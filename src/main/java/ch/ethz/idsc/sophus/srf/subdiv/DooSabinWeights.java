@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.srf.subdiv;
 import java.io.Serializable;
 import java.util.function.Function;
 
-import ch.ethz.idsc.sophus.util.MemoFunction;
+import ch.ethz.idsc.java.util.MemoFunction;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;

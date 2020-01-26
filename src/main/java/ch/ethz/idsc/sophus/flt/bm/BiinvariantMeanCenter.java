@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.flt.bm;
 import java.util.Objects;
 import java.util.function.Function;
 
+import ch.ethz.idsc.java.util.MemoFunction;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
-import ch.ethz.idsc.sophus.util.MemoFunction;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;

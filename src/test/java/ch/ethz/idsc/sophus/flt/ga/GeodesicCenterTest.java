@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.function.Function;
 
+import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter.Splits;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.ethz.idsc.sophus.math.IntegerTensorFunction;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -29,7 +29,7 @@ import ch.ethz.idsc.tensor.sca.win.GaussianWindow;
 import junit.framework.TestCase;
 
 public class GeodesicCenterTest extends TestCase {
-  private static final IntegerTensorFunction CONSTANT = //
+  private static final IntegerFunction<Tensor> CONSTANT = //
       i -> Array.of(k -> RationalScalar.of(1, i), i);
 
   public void testSimple() {

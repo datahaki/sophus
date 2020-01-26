@@ -4,12 +4,12 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
-import ch.ethz.idsc.sophus.math.IntegerTensorFunction;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -46,7 +46,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
   }
 
   public HermiteSubdivision create() {
-    IntegerTensorFunction integerTensorFunction = i -> cgw;
+    IntegerFunction integerTensorFunction = i -> cgw;
     return get(GeodesicCenter.of(new LieGroupGeodesic(lieGroup, lieExponential), integerTensorFunction));
   }
 

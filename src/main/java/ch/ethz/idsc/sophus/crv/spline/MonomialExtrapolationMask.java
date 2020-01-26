@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 import java.io.Serializable;
 import java.util.function.Function;
 
-import ch.ethz.idsc.sophus.util.MemoFunction;
+import ch.ethz.idsc.java.util.MemoFunction;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Binomial;

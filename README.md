@@ -1,6 +1,6 @@
 # ch.ethz.idsc.sophus <a href="https://travis-ci.org/idsc-frazzoli/owl"><img src="https://travis-ci.org/idsc-frazzoli/owl.svg?branch=master" alt="Build Status"></a>
 
-Library for non-linear geometry computation in Java
+Library for non-linear geometry computation in Java, version `0.0.1`
 
 ![sophus](https://user-images.githubusercontent.com/4012178/64911180-9f1d5080-d71e-11e9-9490-ae484d0399f3.png)
 

@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.flt.ga;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.util.BoundedLinkedList;
+import ch.ethz.idsc.java.util.BoundedLinkedList;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

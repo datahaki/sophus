@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.flt;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.util.SerializableSupplier;
+import ch.ethz.idsc.java.util.SerializableSupplier;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
