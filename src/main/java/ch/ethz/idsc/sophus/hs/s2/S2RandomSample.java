@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
 /** sample from unit circle S2 */
 public enum S2RandomSample implements RandomSampleInterface {
   INSTANCE;
-  // ---
+
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.VALUE));
 
   @Override // from RandomSampleInterface

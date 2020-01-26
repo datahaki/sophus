@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * by Scott Schaefer and Ron Goldman, page 2 */
 public enum SnGeodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   @Override // from TensorGeodesic

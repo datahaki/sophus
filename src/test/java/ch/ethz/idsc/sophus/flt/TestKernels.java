@@ -53,8 +53,8 @@ public enum TestKernels implements ScalarUnaryOperator {
   LANCZOS(LanczosWindow.FUNCTION), //
   NUTTALL(NuttallWindow.FUNCTION), //
   PARZEN(ParzenWindow.FUNCTION), //
-  TUKEY(TukeyWindow.FUNCTION), //
-  ;
+  TUKEY(TukeyWindow.FUNCTION);
+
   private final ScalarUnaryOperator scalarUnaryOperator;
 
   private TestKernels(ScalarUnaryOperator scalarUnaryOperator) {

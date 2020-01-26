@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensors;
 
 public enum HeExponential implements LieExponential {
   INSTANCE;
-  // ---
+
   @Override // from LieExponential
   public Tensor exp(Tensor uvw) {
     Tensor u = uvw.get(0);

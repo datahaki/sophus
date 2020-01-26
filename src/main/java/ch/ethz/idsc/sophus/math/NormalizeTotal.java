@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.red.Total;
  * Mathematica::Normalize[{}, Total] == {} */
 public enum NormalizeTotal implements TensorUnaryOperator {
   FUNCTION;
-  // ---
+
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Total::ofVector);
 
   @Override

@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * @see RnBiinvariantMean */
 public enum So2CoveringBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
-  // ---
+
   @Override // from ScalarBiinvariantMean
   public Scalar mean(Tensor sequence, Tensor weights) {
     return (Scalar) weights.dot(sequence);

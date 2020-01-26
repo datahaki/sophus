@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * (instead of a vector of length 1) */
 public enum RnGroup implements LieGroup {
   INSTANCE;
-  // ---
+
   @Override // from LieGroup
   public RnGroupElement element(Tensor tensor) {
     return new RnGroupElement(Objects.requireNonNull(tensor));

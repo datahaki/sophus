@@ -19,7 +19,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * superseded by {@link SnGeodesic} */
 public enum S2Geodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Scalar a = ArcCos.FUNCTION.apply(p.dot(q).Get()); // complex number if |p.q| > 1

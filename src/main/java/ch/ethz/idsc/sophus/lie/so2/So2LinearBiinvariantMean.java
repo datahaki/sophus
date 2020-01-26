@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Xavier Pennec */
 public enum So2LinearBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
-  // ---
+
   @Override // from ScalarBiinvariantMean
   public Scalar mean(Tensor sequence, Tensor weights) {
     Scalar a0 = sequence.Get(0);

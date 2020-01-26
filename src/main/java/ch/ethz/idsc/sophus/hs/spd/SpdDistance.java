@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * Edited by Pennec, Sommer, Fletcher, p. 82 */
 public enum SpdDistance implements TensorMetric {
   INSTANCE;
-  // ---
+
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     SpdSqrt spdSplit = new SpdSqrt(p);

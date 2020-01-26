@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public enum Decibel implements ScalarUnaryOperator {
   FUNCTION;
-  // ---
+
   private static final ScalarUnaryOperator LOG10 = Log.base(10);
   private static final Scalar _20 = RealScalar.of(20);
 

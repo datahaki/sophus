@@ -30,8 +30,8 @@ public enum LieGroupCurveDecimation {
     public CurveDecimation of(LieGroup lieGroup, LieExponential lieExponential, Scalar epsilon) {
       return CurveDecimation.projected(lieGroup, lieExponential, epsilon);
     }
-  }, //
-  ;
+  };
+
   /** @param lieGroup
    * @param lieExponential
    * @param epsilon non-negative

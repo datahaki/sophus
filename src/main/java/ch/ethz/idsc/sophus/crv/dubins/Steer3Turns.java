@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.ArcCos;
 
 /* package */ enum Steer3Turns implements DubinsSteer {
   INSTANCE;
-  // ---
+
   private static final Scalar FOUR = DoubleScalar.of(4);
 
   @Override // from DubinsSteer

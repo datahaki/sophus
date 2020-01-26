@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, pp. 27-31, 2006 */
 public enum StExponential implements LieExponential {
   INSTANCE;
-  // ---
+
   @Override // from LieExponential
   public Tensor exp(Tensor dlambda_dt) {
     Scalar dl = dlambda_dt.Get(0);

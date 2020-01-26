@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * Tests on Manifold-valued Data */
 public enum SpdGeodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor w = SpdPointExponential.log(p, q);

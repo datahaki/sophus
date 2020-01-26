@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * Clothoid1 and degrees 1 or 3. */
 /* package */ enum Clothoid1 implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     return new ClothoidCurve1(p, q);

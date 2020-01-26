@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.alg.UnitVector;
  * BSplineLimitMask[ 5 ] == {1/120, 13/60, 11/20, 13/60, 1/120} */
 public enum BSplineLimitMask implements Function<Integer, Tensor> {
   FUNCTION;
-  // ---
+
   @Override
   public Tensor apply(Integer degree) {
     if (degree % 2 == 0)

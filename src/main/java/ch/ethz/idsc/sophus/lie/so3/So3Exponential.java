@@ -29,7 +29,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * <p>The formula for the logarithm is taken from a book by Chirikjian */
 public enum So3Exponential implements LieExponential {
   INSTANCE;
-  // ---
+
   private static final Tensor ID3 = IdentityMatrix.of(3);
   private static final Scalar HALF = DoubleScalar.of(0.5);
 

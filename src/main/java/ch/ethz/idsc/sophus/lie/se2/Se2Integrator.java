@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 // TODO special case of lie euler integrator
 public enum Se2Integrator implements LieIntegrator {
   INSTANCE;
-  // ---
+
   /** @param g == {px, py, alpha}
    * @param x == {vx, vy, beta}
    * @return g . exp x */

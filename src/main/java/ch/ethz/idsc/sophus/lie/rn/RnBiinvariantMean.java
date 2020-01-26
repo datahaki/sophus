@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * @see BiinvariantMeans */
 public enum RnBiinvariantMean implements BiinvariantMean {
   INSTANCE;
-  // ---
+
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Integers.requirePositive(weights.length());

@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 /** original implementation */
 /* package */ enum ComplexClothoidCurve implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //
       .multiply(Sqrt.FUNCTION.apply(RationalScalar.of(3, 5))) //

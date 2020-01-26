@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * parameterizes the group differently with the scaling coefficient alpha := 1 - lambda */
 public enum StGeodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     StGroupElement p_act = new StGroupElement(p);

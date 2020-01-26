@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * subdivision along geodesics in metric spaces other than Euclidean is not defined */
 public enum DodgsonSabinCurveSubdivision implements CurveSubdivision {
   INSTANCE;
-  // --
+
   @Override // from CurveSubdivision
   public Tensor cyclic(Tensor tensor) {
     int length = tensor.length();

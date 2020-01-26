@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 /** geodesics in the Euclidean space R^n are straight lines */
 public enum RnGeodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor delta = q.subtract(p);

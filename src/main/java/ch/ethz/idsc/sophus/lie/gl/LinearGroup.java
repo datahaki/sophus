@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * also called "immersely linear Lie group" */
 public enum LinearGroup implements LieGroup {
   INSTANCE;
-  // ---
+
   @Override // from LieGroup
   public LinearGroupElement element(Tensor matrix) {
     return LinearGroupElement.of(matrix);

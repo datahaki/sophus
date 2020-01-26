@@ -14,9 +14,8 @@ import ch.ethz.idsc.tensor.Tensors;
  * weights are required to be affine */
 public enum Se2CoveringBiinvariantMean implements BiinvariantMean {
   INSTANCE;
-  // ---
+
   private static final Scalar ZERO = RealScalar.ZERO;
-  // ---
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {

@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 public enum Se2CoveringGeodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Se2CoveringGroupElement p_act = new Se2CoveringGroupElement(p);

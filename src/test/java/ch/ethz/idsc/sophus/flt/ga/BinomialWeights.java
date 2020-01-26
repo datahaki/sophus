@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.sca.Power;
 
 public enum BinomialWeights implements Function<Integer, Tensor> {
   INSTANCE;
-  // ---
+
   @Override
   public Tensor apply(Integer i) {
     Integers.requirePositive(i);

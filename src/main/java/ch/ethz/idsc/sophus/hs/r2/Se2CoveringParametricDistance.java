@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
 /** @see Se2ParametricDistance */
 public enum Se2CoveringParametricDistance implements TensorMetric {
   INSTANCE;
-  // ---
+
   private static final Scalar HALF = RealScalar.of(0.5);
 
   /** @param p element in SE2 of the form {px, py, p_heading}

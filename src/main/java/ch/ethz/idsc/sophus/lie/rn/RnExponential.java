@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * the logarithm function is the identity */
 public enum RnExponential implements LieExponential {
   INSTANCE;
-  // ---
+
   @Override // from LieExponential
   public Tensor exp(Tensor x) {
     return x.copy();

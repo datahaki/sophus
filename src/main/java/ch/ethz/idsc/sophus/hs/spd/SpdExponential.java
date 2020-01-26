@@ -25,7 +25,7 @@ import ch.ethz.idsc.tensor.sca.Log;
  * @see MatrixLog */
 public enum SpdExponential implements LieExponential {
   INSTANCE;
-  // ---
+
   @Override // from LieExponential
   public Tensor exp(Tensor x) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(x);

@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.red.Nest;
  * similar implementation as {@link PseudoClothoidDistance}; maybe merge at some point */
 /* package */ enum SubdivisionClothoidDistance implements TensorMetric, TensorNorm {
   INSTANCE;
-  // ---
+
   private static final CurveSubdivision CURVE_SUBDIVISION = //
       LaneRiesenfeldCurveSubdivision.of(Clothoids.INSTANCE, 1);
   private static final int DEPTH = 3;

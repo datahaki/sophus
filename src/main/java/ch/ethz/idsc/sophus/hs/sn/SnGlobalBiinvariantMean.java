@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 /** Hint: non-linear, non conform with {@link SnGeodesic} */
 public enum SnGlobalBiinvariantMean implements BiinvariantMean {
   INSTANCE;
-  // ---
+
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   @Override // from BiinvariantMean

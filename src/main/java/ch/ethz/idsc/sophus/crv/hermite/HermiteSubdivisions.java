@@ -88,8 +88,8 @@ public enum HermiteSubdivisions {
     public HermiteSubdivision supply(LieGroup lieGroup, LieExponential lieExponential, BiinvariantMean biinvariantMean) {
       return Hermite3Subdivisions.a2(lieGroup, lieExponential, biinvariantMean);
     }
-  }, //
-  ;
+  };
+
   public static Scalar LAMBDA = RationalScalar.of(-1, 8);
   public static Scalar MU = RationalScalar.of(-1, 2);
   public static Scalar THETA = RationalScalar.of(+1, 128);

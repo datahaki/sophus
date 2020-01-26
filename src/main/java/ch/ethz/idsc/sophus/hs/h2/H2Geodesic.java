@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.Tanh;
  * Tomasz Popiel, Lyle Noakes - Bézier Curves and C^2 interpolation in Riemannian manifolds */
 public enum H2Geodesic implements SplitInterface {
   INSTANCE;
-  // ---
+
   /** p and q are vectors of length 2 with the second entry positive
    * 
    * @throws Exception if input is not valid */

@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.lie.AngleVector;
  * elements of SO(2) are represented as scalars */
 public enum So2GlobalBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
-  // ---
+
   @Override // from ScalarBiinvariantMean
   public Scalar mean(Tensor sequence, Tensor weights) {
     return ArcTan2D.of(weights.dot(sequence.map(AngleVector::of)));

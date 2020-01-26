@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Log;
  * @see StBiinvariantMean */
 public enum ScBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
-  // ---
+
   @Override // from ScalarBiinvariantMean
   public Scalar mean(Tensor sequence, Tensor weights) {
     return Exp.FUNCTION.apply((Scalar) weights.dot(sequence.map(Log.FUNCTION)));

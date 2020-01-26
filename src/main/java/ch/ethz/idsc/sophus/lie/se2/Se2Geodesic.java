@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * https://www.youtube.com/watch?v=2vDciaUgL4E */
 public enum Se2Geodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor delta = new Se2GroupElement(p).inverse().combine(q);

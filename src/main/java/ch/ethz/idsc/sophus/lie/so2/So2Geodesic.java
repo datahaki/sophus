@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 public enum So2Geodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor log = q.subtract(p);

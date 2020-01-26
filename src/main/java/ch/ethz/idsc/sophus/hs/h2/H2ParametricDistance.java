@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * https://en.wikipedia.org/wiki/Poincar%C3%A9_half-plane_model#Distance_calculation */
 public enum H2ParametricDistance implements TensorMetric {
   INSTANCE;
-  // ---
+
   /** @param p element in H2 of the form {px, py}
    * @param q element in H2 of the form {qx, qy}
    * @return length of geodesic between p and q

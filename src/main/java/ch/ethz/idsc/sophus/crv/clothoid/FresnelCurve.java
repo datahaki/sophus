@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 public enum FresnelCurve implements ScalarTensorFunction {
   FUNCTION;
-  // ---
+
   @Override
   public Tensor apply(Scalar scalar) {
     return Tensors.of( //

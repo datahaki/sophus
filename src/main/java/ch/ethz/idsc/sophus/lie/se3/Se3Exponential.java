@@ -25,7 +25,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * @see LieGroupElement */
 public enum Se3Exponential implements LieExponential {
   INSTANCE;
-  // ---
+
   private static final Tensor ID3 = IdentityMatrix.of(3);
 
   @Override // from LieExponential

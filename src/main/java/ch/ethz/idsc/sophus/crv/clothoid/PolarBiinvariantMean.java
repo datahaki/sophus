@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.red.ScalarSummaryStatistics;
 
 public enum PolarBiinvariantMean implements BiinvariantMean {
   INSTANCE;
-  // ---
+
   private static final int MAX_ITERATIONS = 10;
 
   @Override

@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * https://en.wikipedia.org/wiki/Quaternion */
 public enum UnitQuaternionDistance implements Metric<Quaternion> {
   INSTANCE;
-  // ---
+
   private static final Scalar HALF = RealScalar.of(0.5);
 
   @Override // from Metric

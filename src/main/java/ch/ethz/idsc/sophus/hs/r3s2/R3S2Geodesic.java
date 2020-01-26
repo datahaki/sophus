@@ -19,7 +19,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * {{px, py, pz}, {nx, ny, nz}} */
 public enum R3S2Geodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   private static final Tensor ID3 = IdentityMatrix.of(3);
 
   @Override // from TensorGeodesic

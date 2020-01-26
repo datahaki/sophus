@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Cos;
 
 /* package */ enum Steer2TurnsDiffSide implements DubinsSteer {
   INSTANCE;
-  // ---
+
   @Override // from DubinsSteer
   public Optional<Tensor> steer(Scalar dist_tr, Scalar th_tr, Scalar th_total, Scalar radius) {
     Scalar aux = radius.add(radius).divide(dist_tr);

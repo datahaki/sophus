@@ -8,10 +8,9 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public enum R2IdentityFamily implements R2RigidFamily {
   INSTANCE;
-  // ---
+
   private static final Tensor MATRIX = IdentityMatrix.of(3).unmodifiable();
 
-  // ---
   @Override
   public TensorUnaryOperator inverse(Scalar scalar) {
     return t -> t;

@@ -28,9 +28,8 @@ public class DubinsPath implements Serializable {
     LSL(+1, +0, +1, Steer2TurnsSameSide.INSTANCE), //
     RSR(-1, +0, -1, Steer2TurnsSameSide.INSTANCE), //
     LRL(+1, -1, +1, Steer3Turns.INSTANCE), //
-    RLR(-1, +1, -1, Steer3Turns.INSTANCE), //
-    ;
-    // ---
+    RLR(-1, +1, -1, Steer3Turns.INSTANCE);
+
     private final Tensor signature;
     private final Tensor signatureAbs;
     private final boolean isFirstTurnRight;

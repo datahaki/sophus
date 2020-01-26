@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * For these reasons, this is a highly pedagogical case." */
 public enum StGroup implements LieGroup {
   INSTANCE;
-  // ---
+
   @Override // from LieGroup
   public StGroupElement element(Tensor lambda_t) {
     return new StGroupElement(lambda_t);

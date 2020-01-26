@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * for sequences of length 3 or greater. */
 public enum So2FilterBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
-  // ---
+
   @Override // from ScalarBiinvariantMean
   public Scalar mean(Tensor sequence, Tensor weights) {
     // sequences of odd and even length are permitted

@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.sca.Log;
  * https://en.wikipedia.org/wiki/Quaternion */
 /* package */ enum LogUnitQuaternionDistance implements Metric<Quaternion> {
   INSTANCE;
-  // ---
+
   @Override // from Metric
   public Scalar distance(Quaternion p, Quaternion q) {
     return Log.of(p.reciprocal().multiply(q)).abs();

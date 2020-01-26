@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * @see LieGroupElement */
 public enum Se3Geodesic implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor log = Se3Exponential.INSTANCE.log(LinearSolve.of(p, q));

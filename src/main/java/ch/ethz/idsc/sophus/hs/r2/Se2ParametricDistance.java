@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * @see Se2CoveringParametricDistance */
 public enum Se2ParametricDistance implements TensorMetric, TensorNorm {
   INSTANCE;
-  // ---
+
   private static final Scalar HALF = RealScalar.of(0.5);
 
   @Override // from TensorMetric

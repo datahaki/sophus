@@ -42,6 +42,7 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
   /** global formula is defined globally for arbitrary angles and weights */
   GLOBAL(So2GlobalBiinvariantMean.INSTANCE), //
   ;
+
   // ---
   private static final Scalar ZERO = RealScalar.ZERO;
   // ---

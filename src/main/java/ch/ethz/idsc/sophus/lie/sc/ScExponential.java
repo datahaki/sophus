@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.sca.Log;
 
 public enum ScExponential implements LieExponential {
   INSTANCE;
-  // ---
+
   @Override // from LieExponential
   public Scalar exp(Tensor x) {
     return Exp.FUNCTION.apply((Scalar) x);

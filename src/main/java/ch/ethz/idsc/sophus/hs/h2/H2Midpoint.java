@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * Alekseevskij et al. 1993 */
 public enum H2Midpoint implements MidpointInterface {
   INSTANCE;
-  // ---
+
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor a, Tensor b) {
     Tensor sum = psi(a).add(psi(b));

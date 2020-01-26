@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.red.VectorAngle;
 
 public enum SnMetric implements TensorMetric {
   INSTANCE;
-  // ---
+
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return VectorAngle.of(p, q).get();

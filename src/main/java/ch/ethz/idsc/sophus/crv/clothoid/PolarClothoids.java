@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * Clothoids and degrees 1 or 3. */
 public enum PolarClothoids implements GeodesicInterface {
   INSTANCE;
-  // ---
+
   public static final CurveSubdivision CURVE_SUBDIVISION = LaneRiesenfeldCurveSubdivision.of(INSTANCE, 1);
 
   @Override // from GeodesicInterface

@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Tensors;
 
 /* package */ enum Steer2TurnsSameSide implements DubinsSteer {
   INSTANCE;
-  // ---
+
   @Override // from DubinsSteer
   public Optional<Tensor> steer(Scalar dist_tr, Scalar th_tr, Scalar th_total, Scalar radius) {
     return Optional.of(Tensors.of( //

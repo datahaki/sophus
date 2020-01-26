@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
 /** length of clothoid in Euclidean plane */
 public enum ClothoidParametricDistance implements TensorMetric, TensorNorm {
   INSTANCE;
-  // ---
+
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return distance(new Clothoid(p, q));

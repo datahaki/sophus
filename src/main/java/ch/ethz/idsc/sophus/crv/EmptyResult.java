@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Tensors;
 
 /* package */ enum EmptyResult implements Result {
   INSTANCE;
-  // ---
+
   @Override // from Result
   public Tensor result() {
     return Tensors.empty();

@@ -23,6 +23,7 @@ import ch.ethz.idsc.tensor.red.Total;
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, p.29, 2006 */
 public enum StBiinvariantMean implements BiinvariantMean {
   INSTANCE;
+
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Tensor lambdas = sequence.get(Tensor.ALL, 0);

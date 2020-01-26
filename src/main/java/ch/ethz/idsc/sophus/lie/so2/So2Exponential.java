@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * (Actually a scalar, but LieExponential requires a vector) */
 public enum So2Exponential implements LieExponential {
   INSTANCE;
-  // ---
+
   @Override // from LieExponential
   public Scalar exp(Tensor scalar) {
     return (Scalar) scalar;
