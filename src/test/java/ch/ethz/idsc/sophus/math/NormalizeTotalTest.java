@@ -17,6 +17,15 @@ public class NormalizeTotalTest extends TestCase {
     assertEquals(NormalizeTotal.FUNCTION.apply(Tensors.empty()), Tensors.empty());
   }
 
+  public void testZeroFail() {
+    try {
+      NormalizeTotal.FUNCTION.apply(Tensors.vector(2, -2, 1, -1));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
   public void testFailScalar() {
     try {
       NormalizeTotal.FUNCTION.apply(Pi.TWO);

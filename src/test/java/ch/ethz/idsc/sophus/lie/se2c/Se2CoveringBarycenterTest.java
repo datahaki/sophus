@@ -49,6 +49,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tensor mean = Tensors.vector(0.75, 1, 0);
     Tensor weights = se2CoveringBarycenter.apply(mean);
     AffineQ.require(weights);
+    Chop._10.requireClose(weights, Tensors.vector(-0.75, 0.75, 1, 0));
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._12.requireClose(result, mean);
     Scalar w = weights.Get(1);
