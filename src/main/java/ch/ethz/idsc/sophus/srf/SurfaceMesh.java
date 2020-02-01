@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.srf;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.Primitives;
 
-public class SurfaceMesh {
+public class SurfaceMesh implements Serializable {
   public final Tensor ind = Tensors.empty();
   public Tensor vrt = Tensors.empty();
 

@@ -44,10 +44,10 @@ public class R2BarycentricCoordinatesTest extends TestCase {
   }
 
   public void testQuantity() throws ClassNotFoundException, IOException {
-    R2BarycentricCoordinates powerCoordinates = Serialization.copy(new R2BarycentricCoordinates(Barycenter.DISCRETE_HARMONIC));
+    R2BarycentricCoordinates r2BarycentricCoordinates = Serialization.copy(new R2BarycentricCoordinates(Barycenter.DISCRETE_HARMONIC));
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").map(s -> Quantity.of(s, "m"));
     Tensor x = Tensors.vector(4, 2).map(s -> Quantity.of(s, "m"));
-    Tensor weights = powerCoordinates.of(P).apply(x);
+    Tensor weights = r2BarycentricCoordinates.of(P).apply(x);
     Tensor exp = Tensors.vector(0.120229008, 0.629770992, 0.230916031, 0.019083969);
     Chop._08.requireClose(weights, exp);
     Chop._10.requireClose(weights.dot(P), x);

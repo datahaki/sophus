@@ -10,7 +10,11 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
- * by Xavier Pennec, Vincent Arsigny, 2012 */
+ * by Xavier Pennec, Vincent Arsigny, 2012
+ * 
+ * see also Eq. 1.11
+ * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics" 
+ * by Hormann Sukumar */
 public class BiinvariantMeanEquation implements Serializable {
   private final LieGroup lieGroup;
   private final LieExponential lieExponential;
@@ -22,6 +26,10 @@ public class BiinvariantMeanEquation implements Serializable {
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }
 
+  /** @param sequence
+   * @param weights
+   * @param mean
+   * @return zero vector of the lie algebra */
   public Tensor evaluate(Tensor sequence, Tensor weights, Tensor mean) {
     return weights.dot(Tensor.of(sequence.stream() //
         .map(lieGroup.element(mean).inverse()::combine) //
