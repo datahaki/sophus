@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Xavier Pennec, Vincent Arsigny, 2012
  * 
  * see also Eq. 1.11
- * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics" 
+ * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Hormann Sukumar */
 public class BiinvariantMeanEquation implements Serializable {
   private final LieGroup lieGroup;

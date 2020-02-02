@@ -22,15 +22,16 @@ import junit.framework.TestCase;
 public class LieAffineCoordinatesTest extends TestCase {
   public void testMean() {
     Distribution distribution = UniformDistribution.unit();
-    for (int n = 3; n < 10; ++n) {
-      Tensor points = RandomVariate.of(distribution, n, 2);
-      TensorUnaryOperator affineCoordinates = AffineCoordinates.of(points);
-      LieAffineCoordinates lieAffineCoordinates = new LieAffineCoordinates(RnGroup.INSTANCE, RnExponential.INSTANCE, RnBiinvariantMean.INSTANCE, points);
-      Tensor x = RandomVariate.of(distribution, 2);
-      Tensor w1 = affineCoordinates.apply(x);
-      Tensor w2 = lieAffineCoordinates.apply(x);
-      Chop._10.requireClose(w1, w2);
-    }
+    for (int d = 2; d < 5; ++d)
+      for (int n = d + 1; n < 10; ++n) {
+        Tensor points = RandomVariate.of(distribution, n, d);
+        TensorUnaryOperator affineCoordinates = AffineCoordinates.of(points);
+        LieAffineCoordinates lieAffineCoordinates = new LieAffineCoordinates(RnGroup.INSTANCE, RnExponential.INSTANCE, RnBiinvariantMean.INSTANCE, points);
+        Tensor x = RandomVariate.of(distribution, d);
+        Tensor w1 = affineCoordinates.apply(x);
+        Tensor w2 = lieAffineCoordinates.apply(x);
+        Chop._10.requireClose(w1, w2);
+      }
   }
 
   public void testUnity() {

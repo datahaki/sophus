@@ -18,20 +18,6 @@ import ch.ethz.idsc.tensor.qty.Quantity;
  * 
  * "Interpolation via Barycentric Coordinates" by Pierre Alliez, 2017 */
 public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
-  /** C^infty, also for non-convex polygons
-   * 
-   * BLTD, Section 3.3, eqs (12)
-   * mean value coordinates seem to be the most robust
-   * 
-   * "Mean value mappings between convex polygons are not always injective."
-   * Reference:
-   * "On the injectivity of Wachspress and mean value mappings between convex polygons" */
-  MEAN_VALUE() {
-    @Override
-    public Tensor apply(Tensor dif, Scalar nrm) {
-      return dif.divide(nrm);
-    }
-  },
   /** C^infty, for convex polygons
    * 
    * BLTD, Section 3.1
@@ -51,6 +37,20 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
     @Override
     public Tensor apply(Tensor dif, Scalar nrm) {
       return dif.divide(nrm.multiply(nrm));
+    }
+  },
+  /** C^infty, also for non-convex polygons
+   * 
+   * BLTD, Section 3.3, eqs (12)
+   * mean value coordinates seem to be the most robust
+   * 
+   * "Mean value mappings between convex polygons are not always injective."
+   * Reference:
+   * "On the injectivity of Wachspress and mean value mappings between convex polygons" */
+  MEAN_VALUE() {
+    @Override
+    public Tensor apply(Tensor dif, Scalar nrm) {
+      return dif.divide(nrm);
     }
   },
   /** C^infty, for convex polygons

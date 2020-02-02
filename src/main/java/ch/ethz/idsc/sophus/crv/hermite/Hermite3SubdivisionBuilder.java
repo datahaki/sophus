@@ -40,13 +40,18 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
     this.vpqr = vpqr;
   }
 
+  /** @param biinvariantMean
+   * @return Hermite subdivision operator that uses the given biinvariant Mean
+   * for computing weighted averages in the Lie group */
   public HermiteSubdivision create(BiinvariantMean biinvariantMean) {
     Objects.requireNonNull(biinvariantMean);
     return get(pqr -> biinvariantMean.mean(pqr, cgw));
   }
 
+  /** @return Hermite subdivision operator that uses the geodesic center
+   * for computing weighted averages in the Lie group */
   public HermiteSubdivision create() {
-    IntegerFunction integerTensorFunction = i -> cgw;
+    IntegerFunction<Tensor> integerTensorFunction = i -> cgw;
     return get(GeodesicCenter.of(new LieGroupGeodesic(lieGroup, lieExponential), integerTensorFunction));
   }
 

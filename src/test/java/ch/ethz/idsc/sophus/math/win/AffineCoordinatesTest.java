@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.win;
 
-import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -33,8 +33,8 @@ public class AffineCoordinatesTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, 2);
       TensorUnaryOperator affineCoordinates = AffineCoordinates.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
-      assertEquals(weights, ConstantArray.of(RationalScalar.of(1, n), n));
-      ExactTensorQ.require(weights);
+      Chop._10.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
+      // ExactTensorQ.require(weights);
     }
   }
 
@@ -56,6 +56,25 @@ public class AffineCoordinatesTest extends TestCase {
       TensorUnaryOperator affineCoordinates = AffineCoordinates.of(p1);
       Tensor p2 = Tensor.of(p1.stream().map(affineCoordinates)).dot(p1);
       Chop._08.requireClose(p1, p2);
+    }
+  }
+
+  public void testSmallN() {
+    Distribution distribution = UniformDistribution.unit();
+    for (int n = 1; n < 3; ++n) {
+      Tensor points = RandomVariate.of(distribution, n, 2);
+      TensorUnaryOperator affineCoordinates = AffineCoordinates.of(points);
+      Tensor tensor = Tensor.of(points.stream().map(affineCoordinates));
+      Chop._10.requireClose(tensor, IdentityMatrix.of(n));
+    }
+  }
+
+  public void testEmptyFail() {
+    try {
+      AffineCoordinates.of(Tensors.empty());
+      fail();
+    } catch (Exception exception) {
+      // ---
     }
   }
 }
