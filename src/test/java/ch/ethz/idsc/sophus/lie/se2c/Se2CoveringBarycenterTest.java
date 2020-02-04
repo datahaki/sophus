@@ -58,7 +58,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
 
   public void testLengthFail() {
     try {
-      new Se2CoveringBarycenter(HilbertMatrix.of(5, 3));
+      new Se2CoveringBarycenter(HilbertMatrix.of(5, 3)).apply(Tensors.vector(1, 2, 3));
       fail();
     } catch (Exception exception) {
       // ---

@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.r2;
 
 import ch.ethz.idsc.sophus.math.TensorMetric;
+import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -10,7 +11,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 /** @see Se2ParametricDistance */
-public enum Se2CoveringParametricDistance implements TensorMetric {
+public enum Se2CoveringParametricDistance implements TensorMetric, TensorNorm {
   INSTANCE;
 
   private static final Scalar HALF = RealScalar.of(0.5);
@@ -27,5 +28,10 @@ public enum Se2CoveringParametricDistance implements TensorMetric {
     Scalar ahalf = alpha.multiply(HALF);
     Scalar radius = norm.multiply(HALF).divide(Sin.FUNCTION.apply(ahalf));
     return radius.multiply(alpha).abs();
+  }
+
+  @Override // from TensorNorm
+  public Scalar norm(Tensor p) {
+    return distance(p.map(Scalar::zero), p);
   }
 }

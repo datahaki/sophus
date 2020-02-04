@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum Se2CoveringGroup implements LieGroup {
   INSTANCE;
 
-  @Override
+  @Override // from LieGroup
   public Se2CoveringGroupElement element(Tensor xya) {
     return new Se2CoveringGroupElement(xya);
   }

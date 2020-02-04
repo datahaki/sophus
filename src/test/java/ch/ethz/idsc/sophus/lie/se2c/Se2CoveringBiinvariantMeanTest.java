@@ -16,6 +16,8 @@ import ch.ethz.idsc.tensor.lie.Permutations;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.qty.Quantity;
+import ch.ethz.idsc.tensor.qty.QuantityMagnitude;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
@@ -48,6 +50,23 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+      Tensor defect = BIINVARIANT_MEAN_EQUATION.evaluate(sequence, weights, mean);
+      Chop._06.requireClose(defect, defect.map(Scalar::zero));
+    }
+  }
+
+  public void testEquationQuantity() {
+    for (int length = 1; length < 6; ++length) {
+      Distribution distribution = UniformDistribution.of(Clips.absolute(10));
+      Tensor sequence = Tensor.of(RandomVariate.of(distribution, length, 3).stream().map(row -> Tensors.of( //
+          Quantity.of(row.Get(0), "m"), //
+          Quantity.of(row.Get(1), "m"), //
+          Quantity.of(row.Get(2), ""))));
+      Tensor weights = RandomVariate.of(distribution, length);
+      weights = weights.divide(Total.ofVector(weights));
+      Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+      QuantityMagnitude.SI().in("m").apply(mean.Get(0));
+      QuantityMagnitude.SI().in("m").apply(mean.Get(1));
       Tensor defect = BIINVARIANT_MEAN_EQUATION.evaluate(sequence, weights, mean);
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }

@@ -5,7 +5,9 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
@@ -13,6 +15,7 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.Mean;
+import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -57,6 +60,32 @@ public class AffineCoordinatesTest extends TestCase {
       Tensor p2 = Tensor.of(p1.stream().map(affineCoordinates)).dot(p1);
       Chop._08.requireClose(p1, p2);
     }
+  }
+
+  public void testWeights() {
+    Distribution distribution = UniformDistribution.unit();
+    for (int d = 2; d < 5; ++d)
+      for (int n = 5; n < 10; ++n) {
+        Tensor points = RandomVariate.of(distribution, n, d);
+        TensorUnaryOperator affineCoordinates = AffineCoordinates.of(points);
+        Tensor x = RandomVariate.of(distribution, d);
+        Tensor weights = affineCoordinates.apply(x);
+        VectorQ.requireLength(weights, n);
+        Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      }
+  }
+
+  public void testZeros() {
+    Distribution distribution = UniformDistribution.unit();
+    for (int d = 2; d < 5; ++d)
+      for (int n = 5; n < 10; ++n) {
+        Tensor points = Array.zeros(n, d);
+        TensorUnaryOperator affineCoordinates = AffineCoordinates.of(points);
+        Tensor x = RandomVariate.of(distribution, d);
+        Tensor weights = affineCoordinates.apply(x);
+        VectorQ.requireLength(weights, n);
+        Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      }
   }
 
   public void testSmallN() {

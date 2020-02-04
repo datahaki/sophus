@@ -33,13 +33,13 @@ public enum So2CoveringSkew {
     Scalar angle_half = angle.multiply(RationalScalar.HALF);
     Scalar den = Tan.FUNCTION.apply(angle_half);
     if (Scalars.isZero(den))
-      return Tensors.matrix(new Scalar[][] { //
-          { weight, weight.zero() }, //
-          { weight.zero(), weight } });
+      return Tensors.of( //
+          Tensors.of(weight, weight.zero()), //
+          Tensors.of(weight.zero(), weight));
     Scalar m12 = angle_half.multiply(weight);
     Scalar m11 = m12.divide(den);
-    return Tensors.matrix(new Scalar[][] { //
-        { m11, m12 }, //
-        { m12.negate(), m11 } });
+    return Tensors.of( //
+        Tensors.of(m11, m12), //
+        Tensors.of(m12.negate(), m11));
   }
 }

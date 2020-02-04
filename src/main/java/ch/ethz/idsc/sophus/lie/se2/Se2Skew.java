@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.lie.RotationMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 
 public class Se2Skew {
-  /** @param se2CoveringGroupElement
+  /** @param se2CoveringGroupElement may be either element of SE2 Covering or SE2
    * @param sequence
    * @param weights
    * @return */
@@ -50,6 +50,7 @@ public class Se2Skew {
     return new Se2Skew(lhs.add(se2Skew.lhs), rhs.add(se2Skew.rhs));
   }
 
+  /** @return vector of length 2 */
   public Tensor solve() {
     return LinearSolve.of(lhs, rhs);
   }
