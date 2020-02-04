@@ -12,17 +12,17 @@ import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class InverseDistanceFromOrigin implements TensorUnaryOperator {
+public class InverseNorm implements TensorUnaryOperator {
   private static final Chop CHOP = Chop._14;
 
   /** @param tensorMetric non-null */
   public static TensorUnaryOperator of(TensorNorm tensorNorm) {
-    return new InverseDistanceFromOrigin(Objects.requireNonNull(tensorNorm));
+    return new InverseNorm(Objects.requireNonNull(tensorNorm));
   }
 
   private final TensorNorm tensorNorm;
 
-  private InverseDistanceFromOrigin(TensorNorm tensorNorm) {
+  private InverseNorm(TensorNorm tensorNorm) {
     this.tensorNorm = tensorNorm;
   }
 

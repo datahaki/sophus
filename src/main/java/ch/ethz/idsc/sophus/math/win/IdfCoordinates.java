@@ -22,7 +22,7 @@ public class IdfCoordinates implements TensorUnaryOperator {
    * @return */
   public static TensorUnaryOperator of(TensorNorm tensorNorm, Tensor sequence) {
     return new IdfCoordinates( //
-        InverseDistanceFromOrigin.of(tensorNorm), //
+        InverseNorm.of(tensorNorm), //
         Objects.requireNonNull(sequence));
   }
 

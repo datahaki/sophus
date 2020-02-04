@@ -34,15 +34,12 @@ public class Se2CoveringBarycenter implements TensorUnaryOperator {
     this.sequence = Objects.requireNonNull(sequence);
   }
 
-  public Tensor matrix(Tensor mean) {
-    return Tensor.of(sequence.stream() //
-        .map(new Se2CoveringGroupElement(mean).inverse()::combine) //
-        .map(Se2CoveringBarycenter::equation));
-  }
-
   @Override
   public Tensor apply(Tensor mean) {
-    Tensor m4x4 = Tensor.of(matrix(mean).stream().map(row -> row.append(RealScalar.ONE)));
+    Tensor m4x4 = Tensor.of(sequence.stream() //
+        .map(new Se2CoveringGroupElement(mean).inverse()::combine) //
+        .map(Se2CoveringBarycenter::equation) //
+        .map(row -> row.append(RealScalar.ONE)));
     return LinearSolve.of(Transpose.of(m4x4), RHS);
   }
 }

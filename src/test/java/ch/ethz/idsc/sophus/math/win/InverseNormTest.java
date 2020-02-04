@@ -14,10 +14,10 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class InverseDistanceFromOriginTest extends TestCase {
+public class InverseNormTest extends TestCase {
   public void testSimple() {
-    TensorUnaryOperator inverseDistanceFromOrigin = InverseDistanceFromOrigin.of(Norm._2::ofVector);
-    Tensor weights = inverseDistanceFromOrigin.apply(Tensors.vector(1, 3).map(Tensors::of));
+    TensorUnaryOperator inverseNorm = InverseNorm.of(Norm._2::ofVector);
+    Tensor weights = inverseNorm.apply(Tensors.vector(1, 3).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.of(3, 4), RationalScalar.of(1, 4)));
   }
 
@@ -28,9 +28,9 @@ public class InverseDistanceFromOriginTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor tensor = RandomVariate.of(distribution, n, d);
         tensor.set(Scalar::zero, j, Tensor.ALL);
-        TensorUnaryOperator inverseDistanceFromOrigin = InverseDistanceFromOrigin.of(Norm._2::ofVector);
+        TensorUnaryOperator inverseNorm = InverseNorm.of(Norm._2::ofVector);
         for (int index = 0; index < tensor.length(); ++index) {
-          Tensor q = inverseDistanceFromOrigin.apply(tensor);
+          Tensor q = inverseNorm.apply(tensor);
           Chop._10.requireClose(q, UnitVector.of(n, j));
         }
       }
@@ -38,7 +38,7 @@ public class InverseDistanceFromOriginTest extends TestCase {
 
   public void testFailNull() {
     try {
-      InverseDistanceFromOrigin.of(null);
+      InverseNorm.of(null);
       fail();
     } catch (Exception exception) {
       // ---

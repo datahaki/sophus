@@ -11,13 +11,13 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * Se2CoveringBiinvariantMean[sequence, weights] == mean */
 public class Se2CoveringIdfCoordinates {
-  private static final TensorUnaryOperator INVERSE_DISTANCE_FROM_ORIGIN = //
-      InverseDistanceFromOrigin.of(Se2CoveringParametricDistance.INSTANCE);
+  private static final TensorUnaryOperator INVERSE_NORM = //
+      InverseNorm.of(Se2CoveringParametricDistance.INSTANCE);
 
   public static TensorUnaryOperator of(Tensor sequence) {
     return new LieIdfCoordinates( //
         Se2CoveringGroup.INSTANCE, //
         Se2CoveringBarycenter::equation, //
-        INVERSE_DISTANCE_FROM_ORIGIN).of(sequence);
+        INVERSE_NORM).of(sequence);
   }
 }

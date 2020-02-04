@@ -13,16 +13,16 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public class LieIdfCoordinates implements Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator equation;
-  private final TensorUnaryOperator inv_dist;
+  private final TensorUnaryOperator inv_norm;
 
   /** @param lieGroup
    * @param equation
-   * @param inv_dist
+   * @param inv_norm
    * @throws Exception if any input parameter is null */
-  public LieIdfCoordinates(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_dist) {
+  public LieIdfCoordinates(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_norm) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.equation = Objects.requireNonNull(equation);
-    this.inv_dist = Objects.requireNonNull(inv_dist);
+    this.inv_norm = Objects.requireNonNull(inv_norm);
   }
 
   /** @param sequence of coordinates in Lie group
@@ -42,7 +42,7 @@ public class LieIdfCoordinates implements Serializable {
     public Tensor apply(Tensor x) {
       Tensor levers = Tensor.of(sequence.stream().map(lieGroup.element(x).inverse()::combine).map(equation));
       Tensor nullSpace = NullSpaces.of(levers);
-      return NormalizeTotal.FUNCTION.apply(inv_dist.apply(levers).dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
+      return NormalizeTotal.FUNCTION.apply(inv_norm.apply(levers).dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
     }
   }
 }
