@@ -20,12 +20,13 @@ import ch.ethz.idsc.tensor.red.Hypot;
 
 /** Reference:
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
- * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
+ * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
+ * 
+ * @see Barycenter */
 public class R2BarycentricCoordinates implements Serializable {
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
 
-  /** @param biFunction
-   * @see Barycenter */
+  /** @param biFunction for instance {@link Barycenter#MEAN_VALUE} */
   public R2BarycentricCoordinates(BiFunction<Tensor, Scalar, Tensor> biFunction) {
     this.biFunction = Objects.requireNonNull(biFunction);
   }

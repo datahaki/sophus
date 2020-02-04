@@ -85,7 +85,7 @@ public class R2BarycentricCoordinatesTest extends TestCase {
     }
   }
 
-  public void testCorners() {
+  public void testLagrangeProperty() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
       R2BarycentricCoordinates powerCoordinates = new R2BarycentricCoordinates(barycenter);

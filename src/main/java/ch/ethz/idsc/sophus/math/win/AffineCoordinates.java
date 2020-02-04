@@ -9,7 +9,23 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Mean;
 
 /** Affine coordinates created by n points in d-dimensional vector space
- * S. Waldron. Affine generalized barycentric coordinates. Jaen Journal on Approximation, 3(2):209-226, 2011 */
+ * 
+ * Affine coordinates are generalized barycentric coordinates and satisfy
+ * partition of unity property
+ * linear reproduction property
+ * C^infinity
+ * 
+ * but do not satisfy Lagrange property
+ * 
+ * Reference:
+ * "Affine generalized barycentric coordinates"
+ * by S. Waldron
+ * Jaen Journal on Approximation, 3(2):209-226, 2011
+ * 
+ * Quote: "Among all generalized barycentric coordinates with respect to a
+ * scattered set of points, Waldron suggests to consider those with minimal
+ * L2-norm, which are uniquely defined as the affine functions."
+ * in Hormann and Sukumar, 2016 */
 public class AffineCoordinates implements TensorUnaryOperator {
   /** @param points matrix with dimensions n x d
    * @return

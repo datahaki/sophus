@@ -21,12 +21,9 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public class Se2CoveringBarycenter implements TensorUnaryOperator {
   private static final Tensor RHS = UnitVector.of(4, 3);
 
-  /** @param sequence
-   * @return equation with respect to neutral element */
-  public static Tensor equation(Tensor sequence) {
-    return Tensor.of(sequence.stream() //
-        .map(xya -> Se2Skew.of(xya, RealScalar.ONE).rhs() //
-            .append(xya.Get(2)))); // biinvariant mean of angles
+  public static Tensor equation(Tensor xya) {
+    return Se2Skew.of(xya, RealScalar.ONE).rhs() //
+        .append(xya.Get(2)); // biinvariant mean of angles
   }
 
   // ---
@@ -38,8 +35,9 @@ public class Se2CoveringBarycenter implements TensorUnaryOperator {
   }
 
   public Tensor matrix(Tensor mean) {
-    return equation(Tensor.of(sequence.stream() //
-        .map(new Se2CoveringGroupElement(mean).inverse()::combine)));
+    return Tensor.of(sequence.stream() //
+        .map(new Se2CoveringGroupElement(mean).inverse()::combine) //
+        .map(Se2CoveringBarycenter::equation));
   }
 
   @Override

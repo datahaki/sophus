@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -14,15 +15,15 @@ import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class Se2CoveringAffineCoordinatesTest extends TestCase {
-  public void testMean() {
+public class Se2CoveringIdfCoordinatesTest extends TestCase {
+  public void testLinearReproduction() {
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     for (int n = 5; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 3);
-      Se2CoveringAffineCoordinates se2CoveringAffineCoordinates = new Se2CoveringAffineCoordinates(points);
+      TensorUnaryOperator se2CoveringIdfCoordinates = Se2CoveringIdfCoordinates.of(points);
       Tensor x = Se2CoveringBiinvariantMean.INSTANCE.mean(points, ConstantArray.of(RationalScalar.of(1, n), n));
-      Tensor weights = se2CoveringAffineCoordinates.apply(x);
+      Tensor weights = se2CoveringIdfCoordinates.apply(x);
       Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(x, x_recreated);
@@ -35,11 +36,20 @@ public class Se2CoveringAffineCoordinatesTest extends TestCase {
     for (int n = 5; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor x = RandomVariate.of(distribution, 3);
-      Se2CoveringAffineCoordinates se2CoveringAffineCoordinates = new Se2CoveringAffineCoordinates(points);
-      Tensor weights = se2CoveringAffineCoordinates.apply(x);
+      TensorUnaryOperator se2CoveringIdfCoordinates = Se2CoveringIdfCoordinates.of(points);
+      Tensor weights = se2CoveringIdfCoordinates.apply(x);
       Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(x, x_recreated);
+    }
+  }
+
+  public void testNullFail() {
+    try {
+      Se2CoveringIdfCoordinates.of(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
     }
   }
 }

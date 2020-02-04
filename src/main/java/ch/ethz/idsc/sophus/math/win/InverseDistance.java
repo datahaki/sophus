@@ -12,6 +12,9 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.sca.Chop;
 
+/** Reference:
+ * "A two-dimensional interpolation function for irregularly-spaced data"
+ * by Donald Shepard, 1968 */
 public class InverseDistance implements Serializable {
   private static final Chop CHOP = Chop._14;
   // ---

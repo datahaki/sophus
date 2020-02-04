@@ -14,12 +14,16 @@ import ch.ethz.idsc.tensor.sca.Chop;
 
 public class InverseDistanceFromOrigin implements TensorUnaryOperator {
   private static final Chop CHOP = Chop._14;
-  // ---
-  private final TensorNorm tensorNorm;
 
   /** @param tensorMetric non-null */
-  public InverseDistanceFromOrigin(TensorNorm tensorNorm) {
-    this.tensorNorm = Objects.requireNonNull(tensorNorm);
+  public static TensorUnaryOperator of(TensorNorm tensorNorm) {
+    return new InverseDistanceFromOrigin(Objects.requireNonNull(tensorNorm));
+  }
+
+  private final TensorNorm tensorNorm;
+
+  private InverseDistanceFromOrigin(TensorNorm tensorNorm) {
+    this.tensorNorm = tensorNorm;
   }
 
   @Override
