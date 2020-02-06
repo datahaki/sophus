@@ -6,18 +6,18 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMetric;
+import ch.ethz.idsc.tensor.NumberQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.sca.Chop;
 
-/** Reference:
+/** Inverse Distance Weighting does not reproduce linear functions
+ * 
+ * Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
 public class InverseDistance implements Serializable {
-  private static final Chop CHOP = Chop._14;
-  // ---
   private final TensorMetric tensorMetric;
 
   /** @param tensorMetric non-null */
@@ -29,10 +29,10 @@ public class InverseDistance implements Serializable {
     Tensor weights = Tensors.reserve(tensor.length());
     int count = 0;
     for (Tensor p : tensor) {
-      Scalar distance = tensorMetric.distance(p, q);
-      if (CHOP.allZero(distance))
+      Scalar reciprocal = tensorMetric.distance(p, q).reciprocal();
+      if (!NumberQ.of(reciprocal))
         return UnitVector.of(tensor.length(), count);
-      weights.append(distance.reciprocal());
+      weights.append(reciprocal);
       ++count;
     }
     return NormalizeTotal.FUNCTION.apply(weights);

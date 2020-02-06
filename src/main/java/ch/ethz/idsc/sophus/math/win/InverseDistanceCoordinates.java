@@ -9,19 +9,19 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** Inverse Distance Fitted Coordinates are generalized barycentric coordinates with
- * partition of unity property
- * linear reproduction property
- * Lagrange property
+/** Inverse Distance Coordinates are generalized barycentric coordinates with the properties
+ * partition of unity
+ * linear reproduction
+ * Lagrange
  * C^infinity (except at points from input set)
  * 
  * in general, the coordinates may evaluate to be negative */
-public class IdfCoordinates implements TensorUnaryOperator {
+public class InverseDistanceCoordinates implements TensorUnaryOperator {
   /** @param tensorNorm for instance Norm._2::ofVector
    * @param sequence matrix of dimensions n x d
    * @return */
   public static TensorUnaryOperator of(TensorNorm tensorNorm, Tensor sequence) {
-    return new IdfCoordinates( //
+    return new InverseDistanceCoordinates( //
         InverseNorm.of(tensorNorm), //
         Objects.requireNonNull(sequence));
   }
@@ -29,7 +29,7 @@ public class IdfCoordinates implements TensorUnaryOperator {
   private final TensorUnaryOperator operator;
   private final Tensor sequence;
 
-  private IdfCoordinates(TensorUnaryOperator operator, Tensor sequence) {
+  private InverseDistanceCoordinates(TensorUnaryOperator operator, Tensor sequence) {
     this.operator = operator;
     this.sequence = sequence;
   }

@@ -5,16 +5,14 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorNorm;
+import ch.ethz.idsc.tensor.NumberQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.sca.Chop;
 
 public class InverseNorm implements TensorUnaryOperator {
-  private static final Chop CHOP = Chop._14;
-
   /** @param tensorMetric non-null */
   public static TensorUnaryOperator of(TensorNorm tensorNorm) {
     return new InverseNorm(Objects.requireNonNull(tensorNorm));
@@ -31,10 +29,10 @@ public class InverseNorm implements TensorUnaryOperator {
     Tensor weights = Tensors.reserve(tensor.length());
     int count = 0;
     for (Tensor p : tensor) {
-      Scalar distance = tensorNorm.norm(p);
-      if (CHOP.allZero(distance))
+      Scalar reciprocal = tensorNorm.norm(p).reciprocal();
+      if (!NumberQ.of(reciprocal))
         return UnitVector.of(tensor.length(), count);
-      weights.append(distance.reciprocal());
+      weights.append(reciprocal);
       ++count;
     }
     return NormalizeTotal.FUNCTION.apply(weights);

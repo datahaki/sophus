@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class LieIdfCoordinates implements Serializable {
+public class LieInverseDistanceCoordinates implements Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator equation;
   private final TensorUnaryOperator inv_norm;
@@ -19,7 +19,7 @@ public class LieIdfCoordinates implements Serializable {
    * @param equation
    * @param inv_norm
    * @throws Exception if any input parameter is null */
-  public LieIdfCoordinates(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_norm) {
+  public LieInverseDistanceCoordinates(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_norm) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.equation = Objects.requireNonNull(equation);
     this.inv_norm = Objects.requireNonNull(inv_norm);

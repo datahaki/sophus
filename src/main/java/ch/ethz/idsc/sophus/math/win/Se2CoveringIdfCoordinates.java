@@ -15,7 +15,7 @@ public class Se2CoveringIdfCoordinates {
       InverseNorm.of(Se2CoveringParametricDistance.INSTANCE);
 
   public static TensorUnaryOperator of(Tensor sequence) {
-    return new LieIdfCoordinates( //
+    return new LieInverseDistanceCoordinates( //
         Se2CoveringGroup.INSTANCE, //
         Se2CoveringBarycenter::equation, //
         INVERSE_NORM).of(sequence);
