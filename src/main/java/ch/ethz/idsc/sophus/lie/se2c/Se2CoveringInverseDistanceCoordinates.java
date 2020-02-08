@@ -1,19 +1,21 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.hs.r2.Se2CoveringParametricDistance;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBarycenter;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinates;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
  * Se2CoveringBiinvariantMean[sequence, weights] == mean */
-public class Se2CoveringIdfCoordinates {
+public class Se2CoveringInverseDistanceCoordinates {
   private static final TensorUnaryOperator INVERSE_NORM = //
       InverseNorm.of(Se2CoveringParametricDistance.INSTANCE);
 
+  /** @param sequence
+   * @return */
   public static TensorUnaryOperator of(Tensor sequence) {
     return new LieInverseDistanceCoordinates( //
         Se2CoveringGroup.INSTANCE, //

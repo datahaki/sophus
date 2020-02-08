@@ -19,8 +19,7 @@ import ch.ethz.idsc.tensor.red.Mean;
  * 
  * Reference:
  * "Affine generalized barycentric coordinates"
- * by S. Waldron
- * Jaen Journal on Approximation, 3(2):209-226, 2011
+ * by S. Waldron, Jaen Journal on Approximation, 3(2):209-226, 2011
  * 
  * Quote: "Among all generalized barycentric coordinates with respect to a
  * scattered set of points, Waldron suggests to consider those with minimal

@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * for sequences of length != 4 the nullspace of the matrix covers
  * possible weights (still subject to normalization) */
+// TODO most functionality here should be merged with other code
 public class Se2CoveringBarycenter implements TensorUnaryOperator {
   private static final Tensor RHS = UnitVector.of(4, 3);
 

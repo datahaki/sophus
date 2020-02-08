@@ -15,7 +15,11 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * Lagrange
  * C^infinity (except at points from input set)
  * 
- * in general, the coordinates may evaluate to be negative */
+ * in general, the coordinates may evaluate to be negative
+ * 
+ * Reference:
+ * "Inverse Distance Coordinates for Scattered Sets of Points"
+ * by Hakenberg, 2020 */
 public class InverseDistanceCoordinates implements TensorUnaryOperator {
   /** @param tensorNorm for instance Norm._2::ofVector
    * @param sequence matrix of dimensions n x d
