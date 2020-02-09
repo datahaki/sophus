@@ -17,7 +17,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
     TensorUnaryOperator tensorUnaryOperator = So3InverseDistanceCoordinates.INSTANCE.of(sequence);
     Tensor mean = So3Exponential.INSTANCE.exp(Tensors.vector(0.4, 0.2, 0.3));
     Tensor weights = tensorUnaryOperator.apply(mean);
-    Tensor defect = So3BiinvariantMeanEquation.INSTANCE.evaluate(sequence, weights, mean);
+    Tensor defect = So3BiinvariantMeanDefect.INSTANCE.evaluate(sequence, weights, mean);
     Chop._10.requireAllZero(defect);
   }
 }

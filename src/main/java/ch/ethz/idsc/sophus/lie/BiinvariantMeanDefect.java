@@ -6,22 +6,29 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Tensor;
 
-/** 0 == sum_i w_i * log (m^-1).x_i
+/** Any m from the group that satisfies the equation below is refers to as
+ * the biinvariant mean to the given sequence of points x_i and weights w_i.
  * 
- * Reference:
+ * <pre>
+ * 0 == sum_i w_i * log (m^-1).x_i
+ * </pre>
+ * 
+ * <p>For given parameters, the defect is refered to as the right hand side
+ * of the equation and may be non-zero.
+ * 
+ * <p>Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
- * by Xavier Pennec, Vincent Arsigny, 2012
+ * by Xavier Pennec, Vincent Arsigny, p.21, 2012
  * 
- * see also Eq. 1.11
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Hormann Sukumar */
-public class BiinvariantMeanEquation implements Serializable {
+ * by Hormann, Sukumar, Eq. 1.11, 2016 */
+public class BiinvariantMeanDefect implements Serializable {
   private final LieGroup lieGroup;
   private final LieExponential lieExponential;
 
   /** @param lieGroup
    * @param lieExponential */
-  public BiinvariantMeanEquation(LieGroup lieGroup, LieExponential lieExponential) {
+  public BiinvariantMeanDefect(LieGroup lieGroup, LieExponential lieExponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }

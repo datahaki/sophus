@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se2;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanEquation;
+import ch.ethz.idsc.sophus.lie.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -23,8 +23,8 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
 public class Se2BiinvariantMeanTest extends TestCase {
-  private static final BiinvariantMeanEquation BIINVARIANT_MEAN_EQUATION = //
-      new BiinvariantMeanEquation(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE);
+  private static final BiinvariantMeanDefect BIINVARIANT_MEAN_DEFECT = //
+      new BiinvariantMeanDefect(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE);
 
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
@@ -48,7 +48,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(sequence, weights);
-      BIINVARIANT_MEAN_EQUATION.evaluate(sequenceUnordered, weights, actual);
+      BIINVARIANT_MEAN_DEFECT.evaluate(sequenceUnordered, weights, actual);
       Tensor actualUnordered = se2BiinvariantMean.mean(sequenceUnordered, weights);
       // ---
       Chop._14.requireClose(expected, actual);
@@ -61,7 +61,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     Tensor weights = Tensors.vector(1);
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(p, weights);
-      BIINVARIANT_MEAN_EQUATION.evaluate(p, weights, actual);
+      BIINVARIANT_MEAN_DEFECT.evaluate(p, weights, actual);
       Chop._14.requireClose(p.get(0), actual);
     }
   }
@@ -75,7 +75,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(3, 3, 0), actual);
-      BIINVARIANT_MEAN_EQUATION.evaluate(sequence, weights, actual);
+      BIINVARIANT_MEAN_DEFECT.evaluate(sequence, weights, actual);
     }
   }
 
@@ -88,7 +88,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(0, 0, 0.6), actual);
-      BIINVARIANT_MEAN_EQUATION.evaluate(sequence, weights, actual);
+      BIINVARIANT_MEAN_DEFECT.evaluate(sequence, weights, actual);
     }
   }
 
@@ -144,7 +144,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
         Tensor result = se2BiinvariantMean.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
         Chop._12.requireClose(result, solution);
       }
-      BIINVARIANT_MEAN_EQUATION.evaluate(sequence, weights, solution);
+      BIINVARIANT_MEAN_DEFECT.evaluate(sequence, weights, solution);
     }
   }
 

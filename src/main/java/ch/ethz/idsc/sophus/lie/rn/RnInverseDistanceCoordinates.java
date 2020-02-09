@@ -9,12 +9,14 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
  * Se2CoveringBiinvariantMean[sequence, weights] == mean */
-public class RnInverseDistanceCoordinates {
-  private static final TensorUnaryOperator INVERSE_NORM = InverseNorm.of(RnVectorNorm.INSTANCE);
-
+public enum RnInverseDistanceCoordinates {
+  ;
   /** @param tensor of coordinates in Lie group
    * @return */
   public static TensorUnaryOperator of(Tensor tensor) {
-    return new LieInverseDistanceCoordinates(RnGroup.INSTANCE, t -> t, INVERSE_NORM).of(tensor);
+    return new LieInverseDistanceCoordinates( //
+        RnGroup.INSTANCE, //
+        RnExponential.INSTANCE::log, //
+        InverseNorm.of(RnVectorNorm.INSTANCE)).of(tensor);
   }
 }

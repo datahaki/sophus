@@ -1,4 +1,4 @@
-// code by ob /jph
+// code by ob, jph
 package ch.ethz.idsc.sophus.lie;
 
 import java.io.IOException;

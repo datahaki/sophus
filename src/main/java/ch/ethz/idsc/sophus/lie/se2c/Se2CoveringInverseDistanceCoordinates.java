@@ -20,7 +20,7 @@ public class Se2CoveringInverseDistanceCoordinates {
   public static TensorUnaryOperator of(Tensor tensor) {
     return new LieInverseDistanceCoordinates( //
         Se2CoveringGroup.INSTANCE, //
-        Se2CoveringBarycenter::equation, //
+        Se2CoveringBarycenter::equation, // FIXME this is probably not confirmed !?!
         INVERSE_NORM).of(tensor);
   }
 }
