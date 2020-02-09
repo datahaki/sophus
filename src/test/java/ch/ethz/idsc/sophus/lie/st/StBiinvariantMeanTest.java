@@ -16,6 +16,7 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));
     Tensor weights = Tensors.vector(1);
     Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(StBiinvariantMeanDefect.INSTANCE.evaluate(sequence, weights, actual));
     assertEquals(Tensors.vector(2, 2), actual);
   }
 
@@ -25,6 +26,7 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensors.of(p, q);
     Tensor weights = Tensors.vector(0.5, 0.5);
     Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(StBiinvariantMeanDefect.INSTANCE.evaluate(sequence, weights, actual));
     Tensor expected = Tensors.fromString("{1.414213562373095, 2.414213562373095}");
     Chop._12.requireClose(expected, actual);
   }
@@ -37,6 +39,7 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor mask = Tensors.vector(1, 2, 3);
     Tensor weights = mask.divide(Total.ofVector(mask));
     Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(StBiinvariantMeanDefect.INSTANCE.evaluate(sequence, weights, actual));
     Tensor expected = Tensors.vector(2.1822472719434427, 1.9243978173573888);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
@@ -55,6 +58,7 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor mask = Tensors.vector(1, 2, 3, -1);
     Tensor weights = mask.divide(Total.ofVector(mask));
     Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(StBiinvariantMeanDefect.INSTANCE.evaluate(sequence, weights, actual));
     Tensor expected = Tensors.vector(2.9301560515835217, 3.1983964535982485);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
@@ -73,6 +77,7 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor mask = Tensors.vector(1, 2, 3, -1);
     Tensor weights = mask.divide(Total.ofVector(mask));
     Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(StBiinvariantMeanDefect.INSTANCE.evaluate(sequence, weights, actual));
     Tensor expected = Tensors.fromString("{2.9301560515835217, {1.0099219737525793, -2.5153382244082483}}");
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {

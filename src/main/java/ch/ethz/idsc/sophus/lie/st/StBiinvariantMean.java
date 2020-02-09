@@ -2,12 +2,13 @@
 package ch.ethz.idsc.sophus.lie.st;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.sc.ScBiinvariantMean;
 import ch.ethz.idsc.sophus.math.Logc;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.red.Total;
 
 /** @param sequence of (lambda_i, t_i) points in ST(n) and weights non-negative and normalized
  * @return associated biinvariant mean which is the solution to the barycentric equation
@@ -29,10 +30,8 @@ public enum StBiinvariantMean implements BiinvariantMean {
     Tensor lambdas = sequence.get(Tensor.ALL, 0);
     // Reference 1, p.27 "weighted geometric mean of scalings"
     Scalar scmean = ScBiinvariantMean.INSTANCE.mean(lambdas.map(Tensors::of), weights).Get(0);
-    Tensor prod = weights.pmul(lambdas.divide(scmean).map(Logc.FUNCTION));
-    Tensor sum = prod.dot(sequence.get(Tensor.ALL, 1));
-    return Tensors.of( //
-        scmean, //
-        sum.divide(Total.ofVector(prod))); // "scalings reweighted arithmetic mean of translations"
+    Tensor alphaw = NormalizeTotal.FUNCTION.apply(weights.pmul(lambdas.divide(scmean).map(Logc.FUNCTION)));
+    Tensor trmean = RnBiinvariantMean.INSTANCE.mean(sequence.get(Tensor.ALL, 1), alphaw);
+    return Tensors.of(scmean, trmean); // "scalings reweighted arithmetic mean of translations"
   }
 }
