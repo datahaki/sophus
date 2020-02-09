@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -25,24 +26,25 @@ public class LieInverseDistanceCoordinates implements Serializable {
     this.inv_norm = Objects.requireNonNull(inv_norm);
   }
 
-  /** @param sequence of coordinates in Lie group
+  /** @param tensor of coordinates in Lie group
    * @return */
-  public TensorUnaryOperator of(Tensor sequence) {
-    return new Operator(Objects.requireNonNull(sequence));
+  public TensorUnaryOperator of(Tensor tensor) {
+    return new Anonymous(Objects.requireNonNull(tensor));
   }
 
-  private class Operator implements TensorUnaryOperator {
-    private final Tensor sequence;
+  private class Anonymous implements TensorUnaryOperator {
+    private final Tensor tensor;
 
-    public Operator(Tensor sequence) {
-      this.sequence = sequence;
+    public Anonymous(Tensor tensor) {
+      this.tensor = tensor;
     }
 
     @Override
     public Tensor apply(Tensor x) {
-      Tensor levers = Tensor.of(sequence.stream().map(lieGroup.element(x).inverse()::combine).map(equation));
-      Tensor nullSpace = NullSpaces.of(levers);
-      return NormalizeTotal.FUNCTION.apply(inv_norm.apply(levers).dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
+      Tensor levers = Tensor.of(tensor.stream().map(lieGroup.element(x).inverse()::combine).map(equation));
+      Tensor nullsp = LeftNullSpace.of(levers);
+      Tensor target = inv_norm.apply(levers);
+      return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullsp)).dot(nullsp));
     }
   }
 }

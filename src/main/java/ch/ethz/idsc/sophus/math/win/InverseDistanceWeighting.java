@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.math.win;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.NumberQ;
@@ -21,20 +22,22 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public class InverseDistanceWeighting implements Serializable {
   private final TensorMetric tensorMetric;
 
-  /** @param tensorMetric non-null */
+  /** @param tensorMetric non-null, for instance {@link RnMetric#INSTANCE} */
   public InverseDistanceWeighting(TensorMetric tensorMetric) {
     this.tensorMetric = Objects.requireNonNull(tensorMetric);
   }
 
+  /** @param tensor
+   * @return operator that maps points to the normalized vector of inverse distances */
   public TensorUnaryOperator of(Tensor tensor) {
-    return new Dual(tensor);
+    return new Anonymous(Objects.requireNonNull(tensor));
   }
 
-  private class Dual implements TensorUnaryOperator {
+  private class Anonymous implements TensorUnaryOperator {
     private final Tensor tensor;
 
-    public Dual(Tensor tensor) {
-      this.tensor = Objects.requireNonNull(tensor);
+    public Anonymous(Tensor tensor) {
+      this.tensor = tensor;
     }
 
     @Override

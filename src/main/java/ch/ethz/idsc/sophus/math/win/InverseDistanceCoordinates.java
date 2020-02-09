@@ -6,6 +6,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -41,7 +42,7 @@ public class InverseDistanceCoordinates implements TensorUnaryOperator {
   @Override
   public Tensor apply(Tensor x) {
     Tensor levers = Tensor.of(sequence.stream().map(x.negate()::add));
-    Tensor nullSpace = NullSpaces.of(levers);
+    Tensor nullSpace = LeftNullSpace.of(levers);
     Tensor target = operator.apply(levers);
     return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
   }

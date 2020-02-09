@@ -44,10 +44,13 @@ public enum So3Exponential implements LieExponential {
     return ID3.add(X1).add(X2.dot(X2));
   }
 
-  /** @param matrix with dimensions 3 x 3 that satisfies OrthogonalMatrixQ
-   * @return skew-symmetric 3 x 3 matrix X with exp X == matrix */
+  /** @param matrix orthogonal with dimensions 3 x 3
+   * @return skew-symmetric 3 x 3 matrix X with exp X == matrix
+   * @throws Exception if given matrix is not orthogonal or does not have dimensions 3 x 3
+   * @see OrthogonalMatrixQ */
   public static Tensor logMatrix(Tensor matrix) {
-    if (OrthogonalMatrixQ.of(matrix)) {
+    if (matrix.length() == 3 && //
+        OrthogonalMatrixQ.of(matrix)) {
       Scalar sinc = Sinc.FUNCTION.apply(theta(matrix));
       return matrix.subtract(Transpose.of(matrix)).divide(sinc.add(sinc));
     }

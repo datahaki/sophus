@@ -1,11 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import java.io.IOException;
+
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -15,15 +18,16 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se2CoveringInverseDistanceCoordinatesTest extends TestCase {
-  public void test4Exact() {
+  public void test4Exact() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     int n = 4;
     for (int count = 0; count < 10; ++count) {
       Tensor points = RandomVariate.of(distribution, n, 3);
-      TensorUnaryOperator inverseDistanceCoordinates = Se2CoveringInverseDistanceCoordinates.of(points);
+      TensorUnaryOperator tensorUnaryOperator = //
+          Serialization.copy(Se2CoveringInverseDistanceCoordinates.of(points));
       Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(points);
       Tensor xya = RandomVariate.of(distribution, 3);
-      Tensor w1 = inverseDistanceCoordinates.apply(xya);
+      Tensor w1 = tensorUnaryOperator.apply(xya);
       Tensor w2 = se2CoveringBarycenter.apply(xya);
       Chop._06.requireClose(w1, w2);
     }

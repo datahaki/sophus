@@ -1,16 +1,22 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.win;
 
+import java.io.IOException;
+
+import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -31,6 +37,19 @@ public class InverseDistanceWeightingTest extends TestCase {
         Chop._10.requireClose(q, UnitVector.of(n, index));
       }
     }
+  }
+
+  public void testQuantity() throws ClassNotFoundException, IOException {
+    Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
+    for (int d = 2; d < 6; ++d)
+      for (int n = d + 1; n < 10; ++n) {
+        Tensor points = RandomVariate.of(distribution, n, d);
+        Tensor x = RandomVariate.of(distribution, d);
+        TensorUnaryOperator tensorUnaryOperator = //
+            Serialization.copy(new InverseDistanceWeighting(RnMetric.INSTANCE).of(points));
+        Tensor weights = tensorUnaryOperator.apply(x);
+        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      }
   }
 
   public void testFailMetricNull() {
