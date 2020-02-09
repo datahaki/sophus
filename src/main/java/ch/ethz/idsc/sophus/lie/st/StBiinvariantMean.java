@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.sc.ScBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.sc.ScSkew;
+import ch.ethz.idsc.sophus.math.Logc;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -29,10 +29,10 @@ public enum StBiinvariantMean implements BiinvariantMean {
     Tensor lambdas = sequence.get(Tensor.ALL, 0);
     // Reference 1, p.27 "weighted geometric mean of scalings"
     Scalar scmean = ScBiinvariantMean.INSTANCE.mean(lambdas.map(Tensors::of), weights).Get(0);
-    Tensor prod = weights.pmul(lambdas.map(new ScSkew(scmean)));
+    Tensor prod = weights.pmul(lambdas.divide(scmean).map(Logc.FUNCTION));
     Tensor sum = prod.dot(sequence.get(Tensor.ALL, 1));
     return Tensors.of( //
         scmean, //
-        sum.divide(Total.ofVector(prod))); // "scalings reweighed arithmetic mean of translations"
+        sum.divide(Total.ofVector(prod))); // "scalings reweighted arithmetic mean of translations"
   }
 }

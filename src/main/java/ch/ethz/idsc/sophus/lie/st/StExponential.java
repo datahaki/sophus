@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.st;
 
 import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Logc;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -37,12 +38,10 @@ public enum StExponential implements LieExponential {
   public Tensor log(Tensor lambda_t) {
     Scalar lambda = Sign.requirePositive(lambda_t.Get(0));
     Tensor t = lambda_t.get(1);
-    if (lambda.equals(RealScalar.ONE))
-      return Tensors.of(RealScalar.ZERO, t);
     Scalar log_l = Log.FUNCTION.apply(lambda);
     return Tensors.of( //
         log_l, //
         /* there is a typo in Reference 1 (!) */
-        t.multiply(log_l.divide(lambda.subtract(RealScalar.ONE))));
+        t.multiply(Logc.FUNCTION.apply(lambda)));
   }
 }
