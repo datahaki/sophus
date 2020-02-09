@@ -28,7 +28,7 @@ public enum StBiinvariantMean implements BiinvariantMean {
   public Tensor mean(Tensor sequence, Tensor weights) {
     Tensor lambdas = sequence.get(Tensor.ALL, 0);
     // Reference 1, p.27 "weighted geometric mean of scalings"
-    Scalar scmean = ScBiinvariantMean.INSTANCE.mean(lambdas, weights);
+    Scalar scmean = ScBiinvariantMean.INSTANCE.mean(lambdas.map(Tensors::of), weights).Get(0);
     Tensor prod = weights.pmul(lambdas.map(new ScSkew(scmean)));
     Tensor sum = prod.dot(sequence.get(Tensor.ALL, 1));
     return Tensors.of( //

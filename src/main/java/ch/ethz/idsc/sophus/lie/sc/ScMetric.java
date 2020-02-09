@@ -4,13 +4,13 @@ package ch.ethz.idsc.sophus.lie.sc;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Abs;
+import ch.ethz.idsc.tensor.red.Norm;
 
 public enum ScMetric implements TensorMetric {
   INSTANCE;
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Abs.FUNCTION.apply(ScExponential.INSTANCE.log(q.divide(p.Get())));
+    return Norm._1.ofVector(ScExponential.INSTANCE.log(q.divide(p.Get(0))));
   }
 }
