@@ -1,9 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import java.util.Optional;
-
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanImplicit;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -15,10 +12,7 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class So3BiinvariantMeanEquationTest extends TestCase {
-  private static final BiinvariantMeanImplicit BIINVARIANT_MEAN_IMPLICIT = //
-      new BiinvariantMeanImplicit(So3Group.INSTANCE, So3Exponential.INSTANCE);
-
+public class So3BiinvariantMeanTest extends TestCase {
   public void testSimple() {
     Tensor sequence = Tensors.of( //
         So3Exponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
@@ -34,12 +28,11 @@ public class So3BiinvariantMeanEquationTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-      Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
-      Tensor mean = optional.get();
+      Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
       TensorUnaryOperator tensorUnaryOperator = So3InverseDistanceCoordinates.INSTANCE.of(sequence);
       Tensor w2 = tensorUnaryOperator.apply(mean);
-      Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
-      Chop._08.requireClose(mean, o2.get());
+      Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
+      Chop._08.requireClose(mean, o2);
     }
   }
 
@@ -48,11 +41,10 @@ public class So3BiinvariantMeanEquationTest extends TestCase {
     int n = 4;
     Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-    Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
-    Tensor mean = optional.get();
+    Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
     TensorUnaryOperator tensorUnaryOperator = So3InverseDistanceCoordinates.INSTANCE.of(sequence);
     Tensor w2 = tensorUnaryOperator.apply(mean);
-    Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
+    Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
     Chop._08.requireClose(mean, o2.get());
     Chop._08.requireClose(weights, w2);
   }

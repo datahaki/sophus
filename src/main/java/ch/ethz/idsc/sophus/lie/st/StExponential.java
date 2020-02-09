@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * by Xavier Pennec, Vincent Arsigny, pp. 25-28, 2012
  * 
  * Reference 2:
- * Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations.
+ * "Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations."
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, pp. 27-31, 2006 */
 public enum StExponential implements LieExponential {
   INSTANCE;
