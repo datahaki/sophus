@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
  * Example: if the points are from R^n the center would simply be the mean */
 public enum GeodesicMean {
   ;
-  /** @param geodesicInterface
+  /** @param binaryAverage
    * @return geodesic center operator with Dirichlet/constant weights */
   public static TensorUnaryOperator of(BinaryAverage binaryAverage) {
     return GeodesicCenter.of(binaryAverage, DirichletWindow.FUNCTION);

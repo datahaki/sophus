@@ -17,7 +17,7 @@ public class LieInverseDistanceCoordinates implements Serializable {
   private final TensorUnaryOperator inv_norm;
 
   /** @param lieGroup
-   * @param equation
+   * @param equation mapping from group to vector space
    * @param inv_norm
    * @throws Exception if any input parameter is null */
   public LieInverseDistanceCoordinates(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_norm) {

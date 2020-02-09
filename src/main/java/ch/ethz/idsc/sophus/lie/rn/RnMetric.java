@@ -6,7 +6,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
 
-/** metric for vectors */
+/** Euclidean vector metric */
 public enum RnMetric implements TensorMetric {
   INSTANCE;
 

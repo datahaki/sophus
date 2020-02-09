@@ -5,18 +5,16 @@ import java.util.function.BiFunction;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.qty.Quantity;
 
 /** BiFunction that takes as input 1) a non-zero vector "dif" and 2) the 2-norm of vector "dif".
  * The function returns a scaled version of "dif".
  * 
- * <p>Hint: only DISCRETE_HARMONIC allows {@link Quantity} as coordinates
+ * References:
+ * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
+ * by Kai Hormann, N. Sukumar, 2016
  * 
- * <p>Reference:
- * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
- * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
- * 
- * "Interpolation via Barycentric Coordinates" by Pierre Alliez, 2017 */
+ * "Interpolation via Barycentric Coordinates"
+ * by Pierre Alliez, 2017 */
 public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
   /** C^infty, for convex polygons
    * 

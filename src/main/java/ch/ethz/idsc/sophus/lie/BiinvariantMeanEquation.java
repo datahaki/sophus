@@ -26,10 +26,10 @@ public class BiinvariantMeanEquation implements Serializable {
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }
 
-  /** @param sequence
+  /** @param sequence of elements in Lie group
    * @param weights
    * @param mean
-   * @return zero vector of the lie algebra */
+   * @return vector of the lie algebra, zero if given mean is the weighted mean of the given sequence */
   public Tensor evaluate(Tensor sequence, Tensor weights, Tensor mean) {
     return weights.dot(Tensor.of(sequence.stream() //
         .map(lieGroup.element(mean).inverse()::combine) //
