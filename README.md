@@ -91,6 +91,9 @@ by Jan Hakenberg,
 * *Curve Decimation in SE(2) and SE(3)*
 by Jan Hakenberg,
 [viXra:1909.0174](http://vixra.org/abs/1909.0174)
+* *Inverse Distance Coordinates for Scattered Sets of Points*
+by Jan Hakenberg,
+[viXra:2002.0129](http://vixra.org/abs/2002.0129)
 
 ## References
 
@@ -99,6 +102,7 @@ by Jan Hakenberg,
 * *Lie Groups for 2D and 3D Transformations* by Ethan Eade
 * *Manifold-valued subdivision schemes based on geodesic inductive averaging* by Nira Dyn, Nir Sharon
 * *Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes* by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun
+* *Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics* by Kai Hormann, N. Sukumar 
 
 ---
 

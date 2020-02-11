@@ -14,7 +14,7 @@ public enum So3BiinvariantMean implements BiinvariantMean {
   private static final BiinvariantMeanImplicit BIINVARIANT_MEAN_IMPLICIT = //
       new BiinvariantMeanImplicit(So3Group.INSTANCE, So3Exponential.INSTANCE);
 
-  @Override
+  @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     return BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights).get();
   }

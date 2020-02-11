@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * Se2CoveringBiinvariantMean[sequence, weights] == mean */
 public enum RnInverseDistanceCoordinates {
   ;
-  /** @param tensor of coordinates in Lie group
+  /** @param tensor of coordinates in R^n
    * @return */
   public static TensorUnaryOperator of(Tensor tensor) {
     return new LieInverseDistanceCoordinates( //

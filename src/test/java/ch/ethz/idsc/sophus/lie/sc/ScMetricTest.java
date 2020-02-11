@@ -5,7 +5,6 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.lie.Permutations;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -18,11 +17,10 @@ public class ScMetricTest extends TestCase {
     Sign.requirePositive(pq);
     Scalar qp = ScMetric.INSTANCE.distance(q, p);
     Chop._10.requireClose(pq, qp);
-    Tensor[] array = new Tensor[] { p, q, r };
-    for (Tensor perm : Permutations.of(Range.of(0, 3))) {
-      Tensor p0 = array[perm.Get(0).number().intValue()];
-      Tensor p1 = array[perm.Get(1).number().intValue()];
-      Tensor p2 = array[perm.Get(2).number().intValue()];
+    for (Tensor perm : Permutations.of(Tensors.of(p, q, r))) {
+      Tensor p0 = perm.get(0);
+      Tensor p1 = perm.get(1);
+      Tensor p2 = perm.get(2);
       Scalar d01 = ScMetric.INSTANCE.distance(p0, p1);
       Scalar d12 = ScMetric.INSTANCE.distance(p1, p2);
       Scalar d02 = ScMetric.INSTANCE.distance(p0, p2);
