@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 /** CatmullRom denotes the function that is defined by control points over a sequence of knots.
  * 
  * Reference: "Freeform Curves on Spheres of Arbitrary Dimension"
- * by Scott Schaefer and Ron Goldman in Proceedings of Pacific Graphics 2005, pages 160-162
+ * by Scott Schaefer and Ron Goldman, Proceedings of Pacific Graphics 2005, pages 160-162
  * http://faculty.cs.tamu.edu/schaefer/research/sphereCurves.pdf */
 public class GeodesicCatmullRom implements ScalarTensorFunction {
   /** @param binaryAverage non null
