@@ -11,8 +11,12 @@ import ch.ethz.idsc.tensor.red.ArgMax;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-/** Buss and Fillmore [4] prove for data on spheres, the step size
- * of 1 is sufficient for convergence. */
+/** Buss and Fillmore prove for data on spheres S^2, the step size of 1 for
+ * weights w_i == 1/N is sufficient for convergence to the mean.
+ * 
+ * Reference:
+ * "Spherical averages and applications to spherical splines and interpolation"
+ * by S. R. Buss, J. P. Fillmore, 2001 */
 public enum SnMean implements BiinvariantMean, MeanDefect {
   INSTANCE;
 

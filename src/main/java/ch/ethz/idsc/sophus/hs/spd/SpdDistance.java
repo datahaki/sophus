@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -18,8 +19,8 @@ public enum SpdDistance implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    SpdSqrt spdSqrt = new SpdSqrt(p);
-    Tensor pn12 = spdSqrt.inverse();
+    MatrixSqrt simSqrt = MatrixSqrt.ofSymmetric(p);
+    Tensor pn12 = simSqrt.inverse();
     return n(Symmetrize.of(pn12.dot(q).dot(pn12)));
   }
 

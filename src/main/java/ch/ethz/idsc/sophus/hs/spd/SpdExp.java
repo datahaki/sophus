@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
@@ -25,9 +26,9 @@ public class SpdExp implements LieExponential {
   private final Tensor pn;
 
   public SpdExp(Tensor p) {
-    SpdSqrt spdSqrt = new SpdSqrt(p);
-    pp = spdSqrt.forward();
-    pn = spdSqrt.inverse();
+    MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
+    pp = matrixSqrt.forward();
+    pn = matrixSqrt.inverse();
   }
 
   @Override // from LieExponential
