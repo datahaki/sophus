@@ -49,7 +49,7 @@ public class BiinvariantMeanImplicitTest extends TestCase {
   // Tests form more groups however i think that e.g. HE1 could cause problems due to tensor of tensor structure.
 
   public void testSome() throws ClassNotFoundException, IOException {
-    Distribution distribution = NormalDistribution.of(0, .2);
+    Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;
     for (int length = 2; length < 8; ++length) {
       Tensor sequence = RandomVariate.of(UniformDistribution.unit(), length, 3);

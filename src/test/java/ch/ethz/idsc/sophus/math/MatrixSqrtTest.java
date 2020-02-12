@@ -40,4 +40,13 @@ public class MatrixSqrtTest extends TestCase {
       // ---
     }
   }
+
+  public void testNullFail() {
+    try {
+      MatrixSqrt.ofSymmetric(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

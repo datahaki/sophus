@@ -28,12 +28,8 @@ public enum SpdMean implements BiinvariantMean, MeanDefect {
     throw TensorRuntimeException.of(sequence, weights);
   }
 
-  /** @param sequence
-   * @param weights
-   * @param candidate
-   * @return matrix in Sim */
-  @Override
-  public Tensor defect(Tensor sequence, Tensor weights, Tensor candidate) {
-    return weights.dot(Tensor.of(sequence.stream().map(new SpdExp(candidate)::log)));
+  @Override // from MeanDefect
+  public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
+    return weights.dot(Tensor.of(sequence.stream().map(new SpdExp(mean)::log)));
   }
 }

@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** References:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
- * Edited by Pennec, Sommer, Fletcher
+ * Edited by Xavier Pennec, Sommer, Fletcher
  * p. 86 eqs 3.12 and 3.13, also
  * p. 89
  * 

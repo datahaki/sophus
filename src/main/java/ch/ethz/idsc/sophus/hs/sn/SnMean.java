@@ -39,12 +39,8 @@ public enum SnMean implements BiinvariantMean, MeanDefect {
     throw TensorRuntimeException.of(sequence, weights);
   }
 
-  /** @param sequence
-   * @param weights vector affine
-   * @param candidate
-   * @return */
   @Override
-  public Tensor defect(Tensor sequence, Tensor weights, Tensor candidate) {
-    return weights.dot(Tensor.of(sequence.stream().map(new SnExp(candidate)::log)));
+  public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
+    return weights.dot(Tensor.of(sequence.stream().map(new SnExp(mean)::log)));
   }
 }

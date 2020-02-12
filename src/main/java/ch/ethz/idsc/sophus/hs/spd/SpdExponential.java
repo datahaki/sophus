@@ -17,9 +17,14 @@ import ch.ethz.idsc.tensor.sca.Log;
  * Log: Sym+(n) -> sim (n)
  * </pre>
  * 
+ * <p>
+ * Exp is equivalent to MatrixExp
+ * Log is equivalent to MatrixLog
+ * 
+ * <p>
  * Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
- * Edited by Pennec, Sommer, Fletcher, p. 79
+ * Edited by Xavier Pennec, Sommer, Fletcher, p. 79
  * 
  * @see MatrixExp
  * @see MatrixLog

@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -25,6 +26,7 @@ public class TestHelperTest extends TestCase {
       for (int count = 1; count < 10; ++count) {
         Tensor g = TestHelper.generateSpd(n);
         _check(g, Serialization.copy(MatrixSqrt.ofSymmetric(g)));
+        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(g));
       }
   }
 

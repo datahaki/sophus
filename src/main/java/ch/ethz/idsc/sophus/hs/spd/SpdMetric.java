@@ -13,14 +13,13 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
- * Edited by Pennec, Sommer, Fletcher, p. 82 */
-public enum SpdDistance implements TensorMetric {
+ * Edited by Xavier Pennec, Sommer, Fletcher, p. 82 */
+public enum SpdMetric implements TensorMetric {
   INSTANCE;
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    MatrixSqrt simSqrt = MatrixSqrt.ofSymmetric(p);
-    Tensor pn12 = simSqrt.inverse();
+    Tensor pn12 = MatrixSqrt.ofSymmetric(p).inverse();
     return n(Symmetrize.of(pn12.dot(q).dot(pn12)));
   }
 

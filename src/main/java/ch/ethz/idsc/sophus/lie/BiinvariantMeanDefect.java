@@ -33,14 +33,10 @@ public class BiinvariantMeanDefect implements MeanDefect, Serializable {
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }
 
-  /** @param sequence of elements in Lie group
-   * @param weights
-   * @param candidate
-   * @return vector of the lie algebra, zero if given mean is the weighted mean of the given sequence */
-  @Override
-  public Tensor defect(Tensor sequence, Tensor weights, Tensor candidate) {
+  @Override // from MeanDefect
+  public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
     return weights.dot(Tensor.of(sequence.stream() //
-        .map(lieGroup.element(candidate).inverse()::combine) //
+        .map(lieGroup.element(mean).inverse()::combine) //
         .map(lieExponential::log)));
   }
 }
