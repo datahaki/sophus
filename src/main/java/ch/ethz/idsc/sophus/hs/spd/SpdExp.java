@@ -30,12 +30,12 @@ public class SpdExp implements LieExponential {
     pn = spdSqrt.inverse();
   }
 
-  @Override
+  @Override // from LieExponential
   public Tensor exp(Tensor w) {
     return pp.dot(SpdExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
   }
 
-  @Override
+  @Override // from LieExponential
   public Tensor log(Tensor q) {
     return pp.dot(SpdExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp);
   }
