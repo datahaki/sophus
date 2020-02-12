@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -14,6 +15,16 @@ public class MatrixSqrtTest extends TestCase {
     Chop._08.requireClose(Inverse.of(matrixSqrt.forward()), matrixSqrt.inverse());
     Chop._08.requireClose(matrixSqrt.forward().dot(matrixSqrt.forward()), g);
     Chop._08.requireClose(matrixSqrt.inverse().dot(matrixSqrt.inverse()), Inverse.of(g));
+  }
+
+  public void testIdentityMatrix() {
+    for (int n = 1; n < 6; ++n) {
+      Tensor matrix = IdentityMatrix.of(n);
+      MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(matrix);
+      _check(matrix, matrixSqrt);
+      Chop._12.requireClose(matrixSqrt.forward(), IdentityMatrix.of(n));
+      Chop._12.requireClose(matrixSqrt.inverse(), IdentityMatrix.of(n));
+    }
   }
 
   public void testNegativeDiagonal() {

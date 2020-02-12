@@ -23,8 +23,7 @@ public class Se2CoveringBarycenter implements TensorUnaryOperator {
   private static final Tensor RHS = UnitVector.of(4, 3);
 
   public static Tensor equation(Tensor xya) {
-    return Se2Skew.of(xya, RealScalar.ONE).rhs() //
-        .append(xya.Get(2)); // biinvariant mean of angles
+    return Se2Skew.of(xya, RealScalar.ONE).rhs().append(xya.Get(2)); // append biinvariant mean of angles
   }
 
   // ---

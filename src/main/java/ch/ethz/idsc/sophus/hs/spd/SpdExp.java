@@ -8,7 +8,9 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 
-/** SPD == Symmetric positive definite == Sym+
+/** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
+ * 
+ * SPD == Symmetric positive definite == Sym+
  * 
  * <pre>
  * Exp: sim (n) -> Sym+(n)
@@ -20,11 +22,14 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * Edited by Pennec, Sommer, Fletcher, p. 79
  * 
  * @see MatrixExp
- * @see MatrixLog */
+ * @see MatrixLog
+ * @see SpdExponential */
 public class SpdExp implements LieExponential {
   private final Tensor pp;
   private final Tensor pn;
 
+  /** @param p symmetric
+   * @throws Exception if p is not symmetric */
   public SpdExp(Tensor p) {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
     pp = matrixSqrt.forward();

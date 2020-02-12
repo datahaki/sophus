@@ -24,11 +24,7 @@ public class TestHelperTest extends TestCase {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
         Tensor g = TestHelper.generateSpd(n);
-        Tensor sqrt = TestHelper.sqrt(g);
-        Chop._08.requireClose(sqrt.dot(sqrt), g);
-        MatrixSqrt matrixSqrt = Serialization.copy(MatrixSqrt.ofSymmetric(g));
-        Chop._08.requireClose(matrixSqrt.forward(), sqrt);
-        _check(g, matrixSqrt);
+        _check(g, Serialization.copy(MatrixSqrt.ofSymmetric(g)));
       }
   }
 

@@ -3,6 +3,8 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -29,6 +31,15 @@ public class SpdExpTest extends TestCase {
       Tensor ph = spdExpP.exp(pqw.multiply(RationalScalar.HALF));
       Tensor qh = spdExpQ.exp(qpw.multiply(RationalScalar.HALF));
       Chop._08.requireClose(ph, qh);
+    }
+  }
+
+  public void testNonSymmetricFail() {
+    try {
+      new SpdExp(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3));
+      fail();
+    } catch (Exception exception) {
+      // ---
     }
   }
 

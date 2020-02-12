@@ -47,7 +47,9 @@ public class Se2Skew {
   }
 
   public Se2Skew add(Se2Skew se2Skew) {
-    return new Se2Skew(lhs.add(se2Skew.lhs), rhs.add(se2Skew.rhs));
+    return new Se2Skew( //
+        lhs.add(se2Skew.lhs), //
+        rhs.add(se2Skew.rhs));
   }
 
   /** @return vector of length 2 */

@@ -22,25 +22,24 @@ import ch.ethz.idsc.tensor.sca.Log;
  * Edited by Pennec, Sommer, Fletcher, p. 79
  * 
  * @see MatrixExp
- * @see MatrixLog */
+ * @see MatrixLog
+ * @see SpdExp */
 public enum SpdExponential implements LieExponential {
   INSTANCE;
 
   @Override // from LieExponential
   public Tensor exp(Tensor x) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(x);
-    Tensor a = eigensystem.vectors();
-    // return LinearSolve.of(a, eigensystem.values().map(Exp.FUNCTION).pmul(a));
-    Tensor ainv = Transpose.of(a);
-    return ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(a));
+    Tensor avec = eigensystem.vectors();
+    Tensor ainv = Transpose.of(avec);
+    return ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(avec));
   }
 
   @Override // from LieExponential
   public Tensor log(Tensor g) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
-    Tensor a = eigensystem.vectors();
-    // return LinearSolve.of(a, eigensystem.values().map(Log.FUNCTION).pmul(a));
-    Tensor ainv = Transpose.of(a);
-    return ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(a));
+    Tensor avec = eigensystem.vectors();
+    Tensor ainv = Transpose.of(avec);
+    return ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(avec));
   }
 }
