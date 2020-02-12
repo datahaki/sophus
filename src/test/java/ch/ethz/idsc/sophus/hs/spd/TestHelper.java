@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 /* package */ enum TestHelper {
   ;
   static Tensor generateSim(int n) {
-    Distribution distribution = UniformDistribution.of(-2, 2);
+    Distribution distribution = UniformDistribution.of(-1, 1);
     Tensor matrix = RandomVariate.of(distribution, n, n);
     return Symmetrize.of(matrix);
   }

@@ -18,7 +18,7 @@ public class So3BiinvariantMeanTest extends TestCase {
         So3Exponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         So3Exponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
         So3Exponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = So3BiinvariantMeanDefect.INSTANCE.evaluate( //
+    Tensor log = So3BiinvariantMeanDefect.INSTANCE.defect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), So3Exponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)));
     Chop._10.requireAllZero(log);
   }

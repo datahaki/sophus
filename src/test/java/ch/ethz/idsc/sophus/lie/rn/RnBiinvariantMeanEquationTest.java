@@ -24,7 +24,7 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
         RnExponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = RnBiinvariantMeanDefect.INSTANCE.evaluate( //
+    Tensor log = RnBiinvariantMeanDefect.INSTANCE.defect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)));
     Chop._10.requireAllZero(log);
   }

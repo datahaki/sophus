@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
- * Edited by Pennec, Sommer, Fletcher, p. 80 */
+ * Edited by Xavier Pennec, Sommer, P. Thomas Fletcher, p. 80 */
 public class SpdSqrt implements Serializable {
   private final Tensor forward;
   private final Tensor inverse;
@@ -28,10 +28,12 @@ public class SpdSqrt implements Serializable {
     inverse = ainv.dot(sqrt.map(Scalar::reciprocal).pmul(avec));
   }
 
+  /** @return */
   public Tensor forward() {
     return forward;
   }
 
+  /** @return inverse matrix to forward() */
   public Tensor inverse() {
     return inverse;
   }

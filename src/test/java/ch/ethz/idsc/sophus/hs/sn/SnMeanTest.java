@@ -26,7 +26,7 @@ public class SnMeanTest extends TestCase {
       Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
       Tensor weights = SnInverseDistanceCoordinates.of(sequence, mean);
       Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
-      Tensor evaluate = SnMean.defect(sequence, weights, mean);
+      Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);
       Chop._12.requireAllZero(evaluate);
       Tensor point = SnMean.INSTANCE.mean(sequence, weights);
       Chop._12.requireClose(mean, point);

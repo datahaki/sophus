@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Hormann, Sukumar, Eq. 1.11, 2016 */
-public class BiinvariantMeanDefect implements Serializable {
+public class BiinvariantMeanDefect implements MeanDefect, Serializable {
   private final LieGroup lieGroup;
   private final LieExponential lieExponential;
 
@@ -35,11 +35,12 @@ public class BiinvariantMeanDefect implements Serializable {
 
   /** @param sequence of elements in Lie group
    * @param weights
-   * @param mean
+   * @param candidate
    * @return vector of the lie algebra, zero if given mean is the weighted mean of the given sequence */
-  public Tensor evaluate(Tensor sequence, Tensor weights, Tensor mean) {
+  @Override
+  public Tensor defect(Tensor sequence, Tensor weights, Tensor candidate) {
     return weights.dot(Tensor.of(sequence.stream() //
-        .map(lieGroup.element(mean).inverse()::combine) //
+        .map(lieGroup.element(candidate).inverse()::combine) //
         .map(lieExponential::log)));
   }
 }

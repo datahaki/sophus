@@ -25,16 +25,16 @@ public class BiinvariantMeanImplicit implements Serializable {
   private static final int MAX_ITERATIONS = 100;
   private static final Chop CHOP = Chop._12;
   // ---
-  private final BiinvariantMeanDefect biinvariantMeanDefect;
   private final LieGroup lieGroup;
   private final LieExponential lieExponential;
+  private final MeanDefect meanDefect;
 
   /** @param lieGroup
    * @param lieExponential */
   public BiinvariantMeanImplicit(LieGroup lieGroup, LieExponential lieExponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.lieExponential = Objects.requireNonNull(lieExponential);
-    biinvariantMeanDefect = new BiinvariantMeanDefect(lieGroup, lieExponential);
+    meanDefect = new BiinvariantMeanDefect(lieGroup, lieExponential);
   }
 
   /** @param sequence
@@ -42,7 +42,7 @@ public class BiinvariantMeanImplicit implements Serializable {
    * @return approximate biinvariant mean */
   public Optional<Tensor> apply(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
-    Tensor mean = sequence.get(ArgMax.of(weights));
+    Tensor mean = sequence.get(ArgMax.of(weights)); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
       Tensor next = update(sequence, weights, mean);
       if (CHOP.allZero(lieExponential.log(lieGroup.element(next).inverse().combine(mean))))
@@ -54,6 +54,6 @@ public class BiinvariantMeanImplicit implements Serializable {
 
   private Tensor update(Tensor sequence, Tensor weights, Tensor mean) {
     return lieGroup.element(mean).combine( //
-        lieExponential.exp(biinvariantMeanDefect.evaluate(sequence, weights, mean)));
+        lieExponential.exp(meanDefect.defect(sequence, weights, mean)));
   }
 }
