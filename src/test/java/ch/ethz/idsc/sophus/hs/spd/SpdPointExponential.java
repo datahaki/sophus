@@ -25,9 +25,9 @@ public enum SpdPointExponential {
    * @param w
    * @return */
   public static Tensor exp(Tensor p, Tensor w) {
-    SpdSqrt spdSplit = new SpdSqrt(p);
-    Tensor pp = spdSplit.forward();
-    Tensor pn = spdSplit.inverse();
+    SpdSqrt spdSqrt = new SpdSqrt(p);
+    Tensor pp = spdSqrt.forward();
+    Tensor pn = spdSqrt.inverse();
     return pp.dot(SpdExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
   }
 
@@ -35,9 +35,9 @@ public enum SpdPointExponential {
    * @param q
    * @return */
   public static Tensor log(Tensor p, Tensor q) {
-    SpdSqrt spdSplit = new SpdSqrt(p);
-    Tensor pp = spdSplit.forward();
-    Tensor pn = spdSplit.inverse();
+    SpdSqrt spdSqrt = new SpdSqrt(p);
+    Tensor pp = spdSqrt.forward();
+    Tensor pn = spdSqrt.inverse();
     return pp.dot(SpdExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp);
   }
 }

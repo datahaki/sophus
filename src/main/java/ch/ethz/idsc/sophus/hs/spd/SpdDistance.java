@@ -18,8 +18,8 @@ public enum SpdDistance implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    SpdSqrt spdSplit = new SpdSqrt(p);
-    Tensor pn12 = spdSplit.inverse();
+    SpdSqrt spdSqrt = new SpdSqrt(p);
+    Tensor pn12 = spdSqrt.inverse();
     return n(Symmetrize.of(pn12.dot(q).dot(pn12)));
   }
 
