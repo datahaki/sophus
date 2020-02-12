@@ -7,7 +7,8 @@ import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 
-/** Hint: non-linear, non conform with {@link SnGeodesic} */
+/** Hint: non-linear, non conform with {@link SnGeodesic}
+ * Do not use! */
 public enum SnGlobalBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 

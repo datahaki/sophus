@@ -11,11 +11,11 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum So3BiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
-  private static final BiinvariantMeanImplicit BIINVARIANT_MEAN_IMPLICIT = //
+  private static final BiinvariantMeanImplicit LIE_BIINVARIANT_MEAN_IMPLICIT = //
       new BiinvariantMeanImplicit(So3Group.INSTANCE, So3Exponential.INSTANCE);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights).get();
+    return LIE_BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights).get();
   }
 }

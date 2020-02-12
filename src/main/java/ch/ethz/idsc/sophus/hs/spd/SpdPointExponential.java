@@ -21,7 +21,9 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see MatrixLog */
 public enum SpdPointExponential {
   ;
-  // ---
+  /** @param p
+   * @param w
+   * @return */
   public static Tensor exp(Tensor p, Tensor w) {
     SpdSqrt spdSplit = new SpdSqrt(p);
     Tensor pp = spdSplit.forward();
@@ -29,6 +31,9 @@ public enum SpdPointExponential {
     return pp.dot(SpdExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
   }
 
+  /** @param p
+   * @param q
+   * @return */
   public static Tensor log(Tensor p, Tensor q) {
     SpdSqrt spdSplit = new SpdSqrt(p);
     Tensor pp = spdSplit.forward();

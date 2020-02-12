@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** implementation is based on the function "strans" taken from
  * "Freeform Curves on Spheres of Arbitrary Dimension"
- * by Scott Schaefer and Ron Goldman, page 5 */
+ * by Scott Schaefer and Ron Goldman, 2005, page 5 */
 public class SnExp implements LieExponential {
   private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Norm._2);
   // ---

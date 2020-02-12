@@ -16,7 +16,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Interpolation via Barycentric Coordinates"
  * by Pierre Alliez, 2017 */
 public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
-  /** C^infty, for convex polygons
+  /** C^infty, non-negative, for convex polygons
+   * not well-defined for non-convex polygons
    * 
    * BLTD, Section 3.1
    * 
@@ -51,7 +52,8 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
       return dif.divide(nrm);
     }
   },
-  /** C^infty, for convex polygons
+  /** C^infty, possibly negative, for convex polygons
+   * not well-defined for non-convex polygons
    * 
    * BLTD, Section 3.2
    * 

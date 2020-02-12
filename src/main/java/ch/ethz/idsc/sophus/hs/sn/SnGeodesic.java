@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.ArcCos;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 /** geodesic on n-dimensional sphere embedded in R^(n+1)
@@ -26,9 +25,9 @@ public enum SnGeodesic implements GeodesicInterface {
 
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
-  @Override // from TensorGeodesic
+  @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Scalar a = ArcCos.FUNCTION.apply((Scalar) p.dot(q)); // complex number if |p.q| > 1
+    Scalar a = SnMetric.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();
     if (Pi.VALUE.equals(a))
