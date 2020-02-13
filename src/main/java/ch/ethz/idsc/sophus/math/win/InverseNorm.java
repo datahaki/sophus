@@ -18,6 +18,7 @@ public class InverseNorm implements TensorUnaryOperator {
     return new InverseNorm(Objects.requireNonNull(tensorNorm));
   }
 
+  /***************************************************/
   private final TensorNorm tensorNorm;
 
   private InverseNorm(TensorNorm tensorNorm) {

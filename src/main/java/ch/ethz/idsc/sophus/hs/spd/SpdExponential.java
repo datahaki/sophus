@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
@@ -37,7 +38,7 @@ public enum SpdExponential implements LieExponential {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(x);
     Tensor avec = eigensystem.vectors();
     Tensor ainv = Transpose.of(avec);
-    return ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(avec));
+    return Symmetrize.of(ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(avec)));
   }
 
   @Override // from LieExponential
@@ -45,6 +46,6 @@ public enum SpdExponential implements LieExponential {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
     Tensor avec = eigensystem.vectors();
     Tensor ainv = Transpose.of(avec);
-    return ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(avec));
+    return Symmetrize.of(ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(avec)));
   }
 }

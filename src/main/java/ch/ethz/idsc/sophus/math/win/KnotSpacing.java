@@ -45,7 +45,7 @@ public class KnotSpacing implements TensorUnaryOperator {
     return centripetal(tensorMetric, RealScalar.of(exponent));
   }
 
-  // ---
+  /***************************************************/
   private final TensorMetric tensorMetric;
   private final ScalarUnaryOperator distanceFunction;
 

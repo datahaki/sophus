@@ -16,7 +16,7 @@ public class UniformWindowSampler extends BaseWindowSampler {
     return MemoFunction.wrap(new UniformWindowSampler(windowFunction));
   }
 
-  // ---
+  /***************************************************/
   private UniformWindowSampler(ScalarUnaryOperator windowFunction) {
     super(windowFunction);
   }

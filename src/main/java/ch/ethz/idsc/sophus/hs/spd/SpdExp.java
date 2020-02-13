@@ -38,11 +38,11 @@ public class SpdExp implements LieExponential {
 
   @Override // from LieExponential
   public Tensor exp(Tensor w) {
-    return pp.dot(SpdExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
+    return Symmetrize.of(pp.dot(SpdExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp));
   }
 
   @Override // from LieExponential
   public Tensor log(Tensor q) {
-    return pp.dot(SpdExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp);
+    return Symmetrize.of(pp.dot(SpdExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp));
   }
 }

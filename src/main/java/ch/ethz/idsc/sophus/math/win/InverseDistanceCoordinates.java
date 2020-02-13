@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * Reference:
  * "Inverse Distance Coordinates for Scattered Sets of Points"
- * by Hakenberg, 2020 */
+ * by Hakenberg, 2020, http://vixra.org/abs/2002.0129 */
 public class InverseDistanceCoordinates implements TensorUnaryOperator {
   /** @param tensorNorm for instance Norm._2::ofVector
    * @param sequence matrix of dimensions n x d
@@ -31,6 +31,7 @@ public class InverseDistanceCoordinates implements TensorUnaryOperator {
         Objects.requireNonNull(sequence));
   }
 
+  /***************************************************/
   private final TensorUnaryOperator operator;
   private final Tensor sequence;
 
