@@ -18,7 +18,10 @@ import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Hypot;
 
-/** Reference:
+/** References:
+ * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
+ * by Hormann, Sukumar, 2016
+ * 
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
  * 

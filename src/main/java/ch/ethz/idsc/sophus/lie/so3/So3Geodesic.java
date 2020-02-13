@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 public enum So3Geodesic implements GeodesicInterface {
   INSTANCE;
 
-  @Override
+  @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor log = So3Exponential.INSTANCE.log(LinearSolve.of(p, q));
     return scalar -> p.dot(So3Exponential.INSTANCE.exp(log.multiply(scalar)));
