@@ -17,6 +17,6 @@ public enum RnInverseDistanceCoordinates {
     return new LieInverseDistanceCoordinates( //
         RnGroup.INSTANCE, //
         RnExponential.INSTANCE::log, //
-        InverseNorm.of(RnVectorNorm.INSTANCE)).of(tensor);
+        InverseNorm.of(RnNorm.INSTANCE)).of(tensor);
   }
 }

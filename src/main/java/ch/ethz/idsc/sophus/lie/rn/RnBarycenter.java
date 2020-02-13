@@ -11,6 +11,6 @@ public enum RnBarycenter {
   /** @param sequence
    * @return */
   public static TensorUnaryOperator of(Tensor sequence) {
-    return InverseDistanceCoordinates.of(RnVectorNorm.INSTANCE, sequence);
+    return InverseDistanceCoordinates.of(RnNorm.INSTANCE, sequence);
   }
 }

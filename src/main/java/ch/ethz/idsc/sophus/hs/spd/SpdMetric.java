@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
- * Edited by Xavier Pennec, Sommer, Fletcher, p. 82 */
+ * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 82 */
 public enum SpdMetric implements TensorMetric {
   INSTANCE;
 

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.math.win;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.rn.RnVectorNorm;
+import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -24,7 +24,7 @@ public class InverseDistanceCoordinatesTest extends TestCase {
         Tensor points = RandomVariate.of(distribution, n, d);
         Tensor x = RandomVariate.of(distribution, d);
         TensorUnaryOperator tensorUnaryOperator = //
-            Serialization.copy(InverseDistanceCoordinates.of(RnVectorNorm.INSTANCE, points));
+            Serialization.copy(InverseDistanceCoordinates.of(RnNorm.INSTANCE, points));
         Tensor weights = tensorUnaryOperator.apply(x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(x, y);
@@ -36,7 +36,7 @@ public class InverseDistanceCoordinatesTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator tensorUnaryOperator = InverseDistanceCoordinates.of(RnVectorNorm.INSTANCE, points);
+        TensorUnaryOperator tensorUnaryOperator = InverseDistanceCoordinates.of(RnNorm.INSTANCE, points);
         Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(n));
       }
   }
@@ -47,7 +47,7 @@ public class InverseDistanceCoordinatesTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
         Tensor x = RandomVariate.of(distribution, d);
-        TensorUnaryOperator tensorUnaryOperator = InverseDistanceCoordinates.of(RnVectorNorm.INSTANCE, points);
+        TensorUnaryOperator tensorUnaryOperator = InverseDistanceCoordinates.of(RnNorm.INSTANCE, points);
         Tensor weights = tensorUnaryOperator.apply(x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(x, y);
