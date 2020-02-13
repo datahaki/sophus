@@ -1,14 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.win;
 
-import java.util.Objects;
-
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.TensorNorm;
+import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.LeftNullSpace;
-import ch.ethz.idsc.tensor.mat.PseudoInverse;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Inverse Distance Coordinates are generalized barycentric coordinates with the properties
  * partition of unity
@@ -20,31 +15,13 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * Reference:
  * "Inverse Distance Coordinates for Scattered Sets of Points"
- * by Hakenberg, 2020, http://vixra.org/abs/2002.0129 */
-public class InverseDistanceCoordinates implements TensorUnaryOperator {
-  /** @param tensorNorm for instance Norm._2::ofVector
-   * @param sequence matrix of dimensions n x d
-   * @return */
-  public static TensorUnaryOperator of(TensorNorm tensorNorm, Tensor sequence) {
-    return new InverseDistanceCoordinates( //
-        InverseNorm.of(tensorNorm), //
-        Objects.requireNonNull(sequence));
-  }
-
-  /***************************************************/
-  private final TensorUnaryOperator operator;
-  private final Tensor sequence;
-
-  private InverseDistanceCoordinates(TensorUnaryOperator operator, Tensor sequence) {
-    this.operator = operator;
-    this.sequence = sequence;
-  }
-
-  @Override
-  public Tensor apply(Tensor x) {
-    Tensor levers = Tensor.of(sequence.stream().map(x.negate()::add));
-    Tensor nullSpace = LeftNullSpace.of(levers);
-    Tensor target = operator.apply(levers);
-    return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
-  }
+ * by Hakenberg, 2020, http://vixra.org/abs/2002.0129
+ * 
+ * @see BiinvariantMean */
+public interface InverseDistanceCoordinates {
+  /** @param sequence
+   * @param point
+   * @return vector of affine weights
+   * @see AffineQ */
+  Tensor weights(Tensor sequence, Tensor point);
 }

@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class LieInverseDistanceCoordinates implements Serializable {
+public class LieInverseDistanceCoordinates implements InverseDistanceCoordinates, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator equation;
   private final TensorUnaryOperator inv_norm;
@@ -26,25 +26,13 @@ public class LieInverseDistanceCoordinates implements Serializable {
     this.inv_norm = Objects.requireNonNull(inv_norm);
   }
 
-  /** @param tensor of coordinates in Lie group
-   * @return */
-  public TensorUnaryOperator of(Tensor tensor) {
-    return new Anonymous(Objects.requireNonNull(tensor));
-  }
-
-  private class Anonymous implements TensorUnaryOperator {
-    private final Tensor tensor;
-
-    public Anonymous(Tensor tensor) {
-      this.tensor = tensor;
-    }
-
-    @Override
-    public Tensor apply(Tensor x) {
-      Tensor levers = Tensor.of(tensor.stream().map(lieGroup.element(x).inverse()::combine).map(equation));
-      Tensor nullsp = LeftNullSpace.of(levers);
-      Tensor target = inv_norm.apply(levers);
-      return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullsp)).dot(nullsp));
-    }
+  @Override // from InverseDistanceCoordinates
+  public Tensor weights(Tensor sequence, Tensor point) {
+    Tensor levers = Tensor.of(sequence.stream() //
+        .map(lieGroup.element(point).inverse()::combine) //
+        .map(equation));
+    Tensor nullsp = LeftNullSpace.of(levers);
+    Tensor target = inv_norm.apply(levers);
+    return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullsp)).dot(nullsp));
   }
 }

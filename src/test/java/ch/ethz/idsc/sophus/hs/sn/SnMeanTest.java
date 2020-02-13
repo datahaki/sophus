@@ -24,7 +24,7 @@ public class SnMeanTest extends TestCase {
       Tensor rotation = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
       Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));
       Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
-      Tensor weights = SnInverseDistanceCoordinates.of(sequence, mean);
+      Tensor weights = SnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
       Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
       Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);
       Chop._12.requireAllZero(evaluate);

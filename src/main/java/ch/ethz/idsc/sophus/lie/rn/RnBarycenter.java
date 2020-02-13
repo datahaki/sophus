@@ -1,7 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.math.win.InverseDistanceCoordinates;
+import java.util.Objects;
+
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -11,6 +12,7 @@ public enum RnBarycenter {
   /** @param sequence
    * @return */
   public static TensorUnaryOperator of(Tensor sequence) {
-    return InverseDistanceCoordinates.of(RnNorm.INSTANCE, sequence);
+    Objects.requireNonNull(sequence);
+    return p -> RnInverseDistanceCoordinates.INSTANCE.weights(sequence, p);
   }
 }

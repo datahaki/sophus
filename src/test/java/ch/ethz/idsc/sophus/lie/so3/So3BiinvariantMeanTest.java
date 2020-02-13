@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.so3;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -29,8 +28,7 @@ public class So3BiinvariantMeanTest extends TestCase {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-      TensorUnaryOperator tensorUnaryOperator = So3InverseDistanceCoordinates.INSTANCE.of(sequence);
-      Tensor w2 = tensorUnaryOperator.apply(mean);
+      Tensor w2 = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
       Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
       Chop._08.requireClose(mean, o2);
     }
@@ -42,8 +40,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
     Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-    TensorUnaryOperator tensorUnaryOperator = So3InverseDistanceCoordinates.INSTANCE.of(sequence);
-    Tensor w2 = tensorUnaryOperator.apply(mean);
+    Tensor w2 = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
     Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
     Chop._08.requireClose(mean, o2.get());
     Chop._08.requireClose(weights, w2);

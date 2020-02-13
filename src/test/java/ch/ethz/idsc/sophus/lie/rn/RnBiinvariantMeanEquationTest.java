@@ -7,7 +7,6 @@ import ch.ethz.idsc.sophus.lie.BiinvariantMeanImplicit;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -36,8 +35,7 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
       Tensor mean = optional.get();
-      TensorUnaryOperator tensorUnaryOperator = RnInverseDistanceCoordinates.of(sequence);
-      Tensor w2 = tensorUnaryOperator.apply(mean);
+      Tensor w2 = RnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
       Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
       Chop._08.requireClose(mean, o2.get());
     }
@@ -50,8 +48,7 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
     Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
     Tensor mean = optional.get();
-    TensorUnaryOperator tensorUnaryOperator = RnInverseDistanceCoordinates.of(sequence);
-    Tensor w2 = tensorUnaryOperator.apply(mean);
+    Tensor w2 = RnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
     Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
     Chop._08.requireClose(mean, o2.get());
     Chop._08.requireClose(weights, w2);
