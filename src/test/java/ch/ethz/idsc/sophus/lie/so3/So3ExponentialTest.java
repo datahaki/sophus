@@ -1,6 +1,7 @@
 // code by jph / ob
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.lie.so2.RotationMatrix;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -12,7 +13,6 @@ import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.Orthogonalize;
 import ch.ethz.idsc.tensor.lie.QRDecomposition;
-import ch.ethz.idsc.tensor.lie.RotationMatrix;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;

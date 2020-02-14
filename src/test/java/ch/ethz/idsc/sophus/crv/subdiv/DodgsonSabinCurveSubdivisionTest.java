@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.crv.subdiv;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
-import ch.ethz.idsc.tensor.lie.CirclePoints;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 

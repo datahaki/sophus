@@ -4,11 +4,11 @@ package ch.ethz.idsc.sophus.lie.se2;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroupElement;
+import ch.ethz.idsc.sophus.lie.so2.RotationMatrix;
 import ch.ethz.idsc.sophus.lie.so2c.So2CoveringSkew;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.lie.RotationMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 
 public class Se2Skew {
