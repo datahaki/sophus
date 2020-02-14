@@ -26,7 +26,7 @@ public class LieInverseDistanceCoordinate implements BarycentricCoordinate, Seri
     this.inv_norm = Objects.requireNonNull(inv_norm);
   }
 
-  @Override // from InverseDistanceCoordinates
+  @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream() //
         .map(lieGroup.element(point).inverse()::combine) //

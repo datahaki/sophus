@@ -98,6 +98,13 @@ public class AffineCoordinateTest extends TestCase {
     }
   }
 
+  public void testSinglePoint() {
+    Tensor sequence = Tensors.fromString("{{1, 2, 3}}");
+    TensorUnaryOperator tensorUnaryOperator = AffineCoordinate.of(sequence);
+    Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 4));
+    Chop._10.requireClose(Tensors.vector(1), tensor);
+  }
+
   public void testVectorFail() {
     try {
       AffineCoordinate.of(Tensors.vector(1, 2, 3, 4));

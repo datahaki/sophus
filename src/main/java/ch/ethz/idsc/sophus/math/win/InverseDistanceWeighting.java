@@ -34,7 +34,7 @@ public class InverseDistanceWeighting implements BarycentricCoordinate, Serializ
     this.tensorMetric = Objects.requireNonNull(tensorMetric);
   }
 
-  @Override // from InverseDistanceCoordinates
+  @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor weights = Tensors.reserve(sequence.length());
     int count = 0;

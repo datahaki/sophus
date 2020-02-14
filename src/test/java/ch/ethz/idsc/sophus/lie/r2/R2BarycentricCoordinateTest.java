@@ -26,28 +26,28 @@ import junit.framework.TestCase;
 
 public class R2BarycentricCoordinateTest extends TestCase {
   public void testHDual() {
-    BarycentricCoordinate powerCoordinates = R2BarycentricCoordinate.of(Barycenter.WACHSPRESS);
+    BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(Barycenter.WACHSPRESS);
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
-    Tensor weights = powerCoordinates.weights(P, Tensors.vector(4, 2));
+    Tensor weights = barycentricCoordinate.weights(P, Tensors.vector(4, 2));
     Tensor exp = Tensors.fromString("{4/11, 2, 2/3, 4/33}");
     Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(exp));
   }
 
   public void testWeights() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate powerCoordinates = Serialization.copy(R2BarycentricCoordinate.of(Barycenter.WACHSPRESS));
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy(R2BarycentricCoordinate.of(Barycenter.WACHSPRESS));
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
     Tensor x = Tensors.vector(4, 2);
-    Tensor weights = powerCoordinates.weights(P, x);
+    Tensor weights = barycentricCoordinate.weights(P, x);
     Tensor exp = Tensors.fromString("{3/26, 33/52, 11/52, 1/26}");
     Chop._12.requireClose(weights, exp);
     Chop._10.requireClose(weights.dot(P), x);
   }
 
   public void testQuantity() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate r2BarycentricCoordinates = Serialization.copy(R2BarycentricCoordinate.of(Barycenter.DISCRETE_HARMONIC));
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy(R2BarycentricCoordinate.of(Barycenter.DISCRETE_HARMONIC));
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").map(s -> Quantity.of(s, "m"));
     Tensor x = Tensors.vector(4, 2).map(s -> Quantity.of(s, "m"));
-    Tensor weights = r2BarycentricCoordinates.weights(P, x);
+    Tensor weights = barycentricCoordinate.weights(P, x);
     Tensor exp = Tensors.vector(0.120229008, 0.629770992, 0.230916031, 0.019083969);
     Chop._08.requireClose(weights, exp);
     Chop._10.requireClose(weights.dot(P), x);
@@ -55,10 +55,10 @@ public class R2BarycentricCoordinateTest extends TestCase {
 
   public void testQuantity2() throws ClassNotFoundException, IOException {
     for (Barycenter barycentric : Barycenter.values()) {
-      BarycentricCoordinate powerCoordinates = Serialization.copy(R2BarycentricCoordinate.of(barycentric));
+      BarycentricCoordinate barycentricCoordinate = Serialization.copy(R2BarycentricCoordinate.of(barycentric));
       Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").map(s -> Quantity.of(s, "m"));
       Tensor x = Tensors.vector(4, 2).map(s -> Quantity.of(s, "m"));
-      Tensor weights = powerCoordinates.weights(P, x);
+      Tensor weights = barycentricCoordinate.weights(P, x);
       Chop._10.requireClose(weights.dot(P), x);
     }
   }
@@ -69,14 +69,14 @@ public class R2BarycentricCoordinateTest extends TestCase {
     Tensor polygon2 = polygon1.multiply(factor);
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Tensors.vector(0, 0), Tensors.vector(5, 5));
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate powerCoordinates = R2BarycentricCoordinate.of(barycenter);
+      BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(barycenter);
       // TensorUnaryOperator function1 = powerCoordinates.weights(polygon1);
       // TensorUnaryOperator function2 = powerCoordinates.weights(polygon2);
       for (int count = 0; count < 10; ++count) {
         Tensor point = RandomSample.of(randomSampleInterface);
         if (Polygons.isInside(polygon1, point)) {
-          Tensor w1 = powerCoordinates.weights(polygon1, point);
-          Tensor w2 = powerCoordinates.weights(polygon2, point.multiply(factor));
+          Tensor w1 = barycentricCoordinate.weights(polygon1, point);
+          Tensor w2 = barycentricCoordinate.weights(polygon2, point.multiply(factor));
           Chop._08.requireClose(w1, w2);
           Chop._10.requireClose(w1.dot(polygon1), point);
           Chop._10.requireClose(w2.dot(polygon2), point.multiply(factor));
@@ -88,11 +88,11 @@ public class R2BarycentricCoordinateTest extends TestCase {
   public void testLagrangeProperty() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate powerCoordinates = R2BarycentricCoordinate.of(barycenter);
+      BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(barycenter);
       // TensorUnaryOperator function = powerCoordinates.of(P);
       for (int index = 0; index < P.length(); ++index) {
         Tensor x = P.get(index);
-        Tensor weights = powerCoordinates.weights(P, x);
+        Tensor weights = barycentricCoordinate.weights(P, x);
         assertEquals(weights, UnitVector.of(4, index));
         Chop._10.requireClose(weights.dot(P), x);
       }
@@ -102,10 +102,10 @@ public class R2BarycentricCoordinateTest extends TestCase {
   public void testEdges() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate idc = R2BarycentricCoordinate.of(barycenter);
+      BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(barycenter);
       for (int index = 0; index < P.length(); ++index) {
         // Tensor weights =
-        idc.weights(P, Mean.of(RotateLeft.of(P, index).extract(0, 2)));
+        barycentricCoordinate.weights(P, Mean.of(RotateLeft.of(P, index).extract(0, 2)));
         // System.out.println(weights);
         // weights.stream().map(Scalar.class::cast).forEach(Sign::requirePositiveOrZero);
       }
@@ -115,10 +115,10 @@ public class R2BarycentricCoordinateTest extends TestCase {
   public void testEdgesTriangle() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {4, 4}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate powerCoordinates = R2BarycentricCoordinate.of(barycenter);
+      BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(barycenter);
       for (int index = 0; index < P.length(); ++index) {
         Tensor x = Mean.of(RotateLeft.of(P, index).extract(0, 2));
-        Tensor weights = powerCoordinates.weights(P, x);
+        Tensor weights = barycentricCoordinate.weights(P, x);
         weights.stream().map(Scalar.class::cast).forEach(Sign::requirePositiveOrZero);
         // Chop._10.requireClose(weights.dot(P), x);
       }
@@ -128,9 +128,9 @@ public class R2BarycentricCoordinateTest extends TestCase {
   public void testNonPlanarFail() {
     Distribution distribution = UniformDistribution.unit();
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate r2BarycentricCoordinates = R2BarycentricCoordinate.of(barycenter);
+      BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(barycenter);
       try {
-        r2BarycentricCoordinates.weights(RandomVariate.of(distribution, 10, 3), Tensors.vector(1, 1, 1));
+        barycentricCoordinate.weights(RandomVariate.of(distribution, 10, 3), Tensors.vector(1, 1, 1));
         fail();
       } catch (Exception exception) {
         // ---
@@ -140,9 +140,9 @@ public class R2BarycentricCoordinateTest extends TestCase {
 
   public void testFailEmpty() {
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate barycentricCoordinates = R2BarycentricCoordinate.of(barycenter);
+      BarycentricCoordinate barycentricCoordinate = R2BarycentricCoordinate.of(barycenter);
       try {
-        barycentricCoordinates.weights(Tensors.empty(), Tensors.empty());
+        barycentricCoordinate.weights(Tensors.empty(), Tensors.empty());
         fail();
       } catch (Exception exception) {
         // ---

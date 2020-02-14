@@ -32,6 +32,9 @@ import ch.ethz.idsc.tensor.opt.BinaryAverage;
  * 2) The bi-invariant mean of two points p, q in G coincides with the binary average.
  * 3) The bi-invariant mean is left-, right- and inverse-invariant [p.21]
  * 
+ * The term "biinvariant" makes sense for Lie groups. The biinvariant mean is consistent with the
+ * Riemannian center of mass, or Frechet mean, for Lie groups with biinvariant metric.
+ * 
  * @see BinaryAverage */
 @FunctionalInterface
 public interface BiinvariantMean {

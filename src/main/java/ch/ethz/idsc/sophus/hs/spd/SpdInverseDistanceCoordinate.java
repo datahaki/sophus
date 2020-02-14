@@ -15,7 +15,7 @@ public enum SpdInverseDistanceCoordinate implements BarycentricCoordinate {
   private static final BarycentricCoordinate INVERSE_DISTANCE_WEIGHTING = //
       InverseDistanceWeighting.of(SpdMetric.INSTANCE);
 
-  @Override // from InverseDistanceCoordinates
+  @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor target = INVERSE_DISTANCE_WEIGHTING.weights(sequence, point);
     Tensor levers = Tensor.of(sequence.stream().map(new SpdExp(point)::log).map(Flatten::of));

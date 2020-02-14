@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
   private static final TensorUnaryOperator INVERSE_NORM = InverseNorm.of(RnNorm.INSTANCE);
 
-  @Override // from InverseDistanceCoordinates
+  @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor x) {
     Tensor levers = Tensor.of(sequence.stream().map(x.negate()::add));
     Tensor nullSpace = LeftNullSpace.of(levers);

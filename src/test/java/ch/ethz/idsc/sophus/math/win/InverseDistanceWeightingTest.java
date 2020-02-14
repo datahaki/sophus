@@ -22,9 +22,9 @@ import junit.framework.TestCase;
 
 public class InverseDistanceWeightingTest extends TestCase {
   public void testSimple() {
-    BarycentricCoordinate inverseDistanceCoordinates = //
+    BarycentricCoordinate barycentricCoordinate = //
         InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
-    Tensor weights = inverseDistanceCoordinates.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
+    Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
 
@@ -32,10 +32,10 @@ public class InverseDistanceWeightingTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
-      BarycentricCoordinate inverseDistance = //
+      BarycentricCoordinate barycentricCoordinate = //
           InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
       for (int index = 0; index < p1.length(); ++index) {
-        Tensor q = inverseDistance.weights(p1, p1.get(index));
+        Tensor q = barycentricCoordinate.weights(p1, p1.get(index));
         Chop._10.requireClose(q, UnitVector.of(n, index));
       }
     }
@@ -47,9 +47,9 @@ public class InverseDistanceWeightingTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
         Tensor x = RandomVariate.of(distribution, d);
-        BarycentricCoordinate tensorUnaryOperator = //
+        BarycentricCoordinate barycentricCoordinate = //
             Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
-        Tensor weights = tensorUnaryOperator.weights(points, x);
+        Tensor weights = barycentricCoordinate.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       }
   }
