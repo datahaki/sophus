@@ -21,7 +21,7 @@ public class Se2CoveringInverseDistanceCoordinatesTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(points);
       Tensor xya = RandomVariate.of(distribution, 3);
-      Tensor w1 = Se2CoveringInverseDistanceCoordinates.INSTANCE.weights(points, xya);
+      Tensor w1 = Se2CoveringInverseDistanceCoordinate.INSTANCE.weights(points, xya);
       Tensor w2 = se2CoveringBarycenter.apply(xya);
       Chop._06.requireClose(w1, w2);
     }
@@ -33,7 +33,7 @@ public class Se2CoveringInverseDistanceCoordinatesTest extends TestCase {
     for (int n = 5; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor x = Se2CoveringBiinvariantMean.INSTANCE.mean(points, ConstantArray.of(RationalScalar.of(1, n), n));
-      Tensor weights = Se2CoveringInverseDistanceCoordinates.INSTANCE.weights(points, x);
+      Tensor weights = Se2CoveringInverseDistanceCoordinate.INSTANCE.weights(points, x);
       Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(x, x_recreated);
@@ -46,7 +46,7 @@ public class Se2CoveringInverseDistanceCoordinatesTest extends TestCase {
     for (int n = 5; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor x = RandomVariate.of(distribution, 3);
-      Tensor weights = Se2CoveringInverseDistanceCoordinates.INSTANCE.weights(points, x);
+      Tensor weights = Se2CoveringInverseDistanceCoordinate.INSTANCE.weights(points, x);
       Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(x, x_recreated);
@@ -55,7 +55,7 @@ public class Se2CoveringInverseDistanceCoordinatesTest extends TestCase {
 
   public void testNullFail() {
     try {
-      Se2CoveringInverseDistanceCoordinates.INSTANCE.weights(null, null);
+      Se2CoveringInverseDistanceCoordinate.INSTANCE.weights(null, null);
       fail();
     } catch (Exception exception) {
       // ---

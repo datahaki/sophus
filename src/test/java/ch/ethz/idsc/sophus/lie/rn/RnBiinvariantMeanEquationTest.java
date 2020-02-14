@@ -35,7 +35,7 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
       Tensor mean = optional.get();
-      Tensor w2 = RnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+      Tensor w2 = RnInverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
       Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
       Chop._08.requireClose(mean, o2.get());
     }
@@ -48,7 +48,7 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
     Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
     Tensor mean = optional.get();
-    Tensor w2 = RnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+    Tensor w2 = RnInverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
     Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
     Chop._08.requireClose(mean, o2.get());
     Chop._08.requireClose(weights, w2);

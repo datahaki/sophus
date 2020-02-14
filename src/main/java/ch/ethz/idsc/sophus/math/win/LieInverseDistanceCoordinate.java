@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class LieInverseDistanceCoordinates implements InverseDistanceCoordinates, Serializable {
+public class LieInverseDistanceCoordinate implements BarycentricCoordinate, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator equation;
   private final TensorUnaryOperator inv_norm;
@@ -20,7 +20,7 @@ public class LieInverseDistanceCoordinates implements InverseDistanceCoordinates
    * @param equation mapping from group to vector space
    * @param inv_norm
    * @throws Exception if any input parameter is null */
-  public LieInverseDistanceCoordinates(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_norm) {
+  public LieInverseDistanceCoordinate(LieGroup lieGroup, TensorUnaryOperator equation, TensorUnaryOperator inv_norm) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.equation = Objects.requireNonNull(equation);
     this.inv_norm = Objects.requireNonNull(inv_norm);

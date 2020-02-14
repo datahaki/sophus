@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Hakenberg, 2020, http://vixra.org/abs/2002.0129
  * 
  * @see BiinvariantMean */
-public interface InverseDistanceCoordinates {
+public interface BarycentricCoordinate {
   /** @param sequence
    * @param point
    * @return vector of affine weights

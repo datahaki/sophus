@@ -7,13 +7,13 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SpdInverseDistanceCoordinatesTest extends TestCase {
+public class SpdInverseDistanceCoordinateTest extends TestCase {
   public void testSimple() {
     int d = 2;
     for (int len = 5; len < 10; ++len) {
       Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
       Tensor point = TestHelper.generateSpd(d);
-      Tensor weights = SpdInverseDistanceCoordinates.INSTANCE.weights(sequence, point);
+      Tensor weights = SpdInverseDistanceCoordinate.INSTANCE.weights(sequence, point);
       AffineQ.require(weights);
       Tensor spd = SpdMean.INSTANCE.mean(sequence, weights);
       Chop._08.requireClose(spd, point);
@@ -26,7 +26,7 @@ public class SpdInverseDistanceCoordinatesTest extends TestCase {
     for (int len = 7; len < 16; ++len) {
       Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
       Tensor point = TestHelper.generateSpd(d);
-      Tensor weights = SpdInverseDistanceCoordinates.INSTANCE.weights(sequence, point);
+      Tensor weights = SpdInverseDistanceCoordinate.INSTANCE.weights(sequence, point);
       AffineQ.require(weights);
       try {
         Tensor spd = SpdMean.INSTANCE.mean(sequence, weights);
@@ -43,7 +43,7 @@ public class SpdInverseDistanceCoordinatesTest extends TestCase {
     for (int len = 5; len < 10; ++len) {
       Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
       for (Tensor point : sequence) {
-        Tensor weights = SpdInverseDistanceCoordinates.INSTANCE.weights(sequence, point);
+        Tensor weights = SpdInverseDistanceCoordinate.INSTANCE.weights(sequence, point);
         AffineQ.require(weights);
         Tensor spd = SpdMean.INSTANCE.mean(sequence, weights);
         Chop._08.requireClose(spd, point);

@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SnInverseDistanceCoordinatesTest extends TestCase {
+public class SnInverseDistanceCoordinateTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   public void testLinearReproduction() {
@@ -23,7 +23,7 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor mean = UnitVector.of(d, 0);
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
-        Tensor weights = SnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+        Tensor weights = SnInverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
         VectorQ.requireLength(weights, n);
         AffineQ.require(weights);
         Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);
@@ -40,7 +40,7 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
         Tensor center = UnitVector.of(d, 0);
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
         for (Tensor mean : sequence) {
-          Tensor weights = SnInverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+          Tensor weights = SnInverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
           VectorQ.requireLength(weights, n);
           AffineQ.require(weights);
           Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);

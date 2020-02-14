@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class RnInverseDistanceCoordinatesTest extends TestCase {
+public class RnInverseDistanceCoordinateTest extends TestCase {
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int dim = 2; dim < 5; ++dim) {
@@ -21,7 +21,7 @@ public class RnInverseDistanceCoordinatesTest extends TestCase {
       // Serialization.copy(RnInverseDistanceCoordinates.INSTANCE.of(points));
       for (int count = 0; count < 10; ++count) {
         Tensor mean = RandomVariate.of(distribution, dim);
-        Tensor weights = RnInverseDistanceCoordinates.INSTANCE.weights(points, mean);
+        Tensor weights = RnInverseDistanceCoordinate.INSTANCE.weights(points, mean);
         Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(mean, result);
       }
@@ -93,7 +93,7 @@ public class RnInverseDistanceCoordinatesTest extends TestCase {
 
   public void testNullFail() {
     try {
-      RnInverseDistanceCoordinates.INSTANCE.weights(null, null);
+      RnInverseDistanceCoordinate.INSTANCE.weights(null, null);
       fail();
     } catch (Exception exception) {
       // ---

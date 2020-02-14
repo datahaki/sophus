@@ -25,27 +25,35 @@ import ch.ethz.idsc.tensor.red.Mean;
  * scattered set of points, Waldron suggests to consider those with minimal
  * L2-norm, which are uniquely defined as the affine functions."
  * in Hormann and Sukumar, 2016 */
-public class AffineCoordinates implements TensorUnaryOperator {
-  /** @param points matrix with dimensions n x d
+public enum AffineCoordinate implements BarycentricCoordinate {
+  INSTANCE;
+
+  @Override // from BarycentricCoordinates
+  public Tensor weights(Tensor sequence, Tensor point) {
+    return of(sequence).apply(point);
+  }
+
+  /** @param sequence matrix with dimensions n x d
    * @return
-   * @throws Exception if points is empty */
-  public static TensorUnaryOperator of(Tensor points) {
-    return new AffineCoordinates(points);
+   * @throws Exception if given sequence is empty */
+  public static TensorUnaryOperator of(Tensor sequence) {
+    return new Operator(sequence);
   }
 
-  // ---
-  private final Tensor mean;
-  private final Tensor pinv;
-  private final Scalar _1_n;
+  private static class Operator implements TensorUnaryOperator {
+    private final Tensor mean;
+    private final Tensor pinv;
+    private final Scalar _1_n;
 
-  private AffineCoordinates(Tensor points) {
-    mean = Mean.of(points);
-    pinv = PseudoInverse.of(Tensor.of(points.stream().map(mean.negate()::add)));
-    _1_n = RationalScalar.of(1, points.length());
-  }
+    private Operator(Tensor sequence) {
+      mean = Mean.of(sequence);
+      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(mean.negate()::add)));
+      _1_n = RationalScalar.of(1, sequence.length());
+    }
 
-  @Override
-  public Tensor apply(Tensor x) {
-    return x.subtract(mean).dot(pinv).map(_1_n::add);
+    @Override
+    public Tensor apply(Tensor x) {
+      return x.subtract(mean).dot(pinv).map(_1_n::add);
+    }
   }
 }

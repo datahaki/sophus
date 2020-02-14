@@ -28,7 +28,7 @@ public class So3BiinvariantMeanTest extends TestCase {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor w2 = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+      Tensor w2 = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
       Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
       Chop._08.requireClose(mean, o2);
     }
@@ -40,7 +40,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
     Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-    Tensor w2 = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+    Tensor w2 = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
     Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
     Chop._08.requireClose(mean, o2.get());
     Chop._08.requireClose(weights, w2);

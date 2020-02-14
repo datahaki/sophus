@@ -14,7 +14,12 @@ public class NormalizeTotalTest extends TestCase {
   }
 
   public void testEmpty() {
-    assertEquals(NormalizeTotal.FUNCTION.apply(Tensors.empty()), Tensors.empty());
+    try {
+      NormalizeTotal.FUNCTION.apply(Tensors.empty());
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 
   public void testZeroFail() {

@@ -5,28 +5,32 @@ import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.BinaryAverage;
 
-/** Quote [2012 Pennec, Arsigny; p.20]:
- * Although bi-invariant metrics may fail to exist, the group geodesics always exists in a Lie group
+/** Reference:
+ * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
+ * by Xavier Pennec, Vincent Arsigny, 2012
+ * 
+ * <p>Quotes from the reference:
+ * 
+ * <p>"When performing statistics on elements of sets that possess a particular geometric structure,
+ * it is desirable to respect this structure. For instance in a Lie Group, it would be judicious to a
+ * have a notion of mean which is stable by the group operations." [p.1]
+ * 
+ * <p>"Although bi-invariant metrics may fail to exist, the group geodesics always exists in a Lie group
  * and one can define a bi-invariant mean implicitly as an exponential barycenter, at least locally.
  * As will be shown in the sequel, this definition has all the desirable invariance properties, even
  * when bi-invariant metrics do not exist. Moreover, we can show the existence and uniqueness of the
- * bi-invariant mean provided the dispersion of the data is small enough.
+ * bi-invariant mean provided the dispersion of the data is small enough." [p.20]
  * 
- * <p>Quote [2012 Pennec, Arsigny; p.4]:
- * The intuition behind such a bi-invariant mean on matrix Lie groups was present in [2003 Woods]
+ * <p>"The intuition behind such a bi-invariant mean on matrix Lie groups was present in [2003 Woods]
  * along with a practical iterative algorithm to compute it. However, no precise definition nor proof
  * of convergence was provided. The barycentric definition of bi-invariant means on Lie groups based
  * on one-parameter subgroups was developed in the the PhD of Vincent Arsigny and in the research
- * report [2006 Arsigny, Pennec, Ayache].
+ * report [2006 Arsigny, Pennec, Ayache]." [p.4]
  * 
  * <p>
  * 1) The bi-invariant mean is invariant under simultaneous reordering of the input points and weights.
  * 2) The bi-invariant mean of two points p, q in G coincides with the binary average.
- * 3) For left-, right- and inverse-invariance of bi-invariant means see [2012 Pennec, Arsigny; p. 21].
- * 
- * <p>Reference:
- * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
- * by Xavier Pennec, Vincent Arsigny, 2012
+ * 3) The bi-invariant mean is left-, right- and inverse-invariant [p.21]
  * 
  * @see BinaryAverage */
 @FunctionalInterface

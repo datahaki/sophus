@@ -9,8 +9,9 @@ import ch.ethz.idsc.tensor.red.Total;
 /** Hint: if the weights sum up to zero, then the normalization fails, for example
  * NormalizeTotal.FUNCTION.apply({+1, -1}) throws an Exception
  * 
- * Consistent with Mathematica, in particular
- * Mathematica::Normalize[{}, Total] == {} */
+ * <p>Hint: normalization is not consistent with Mathematica for empty vectors:
+ * Mathematica::Normalize[{}, Total] == {}
+ * Tensor-Lib.::NormalizeTotal[{}] throws an Exception */
 public enum NormalizeTotal implements TensorUnaryOperator {
   FUNCTION;
 

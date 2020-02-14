@@ -44,7 +44,7 @@ public class ClothoidTest extends TestCase {
       Tensor p = RandomVariate.of(distribution, 3);
       Curve curve = new Clothoid(p, p).new Curve();
       Scalar length = curve.length();
-      Chop.NONE.requireAllZero(length);
+      Chop.NONE.requireZero(length);
     }
   }
 
@@ -54,7 +54,7 @@ public class ClothoidTest extends TestCase {
       Tensor p = RandomVariate.of(distribution, 3);
       Curve curve = new Clothoid(p, p).new Curve();
       Scalar length = curve.length();
-      Chop.NONE.requireAllZero(length);
+      Chop.NONE.requireZero(length);
     }
   }
 

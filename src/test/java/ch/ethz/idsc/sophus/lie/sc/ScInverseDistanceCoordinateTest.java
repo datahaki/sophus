@@ -9,11 +9,11 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class ScInverseDistanceCoordinatesTest extends TestCase {
+public class ScInverseDistanceCoordinateTest extends TestCase {
   public void testSimple() {
     Tensor sequence = Tensors.vector(2, 4).map(Tensors::of);
     Tensor target = Tensors.vector(1);
-    Tensor weights = ScInverseDistanceCoordinates.INSTANCE.weights(sequence, target);
+    Tensor weights = ScInverseDistanceCoordinate.INSTANCE.weights(sequence, target);
     Tensor mean = ScBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._10.requireClose(target, mean);
   }
@@ -23,7 +23,7 @@ public class ScInverseDistanceCoordinatesTest extends TestCase {
       Distribution distribution = ExponentialDistribution.of(1);
       Tensor sequence = RandomVariate.of(distribution, n, 1);
       Tensor target = Tensors.vector(1);
-      Tensor weights = ScInverseDistanceCoordinates.INSTANCE.weights(sequence, target);
+      Tensor weights = ScInverseDistanceCoordinate.INSTANCE.weights(sequence, target);
       Tensor mean = ScBiinvariantMean.INSTANCE.mean(sequence, weights);
       Chop._10.requireClose(target, mean);
     }

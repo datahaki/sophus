@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class So3InverseDistanceCoordinatesTest extends TestCase {
+public class So3InverseDistanceCoordinateTest extends TestCase {
   public void testSimple() {
     Tensor g1 = So3Exponential.INSTANCE.exp(Tensors.vector(0.2, 0.3, 0.4));
     Tensor g2 = So3Exponential.INSTANCE.exp(Tensors.vector(0.1, 0.0, 0.5));
@@ -18,7 +18,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
     Tensor g4 = So3Exponential.INSTANCE.exp(Tensors.vector(0.5, 0.2, 0.1));
     Tensor sequence = Tensors.of(g1, g2, g3, g4);
     Tensor mean = So3Exponential.INSTANCE.exp(Tensors.vector(0.4, 0.2, 0.3));
-    Tensor weights = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+    Tensor weights = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
     Tensor defect = So3BiinvariantMeanDefect.INSTANCE.defect(sequence, weights, mean);
     Chop._10.requireAllZero(defect);
   }
@@ -29,7 +29,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
       Tensor mean = So3Exponential.INSTANCE.exp(RandomVariate.of(d2, 3));
-      Tensor weights = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+      Tensor weights = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
       Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
       Chop._08.requireClose(mean, o2);
     }
@@ -41,7 +41,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
       int index = 0;
       for (Tensor mean : sequence) {
-        Tensor weights = So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+        Tensor weights = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
         Chop._08.requireClose(weights, UnitVector.of(n, index));
         Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
         Chop._08.requireClose(mean, o2);
@@ -57,7 +57,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
       try {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
         Tensor mean = So3Exponential.INSTANCE.exp(RandomVariate.of(d2, 3));
-        So3InverseDistanceCoordinates.INSTANCE.weights(sequence, mean);
+        So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
         fail();
       } catch (Exception exception) {
         // ---

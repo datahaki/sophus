@@ -4,13 +4,13 @@ package ch.ethz.idsc.sophus.math.win;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
+import ch.ethz.idsc.sophus.lie.rn.RnMetricSquared;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.io.Serialization;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -22,8 +22,9 @@ import junit.framework.TestCase;
 
 public class InverseDistanceWeightingTest extends TestCase {
   public void testSimple() {
-    InverseDistanceWeighting inverseDistance = new InverseDistanceWeighting(Norm2Squared::between);
-    Tensor weights = inverseDistance.of(Tensors.vector(1, 3).map(Tensors::of)).apply(RealScalar.of(2).map(Tensors::of));
+    BarycentricCoordinate inverseDistanceCoordinates = //
+        InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
+    Tensor weights = inverseDistanceCoordinates.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
 
@@ -31,9 +32,10 @@ public class InverseDistanceWeightingTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
-      TensorUnaryOperator inverseDistance = new InverseDistanceWeighting(Norm2Squared::between).of(p1);
+      BarycentricCoordinate inverseDistance = //
+          InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
       for (int index = 0; index < p1.length(); ++index) {
-        Tensor q = inverseDistance.apply(p1.get(index));
+        Tensor q = inverseDistance.weights(p1, p1.get(index));
         Chop._10.requireClose(q, UnitVector.of(n, index));
       }
     }
@@ -45,16 +47,16 @@ public class InverseDistanceWeightingTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
         Tensor x = RandomVariate.of(distribution, d);
-        TensorUnaryOperator tensorUnaryOperator = //
-            Serialization.copy(new InverseDistanceWeighting(RnMetric.INSTANCE).of(points));
-        Tensor weights = tensorUnaryOperator.apply(x);
+        BarycentricCoordinate tensorUnaryOperator = //
+            Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
+        Tensor weights = tensorUnaryOperator.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       }
   }
 
   public void testFailMetricNull() {
     try {
-      new InverseDistanceWeighting(null);
+      InverseDistanceWeighting.of(null);
       fail();
     } catch (Exception exception) {
       // ---
@@ -63,7 +65,7 @@ public class InverseDistanceWeightingTest extends TestCase {
 
   public void testFailPointsNull() {
     try {
-      new InverseDistanceWeighting(Norm2Squared::between).of(null);
+      InverseDistanceWeighting.of(Norm2Squared::between).weights(null, null);
       fail();
     } catch (Exception exception) {
       // ---

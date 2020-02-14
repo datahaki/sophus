@@ -2,14 +2,14 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.win.InverseDistanceCoordinates;
+import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/* package */ enum OriginalInverseDistanceCoordinates implements InverseDistanceCoordinates {
+/* package */ enum OriginalInverseDistanceCoordinates implements BarycentricCoordinate {
   INSTANCE;
 
   private static final TensorUnaryOperator INVERSE_NORM = InverseNorm.of(RnNorm.INSTANCE);
