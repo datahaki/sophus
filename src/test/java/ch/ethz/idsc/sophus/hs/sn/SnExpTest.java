@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.lie.so2.AngleVector;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,7 +16,34 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SnExpTest extends TestCase {
-  public void testSimple() {
+  public void test2D() {
+    SnExp snExp = new SnExp(UnitVector.of(2, 0));
+    Scalar dist = RealScalar.of(0.2);
+    Tensor log = snExp.log(AngleVector.of(dist));
+    Chop._12.requireClose(log, UnitVector.of(2, 1).multiply(dist));
+  }
+
+  public void test2DNormFail() {
+    try {
+      new SnExp(Tensors.vector(2, 1));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
+  public void test2DExpFail() {
+    SnExp snExp = new SnExp(UnitVector.of(2, 0));
+    Scalar dist = RealScalar.of(0.2);
+    try {
+      snExp.exp(AngleVector.of(dist));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
+  public void test3D() {
     Tensor tensor = new SnExp(UnitVector.of(3, 0)).exp(UnitVector.of(3, 1).multiply(RealScalar.of(Math.PI / 2)));
     Chop._12.requireClose(tensor, UnitVector.of(3, 1));
   }

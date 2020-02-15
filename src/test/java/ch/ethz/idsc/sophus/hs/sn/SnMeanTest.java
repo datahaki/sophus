@@ -1,16 +1,22 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.lie.so2.AngleVector;
 import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.red.Mean;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
@@ -31,5 +37,17 @@ public class SnMeanTest extends TestCase {
       Tensor point = SnMean.INSTANCE.mean(sequence, weights);
       Chop._12.requireClose(mean, point);
     }
+  }
+
+  public void testS1Linear() {
+    Distribution distribution = UniformDistribution.of(0, Math.PI);
+    for (int n = 2; n < 10; ++n)
+      for (int count = 0; count < 10; ++count) {
+        Tensor angles = RandomVariate.of(distribution, n);
+        Tensor sequence = angles.map(AngleVector::of);
+        Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
+        Tensor point = SnMean.INSTANCE.mean(sequence, weights);
+        Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
+      }
   }
 }

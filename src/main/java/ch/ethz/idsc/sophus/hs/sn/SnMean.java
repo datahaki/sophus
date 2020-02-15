@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.ArgMax;
@@ -40,7 +41,7 @@ public class SnMean implements BiinvariantMean, MeanDefect {
       // normalization for numerical stability
       mean = NORMALIZE.apply(mean);
     }
-    System.err.println("iteration limit reached");
+    TensorRuntimeException.of(sequence, weights).printStackTrace();
     // throw new RuntimeException("iteration limit reached");
     return mean;
   }
