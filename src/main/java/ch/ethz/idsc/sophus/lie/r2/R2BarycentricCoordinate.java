@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
 
 /** References:
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Hormann, Sukumar, 2016
+ * by Kai Hormann, N. Sukumar, 2017
  * 
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
@@ -30,6 +30,7 @@ public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializa
     return new R2BarycentricCoordinate(biFunction);
   }
 
+  /***************************************************/
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
 
   private R2BarycentricCoordinate(BiFunction<Tensor, Scalar, Tensor> biFunction) {

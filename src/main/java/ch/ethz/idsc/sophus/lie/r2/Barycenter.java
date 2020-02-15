@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * References:
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Kai Hormann, N. Sukumar, 2016
+ * by Kai Hormann, N. Sukumar, 2017
  * 
  * "Interpolation via Barycentric Coordinates"
  * by Pierre Alliez, 2017 */

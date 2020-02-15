@@ -20,8 +20,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * @see BiinvariantMean */
 public interface BarycentricCoordinate {
   /** @param sequence
-   * @param point
-   * @return vector of affine weights
+   * @param mean
+   * @return vector of affine weights corresponding to given mean
    * @see AffineQ */
-  Tensor weights(Tensor sequence, Tensor point);
+  Tensor weights(Tensor sequence, Tensor mean);
 }

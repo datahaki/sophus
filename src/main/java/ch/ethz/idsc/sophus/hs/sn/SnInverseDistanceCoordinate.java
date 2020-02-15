@@ -8,16 +8,22 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
-public enum SnInverseDistanceCoordinate implements BarycentricCoordinate {
-  INSTANCE;
+public class SnInverseDistanceCoordinate implements BarycentricCoordinate {
+  public static final BarycentricCoordinate INSTANCE = //
+      new SnInverseDistanceCoordinate(InverseDistanceWeighting.of(SnMetric.INSTANCE));
+  public static final BarycentricCoordinate SQUARED = //
+      new SnInverseDistanceCoordinate(InverseDistanceWeighting.of(SnMetricSquared.INSTANCE));
+  /***************************************************/
+  private final BarycentricCoordinate barycentricCoordinate;
 
-  private static final BarycentricCoordinate INVERSE_DISTANCE_WEIGHTING = //
-      InverseDistanceWeighting.of(SnMetric.INSTANCE);
+  private SnInverseDistanceCoordinate(BarycentricCoordinate barycentricCoordinate) {
+    this.barycentricCoordinate = barycentricCoordinate;
+  }
 
   @Override // from BarycentricCoordinate
-  public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor target = INVERSE_DISTANCE_WEIGHTING.weights(sequence, point);
-    Tensor levers = Tensor.of(sequence.stream().map(new SnExp(point)::log));
+  public Tensor weights(Tensor sequence, Tensor mean) {
+    Tensor target = barycentricCoordinate.weights(sequence, mean);
+    Tensor levers = Tensor.of(sequence.stream().map(new SnExp(mean)::log));
     Tensor nullSpace = LeftNullSpace.of(levers);
     return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
   }

@@ -1,12 +1,13 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Mean;
 
 /** Affine coordinates created by n points in d-dimensional vector space
  * 
@@ -25,7 +26,7 @@ import ch.ethz.idsc.tensor.red.Mean;
  * scattered set of points, Waldron suggests to consider those with minimal
  * L2-norm, which are uniquely defined as the affine functions."
  * in Kai Hormann, N. Sukumar, 2017 */
-public enum AffineCoordinate implements BarycentricCoordinate {
+public enum SnAffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 
   @Override // from BarycentricCoordinates
@@ -42,18 +43,18 @@ public enum AffineCoordinate implements BarycentricCoordinate {
 
   private static class Operator implements TensorUnaryOperator {
     private final Scalar _1_n;
-    private final Tensor mean;
+    private final SnExp mean;
     private final Tensor pinv;
 
     private Operator(Tensor sequence) {
       _1_n = RationalScalar.of(1, sequence.length());
-      mean = Mean.of(sequence);
-      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(mean.negate()::add)));
+      mean = new SnExp(SnMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
+      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(mean::log)));
     }
 
     @Override
     public Tensor apply(Tensor x) {
-      return x.subtract(mean).dot(pinv).map(_1_n::add);
+      return mean.log(x).dot(pinv).map(_1_n::add);
     }
   }
 }

@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Xavier Pennec, Vincent Arsigny, p.21, 2012
  * 
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Hormann, Sukumar, Eq. 1.11, 2016 */
+ * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
 public class BiinvariantMeanDefect implements MeanDefect, Serializable {
   private final LieGroup lieGroup;
   private final LieExponential lieExponential;
