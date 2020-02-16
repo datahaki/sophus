@@ -31,6 +31,15 @@ public class NormalizeTotalTest extends TestCase {
     }
   }
 
+  public void testZeroNumericFail() {
+    try {
+      NormalizeTotal.FUNCTION.apply(Tensors.vectorDouble(2, -2, 1, -1));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
   public void testFailScalar() {
     try {
       NormalizeTotal.FUNCTION.apply(Pi.TWO);

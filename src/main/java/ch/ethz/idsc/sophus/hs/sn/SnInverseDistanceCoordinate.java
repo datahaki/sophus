@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
@@ -25,6 +25,6 @@ public class SnInverseDistanceCoordinate implements BarycentricCoordinate {
     Tensor target = barycentricCoordinate.weights(sequence, mean);
     Tensor levers = Tensor.of(sequence.stream().map(new SnExp(mean)::log));
     Tensor nullSpace = LeftNullSpace.of(levers);
-    return NormalizeTotal.FUNCTION.apply(target.dot(PseudoInverse.of(nullSpace)).dot(nullSpace));
+    return NormalizeAffine.of(target, PseudoInverse.of(nullSpace), nullSpace);
   }
 }
