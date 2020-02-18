@@ -38,11 +38,11 @@ public class SnMean implements BiinvariantMean, MeanDefect {
       mean = new SnExp(mean).exp(log);
       // normalization for numerical stability
       // if (count % 10 == 0)
-      // mean = NORMALIZE.apply(mean);
+      mean = NORMALIZE.apply(mean);
     }
     // TensorRuntimeException.of(sequence, weights).printStackTrace();
     // throw new RuntimeException("iteration limit reached");
-    return mean;
+    return NORMALIZE.apply(mean);
   }
 
   @Override

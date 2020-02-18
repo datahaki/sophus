@@ -44,9 +44,9 @@ public class SnInverseDistanceCoordinateTest extends TestCase {
           VectorQ.requireLength(weights, n);
           AffineQ.require(weights);
           Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);
-          Chop._12.requireAllZero(evaluate);
+          Chop._06.requireAllZero(evaluate);
           Tensor point = SnMean.INSTANCE.mean(sequence, weights);
-          Chop._12.requireClose(mean, point);
+          Chop._06.requireClose(mean, point);
         }
       }
   }

@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.opt.Projection;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.red.VectorAngle;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
@@ -43,7 +44,7 @@ public class SnExp implements LieExponential {
   @Override // from LieExponential
   public Tensor exp(Tensor x) {
     // x is orthogonal to base point
-    Tolerance.CHOP.requireZero(point.dot(x).Get());
+    Chop._07.requireZero(point.dot(x).Get()); // errors of up to 1E-9 are expected
     Scalar norm = Norm._2.ofVector(x);
     return point.multiply(Cos.FUNCTION.apply(norm)).add(x.multiply(Sinc.FUNCTION.apply(norm)));
   }
