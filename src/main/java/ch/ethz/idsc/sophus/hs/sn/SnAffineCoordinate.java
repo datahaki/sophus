@@ -30,8 +30,8 @@ public enum SnAffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 
   @Override // from BarycentricCoordinates
-  public Tensor weights(Tensor sequence, Tensor point) {
-    return of(sequence).apply(point);
+  public Tensor weights(Tensor sequence, Tensor weighted_mean) {
+    return of(sequence).apply(weighted_mean);
   }
 
   /** @param sequence matrix with dimensions n x d
@@ -43,18 +43,18 @@ public enum SnAffineCoordinate implements BarycentricCoordinate {
 
   private static class Operator implements TensorUnaryOperator {
     private final Scalar _1_n;
-    private final SnExp mean;
+    private final SnExp snExp;
     private final Tensor pinv;
 
     private Operator(Tensor sequence) {
       _1_n = RationalScalar.of(1, sequence.length());
-      mean = new SnExp(SnMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
-      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(mean::log)));
+      snExp = new SnExp(SnMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
+      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(snExp::log)));
     }
 
     @Override
-    public Tensor apply(Tensor x) {
-      return mean.log(x).dot(pinv).map(_1_n::add);
+    public Tensor apply(Tensor point) {
+      return snExp.log(point).dot(pinv).map(_1_n::add);
     }
   }
 }

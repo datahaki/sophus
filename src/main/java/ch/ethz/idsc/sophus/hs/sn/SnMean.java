@@ -6,7 +6,6 @@ import ch.ethz.idsc.sophus.lie.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.ArgMax;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 
@@ -30,15 +29,16 @@ public class SnMean implements BiinvariantMean, MeanDefect {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    Tensor mean = sequence.get(ArgMax.of(weights)); // initial guess
+    Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights); // initial guess
     int count = 0;
     while (++count < MAX_ITERATIONS) {
       Tensor log = defect(sequence, weights, mean);
       if (chop.allZero(Norm._2.ofVector(log)))
-        return mean;
+        return NORMALIZE.apply(mean);
       mean = new SnExp(mean).exp(log);
       // normalization for numerical stability
-      mean = NORMALIZE.apply(mean);
+      // if (count % 10 == 0)
+      // mean = NORMALIZE.apply(mean);
     }
     // TensorRuntimeException.of(sequence, weights).printStackTrace();
     // throw new RuntimeException("iteration limit reached");
