@@ -30,11 +30,9 @@ public class Se3ExponentialTest extends TestCase {
   }
 
   public void testRandom() {
-    Distribution distribution = NormalDistribution.of(0, .2);
+    Distribution distribution = NormalDistribution.of(0, 0.2);
     for (int index = 0; index < 100; ++index) {
-      Tensor input = Tensors.of( //
-          RandomVariate.of(distribution, 3), //
-          RandomVariate.of(distribution, 3));
+      Tensor input = RandomVariate.of(distribution, 2, 3);
       Tensor g = Se3Exponential.INSTANCE.exp(input);
       Tensor u_w = Se3Exponential.INSTANCE.log(g);
       Chop._12.requireClose(input, u_w);
