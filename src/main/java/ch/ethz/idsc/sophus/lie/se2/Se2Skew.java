@@ -35,7 +35,7 @@ public class Se2Skew {
     return new Se2Skew(so2Skew, so2Skew.dot(RotationMatrix.of(angle).dot(xya.extract(0, 2))));
   }
 
-  // ---
+  /***************************************************/
   /** matrix with dimensions 2 x 2 */
   private final Tensor lhs;
   /** vector of length 2 */
@@ -55,11 +55,6 @@ public class Se2Skew {
   /** @return vector of length 2 */
   public Tensor solve() {
     return LinearSolve.of(lhs, rhs);
-  }
-
-  // TODO JPH function is never called
-  public Tensor diff(Tensor xy) {
-    return lhs.dot(xy).subtract(rhs);
   }
 
   public Tensor rhs() {

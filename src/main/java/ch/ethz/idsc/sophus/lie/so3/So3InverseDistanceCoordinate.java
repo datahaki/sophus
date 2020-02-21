@@ -9,5 +9,7 @@ import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
 public enum So3InverseDistanceCoordinate {
   ;
   public static final BarycentricCoordinate INSTANCE = new LieInverseDistanceCoordinate( //
-      So3Group.INSTANCE, So3Exponential.INSTANCE::log, InverseNorm.of(RnNorm.INSTANCE));
+      So3Group.INSTANCE, //
+      So3Exponential.INSTANCE::log, //
+      InverseNorm.of(RnNorm.INSTANCE));
 }

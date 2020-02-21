@@ -3,9 +3,12 @@ package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
+import ch.ethz.idsc.sophus.lie.se2.Se2Skew;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
+import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Tensor;
 
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
@@ -14,10 +17,26 @@ public enum Se2CoveringInverseDistanceCoordinate {
   ;
   public static final BarycentricCoordinate INSTANCE = new LieInverseDistanceCoordinate( //
       Se2CoveringGroup.INSTANCE, //
-      Se2CoveringBarycenter::equation, //
-      InverseNorm.of(RnNorm.INSTANCE)); // FIXME investigate
+      Se2CoveringInverseDistanceCoordinate::equation, //
+      InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = new LieInverseDistanceCoordinate( //
       Se2CoveringGroup.INSTANCE, //
-      Se2CoveringBarycenter::equation, //
-      InverseNorm.of(RnNormSquared.INSTANCE)); // FIXME investigate
+      Se2CoveringInverseDistanceCoordinate::equation, //
+      InverseNorm.of(RnNormSquared.INSTANCE));
+  public static final BarycentricCoordinate INSTANCET = new LieInverseDistanceCoordinate( //
+      Se2CoveringGroup.INSTANCE, //
+      Se2CoveringExponential.INSTANCE::log, //
+      InverseNorm.of(RnNorm.INSTANCE));
+  public static final BarycentricCoordinate SQUAREDT = new LieInverseDistanceCoordinate( //
+      Se2CoveringGroup.INSTANCE, //
+      Se2CoveringExponential.INSTANCE::log, //
+      InverseNorm.of(RnNormSquared.INSTANCE));
+
+  public static Tensor equation(Tensor xya) {
+    return Se2Skew.of(xya, RealScalar.ONE).rhs().append(xya.Get(2)); // append biinvariant mean of angles
+  }
+
+  public static Tensor equation2(Tensor xya) {
+    return Se2Skew.of(xya, RealScalar.of(2)).rhs().append(xya.Get(2)); // append biinvariant mean of angles
+  }
 }

@@ -8,6 +8,14 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
+/** On S^n the inverse distance coordinate is determined explicitly, whereas
+ * the weighted average is approximated iteratively.
+ * 
+ * Given a scattered sequence of sufficiently distributed points and a point on S^n,
+ * then SnInverseDistanceCoordinate.weights(sequence, point) gives a weight vector
+ * that satisfies SnMean(sequence, weights) == point.
+ * 
+ * @see SnMean */
 public class SnInverseDistanceCoordinate implements BarycentricCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
       new SnInverseDistanceCoordinate(InverseDistanceWeighting.of(SnMetric.INSTANCE));
@@ -21,9 +29,9 @@ public class SnInverseDistanceCoordinate implements BarycentricCoordinate {
   }
 
   @Override // from BarycentricCoordinate
-  public Tensor weights(Tensor sequence, Tensor mean) {
-    Tensor target = barycentricCoordinate.weights(sequence, mean);
-    Tensor levers = Tensor.of(sequence.stream().map(new SnExp(mean)::log));
+  public Tensor weights(Tensor sequence, Tensor point) {
+    Tensor target = barycentricCoordinate.weights(sequence, point);
+    Tensor levers = Tensor.of(sequence.stream().map(new SnExp(point)::log));
     Tensor nullSpace = LeftNullSpace.of(levers);
     return NormalizeAffine.of(target, PseudoInverse.of(nullSpace), nullSpace);
   }

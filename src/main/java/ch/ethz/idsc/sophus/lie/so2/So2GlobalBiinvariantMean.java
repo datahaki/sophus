@@ -10,7 +10,10 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * invariant under simultaneous permutation of control point sequence and weight vector
  * 
- * elements of SO(2) are represented as scalars */
+ * elements of SO(2) are represented as scalars
+ * 
+ * Reference:
+ * "Illumination for computer generated pictures" by B. Phong, 1975 */
 public enum So2GlobalBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
 
