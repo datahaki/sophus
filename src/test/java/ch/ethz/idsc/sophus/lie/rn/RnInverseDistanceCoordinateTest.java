@@ -5,7 +5,6 @@ import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -36,15 +35,12 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
             Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
             Chop._10.requireClose(mean, result);
           }
-          {
-          }
         }
       }
     }
   }
 
   public void testRandom() {
-    Tensor NEUTRAL = Tensors.vector(0, 0, 0);
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
     for (int n = 4; n < 10; ++n) {
@@ -58,8 +54,8 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
         Tensor seqinv = Tensor.of(points.stream() //
             .map(RnGroup.INSTANCE::element) //
             .map(RnGroupElement::inverse) //
-            .map(ge -> ge.combine(NEUTRAL)));
-        Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().combine(NEUTRAL);
+            .map(RnGroupElement::toCoordinate));
+        Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().toCoordinate();
         Tensor weights2 = barycentricCoordinate.weights(seqinv, xyainv);
         Chop._10.requireClose(weights1, weights2);
       }

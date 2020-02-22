@@ -7,7 +7,6 @@ import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -22,7 +21,6 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
       Se2CoveringInverseDistanceCoordinate.INSTANCE, //
       Se2CoveringInverseDistanceCoordinate.SQUARED //
   };
-  private static final Tensor NEUTRAL = Tensors.vector(0, 0, 0);
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();
@@ -82,8 +80,8 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
         Tensor seqinv = Tensor.of(points.stream() //
             .map(Se2CoveringGroup.INSTANCE::element) //
             .map(Se2CoveringGroupElement::inverse) //
-            .map(ge -> ge.combine(NEUTRAL)));
-        Tensor xyainv = Se2CoveringGroup.INSTANCE.element(xya).inverse().combine(NEUTRAL);
+            .map(Se2CoveringGroupElement::toCoordinate));
+        Tensor xyainv = Se2CoveringGroup.INSTANCE.element(xya).inverse().toCoordinate();
         Tensor weights2 = barycentricCoordinate.weights(seqinv, xyainv);
         // System.out.println("i=" + weights2.map(Round._4));
         Tensor check2 = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weights2);

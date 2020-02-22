@@ -24,11 +24,9 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantMeanTest extends TestCase {
-  private static final Tensor NEUTRAL = Tensors.vector(0, 0, 0);
-
   public void testPermutations() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
-      Distribution distribution = UniformDistribution.of(Clips.absolute(10));
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
@@ -43,8 +41,8 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
   }
 
   public void testEquation() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
-      Distribution distribution = UniformDistribution.of(Clips.absolute(10));
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
@@ -55,8 +53,8 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
   }
 
   public void testEquationQuantity() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
-      Distribution distribution = UniformDistribution.of(Clips.absolute(10));
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, length, 3).stream().map(row -> Tensors.of( //
           Quantity.of(row.Get(0), "m"), //
           Quantity.of(row.Get(1), "m"), //
@@ -72,8 +70,8 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
   }
 
   public void testIdentityXY() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(8));
     for (int length = 1; length < 6; ++length) {
-      Distribution distribution = UniformDistribution.of(Clips.absolute(8));
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       sequence.set(s -> RealScalar.ZERO, Tensor.ALL, 2);
       Tensor weights = RandomVariate.of(distribution, length);
@@ -99,7 +97,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor seqinv = Tensor.of(points.stream() //
           .map(Se2CoveringGroup.INSTANCE::element) //
           .map(Se2CoveringGroupElement::inverse) //
-          .map(ge -> ge.combine(NEUTRAL)));
+          .map(Se2CoveringGroupElement::toCoordinate));
       Tensor xyainv = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weights);
       Tensor combine = Se2CoveringGroup.INSTANCE.element(xya).combine(xyainv);
       Chop._12.requireAllZero(combine);

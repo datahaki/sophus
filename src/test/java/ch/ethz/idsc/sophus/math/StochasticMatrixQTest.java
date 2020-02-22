@@ -15,7 +15,7 @@ public class StochasticMatrixQTest extends TestCase {
     try {
       StochasticMatrixQ.requireRows(RealScalar.ONE);
       fail();
-    } catch (Exception e) {
+    } catch (Exception exception) {
       // ---
     }
   }
@@ -24,7 +24,7 @@ public class StochasticMatrixQTest extends TestCase {
     try {
       StochasticMatrixQ.requireRows(Tensors.vector(1, 0, 0));
       fail();
-    } catch (Exception e) {
+    } catch (Exception exception) {
       // ---
     }
   }
