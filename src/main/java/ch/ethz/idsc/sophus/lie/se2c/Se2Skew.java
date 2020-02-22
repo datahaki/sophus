@@ -1,14 +1,8 @@
 // code by ob, jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.se2.Se2Group;
 import ch.ethz.idsc.sophus.lie.so2.RotationMatrix;
 import ch.ethz.idsc.tensor.RationalScalar;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -24,25 +18,7 @@ import ch.ethz.idsc.tensor.sca.Tan;
  * by Xavier Pennec, Vincent Arsigny, p.35, Section 4.5
  * 
  * (1 - Cos[t]) / Sin[t] == Tan[t/2] */
-public class Se2Skew {
-  private static final Scalar ZERO = RealScalar.ZERO;
-
-  /** @param lieGroup either {@link Se2Group#INSTANCE} or {@link Se2CoveringGroup#INSTANCE}
-   * @param amean
-   * @param sequence
-   * @param weights
-   * @return */
-  public static Tensor mean(LieGroup lieGroup, Scalar amean, Tensor sequence, Tensor weights) {
-    LieGroupElement lieGroupElement = lieGroup.element(Tensors.of(ZERO, ZERO, amean));
-    AtomicInteger atomicInteger = new AtomicInteger();
-    Tensor tmean = sequence.stream() // transform elements in sequence so that angles average to 0
-        .map(lieGroupElement.inverse()::combine) //
-        .map(xya -> of(xya, weights.Get(atomicInteger.getAndIncrement()))) //
-        .reduce(Se2Skew::add) //
-        .get().solve();
-    return lieGroupElement.combine(tmean.append(amean.zero()));
-  }
-
+/* package */ class Se2Skew {
   /** @param xya element in SE(2)
    * @param weight
    * @return */

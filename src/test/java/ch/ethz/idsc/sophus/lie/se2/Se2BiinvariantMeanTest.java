@@ -1,6 +1,8 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.se2;
 
+import java.io.IOException;
+
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
@@ -11,6 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.io.Primitives;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.lie.Permutations;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -28,7 +31,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
 
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
-  public void testArsignyPennec() {
+  public void testArsignyPennec() throws ClassNotFoundException, IOException {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
     Scalar rootOfTwo = Sqrt.of(TWO);
@@ -47,7 +50,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     double denom = 1 + Math.PI / 4 * (Math.sqrt(2) / (2 - Math.sqrt(2)));
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
-      Tensor actual = se2BiinvariantMean.mean(sequence, weights);
+      Tensor actual = Serialization.copy(se2BiinvariantMean).mean(sequence, weights);
       BIINVARIANT_MEAN_DEFECT.defect(sequenceUnordered, weights, actual);
       Tensor actualUnordered = se2BiinvariantMean.mean(sequenceUnordered, weights);
       // ---

@@ -4,12 +4,11 @@ package ch.ethz.idsc.sophus.lie.se2;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.se2c.Se2Skew;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2FilterBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.so2.So2GlobalBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2LinearBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.so2.So2PhongBiinvariantMean;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Biinvariant mean for a sequence of points in SE(2), which is the solution to
@@ -39,19 +38,18 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
    * FILTER is suitable for use in center filters */
   FILTER(So2FilterBiinvariantMean.INSTANCE), //
   /** global formula is defined globally for arbitrary angles and weights */
-  GLOBAL(So2GlobalBiinvariantMean.INSTANCE), //
+  GLOBAL(So2PhongBiinvariantMean.INSTANCE), //
   ;
 
-  private final ScalarBiinvariantMean scalarBiinvariantMean;
+  private final BiinvariantMean biinvariantMean;
 
   /** @param scalarBiinvariantMean */
   private Se2BiinvariantMean(ScalarBiinvariantMean scalarBiinvariantMean) {
-    this.scalarBiinvariantMean = scalarBiinvariantMean;
+    biinvariantMean = new Se2CoveringBiinvariantMean(Se2Group.INSTANCE, scalarBiinvariantMean);
   }
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    Scalar amean = scalarBiinvariantMean.mean(sequence.get(Tensor.ALL, 2), weights);
-    return Se2Skew.mean(Se2Group.INSTANCE, amean, sequence, weights);
+    return biinvariantMean.mean(sequence, weights);
   }
 }

@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * Reference:
  * "Illumination for computer generated pictures"
  * by Bui Tuong Phong, 1975 */
-public enum So2GlobalBiinvariantMean implements ScalarBiinvariantMean {
+public enum So2PhongBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
 
   @Override // from ScalarBiinvariantMean

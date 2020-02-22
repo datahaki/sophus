@@ -28,7 +28,7 @@ public class So2LinearBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Total::ofVector);
   private static final Clip CLIP = Clips.absolute(Pi.VALUE);
   private static final ScalarBiinvariantMean[] SCALAR_BIINVARIANT_MEANS = { //
-      So2GlobalBiinvariantMean.INSTANCE, //
+      So2PhongBiinvariantMean.INSTANCE, //
       So2LinearBiinvariantMean.INSTANCE };
 
   public void testPermutations() {
@@ -72,7 +72,7 @@ public class So2LinearBiinvariantMeanTest extends TestCase {
       final Tensor weights = NORMALIZE.apply(RandomVariate.of(UniformDistribution.of(1, 2), random, length));
       for (int count = 0; count < 10; ++count) {
         Scalar shift = RandomVariate.of(distribution, random);
-        Scalar val1 = So2GlobalBiinvariantMean.INSTANCE.mean(sequence.map(shift::add), weights);
+        Scalar val1 = So2PhongBiinvariantMean.INSTANCE.mean(sequence.map(shift::add), weights);
         Tensor val2 = So2LinearBiinvariantMean.INSTANCE.mean(sequence.map(shift::add), weights);
         chop.requireAllZero(So2.MOD.apply(val1.subtract(val2)));
       }
