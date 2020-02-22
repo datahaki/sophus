@@ -7,16 +7,16 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** (Exp [ Mu ] - 1 ) / Mu
+/** ( Exp [ Mu ] - 1 ) / Mu
  * 
  * @see Logc */
 public enum Expc implements ScalarUnaryOperator {
   FUNCTION;
 
   @Override
-  public Scalar apply(Scalar t) {
-    return Scalars.isZero(t) //
+  public Scalar apply(Scalar mu) {
+    return Scalars.isZero(mu) //
         ? RealScalar.ONE
-        : Exp.FUNCTION.apply(t).subtract(RealScalar.ONE).divide(t);
+        : Exp.FUNCTION.apply(mu).subtract(RealScalar.ONE).divide(mu);
   }
 }

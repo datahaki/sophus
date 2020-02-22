@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.lie.LieGroupTests;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -23,80 +24,51 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
 
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
-    for (int dim = 2; dim < 5; ++dim) {
-      Tensor points = RandomVariate.of(distribution, 10, dim);
-      // TensorUnaryOperator tensorUnaryOperator = //
-      // Serialization.copy(RnInverseDistanceCoordinates.INSTANCE.of(points));
-      for (int count = 0; count < 10; ++count) {
-        Tensor mean = RandomVariate.of(distribution, dim);
+    for (int n = 2; n < 5; ++n)
+      for (int length = n + 1; length < 10; ++length) {
+        Tensor points = RandomVariate.of(distribution, length, n);
+        Tensor mean = RandomVariate.of(distribution, n);
         for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
-          {
-            Tensor weights = barycentricCoordinate.weights(points, mean);
-            Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
-            Chop._10.requireClose(mean, result);
-          }
+          Tensor weights = barycentricCoordinate.weights(points, mean);
+          Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
+          Chop._10.requireClose(mean, result);
         }
       }
-    }
   }
 
   public void testRandom() {
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
-    for (int n = 4; n < 10; ++n) {
-      Tensor points = RandomVariate.of(distribution, n, 3);
-      Tensor xya = RandomVariate.of(distribution, 3);
-      for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
-        Tensor weights1 = barycentricCoordinate.weights(points, xya);
-        Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights1);
-        Chop._06.requireClose(xya, x_recreated);
-        Tensor seqinv = Tensor.of(points.stream() //
-            .map(RnGroup.INSTANCE::element) //
-            .map(RnGroupElement::inverse) //
-            .map(RnGroupElement::toCoordinate));
-        Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().toCoordinate();
-        Tensor weights2 = barycentricCoordinate.weights(seqinv, xyainv);
-        Chop._10.requireClose(weights1, weights2);
+    for (int n = 2; n < 5; ++n)
+      for (int length = n + 1; length < 10; ++length) {
+        Tensor points = RandomVariate.of(distribution, length, n);
+        Tensor xya = RandomVariate.of(distribution, n);
+        for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+          Tensor weights1 = barycentricCoordinate.weights(points, xya);
+          Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
+          Tensor x_recreated = biinvariantMean.mean(points, weights1);
+          Chop._06.requireClose(xya, x_recreated);
+          // invariant under inversion
+          Tensor seqinv = LieGroupTests.invert(RnGroup.INSTANCE, points);
+          Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().toCoordinate();
+          Tensor weights2 = barycentricCoordinate.weights(seqinv, xyainv);
+          Chop._10.requireClose(weights1, weights2);
+          // invariant under left action
+          Tensor lft = RandomVariate.of(distribution, n);
+          RnGroupElement rnGroupElement = RnGroup.INSTANCE.element(lft);
+          Tensor misc = Tensor.of(points.stream().map(rnGroupElement::combine));
+          Tensor weights3 = barycentricCoordinate.weights(misc, rnGroupElement.combine(xya));
+          Chop._10.requireClose(weights1, weights3);
+        }
       }
-    }
   }
-  // public void testLinearReproduction() {
-  // Distribution distribution = UniformDistribution.unit();
-  // for (int d = 2; d < 6; ++d)
-  // for (int n = d + 1; n < 10; ++n) {
-  // Tensor points = RandomVariate.of(distribution, n, d);
-  // Tensor x = RandomVariate.of(distribution, d);
-  // TensorUnaryOperator idfCoordinates = RnInverseDistanceCoordinatesOLD.of(Norm._2::ofVector, points);
-  // LieInverseDistanceCoordinates lidc = new LieInverseDistanceCoordinates(RnGroup.INSTANCE, p -> p, InverseNorm.of(Norm._2::ofVector));
-  //// TensorUnaryOperator rn_Coordinates = .of(points);
-  // Tensor w1 = idfCoordinates.apply(x);
-  // Tensor w2 = lidc.idc(points, x);
-  // Chop._06.requireClose(w1, w2);
-  // }
-  // }
-  //
-  // public void testLagrangeProperty() {
-  // Distribution distribution = UniformDistribution.unit();
-  // for (int d = 2; d < 6; ++d)
-  // for (int n = d + 1; n < 10; ++n) {
-  // Tensor points = RandomVariate.of(distribution, n, d);
-  // TensorUnaryOperator idfCoordinates = RnInverseDistanceCoordinatesOLD.of(Norm._2::ofVector, points);
-  //// TensorUnaryOperator rn_Coordinates = new LieInverseDistanceCoordinates(RnGroup.INSTANCE, p -> p, InverseNorm.of(Norm._2::ofVector)).of(points);
-  // LieInverseDistanceCoordinates lidc = new LieInverseDistanceCoordinates(RnGroup.INSTANCE, p -> p, InverseNorm.of(Norm._2::ofVector));
-  // Chop._06.requireClose(Tensor.of(points.stream().map(idfCoordinates)), IdentityMatrix.of(n));
-  // Chop._06.requireClose(Tensor.of(points.stream().map(r->lidc.idc(points, r))), IdentityMatrix.of(n));
-  // }
-  // }
 
   public void testLinearReproduction() {
     Distribution distribution = UniformDistribution.unit();
-    for (int d = 2; d < 6; ++d)
-      for (int n = d + 1; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distribution, n, d);
-        Tensor x = RandomVariate.of(distribution, d);
-        // TensorUnaryOperator tensorUnaryOperator = //
-        // Serialization.copy(of(RnNorm.INSTANCE, points));
+    for (int n = 2; n < 6; ++n)
+      for (int length = n + 1; length < 10; ++length) {
+        Tensor points = RandomVariate.of(distribution, length, n);
+        Tensor x = RandomVariate.of(distribution, n);
         Tensor weights = OriginalInverseDistanceCoordinates.INSTANCE.weights(points, x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(x, y);
@@ -105,20 +77,20 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
 
   public void testLagrangeProperty() {
     Distribution distribution = UniformDistribution.unit();
-    for (int d = 2; d < 6; ++d)
-      for (int n = d + 1; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distribution, n, d);
+    for (int n = 2; n < 6; ++n)
+      for (int length = n + 1; length < 10; ++length) {
+        Tensor points = RandomVariate.of(distribution, length, n);
         TensorUnaryOperator tensorUnaryOperator = x -> OriginalInverseDistanceCoordinates.INSTANCE.weights(points, x);
-        Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(n));
+        Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
       }
   }
 
   public void testQuantity() {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    for (int d = 2; d < 6; ++d)
-      for (int n = d + 1; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distribution, n, d);
-        Tensor x = RandomVariate.of(distribution, d);
+    for (int n = 2; n < 6; ++n)
+      for (int length = n + 1; length < 10; ++length) {
+        Tensor points = RandomVariate.of(distribution, length, n);
+        Tensor x = RandomVariate.of(distribution, n);
         Tensor weights = OriginalInverseDistanceCoordinates.INSTANCE.weights(points, x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(x, y);

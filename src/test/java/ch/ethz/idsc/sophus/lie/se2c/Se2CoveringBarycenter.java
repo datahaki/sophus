@@ -36,8 +36,12 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
   public Tensor apply(Tensor mean) {
     Tensor m4x4 = Tensor.of(sequence.stream() //
         .map(new Se2CoveringGroupElement(mean).inverse()::combine) //
-        .map(Se2CoveringInverseDistanceCoordinate::equation) //
+        .map(Se2CoveringBarycenter::equation) //
         .map(row -> row.append(RealScalar.ONE)));
     return LinearSolve.of(Transpose.of(m4x4), RHS);
+  }
+
+  public static Tensor equation(Tensor xya) {
+    return Se2Skew.of(xya, RealScalar.ONE).rhs().append(xya.Get(2)); // append biinvariant mean of angles
   }
 }

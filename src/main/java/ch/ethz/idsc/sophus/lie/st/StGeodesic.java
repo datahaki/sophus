@@ -16,7 +16,7 @@ public enum StGeodesic implements GeodesicInterface {
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    StGroupElement p_act = new StGroupElement(p);
+    StGroupElement p_act = StGroup.INSTANCE.element(p);
     Tensor delta = p_act.inverse().combine(q);
     Tensor x = StExponential.INSTANCE.log(delta);
     return scalar -> p_act.combine(StExponential.INSTANCE.exp(x.multiply(scalar)));

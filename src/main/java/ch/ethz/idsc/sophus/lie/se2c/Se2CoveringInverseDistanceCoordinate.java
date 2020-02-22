@@ -6,8 +6,6 @@ import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.BiinvariantInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
-import ch.ethz.idsc.tensor.RealScalar;
-import ch.ethz.idsc.tensor.Tensor;
 
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
@@ -22,12 +20,4 @@ public enum Se2CoveringInverseDistanceCoordinate {
       Se2CoveringGroup.INSTANCE, //
       Se2CoveringExponential.INSTANCE::log, //
       InverseNorm.of(RnNormSquared.INSTANCE));
-
-  public static Tensor equation(Tensor xya) {
-    return Se2Skew.of(xya, RealScalar.ONE).rhs().append(xya.Get(2)); // append biinvariant mean of angles
-  }
-
-  public static Tensor equation2(Tensor xya) {
-    return Se2Skew.of(xya, RealScalar.of(2)).rhs().append(xya.Get(2)); // append biinvariant mean of angles
-  }
 }
