@@ -32,10 +32,11 @@ public class LinearGroupElement implements LieGroupElement, Serializable {
     this.matrix = matrix;
     this.inverse = inverse;
   }
-  // @Override
-  // public Tensor toCoordinate() {
-  // return matrix.unmodifiable();
-  // }
+
+  @Override
+  public Tensor toCoordinate() {
+    return matrix.unmodifiable();
+  }
 
   @Override // from LieGroupElement
   public LinearGroupElement inverse() {

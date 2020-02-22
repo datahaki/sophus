@@ -14,6 +14,11 @@ public class So2GroupElement implements LieGroupElement {
     this.alpha = alpha;
   }
 
+  @Override
+  public Tensor toCoordinate() {
+    return alpha;
+  }
+
   @Override // from LieGroupElement
   public So2GroupElement inverse() {
     return new So2GroupElement(alpha.negate());

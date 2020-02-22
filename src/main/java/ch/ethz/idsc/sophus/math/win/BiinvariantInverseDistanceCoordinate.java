@@ -16,7 +16,6 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public class BiinvariantInverseDistanceCoordinate implements BarycentricCoordinate, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator log;
-  private final Tensor neutral;
   private final TensorUnaryOperator inv_norm;
 
   /** @param lieGroup
@@ -24,10 +23,9 @@ public class BiinvariantInverseDistanceCoordinate implements BarycentricCoordina
    * @param neutral
    * @param inv_norm */
   // TODO design is not good: neutral element should depend on group element
-  public BiinvariantInverseDistanceCoordinate(LieGroup lieGroup, TensorUnaryOperator log, Tensor neutral, TensorUnaryOperator inv_norm) {
+  public BiinvariantInverseDistanceCoordinate(LieGroup lieGroup, TensorUnaryOperator log, TensorUnaryOperator inv_norm) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.log = Objects.requireNonNull(log);
-    this.neutral = Objects.requireNonNull(neutral);
     this.inv_norm = Objects.requireNonNull(inv_norm);
   }
 
@@ -40,7 +38,7 @@ public class BiinvariantInverseDistanceCoordinate implements BarycentricCoordina
     Tensor levers2 = Tensor.of(sequence.stream() //
         .map(lieGroup::element) //
         .map(LieGroupElement::inverse) //
-        .map(lieGroupElement -> lieGroupElement.combine(neutral)) //
+        .map(LieGroupElement::toCoordinate) //
         .map(element::combine) //
         .map(log));
     Tensor levers = Join.of(1, levers1, levers2);

@@ -64,7 +64,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     HeGroupElement p = new HeGroupElement(Tensors.fromString("{{1, 2}, {3, 4}, 5}"));
     HeGroupElement pinv = p.inverse();
     // ---
-    Tensor sequence = Tensors.of(p.toTensor(), pinv.toTensor());
+    Tensor sequence = Tensors.of(p.toCoordinate(), pinv.toCoordinate());
     Tensor weights = Tensors.vector(0.5, 0.5);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tensor identity = Tensors.fromString("{{0, 0}, {0, 0}, 0}");

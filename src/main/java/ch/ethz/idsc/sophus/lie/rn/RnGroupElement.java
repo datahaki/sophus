@@ -18,6 +18,11 @@ public class RnGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
+  public Tensor toCoordinate() {
+    return tensor.unmodifiable();
+  }
+
+  @Override // from LieGroupElement
   public RnGroupElement inverse() {
     return new RnGroupElement(tensor.negate());
   }

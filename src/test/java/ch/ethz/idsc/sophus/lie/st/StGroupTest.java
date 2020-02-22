@@ -11,7 +11,7 @@ public class StGroupTest extends TestCase {
     Tensor id = Tensors.fromString("{1, {0, 0}}");
     StGroupElement pE = StGroup.INSTANCE.element(p);
     StGroupElement inv = pE.inverse();
-    assertEquals(inv.toTensor(), Tensors.fromString("{1/3, {-2, -1}}"));
+    assertEquals(inv.toCoordinate(), Tensors.fromString("{1/3, {-2, -1}}"));
     assertEquals(inv.combine(p), id);
   }
 

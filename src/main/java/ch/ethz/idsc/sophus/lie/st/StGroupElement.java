@@ -37,6 +37,11 @@ public class StGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
+  public Tensor toCoordinate() {
+    return Tensors.of(lambda, t);
+  }
+
+  @Override // from LieGroupElement
   public StGroupElement inverse() {
     return new StGroupElement( //
         lambda.reciprocal(), //
@@ -56,10 +61,5 @@ public class StGroupElement implements LieGroupElement, Serializable {
     return Tensors.of( //
         tensor.get(0), //
         tensor.get(1).multiply(lambda).subtract(t.multiply(tensor.Get(0))));
-  }
-
-  // function for convenience and testing
-  public Tensor toTensor() {
-    return Tensors.of(lambda, t);
   }
 }

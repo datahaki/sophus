@@ -20,6 +20,11 @@ public class ScGroupElement implements LieGroupElement {
     this.tensor = tensor;
   }
 
+  @Override // from LieGroupElement
+  public Tensor toCoordinate() {
+    return tensor.unmodifiable();
+  }
+
   @Override
   public LieGroupElement inverse() {
     return new ScGroupElement(tensor.map(Scalar::reciprocal));

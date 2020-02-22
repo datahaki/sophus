@@ -26,9 +26,9 @@ public class HeGroupElementTest extends TestCase {
     ExactTensorQ.require(ab_t);
     assertEquals(ab_t, Tensors.fromString("{{7, 9}, {11, 13}, 41}"));
     HeGroupElement ab = new HeGroupElement(ab_t);
-    Tensor a_r = ab.combine(new HeGroupElement(b_t).inverse().toTensor());
+    Tensor a_r = ab.combine(new HeGroupElement(b_t).inverse().toCoordinate());
     assertEquals(a_r, a_t);
-    Tensor b_r = a.inverse().combine(ab.toTensor());
+    Tensor b_r = a.inverse().combine(ab.toCoordinate());
     assertEquals(b_t, b_r);
   }
 

@@ -17,11 +17,16 @@ public class So3GroupElement implements LieGroupElement {
     throw TensorRuntimeException.of(matrix);
   }
 
-  // ---
+  /***************************************************/
   private final Tensor matrix;
 
   public So3GroupElement(Tensor matrix) {
     this.matrix = matrix;
+  }
+
+  @Override // from LieGroupElement
+  public Tensor toCoordinate() {
+    return matrix.unmodifiable();
   }
 
   @Override // from LieGroupElement

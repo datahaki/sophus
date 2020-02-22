@@ -38,6 +38,11 @@ public class Se2CoveringGroupElement implements LieGroupElement, Serializable {
     this.sa = sa;
   }
 
+  @Override
+  public final Tensor toCoordinate() {
+    return Tensors.of(px, py, pa);
+  }
+
   @Override // from LieGroupElement
   public final Se2CoveringGroupElement inverse() {
     return create( //

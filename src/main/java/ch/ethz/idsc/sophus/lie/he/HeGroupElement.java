@@ -39,6 +39,11 @@ public class HeGroupElement implements LieGroupElement, Serializable {
     this.z = z;
   }
 
+  @Override
+  public Tensor toCoordinate() {
+    return Tensors.of(x, y, z);
+  }
+
   @Override // from LieGroupElement
   public HeGroupElement inverse() {
     return new HeGroupElement( //
@@ -62,10 +67,5 @@ public class HeGroupElement implements LieGroupElement, Serializable {
         dxdydz.get(0), //
         dxdydz.get(1), //
         x.dot(dxdydz.get(1)).subtract(y.dot(dxdydz.get(0))).add(dxdydz.Get(2)));
-  }
-
-  // function for convenience and testing
-  public Tensor toTensor() {
-    return Tensors.of(x, y, z);
   }
 }

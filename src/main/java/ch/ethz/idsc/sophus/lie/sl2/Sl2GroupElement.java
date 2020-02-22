@@ -34,6 +34,11 @@ public class Sl2GroupElement implements LieGroupElement {
   }
 
   @Override // from LieGroupElement
+  public Tensor toCoordinate() {
+    return Tensors.of(a1, a2, a3);
+  }
+
+  @Override // from LieGroupElement
   public Sl2GroupElement inverse() {
     return new Sl2GroupElement( //
         a1.divide(a3).negate(), //
@@ -56,9 +61,5 @@ public class Sl2GroupElement implements LieGroupElement {
   @Override // from LieGroupElement
   public Tensor adjoint(Tensor tensor) {
     throw new UnsupportedOperationException();
-  }
-
-  /* package */ Tensor vector() {
-    return Tensors.of(a1, a2, a3);
   }
 }

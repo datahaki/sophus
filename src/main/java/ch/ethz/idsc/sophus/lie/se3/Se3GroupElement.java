@@ -31,6 +31,11 @@ public class Se3GroupElement implements LieGroupElement {
   }
 
   @Override // from LieGroupElement
+  public Tensor toCoordinate() {
+    return Se3Matrix.of(R, t);
+  }
+
+  @Override // from LieGroupElement
   public Se3GroupElement inverse() {
     Tensor tR = Transpose.of(R);
     return new Se3GroupElement(tR, tR.dot(t).negate());
