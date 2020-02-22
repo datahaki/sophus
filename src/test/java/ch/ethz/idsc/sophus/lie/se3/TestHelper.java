@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 
-enum TestHelper {
+/* package */ enum TestHelper {
   ;
   private static final Distribution DISTRIBUTION_T = NormalDistribution.of(4, 1);
   private static final Distribution DISTRIBUTION_R = NormalDistribution.of(0, 0.1);

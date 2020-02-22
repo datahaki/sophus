@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
+import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -11,6 +14,9 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se3ExponentialTest extends TestCase {
+  private static final LieExponential LIE_EXPONENTIAL = Se3Exponential.INSTANCE;
+  private static final LieGroup LIE_GROUP = Se3Group.INSTANCE;
+
   public void testSimple() {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
@@ -56,5 +62,34 @@ public class Se3ExponentialTest extends TestCase {
     Tensor g = Se3Exponential.INSTANCE.exp(input);
     Tensor u_w = Se3Exponential.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
+  }
+
+  public void testAdjointExp() {
+    // reference Pennec/Arsigny 2012 p.13
+    // g.Exp[x] == Exp[Ad(g).x].g
+    for (int n = 1; n < 4; ++n)
+      for (int count = 0; count < 10; ++count) {
+        Tensor g = TestHelper.spawn_Se3(); // element
+        Tensor x = TestHelper.spawn_se3(); // vector
+        LieGroupElement ge = LIE_GROUP.element(g);
+        Tensor lhs = ge.combine(LIE_EXPONENTIAL.exp(x)); // g.Exp[x]
+        Tensor rhs = LIE_GROUP.element(LIE_EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
+        Chop._10.requireClose(lhs, rhs);
+      }
+  }
+
+  public void testAdjointLog() {
+    // reference Pennec/Arsigny 2012 p.13
+    // Log[g.m.g^-1] == Ad(g).Log[m]
+    for (int n = 1; n < 4; ++n)
+      for (int count = 0; count < 10; ++count) {
+        Tensor g = TestHelper.spawn_Se3(); // element
+        Tensor m = TestHelper.spawn_Se3(); // element
+        LieGroupElement ge = LIE_GROUP.element(g);
+        Tensor lhs = LIE_EXPONENTIAL.log( //
+            LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
+        Tensor rhs = ge.adjoint(LIE_EXPONENTIAL.log(m)); // Ad(g).Log[m]
+        Chop._10.requireClose(lhs, rhs);
+      }
   }
 }

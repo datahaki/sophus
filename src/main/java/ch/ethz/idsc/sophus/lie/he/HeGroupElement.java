@@ -63,9 +63,8 @@ public class HeGroupElement implements LieGroupElement, Serializable {
 
   @Override // from LieGroupElement
   public Tensor adjoint(Tensor dxdydz) {
-    return Tensors.of( //
-        dxdydz.get(0), //
-        dxdydz.get(1), //
-        x.dot(dxdydz.get(1)).subtract(y.dot(dxdydz.get(0))).add(dxdydz.Get(2)));
+    Tensor dx = dxdydz.get(0);
+    Tensor dy = dxdydz.get(1);
+    return Tensors.of(dx, dy, x.dot(dy).subtract(y.dot(dx)).add(dxdydz.get(2)));
   }
 }
