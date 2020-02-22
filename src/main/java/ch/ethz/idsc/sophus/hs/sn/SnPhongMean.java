@@ -11,6 +11,10 @@ import ch.ethz.idsc.tensor.red.Norm;
  * However, Phong projection is not the inverse to inverse distance coordinates.
  * 
  * Reference:
+ * "Illumination for computer generated pictures"
+ * by Bui Tuong Phong, 1975
+ * 
+ * Reference:
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 public enum SnPhongMean implements BiinvariantMean {

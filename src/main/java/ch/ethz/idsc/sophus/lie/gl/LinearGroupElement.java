@@ -24,7 +24,7 @@ public class LinearGroupElement implements LieGroupElement, Serializable {
     return new LinearGroupElement(matrix, Inverse.of(matrix));
   }
 
-  // ---
+  /***************************************************/
   private final Tensor matrix;
   private final Tensor inverse;
 
@@ -32,6 +32,10 @@ public class LinearGroupElement implements LieGroupElement, Serializable {
     this.matrix = matrix;
     this.inverse = inverse;
   }
+  // @Override
+  // public Tensor toCoordinate() {
+  // return matrix.unmodifiable();
+  // }
 
   @Override // from LieGroupElement
   public LinearGroupElement inverse() {

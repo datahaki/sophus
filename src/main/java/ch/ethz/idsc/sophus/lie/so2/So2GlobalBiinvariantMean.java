@@ -13,7 +13,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * elements of SO(2) are represented as scalars
  * 
  * Reference:
- * "Illumination for computer generated pictures" by B. Phong, 1975 */
+ * "Illumination for computer generated pictures"
+ * by Bui Tuong Phong, 1975 */
 public enum So2GlobalBiinvariantMean implements ScalarBiinvariantMean {
   INSTANCE;
 

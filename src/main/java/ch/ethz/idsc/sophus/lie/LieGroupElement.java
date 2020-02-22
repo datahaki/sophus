@@ -5,6 +5,7 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** interface of an element of a Lie-group */
 public interface LieGroupElement {
+  // Tensor toCoordinate();
   /** @return inverse of this element */
   LieGroupElement inverse();
 

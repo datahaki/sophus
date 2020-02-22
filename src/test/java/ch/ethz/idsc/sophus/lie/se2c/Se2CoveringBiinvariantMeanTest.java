@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -23,6 +24,8 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantMeanTest extends TestCase {
+  private static final Tensor NEUTRAL = Tensors.vector(0, 0, 0);
+
   public void testPermutations() {
     for (int length = 1; length < 6; ++length) {
       Distribution distribution = UniformDistribution.of(Clips.absolute(10));
@@ -84,6 +87,22 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
         Tensor rnmean = RnBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
         Chop._02.requireClose(result, rnmean);
       }
+    }
+  }
+
+  public void testRandom() {
+    Distribution distribution = UniformDistribution.unit();
+    for (int n = 4; n < 10; ++n) {
+      Tensor points = RandomVariate.of(distribution, n, 3);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
+      Tensor xya = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
+      Tensor seqinv = Tensor.of(points.stream() //
+          .map(Se2CoveringGroup.INSTANCE::element) //
+          .map(Se2CoveringGroupElement::inverse) //
+          .map(ge -> ge.combine(NEUTRAL)));
+      Tensor xyainv = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weights);
+      Tensor combine = Se2CoveringGroup.INSTANCE.element(xya).combine(xyainv);
+      Chop._12.requireAllZero(combine);
     }
   }
 
