@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
   /** @param xya element from Lie Group SE2 as coordinates {x, y, alpha}
    * @return */
   public static TensorUnaryOperator inverse(Tensor xya) {
-    return new Se2Adjoint(new Se2GroupElement(xya).inverseTensor());
+    return new Se2Adjoint(new Se2GroupElement(xya).inverse().toCoordinate());
   }
 
   // ---

@@ -30,9 +30,4 @@ public class Se2GroupElement extends Se2CoveringGroupElement {
   protected Se2GroupElement create(Scalar px, Scalar py, Scalar pa, Scalar ca, Scalar sa) {
     return new Se2GroupElement(px, py, pa, ca, sa);
   }
-
-  @Override // from Se2CoveringGroupElement
-  protected Tensor inverseTensor() {
-    return super.inverseTensor();
-  }
 }

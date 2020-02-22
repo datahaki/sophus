@@ -93,7 +93,8 @@ public class Se2CoveringGroupElementTest extends TestCase {
   public void testInverseTensor() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Se2CoveringGroupElement element = new Se2CoveringGroupElement(xya);
-    Tensor combine = element.combine(element.inverseTensor());
+    Tensor coordin = element.inverse().toCoordinate();
+    Tensor combine = element.combine(coordin);
     Chop._12.requireClose(combine, Tensors.fromString("{0[m], 0[m], 0}"));
     element.dL(Tensors.fromString("{2[m*s^-1], 3[m*s^-1], 4[s^-1]}"));
     Tensor dR = element.dR(Tensors.fromString("{2[m*s^-1], 3[m*s^-1], 4[s^-1]}"));

@@ -81,14 +81,6 @@ public class Se2CoveringGroupElement implements LieGroupElement, Serializable {
     return new Se2CoveringGroupElement(px, py, pa, ca, sa);
   }
 
-  /** @return vector of coordinates of inverse */
-  protected Tensor inverseTensor() {
-    return Tensors.of( //
-        px.multiply(ca).add(py.multiply(sa)).negate(), //
-        px.multiply(sa).subtract(py.multiply(ca)), //
-        pa.negate());
-  }
-
   @Override // from LieGroupElement
   public final Tensor dL(Tensor uvw) {
     Scalar u = uvw.Get(0);
