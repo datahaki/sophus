@@ -12,7 +12,11 @@ import ch.ethz.idsc.tensor.sca.Clips;
   ;
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(10));
 
-  static Tensor spawn_random(int n) {
+  static Tensor spawn_He(int n) {
+    return spawn_he(n);
+  }
+
+  static Tensor spawn_he(int n) {
     return Tensors.of( //
         RandomVariate.of(DISTRIBUTION, n), //
         RandomVariate.of(DISTRIBUTION, n), //

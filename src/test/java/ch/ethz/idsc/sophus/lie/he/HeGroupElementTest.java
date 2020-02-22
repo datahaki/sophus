@@ -61,8 +61,8 @@ public class HeGroupElementTest extends TestCase {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int n = 1; n < 10; ++n) {
-      Tensor g = TestHelper.spawn_random(n); // element
-      Tensor x = TestHelper.spawn_random(n); // vector
+      Tensor g = TestHelper.spawn_He(n); // element
+      Tensor x = TestHelper.spawn_He(n); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
       Tensor lhs = ge.combine(LIE_EXPONENTIAL.exp(x)); // g.Exp[x]
       Tensor rhs = LIE_GROUP.element(LIE_EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
@@ -74,8 +74,8 @@ public class HeGroupElementTest extends TestCase {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     for (int n = 1; n < 10; ++n) {
-      Tensor g = TestHelper.spawn_random(n); // element
-      Tensor m = TestHelper.spawn_random(n); // element
+      Tensor g = TestHelper.spawn_He(n); // element
+      Tensor m = TestHelper.spawn_He(n); // element
       LieGroupElement ge = LIE_GROUP.element(g);
       Tensor lhs = LIE_EXPONENTIAL.log( //
           LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]

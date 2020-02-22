@@ -9,7 +9,9 @@ import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
 
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
- * Se2CoveringBiinvariantMean[sequence, weights] == mean */
+ * Se2CoveringBiinvariantMean[sequence, weights] == mean
+ * 
+ * Se2CoveringInverseDistanceCoordinate is invariant under left-action */
 public enum Se2CoveringInverseDistanceCoordinate {
   ;
   public static final BarycentricCoordinate INSTANCE = new LieInverseDistanceCoordinate( //

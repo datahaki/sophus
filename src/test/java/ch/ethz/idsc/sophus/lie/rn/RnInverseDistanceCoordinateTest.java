@@ -52,19 +52,21 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
           Tensor x_recreated = biinvariantMean.mean(points, weights1);
           Chop._06.requireClose(xya, x_recreated);
           Tensor shift = RandomVariate.of(distribution, n);
-          RnGroupElement rnGroupElement = RnGroup.INSTANCE.element(shift);
-          // invariant under left action
-          Tensor weightsL = barycentricCoordinate.weights( //
-              LIE_GROUP_OPS.left(points, shift), rnGroupElement.combine(xya));
-          Tolerance.CHOP.requireClose(weights1, weightsL);
-          // invariant under left action
-          Tensor weightsR = barycentricCoordinate.weights( //
-              LIE_GROUP_OPS.right(points, shift), RnGroup.INSTANCE.element(xya).combine(shift));
-          Tolerance.CHOP.requireClose(weights1, weightsR);
-          // invariant under inversion
-          Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().toCoordinate();
-          Tensor weightsI = barycentricCoordinate.weights(LIE_GROUP_OPS.invertAll(points), xyainv);
-          Tolerance.CHOP.requireClose(weights1, weightsI);
+          { // invariant under left action
+            Tensor weightsL = barycentricCoordinate.weights( //
+                LIE_GROUP_OPS.allL(points, shift), LIE_GROUP_OPS.combine(shift, xya));
+            Tolerance.CHOP.requireClose(weights1, weightsL);
+          }
+          { // invariant under left action
+            Tensor weightsR = barycentricCoordinate.weights( //
+                LIE_GROUP_OPS.allR(points, shift), LIE_GROUP_OPS.combine(xya, shift));
+            Tolerance.CHOP.requireClose(weights1, weightsR);
+          }
+          { // invariant under inversion
+            Tensor weightsI = barycentricCoordinate.weights( //
+                LIE_GROUP_OPS.allI(points), LIE_GROUP_OPS.invert(xya));
+            Tolerance.CHOP.requireClose(weights1, weightsI);
+          }
         }
       }
   }

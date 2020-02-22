@@ -15,13 +15,12 @@ import junit.framework.TestCase;
 public class Se3InverseDistanceCoordinateTest extends TestCase {
   static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       Se3InverseDistanceCoordinate.INSTANCE, //
-      Se3InverseDistanceCoordinate.BIINVAR //
+      Se3InverseDistanceCoordinate.SQUARED //
   };
 
   public void testRandom() {
     for (int count = 0; count < 10; ++count)
       for (int n = 7; n < 13; ++n) {
-        System.out.println("n=" + n);
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
         Tensor point = TestHelper.spawn_Se3();
         for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
@@ -32,6 +31,7 @@ public class Se3InverseDistanceCoordinateTest extends TestCase {
           assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
           Tensor defect = Se3BiinvariantMeanDefect.INSTANCE.defect(sequence, weights, mean);
           Chop._08.requireAllZero(defect);
+          // TODO check right invariance
         }
       }
   }
