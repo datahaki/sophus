@@ -33,9 +33,10 @@ public class Sl2GroupElement implements LieGroupElement {
   private final Scalar a2;
   private final Scalar a3;
 
+  /** @param a1
+   * @param a2
+   * @param a3 non-zero */
   private Sl2GroupElement(Scalar a1, Scalar a2, Scalar a3) {
-    if (Scalars.isZero(a3))
-      throw TensorRuntimeException.of(a1, a2, a3);
     this.a1 = a1;
     this.a2 = a2;
     this.a3 = a3;

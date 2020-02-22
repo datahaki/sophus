@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LowerTriangularize;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.mat.UnitaryMatrixQ;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -214,6 +215,13 @@ public class So3ExponentialTest extends TestCase {
       fail();
     } catch (Exception exception) {
       // ---
+    }
+  }
+
+  public void testOrthogonalize() {
+    for (int count = 0; count < 10; ++count) {
+      Tensor matrix = TestHelper.spawn_So3();
+      Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
     }
   }
 

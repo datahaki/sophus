@@ -23,7 +23,7 @@ public class Sl2GroupElementTest extends TestCase {
   }
 
   public void testAdjointId() {
-    Sl2GroupElement sl2GroupElement = Sl2GroupElement.create(Tensors.vector(0, 0, 1));
+    Sl2GroupElement sl2GroupElement = Sl2Group.INSTANCE.element(Tensors.vector(0, 0, 1));
     Tensor matrix = adjoint(sl2GroupElement);
     ExactTensorQ.require(matrix);
     assertEquals(matrix, IdentityMatrix.of(3));

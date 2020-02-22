@@ -2,12 +2,9 @@
 package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.se2.Se2Skew;
 import ch.ethz.idsc.sophus.lie.so2c.So2CoveringBiinvariantMean;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 
 /** no restrictions on input points from Covering SE(2), albeit isolated singularities exists
  * 
@@ -15,12 +12,10 @@ import ch.ethz.idsc.tensor.Tensors;
 public enum Se2CoveringBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
-  private static final Scalar ZERO = RealScalar.ZERO;
-
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Scalar amean = So2CoveringBiinvariantMean.INSTANCE.mean(sequence.get(Tensor.ALL, 2), weights);
     // make transformation s.t. mean rotation is zero and retransformation after taking mean
-    return Se2Skew.mean(Se2CoveringGroup.INSTANCE.element(Tensors.of(ZERO, ZERO, amean)), sequence, weights);
+    return Se2Skew.mean(Se2CoveringGroup.INSTANCE, amean, sequence, weights);
   }
 }

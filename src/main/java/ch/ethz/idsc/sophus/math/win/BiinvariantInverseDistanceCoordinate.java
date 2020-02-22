@@ -20,10 +20,11 @@ public class BiinvariantInverseDistanceCoordinate implements BarycentricCoordina
 
   /** @param lieGroup
    * @param log
-   * @param neutral
    * @param inv_norm */
-  // TODO design is not good: neutral element should depend on group element
-  public BiinvariantInverseDistanceCoordinate(LieGroup lieGroup, TensorUnaryOperator log, TensorUnaryOperator inv_norm) {
+  public BiinvariantInverseDistanceCoordinate( //
+      LieGroup lieGroup, //
+      TensorUnaryOperator log, //
+      TensorUnaryOperator inv_norm) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.log = Objects.requireNonNull(log);
     this.inv_norm = Objects.requireNonNull(inv_norm);

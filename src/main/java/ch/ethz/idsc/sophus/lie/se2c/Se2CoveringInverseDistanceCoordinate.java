@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.lie.se2.Se2Skew;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.BiinvariantInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;

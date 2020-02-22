@@ -4,14 +4,13 @@ package ch.ethz.idsc.sophus.lie.se2;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.se2c.Se2Skew;
 import ch.ethz.idsc.sophus.lie.so2.So2FilterBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2GlobalBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2LinearBiinvariantMean;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 
 /** Biinvariant mean for a sequence of points in SE(2), which is the solution to
  * the barycentric equation.
@@ -43,9 +42,6 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
   GLOBAL(So2GlobalBiinvariantMean.INSTANCE), //
   ;
 
-  // ---
-  private static final Scalar ZERO = RealScalar.ZERO;
-  // ---
   private final ScalarBiinvariantMean scalarBiinvariantMean;
 
   /** @param scalarBiinvariantMean */
@@ -56,6 +52,6 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Scalar amean = scalarBiinvariantMean.mean(sequence.get(Tensor.ALL, 2), weights);
-    return Se2Skew.mean(new Se2GroupElement(Tensors.of(ZERO, ZERO, amean)), sequence, weights);
+    return Se2Skew.mean(Se2Group.INSTANCE, amean, sequence, weights);
   }
 }

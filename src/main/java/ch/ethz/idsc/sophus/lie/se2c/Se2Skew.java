@@ -1,0 +1,100 @@
+// code by ob, jph
+package ch.ethz.idsc.sophus.lie.se2c;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.lie.se2.Se2Group;
+import ch.ethz.idsc.sophus.lie.so2.RotationMatrix;
+import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.Scalars;
+import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.LinearSolve;
+import ch.ethz.idsc.tensor.sca.Tan;
+
+/** solve for biinvariant mean
+ * 
+ * Reference:
+ * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
+ * by Xavier Pennec, Vincent Arsigny, p.35, Section 4.5
+ * 
+ * (1 - Cos[t]) / Sin[t] == Tan[t/2] */
+public class Se2Skew {
+  private static final Scalar ZERO = RealScalar.ZERO;
+
+  /** @param lieGroup either {@link Se2Group#INSTANCE} or {@link Se2CoveringGroup#INSTANCE}
+   * @param amean
+   * @param sequence
+   * @param weights
+   * @return */
+  public static Tensor mean(LieGroup lieGroup, Scalar amean, Tensor sequence, Tensor weights) {
+    LieGroupElement lieGroupElement = lieGroup.element(Tensors.of(ZERO, ZERO, amean));
+    AtomicInteger atomicInteger = new AtomicInteger();
+    Tensor tmean = sequence.stream() // transform elements in sequence so that angles average to 0
+        .map(lieGroupElement.inverse()::combine) //
+        .map(xya -> of(xya, weights.Get(atomicInteger.getAndIncrement()))) //
+        .reduce(Se2Skew::add) //
+        .get().solve();
+    return lieGroupElement.combine(tmean.append(amean.zero()));
+  }
+
+  /** @param xya element in SE(2)
+   * @param weight
+   * @return */
+  public static Se2Skew of(Tensor xya, Scalar weight) {
+    Tensor xy = xya.extract(0, 2);
+    Scalar angle = xya.Get(2).negate();
+    Tensor logflow = logflow(angle);
+    return new Se2Skew(logflow.multiply(weight), logflow.dot(RotationMatrix.of(angle).dot(xy.multiply(weight))));
+  }
+
+  /** Function returns 2x2 matrix that transforms (x, y) part of group element in log
+   * 
+   * The determinant of the matrix is of the form
+   * (t^2 Cos[t])/(2 - 2 Cos[t])
+   * which evaluates to zero for t == pi/2 + z pi where z is any integer
+   * 
+   * @param be angle
+   * @return matrix of dimensions 2 x 2 */
+  public static Tensor logflow(Scalar be) {
+    Scalar be2 = be.multiply(RationalScalar.HALF);
+    Scalar tan = Tan.FUNCTION.apply(be2);
+    if (Scalars.isZero(tan))
+      return IdentityMatrix.of(2);
+    Scalar m11 = be2.divide(tan);
+    return Tensors.of( //
+        Tensors.of(m11, be2), //
+        Tensors.of(be2.negate(), m11));
+  }
+
+  /***************************************************/
+  /** matrix with dimensions 2 x 2 */
+  private final Tensor lhs;
+  /** vector of length 2 */
+  private final Tensor rhs;
+
+  private Se2Skew(Tensor lhs, Tensor rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
+  }
+
+  public Se2Skew add(Se2Skew se2Skew) {
+    return new Se2Skew( //
+        lhs.add(se2Skew.lhs), //
+        rhs.add(se2Skew.rhs));
+  }
+
+  /** @return vector of length 2 */
+  public Tensor solve() {
+    return LinearSolve.of(lhs, rhs);
+  }
+
+  public Tensor rhs() {
+    return rhs.copy();
+  }
+}
