@@ -31,8 +31,11 @@ public class LieInverseDistanceCoordinate implements BarycentricCoordinate, Seri
     Tensor levers = Tensor.of(sequence.stream() //
         .map(lieGroup.element(point).inverse()::combine) //
         .map(equation));
+    // System.out.println("levers=" + Pretty.of(levers.map(Round._4)));
     Tensor nullsp = LeftNullSpace.of(levers);
     Tensor target = inv_norm.apply(levers);
+    // System.out.println("nullsp=" + Pretty.of(nullsp.map(Round._4)));
+    // System.out.println("target=" + Pretty.of(target.map(Round._4)));
     return NormalizeAffine.of(target, PseudoInverse.of(nullsp), nullsp);
   }
 }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
@@ -29,9 +31,19 @@ public class So3InverseDistanceCoordinateTest extends TestCase {
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
       Tensor mean = So3Exponential.INSTANCE.exp(RandomVariate.of(d2, 3));
-      Tensor weights = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
-      Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+      Tensor weights1 = So3InverseDistanceCoordinate.INSTANCE.weights(sequence, mean);
+      Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
       Chop._08.requireClose(mean, o2);
+      // ---
+      LieGroupElement lieGroupElement = So3Group.INSTANCE.element(TestHelper.spawn_So3());
+      Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
+      Tensor weights2 = So3InverseDistanceCoordinate.INSTANCE.weights(seqlft, lieGroupElement.combine(mean));
+      Chop._10.requireClose(weights1, weights2);
+      // ---
+      Tensor seqinv = new LieGroupOps(So3Group.INSTANCE).invertAll(sequence);
+      Tensor weights3 = So3InverseDistanceCoordinate.INSTANCE.weights( //
+          seqinv, So3Group.INSTANCE.element(mean).inverse().toCoordinate());
+      Chop._10.requireClose(weights1, weights3);
     }
   }
 

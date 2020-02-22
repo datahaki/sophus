@@ -5,10 +5,10 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class StExponentialTest extends TestCase {
@@ -18,7 +18,7 @@ public class StExponentialTest extends TestCase {
     Tensor inp = Tensors.of(u, v);
     Tensor xy = StExponential.INSTANCE.exp(inp);
     Tensor uv = StExponential.INSTANCE.log(xy);
-    Chop._12.requireClose(inp, uv);
+    Tolerance.CHOP.requireClose(inp, uv);
   }
 
   public void testSt1LogExp() {
@@ -27,7 +27,7 @@ public class StExponentialTest extends TestCase {
     Tensor inp = Tensors.of(u, v);
     Tensor uv = StExponential.INSTANCE.log(inp);
     Tensor xy = StExponential.INSTANCE.exp(uv);
-    Chop._12.requireClose(inp, xy);
+    Tolerance.CHOP.requireClose(inp, xy);
   }
 
   public void testSt1ExpLogRandom() {
@@ -38,7 +38,7 @@ public class StExponentialTest extends TestCase {
           RandomVariate.of(distribution, 2, 3));
       Tensor xy = StExponential.INSTANCE.exp(inp);
       Tensor uv = StExponential.INSTANCE.log(xy);
-      Chop._10.requireClose(inp, uv);
+      Tolerance.CHOP.requireClose(inp, uv);
     }
   }
 
@@ -50,7 +50,7 @@ public class StExponentialTest extends TestCase {
           RandomVariate.of(distribution, 2, 3));
       Tensor xy = StExponential.INSTANCE.exp(inp);
       Tensor uv = StExponential.INSTANCE.log(xy);
-      Chop._10.requireClose(inp, uv);
+      Tolerance.CHOP.requireClose(inp, uv);
     }
   }
 
@@ -59,7 +59,7 @@ public class StExponentialTest extends TestCase {
       Tensor inp = Tensors.vector(0, Math.random());
       Tensor xy = StExponential.INSTANCE.exp(inp);
       Tensor uv = StExponential.INSTANCE.log(xy);
-      Chop._12.requireClose(inp, uv);
+      Tolerance.CHOP.requireClose(inp, uv);
     }
   }
 
@@ -70,7 +70,7 @@ public class StExponentialTest extends TestCase {
       Tensor inp = Tensors.of(u, v);
       Tensor xy = StExponential.INSTANCE.exp(inp);
       Tensor uv = StExponential.INSTANCE.log(xy);
-      Chop._10.requireClose(inp, uv);
+      Tolerance.CHOP.requireClose(inp, uv);
     }
   }
 
@@ -81,7 +81,7 @@ public class StExponentialTest extends TestCase {
       Tensor inp = Tensors.of(u, v);
       Tensor uv = StExponential.INSTANCE.log(inp);
       Tensor xy = StExponential.INSTANCE.exp(uv);
-      Chop._10.requireClose(inp, xy);
+      Tolerance.CHOP.requireClose(inp, xy);
     }
   }
 
@@ -90,6 +90,17 @@ public class StExponentialTest extends TestCase {
     Tensor inp = Tensors.of(RealScalar.ZERO, v);
     Tensor xy = StExponential.INSTANCE.exp(inp);
     Tensor uv = StExponential.INSTANCE.log(xy);
-    Chop._10.requireClose(inp, uv);
+    Tolerance.CHOP.requireClose(inp, uv);
+  }
+
+  public void testLogInv() {
+    Tensor lambda_t = TestHelper.spawn_St(2);
+    StGroupElement stGroupElement = StGroup.INSTANCE.element(lambda_t);
+    Tensor inv = stGroupElement.inverse().toCoordinate();
+    Tensor neutral = stGroupElement.combine(inv);
+    Tolerance.CHOP.requireClose(neutral, Tensors.fromString("{1, {0, 0}}"));
+    Tensor log1 = StExponential.INSTANCE.log(lambda_t);
+    Tensor log2 = StExponential.INSTANCE.log(inv);
+    Tolerance.CHOP.requireClose(log1, log2.negate());
   }
 }

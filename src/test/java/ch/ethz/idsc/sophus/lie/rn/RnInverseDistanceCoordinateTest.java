@@ -2,11 +2,12 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.LieGroupTests;
+import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -36,6 +37,8 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
       }
   }
 
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(RnGroup.INSTANCE);
+
   public void testRandom() {
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
@@ -48,17 +51,20 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
           Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
           Tensor x_recreated = biinvariantMean.mean(points, weights1);
           Chop._06.requireClose(xya, x_recreated);
-          // invariant under inversion
-          Tensor seqinv = LieGroupTests.invert(RnGroup.INSTANCE, points);
-          Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().toCoordinate();
-          Tensor weights2 = barycentricCoordinate.weights(seqinv, xyainv);
-          Chop._10.requireClose(weights1, weights2);
+          Tensor shift = RandomVariate.of(distribution, n);
+          RnGroupElement rnGroupElement = RnGroup.INSTANCE.element(shift);
           // invariant under left action
-          Tensor lft = RandomVariate.of(distribution, n);
-          RnGroupElement rnGroupElement = RnGroup.INSTANCE.element(lft);
-          Tensor misc = Tensor.of(points.stream().map(rnGroupElement::combine));
-          Tensor weights3 = barycentricCoordinate.weights(misc, rnGroupElement.combine(xya));
-          Chop._10.requireClose(weights1, weights3);
+          Tensor weightsL = barycentricCoordinate.weights( //
+              LIE_GROUP_OPS.left(points, shift), rnGroupElement.combine(xya));
+          Tolerance.CHOP.requireClose(weights1, weightsL);
+          // invariant under left action
+          Tensor weightsR = barycentricCoordinate.weights( //
+              LIE_GROUP_OPS.right(points, shift), RnGroup.INSTANCE.element(xya).combine(shift));
+          Tolerance.CHOP.requireClose(weights1, weightsR);
+          // invariant under inversion
+          Tensor xyainv = RnGroup.INSTANCE.element(xya).inverse().toCoordinate();
+          Tensor weightsI = barycentricCoordinate.weights(LIE_GROUP_OPS.invertAll(points), xyainv);
+          Tolerance.CHOP.requireClose(weights1, weightsI);
         }
       }
   }

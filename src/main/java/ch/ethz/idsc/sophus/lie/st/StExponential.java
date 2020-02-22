@@ -11,7 +11,11 @@ import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
 import ch.ethz.idsc.tensor.sca.Sign;
 
-/** Reference 1:
+/** Regarding log function:
+ * If log(g) == {dl, dt}
+ * then log(inv(g)) == {-dl, -dt}
+ * 
+ * Reference 1:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, pp. 25-28, 2012
  * 

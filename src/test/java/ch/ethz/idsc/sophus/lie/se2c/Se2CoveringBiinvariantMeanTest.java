@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
-import ch.ethz.idsc.sophus.lie.LieGroupTests;
+import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -95,7 +95,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor xya = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
-      Tensor seqinv = LieGroupTests.invert(Se2CoveringGroup.INSTANCE, points);
+      Tensor seqinv = new LieGroupOps(Se2CoveringGroup.INSTANCE).invertAll(points);
       Tensor xyainv = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weights);
       Tensor combine = Se2CoveringGroup.INSTANCE.element(xya).combine(xyainv);
       Chop._12.requireAllZero(combine);
