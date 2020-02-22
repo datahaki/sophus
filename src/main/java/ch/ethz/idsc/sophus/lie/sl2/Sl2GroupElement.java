@@ -8,22 +8,30 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 
 /** neutral element is {0, 0, 1}
  * 
- * Reference
- * S. Lie: Theorie der Transformationsgruppen - Erster Abschnitt, Teubner 1930 */
+ * Reference:
+ * "Theorie der Transformationsgruppen - Erster Abschnitt"
+ * Marius Sophus Lie, Teubner 1930
+ * 
+ * "On Lorentzian Ricci-Flat Homogeneous Manifolds"
+ * by Jan Hakenberg, 2006 */
 public class Sl2GroupElement implements LieGroupElement {
+  public static Sl2GroupElement create(Tensor vector) {
+    Scalar a3 = vector.Get(2);
+    if (Scalars.isZero(a3))
+      throw TensorRuntimeException.of(vector);
+    Scalar a1 = vector.Get(0);
+    Scalar a2 = vector.Get(1);
+    return new Sl2GroupElement(a1, a2, a3);
+  }
+
+  /***************************************************/
   private final Scalar a1;
   private final Scalar a2;
   private final Scalar a3;
-
-  /** @param vector of length 3 */
-  public Sl2GroupElement(Tensor vector) {
-    this(vector.Get(0), //
-        vector.Get(1), //
-        vector.Get(2));
-  }
 
   private Sl2GroupElement(Scalar a1, Scalar a2, Scalar a3) {
     if (Scalars.isZero(a3))
@@ -58,8 +66,16 @@ public class Sl2GroupElement implements LieGroupElement {
         b2.multiply(a1).add(b3.multiply(a3)).divide(den));
   }
 
+  public Tensor adjoint() {
+    Scalar factor = a3.subtract(a1.multiply(a2));
+    return Tensors.matrix(new Scalar[][] { //
+        { a3.multiply(a3), a1.multiply(a1).negate(), a3.multiply(a1).negate() }, //
+        { a2.multiply(a2).negate(), RealScalar.ONE, a2 }, //
+        { a3.multiply(a2).multiply(RealScalar.of(-2)), a1.add(a1), a3.add(a1.multiply(a2)) } }).divide(factor);
+  }
+
   @Override // from LieGroupElement
   public Tensor adjoint(Tensor tensor) {
-    throw new UnsupportedOperationException();
+    return adjoint().dot(VectorQ.require(tensor));
   }
 }

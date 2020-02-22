@@ -11,7 +11,7 @@ public enum Se2CoveringGeodesic implements GeodesicInterface {
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Se2CoveringGroupElement p_act = new Se2CoveringGroupElement(p);
+    Se2CoveringGroupElement p_act = Se2CoveringGroup.INSTANCE.element(p);
     Tensor delta = p_act.inverse().combine(q);
     Tensor x = Se2CoveringExponential.INSTANCE.log(delta);
     return scalar -> p_act.combine(Se2CoveringExponential.INSTANCE.exp(x.multiply(scalar)));

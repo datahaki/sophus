@@ -19,7 +19,7 @@ public class RnGroupElement implements LieGroupElement, Serializable {
 
   @Override // from LieGroupElement
   public Tensor toCoordinate() {
-    return tensor.copy();
+    return tensor.unmodifiable();
   }
 
   @Override // from LieGroupElement

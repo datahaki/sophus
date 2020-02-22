@@ -1,12 +1,15 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2Matrix;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -15,6 +18,10 @@ import ch.ethz.idsc.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class Se2CoveringGroupElementTest extends TestCase {
+  private static Tensor adjoint(LieGroupElement lieGroupElement) {
+    return Tensor.of(IdentityMatrix.of(3).stream().map(lieGroupElement::adjoint));
+  }
+
   public void testCirc() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -99,5 +106,19 @@ public class Se2CoveringGroupElementTest extends TestCase {
     element.dL(Tensors.fromString("{2[m*s^-1], 3[m*s^-1], 4[s^-1]}"));
     Tensor dR = element.dR(Tensors.fromString("{2[m*s^-1], 3[m*s^-1], 4[s^-1]}"));
     ExactTensorQ.require(dR);
+  }
+
+  public void testAdjointCombine() {
+    for (int count = 0; count < 10; ++count) {
+      Tensor a = TestHelper.spawn_Se2C();
+      LieGroupElement ga = Se2CoveringGroup.INSTANCE.element(a);
+      Tensor b = TestHelper.spawn_Se2C();
+      LieGroupElement gb = Se2CoveringGroup.INSTANCE.element(b);
+      LieGroupElement gab = Se2CoveringGroup.INSTANCE.element(ga.combine(b));
+      Tensor matrix = adjoint(gab);
+      Tensor Ad_a = adjoint(ga);
+      Tensor Ad_b = adjoint(gb);
+      Tolerance.CHOP.requireClose(matrix, Ad_b.dot(Ad_a));
+    }
   }
 }

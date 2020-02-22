@@ -39,7 +39,7 @@ public class HeGroupElement implements LieGroupElement, Serializable {
     this.z = z;
   }
 
-  @Override
+  @Override // from LieGroupElement
   public Tensor toCoordinate() {
     return Tensors.of(x, y, z);
   }

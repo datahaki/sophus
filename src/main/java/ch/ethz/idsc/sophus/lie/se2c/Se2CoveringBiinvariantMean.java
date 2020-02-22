@@ -21,6 +21,6 @@ public enum Se2CoveringBiinvariantMean implements BiinvariantMean {
   public Tensor mean(Tensor sequence, Tensor weights) {
     Scalar amean = So2CoveringBiinvariantMean.INSTANCE.mean(sequence.get(Tensor.ALL, 2), weights);
     // make transformation s.t. mean rotation is zero and retransformation after taking mean
-    return Se2Skew.mean(new Se2CoveringGroupElement(Tensors.of(ZERO, ZERO, amean)), sequence, weights);
+    return Se2Skew.mean(Se2CoveringGroup.INSTANCE.element(Tensors.of(ZERO, ZERO, amean)), sequence, weights);
   }
 }

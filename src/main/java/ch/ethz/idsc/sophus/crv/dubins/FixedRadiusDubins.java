@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import ch.ethz.idsc.sophus.crv.dubins.DubinsPath.Type;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroupElement;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -26,7 +26,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
   }
 
   public static DubinsPathGenerator of(Tensor start, Tensor end, Scalar radius) {
-    return of(new Se2CoveringGroupElement(start).inverse().combine(end), radius);
+    return of(Se2CoveringGroup.INSTANCE.element(start).inverse().combine(end), radius);
   }
 
   // ---
@@ -52,8 +52,8 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     Tensor center1 = Tensors.of(zero, radius, xya.Get(2).zero());
     Tensor h = Tensors.of(zero, dubinsPathType.isFirstEqualsLast() ? radius : radius.negate(), xya.Get(2).zero());
     Tensor gnorm = dubinsPathType.isFirstTurnRight() ? Se2Flip.FUNCTION.apply(xya) : xya;
-    Tensor center3 = new Se2CoveringGroupElement(gnorm).combine(h);
-    Tensor deltacenter = new Se2CoveringGroupElement(center1).inverse().combine(center3);
+    Tensor center3 = Se2CoveringGroup.INSTANCE.element(gnorm).combine(h);
+    Tensor deltacenter = Se2CoveringGroup.INSTANCE.element(center1).inverse().combine(center3);
     Scalar dist_tr = Norm._2.ofVector(deltacenter.extract(0, 2));
     Scalar th_tr = ArcTan2D.of(deltacenter);
     Scalar th_total = deltacenter.Get(2);

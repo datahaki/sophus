@@ -22,7 +22,7 @@ public class Se2CoveringGroupElement implements LieGroupElement, Serializable {
   private final Scalar sa;
 
   /** @param xya == {px, py, angle} as member of Lie group SE2 */
-  public Se2CoveringGroupElement(Tensor xya) {
+  protected Se2CoveringGroupElement(Tensor xya) {
     px = xya.Get(0);
     py = xya.Get(1);
     pa = xya.Get(2);

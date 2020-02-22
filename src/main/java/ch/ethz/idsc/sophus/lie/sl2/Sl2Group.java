@@ -9,6 +9,6 @@ public enum Sl2Group implements LieGroup {
 
   @Override // from LieGroup
   public Sl2GroupElement element(Tensor vector) {
-    return new Sl2GroupElement(vector);
+    return Sl2GroupElement.create(vector);
   }
 }

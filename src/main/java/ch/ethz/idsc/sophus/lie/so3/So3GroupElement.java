@@ -8,23 +8,22 @@ import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
-import ch.ethz.idsc.tensor.sca.Chop;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** Reference: http://ethaneade.com/lie.pdf */
 public class So3GroupElement implements LieGroupElement {
-  /** @param matrix 3 x 3
+  /** @param matrix orthogonal 3 x 3 with determinant +1
    * @return */
   public static So3GroupElement of(Tensor matrix) {
-    Chop._10.requireClose(Det.of(matrix), RealScalar.ONE);
     if (matrix.length() == 3)
-      return new So3GroupElement(OrthogonalMatrixQ.require(matrix));
+      return new So3GroupElement(requireSO(matrix));
     throw TensorRuntimeException.of(matrix);
   }
 
   /***************************************************/
   private final Tensor matrix;
 
-  public So3GroupElement(Tensor matrix) {
+  private So3GroupElement(Tensor matrix) {
     this.matrix = matrix;
   }
 
@@ -40,11 +39,19 @@ public class So3GroupElement implements LieGroupElement {
 
   @Override // from LieGroupElement
   public Tensor combine(Tensor tensor) {
-    return matrix.dot(OrthogonalMatrixQ.require(tensor));
+    return matrix.dot(requireSO(tensor));
   }
 
   @Override // from LieGroupElement
   public Tensor adjoint(Tensor tensor) {
     return matrix.dot(tensor);
+  }
+
+  /** @param tensor
+   * @return given tensor
+   * @throws Exception if given tensor is not an orthogonal matrix with determinant +1 */
+  private static Tensor requireSO(Tensor tensor) {
+    Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
+    return OrthogonalMatrixQ.require(tensor);
   }
 }
