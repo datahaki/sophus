@@ -11,7 +11,6 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
 public class InverseBiNorm implements Serializable {
   /** @param tensorMetric non-null */
@@ -35,7 +34,8 @@ public class InverseBiNorm implements Serializable {
       Scalar r2 = tensorNorm.norm(p2).reciprocal();
       if (!NumberQ.of(r1) || !NumberQ.of(r2))
         return UnitVector.of(levers1.length(), index);
-      weights.append(Sqrt.FUNCTION.apply(r1.multiply(r2)));
+      // weights.append(Sqrt.FUNCTION.apply(r1.multiply(r2)));
+      weights.append(r1.add(r2));
     }
     return NormalizeTotal.FUNCTION.apply(weights);
   }

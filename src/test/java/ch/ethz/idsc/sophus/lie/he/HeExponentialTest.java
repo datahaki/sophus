@@ -28,7 +28,6 @@ public class HeExponentialTest extends TestCase {
   }
 
   public void testAdLog() {
-    // lieGroupOps
     for (int count = 0; count < 10; ++count) {
       Tensor g = TestHelper.spawn_He(2);
       Tensor m = TestHelper.spawn_He(2);

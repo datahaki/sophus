@@ -57,9 +57,10 @@ public class StGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
-  public Tensor adjoint(Tensor tensor) {
+  public Tensor adjoint(Tensor dlambda_dt) {
+    Scalar dlambda = dlambda_dt.Get(0);
     return Tensors.of( //
-        tensor.get(0), //
-        tensor.get(1).multiply(lambda).subtract(t.multiply(tensor.Get(0))));
+        dlambda, //
+        dlambda_dt.get(1).multiply(lambda).subtract(t.multiply(dlambda)));
   }
 }

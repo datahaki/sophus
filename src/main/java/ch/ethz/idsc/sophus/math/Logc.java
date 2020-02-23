@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.sca.Log;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
-/** Log [ Lambda ] / ( Lambda - 1 )
+/** Logc [Lambda] := Log [ Lambda ] / ( Lambda - 1 )
  *
  * @see Expc
  * @see Sinc */

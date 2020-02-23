@@ -12,7 +12,9 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** invariance under left-action is guaranteed because
- * log [(g x)^-1 g p] == log [x^-1 p] */
+ * log [(g x)^-1 g p] == log [x^-1 p]
+ * 
+ * if the norm is Ad invariant then invariance under right action is guaranteed */
 public class LieInverseDistanceCoordinate implements BarycentricCoordinate, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator equation;

@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -81,6 +82,15 @@ public class HeGroupElementTest extends TestCase {
           LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
       Tensor rhs = ge.adjoint(LIE_EXPONENTIAL.log(m)); // Ad(g).Log[m]
       Chop._10.requireClose(lhs, rhs);
+    }
+  }
+
+  public void testAdInverse() {
+    for (int count = 0; count < 10; ++count) {
+      Tensor g = TestHelper.spawn_He(2);
+      Tensor lhs = TestHelper.spawn_he(2);
+      Tensor rhs = HeGroup.INSTANCE.element(g).inverse().adjoint(HeGroup.INSTANCE.element(g).adjoint(lhs));
+      Tolerance.CHOP.requireClose(lhs, rhs);
     }
   }
 

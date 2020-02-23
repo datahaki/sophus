@@ -22,4 +22,8 @@ public enum Se2CoveringInverseDistanceCoordinate {
       Se2CoveringGroup.INSTANCE, //
       Se2CoveringExponential.INSTANCE::log, //
       InverseNorm.of(RnNormSquared.INSTANCE));
+  public static final BarycentricCoordinate ADINV = new LieInverseDistanceCoordinate( //
+      Se2CoveringGroup.INSTANCE, //
+      Se2CoveringExponential.INSTANCE::log, //
+      InverseNorm.of(v -> RnNorm.INSTANCE.norm(v.extract(2, 3))));
 }

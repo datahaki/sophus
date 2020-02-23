@@ -1,6 +1,7 @@
 // code by ob, jph
 package ch.ethz.idsc.sophus.lie.st;
 
+import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -12,6 +13,8 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class StExponentialTest extends TestCase {
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
+
   public void testSt1ExpLog() {
     Scalar u = RealScalar.of(7);
     Scalar v = RealScalar.of(3);
@@ -102,5 +105,15 @@ public class StExponentialTest extends TestCase {
     Tensor log1 = StExponential.INSTANCE.log(lambda_t);
     Tensor log2 = StExponential.INSTANCE.log(inv);
     Tolerance.CHOP.requireClose(log1, log2.negate());
+  }
+
+  public void testAdLog() {
+    for (int count = 0; count < 10; ++count) {
+      Tensor g = TestHelper.spawn_St(2);
+      Tensor m = TestHelper.spawn_St(2);
+      Tensor lhs = StExponential.INSTANCE.log(LIE_GROUP_OPS.conjugate(g, m));
+      Tensor rhs = StGroup.INSTANCE.element(g).adjoint(StExponential.INSTANCE.log(m));
+      Tolerance.CHOP.requireClose(lhs, rhs);
+    }
   }
 }
