@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.lie.st;
 
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
@@ -24,9 +23,9 @@ public class StAdMetricTest extends TestCase {
     Tensor dR = stAdMetric.all(seqR, mR);
     // Scalar dL = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(s).combine(m), StGroup.INSTANCE.element(s).combine(x));
     // Scalar dR = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(m).combine(s), StGroup.INSTANCE.element(x).combine(s));
-    System.out.println(d1);
-    System.out.println(dL.pmul(d1.map(Scalar::reciprocal)));
-    System.out.println(dR.pmul(d1.map(Scalar::reciprocal)));
+    // System.out.println(d1);
+    // System.out.println(dL.pmul(d1.map(Scalar::reciprocal)));
+    // System.out.println(dR.pmul(d1.map(Scalar::reciprocal)));
     // System.out.println(dR);
   }
 }

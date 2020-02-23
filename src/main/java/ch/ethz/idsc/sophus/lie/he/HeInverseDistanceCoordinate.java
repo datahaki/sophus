@@ -4,12 +4,12 @@ package ch.ethz.idsc.sophus.lie.he;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.sophus.math.win.LieAffineCoordinate;
-import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.math.win.LieBarycentricCoordinate;
 
 /** HeInverseDistanceCoordinate is invariant under left-action */
 public enum HeInverseDistanceCoordinate {
   ;
-  public static final BarycentricCoordinate INSTANCE = new LieInverseDistanceCoordinate( //
+  public static final BarycentricCoordinate INSTANCE = new LieBarycentricCoordinate( //
       HeGroup.INSTANCE, //
       HeExponential::flattenLog, //
       InverseNorm.of(HeAdNorm.INSTANCE));

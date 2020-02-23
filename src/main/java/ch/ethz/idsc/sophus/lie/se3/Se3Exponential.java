@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.red.Norm;
@@ -53,5 +54,11 @@ public enum Se3Exponential implements LieExponential {
     Tensor Vi = ID3.subtract(wx.multiply(RationalScalar.HALF)).add(wx2.multiply(se3Numerics.D));
     Tensor t = Se3Matrix.translation(g);
     return Tensors.of(Vi.dot(t), w);
+  }
+
+  /** @param g matrix of dimensions 4 x 4
+   * @return vector of length 6 */
+  public static Tensor flattenLog(Tensor g) {
+    return Flatten.of(INSTANCE.log(g));
   }
 }

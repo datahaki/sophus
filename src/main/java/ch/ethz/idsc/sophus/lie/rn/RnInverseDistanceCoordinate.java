@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
-import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.math.win.LieBarycentricCoordinate;
 
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
@@ -12,11 +12,11 @@ import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
  * The RnInverseDistanceCoordinate is invariant under left-, right-translation and inversion. */
 public enum RnInverseDistanceCoordinate {
   ;
-  public static final BarycentricCoordinate INSTANCE = new LieInverseDistanceCoordinate( //
+  public static final BarycentricCoordinate INSTANCE = new LieBarycentricCoordinate( //
       RnGroup.INSTANCE, //
       RnExponential.INSTANCE::log, //
       InverseNorm.of(RnNorm.INSTANCE));
-  public static final BarycentricCoordinate SQUARED = new LieInverseDistanceCoordinate( //
+  public static final BarycentricCoordinate SQUARED = new LieBarycentricCoordinate( //
       RnGroup.INSTANCE, //
       RnExponential.INSTANCE::log, //
       InverseNorm.of(RnNormSquared.INSTANCE));
