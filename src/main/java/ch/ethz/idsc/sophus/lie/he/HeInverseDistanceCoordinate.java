@@ -14,6 +14,6 @@ public class HeInverseDistanceCoordinate extends LieBarycentricCoordinate {
       new HeInverseDistanceCoordinate(InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
 
   private HeInverseDistanceCoordinate(TensorUnaryOperator target) {
-    super(HeGroup.INSTANCE, HeExponential::flattenLog, target);
+    super(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog, target);
   }
 }

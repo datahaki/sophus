@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import java.io.IOException;
+
 import ch.ethz.idsc.sophus.lie.so2.AngleVector;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -8,6 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -16,8 +19,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SnExpTest extends TestCase {
-  public void test2D() {
-    SnExp snExp = new SnExp(UnitVector.of(2, 0));
+  public void test2D() throws ClassNotFoundException, IOException {
+    SnExp snExp = Serialization.copy(new SnExp(UnitVector.of(2, 0)));
     Scalar dist = RealScalar.of(0.2);
     Tensor log = snExp.log(AngleVector.of(dist));
     Chop._12.requireClose(log, UnitVector.of(2, 1).multiply(dist));

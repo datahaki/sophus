@@ -1,9 +1,13 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import java.io.Serializable;
+
+import ch.ethz.idsc.sophus.lie.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
@@ -24,7 +28,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdExponential */
-public class SpdExp implements LieExponential {
+public class SpdExp implements LieExponential, FlattenLog, Serializable {
   private final Tensor pp;
   private final Tensor pn;
 
@@ -44,5 +48,10 @@ public class SpdExp implements LieExponential {
   @Override // from LieExponential
   public Tensor log(Tensor q) {
     return Symmetrize.of(pp.dot(SpdExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp));
+  }
+
+  @Override
+  public Tensor flattenLog(Tensor q) {
+    return Flatten.of(log(q));
   }
 }

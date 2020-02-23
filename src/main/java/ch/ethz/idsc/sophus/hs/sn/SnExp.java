@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import java.io.Serializable;
+
+import ch.ethz.idsc.sophus.lie.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -26,7 +29,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * implementation is based on the function "strans" taken from
  * "Freeform Curves on Spheres of Arbitrary Dimension"
  * by Scott Schaefer and Ron Goldman, 2005, page 5 */
-public class SnExp implements LieExponential {
+public class SnExp implements LieExponential, FlattenLog, Serializable {
   private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final Tensor point;
@@ -53,6 +56,11 @@ public class SnExp implements LieExponential {
   public Tensor log(Tensor q) {
     requireNorm1(q);
     return NORMALIZE.apply(q.subtract(projection.apply(q))).multiply(VectorAngle.of(point, q).get());
+  }
+
+  @Override
+  public Tensor flattenLog(Tensor q) {
+    return log(q);
   }
 
   // helper function

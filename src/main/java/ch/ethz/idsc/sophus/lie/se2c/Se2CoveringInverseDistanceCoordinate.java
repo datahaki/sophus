@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.sophus.math.win.LieBarycentricCoordinate;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** given sequence and mean the implementation computes the weights that satisfy
@@ -18,6 +19,8 @@ public class Se2CoveringInverseDistanceCoordinate extends LieBarycentricCoordina
       new Se2CoveringInverseDistanceCoordinate(InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
       new Se2CoveringInverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
+  public static final BarycentricCoordinate AD_INVAR = //
+      new Se2CoveringInverseDistanceCoordinate(InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
 
   private Se2CoveringInverseDistanceCoordinate(TensorUnaryOperator target) {
     super(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log, target);

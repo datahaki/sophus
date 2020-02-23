@@ -8,6 +8,6 @@ public class HeAffineCoordinate extends LieAffineCoordinate {
   public static final BarycentricCoordinate INSTANCE = new HeAffineCoordinate();
 
   private HeAffineCoordinate() {
-    super(HeGroup.INSTANCE, HeExponential::flattenLog);
+    super(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog);
   }
 }

@@ -1,19 +1,22 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import java.io.IOException;
+
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SpdExpTest extends TestCase {
-  public void testSimple() {
+  public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
       Tensor p = TestHelper.generateSpd(n);
       Tensor q = TestHelper.generateSpd(n);
-      SpdExp spdExp = new SpdExp(p);
+      SpdExp spdExp = Serialization.copy(new SpdExp(p));
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);
       Chop._08.requireClose(q, exp);

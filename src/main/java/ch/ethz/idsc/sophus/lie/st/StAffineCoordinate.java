@@ -8,6 +8,6 @@ public class StAffineCoordinate extends LieAffineCoordinate {
   public static final BarycentricCoordinate INSTANCE = new StAffineCoordinate();
 
   private StAffineCoordinate() {
-    super(StGroup.INSTANCE, StExponential::flattenLog);
+    super(StGroup.INSTANCE, StExponential.INSTANCE::flattenLog);
   }
 }

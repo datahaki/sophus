@@ -16,6 +16,6 @@ public class StInverseDistanceCoordinate extends LieBarycentricCoordinate {
       new StInverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
 
   private StInverseDistanceCoordinate(TensorUnaryOperator target) {
-    super(StGroup.INSTANCE, StExponential::flattenLog, target);
+    super(StGroup.INSTANCE, StExponential.INSTANCE::flattenLog, target);
   }
 }
