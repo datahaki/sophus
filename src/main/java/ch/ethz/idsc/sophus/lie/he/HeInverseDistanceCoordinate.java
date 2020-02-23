@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.lie.he;
 
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.BiinvariantInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.win.LieAffineCoordinate;
 import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Flatten;
@@ -15,7 +15,7 @@ public enum HeInverseDistanceCoordinate {
       HeGroup.INSTANCE, //
       HeInverseDistanceCoordinate::flattenLog, //
       InverseNorm.of(HeAdNorm.INSTANCE));
-  public static final BarycentricCoordinate BIINVAR = new BiinvariantInverseDistanceCoordinate( //
+  public static final BarycentricCoordinate BIINVAR = new LieAffineCoordinate( //
       HeGroup.INSTANCE, //
       HeInverseDistanceCoordinate::flattenLog);
 

@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.win.LieAffineCoordinate;
 import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
 
 /** given sequence and mean the implementation computes the weights that satisfy
@@ -22,8 +23,7 @@ public enum Se2CoveringInverseDistanceCoordinate {
       Se2CoveringGroup.INSTANCE, //
       Se2CoveringExponential.INSTANCE::log, //
       InverseNorm.of(RnNormSquared.INSTANCE));
-  public static final BarycentricCoordinate ADINV = new LieInverseDistanceCoordinate( //
+  public static final BarycentricCoordinate BIINVAR = new LieAffineCoordinate( //
       Se2CoveringGroup.INSTANCE, //
-      Se2CoveringExponential.INSTANCE::log, //
-      InverseNorm.of(v -> RnNorm.INSTANCE.norm(v.extract(2, 3))));
+      Se2CoveringExponential.INSTANCE::log);
 }

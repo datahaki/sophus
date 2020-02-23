@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.math.Logc;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
 import ch.ethz.idsc.tensor.sca.Sign;
@@ -41,5 +42,9 @@ public enum StExponential implements LieExponential {
         log_l, //
         /* there is a typo in Reference 1 (!) */
         lambda_t.get(1).multiply(Logc.FUNCTION.apply(lambda)));
+  }
+
+  public static Tensor flattenLog(Tensor lambda_t) {
+    return Flatten.of(INSTANCE.log(lambda_t));
   }
 }

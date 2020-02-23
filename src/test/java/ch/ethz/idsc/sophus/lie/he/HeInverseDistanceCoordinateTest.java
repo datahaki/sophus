@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 public class HeInverseDistanceCoordinateTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HeInverseDistanceCoordinate.INSTANCE, //
+      // HeInverseDistanceCoordinate.INSTANCE, //
       HeInverseDistanceCoordinate.BIINVAR };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(HeGroup.INSTANCE);
 

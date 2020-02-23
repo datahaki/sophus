@@ -19,9 +19,9 @@ import junit.framework.TestCase;
 
 public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
   static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      Se2CoveringInverseDistanceCoordinate.INSTANCE, //
-      Se2CoveringInverseDistanceCoordinate.SQUARED, //
-      Se2CoveringInverseDistanceCoordinate.ADINV //
+      // Se2CoveringInverseDistanceCoordinate.INSTANCE, //
+      // Se2CoveringInverseDistanceCoordinate.SQUARED, //
+      Se2CoveringInverseDistanceCoordinate.BIINVAR //
   };
 
   public void test4Exact() {

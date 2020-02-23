@@ -41,6 +41,14 @@ public class StGroupElement implements LieGroupElement, Serializable {
     return Tensors.of(lambda, t);
   }
 
+  public Scalar lambda() {
+    return lambda;
+  }
+
+  public Tensor t() {
+    return t.unmodifiable();
+  }
+
   @Override // from LieGroupElement
   public StGroupElement inverse() {
     return new StGroupElement( //
