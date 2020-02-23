@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.red.Mean;
  * but do not satisfy Lagrange property
  * 
  * Reference:
- * "Affine generalized barycentric coordinates"
+ * "Affine generalised barycentric coordinates"
  * by S. Waldron, Jaen Journal on Approximation, 3(2):209-226, 2011
  * 
  * Quote: "Among all generalized barycentric coordinates with respect to a

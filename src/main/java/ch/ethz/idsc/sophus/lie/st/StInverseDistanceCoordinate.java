@@ -6,16 +6,16 @@ import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.sophus.math.win.LieBarycentricCoordinate;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** StInverseDistanceCoordinate is invariant under left-action */
-public enum StInverseDistanceCoordinate {
-  ;
-  public static final BarycentricCoordinate INSTANCE = new LieBarycentricCoordinate( //
-      StGroup.INSTANCE, //
-      StExponential::flattenLog, //
-      InverseNorm.of(RnNorm.INSTANCE));
-  public static final BarycentricCoordinate SQUARED = new LieBarycentricCoordinate( //
-      StGroup.INSTANCE, //
-      StExponential::flattenLog, //
-      InverseNorm.of(RnNormSquared.INSTANCE));
+public class StInverseDistanceCoordinate extends LieBarycentricCoordinate {
+  public static final BarycentricCoordinate INSTANCE = //
+      new StInverseDistanceCoordinate(InverseNorm.of(RnNorm.INSTANCE));
+  public static final BarycentricCoordinate SQUARED = //
+      new StInverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
+
+  private StInverseDistanceCoordinate(TensorUnaryOperator target) {
+    super(StGroup.INSTANCE, StExponential::flattenLog, target);
+  }
 }
