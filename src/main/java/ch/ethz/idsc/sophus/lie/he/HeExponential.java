@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Flatten;
 
 public enum HeExponential implements LieExponential {
   INSTANCE;
@@ -29,5 +30,9 @@ public enum HeExponential implements LieExponential {
         x, //
         y, //
         z.subtract(x.dot(y).multiply(RationalScalar.HALF)));
+  }
+
+  public static Tensor flattenLog(Tensor xyz) {
+    return Flatten.of(INSTANCE.log(xyz));
   }
 }

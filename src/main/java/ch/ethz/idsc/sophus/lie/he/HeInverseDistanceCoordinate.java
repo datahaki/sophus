@@ -5,21 +5,15 @@ import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.sophus.math.win.LieAffineCoordinate;
 import ch.ethz.idsc.sophus.math.win.LieInverseDistanceCoordinate;
-import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Flatten;
 
 /** HeInverseDistanceCoordinate is invariant under left-action */
 public enum HeInverseDistanceCoordinate {
   ;
   public static final BarycentricCoordinate INSTANCE = new LieInverseDistanceCoordinate( //
       HeGroup.INSTANCE, //
-      HeInverseDistanceCoordinate::flattenLog, //
+      HeExponential::flattenLog, //
       InverseNorm.of(HeAdNorm.INSTANCE));
   public static final BarycentricCoordinate BIINVAR = new LieAffineCoordinate( //
       HeGroup.INSTANCE, //
-      HeInverseDistanceCoordinate::flattenLog);
-
-  private static Tensor flattenLog(Tensor xyz) {
-    return Flatten.of(HeExponential.INSTANCE.log(xyz));
-  }
+      HeExponential::flattenLog);
 }

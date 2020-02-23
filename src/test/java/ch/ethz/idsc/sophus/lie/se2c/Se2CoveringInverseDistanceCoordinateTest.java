@@ -21,7 +21,7 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
   static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // Se2CoveringInverseDistanceCoordinate.INSTANCE, //
       // Se2CoveringInverseDistanceCoordinate.SQUARED, //
-      Se2CoveringInverseDistanceCoordinate.BIINVAR //
+      Se2CoveringAffineCoordinate.INSTANCE //
   };
 
   public void test4Exact() {
