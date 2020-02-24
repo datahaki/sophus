@@ -47,7 +47,8 @@ public class SpdExp implements LieExponential, FlattenLog, Serializable {
 
   @Override // from LieExponential
   public Tensor log(Tensor q) {
-    return Symmetrize.of(pp.dot(SpdExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp));
+    Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
+    return Symmetrize.of(pp.dot(SpdExponential.INSTANCE.log(pq)).dot(pp));
   }
 
   @Override

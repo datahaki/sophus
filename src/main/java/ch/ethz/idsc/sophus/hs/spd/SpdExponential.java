@@ -2,14 +2,17 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
+import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
+import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** SPD == Symmetric positive definite == Sym+
  * 
@@ -47,5 +50,19 @@ public enum SpdExponential implements LieExponential {
     Tensor avec = eigensystem.vectors();
     Tensor ainv = Transpose.of(avec);
     return Symmetrize.of(ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(avec)));
+  }
+
+  /** n(g) == n(Inverse[g])
+   * 
+   * @param g spd
+   * @return */
+  public static Scalar n(Tensor g) {
+    Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
+    return Sqrt.FUNCTION.apply(eigensystem.values().stream() //
+        .map(Scalar.class::cast) //
+        .map(Log.FUNCTION) //
+        .map(AbsSquared.FUNCTION) //
+        .reduce(Scalar::add) //
+        .get());
   }
 }

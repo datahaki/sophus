@@ -47,4 +47,17 @@ public class LieBarycentricCoordinate implements BarycentricCoordinate, Serializ
         target.apply(levers), //
         PseudoInverse.of(nullsp), nullsp);
   }
+
+  /** function for testing
+   * 
+   * @param sequence
+   * @param point
+   * @return */
+  public Tensor projection(Tensor sequence, Tensor point) {
+    Tensor levers = Tensor.of(sequence.stream() //
+        .map(lieGroup.element(point).inverse()::combine) //
+        .map(log));
+    Tensor nullsp = LeftNullSpace.of(levers);
+    return PseudoInverse.of(nullsp).dot(nullsp);
+  }
 }

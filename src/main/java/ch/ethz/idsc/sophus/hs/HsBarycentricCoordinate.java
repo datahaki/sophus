@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 public abstract class HsBarycentricCoordinate implements BarycentricCoordinate, Serializable {
   private final BarycentricCoordinate barycentricCoordinate;
 
+  /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
   public HsBarycentricCoordinate(BarycentricCoordinate barycentricCoordinate) {
     this.barycentricCoordinate = Objects.requireNonNull(barycentricCoordinate);
   }
