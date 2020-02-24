@@ -30,6 +30,12 @@ public interface LieGroupElement {
    * @return Ad(this).tensor */
   Tensor adjoint(Tensor tensor);
 
+  /** dL maps a vector from the lie algebra to the tangent space at this element
+   * 
+   * DL_x|e . Log[x^-1 . p] == Log_x[p]
+   * 
+   * @param tensor
+   * @return */
   default Tensor dL(Tensor tensor) {
     throw new UnsupportedOperationException();
   }

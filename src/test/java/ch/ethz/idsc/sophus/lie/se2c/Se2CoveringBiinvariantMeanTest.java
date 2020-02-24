@@ -124,4 +124,16 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       // ---
     }
   }
+
+  public void testNonAffineFail() {
+    Distribution distribution = UniformDistribution.of(-2, 2);
+    Tensor sequence = RandomVariate.of(distribution, 10, 3);
+    Tensor weights = RandomVariate.of(distribution, 3);
+    try {
+      Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }
