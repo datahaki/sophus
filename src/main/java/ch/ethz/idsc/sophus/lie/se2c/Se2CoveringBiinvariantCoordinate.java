@@ -12,7 +12,12 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * Se2CoveringBiinvariantMean[sequence, weights] == mean
  * 
- * Se2CoveringInverseDistanceCoordinate is invariant under left-action */
+ * Se2CoveringInverseDistanceCoordinate is
+ * 
+ * linear reproduction
+ * lagrange property
+ * biinvariant
+ * smooth */
 public class Se2CoveringBiinvariantCoordinate extends BiinvariantCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
       new Se2CoveringBiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));

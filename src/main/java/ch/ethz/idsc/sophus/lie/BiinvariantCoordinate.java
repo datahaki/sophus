@@ -1,3 +1,4 @@
+// code by jph
 package ch.ethz.idsc.sophus.lie;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
+/** invariant under left-action, right-action and inversion */
 public class BiinvariantCoordinate implements BarycentricCoordinate, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator log;

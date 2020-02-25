@@ -21,7 +21,9 @@ import junit.framework.TestCase;
 public class RnInverseDistanceCoordinateTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       RnInverseDistanceCoordinate.INSTANCE, //
-      RnInverseDistanceCoordinate.SQUARED };
+      RnInverseDistanceCoordinate.SQUARED, //
+      RnBiinvariantCoordinate.INSTANCE, //
+      RnBiinvariantCoordinate.SQUARED };
 
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();

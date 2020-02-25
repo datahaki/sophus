@@ -43,10 +43,7 @@ public class LieBarycentricCoordinate implements BarycentricCoordinate, Serializ
         .map(lieGroup.element(point).inverse()::combine) //
         .map(log));
     Tensor nullsp = LeftNullSpace.of(levers);
-    return NormalizeAffine.of( //
-        // target.apply(projection(sequence, point).subtract(IdentityMatrix.of(sequence.length()))), //
-        target.apply(levers), //
-        PseudoInverse.of(nullsp), nullsp);
+    return NormalizeAffine.of(target.apply(levers), PseudoInverse.of(nullsp), nullsp);
   }
 
   /** function for testing
