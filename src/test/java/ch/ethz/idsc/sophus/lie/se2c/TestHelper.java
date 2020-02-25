@@ -13,4 +13,8 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
   static Tensor spawn_Se2C() {
     return RandomVariate.of(DISTRIBUTION, 3);
   }
+
+  static Tensor spawn_se2C() {
+    return RandomVariate.of(DISTRIBUTION, 3);
+  }
 }

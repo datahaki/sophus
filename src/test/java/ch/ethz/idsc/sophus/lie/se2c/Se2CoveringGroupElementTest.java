@@ -4,6 +4,8 @@ package ch.ethz.idsc.sophus.lie.se2c;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2Matrix;
 import ch.ethz.idsc.tensor.ExactTensorQ;
+import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -120,5 +122,34 @@ public class Se2CoveringGroupElementTest extends TestCase {
       Tensor Ad_b = adjoint(gb);
       Tolerance.CHOP.requireClose(matrix, Ad_b.dot(Ad_a));
     }
+  }
+
+  public void testDLNumeric() {
+    Tensor g = TestHelper.spawn_Se2C();
+    Tensor x = TestHelper.spawn_se2C();
+    Scalar h = RealScalar.of(1e-6);
+    Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(g);
+    Tensor gexphx = se2CoveringGroupElement.combine(Se2CoveringExponential.INSTANCE.exp(x.multiply(h)));
+    // Tensor nu = gexphx.divide(h);
+    // Tensor dL = se2CoveringGroupElement.dL(x);
+    // System.out.println(nu);
+    // System.out.println(dL);
+  }
+
+  public void testDRDL_ad() {
+    Tensor a = TestHelper.spawn_Se2C();
+    LieGroupElement ga = Se2CoveringGroup.INSTANCE.element(a);
+    Tensor uvw = TestHelper.spawn_se2C();
+    Tensor lhs = ga.inverse().dR(ga.dL(uvw));
+    Tensor oth = ga.dL(ga.inverse().dR(uvw));
+    Tensor lh1 = ga.dR(ga.inverse().dL(uvw));
+    Tensor ot1 = ga.inverse().dL(ga.dR(uvw));
+    Tensor rhs = ga.adjoint(uvw);
+    // System.out.println(lhs);
+    // System.out.println(oth);
+    // System.out.println(lh1);
+    // System.out.println(ot1);
+    // System.out.println(rhs);
+    // Tolerance.CHOP.requireClose(lhs, rhs);
   }
 }

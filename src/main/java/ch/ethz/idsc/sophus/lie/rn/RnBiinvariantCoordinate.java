@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.lie.LieBarycentricCoordinate;
+import ch.ethz.idsc.sophus.lie.BiinvariantCoordinate;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -11,13 +11,13 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * RnBiinvariantMean[sequence, weights] == mean
  * 
  * The RnInverseDistanceCoordinate is invariant under left-, right-translation and inversion. */
-public class RnInverseDistanceCoordinate extends LieBarycentricCoordinate {
+public class RnBiinvariantCoordinate extends BiinvariantCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
-      new RnInverseDistanceCoordinate(InverseNorm.of(RnNorm.INSTANCE));
+      new RnBiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
-      new RnInverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
+      new RnBiinvariantCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
 
-  private RnInverseDistanceCoordinate(TensorUnaryOperator target) {
+  private RnBiinvariantCoordinate(TensorUnaryOperator target) {
     super(RnGroup.INSTANCE, RnExponential.INSTANCE::log, target);
   }
 }

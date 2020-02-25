@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
+import ch.ethz.idsc.sophus.lie.LieAffineCoordinate;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.LieAffineCoordinate;
 
 public class HeAffineCoordinate extends LieAffineCoordinate {
   public static final BarycentricCoordinate INSTANCE = new HeAffineCoordinate();

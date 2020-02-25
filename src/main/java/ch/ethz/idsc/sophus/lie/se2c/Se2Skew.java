@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.lie.so2.RotationMatrix;
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,6 +19,8 @@ import ch.ethz.idsc.tensor.sca.Tan;
  * 
  * (1 - Cos[t]) / Sin[t] == Tan[t/2] */
 /* package */ class Se2Skew {
+  private static final Scalar HALF = RealScalar.of(0.5);
+
   /** @param xya element in SE(2)
    * @param weight
    * @return */
@@ -38,7 +40,7 @@ import ch.ethz.idsc.tensor.sca.Tan;
    * @param be angle
    * @return matrix of dimensions 2 x 2 */
   public static Tensor logflow(Scalar be) {
-    Scalar be2 = be.multiply(RationalScalar.HALF);
+    Scalar be2 = be.multiply(HALF);
     Scalar tan = Tan.FUNCTION.apply(be2);
     if (Scalars.isZero(tan))
       return IdentityMatrix.of(2);

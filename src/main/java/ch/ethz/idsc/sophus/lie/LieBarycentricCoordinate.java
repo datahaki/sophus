@@ -1,11 +1,11 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.lie;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
+import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
@@ -44,6 +44,7 @@ public class LieBarycentricCoordinate implements BarycentricCoordinate, Serializ
         .map(log));
     Tensor nullsp = LeftNullSpace.of(levers);
     return NormalizeAffine.of( //
+        // target.apply(projection(sequence, point).subtract(IdentityMatrix.of(sequence.length()))), //
         target.apply(levers), //
         PseudoInverse.of(nullsp), nullsp);
   }

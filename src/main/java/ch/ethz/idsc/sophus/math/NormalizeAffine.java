@@ -10,6 +10,10 @@ import ch.ethz.idsc.tensor.red.Total;
 
 public enum NormalizeAffine {
   ;
+  public static Tensor of(Tensor target, Tensor a) {
+    return of(target.dot(a));
+  }
+
   public static Tensor of(Tensor target, Tensor a, Tensor b) {
     return of(target.dot(a).dot(b));
   }

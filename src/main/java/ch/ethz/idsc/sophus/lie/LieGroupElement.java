@@ -20,6 +20,9 @@ public interface LieGroupElement {
   Tensor combine(Tensor tensor);
 
   /** the adjoint map is a linear map on the lie algebra with full rank
+   * the adjoint map is the differential at the neutral element of the conjugation
+   * c_g : G -> G
+   * c_g(x) = g.x.g^-1
    * 
    * <pre>
    * g.Exp[x] == Exp[Ad(g).x].g
@@ -32,6 +35,7 @@ public interface LieGroupElement {
 
   /** dL maps a vector from the lie algebra to the tangent space at this element
    * 
+   * DL_x|e : TeG -> TxG
    * DL_x|e . Log[x^-1 . p] == Log_x[p]
    * 
    * @param tensor
@@ -40,6 +44,10 @@ public interface LieGroupElement {
     throw new UnsupportedOperationException();
   }
 
+  /** dR
+   * 
+   * @param tensor
+   * @return */
   default Tensor dR(Tensor tensor) {
     throw new UnsupportedOperationException();
   }

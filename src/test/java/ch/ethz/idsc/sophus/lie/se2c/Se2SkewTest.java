@@ -42,7 +42,6 @@ public class Se2SkewTest extends TestCase {
   public void testSe2Exp() {
     Tensor xy = Tensors.vector(2, 3).unmodifiable();
     Scalar angle = RealScalar.of(0.2);
-    // ---
     Tensor csk = Se2Skew.logflow(angle);
     Tensor log = Se2CoveringExponential.INSTANCE.log(xy.copy().append(angle));
     Tolerance.CHOP.requireClose(log.extract(0, 2), csk.dot(xy));

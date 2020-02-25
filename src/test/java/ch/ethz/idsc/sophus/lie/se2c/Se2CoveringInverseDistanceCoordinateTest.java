@@ -4,11 +4,11 @@ package ch.ethz.idsc.sophus.lie.se2c;
 import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.lie.LieBarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.LieBarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -95,6 +95,7 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
           Tensor seqrgt = LIE_GROUP_OPS.allR(points, shift);
           Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
           Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
+          Chop._10.requireClose(weights1, weightsR);
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._10.requireClose(xyargt, x_rgt);
         }
@@ -102,6 +103,7 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
           Tensor seqinv = LIE_GROUP_OPS.allI(points);
           Tensor xyainv = LIE_GROUP_OPS.invert(xya);
           Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
+          Chop._10.requireClose(weights1, weightsI);
           Tensor check2 = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weightsI);
           Chop._10.requireClose(check2, xyainv);
           AffineQ.require(weightsI);

@@ -13,7 +13,9 @@ import ch.ethz.idsc.tensor.sca.Tan;
 
 /** References:
  * http://vixra.org/abs/1807.0463
- * https://www.youtube.com/watch?v=2vDciaUgL4E */
+ * https://www.youtube.com/watch?v=2vDciaUgL4E
+ * 
+ * @see Se2Skew */
 public enum Se2CoveringExponential implements LieExponential {
   INSTANCE;
 
@@ -42,13 +44,13 @@ public enum Se2CoveringExponential implements LieExponential {
    * @return element x in the se2 Lie algebra with x == log g, and g == exp x */
   @Override // from LieExponential
   public Tensor log(Tensor g) {
-    final Scalar be = g.Get(2);
-    if (Scalars.isZero(be))
+    Scalar be = g.Get(2);
+    Scalar be2 = be.multiply(HALF);
+    Scalar tan = Tan.FUNCTION.apply(be2);
+    if (Scalars.isZero(tan))
       return g.copy();
     Scalar x = g.Get(0);
     Scalar y = g.Get(1);
-    Scalar be2 = be.multiply(HALF);
-    Scalar tan = Tan.FUNCTION.apply(be2);
     return Tensors.of( //
         y.add(x.divide(tan)).multiply(be2), //
         y.divide(tan).subtract(x).multiply(be2), //
