@@ -68,7 +68,7 @@ public class Se2CoveringAffineCoordinateTest extends TestCase {
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights1 = barycentricCoordinate.weights(points, xya);
         AffineQ.require(weights1);
-        Tensor check1 = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights1);
+        Tensor check1 = biinvariantMean.mean(points, weights1);
         Chop._10.requireClose(check1, xya);
         Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
         Tensor x_recreated = biinvariantMean.mean(points, weights1);
@@ -94,7 +94,7 @@ public class Se2CoveringAffineCoordinateTest extends TestCase {
           Tensor seqinv = LIE_GROUP_OPS.allI(points);
           Tensor xyainv = LIE_GROUP_OPS.invert(xya);
           Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
-          Tensor check2 = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weightsI);
+          Tensor check2 = biinvariantMean.mean(seqinv, weightsI);
           Chop._10.requireClose(check2, xyainv);
           AffineQ.require(weightsI);
           Chop._10.requireClose(weights1, weightsI);

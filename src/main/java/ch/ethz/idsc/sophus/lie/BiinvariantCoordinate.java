@@ -11,7 +11,11 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** invariant under left-action, right-action and inversion */
+/** invariant under left-action, right-action, and inversion
+ * 
+ * Reference:
+ * "Biinvariant Coordinates in Lie Groups"
+ * by Jan Hakenberg, 2020 */
 public class BiinvariantCoordinate implements BarycentricCoordinate, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator log;
@@ -31,14 +35,17 @@ public class BiinvariantCoordinate implements BarycentricCoordinate, Serializabl
   }
 
   @Override // from BarycentricCoordinate
-  public Tensor weights(Tensor sequence, Tensor point) {
+  public final Tensor weights(Tensor sequence, Tensor point) {
     Tensor projection = projection(sequence, point);
     return NormalizeAffine.of( //
         target.apply(projection.subtract(IdentityMatrix.of(sequence.length()))), //
         projection);
   }
 
-  public Tensor projection(Tensor sequence, Tensor point) {
+  /** @param sequence
+   * @param point
+   * @return */
+  public final Tensor projection(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream() //
         .map(lieGroup.element(point).inverse()::combine) //
         .map(log));
