@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import java.util.Objects;
+
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -20,8 +22,8 @@ public class LieBiinvariantCoordinate extends HsBiinvariantCoordinate {
    * @throws Exception if any input parameter is null */
   public LieBiinvariantCoordinate(LieGroup lieGroup, TensorUnaryOperator log, TensorUnaryOperator target) {
     super(target);
-    this.lieGroup = lieGroup;
-    this.log = log;
+    this.lieGroup = Objects.requireNonNull(lieGroup);
+    this.log = Objects.requireNonNull(log);
   }
 
   @Override

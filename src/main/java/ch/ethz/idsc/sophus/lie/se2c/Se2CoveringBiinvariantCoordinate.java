@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -19,9 +19,9 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * biinvariant
  * smooth */
 public class Se2CoveringBiinvariantCoordinate extends LieBiinvariantCoordinate {
-  public static final BarycentricCoordinate INSTANCE = //
+  public static final BiinvariantCoordinate INSTANCE = //
       new Se2CoveringBiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));
-  public static final BarycentricCoordinate SQUARED = //
+  public static final BiinvariantCoordinate SQUARED = //
       new Se2CoveringBiinvariantCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
 
   private Se2CoveringBiinvariantCoordinate(TensorUnaryOperator target) {

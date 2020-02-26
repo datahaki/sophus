@@ -12,10 +12,13 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
+/** Reference:
+ * "Biinvariant Coordinates for Lie Groups"
+ * by Jan Hakenberg, 2020 */
 public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, Serializable {
   private final TensorUnaryOperator target;
 
-  /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
+  /** @param target is an inverse norm for R^n */
   public HsBiinvariantCoordinate(TensorUnaryOperator target) {
     this.target = Objects.requireNonNull(target);
   }

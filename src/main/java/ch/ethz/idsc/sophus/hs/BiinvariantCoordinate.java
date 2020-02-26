@@ -7,6 +7,6 @@ import ch.ethz.idsc.tensor.Tensor;
 public interface BiinvariantCoordinate extends BarycentricCoordinate {
   /** @param sequence
    * @param point
-   * @return */
+   * @return biinvariant symmetric projection matrix with eigenvalues either 1 or 0 */
   Tensor projection(Tensor sequence, Tensor point);
 }
