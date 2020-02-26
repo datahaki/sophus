@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantCoordinate;
+import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * lagrange property
  * biinvariant
  * smooth */
-public class Se2CoveringBiinvariantCoordinate extends BiinvariantCoordinate {
+public class Se2CoveringBiinvariantCoordinate extends LieBiinvariantCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
       new Se2CoveringBiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
