@@ -46,7 +46,7 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
       Distribution distribution = UniformDistribution.of( //
           middle.subtract(radius), //
           middle.add(radius));
-      return UniformRandomSample.of(distribution, 1);
+      return new UniformRandomSample(distribution, 1);
     }
     case 2:
       return new DiskRandomSample(center, radius);

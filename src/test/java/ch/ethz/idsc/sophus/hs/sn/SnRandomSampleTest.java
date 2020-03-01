@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 import java.io.IOException;
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.hs.s2.S2RandomSample;
+import ch.ethz.idsc.sophus.hs.s1.S1RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,12 +15,25 @@ import junit.framework.TestCase;
 
 public class SnRandomSampleTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    RandomSampleInterface randomSampleInterface = Serialization.copy(SnRandomSample.of(3));
-    Tensor tensor = randomSampleInterface.randomSample(new Random());
-    Chop._12.requireClose(Norm._2.ofVector(tensor), RealScalar.ONE);
+    for (int dimension = 0; dimension < 6; ++dimension) {
+      RandomSampleInterface randomSampleInterface = Serialization.copy(SnRandomSample.of(dimension));
+      Tensor tensor = randomSampleInterface.randomSample(new Random());
+      Chop._12.requireClose(Norm._2.ofVector(tensor), RealScalar.ONE);
+      assertEquals(tensor.length(), dimension + 1);
+    }
   }
 
-  public void testS2() {
-    assertEquals(SnRandomSample.of(2), S2RandomSample.INSTANCE);
+  public void testS1() {
+    assertEquals(SnRandomSample.of(1), S1RandomSample.INSTANCE);
+  }
+
+  public void testSNegFail() {
+    for (int dimension = -5; dimension < 0; ++dimension)
+      try {
+        SnRandomSample.of(dimension);
+        fail();
+      } catch (Exception exception) {
+        // ---
+      }
   }
 }

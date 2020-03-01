@@ -5,7 +5,7 @@ package ch.ethz.idsc.sophus.math.sample;
 import java.io.Serializable;
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.hs.s2.S2RandomSample;
+import ch.ethz.idsc.sophus.hs.s1.S1RandomSample;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -32,7 +32,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    Tensor circle = S2RandomSample.INSTANCE.randomSample(random);
+    Tensor circle = S1RandomSample.INSTANCE.randomSample(random);
     Scalar residue = Sqrt.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit()));
     return center.add(circle.multiply(radius.multiply(residue)));
   }
