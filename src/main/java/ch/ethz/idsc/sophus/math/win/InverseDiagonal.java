@@ -12,16 +12,16 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class InverseNorm implements TensorUnaryOperator {
+public class InverseDiagonal implements TensorUnaryOperator {
   /** @param tensorMetric non-null */
   public static TensorUnaryOperator of(TensorNorm tensorNorm) {
-    return new InverseNorm(Objects.requireNonNull(tensorNorm));
+    return new InverseDiagonal(Objects.requireNonNull(tensorNorm));
   }
 
   /***************************************************/
   private final TensorNorm tensorNorm;
 
-  private InverseNorm(TensorNorm tensorNorm) {
+  private InverseDiagonal(TensorNorm tensorNorm) {
     this.tensorNorm = tensorNorm;
   }
 
@@ -30,7 +30,7 @@ public class InverseNorm implements TensorUnaryOperator {
     Tensor weights = Tensors.reserve(tensor.length());
     int index = 0;
     for (Tensor p : tensor) {
-      Scalar reciprocal = tensorNorm.norm(p).reciprocal();
+      Scalar reciprocal = tensorNorm.norm(p.extract(index, index + 1)).reciprocal();
       if (!NumberQ.of(reciprocal))
         return UnitVector.of(tensor.length(), index);
       weights.append(reciprocal);

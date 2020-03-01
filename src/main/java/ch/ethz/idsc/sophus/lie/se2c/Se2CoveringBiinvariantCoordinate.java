@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * linear reproduction
  * lagrange property
  * biinvariant
- * smooth */
+ * smooth for beta == 2 */
 public class Se2CoveringBiinvariantCoordinate extends LieBiinvariantCoordinate {
   public static final BiinvariantCoordinate INSTANCE = //
       new Se2CoveringBiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));
