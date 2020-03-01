@@ -12,7 +12,6 @@ import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** SPD == Symmetric positive definite == Sym+
  * 
@@ -56,13 +55,13 @@ public enum SpdExponential implements LieExponential {
    * 
    * @param g spd
    * @return */
-  public static Scalar n(Tensor g) {
+  public static Scalar nSquared(Tensor g) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
-    return Sqrt.FUNCTION.apply(eigensystem.values().stream() //
+    return eigensystem.values().stream() //
         .map(Scalar.class::cast) //
         .map(Log.FUNCTION) //
         .map(AbsSquared.FUNCTION) //
         .reduce(Scalar::add) //
-        .get());
+        .get();
   }
 }

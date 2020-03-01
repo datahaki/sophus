@@ -26,8 +26,8 @@ public class LieBiinvariantCoordinate extends HsBiinvariantCoordinate {
     this.log = Objects.requireNonNull(log);
   }
 
-  @Override
-  public FlattenLog logAt(Tensor point) {
+  @Override // from HsBiinvariantCoordinate
+  public final FlattenLog logAt(Tensor point) {
     LieGroupElement lieGroupElement = lieGroup.element(point).inverse();
     return q -> log.apply(lieGroupElement.combine(q));
   }

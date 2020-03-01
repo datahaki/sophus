@@ -10,6 +10,8 @@ import ch.ethz.idsc.tensor.Tensor;
 public class SpdInverseDistanceCoordinate extends HsBarycentricCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
       new SpdInverseDistanceCoordinate(InverseDistanceWeighting.of(SpdMetric.INSTANCE));
+  public static final BarycentricCoordinate SQUARED = //
+      new SpdInverseDistanceCoordinate(InverseDistanceWeighting.of(SpdMetricSquared.INSTANCE));
 
   private SpdInverseDistanceCoordinate(BarycentricCoordinate barycentricCoordinate) {
     super(barycentricCoordinate);
