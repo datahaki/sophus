@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** biinvariant */
+/** biinvariant generalized barycentric coordinates */
 public class Se3BiinvariantCoordinate extends LieBiinvariantCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
       new Se3BiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));

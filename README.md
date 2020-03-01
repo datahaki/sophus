@@ -94,6 +94,9 @@ by Jan Hakenberg,
 * *Inverse Distance Coordinates for Scattered Sets of Points*
 by Jan Hakenberg,
 [viXra:2002.0129](http://vixra.org/abs/2002.0129)
+* *Biinvariant Generalized Barycentric Coordinates on Lie Groups*
+by Jan Hakenberg,
+[viXra:2002.0129](http://vixra.org/abs/2002.0129)
 
 ## References
 

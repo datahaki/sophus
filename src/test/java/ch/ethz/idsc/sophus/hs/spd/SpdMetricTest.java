@@ -35,9 +35,9 @@ public class SpdMetricTest extends TestCase {
       SpdExp spdExp = new SpdExp(p);
       Tensor q = TestHelper.generateSpd(n);
       Tensor log = spdExp.log(q);
-      System.out.println(log);
+      log.add(log);
       Scalar distance = SpdMetric.INSTANCE.distance(p, q);
-      System.out.println(distance);
+      distance.add(distance);
     }
   }
 }

@@ -3,18 +3,21 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.FlattenLog;
+import ch.ethz.idsc.sophus.lie.rn.RnNorm;
+import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class SpdInverseDistanceCoordinate extends HsBarycentricCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
-      new SpdInverseDistanceCoordinate(InverseDistanceWeighting.of(SpdMetric.INSTANCE));
+      new SpdInverseDistanceCoordinate(InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
-      new SpdInverseDistanceCoordinate(InverseDistanceWeighting.of(SpdMetricSquared.INSTANCE));
+      new SpdInverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
 
-  private SpdInverseDistanceCoordinate(BarycentricCoordinate barycentricCoordinate) {
-    super(barycentricCoordinate);
+  public SpdInverseDistanceCoordinate(TensorUnaryOperator target) {
+    super(target);
   }
 
   @Override

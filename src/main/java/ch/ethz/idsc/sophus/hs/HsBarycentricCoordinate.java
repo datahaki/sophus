@@ -10,22 +10,24 @@ import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** barycentric coordinates for inverse distance weights */
+/** barycentric coordinates for inverse distance weights
+ * 
+ * @see HsBiinvariantCoordinate */
 public abstract class HsBarycentricCoordinate implements BarycentricCoordinate, Serializable {
-  private final BarycentricCoordinate barycentricCoordinate;
+  private final TensorUnaryOperator target;
 
   /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
-  public HsBarycentricCoordinate(BarycentricCoordinate barycentricCoordinate) {
-    this.barycentricCoordinate = Objects.requireNonNull(barycentricCoordinate);
+  public HsBarycentricCoordinate(TensorUnaryOperator target) {
+    this.target = Objects.requireNonNull(target);
   }
 
   @Override // from BarycentricCoordinate
   public final Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
-    Tensor target = barycentricCoordinate.weights(sequence, point);
-    return NormalizeAffine.of(target, PseudoInverse.of(nullsp), nullsp);
+    return NormalizeAffine.of(target.apply(levers), PseudoInverse.of(nullsp), nullsp);
   }
 
   /** @param point

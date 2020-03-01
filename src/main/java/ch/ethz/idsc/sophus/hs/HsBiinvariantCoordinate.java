@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Reference:
- * "Biinvariant Coordinates for Lie Groups"
+ * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, Serializable {
   private final TensorUnaryOperator target;

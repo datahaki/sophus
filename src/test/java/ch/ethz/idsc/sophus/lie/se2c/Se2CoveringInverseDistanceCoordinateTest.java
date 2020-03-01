@@ -1,29 +1,20 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import java.util.Arrays;
-
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.LieBarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.alg.Dimensions;
-import ch.ethz.idsc.tensor.lie.Symmetrize;
-import ch.ethz.idsc.tensor.mat.Eigensystem;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
-import ch.ethz.idsc.tensor.sca.Unitize;
 import junit.framework.TestCase;
 
 public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
@@ -106,37 +97,6 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
           Chop._10.requireClose(check2, xyainv);
           AffineQ.require(weightsI);
         }
-      }
-    }
-  }
-
-  public void testProjectionIntoAdInvariant() {
-    Distribution distribution = NormalDistribution.standard();
-    BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (int n = 4; n < 10; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-      Tensor xya = biinvariantMean.mean(sequence, weights);
-      LieBarycentricCoordinate lieBarycentricCoordinate = new LieBarycentricCoordinate( //
-          Se2CoveringGroup.INSTANCE, //
-          Se2CoveringExponential.INSTANCE::log, //
-          target -> weights);
-      Tensor weights1 = lieBarycentricCoordinate.weights(sequence, xya); // projection
-      AffineQ.require(weights1);
-      Tolerance.CHOP.requireClose(weights, weights);
-      Tensor projection = lieBarycentricCoordinate.projection(sequence, xya);
-      Tolerance.CHOP.requireClose(projection.dot(weights), weights);
-      assertEquals(Dimensions.of(projection), Arrays.asList(n, n));
-      Tolerance.CHOP.requireClose(Symmetrize.of(projection), projection);
-      Eigensystem eigensystem = Eigensystem.ofSymmetric(Symmetrize.of(projection));
-      Tensor unitize = Unitize.of(eigensystem.values().map(Tolerance.CHOP));
-      Tolerance.CHOP.requireClose(eigensystem.values(), unitize);
-      assertEquals(Total.ofVector(unitize), RealScalar.of(n - 3));
-      for (int index = 0; index < n - 3; ++index) {
-        Chop._12.requireClose(eigensystem.values().get(index), RealScalar.ONE);
-        Tensor eigenw = NormalizeTotal.FUNCTION.apply(eigensystem.vectors().get(index));
-        Tensor recons = biinvariantMean.mean(sequence, eigenw);
-        Chop._07.requireClose(xya, recons);
       }
     }
   }

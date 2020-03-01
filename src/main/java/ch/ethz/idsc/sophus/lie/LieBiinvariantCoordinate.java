@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** invariant under left-action, right-action, and inversion
  * 
  * Reference:
- * "Biinvariant Coordinates in Lie Groups"
+ * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public class LieBiinvariantCoordinate extends HsBiinvariantCoordinate {
   private final LieGroup lieGroup;

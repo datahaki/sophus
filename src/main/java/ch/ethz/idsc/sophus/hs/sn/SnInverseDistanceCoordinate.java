@@ -3,9 +3,12 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.FlattenLog;
+import ch.ethz.idsc.sophus.lie.rn.RnNorm;
+import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** On S^n the inverse distance coordinate is determined explicitly, whereas
  * the weighted average is approximated iteratively.
@@ -17,13 +20,13 @@ import ch.ethz.idsc.tensor.Tensor;
  * @see SnMean */
 public class SnInverseDistanceCoordinate extends HsBarycentricCoordinate {
   public static final BarycentricCoordinate INSTANCE = //
-      new SnInverseDistanceCoordinate(InverseDistanceWeighting.of(SnMetric.INSTANCE));
+      new SnInverseDistanceCoordinate(InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
-      new SnInverseDistanceCoordinate(InverseDistanceWeighting.of(SnMetricSquared.INSTANCE));
+      new SnInverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
 
   /***************************************************/
-  private SnInverseDistanceCoordinate(BarycentricCoordinate barycentricCoordinate) {
-    super(barycentricCoordinate);
+  private SnInverseDistanceCoordinate(TensorUnaryOperator target) {
+    super(target);
   }
 
   @Override
