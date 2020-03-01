@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLog;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
+import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -18,6 +19,11 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * by Jan Hakenberg, 2020 */
 public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, Serializable {
   private final TensorUnaryOperator target;
+
+  /** @param tensorNorm */
+  public HsBiinvariantCoordinate(TensorNorm tensorNorm) {
+    this.target = InverseNorm.of(tensorNorm);
+  }
 
   /** @param target typically {@link InverseNorm} */
   public HsBiinvariantCoordinate(TensorUnaryOperator target) {

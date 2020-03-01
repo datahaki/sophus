@@ -75,7 +75,7 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
         { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allL(points, shift);
+          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
           Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
           Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
           Chop._10.requireClose(xyalft, x_lft);
@@ -83,14 +83,14 @@ public class Se2CoveringInverseDistanceCoordinateTest extends TestCase {
           Chop._10.requireClose(weights1, weightsL);
         }
         { // result invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allR(points, shift);
+          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
           Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
           Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._10.requireClose(xyargt, x_rgt);
         }
         { // result invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allI(points);
+          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
           Tensor xyainv = LIE_GROUP_OPS.invert(xya);
           Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
           Tensor check2 = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weightsI);

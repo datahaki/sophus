@@ -15,10 +15,10 @@ public class StAdMetricTest extends TestCase {
     Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St1(), 5);
     Tensor d1 = stAdMetric.all(sequence, m);
     Tensor shift = TestHelper.spawn_St1();
-    Tensor seqL = LIE_GROUP_OPS.allL(sequence, shift);
+    Tensor seqL = LIE_GROUP_OPS.allLeft(sequence, shift);
     Tensor mL = LIE_GROUP_OPS.combine(shift, m);
     Tensor dL = stAdMetric.all(seqL, mL);
-    Tensor seqR = LIE_GROUP_OPS.allR(sequence, shift);
+    Tensor seqR = LIE_GROUP_OPS.allRight(sequence, shift);
     Tensor mR = LIE_GROUP_OPS.combine(m, shift);
     Tensor dR = stAdMetric.all(seqR, mR);
     // Scalar dL = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(s).combine(m), StGroup.INSTANCE.element(s).combine(x));

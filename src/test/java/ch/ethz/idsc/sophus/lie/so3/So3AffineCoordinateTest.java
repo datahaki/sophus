@@ -26,7 +26,7 @@ public class So3AffineCoordinateTest extends TestCase {
       Tensor weights2 = So3AffineCoordinate.INSTANCE.weights(seqlft, lieGroupElement.combine(mean));
       Chop._10.requireClose(weights1, weights2);
       // ---
-      Tensor seqinv = new LieGroupOps(So3Group.INSTANCE).allI(sequence);
+      Tensor seqinv = new LieGroupOps(So3Group.INSTANCE).allInvert(sequence);
       Tensor weights3 = So3AffineCoordinate.INSTANCE.weights( //
           seqinv, So3Group.INSTANCE.element(mean).inverse().toCoordinate());
       Chop._10.requireClose(weights1, weights3);

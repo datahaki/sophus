@@ -56,17 +56,17 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
           Tensor shift = RandomVariate.of(distribution, n);
           { // invariant under left action
             Tensor weightsL = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allL(points, shift), LIE_GROUP_OPS.combine(shift, xya));
+                LIE_GROUP_OPS.allLeft(points, shift), LIE_GROUP_OPS.combine(shift, xya));
             Tolerance.CHOP.requireClose(weights1, weightsL);
           }
           { // invariant under left action
             Tensor weightsR = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allR(points, shift), LIE_GROUP_OPS.combine(xya, shift));
+                LIE_GROUP_OPS.allRight(points, shift), LIE_GROUP_OPS.combine(xya, shift));
             Tolerance.CHOP.requireClose(weights1, weightsR);
           }
           { // invariant under inversion
             Tensor weightsI = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allI(points), LIE_GROUP_OPS.invert(xya));
+                LIE_GROUP_OPS.allInvert(points), LIE_GROUP_OPS.invert(xya));
             Tolerance.CHOP.requireClose(weights1, weightsI);
           }
         }

@@ -27,7 +27,7 @@ public class MahalanobisTest extends TestCase {
     // weights = UnitVector.of(n, 0);
     Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tensor invert = Se2CoveringGroup.INSTANCE.element(mean).inverse().toCoordinate();
-    Tensor centralized = lieGroupOps.allL(sequence, invert);
+    Tensor centralized = lieGroupOps.allLeft(sequence, invert);
     // System.out.println(Pretty.of(centralized.map(Round._4)));
     Norm norm = mahalanobis.new Norm(centralized, weights);
     // for (Tensor x : centralized) {
