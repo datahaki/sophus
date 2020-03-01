@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -18,7 +19,7 @@ public class LieBiinvariantCoordinate extends HsBiinvariantCoordinate {
 
   /** @param lieGroup
    * @param log mapping from group to Lie algebra
-   * @param target
+   * @param target typically {@link InverseNorm}
    * @throws Exception if any input parameter is null */
   public LieBiinvariantCoordinate(LieGroup lieGroup, TensorUnaryOperator log, TensorUnaryOperator target) {
     super(target);

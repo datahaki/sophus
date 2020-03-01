@@ -7,7 +7,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.VectorAngle;
 
 /** The distance between two point on the d-dimensional sphere
- * embedded in R^(d+1) is the vector angle between the points. */
+ * embedded in R^(d+1) is the vector angle between the points.
+ * 
+ * SnMetric is equivalent to
+ * RnNorm.INSTANCE.norm(new SnExp(p).log(q)) */
 public enum SnMetric implements TensorMetric {
   INSTANCE;
 

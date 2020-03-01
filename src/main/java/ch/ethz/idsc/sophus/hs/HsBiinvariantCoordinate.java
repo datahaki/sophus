@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLog;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
@@ -18,7 +19,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, Serializable {
   private final TensorUnaryOperator target;
 
-  /** @param target is an inverse norm for R^n */
+  /** @param target typically {@link InverseNorm} */
   public HsBiinvariantCoordinate(TensorUnaryOperator target) {
     this.target = Objects.requireNonNull(target);
   }
@@ -31,7 +32,7 @@ public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, 
         projection);
   }
 
-  @Override
+  @Override // from BiinvariantCoordinate
   public final Tensor projection(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
