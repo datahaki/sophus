@@ -40,7 +40,8 @@ public class MahalanobisTest extends TestCase {
         Se2CoveringGroup.INSTANCE, //
         Se2CoveringExponential.INSTANCE::log, //
         t -> target.map(Scalar::reciprocal));
-    Tensor weights2 = lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));
+    // Tensor weights2 =
+    lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));
     // System.out.println(weights2);
     Tensor affine = Se2CoveringAffineCoordinate.INSTANCE.weights(centralized, Tensors.vector(0, 0, 0));
     Tolerance.CHOP.requireClose(weights, affine);

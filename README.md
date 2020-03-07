@@ -2,7 +2,7 @@
 
 Library for non-linear geometry computation in Java, version `0.0.1`
 
-![sophus](https://user-images.githubusercontent.com/4012178/64911180-9f1d5080-d71e-11e9-9490-ae484d0399f3.png)
+![sophus](https://user-images.githubusercontent.com/4012178/76152560-1aa1fe00-60c1-11ea-8318-c25a61b6be64.png)
 
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
@@ -82,21 +82,21 @@ Jan Hakenberg, Oliver Brinkmann, Joel Gächter
 
 * *Curve Subdivision in SE(2)*
 by Jan Hakenberg,
-[viXra:1807.0463](http://vixra.org/abs/1807.0463),
+[viXra:1807.0463](https://vixra.org/abs/1807.0463),
 [video](https://www.youtube.com/watch?v=2vDciaUgL4E)
 * *Smoothing using Geodesic Averages*
 by Jan Hakenberg,
-[viXra:1810.0283](http://vixra.org/abs/1810.0283),
+[viXra:1810.0283](https://vixra.org/abs/1810.0283),
 [video](https://www.youtube.com/watch?v=dmFO72Pigb4)
 * *Curve Decimation in SE(2) and SE(3)*
 by Jan Hakenberg,
-[viXra:1909.0174](http://vixra.org/abs/1909.0174)
+[viXra:1909.0174](https://vixra.org/abs/1909.0174)
 * *Inverse Distance Coordinates for Scattered Sets of Points*
 by Jan Hakenberg,
-[viXra:2002.0129](http://vixra.org/abs/2002.0129)
+[viXra:2002.0129](https://vixra.org/abs/2002.0129)
 * *Biinvariant Generalized Barycentric Coordinates on Lie Groups*
 by Jan Hakenberg,
-[viXra:2002.0129](http://vixra.org/abs/2002.0129)
+[viXra:2002.0129](https://vixra.org/abs/2002.0584)
 
 ## References
 

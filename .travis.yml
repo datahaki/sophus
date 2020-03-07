@@ -5,7 +5,9 @@ before_install:
 language: java
 jdk:
   - openjdk8
+  - openjdk9
   - openjdk12
+  - openjdk13
 
 notifications:
   email: false

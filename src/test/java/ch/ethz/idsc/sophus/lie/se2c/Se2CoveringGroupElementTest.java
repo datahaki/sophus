@@ -129,7 +129,8 @@ public class Se2CoveringGroupElementTest extends TestCase {
     Tensor x = TestHelper.spawn_se2C();
     Scalar h = RealScalar.of(1e-6);
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(g);
-    Tensor gexphx = se2CoveringGroupElement.combine(Se2CoveringExponential.INSTANCE.exp(x.multiply(h)));
+    // Tensor gexphx =
+    se2CoveringGroupElement.combine(Se2CoveringExponential.INSTANCE.exp(x.multiply(h)));
     // Tensor nu = gexphx.divide(h);
     // Tensor dL = se2CoveringGroupElement.dL(x);
     // System.out.println(nu);
@@ -138,13 +139,14 @@ public class Se2CoveringGroupElementTest extends TestCase {
 
   public void testDRDL_ad() {
     Tensor a = TestHelper.spawn_Se2C();
-    LieGroupElement ga = Se2CoveringGroup.INSTANCE.element(a);
-    Tensor uvw = TestHelper.spawn_se2C();
-    Tensor lhs = ga.inverse().dR(ga.dL(uvw));
-    Tensor oth = ga.dL(ga.inverse().dR(uvw));
-    Tensor lh1 = ga.dR(ga.inverse().dL(uvw));
-    Tensor ot1 = ga.inverse().dL(ga.dR(uvw));
-    Tensor rhs = ga.adjoint(uvw);
+    // LieGroupElement ga =
+    Se2CoveringGroup.INSTANCE.element(a);
+    // Tensor uvw = TestHelper.spawn_se2C();
+    // Tensor lhs = ga.inverse().dR(ga.dL(uvw));
+    // Tensor oth = ga.dL(ga.inverse().dR(uvw));
+    // Tensor lh1 = ga.dR(ga.inverse().dL(uvw));
+    // Tensor ot1 = ga.inverse().dL(ga.dR(uvw));
+    // Tensor rhs = ga.adjoint(uvw);
     // System.out.println(lhs);
     // System.out.println(oth);
     // System.out.println(lh1);

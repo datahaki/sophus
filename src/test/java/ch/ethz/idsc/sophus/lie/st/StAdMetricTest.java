@@ -13,14 +13,16 @@ public class StAdMetricTest extends TestCase {
     Tensor m = TestHelper.spawn_St1();
     StAdMetric stAdMetric = new StAdMetric(m);
     Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St1(), 5);
-    Tensor d1 = stAdMetric.all(sequence, m);
+    // Tensor d1 = stAdMetric.all(sequence, m);
     Tensor shift = TestHelper.spawn_St1();
     Tensor seqL = LIE_GROUP_OPS.allLeft(sequence, shift);
     Tensor mL = LIE_GROUP_OPS.combine(shift, m);
-    Tensor dL = stAdMetric.all(seqL, mL);
+    // Tensor dL =
+    stAdMetric.all(seqL, mL);
     Tensor seqR = LIE_GROUP_OPS.allRight(sequence, shift);
     Tensor mR = LIE_GROUP_OPS.combine(m, shift);
-    Tensor dR = stAdMetric.all(seqR, mR);
+    // Tensor dR =
+    stAdMetric.all(seqR, mR);
     // Scalar dL = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(s).combine(m), StGroup.INSTANCE.element(s).combine(x));
     // Scalar dR = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(m).combine(s), StGroup.INSTANCE.element(x).combine(s));
     // System.out.println(d1);
