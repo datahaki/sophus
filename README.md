@@ -1,4 +1,4 @@
-# ch.ethz.idsc.sophus <a href="https://travis-ci.org/idsc-frazzoli/owl"><img src="https://travis-ci.org/idsc-frazzoli/owl.svg?branch=master" alt="Build Status"></a>
+# ch.ethz.idsc.sophus <a href="https://travis-ci.org/datahaki/sophus"><img src="https://travis-ci.org/datahaki/sophus.svg?branch=master" alt="Build Status"></a>
 
 Library for non-linear geometry computation in Java, version `0.0.1`
 
@@ -63,7 +63,12 @@ Instead of using a complicated extended Kalman filter, geodesic averages based o
 ![curve_decimation](https://user-images.githubusercontent.com/4012178/64847671-cf29fe00-d60f-11e9-8993-9f5549388ceb.png)
 
 The pose of mobile robots is typically recorded at high frequencies.
-The trajectory can be faithfully reconstructed from a fraction of the samples. 
+The trajectory can be faithfully reconstructed from a fraction of the samples.
+
+### Biinvariant Generalized Barycentric Coordinates
+
+* for Lie groups: R^d, SE(2), SE(3), ...
+* for homogeneous spaces: S^n, Spd
 
 ### Visualization of Geodesic Averages
 
@@ -96,7 +101,8 @@ by Jan Hakenberg,
 [viXra:2002.0129](https://vixra.org/abs/2002.0129)
 * *Biinvariant Generalized Barycentric Coordinates on Lie Groups*
 by Jan Hakenberg,
-[viXra:2002.0129](https://vixra.org/abs/2002.0584)
+[viXra:2002.0129](https://vixra.org/abs/2002.0584),
+[video](https://www.youtube.com/watch?v=n0-YJE15m90)
 
 ## References
 
