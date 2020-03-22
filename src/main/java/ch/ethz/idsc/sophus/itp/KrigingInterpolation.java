@@ -6,13 +6,22 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.qty.Boole;
 
 public class KrigingInterpolation implements TensorUnaryOperator {
+  /** @param tensorNorm
+   * @param sequence
+   * @param values
+   * @return */
   public static TensorUnaryOperator of(TensorNorm tensorNorm, Tensor sequence, Tensor values) {
     return new KrigingInterpolation(tensorNorm, sequence, values);
+  }
+
+  public static TensorUnaryOperator barycentric(TensorNorm tensorNorm, Tensor sequence) {
+    return new KrigingInterpolation(tensorNorm, sequence, IdentityMatrix.of(sequence.length()));
   }
 
   /***************************************************/

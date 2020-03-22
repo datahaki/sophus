@@ -12,11 +12,11 @@ import ch.ethz.idsc.tensor.sca.Power;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** https://en.wikipedia.org/wiki/Fresnel_integral */
-public class Fresnel implements ScalarUnaryOperator {
+/* package */ class DeprecatedFresnel implements ScalarUnaryOperator {
   private static final Clip CLIP = Clips.interval(-5, 5);
   // ---
-  private static final ScalarUnaryOperator C = new Fresnel(1, 0);
-  private static final ScalarUnaryOperator S = new Fresnel(3, 1);
+  private static final ScalarUnaryOperator C = new DeprecatedFresnel(1, 0);
+  private static final ScalarUnaryOperator S = new DeprecatedFresnel(3, 1);
 
   /** Careful: not consistent with Mathematica::FresnelC
    * input off by a factor, output off by a factor */
@@ -39,7 +39,7 @@ public class Fresnel implements ScalarUnaryOperator {
   private final int first;
   private final int second;
 
-  private Fresnel(int first, int second) {
+  private DeprecatedFresnel(int first, int second) {
     this.first = first;
     this.second = second;
   }

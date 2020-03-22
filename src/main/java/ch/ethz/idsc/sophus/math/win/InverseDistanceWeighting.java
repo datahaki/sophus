@@ -14,9 +14,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 
-/** Strictly speaking, inverse distance weights fall not in the category
- * of generalized barycentric coordinates, because Inverse Distance Weighting
- * does not reproduce linear functions!
+/** Careful: Inverse distance weights fall not in the category of generalized barycentric
+ * coordinates, because Inverse Distance Weighting does not reproduce linear functions!
  * 
  * Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
