@@ -51,7 +51,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   }
 
   public final class Curve implements ScalarTensorFunction {
-    private final ClothoidQuadratic clothoidQuadratic = new ClothoidQuadratic(b0, bm, b1);
+    private final LagrangeQuadratic lagrangeQuadratic = new LagrangeQuadratic(b0, bm, b1);
 
     @Override
     public Tensor apply(Scalar t) {
@@ -67,7 +67,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
       return Tensors.of( //
           Real.FUNCTION.apply(zq), //
           Imag.FUNCTION.apply(zq), //
-          qxy_arg.add(clothoidQuadratic.apply(t)));
+          qxy_arg.add(lagrangeQuadratic.apply(t)));
     }
 
     /** @param t
@@ -90,7 +90,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     }
 
     private Scalar exp_i(Scalar t) {
-      return PolarScalar.unit(clothoidQuadratic.apply(t));
+      return PolarScalar.unit(lagrangeQuadratic.apply(t));
     }
   }
 }

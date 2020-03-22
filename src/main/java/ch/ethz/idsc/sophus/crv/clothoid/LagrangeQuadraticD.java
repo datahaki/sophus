@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * p[1/2] == bm
  * p[2/2] == b1
  * </pre> */
-/* package */ class ClothoidQuadraticD implements ScalarUnaryOperator, HeadTailInterface {
+/* package */ class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterface {
   private static final Scalar _3 = RealScalar.of(+3);
   private static final Scalar _4 = RealScalar.of(+4);
   // ---
@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
    * @param b0
    * @param bm
    * @param b1 */
-  public ClothoidQuadraticD(Scalar b0, Scalar bm, Scalar b1) {
+  public LagrangeQuadraticD(Scalar b0, Scalar bm, Scalar b1) {
     c0 = bm.multiply(_4).subtract(b1).subtract(b0.multiply(_3));
     c1 = b0.add(b1).subtract(bm.add(bm)).multiply(_4);
   }

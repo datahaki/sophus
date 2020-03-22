@@ -14,9 +14,9 @@ public enum FresnelCurve implements ScalarTensorFunction {
 
   @Override
   public Tensor apply(Scalar x) {
-    Scalar apply = Fresnel.FUNCTION.apply(x);
+    Scalar z = Fresnel.FUNCTION.apply(x);
     return Tensors.of( //
-        Real.FUNCTION.apply(apply), //
-        Imag.FUNCTION.apply(apply));
+        Real.FUNCTION.apply(z), //
+        Imag.FUNCTION.apply(z));
   }
 }

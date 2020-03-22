@@ -45,17 +45,17 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     Scalar f2 = b0.multiply(b1).divide(_46);
     Scalar f3 = _1_4;
     Scalar bm = b0.add(b1).multiply(f1.subtract(f2).subtract(f3));
-    ClothoidQuadraticEx clothoidQuadratic = new ClothoidQuadraticEx(b0, bm, b1);
+    ClothoidQuadraticEx clothoidQuadraticEx = new ClothoidQuadraticEx(b0, bm, b1);
     return t -> {
       Scalar _1_t = _1.subtract(t);
       Tensor wl = W.multiply(t);
       Tensor wr = W.multiply(_1_t);
       Tensor xl = X.multiply(t);
       Tensor xr = X.multiply(_1_t).map(t::add);
-      Scalar il = wl.dot(xl.map(clothoidQuadratic)).Get();
-      Scalar ir = wr.dot(xr.map(clothoidQuadratic)).Get();
+      Scalar il = wl.dot(xl.map(clothoidQuadraticEx)).Get();
+      Scalar ir = wr.dot(xr.map(clothoidQuadraticEx)).Get();
       Scalar ret_p = p0.add(il.multiply(d).divide(il.add(ir)));
-      Scalar ret_a = clothoidQuadratic.angle(t).add(da);
+      Scalar ret_a = clothoidQuadraticEx.angle(t).add(da);
       return Tensors.of( //
           Real.FUNCTION.apply(ret_p), //
           Imag.FUNCTION.apply(ret_p), //

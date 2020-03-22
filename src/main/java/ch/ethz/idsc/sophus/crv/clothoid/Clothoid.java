@@ -58,7 +58,7 @@ public class Clothoid implements Serializable {
   }
 
   public final class Curve implements ScalarTensorFunction {
-    private final ClothoidQuadratic clothoidQuadratic = new ClothoidQuadratic(b0, bm, b1);
+    private final LagrangeQuadratic lagrangeQuadratic = new LagrangeQuadratic(b0, bm, b1);
 
     @Override
     public Tensor apply(Scalar t) {
@@ -69,7 +69,7 @@ public class Clothoid implements Serializable {
        * t == 1 -> (1, 0) */
       Scalar z = il.divide(il.add(ir));
       return pxy.add(prod(z, diff)) //
-          .append(da.add(clothoidQuadratic.apply(t)));
+          .append(da.add(lagrangeQuadratic.apply(t)));
     }
 
     /** @param t
@@ -106,29 +106,29 @@ public class Clothoid implements Serializable {
     }
 
     private Scalar exp_i(Scalar s) {
-      return ComplexScalar.unit(clothoidQuadratic.apply(s));
+      return ComplexScalar.unit(lagrangeQuadratic.apply(s));
     }
   }
 
   /** when the start and end point of the clothoid have identical (x, y)-coordinates,
    * the curvature evaluates to Infinity, or NaN. */
   public final class Curvature implements ScalarUnaryOperator, HeadTailInterface {
-    private final ClothoidQuadraticD clothoidQuadraticD = new ClothoidQuadraticD(b0, bm, b1);
+    private final LagrangeQuadraticD lagrangeQuadraticD = new LagrangeQuadraticD(b0, bm, b1);
     private final Scalar v = Norm._2.ofVector(diff);
 
     @Override
     public Scalar apply(Scalar t) {
-      return clothoidQuadraticD.apply(t).divide(v);
+      return lagrangeQuadraticD.apply(t).divide(v);
     }
 
     @Override // from HeadTailInterface
     public Scalar head() {
-      return clothoidQuadraticD.head().divide(v);
+      return lagrangeQuadraticD.head().divide(v);
     }
 
     @Override // from HeadTailInterface
     public Scalar tail() {
-      return clothoidQuadraticD.tail().divide(v);
+      return lagrangeQuadraticD.tail().divide(v);
     }
   }
 

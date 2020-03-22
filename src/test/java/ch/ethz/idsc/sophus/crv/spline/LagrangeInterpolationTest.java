@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.opt.Interpolation;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
@@ -18,5 +19,17 @@ public class LagrangeInterpolationTest extends TestCase {
     Tensor polynom = domain.map(interpolation::at);
     assertEquals(control, polynom);
     ExactTensorQ.require(polynom);
+  }
+
+  public void testFail() {
+    Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(-3, 7), 4, 2).unmodifiable();
+    Interpolation interpolation = LagrangeInterpolation.of(RnGeodesic.INSTANCE, control);
+    interpolation.get(Tensors.vector(1));
+    try {
+      interpolation.get(Tensors.vector(1, 2));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

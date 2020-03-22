@@ -1,6 +1,7 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
+import ch.ethz.idsc.sophus.crv.spline.GeodesicNeville;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
@@ -12,8 +13,10 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * p[0/2] == b0
  * p[1/2] == bm
  * p[2/2] == b1
- * </pre> */
-/* package */ class ClothoidQuadratic implements ScalarUnaryOperator {
+ * </pre>
+ * 
+ * @see GeodesicNeville */
+/* package */ class LagrangeQuadratic implements ScalarUnaryOperator {
   private static final Scalar _3 = RealScalar.of(+3.0);
   // ---
   private final Scalar c0;
@@ -29,7 +32,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
    * @param b0
    * @param bm
    * @param b1 */
-  public ClothoidQuadratic(Scalar b0, Scalar bm, Scalar b1) {
+  public LagrangeQuadratic(Scalar b0, Scalar bm, Scalar b1) {
     c0 = b0;
     Scalar b2 = bm.add(bm);
     c1 = b2.add(b2).subtract(b0.multiply(_3).add(b1));

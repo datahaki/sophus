@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
   private final Tensor pxy;
   private final Tensor diff;
   private final Scalar da;
-  protected final ClothoidQuadratic clothoidQuadratic;
+  protected final LagrangeQuadratic clothoidQuadratic;
 
   public ClothoidCurve(Tensor p, Tensor q) {
     pxy = p.extract(0, 2);
@@ -30,7 +30,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
     Scalar b0 = So2.MOD.apply(pa.subtract(da)); // normal form T0 == b0
     Scalar b1 = So2.MOD.apply(qa.subtract(da)); // normal form T1 == b1
     // ---
-    clothoidQuadratic = new ClothoidQuadratic(b0, ClothoidApproximation.f(b0, b1), b1);
+    clothoidQuadratic = new LagrangeQuadratic(b0, ClothoidApproximation.f(b0, b1), b1);
   }
 
   /** @param t

@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.itp;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
-import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.UnitVector;
@@ -31,21 +30,6 @@ public class KrigingInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     TensorUnaryOperator tensorUnaryOperator = KrigingInterpolation.barycentric(RnNorm.INSTANCE, sequence);
-    for (int index = 0; index < sequence.length(); ++index) {
-      Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
-      Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));
-      // ---
-      Tensor point = RandomVariate.of(distribution, 3);
-      Tensor weights = tensorUnaryOperator.apply(point);
-      AffineQ.require(weights);
-    }
-  }
-
-  public void testBarycentric2() {
-    Distribution distribution = NormalDistribution.standard();
-    int n = 10;
-    Tensor sequence = RandomVariate.of(distribution, n, 3);
-    TensorUnaryOperator tensorUnaryOperator = KrigingInterpolation.barycentric(RnNormSquared.INSTANCE, sequence);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));

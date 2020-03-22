@@ -57,7 +57,7 @@ public class CommonClothoid implements Serializable {
   }
 
   public final class Curve implements ScalarTensorFunction {
-    private final ClothoidQuadratic clothoidQuadratic = new ClothoidQuadratic(b0, bm, b1);
+    private final LagrangeQuadratic clothoidQuadratic = new LagrangeQuadratic(b0, bm, b1);
     private final Scalar unit = unit();
 
     @Override
@@ -100,22 +100,22 @@ public class CommonClothoid implements Serializable {
   }
 
   public final class Curvature implements ScalarUnaryOperator, HeadTailInterface {
-    private final ClothoidQuadraticD clothoidQuadraticD = new ClothoidQuadraticD(b0, bm, b1);
+    private final LagrangeQuadraticD lagrangeQuadraticD = new LagrangeQuadraticD(b0, bm, b1);
     private final Scalar v = Norm._2.ofVector(diff);
 
     @Override
     public Scalar apply(Scalar t) {
-      return clothoidQuadraticD.apply(t).divide(v);
+      return lagrangeQuadraticD.apply(t).divide(v);
     }
 
     @Override // from HeadTailInterface
     public Scalar head() {
-      return clothoidQuadraticD.head().divide(v);
+      return lagrangeQuadraticD.head().divide(v);
     }
 
     @Override // from HeadTailInterface
     public Scalar tail() {
-      return clothoidQuadraticD.tail().divide(v);
+      return lagrangeQuadraticD.tail().divide(v);
     }
   }
 
