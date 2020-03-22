@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -42,6 +43,15 @@ public class GeodesicNevilleTest extends TestCase {
   public void testLengthFail() {
     try {
       GeodesicNeville.of(RnGeodesic.INSTANCE, Tensors.vector(1, 2, 3), Tensors.vector(1, 2));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
+  public void testKnotsNonVectorFail() {
+    try {
+      GeodesicNeville.of(RnGeodesic.INSTANCE, IdentityMatrix.of(3), Tensors.vector(1, 2, 3));
       fail();
     } catch (Exception exception) {
       // ---

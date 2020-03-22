@@ -1,18 +1,17 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import ch.ethz.idsc.sophus.crv.spline.GeodesicNeville;
-import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.crv.spline.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
 public class LagrangeQuadraticTest extends TestCase {
@@ -41,7 +40,7 @@ public class LagrangeQuadraticTest extends TestCase {
   }
 
   public void testNeville() {
-    ScalarTensorFunction geodesicNeville = GeodesicNeville.of(RnGeodesic.INSTANCE, //
+    ScalarUnaryOperator geodesicNeville = InterpolatingPolynomial.of( //
         Tensors.vector(0, 0.5, 1), //
         Tensors.vector(5, 7, 13));
     LagrangeQuadratic clothoidQuadratic = //

@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.crv.spline.InterpolatingPolynomial;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -13,9 +14,11 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Imag;
 import ch.ethz.idsc.tensor.sca.Real;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /* package */ class OriginClothoid implements Serializable {
+  private static final Tensor KNOTS = Tensors.vector(0.0, 0.5, 1.0);
   private static final Scalar _1 = RealScalar.of(1.0);
   private static final Tensor ONES = Tensors.of(_1, _1).unmodifiable();
   /** 3-point Gauss Legendre quadrature on interval [0, 1] */
@@ -51,7 +54,8 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   }
 
   public final class Curve implements ScalarTensorFunction {
-    private final LagrangeQuadratic lagrangeQuadratic = new LagrangeQuadratic(b0, bm, b1);
+    private final ScalarUnaryOperator interpolatingPolynomial = //
+        InterpolatingPolynomial.of(KNOTS, Tensors.of(b0, bm, b1));
 
     @Override
     public Tensor apply(Scalar t) {
@@ -67,7 +71,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
       return Tensors.of( //
           Real.FUNCTION.apply(zq), //
           Imag.FUNCTION.apply(zq), //
-          qxy_arg.add(lagrangeQuadratic.apply(t)));
+          qxy_arg.add(interpolatingPolynomial.apply(t)));
     }
 
     /** @param t
@@ -90,7 +94,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     }
 
     private Scalar exp_i(Scalar t) {
-      return PolarScalar.unit(lagrangeQuadratic.apply(t));
+      return PolarScalar.unit(interpolatingPolynomial.apply(t));
     }
   }
 }

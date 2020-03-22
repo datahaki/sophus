@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference:
  * Ulrich Reif slides */
@@ -17,7 +18,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
   private final Tensor pxy;
   private final Tensor diff;
   private final Scalar da;
-  protected final LagrangeQuadratic clothoidQuadratic;
+  protected final ScalarUnaryOperator clothoidQuadratic;
 
   public ClothoidCurve(Tensor p, Tensor q) {
     pxy = p.extract(0, 2);

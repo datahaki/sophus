@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.crv.spline.InterpolatingPolynomial;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.sophus.math.HeadTailInterface;
@@ -22,6 +23,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Reference: U. Reif slides */
 public class CommonClothoid implements Serializable {
+  private static final Tensor KNOTS = Tensors.vector(0.0, 0.5, 1.0);
   /** 3-point Gauss Legendre quadrature on interval [0, 1] */
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //
@@ -57,7 +59,8 @@ public class CommonClothoid implements Serializable {
   }
 
   public final class Curve implements ScalarTensorFunction {
-    private final LagrangeQuadratic clothoidQuadratic = new LagrangeQuadratic(b0, bm, b1);
+    private final ScalarUnaryOperator interpolatingPolynomial = //
+        InterpolatingPolynomial.of(KNOTS, Tensors.of(b0, bm, b1));
     private final Scalar unit = unit();
 
     @Override
@@ -68,7 +71,7 @@ public class CommonClothoid implements Serializable {
        * t == 1 -> (1, 0) */
       Scalar z = il.divide(unit);
       return pxy.add(prod(z, diff)) //
-          .append(da.add(clothoidQuadratic.apply(t)));
+          .append(da.add(interpolatingPolynomial.apply(t)));
     }
 
     /** @param t
@@ -95,7 +98,7 @@ public class CommonClothoid implements Serializable {
     }
 
     private Scalar exp_i(Scalar s) {
-      return ComplexScalar.unit(clothoidQuadratic.apply(s));
+      return ComplexScalar.unit(interpolatingPolynomial.apply(s));
     }
   }
 

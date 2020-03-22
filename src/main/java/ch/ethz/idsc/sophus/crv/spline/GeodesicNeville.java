@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.VectorQ;
+import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.opt.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
@@ -19,10 +19,9 @@ public class GeodesicNeville implements ScalarTensorFunction {
    * @param tensor
    * @return */
   public static ScalarTensorFunction of(BinaryAverage binaryAverage, Tensor knots, Tensor tensor) {
-    return new GeodesicNeville( //
-        Objects.requireNonNull(binaryAverage), //
-        VectorQ.requireLength(knots, tensor.length()), //
-        tensor);
+    if (knots.length() == tensor.length())
+      return new GeodesicNeville(Objects.requireNonNull(binaryAverage), knots, tensor);
+    throw TensorRuntimeException.of(knots, tensor);
   }
 
   /***************************************************/
@@ -30,7 +29,7 @@ public class GeodesicNeville implements ScalarTensorFunction {
   private final Scalar[] knots;
   private final Tensor tensor;
 
-  private GeodesicNeville(BinaryAverage binaryAverage, Tensor knots, Tensor tensor) {
+  /* package */ GeodesicNeville(BinaryAverage binaryAverage, Tensor knots, Tensor tensor) {
     this.binaryAverage = binaryAverage;
     this.knots = knots.stream().map(Scalar.class::cast).toArray(Scalar[]::new);
     this.tensor = tensor;
