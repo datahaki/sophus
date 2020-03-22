@@ -70,20 +70,13 @@ The trajectory can be faithfully reconstructed from a fraction of the samples.
 * for Lie groups: R^d, SE(2), SE(3), ...
 * for homogeneous spaces: S^n, Spd
 
-### Visualization of Geodesic Averages
-
-![deboor5](https://user-images.githubusercontent.com/4012178/51075948-ade4cc80-1692-11e9-9c9a-1e75084df796.png)
-
-A geodesic average is the generalization of an affine combination from the Euclidean space to a non-linear space.
-A geodesic average consists of a nested binary averages.
-Generally, an affine combination does not have a unique expression as a geodesic average.
-Instead, several geodesic averages reduce to the same affine combination when applied in Euclidean space. 
-
 ## Contributors
 
 Jan Hakenberg, Oliver Brinkmann, Joel Gächter
 
 ## Publications
+
+##### 2018
 
 * *Curve Subdivision in SE(2)*
 by Jan Hakenberg,
@@ -93,9 +86,15 @@ by Jan Hakenberg,
 by Jan Hakenberg,
 [viXra:1810.0283](https://vixra.org/abs/1810.0283),
 [video](https://www.youtube.com/watch?v=dmFO72Pigb4)
+
+##### 2019
+
 * *Curve Decimation in SE(2) and SE(3)*
 by Jan Hakenberg,
 [viXra:1909.0174](https://vixra.org/abs/1909.0174)
+
+##### 2020
+
 * *Inverse Distance Coordinates for Scattered Sets of Points*
 by Jan Hakenberg,
 [viXra:2002.0129](https://vixra.org/abs/2002.0129)
@@ -103,6 +102,35 @@ by Jan Hakenberg,
 by Jan Hakenberg,
 [viXra:2002.0129](https://vixra.org/abs/2002.0584),
 [video](https://www.youtube.com/watch?v=n0-YJE15m90)
+
+## Integration
+
+Specify `repository` and `dependency` of the tensor library in the `pom.xml` file of your maven project:
+
+```xml
+<repositories>
+  <repository>
+    <id>tensor-mvn-repo</id>
+    <url>https://raw.github.com/datahaki/sophus/mvn-repo/</url>
+    <snapshots>
+      <enabled>true</enabled>
+      <updatePolicy>always</updatePolicy>
+    </snapshots>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>ch.ethz.idsc</groupId>
+    <artifactId>sophus</artifactId>
+    <version>0.0.1</version>
+  </dependency>
+</dependencies>
+```
+
+The source code is attached to every release.
+
+---
 
 ## References
 

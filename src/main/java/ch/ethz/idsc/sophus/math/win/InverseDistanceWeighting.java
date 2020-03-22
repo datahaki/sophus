@@ -9,14 +9,14 @@ import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.NumberQ;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 
-/** Inverse Distance Weighting does not reproduce linear functions
- * 
- * Strictly speaking, inverse distance weights fall not in the category
- * of generalized barycentric coordinates.
+/** Strictly speaking, inverse distance weights fall not in the category
+ * of generalized barycentric coordinates, because Inverse Distance Weighting
+ * does not reproduce linear functions!
  * 
  * Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
@@ -39,7 +39,10 @@ public class InverseDistanceWeighting implements BarycentricCoordinate, Serializ
     Tensor weights = Tensors.reserve(sequence.length());
     int count = 0;
     for (Tensor p : sequence) {
-      Scalar reciprocal = tensorMetric.distance(p, point).reciprocal();
+      Scalar distance = tensorMetric.distance(p, point);
+      if (Scalars.isZero(distance))
+        return UnitVector.of(sequence.length(), count);
+      Scalar reciprocal = distance.reciprocal();
       if (!NumberQ.of(reciprocal))
         return UnitVector.of(sequence.length(), count);
       weights.append(reciprocal);

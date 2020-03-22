@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.lie.rn.RnMetricSquared;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -26,6 +27,13 @@ public class InverseDistanceWeightingTest extends TestCase {
         InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
     Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
+  }
+
+  public void testExact() {
+    BarycentricCoordinate barycentricCoordinate = InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
+    Tensor weights = barycentricCoordinate.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
+    ExactTensorQ.require(weights);
+    assertEquals(weights, UnitVector.of(2, 1));
   }
 
   public void testPoints() {

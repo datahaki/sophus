@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * by Kai Hormann, N. Sukumar, 2017
  * 
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
- * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
+ * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
  * 
  * @see Barycenter */
 public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializable {
