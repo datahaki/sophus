@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.qty.Unit;
 import ch.ethz.idsc.tensor.red.Nest;
 import ch.ethz.idsc.tensor.sca.Chop;
 
+// TODO choose between Erf and Legendre3
 public enum ClothoidTerminalRatios {
   ;
   /** @param p
@@ -24,9 +25,9 @@ public enum ClothoidTerminalRatios {
 
   /***************************************************/
   private static final TensorUnaryOperator HEAD = //
-      value -> Clothoids.CURVE_SUBDIVISION.string(value.extract(0, 2));
+      value -> Legendre3Clothoids.CURVE_SUBDIVISION.string(value.extract(0, 2));
   private static final TensorUnaryOperator TAIL = //
-      value -> Clothoids.CURVE_SUBDIVISION.string(value.extract(value.length() - 2, value.length()));
+      value -> Legendre3Clothoids.CURVE_SUBDIVISION.string(value.extract(value.length() - 2, value.length()));
   /***************************************************/
   /** investigations have shown that for iterations == 5 works on all start and end point configurations
    * 
@@ -94,7 +95,7 @@ public enum ClothoidTerminalRatios {
    * @param end of the form {end_x, end_y, end_heading}
    * @return */
   public static HeadTailInterface planar(Tensor beg, Tensor end) {
-    final Tensor init = Clothoids.CURVE_SUBDIVISION.string(Unprotect.byRef(beg, end));
+    final Tensor init = Legendre3Clothoids.CURVE_SUBDIVISION.string(Unprotect.byRef(beg, end));
     Scalar head = ClothoidTerminalRatios.curvature(init);
     {
       Tensor hseq = init;

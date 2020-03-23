@@ -31,7 +31,7 @@ public class ClothoidTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      Curve curve = Serialization.copy(new Clothoid(p, q)).new Curve();
+      Curve curve = Serialization.copy(new Clothoid(p, q)).legendre3();
       Scalar length = Serialization.copy(curve).length();
       Scalar between = Norm._2.between(p.extract(0, 2), q.extract(0, 2));
       assertTrue(Scalars.lessEquals(between, length));
@@ -42,7 +42,7 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      Curve curve = new Clothoid(p, p).new Curve();
+      Curve curve = new Clothoid(p, p).legendre3();
       Scalar length = curve.length();
       Chop.NONE.requireZero(length);
     }
@@ -52,7 +52,7 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = DiscreteUniformDistribution.of(-3, +3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      Curve curve = new Clothoid(p, p).new Curve();
+      Curve curve = new Clothoid(p, p).legendre3();
       Scalar length = curve.length();
       Chop.NONE.requireZero(length);
     }
@@ -94,11 +94,11 @@ public class ClothoidTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      Curve curve = new Clothoid(p, q).new Curve();
+      Curve curve = new Clothoid(p, q).legendre3();
       Tensor m = curve.apply(RationalScalar.HALF);
       {
-        Scalar l1 = new Clothoid(p, m).new Curve().length();
-        Scalar l2 = new Clothoid(m, q).new Curve().length();
+        Scalar l1 = new Clothoid(p, m).legendre3().length();
+        Scalar l2 = new Clothoid(m, q).legendre3().length();
         Chop._01.requireClose(l1, l2);
       }
     }
@@ -106,7 +106,7 @@ public class ClothoidTest extends TestCase {
 
   public void testQuantity() {
     Clothoid clothoid = new Clothoid(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{7[m], -2[m], 4}"));
-    Curve curve = clothoid.new Curve();
+    Curve curve = clothoid.legendre3();
     Tensor tensor = curve.apply(RealScalar.of(0.3));
     Chop._08.requireClose(tensor, Tensors.fromString("{0.90418903396778[m], -0.39687882575701483[m], -0.40076838060546527}"));
     Chop._10.requireClose(curve.length(), Quantity.of(12.394047346728675, "m^1.0"));
@@ -165,7 +165,7 @@ public class ClothoidTest extends TestCase {
     Tensor angles = Range.of(-3, 4).map(Pi.TWO::multiply);
     for (Tensor angle : angles) {
       Clothoid clothoid = new Clothoid(pxy.append(angle), qxy.append(angle));
-      Curve curve = clothoid.new Curve();
+      Curve curve = clothoid.legendre3();
       Tensor r = curve.apply(RationalScalar.HALF);
       Chop._13.requireClose(r, Tensors.vector(0.5, 0, 0));
     }

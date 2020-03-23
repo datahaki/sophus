@@ -43,21 +43,31 @@ public class Clothoid implements Serializable {
     bm = ClothoidApproximation.f(b0, b1);
   }
 
-  public final class Curve implements ScalarTensorFunction {
-    /** quadratic polynomial */
-    private final ScalarUnaryOperator scalarUnaryOperator = //
+  public Curve legendre3() {
+    ScalarUnaryOperator scalarUnaryOperator = //
         InterpolatingPolynomial.scalar(KNOTS, Tensors.of(b0, bm, b1));
-    private final ClothoidIntegral clothoidIntegral = //
-        new Legendre3ClothoidIntegral(scalarUnaryOperator);
+    return new Curve(scalarUnaryOperator, new Legendre3ClothoidIntegral(scalarUnaryOperator));
+  }
+
+  public Curve erf() {
+    return new Curve( //
+        InterpolatingPolynomial.scalar(KNOTS, Tensors.of(b0, bm, b1)), //
+        ErfClothoidIntegral.interp(b0, bm, b1));
+  }
+
+  public class Curve implements ScalarTensorFunction {
+    /** quadratic polynomial */
+    private final ScalarUnaryOperator scalarUnaryOperator;
+    private final ClothoidIntegral clothoidIntegral;
+
+    private Curve(ScalarUnaryOperator scalarUnaryOperator, ClothoidIntegral clothoidIntegral) {
+      this.scalarUnaryOperator = scalarUnaryOperator;
+      this.clothoidIntegral = clothoidIntegral;
+    }
 
     @Override
     public Tensor apply(Scalar t) {
-      Scalar il = clothoidIntegral.il(t);
-      Scalar ir = clothoidIntegral.ir(t);
-      /** ratio z enforces interpolation of terminal points
-       * t == 0 -> (0, 0)
-       * t == 1 -> (1, 0) */
-      Scalar z = il.divide(il.add(ir));
+      Scalar z = clothoidIntegral.normalized(t);
       return pxy.add(prod(z, diff)) //
           .append(da.add(scalarUnaryOperator.apply(t)));
     }

@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
-/** clothoid3 factory
+/** factory of {@link Clothoid}
  *
  * <p>The curvature of the provided curve resembles that of a clothoid.
  * The curve does not interpolate the tangents at the end points p and q in general.
@@ -16,14 +16,14 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * <p>In order to obtain samples of a clothoid that interpolates p and q the
  * recommended method is to use {@link LaneRiesenfeldCurveSubdivision} with
  * Clothoids and degrees 1 or 3. */
-public enum CommonClothoids implements GeodesicInterface {
+public enum ErfClothoids implements GeodesicInterface {
   INSTANCE;
 
   public static final CurveSubdivision CURVE_SUBDIVISION = LaneRiesenfeldCurveSubdivision.of(INSTANCE, 1);
 
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return new CommonClothoid(p, q).new Curve();
+    return new Clothoid(p, q).erf();
   }
 
   @Override // from GeodesicInterface

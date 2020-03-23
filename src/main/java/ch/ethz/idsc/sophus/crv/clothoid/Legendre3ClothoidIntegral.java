@@ -35,6 +35,16 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   }
 
   @Override
+  public Scalar normalized(Scalar t) {
+    Scalar il = il(t);
+    Scalar ir = ir(t);
+    /** ratio z enforces interpolation of terminal points
+     * t == 0 -> (0, 0)
+     * t == 1 -> (1, 0) */
+    return il.divide(il.add(ir));
+  }
+
+  @Override // from ClothoidIntegral
   public Scalar il(Scalar t) {
     Scalar v0 = exp_i(X0.multiply(t));
     Scalar v1 = exp_i(X1.multiply(t));
@@ -42,8 +52,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     return v0.add(v2).multiply(W0).add(v1.multiply(W1)).multiply(t);
   }
 
-  @Override
-  public Scalar ir(Scalar t) {
+  private Scalar ir(Scalar t) {
     Scalar _1_t = _1.subtract(t);
     Scalar v0 = exp_i(X0.multiply(_1_t).add(t));
     Scalar v1 = exp_i(X1.multiply(_1_t).add(t));
@@ -51,7 +60,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     return v0.add(v2).multiply(W0).add(v1.multiply(W1)).multiply(_1_t);
   }
 
-  @Override
+  @Override // from ClothoidIntegral
   public Scalar one() {
     Scalar v0 = exp_i(X0);
     Scalar v1 = exp_i(X1);
