@@ -19,7 +19,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference: U. Reif slides */
 public class Clothoid implements Serializable {
-  private static final InterpolatingPolynomial INTERPOLATING_POLYNOMIAL = //
+  static final InterpolatingPolynomial INTERPOLATING_POLYNOMIAL = //
       InterpolatingPolynomial.of(Tensors.vector(0.0, 0.5, 1.0));
   // ---
   private final Tensor pxy;

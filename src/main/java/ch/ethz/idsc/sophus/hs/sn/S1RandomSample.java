@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.s1;
+package ch.ethz.idsc.sophus.hs.sn;
 
 import java.util.Random;
 
@@ -12,8 +12,10 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Clips;
 
-/** sample from unit circle S2 */
-public enum S1RandomSample implements RandomSampleInterface {
+/** sample from unit circle S1 parameterized by {cos(angle), sin(angle)} in the plane
+ * 
+ * @see SnRandomSample */
+/* package */ enum S1RandomSample implements RandomSampleInterface {
   INSTANCE;
 
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.VALUE));

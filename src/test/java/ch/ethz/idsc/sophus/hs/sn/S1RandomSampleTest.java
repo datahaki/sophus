@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.s1;
+package ch.ethz.idsc.sophus.hs.sn;
 
 import java.util.Arrays;
 

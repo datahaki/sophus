@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.hs.sn;
 import java.io.IOException;
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.hs.s1.S1RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;

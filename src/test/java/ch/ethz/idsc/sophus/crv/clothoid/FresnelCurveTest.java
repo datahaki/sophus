@@ -17,8 +17,9 @@ public class FresnelCurveTest extends TestCase {
       Scalar scalar = RandomVariate.of(distribution);
       Tensor p = FresnelCurve.FUNCTION.apply(scalar);
       Tensor q = FresnelCurve.FUNCTION.apply(scalar.negate());
-      VectorQ.requireLength(p, 2);
-      Tolerance.CHOP.requireClose(p, q.negate());
+      VectorQ.requireLength(p, 3);
+      Tolerance.CHOP.requireClose(p.extract(0, 2), q.extract(0, 2).negate());
+      Tolerance.CHOP.requireClose(p.get(2), q.get(2));
     }
   }
 }

@@ -4,11 +4,9 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.math.ArcTan2D;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Arg;
@@ -17,11 +15,6 @@ import ch.ethz.idsc.tensor.sca.Real;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /* package */ class OriginClothoid implements Serializable {
-  private static final InterpolatingPolynomial INTERPOLATING_POLYNOMIAL = //
-      InterpolatingPolynomial.of(Tensors.vector(0.0, 0.5, 1.0));
-  private static final Scalar _1 = RealScalar.of(1.0);
-  private static final Tensor ONES = Tensors.of(_1, _1).unmodifiable();
-  // ---
   private final Tensor qxy;
   private final Scalar qp;
   private final Scalar qxy_arg;
@@ -45,13 +38,14 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   }
 
   public Curve legendre3() {
-    ScalarUnaryOperator scalarUnaryOperator = INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1));
+    ScalarUnaryOperator scalarUnaryOperator = //
+        Clothoid.INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1));
     return new Curve(scalarUnaryOperator, new Legendre3ClothoidIntegral(scalarUnaryOperator));
   }
 
   public Curve erf() {
     return new Curve( //
-        INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1)), //
+        Clothoid.INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1)), //
         ErfClothoidIntegral.interp(b0, bm, b1));
   }
 
@@ -66,9 +60,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
     @Override
     public Tensor apply(Scalar t) {
-      // PolarScalar ilr = PolarBiinvariantMean.INSTANCE.mean(Tensors.of(il, ir), ONES);
       Scalar zcomplex = clothoidIntegral.normalized(t);
-      // PolarScalar z = (PolarScalar) il.divide(ilr);
       PolarScalar z = PolarScalar.of(zcomplex.abs(), Arg.FUNCTION.apply(zcomplex));
       PolarScalar zq = z.multiply(qp);
       // TODO check code below

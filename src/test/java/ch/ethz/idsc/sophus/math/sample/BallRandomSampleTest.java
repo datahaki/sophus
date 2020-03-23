@@ -47,11 +47,20 @@ public class BallRandomSampleTest extends TestCase {
     }
   }
 
-  public void test2D() {
-    Tensor center = Tensors.vector(10, 20);
-    Scalar radius = RealScalar.of(2);
-    RandomSampleInterface rsi = BallRandomSample.of(center, radius);
-    assertTrue(rsi instanceof DiskRandomSample);
+  public void testSimple2D() {
+    RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.ONE);
+    for (int count = 0; count < 100; ++count) {
+      Tensor loc = diskRandomSample.randomSample(RANDOM);
+      Scalar rad = Norm._2.ofVector(loc);
+      assertTrue(Scalars.lessEquals(rad, RealScalar.ONE));
+    }
+  }
+
+  public void testQuantity2D() {
+    RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.fromString("{10[m], 20[m]}"), Quantity.of(2, "m"));
+    Tensor tensor = diskRandomSample.randomSample(RANDOM);
+    ScalarUnaryOperator scalarUnaryOperator = QuantityMagnitude.SI().in("m");
+    tensor.map(scalarUnaryOperator);
   }
 
   public void test3DZeroRadius() {
@@ -103,17 +112,8 @@ public class BallRandomSampleTest extends TestCase {
 
   public void testLarge() {
     RandomSampleInterface randomSampleInterface = //
-        BallRandomSample.of(Array.zeros(BallRandomSample.MAX_LENGTH), RealScalar.ONE);
+        BallRandomSample.of(Array.zeros(10), RealScalar.ONE);
     randomSampleInterface.randomSample(RANDOM);
-  }
-
-  public void testLargeFail() {
-    try {
-      BallRandomSample.of(Array.zeros(BallRandomSample.MAX_LENGTH + 1), RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
   }
 
   public void testCenterEmptyFail() {
