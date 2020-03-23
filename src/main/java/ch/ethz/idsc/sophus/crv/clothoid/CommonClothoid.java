@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.crv.spline.InterpolatingPolynomial;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.sophus.math.HeadTailInterface;
@@ -13,6 +12,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.red.Norm;
@@ -60,7 +60,7 @@ public class CommonClothoid implements Serializable {
 
   public final class Curve implements ScalarTensorFunction {
     private final ScalarUnaryOperator interpolatingPolynomial = //
-        InterpolatingPolynomial.of(KNOTS, Tensors.of(b0, bm, b1));
+        InterpolatingPolynomial.scalar(KNOTS, Tensors.of(b0, bm, b1));
     private final Scalar unit = unit();
 
     @Override

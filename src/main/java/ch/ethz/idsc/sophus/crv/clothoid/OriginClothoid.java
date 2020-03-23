@@ -3,13 +3,13 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.crv.spline.InterpolatingPolynomial;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Imag;
@@ -55,7 +55,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
   public final class Curve implements ScalarTensorFunction {
     private final ScalarUnaryOperator interpolatingPolynomial = //
-        InterpolatingPolynomial.of(KNOTS, Tensors.of(b0, bm, b1));
+        InterpolatingPolynomial.scalar(KNOTS, Tensors.of(b0, bm, b1));
 
     @Override
     public Tensor apply(Scalar t) {

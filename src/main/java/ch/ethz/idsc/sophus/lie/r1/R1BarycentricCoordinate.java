@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r1;
 
-import ch.ethz.idsc.sophus.crv.spline.GeodesicNeville;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Integers;
@@ -13,6 +12,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.OrderedQ;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.alg.VectorQ;
+import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** References:
@@ -28,7 +28,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * "Lebesgue constant minimizing linear rational interpolation of continuous functions over the interval"
  * by J.-P. Berrut, H. D. Mittelmann, 1997
  * 
- * @see GeodesicNeville */
+ * @see InterpolatingPolynomial */
 public class R1BarycentricCoordinate implements ScalarTensorFunction {
   /** @param domain vector with increasing entries
    * @param degree non-negative

@@ -7,12 +7,13 @@ import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.opt.AbstractInterpolation;
 import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.Interpolation;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** implementation uses knots 0, 1, 2, ...
  * 
- * @see GeodesicNeville */
+ * @see InterpolatingPolynomial */
 public class LagrangeInterpolation extends AbstractInterpolation {
   /** @param binaryAverage
    * @param tensor
@@ -25,7 +26,7 @@ public class LagrangeInterpolation extends AbstractInterpolation {
   private final ScalarTensorFunction geodesicNeville;
 
   private LagrangeInterpolation(BinaryAverage binaryAverage, Tensor tensor) {
-    geodesicNeville = GeodesicNeville.of(binaryAverage, Range.of(0, tensor.length()), tensor);
+    geodesicNeville = InterpolatingPolynomial.of(binaryAverage, Range.of(0, tensor.length()), tensor);
   }
 
   @Override // from Interpolation

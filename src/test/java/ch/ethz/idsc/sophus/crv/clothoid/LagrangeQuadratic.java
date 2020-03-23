@@ -1,10 +1,9 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import ch.ethz.idsc.sophus.crv.spline.GeodesicNeville;
-import ch.ethz.idsc.sophus.crv.spline.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference: U. Reif slide 8/32
@@ -16,7 +15,6 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * p[2/2] == b1
  * </pre>
  * 
- * @see GeodesicNeville
  * @see InterpolatingPolynomial */
 /* package */ class LagrangeQuadratic implements ScalarUnaryOperator {
   private static final Scalar _3 = RealScalar.of(+3.0);
