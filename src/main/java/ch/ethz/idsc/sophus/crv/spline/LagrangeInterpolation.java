@@ -23,10 +23,10 @@ public class LagrangeInterpolation extends AbstractInterpolation {
   }
 
   /***************************************************/
-  private final ScalarTensorFunction geodesicNeville;
+  private final ScalarTensorFunction scalarTensorFunction;
 
   private LagrangeInterpolation(BinaryAverage binaryAverage, Tensor tensor) {
-    geodesicNeville = InterpolatingPolynomial.of(binaryAverage, Range.of(0, tensor.length()), tensor);
+    scalarTensorFunction = InterpolatingPolynomial.of(binaryAverage, Range.of(0, tensor.length())).scalarTensorFunction(tensor);
   }
 
   @Override // from Interpolation
@@ -36,6 +36,6 @@ public class LagrangeInterpolation extends AbstractInterpolation {
 
   @Override // from Interpolation
   public Tensor at(Scalar index) {
-    return geodesicNeville.apply(index);
+    return scalarTensorFunction.apply(index);
   }
 }

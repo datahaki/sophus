@@ -27,7 +27,7 @@ public enum PolarClothoids implements GeodesicInterface {
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     LieGroupElement lieGroupElement = Se2CoveringGroup.INSTANCE.element(p);
-    Curve curve = new OriginClothoid(lieGroupElement.inverse().combine(q)).new Curve();
+    Curve curve = new OriginClothoid(lieGroupElement.inverse().combine(q)).erf();
     return t -> lieGroupElement.combine(curve.apply(t));
   }
 

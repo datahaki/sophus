@@ -19,7 +19,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference: U. Reif slides */
 public class Clothoid implements Serializable {
-  private static final Tensor KNOTS = Tensors.vector(0.0, 0.5, 1.0);
+  private static final InterpolatingPolynomial INTERPOLATING_POLYNOMIAL = //
+      InterpolatingPolynomial.of(Tensors.vector(0.0, 0.5, 1.0));
   // ---
   private final Tensor pxy;
   private final Tensor diff;
@@ -45,13 +46,13 @@ public class Clothoid implements Serializable {
 
   public Curve legendre3() {
     ScalarUnaryOperator scalarUnaryOperator = //
-        InterpolatingPolynomial.scalar(KNOTS, Tensors.of(b0, bm, b1));
+        INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1));
     return new Curve(scalarUnaryOperator, new Legendre3ClothoidIntegral(scalarUnaryOperator));
   }
 
   public Curve erf() {
     return new Curve( //
-        InterpolatingPolynomial.scalar(KNOTS, Tensors.of(b0, bm, b1)), //
+        INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1)), //
         ErfClothoidIntegral.interp(b0, bm, b1));
   }
 

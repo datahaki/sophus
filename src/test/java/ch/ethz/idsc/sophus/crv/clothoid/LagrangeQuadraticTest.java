@@ -40,13 +40,12 @@ public class LagrangeQuadraticTest extends TestCase {
   }
 
   public void testNeville() {
-    ScalarUnaryOperator geodesicNeville = InterpolatingPolynomial.scalar( //
-        Tensors.vector(0, 0.5, 1), //
-        Tensors.vector(5, 7, 13));
+    ScalarUnaryOperator scalarUnaryOperator = InterpolatingPolynomial.of( //
+        Tensors.vector(0, 0.5, 1)).scalarUnaryOperator(Tensors.vector(5, 7, 13));
     LagrangeQuadratic clothoidQuadratic = //
         new LagrangeQuadratic(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
     Distribution distribution = UniformDistribution.of(-1, 2);
     Tensor domain = RandomVariate.of(distribution, 10);
-    Tolerance.CHOP.requireClose(domain.map(clothoidQuadratic), domain.map(geodesicNeville));
+    Tolerance.CHOP.requireClose(domain.map(clothoidQuadratic), domain.map(scalarUnaryOperator));
   }
 }
