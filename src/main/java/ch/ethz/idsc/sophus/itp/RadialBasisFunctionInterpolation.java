@@ -9,10 +9,9 @@ import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Reference:
- * "Radial Basis Function Interpolation"
- * NR, 2007 */
+ * "Radial Basis Function Interpolation" in NR, 2007 */
 public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
-  /** @param tensorNorm
+  /** @param tensorNorm to measure the length of the difference between two points
    * @param sequence
    * @param values
    * @return */
@@ -20,7 +19,7 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
     return new RadialBasisFunctionInterpolation(v -> v, tensorNorm, sequence, values);
   }
 
-  /** @param tensorNorm
+  /** @param tensorNorm to measure the length of the difference between two points
    * @param sequence
    * @param values
    * @return */
