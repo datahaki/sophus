@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import ch.ethz.idsc.sophus.crv.clothoid.OriginClothoid.Curve;
 import ch.ethz.idsc.sophus.crv.subdiv.CurveSubdivision;
 import ch.ethz.idsc.sophus.crv.subdiv.LaneRiesenfeldCurveSubdivision;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
@@ -27,8 +26,8 @@ public enum PolarClothoids implements GeodesicInterface {
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     LieGroupElement lieGroupElement = Se2CoveringGroup.INSTANCE.element(p);
-    Curve curve = new OriginClothoid(lieGroupElement.inverse().combine(q)).erf();
-    return t -> lieGroupElement.combine(curve.apply(t));
+    OriginClothoid originClothoid = new OriginClothoid(lieGroupElement.inverse().combine(q));
+    return t -> lieGroupElement.combine(originClothoid.apply(t));
   }
 
   @Override // from GeodesicInterface

@@ -41,8 +41,8 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      Clothoid curve = new Clothoid(p, p);
-      Scalar length = curve.length();
+      Clothoid clothoid = new Clothoid(p, p);
+      Scalar length = clothoid.length();
       Chop.NONE.requireZero(length);
     }
   }
@@ -51,8 +51,8 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = DiscreteUniformDistribution.of(-3, +3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      Clothoid curve = new Clothoid(p, p);
-      Scalar length = curve.length();
+      Clothoid clothoid = new Clothoid(p, p);
+      Scalar length = clothoid.length();
       Chop.NONE.requireZero(length);
     }
   }
@@ -93,13 +93,11 @@ public class ClothoidTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      Clothoid curve = new Clothoid(p, q);
-      Tensor m = curve.apply(RationalScalar.HALF);
-      {
-        Scalar l1 = new Clothoid(p, m).length();
-        Scalar l2 = new Clothoid(m, q).length();
-        Chop._01.requireClose(l1, l2);
-      }
+      Clothoid clothoid = new Clothoid(p, q);
+      Tensor m = clothoid.apply(RationalScalar.HALF);
+      Scalar l1 = new Clothoid(p, m).length();
+      Scalar l2 = new Clothoid(m, q).length();
+      Chop._01.requireClose(l1, l2);
     }
   }
 

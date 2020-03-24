@@ -19,10 +19,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   private static final Scalar _N1_3_4 = ComplexScalar.of(-0.7071067811865475, 0.7071067811865476);
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
 
-  public static ClothoidIntegral interp(Scalar b0, Scalar bm, Scalar b1) {
-    return interp(new LagrangeQuadratic(b0, bm, b1));
-  }
-
   public static ClothoidIntegral interp(LagrangeQuadratic lagrangeQuadratic) {
     return of(lagrangeQuadratic.c0, lagrangeQuadratic.c1, lagrangeQuadratic.c2);
   }

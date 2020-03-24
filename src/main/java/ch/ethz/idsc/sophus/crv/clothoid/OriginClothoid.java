@@ -1,8 +1,6 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import java.io.Serializable;
-
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -12,15 +10,16 @@ import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Arg;
 import ch.ethz.idsc.tensor.sca.Imag;
 import ch.ethz.idsc.tensor.sca.Real;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/* package */ class OriginClothoid implements Serializable {
+/* package */ class OriginClothoid implements ScalarTensorFunction {
   private final Tensor qxy;
   private final Scalar qp;
   private final Scalar qxy_arg;
   private final Scalar b0;
   private final Scalar b1;
   private final Scalar bm;
+  private final LagrangeQuadratic lagrangeQuadratic;
+  private final ClothoidIntegral clothoidIntegral;
 
   /** @param q vector of the form {qx, qy, qa} */
   public OriginClothoid(Tensor q) {
@@ -35,39 +34,19 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
     b0 = qxy_arg.negate(); // normal form T0 == b0
     b1 = qangle.subtract(qxy_arg); // normal form T1 == b1
     bm = ClothoidApproximation.f(b0, b1);
+    lagrangeQuadratic = new LagrangeQuadratic(b0, bm, b1);
+    clothoidIntegral = ErfClothoidIntegral.interp(lagrangeQuadratic);
   }
 
-  public Curve legendre3() {
-    ScalarUnaryOperator scalarUnaryOperator = //
-        Clothoid.INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1));
-    return new Curve(scalarUnaryOperator, new Legendre3ClothoidIntegral(scalarUnaryOperator));
-  }
-
-  public Curve erf() {
-    return new Curve( //
-        Clothoid.INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1)), //
-        ErfClothoidIntegral.interp(b0, bm, b1));
-  }
-
-  public final class Curve implements ScalarTensorFunction {
-    private final ScalarUnaryOperator scalarUnaryOperator;
-    private final ClothoidIntegral clothoidIntegral;
-
-    private Curve(ScalarUnaryOperator scalarUnaryOperator, ClothoidIntegral clothoidIntegral) {
-      this.scalarUnaryOperator = scalarUnaryOperator;
-      this.clothoidIntegral = clothoidIntegral;
-    }
-
-    @Override
-    public Tensor apply(Scalar t) {
-      Scalar zcomplex = clothoidIntegral.normalized(t);
-      PolarScalar z = PolarScalar.of(zcomplex.abs(), Arg.FUNCTION.apply(zcomplex));
-      PolarScalar zq = z.multiply(qp);
-      // TODO check code below
-      return Tensors.of( //
-          Real.FUNCTION.apply(zq), //
-          Imag.FUNCTION.apply(zq), //
-          qxy_arg.add(scalarUnaryOperator.apply(t)));
-    }
+  @Override
+  public Tensor apply(Scalar t) {
+    Scalar zcomplex = clothoidIntegral.normalized(t);
+    PolarScalar z = PolarScalar.of(zcomplex.abs(), Arg.FUNCTION.apply(zcomplex));
+    PolarScalar zq = z.multiply(qp);
+    // TODO check code below
+    return Tensors.of( //
+        Real.FUNCTION.apply(zq), //
+        Imag.FUNCTION.apply(zq), //
+        qxy_arg.add(lagrangeQuadratic.apply(t)));
   }
 }

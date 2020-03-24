@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ArcCos;
+import ch.ethz.idsc.tensor.sca.N;
 import ch.ethz.idsc.tensor.sca.Sinc;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
@@ -30,7 +31,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 public enum So3Exponential implements LieExponential {
   INSTANCE;
 
-  private static final Tensor ID3 = IdentityMatrix.of(3);
+  private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
   private static final Scalar HALF = DoubleScalar.of(0.5);
 
   @Override // from LieExponential
