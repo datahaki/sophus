@@ -26,7 +26,7 @@ public class Clothoid implements ScalarTensorFunction {
   private final Scalar b0;
   private final Scalar b1;
   private final Scalar bm;
-  private final ScalarUnaryOperator scalarUnaryOperator;
+  private final LagrangeQuadratic lagrangeQuadratic;
   private final ClothoidIntegral clothoidIntegral;
   private final Scalar length;
 
@@ -43,9 +43,8 @@ public class Clothoid implements ScalarTensorFunction {
     b0 = So2.MOD.apply(pa.subtract(da)); // normal form T0 == b0
     b1 = So2.MOD.apply(qa.subtract(da)); // normal form T1 == b1
     bm = ClothoidApproximation.f(b0, b1);
-    scalarUnaryOperator = //
-        INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1));
-    clothoidIntegral = ErfClothoidIntegral.interp(b0, bm, b1);
+    lagrangeQuadratic = new LagrangeQuadratic(b0, bm, b1);
+    clothoidIntegral = ErfClothoidIntegral.interp(lagrangeQuadratic);
     length = Norm._2.ofVector(diff).divide(clothoidIntegral.one().abs());
   }
 
@@ -54,7 +53,7 @@ public class Clothoid implements ScalarTensorFunction {
   public Tensor apply(Scalar t) {
     Scalar z = clothoidIntegral.normalized(t);
     return pxy.add(prod(z, diff)) //
-        .append(da.add(scalarUnaryOperator.apply(t)));
+        .append(da.add(lagrangeQuadratic.apply(t)));
   }
 
   /** @return approximate length */

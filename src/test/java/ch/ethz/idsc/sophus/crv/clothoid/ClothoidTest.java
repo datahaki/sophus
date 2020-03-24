@@ -168,7 +168,7 @@ public class ClothoidTest extends TestCase {
       Chop._13.requireClose(r, Tensors.vector(0.5, 0, 0));
     }
   }
-  
+
   public void testLeft() {
     HeadTailInterface headTailInterface = //
         new Clothoid(Tensors.vector(0, 1, 0), Tensors.vector(2, 2, 0)).new Curvature();
