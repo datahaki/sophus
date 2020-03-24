@@ -23,7 +23,7 @@ public enum Legendre3Clothoids implements GeodesicInterface {
 
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return new Clothoid(p, q).legendre3();
+    return new Clothoid(p, q);
   }
 
   @Override // from GeodesicInterface

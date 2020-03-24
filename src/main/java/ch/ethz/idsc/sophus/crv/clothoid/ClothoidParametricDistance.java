@@ -18,7 +18,7 @@ public enum ClothoidParametricDistance implements TensorMetric, TensorNorm {
   /** @param clothoid
    * @return curve length of given clothoid */
   public static Scalar distance(Clothoid clothoid) {
-    return clothoid.legendre3().length();
+    return clothoid.length();
   }
 
   @Override // from TensorNorm

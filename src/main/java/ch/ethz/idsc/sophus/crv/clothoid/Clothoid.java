@@ -1,8 +1,6 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import java.io.Serializable;
-
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.sophus.math.HeadTailInterface;
@@ -18,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.Real;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference: U. Reif slides */
-public class Clothoid implements Serializable {
+public class Clothoid implements ScalarTensorFunction {
   static final InterpolatingPolynomial INTERPOLATING_POLYNOMIAL = //
       InterpolatingPolynomial.of(Tensors.vector(0.0, 0.5, 1.0));
   // ---
@@ -28,6 +26,9 @@ public class Clothoid implements Serializable {
   private final Scalar b0;
   private final Scalar b1;
   private final Scalar bm;
+  private final ScalarUnaryOperator scalarUnaryOperator;
+  private final ClothoidIntegral clothoidIntegral;
+  private final Scalar length;
 
   /** @param p vector of the form {px, py, pa}
    * @param q vector of the form {qx, qy, qa} */
@@ -42,62 +43,41 @@ public class Clothoid implements Serializable {
     b0 = So2.MOD.apply(pa.subtract(da)); // normal form T0 == b0
     b1 = So2.MOD.apply(qa.subtract(da)); // normal form T1 == b1
     bm = ClothoidApproximation.f(b0, b1);
-  }
-
-  public Curve legendre3() {
-    ScalarUnaryOperator scalarUnaryOperator = //
+    scalarUnaryOperator = //
         INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1));
-    return new Curve(scalarUnaryOperator, new Legendre3ClothoidIntegral(scalarUnaryOperator));
+    clothoidIntegral = ErfClothoidIntegral.interp(b0, bm, b1);
+    length = Norm._2.ofVector(diff).divide(clothoidIntegral.one().abs());
   }
 
-  public Curve erf() {
-    return new Curve( //
-        INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(Tensors.of(b0, bm, b1)), //
-        ErfClothoidIntegral.interp(b0, bm, b1));
+  /** maps to SE(2) or SE(2) Covering */
+  @Override
+  public Tensor apply(Scalar t) {
+    Scalar z = clothoidIntegral.normalized(t);
+    return pxy.add(prod(z, diff)) //
+        .append(da.add(scalarUnaryOperator.apply(t)));
   }
 
-  public class Curve implements ScalarTensorFunction {
-    /** quadratic polynomial */
-    private final ScalarUnaryOperator scalarUnaryOperator;
-    private final ClothoidIntegral clothoidIntegral;
-
-    private Curve(ScalarUnaryOperator scalarUnaryOperator, ClothoidIntegral clothoidIntegral) {
-      this.scalarUnaryOperator = scalarUnaryOperator;
-      this.clothoidIntegral = clothoidIntegral;
-    }
-
-    @Override
-    public Tensor apply(Scalar t) {
-      Scalar z = clothoidIntegral.normalized(t);
-      return pxy.add(prod(z, diff)) //
-          .append(da.add(scalarUnaryOperator.apply(t)));
-    }
-
-    /** @return approximate length */
-    public Scalar length() {
-      return Norm._2.ofVector(diff).divide(clothoidIntegral.one().abs());
-    }
+  /** @return approximate length */
+  public Scalar length() {
+    return length;
   }
 
-  /** when the start and end point of the clothoid have identical (x, y)-coordinates,
-   * the curvature evaluates to Infinity, or NaN. */
-  public final class Curvature implements ScalarUnaryOperator, HeadTailInterface {
+  public class Curvature implements ScalarUnaryOperator, HeadTailInterface {
     private final LagrangeQuadraticD lagrangeQuadraticD = new LagrangeQuadraticD(b0, bm, b1);
-    private final Scalar v = Norm._2.ofVector(diff);
 
     @Override
     public Scalar apply(Scalar t) {
-      return lagrangeQuadraticD.apply(t).divide(v);
+      return lagrangeQuadraticD.apply(t).divide(length);
     }
 
     @Override // from HeadTailInterface
     public Scalar head() {
-      return lagrangeQuadraticD.head().divide(v);
+      return lagrangeQuadraticD.head().divide(length);
     }
 
     @Override // from HeadTailInterface
     public Scalar tail() {
-      return lagrangeQuadraticD.tail().divide(v);
+      return lagrangeQuadraticD.tail().divide(length);
     }
   }
 

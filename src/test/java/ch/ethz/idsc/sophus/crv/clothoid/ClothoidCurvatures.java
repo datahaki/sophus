@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 
 /** class exists for demo */
+@Deprecated
 /* package */ enum ClothoidCurvatures {
   ;
   /** @param tensor

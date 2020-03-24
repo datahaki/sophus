@@ -23,7 +23,7 @@ public enum ErfClothoids implements GeodesicInterface {
 
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return new Clothoid(p, q).erf();
+    return new Clothoid(p, q);
   }
 
   @Override // from GeodesicInterface

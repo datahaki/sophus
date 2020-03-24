@@ -9,6 +9,6 @@ import junit.framework.TestCase;
 public class ErfClothoidsTest extends TestCase {
   public void testSimple() {
     ScalarTensorFunction scalarTensorFunction = ErfClothoids.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
-    assertTrue(scalarTensorFunction instanceof Clothoid.Curve);
+    assertTrue(scalarTensorFunction instanceof Clothoid);
   }
 }
