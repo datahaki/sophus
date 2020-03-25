@@ -5,16 +5,48 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** barycentric coordinates for inverse distance weights
+/** Lie affine coordinates are generalized barycentric coordinates for
+ * scattered sets of points on a Lie-group with the properties:
  * 
- * @see HsBiinvariantCoordinate */
-// TODO make class final
-public class HsBarycentricCoordinate extends HsProjection implements ProjectedCoordinate {
+ * coordinates sum up to 1
+ * linear reproduction
+ * Biinvariant: invariant under left-, right- and inverse action
+ * 
+ * However, generally NOT fulfilled:
+ * Lagrange property
+ * non-negativity
+ * 
+ * Log[g.m.g^-1] == Ad[g].Log[m]
+ * Log[g.m] == Ad[g].Log[m.g]
+ * Log[g^-1.m] == Ad[g^-1].Log[m.g^-1]
+ * Ad[g].Log[g^-1.m] == Log[m.g^-1] */
+/** invariance under left-action is guaranteed because
+ * log [(g x)^-1 g p] == log [x^-1 p]
+ * 
+ * If the target mapping is Ad invariant then invariance under right action
+ * and inversion is guaranteed.
+ * 
+ * If the target mapping correlates to inverse distances then the coordinates
+ * satisfy the Lagrange property.
+ * 
+ * @see LieBiinvariantCoordinate */
+public final class HsBarycentricCoordinate extends HsProjection implements ProjectedCoordinate {
+  private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
+
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate affine(FlattenLogManifold flattenLogManifold) {
+    return new HsBarycentricCoordinate(flattenLogManifold, AFFINE);
+  }
+
+  /***************************************************/
   private final TensorUnaryOperator target;
 
   /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */

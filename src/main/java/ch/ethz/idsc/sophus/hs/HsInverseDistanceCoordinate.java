@@ -10,10 +10,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
-/** barycentric coordinates for inverse distance weights using distance measurements
- * 
- * @see HsBiinvariantCoordinate */
-public final class HsInverseDistanceCoordinate extends HsProjection implements BarycentricCoordinate {
+/** barycentric coordinates for inverse distance weights using distance measurements */
+public final class HsInverseDistanceCoordinate extends HsProjection implements ProjectedCoordinate {
   private final BarycentricCoordinate barycentricCoordinate;
 
   /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */

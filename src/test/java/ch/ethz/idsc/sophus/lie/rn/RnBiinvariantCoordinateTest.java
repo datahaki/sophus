@@ -15,7 +15,7 @@ public class RnBiinvariantCoordinateTest extends TestCase {
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
     sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
-    Tensor weights = RnBiinvariantCoordinate.INSTANCE.weights(sequence, Array.zeros(d));
+    Tensor weights = RnBiinvariantCoordinate.LINEAR.weights(sequence, Array.zeros(d));
     assertEquals(sequence.length(), n + 1);
     AffineQ.require(weights);
   }

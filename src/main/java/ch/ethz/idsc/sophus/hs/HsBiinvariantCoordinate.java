@@ -4,6 +4,8 @@ package ch.ethz.idsc.sophus.hs;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.lie.rn.RnNorm;
+import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
@@ -15,6 +17,19 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public final class HsBiinvariantCoordinate extends HsProjection implements ProjectedCoordinate {
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
+    return new HsBiinvariantCoordinate(flattenLogManifold, RnNorm.INSTANCE);
+  }
+
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate smooth(FlattenLogManifold flattenLogManifold) {
+    return new HsBiinvariantCoordinate(flattenLogManifold, RnNormSquared.INSTANCE);
+  }
+
+  /***************************************************/
   private final TensorUnaryOperator target;
 
   /** @param tensorNorm */

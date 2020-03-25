@@ -31,17 +31,17 @@ public class HeAffineCoordinateTest extends TestCase {
         Tensor shift = TestHelper.spawn_He(n);
         { // invariant under left action
           Tensor weightsL = barycentricCoordinate.weights(LIE_GROUP_OPS.allLeft(sequence, shift), LIE_GROUP_OPS.combine(shift, mean1));
-          Chop._10.requireClose(weights1, weightsL);
+          Chop._08.requireClose(weights1, weightsL);
         }
         { // invariant under right action
           Tensor weightsR = barycentricCoordinate.weights(LIE_GROUP_OPS.allRight(sequence, shift), LIE_GROUP_OPS.combine(mean1, shift));
-          Chop._10.requireClose(weights1, weightsR);
+          Chop._08.requireClose(weights1, weightsR);
         }
         { // invariant under inversion
           Tensor weightsI = barycentricCoordinate.weights( //
               LIE_GROUP_OPS.allInvert(sequence), //
               LIE_GROUP_OPS.invert(mean1));
-          Chop._10.requireClose(weights1, weightsI);
+          Chop._08.requireClose(weights1, weightsI);
         }
       }
   }

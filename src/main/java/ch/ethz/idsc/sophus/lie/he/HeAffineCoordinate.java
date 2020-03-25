@@ -1,13 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.lie.LieAffineCoordinate;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
 
-public class HeAffineCoordinate extends LieAffineCoordinate {
-  public static final BarycentricCoordinate INSTANCE = new HeAffineCoordinate();
-
-  private HeAffineCoordinate() {
-    super(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog);
-  }
+public enum HeAffineCoordinate {
+  ;
+  public static final ProjectedCoordinate INSTANCE = //
+      HsBarycentricCoordinate.affine(LieFlattenLogManifold.of(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog));
 }

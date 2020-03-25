@@ -29,8 +29,8 @@ import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
   private static final ProjectedCoordinate[] BARYCENTRIC_COORDINATES = { //
-      Se2CoveringBiinvariantCoordinate.INSTANCE, //
-      Se2CoveringBiinvariantCoordinate.SQUARED //
+      Se2CoveringBiinvariantCoordinate.LINEAR, //
+      Se2CoveringBiinvariantCoordinate.SMOOTH //
   };
 
   public void testLagrange() {
@@ -133,7 +133,7 @@ public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Tensor xya = biinvariantMean.mean(sequence, weights);
-      ProjectedCoordinate lieBarycentricCoordinate = Se2CoveringBiinvariantCoordinate.INSTANCE;
+      ProjectedCoordinate lieBarycentricCoordinate = Se2CoveringBiinvariantCoordinate.LINEAR;
       Tensor weights1 = lieBarycentricCoordinate.weights(sequence, xya); // projection
       AffineQ.require(weights1);
       Tolerance.CHOP.requireClose(weights, weights);

@@ -22,8 +22,8 @@ public class RnInverseDistanceCoordinateTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       RnInverseDistanceCoordinate.INSTANCE, //
       RnInverseDistanceCoordinate.SQUARED, //
-      RnBiinvariantCoordinate.INSTANCE, //
-      RnBiinvariantCoordinate.SQUARED };
+      RnBiinvariantCoordinate.LINEAR, //
+      RnBiinvariantCoordinate.SMOOTH };
 
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();

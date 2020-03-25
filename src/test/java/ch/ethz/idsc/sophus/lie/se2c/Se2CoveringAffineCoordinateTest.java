@@ -20,8 +20,8 @@ import junit.framework.TestCase;
 public class Se2CoveringAffineCoordinateTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       Se2CoveringAffineCoordinate.INSTANCE, //
-      Se2CoveringBiinvariantCoordinate.INSTANCE, //
-      Se2CoveringBiinvariantCoordinate.SQUARED, //
+      Se2CoveringBiinvariantCoordinate.LINEAR, //
+      Se2CoveringBiinvariantCoordinate.SMOOTH, //
       Se2CoveringInverseDistanceCoordinate.AD_INVAR };
 
   public void test4Exact() {
