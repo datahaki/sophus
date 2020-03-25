@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
@@ -11,17 +10,15 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
-/** barycentric coordinates for inverse distance weights
- * using distance measurements
+/** barycentric coordinates for inverse distance weights using distance measurements
  * 
  * @see HsBiinvariantCoordinate */
-public class HsInverseDistanceCoordinate implements BarycentricCoordinate, Serializable {
-  private final FlattenLogManifold flattenLogManifold;
+public final class HsInverseDistanceCoordinate extends HsProjection implements BarycentricCoordinate {
   private final BarycentricCoordinate barycentricCoordinate;
 
   /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
   public HsInverseDistanceCoordinate(FlattenLogManifold flattenLogManifold, BarycentricCoordinate target) {
-    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
+    super(flattenLogManifold);
     this.barycentricCoordinate = Objects.requireNonNull(target);
   }
 

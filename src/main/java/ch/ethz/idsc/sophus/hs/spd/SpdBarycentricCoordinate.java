@@ -6,15 +6,11 @@ import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class SpdBarycentricCoordinate extends HsBarycentricCoordinate {
+public enum SpdBarycentricCoordinate {
+  ;
   public static final BarycentricCoordinate INSTANCE = //
-      new SpdBarycentricCoordinate(InverseNorm.of(RnNorm.INSTANCE));
+      new HsBarycentricCoordinate(SpdManifold.INSTANCE, InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
-      new SpdBarycentricCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
-
-  public SpdBarycentricCoordinate(TensorUnaryOperator target) {
-    super(SpdManifold.INSTANCE, target);
-  }
+      new HsBarycentricCoordinate(SpdManifold.INSTANCE, InverseNorm.of(RnNormSquared.INSTANCE));
 }

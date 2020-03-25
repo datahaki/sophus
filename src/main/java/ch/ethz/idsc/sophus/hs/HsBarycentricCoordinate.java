@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
@@ -14,13 +13,13 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** barycentric coordinates for inverse distance weights
  * 
  * @see HsBiinvariantCoordinate */
-public abstract class HsBarycentricCoordinate implements ProjectedCoordinate, Serializable {
-  private final FlattenLogManifold flattenLogManifold;
+// TODO make class final
+public class HsBarycentricCoordinate extends HsProjection implements ProjectedCoordinate {
   private final TensorUnaryOperator target;
 
   /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
   public HsBarycentricCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
-    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
+    super(flattenLogManifold);
     this.target = Objects.requireNonNull(target);
   }
 
@@ -29,12 +28,5 @@ public abstract class HsBarycentricCoordinate implements ProjectedCoordinate, Se
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
     return NormalizeAffine.of(target.apply(levers), PseudoInverse.of(nullsp), nullsp);
-  }
-
-  @Override // from ProjectionInterface
-  public final Tensor projection(Tensor sequence, Tensor point) {
-    Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
-    Tensor nullsp = LeftNullSpace.of(levers);
-    return PseudoInverse.of(nullsp).dot(nullsp);
   }
 }

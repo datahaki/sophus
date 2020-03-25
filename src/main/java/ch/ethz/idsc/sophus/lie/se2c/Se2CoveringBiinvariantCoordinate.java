@@ -1,11 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
-import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.TensorNorm;
 
 /** given sequence and mean the implementation computes the weights that satisfy
  * 
@@ -17,11 +17,10 @@ import ch.ethz.idsc.sophus.math.TensorNorm;
  * lagrange property
  * biinvariant
  * smooth for beta == 2 */
-public class Se2CoveringBiinvariantCoordinate extends LieBiinvariantCoordinate {
-  public static final ProjectedCoordinate INSTANCE = new Se2CoveringBiinvariantCoordinate(RnNorm.INSTANCE);
-  public static final ProjectedCoordinate SQUARED = new Se2CoveringBiinvariantCoordinate(RnNormSquared.INSTANCE);
-
-  private Se2CoveringBiinvariantCoordinate(TensorNorm tensorNorm) {
-    super(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log, tensorNorm);
-  }
+public enum Se2CoveringBiinvariantCoordinate {
+  ;
+  public static final ProjectedCoordinate INSTANCE = new HsBiinvariantCoordinate( //
+      LieFlattenLogManifold.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log), RnNorm.INSTANCE);
+  public static final ProjectedCoordinate SQUARED = new HsBiinvariantCoordinate( //
+      LieFlattenLogManifold.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log), RnNormSquared.INSTANCE);
 }

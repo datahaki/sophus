@@ -1,17 +1,16 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.TensorNorm;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 
-public class HeBiinvariantCoordinate extends LieBiinvariantCoordinate {
-  public static final BarycentricCoordinate INSTANCE = new HeBiinvariantCoordinate(RnNorm.INSTANCE);
-  public static final BarycentricCoordinate SQUARED = new HeBiinvariantCoordinate(RnNormSquared.INSTANCE);
-
-  public HeBiinvariantCoordinate(TensorNorm tensorNorm) {
-    super(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog, tensorNorm);
-  }
+public enum HeBiinvariantCoordinate {
+  ;
+  public static final ProjectedCoordinate INSTANCE = new HsBiinvariantCoordinate( //
+      LieFlattenLogManifold.of(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog), RnNorm.INSTANCE);
+  public static final ProjectedCoordinate SQUARED = new HsBiinvariantCoordinate( //
+      LieFlattenLogManifold.of(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog), RnNormSquared.INSTANCE);
 }

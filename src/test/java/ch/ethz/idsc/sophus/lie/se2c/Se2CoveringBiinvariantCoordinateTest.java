@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -134,8 +133,7 @@ public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Tensor xya = biinvariantMean.mean(sequence, weights);
-      LieBiinvariantCoordinate lieBarycentricCoordinate = //
-          (LieBiinvariantCoordinate) Se2CoveringBiinvariantCoordinate.INSTANCE;
+      ProjectedCoordinate lieBarycentricCoordinate = Se2CoveringBiinvariantCoordinate.INSTANCE;
       Tensor weights1 = lieBarycentricCoordinate.weights(sequence, xya); // projection
       AffineQ.require(weights1);
       Tolerance.CHOP.requireClose(weights, weights);
