@@ -7,7 +7,6 @@ import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
-import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -20,26 +19,27 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
   /** @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
-    return new HsBiinvariantCoordinate(flattenLogManifold, RnNorm.INSTANCE);
+    return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
   }
 
   /** @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate smooth(FlattenLogManifold flattenLogManifold) {
-    return new HsBiinvariantCoordinate(flattenLogManifold, RnNormSquared.INSTANCE);
+    return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
+  }
+
+  /** @param flattenLogManifold
+   * @param target
+   * @return */
+  public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
+    return new HsBiinvariantCoordinate(flattenLogManifold, target);
   }
 
   /***************************************************/
   private final TensorUnaryOperator target;
 
-  /** @param tensorNorm */
-  public HsBiinvariantCoordinate(FlattenLogManifold flattenLogManifold, TensorNorm tensorNorm) {
-    super(flattenLogManifold);
-    this.target = InverseNorm.of(tensorNorm);
-  }
-
   /** @param target typically {@link InverseNorm} */
-  public HsBiinvariantCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
+  private HsBiinvariantCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     super(flattenLogManifold);
     this.target = Objects.requireNonNull(target);
   }

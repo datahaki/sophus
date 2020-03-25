@@ -14,7 +14,8 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 public final class HsInverseDistanceCoordinate extends HsProjection implements ProjectedCoordinate {
   private final BarycentricCoordinate barycentricCoordinate;
 
-  /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
+  /** @param flattenLogManifold
+   * @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
   public HsInverseDistanceCoordinate(FlattenLogManifold flattenLogManifold, BarycentricCoordinate target) {
     super(flattenLogManifold);
     this.barycentricCoordinate = Objects.requireNonNull(target);

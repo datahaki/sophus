@@ -13,6 +13,6 @@ public enum RnBarycenter {
    * @return */
   public static TensorUnaryOperator of(Tensor sequence) {
     Objects.requireNonNull(sequence);
-    return p -> RnInverseDistanceCoordinate.INSTANCE.weights(sequence, p);
+    return p -> RnInverseDistanceCoordinates.LINEAR.weights(sequence, p);
   }
 }

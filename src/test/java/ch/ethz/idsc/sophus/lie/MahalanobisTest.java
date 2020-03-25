@@ -4,10 +4,11 @@ package ch.ethz.idsc.sophus.lie;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.Mahalanobis.Norm;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringAffineCoordinate;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantCoordinates;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -38,13 +39,12 @@ public class MahalanobisTest extends TestCase {
     // System.out.println("---");
     // }
     Tensor target = Tensor.of(centralized.stream().map(norm::norm));
-    ProjectedCoordinate lieBarycentricCoordinate = new HsBarycentricCoordinate( //
-        LieFlattenLogManifold.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log), //
-        t -> target.map(Scalar::reciprocal));
+    ProjectedCoordinate lieBarycentricCoordinate = HsBarycentricCoordinate.custom( //
+        Se2CoveringManifold.INSTANCE, t -> target.map(Scalar::reciprocal));
     // Tensor weights2 =
     lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));
     // System.out.println(weights2);
-    Tensor affine = Se2CoveringAffineCoordinate.INSTANCE.weights(centralized, Tensors.vector(0, 0, 0));
+    Tensor affine = Se2CoveringBiinvariantCoordinates.AFFINE.weights(centralized, Tensors.vector(0, 0, 0));
     Tolerance.CHOP.requireClose(weights, affine);
   }
 }

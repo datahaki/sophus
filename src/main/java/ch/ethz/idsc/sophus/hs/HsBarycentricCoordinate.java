@@ -4,7 +4,10 @@ package ch.ethz.idsc.sophus.hs;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.lie.rn.RnNorm;
+import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
@@ -41,16 +44,35 @@ public final class HsBarycentricCoordinate extends HsProjection implements Proje
   private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
 
   /** @param flattenLogManifold
-   * @return */
+   * @return biinvariant coordinates */
   public static ProjectedCoordinate affine(FlattenLogManifold flattenLogManifold) {
     return new HsBarycentricCoordinate(flattenLogManifold, AFFINE);
+  }
+
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
+    return new HsBarycentricCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
+  }
+
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate smooth(FlattenLogManifold flattenLogManifold) {
+    return new HsBarycentricCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
+  }
+
+  /** @param flattenLogManifold
+   * @param target
+   * @return */
+  public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
+    return new HsBarycentricCoordinate(flattenLogManifold, target);
   }
 
   /***************************************************/
   private final TensorUnaryOperator target;
 
   /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
-  public HsBarycentricCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
+  private HsBarycentricCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     super(flattenLogManifold);
     this.target = Objects.requireNonNull(target);
   }

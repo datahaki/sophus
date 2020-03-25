@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.itp;
 
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantCoordinates;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -28,7 +28,7 @@ public class BiinvariantKrigingTest extends TestCase {
       Tensor values = RandomVariate.of(distributiox, n);
       Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
       Kriging kriging1 = BiinvariantKriging.regression( //
-          powerVariogram, Se2CoveringBiinvariantCoordinate.LINEAR, //
+          powerVariogram, Se2CoveringBiinvariantCoordinates.LINEAR, //
           points, values, covariance);
       Tensor est1 = kriging1.estimate(xya);
       Scalar var1 = kriging1.variance(xya);
@@ -36,7 +36,7 @@ public class BiinvariantKrigingTest extends TestCase {
       { // invariant under left action
         Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
         Kriging krigingL = BiinvariantKriging.regression( //
-            powerVariogram, Se2CoveringBiinvariantCoordinate.LINEAR, //
+            powerVariogram, Se2CoveringBiinvariantCoordinates.LINEAR, //
             seqlft, values, covariance);
         Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
         Chop._10.requireClose(est1, krigingL.estimate(xyalft));
@@ -45,7 +45,7 @@ public class BiinvariantKrigingTest extends TestCase {
       { // invariant under right action
         Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
         Kriging krigingR = BiinvariantKriging.regression( //
-            powerVariogram, Se2CoveringBiinvariantCoordinate.LINEAR, //
+            powerVariogram, Se2CoveringBiinvariantCoordinates.LINEAR, //
             seqrgt, values, covariance);
         Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
         Chop._10.requireClose(est1, krigingR.estimate(xyargt));
@@ -54,7 +54,7 @@ public class BiinvariantKrigingTest extends TestCase {
       { // invariant under inversion
         Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
         Kriging krigingI = BiinvariantKriging.regression( //
-            powerVariogram, Se2CoveringBiinvariantCoordinate.LINEAR, //
+            powerVariogram, Se2CoveringBiinvariantCoordinates.LINEAR, //
             seqinv, values, covariance);
         Tensor xyainv = LIE_GROUP_OPS.invert(xya);
         Chop._10.requireClose(est1, krigingI.estimate(xyainv));
