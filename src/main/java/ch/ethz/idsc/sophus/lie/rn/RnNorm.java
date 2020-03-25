@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 public enum RnNorm implements TensorNorm {
   INSTANCE;
 
-  @Override
+  @Override // from TensorNorm
   public Scalar norm(Tensor vector) {
     return Norm._2.ofVector(vector);
   }
