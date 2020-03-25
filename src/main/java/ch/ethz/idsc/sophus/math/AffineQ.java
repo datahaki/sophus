@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.red.Total;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public enum AffineQ {
@@ -14,7 +15,15 @@ public enum AffineQ {
    * @return given vector
    * @throws Exception if scalar entries of given mask do not add up to one */
   public static Tensor require(Tensor vector) {
-    Tolerance.CHOP.requireClose(Total.of(vector), RealScalar.ONE);
+    return require(vector, Tolerance.CHOP);
+  }
+
+  /** @param vector
+   * @param chop
+   * @return given vector
+   * @throws Exception if scalar entries of given mask do not add up to one */
+  public static Tensor require(Tensor vector, Chop chop) {
+    chop.requireClose(Total.of(vector), RealScalar.ONE);
     return vector;
   }
 

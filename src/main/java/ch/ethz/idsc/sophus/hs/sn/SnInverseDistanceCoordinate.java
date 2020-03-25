@@ -2,12 +2,10 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
-import ch.ethz.idsc.sophus.lie.FlattenLog;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
-import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** On S^n the inverse distance coordinate is determined explicitly, whereas
@@ -26,11 +24,6 @@ public class SnInverseDistanceCoordinate extends HsBarycentricCoordinate {
 
   /***************************************************/
   private SnInverseDistanceCoordinate(TensorUnaryOperator target) {
-    super(target);
-  }
-
-  @Override
-  public FlattenLog logAt(Tensor point) {
-    return new SnExp(point);
+    super(SnManifold.INSTANCE, target);
   }
 }

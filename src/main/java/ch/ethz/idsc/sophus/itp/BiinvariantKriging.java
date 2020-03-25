@@ -16,7 +16,19 @@ import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** @see ExponentialVariogram
+/** Reference:
+ * "Biinvariant Kriging on Lie Groups"
+ * by Jan Hakenberg, 2020
+ * 
+ * <p>Quote:
+ * "Kriging is a technique named for South African mining engineer D.G. Krige. It is basically
+ * a form of linear prediction, also known in different communities as Gauss-Markov estimation
+ * or Gaussian process regression."
+ * 
+ * <p>Reference:
+ * "Interpolation on Scattered Data in Multidimensions" in NR, 2007
+ * 
+ * @see ExponentialVariogram
  * @see PowerVariogram */
 public class BiinvariantKriging implements Kriging, Serializable {
   /** @param variogram

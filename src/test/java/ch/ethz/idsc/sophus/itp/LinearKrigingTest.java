@@ -16,10 +16,11 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.qty.QuantityMagnitude;
 import ch.ethz.idsc.tensor.qty.Unit;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class KrigingTest extends TestCase {
+public class LinearKrigingTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -55,11 +56,11 @@ public class KrigingTest extends TestCase {
       Kriging kriging = Serialization.copy(LinearKriging.barycentric(variogram, sequence));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
-        Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));
+        Chop._10.requireClose(tensor, UnitVector.of(n, index));
         // ---
         Tensor point = RandomVariate.of(distribution, d);
         Tensor weights = kriging.estimate(point);
-        AffineQ.require(weights);
+        AffineQ.require(weights, Chop._10);
       }
     }
   }
