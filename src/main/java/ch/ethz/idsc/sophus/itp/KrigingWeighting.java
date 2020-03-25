@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.itp;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
@@ -22,6 +23,6 @@ public class KrigingWeighting implements BarycentricCoordinate, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    return LinearKriging.barycentric(variogram, sequence).estimate(point);
+    return MetricKriging.barycentric(RnManifold.INSTANCE, variogram, sequence).estimate(point);
   }
 }

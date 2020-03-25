@@ -10,6 +10,9 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
+/** Reference:
+ * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+ * by Jan Hakenberg, 2020 */
 public class HsProjection implements ProjectionInterface, Serializable {
   protected final FlattenLogManifold flattenLogManifold;
 
