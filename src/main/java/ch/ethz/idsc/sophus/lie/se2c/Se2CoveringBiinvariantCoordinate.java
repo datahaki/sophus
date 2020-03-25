@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
@@ -18,8 +18,8 @@ import ch.ethz.idsc.sophus.math.TensorNorm;
  * biinvariant
  * smooth for beta == 2 */
 public class Se2CoveringBiinvariantCoordinate extends LieBiinvariantCoordinate {
-  public static final BiinvariantCoordinate INSTANCE = new Se2CoveringBiinvariantCoordinate(RnNorm.INSTANCE);
-  public static final BiinvariantCoordinate SQUARED = new Se2CoveringBiinvariantCoordinate(RnNormSquared.INSTANCE);
+  public static final ProjectedCoordinate INSTANCE = new Se2CoveringBiinvariantCoordinate(RnNorm.INSTANCE);
+  public static final ProjectedCoordinate SQUARED = new Se2CoveringBiinvariantCoordinate(RnNormSquared.INSTANCE);
 
   private Se2CoveringBiinvariantCoordinate(TensorNorm tensorNorm) {
     super(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log, tensorNorm);

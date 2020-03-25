@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.Mahalanobis.Norm;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringAffineCoordinate;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
@@ -36,7 +37,7 @@ public class MahalanobisTest extends TestCase {
     // System.out.println("---");
     // }
     Tensor target = Tensor.of(centralized.stream().map(norm::norm));
-    LieBarycentricCoordinate lieBarycentricCoordinate = new LieBarycentricCoordinate( //
+    ProjectedCoordinate lieBarycentricCoordinate = new LieBarycentricCoordinate( //
         Se2CoveringGroup.INSTANCE, //
         Se2CoveringExponential.INSTANCE::log, //
         t -> target.map(Scalar::reciprocal));

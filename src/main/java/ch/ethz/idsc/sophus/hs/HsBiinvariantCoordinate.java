@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, Serializable {
+public abstract class HsBiinvariantCoordinate implements ProjectedCoordinate, Serializable {
   private final TensorUnaryOperator target;
 
   /** @param tensorNorm */
@@ -34,8 +34,8 @@ public abstract class HsBiinvariantCoordinate implements BiinvariantCoordinate, 
   public final Tensor weights(Tensor sequence, Tensor point) {
     Tensor projection = projection(sequence, point);
     return NormalizeAffine.of( //
-        target.apply(IdentityMatrix.of(sequence.length()).subtract(projection)), //
-        projection);
+        target.apply(IdentityMatrix.of(sequence.length()).subtract(projection)), // typically: inverse norm of rows
+        projection); // projection enforces linear reproduction
   }
 
   @Override // from BiinvariantCoordinate

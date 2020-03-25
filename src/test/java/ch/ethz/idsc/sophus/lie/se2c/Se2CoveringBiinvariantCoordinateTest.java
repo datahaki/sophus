@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.se2c;
 
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -11,6 +11,7 @@ import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
@@ -20,13 +21,14 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Unitize;
 import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
-  private static final BiinvariantCoordinate[] BARYCENTRIC_COORDINATES = { //
+  private static final ProjectedCoordinate[] BARYCENTRIC_COORDINATES = { //
       Se2CoveringBiinvariantCoordinate.INSTANCE, //
       Se2CoveringBiinvariantCoordinate.SQUARED //
   };
@@ -35,12 +37,36 @@ public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
-      for (BiinvariantCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+      for (ProjectedCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
           AffineQ.require(weights);
           Tolerance.CHOP.requireClose(weights, UnitVector.of(n, index));
         }
+      }
+    }
+  }
+
+  private static Tensor withUnits(Tensor xya) {
+    return Tensors.of( //
+        Quantity.of(xya.Get(0), "m"), //
+        Quantity.of(xya.Get(1), "m"), //
+        xya.Get(2));
+  }
+
+  public void testQuantity() {
+    Distribution distribution = NormalDistribution.standard();
+    for (int n = 4; n < 10; ++n) {
+      Tensor sequence = RandomVariate.of(distribution, n, 3);
+      sequence.set(Se2CoveringBiinvariantCoordinateTest::withUnits, Tensor.ALL);
+      for (ProjectedCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+        for (int index = 0; index < n; ++index) {
+          Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
+          AffineQ.require(weights);
+          Tolerance.CHOP.requireClose(weights, UnitVector.of(n, index));
+        }
+        Tensor weights = barycentricCoordinate.weights(sequence, withUnits(RandomVariate.of(distribution, 3)));
+        AffineQ.require(weights);
       }
     }
   }
@@ -51,7 +77,7 @@ public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (BiinvariantCoordinate biinvariantCoordinate : BARYCENTRIC_COORDINATES)
+    for (ProjectedCoordinate biinvariantCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);

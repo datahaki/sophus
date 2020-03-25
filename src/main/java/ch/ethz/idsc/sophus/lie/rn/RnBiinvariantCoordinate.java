@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseDiagonal;
@@ -13,7 +14,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * The RnInverseDistanceCoordinate is invariant under left-, right-translation and inversion. */
 public class RnBiinvariantCoordinate extends LieBiinvariantCoordinate {
-  public static final BarycentricCoordinate INSTANCE = //
+  public static final ProjectedCoordinate INSTANCE = //
       new RnBiinvariantCoordinate(InverseNorm.of(RnNorm.INSTANCE));
   public static final BarycentricCoordinate SQUARED = //
       new RnBiinvariantCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));

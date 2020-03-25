@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.itp;
 
-import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -25,14 +24,14 @@ public class PowerVariogramTest extends TestCase {
     Tensor values = RandomVariate.of(distributionY, n);
     {
       ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
-      Kriging kriging = Kriging.interpolation(variogram, RnNorm.INSTANCE, sequence, values);
+      Kriging kriging = LinearKriging.interpolation(variogram, sequence, values);
       Scalar value = (Scalar) kriging.apply(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
       PowerVariogram variogram = PowerVariogram.fit(sequence, values, RealScalar.ONE);
       Tensor covariance = IdentityMatrix.of(n, Quantity.of(1, "s^2"));
-      Kriging kriging = Kriging.regression(variogram, RnNorm.INSTANCE, sequence, values, covariance);
+      Kriging kriging = LinearKriging.regression(variogram, sequence, values, covariance);
       Scalar value = (Scalar) kriging.apply(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }

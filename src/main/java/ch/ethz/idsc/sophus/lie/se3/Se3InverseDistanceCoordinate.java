@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieBarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -16,9 +16,9 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * @see Se3BiinvariantCoordinate */
 public class Se3InverseDistanceCoordinate extends LieBarycentricCoordinate {
-  public static final BarycentricCoordinate INSTANCE = //
+  public static final ProjectedCoordinate INSTANCE = //
       new Se3InverseDistanceCoordinate(InverseNorm.of(RnNorm.INSTANCE));
-  public static final BarycentricCoordinate SQUARED = //
+  public static final ProjectedCoordinate SQUARED = //
       new Se3InverseDistanceCoordinate(InverseNorm.of(RnNormSquared.INSTANCE));
 
   public Se3InverseDistanceCoordinate(TensorUnaryOperator target) {
