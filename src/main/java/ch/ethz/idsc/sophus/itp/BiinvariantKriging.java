@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.itp;
 
+import java.io.Serializable;
+
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.win.ProjectionInterface;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -16,7 +18,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** @see ExponentialVariogram
  * @see PowerVariogram */
-public class BiinvariantKriging implements Kriging {
+public class BiinvariantKriging implements Kriging, Serializable {
   /** @param variogram
    * @param projectionInterface to measure the length of the difference between two points
    * @param sequence of points
@@ -85,22 +87,22 @@ public class BiinvariantKriging implements Kriging {
     weights = inverse.dot(values.copy().append(values.get(0).map(Scalar::zero)));
   }
 
-  @Override
-  public Tensor apply(Tensor x) {
-    return pseudoDistances(x).append(one).dot(weights);
+  @Override // from Kriging
+  public Tensor estimate(Tensor point) {
+    return pseudoDistances(point).append(one).dot(weights);
   }
 
-  @Override
-  public Scalar variance(Tensor x) {
-    Tensor y = pseudoDistances(x).append(one);
+  @Override // from Kriging
+  public Scalar variance(Tensor point) {
+    Tensor y = pseudoDistances(point).append(one);
     return inverse.dot(y).dot(y).Get();
   }
 
-  /** @param x
+  /** @param point
    * @return vector with sequence.length() + 1 entries */
-  private Tensor pseudoDistances(Tensor x) {
+  private Tensor pseudoDistances(Tensor point) {
     // biinvariant symmetric projection matrix with eigenvalues either 1 or 0
-    Tensor projection = projectionInterface.projection(sequence, x);
+    Tensor projection = projectionInterface.projection(sequence, point);
     Tensor normalized = IdentityMatrix.of(sequence.length()).subtract(projection);
     return Tensor.of(normalized.stream().map(RnNorm.INSTANCE::norm).map(variogram));
   }

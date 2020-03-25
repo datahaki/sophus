@@ -25,14 +25,14 @@ public class PowerVariogramTest extends TestCase {
     {
       ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
       Kriging kriging = LinearKriging.interpolation(variogram, sequence, values);
-      Scalar value = (Scalar) kriging.apply(RandomVariate.of(distributionX, d));
+      Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
       PowerVariogram variogram = PowerVariogram.fit(sequence, values, RealScalar.ONE);
       Tensor covariance = IdentityMatrix.of(n, Quantity.of(1, "s^2"));
       Kriging kriging = LinearKriging.regression(variogram, sequence, values, covariance);
-      Scalar value = (Scalar) kriging.apply(RandomVariate.of(distributionX, d));
+      Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
   }

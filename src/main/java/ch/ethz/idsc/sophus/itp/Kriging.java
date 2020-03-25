@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.itp;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Quote:
  * "Kriging is a technique named for South African mining engineer D.G. Krige. It is basically
@@ -12,8 +11,12 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
-public interface Kriging extends TensorUnaryOperator {
-  /** @param x
-   * @return error estimate */
-  Scalar variance(Tensor x);
+public interface Kriging {
+  /** @param point
+   * @return estimate at given point */
+  Tensor estimate(Tensor point);
+
+  /** @param point
+   * @return variance of estimate at given point */
+  Scalar variance(Tensor point);
 }

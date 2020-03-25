@@ -22,6 +22,6 @@ public class KrigingWeighting implements BarycentricCoordinate, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    return LinearKriging.barycentric(variogram, sequence).apply(point);
+    return LinearKriging.barycentric(variogram, sequence).estimate(point);
   }
 }

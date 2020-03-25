@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -83,6 +84,7 @@ public class Se2CoveringBiinvariantCoordinateTest extends TestCase {
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights1 = biinvariantCoordinate.weights(points, xya);
         Tensor projection = biinvariantCoordinate.projection(points, xya);
+        SymmetricMatrixQ.require(projection, Chop._10);
         Chop._10.requireClose(Symmetrize.of(projection), projection);
         AffineQ.require(weights1);
         Tensor check1 = biinvariantMean.mean(points, weights1);

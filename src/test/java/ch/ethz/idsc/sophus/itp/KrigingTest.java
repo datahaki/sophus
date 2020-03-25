@@ -10,7 +10,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -27,10 +26,9 @@ public class KrigingTest extends TestCase {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    TensorUnaryOperator tensorUnaryOperator = //
-        Serialization.copy(LinearKriging.interpolation(variogram, sequence, values));
+    Kriging kriging = Serialization.copy(LinearKriging.interpolation(variogram, sequence, values));
     for (int index = 0; index < sequence.length(); ++index) {
-      Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
+      Tensor tensor = kriging.estimate(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, values.get(index));
     }
   }
@@ -41,10 +39,9 @@ public class KrigingTest extends TestCase {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n);
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    TensorUnaryOperator tensorUnaryOperator = //
-        Serialization.copy(LinearKriging.interpolation(variogram, sequence, values));
+    Kriging kriging = Serialization.copy(LinearKriging.interpolation(variogram, sequence, values));
     for (int index = 0; index < sequence.length(); ++index) {
-      Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
+      Tensor tensor = kriging.estimate(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, values.get(index));
     }
   }
@@ -55,14 +52,13 @@ public class KrigingTest extends TestCase {
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (int d = 1; d < 4; ++d) {
       Tensor sequence = RandomVariate.of(distribution, n, d);
-      TensorUnaryOperator tensorUnaryOperator = //
-          Serialization.copy(LinearKriging.barycentric(variogram, sequence));
+      Kriging kriging = Serialization.copy(LinearKriging.barycentric(variogram, sequence));
       for (int index = 0; index < sequence.length(); ++index) {
-        Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
+        Tensor tensor = kriging.estimate(sequence.get(index));
         Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));
         // ---
         Tensor point = RandomVariate.of(distribution, d);
-        Tensor weights = tensorUnaryOperator.apply(point);
+        Tensor weights = kriging.estimate(point);
         AffineQ.require(weights);
       }
     }
@@ -77,7 +73,7 @@ public class KrigingTest extends TestCase {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     Kriging kriging = LinearKriging.interpolation(variogram, sequence, values);
-    Scalar apply = (Scalar) kriging.apply(RandomVariate.of(distributionX, d));
+    Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
 }
