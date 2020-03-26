@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** 3-point Gauss Legendre quadrature on interval [0, 1] */
-/* package */ class Legendre3ClothoidIntegral implements ClothoidIntegral, Serializable {
+/* package */ class Legendre3ClothoidIntegral implements Serializable {
   private static final Scalar _1 = RealScalar.of(1.0);
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //
@@ -34,7 +34,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     this.scalarUnaryOperator = scalarUnaryOperator;
   }
 
-  @Override
   public Scalar normalized(Scalar t) {
     Scalar il = il(t);
     Scalar ir = ir(t);
@@ -44,7 +43,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     return il.divide(il.add(ir));
   }
 
-  @Override // from ClothoidIntegral
   public Scalar il(Scalar t) {
     Scalar v0 = exp_i(X0.multiply(t));
     Scalar v1 = exp_i(X1.multiply(t));
@@ -60,7 +58,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     return v0.add(v2).multiply(W0).add(v1.multiply(W1)).multiply(_1_t);
   }
 
-  @Override // from ClothoidIntegral
   public Scalar one() {
     Scalar v0 = exp_i(X0);
     Scalar v1 = exp_i(X1);

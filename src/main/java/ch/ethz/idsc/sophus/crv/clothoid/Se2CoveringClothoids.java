@@ -20,20 +20,21 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum Se2CoveringClothoids implements GeodesicInterface {
   INSTANCE;
 
-  @Override // from GeodesicInterface
+  @Override // from ParametricCurve
   public Clothoid curve(Tensor p, Tensor _q) {
     LieGroupElement lieGroupElement = Se2CoveringGroup.INSTANCE.element(p);
     Tensor q = lieGroupElement.inverse().combine(_q);
     Tensor diff = q.extract(0, 2);
     Scalar da = ArcTan2D.of(diff); // special case when diff == {0, 0}
-    Scalar qa = q.Get(2);
-    Scalar b0 = da.negate(); // normal form T0 == b0
-    Scalar b1 = qa.subtract(da); // normal form T1 == b1
+    // ---
+    Scalar b0 = da.negate();
+    Scalar b1 = q.Get(2).subtract(da);
+    // ---
     Scalar bm = MidpointTangentApproximation.INSTANCE.apply(b0, b1);
     return new ClothoidImpl(lieGroupElement, LagrangeQuadratic.interp(b0, bm, b1), diff);
   }
 
-  @Override // from GeodesicInterface
+  @Override // from BinaryAverage
   public Tensor split(Tensor p, Tensor q, Scalar t) {
     return curve(p, q).apply(t);
   }

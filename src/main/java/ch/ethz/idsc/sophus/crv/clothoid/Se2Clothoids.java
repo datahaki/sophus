@@ -30,9 +30,10 @@ public enum Se2Clothoids implements GeodesicInterface {
     Tensor q = lieGroupElement.inverse().combine(_q);
     Tensor diff = q.extract(0, 2);
     Scalar da = ArcTan2D.of(diff); // special case when diff == {0, 0}
-    Scalar qa = q.Get(2);
+    // ---
     Scalar b0 = So2.MOD.apply(da.negate()); // normal form T0 == b0
-    Scalar b1 = So2.MOD.apply(qa.subtract(da)); // normal form T1 == b1
+    Scalar b1 = So2.MOD.apply(q.Get(2).subtract(da)); // normal form T1 == b1
+    // ---
     Scalar bm = MidpointTangentApproximation.INSTANCE.apply(b0, b1);
     return new ClothoidImpl(lieGroupElement, LagrangeQuadratic.interp(b0, bm, b1), diff);
   }

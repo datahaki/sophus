@@ -1,6 +1,8 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
+import java.util.Objects;
+
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
@@ -25,27 +27,28 @@ public final class ClothoidImpl implements Clothoid {
    * @param lagrangeQuadratic
    * @param diff */
   public ClothoidImpl(LieGroupElement lieGroupElement, LagrangeQuadratic lagrangeQuadratic, Tensor diff) {
-    this.lieGroupElement = lieGroupElement;
+    this.lieGroupElement = Objects.requireNonNull(lieGroupElement);
     this.lagrangeQuadratic = lagrangeQuadratic;
     this.diff = diff;
     // ---
-    clothoidIntegral = ErfClothoidIntegral.interp(lagrangeQuadratic);
-    this.length = Norm._2.of(diff).divide(clothoidIntegral.one().abs());
+    clothoidIntegral = ClothoidIntegral.interp(lagrangeQuadratic);
+    Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
+    this.length = Norm._2.of(diff).divide(one.abs());
     this.da = ArcTan2D.of(diff);
   }
 
   @Override // from Clothoid
-  public final Scalar length() {
+  public Scalar length() {
     return length;
   }
 
   @Override // from Clothoid
-  public final LagrangeQuadraticD curvature() {
+  public LagrangeQuadraticD curvature() {
     return lagrangeQuadratic.derivative(length);
   }
 
   @Override
-  public final Tensor apply(Scalar t) {
+  public Tensor apply(Scalar t) {
     Tensor xya = StaticHelper.prod(clothoidIntegral.normalized(t), diff).append(lagrangeQuadratic.apply(t).add(da));
     return lieGroupElement.combine(xya);
   }
