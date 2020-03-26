@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
-import ch.ethz.idsc.sophus.math.HeadTailInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -13,7 +12,6 @@ import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Imag;
 import ch.ethz.idsc.tensor.sca.Real;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference: U. Reif slides */
 public class Clothoid implements ScalarTensorFunction {
@@ -56,28 +54,14 @@ public class Clothoid implements ScalarTensorFunction {
         .append(da.add(lagrangeQuadratic.apply(t)));
   }
 
-  /** @return approximate length */
+  /** @return non-negative approximate length */
   public Scalar length() {
     return length;
   }
 
-  public class Curvature implements ScalarUnaryOperator, HeadTailInterface {
-    private final LagrangeQuadraticD lagrangeQuadraticD = new LagrangeQuadraticD(b0, bm, b1);
-
-    @Override
-    public Scalar apply(Scalar t) {
-      return lagrangeQuadraticD.apply(t).divide(length);
-    }
-
-    @Override // from HeadTailInterface
-    public Scalar head() {
-      return lagrangeQuadraticD.head().divide(length);
-    }
-
-    @Override // from HeadTailInterface
-    public Scalar tail() {
-      return lagrangeQuadraticD.tail().divide(length);
-    }
+  /** @return function that evaluates curvature at given parameter */
+  public LagrangeQuadraticD curvature() {
+    return new LagrangeQuadraticD(b0.divide(length), bm.divide(length), b1.divide(length));
   }
 
   /** complex multiplication between z and vector[0]+i*vector[1]

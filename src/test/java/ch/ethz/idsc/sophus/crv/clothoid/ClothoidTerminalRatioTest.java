@@ -20,12 +20,12 @@ public class ClothoidTerminalRatioTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      HeadTailInterface clothoidTerminalRatio1 = new Clothoid(p, q).new Curvature();
+      HeadTailInterface headTailInterface1 = new Clothoid(p, q).curvature();
       p.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
       q.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
-      HeadTailInterface clothoidTerminalRatio2 = new Clothoid(q, p).new Curvature();
-      Chop._06.requireClose(clothoidTerminalRatio1.head(), clothoidTerminalRatio2.tail().negate());
-      Chop._06.requireClose(clothoidTerminalRatio1.tail(), clothoidTerminalRatio2.head().negate());
+      HeadTailInterface headTailInterface2 = new Clothoid(q, p).curvature();
+      Chop._06.requireClose(headTailInterface1.head(), headTailInterface2.tail().negate());
+      Chop._06.requireClose(headTailInterface1.tail(), headTailInterface2.head().negate());
     }
   }
 
@@ -34,14 +34,14 @@ public class ClothoidTerminalRatioTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      HeadTailInterface clothoidTerminalRatio1 = new Clothoid(p, q).new Curvature();
+      HeadTailInterface headTailInterface1 = new Clothoid(p, q).curvature();
       Tensor g = RandomVariate.of(distribution, 3);
       Se2GroupElement se2GroupElement = new Se2GroupElement(g);
-      HeadTailInterface clothoidTerminalRatio2 = new Clothoid( //
+      HeadTailInterface headTailInterface2 = new Clothoid( //
           se2GroupElement.combine(p), //
-          se2GroupElement.combine(q)).new Curvature();
-      Chop._06.requireClose(clothoidTerminalRatio1.head(), clothoidTerminalRatio2.head());
-      Chop._06.requireClose(clothoidTerminalRatio1.tail(), clothoidTerminalRatio2.tail());
+          se2GroupElement.combine(q)).curvature();
+      Chop._06.requireClose(headTailInterface1.head(), headTailInterface2.head());
+      Chop._06.requireClose(headTailInterface1.tail(), headTailInterface2.tail());
     }
   }
 
@@ -50,12 +50,12 @@ public class ClothoidTerminalRatioTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      HeadTailInterface clothoidTerminalRatio1 = new Clothoid(p, q).new Curvature();
+      HeadTailInterface headTailInterface1 = new Clothoid(p, q).curvature();
       p.set(Pi.TWO::add, 2);
       q.set(Pi.TWO::add, 2);
-      HeadTailInterface clothoidTerminalRatio2 = new Clothoid(p, q).new Curvature();
-      Chop._10.requireClose(clothoidTerminalRatio1.head(), clothoidTerminalRatio2.head());
-      Chop._10.requireClose(clothoidTerminalRatio1.tail(), clothoidTerminalRatio2.tail());
+      HeadTailInterface headTailInterface2 = new Clothoid(p, q).curvature();
+      Chop._10.requireClose(headTailInterface1.head(), headTailInterface2.head());
+      Chop._10.requireClose(headTailInterface1.tail(), headTailInterface2.tail());
     }
   }
 
@@ -63,25 +63,25 @@ public class ClothoidTerminalRatioTest extends TestCase {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(3, 0, 0);
     {
-      HeadTailInterface clothoidTerminalRatio = new Clothoid(p, q).new Curvature();
-      Chop._03.requireClose(clothoidTerminalRatio.head(), RealScalar.ZERO);
-      Chop._03.requireClose(clothoidTerminalRatio.tail(), RealScalar.ZERO);
-      assertNotNull(clothoidTerminalRatio.toString());
+      HeadTailInterface headTailInterface = new Clothoid(p, q).curvature();
+      Chop._03.requireClose(headTailInterface.head(), RealScalar.ZERO);
+      Chop._03.requireClose(headTailInterface.tail(), RealScalar.ZERO);
+      assertNotNull(headTailInterface.toString());
     }
   }
 
   public void testStraightUp() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(0, 3, +Math.PI / 2);
-    HeadTailInterface clothoidTerminalRatio = new Clothoid(p, q).new Curvature();
-    Chop._03.requireClose(clothoidTerminalRatio.head(), RealScalar.ZERO);
-    Chop._03.requireClose(clothoidTerminalRatio.tail(), RealScalar.ZERO);
+    HeadTailInterface headTailInterface = new Clothoid(p, q).curvature();
+    Chop._03.requireClose(headTailInterface.head(), RealScalar.ZERO);
+    Chop._03.requireClose(headTailInterface.tail(), RealScalar.ZERO);
   }
 
   public void testCircle() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(-2, 0, -Math.PI / 2);
-    HeadTailInterface headTailInterface = new Clothoid(p, q).new Curvature();
+    HeadTailInterface headTailInterface = new Clothoid(p, q).curvature();
     Chop._03.requireClose(headTailInterface.head(), RealScalar.ONE);
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ONE);
   }

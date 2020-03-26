@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * p[1/2] == bm
  * p[2/2] == b1
  * </pre> */
-/* package */ class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterface {
+public class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterface {
   private static final Scalar _3 = RealScalar.of(+3);
   private static final Scalar _4 = RealScalar.of(+4);
   // ---

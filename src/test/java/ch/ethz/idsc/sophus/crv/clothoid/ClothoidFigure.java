@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.math.HeadTailInterface;
 import ch.ethz.idsc.tensor.Parallelize;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -28,10 +29,10 @@ import ch.ethz.idsc.tensor.red.Max;
 
   private Scalar function(int y, int x) {
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
-    // return new Clothoid(q.map(Scalar::zero), q).new Curve().length();
+    HeadTailInterface headTailInterface = new Clothoid(q.map(Scalar::zero), q).curvature();
     return Max.of( //
-        new Clothoid(q.map(Scalar::zero), q).new Curvature().head().abs(), //
-        new Clothoid(q.map(Scalar::zero), q).new Curvature().tail().abs()).reciprocal();
+        headTailInterface.head().abs(), //
+        headTailInterface.tail().abs()).reciprocal();
   }
 
   public static void main(String[] args) throws IOException {
