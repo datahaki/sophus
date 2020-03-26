@@ -14,6 +14,9 @@ public interface Clothoid extends ScalarTensorFunction {
   /** @return non-negative approximate length */
   Scalar length();
 
+  /** @return */
+  Scalar addAngle(Scalar t);
+
   /** Example:
    * parameter 0 returns curvature of clothoid at p
    * parameter 1 returns curvature of clothoid at q

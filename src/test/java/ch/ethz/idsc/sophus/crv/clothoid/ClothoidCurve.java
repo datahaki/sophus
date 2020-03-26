@@ -31,7 +31,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
     Scalar b0 = So2.MOD.apply(pa.subtract(da)); // normal form T0 == b0
     Scalar b1 = So2.MOD.apply(qa.subtract(da)); // normal form T1 == b1
     // ---
-    lagrangeQuadratic = LagrangeQuadratic.interp(b0, MidpointTangentApproximation.INSTANCE.apply(b0, b1), b1);
+    lagrangeQuadratic = LagrangeQuadratic.interp(b0, OriginalApproximation.INSTANCE.apply(b0, b1), b1);
   }
 
   /** @param t
