@@ -12,7 +12,7 @@ public enum ClothoidParametricDistance implements TensorMetric, TensorNorm {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return distance(new Se2Clothoid(p, q));
+    return distance(Se2Clothoid.of(p, q));
   }
 
   /** @param clothoid

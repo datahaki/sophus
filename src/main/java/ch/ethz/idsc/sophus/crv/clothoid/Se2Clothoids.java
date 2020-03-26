@@ -19,7 +19,7 @@ public enum Se2Clothoids implements GeodesicInterface {
 
   @Override // from GeodesicInterface
   public Clothoid curve(Tensor p, Tensor q) {
-    return new Se2Clothoid(p, q);
+    return Se2Clothoid.of(p, q);
   }
 
   @Override // from GeodesicInterface

@@ -29,7 +29,7 @@ import ch.ethz.idsc.tensor.red.Max;
 
   private Scalar function(int y, int x) {
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
-    HeadTailInterface headTailInterface = new Se2Clothoid(q.map(Scalar::zero), q).curvature();
+    HeadTailInterface headTailInterface = Se2Clothoid.of(q.map(Scalar::zero), q).curvature();
     return Max.of( //
         headTailInterface.head().abs(), //
         headTailInterface.tail().abs()).reciprocal();
