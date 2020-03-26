@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.pdf.Erfi;
 import ch.ethz.idsc.tensor.red.Times;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
@@ -18,14 +19,15 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   private static final Scalar _N1_1_4 = ComplexScalar.of(+0.7071067811865476, 0.7071067811865475);
   private static final Scalar _N1_3_4 = ComplexScalar.of(-0.7071067811865475, 0.7071067811865476);
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
+  private static final Chop CHOP = Chop._10;
 
   public static ClothoidIntegral interp(LagrangeQuadratic lagrangeQuadratic) {
     return of(lagrangeQuadratic.c0, lagrangeQuadratic.c1, lagrangeQuadratic.c2);
   }
 
   public static ClothoidIntegral of(Scalar c0, Scalar c1, Scalar c2) {
-    if (Scalars.isZero(c2))
-      return Scalars.isZero(c1) //
+    if (Scalars.isZero(CHOP.apply(c2)))
+      return Scalars.isZero(CHOP.apply(c1)) //
           ? new LineIntegral(c0)
           : new CircleIntegral(c0, c1);
     return new ErfClothoidIntegral(c0, c1, c2);

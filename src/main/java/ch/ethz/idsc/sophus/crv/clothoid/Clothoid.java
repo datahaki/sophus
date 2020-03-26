@@ -11,10 +11,6 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * 
  * Reference: U. Reif slides */
 public interface Clothoid extends ScalarTensorFunction {
-  /** @param t
-   * @return element in SO(2) covering */
-  Scalar angle(Scalar t);
-
   /** @return non-negative approximate length */
   Scalar length();
 

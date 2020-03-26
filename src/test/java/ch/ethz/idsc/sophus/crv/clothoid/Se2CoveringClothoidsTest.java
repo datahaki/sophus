@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import junit.framework.TestCase;
 
-public class PolarClothoidsTest extends TestCase {
+public class Se2CoveringClothoidsTest extends TestCase {
   public void testAngles() {
     // FIXME
     // Tensor pxy = Tensors.vector(0, 0).unmodifiable();
