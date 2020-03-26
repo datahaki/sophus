@@ -15,13 +15,15 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * p[2/2] == b1
  * </pre>
  * 
+ * <p>In Mathematica, the coefficients can be obtained via
+ * <pre>
+ * InterpolatingPolynomial[{{0, b0}, {1/2, bm}, {1, b1}}, x]
+ * == b0 + (-3 b0 + 4 bm - b1) x + 2 (b0 + b1 - 2 bm) x^2
+ * </pre>
+ * 
  * @see InterpolatingPolynomial */
 /* package */ class LagrangeQuadratic implements ScalarUnaryOperator {
   private static final Scalar _3 = RealScalar.of(+3.0);
-  // ---
-  public final Scalar c0;
-  public final Scalar c1;
-  public final Scalar c2;
 
   /** The Lagrange interpolating polynomial has the following coefficients
    * {b0, -3 b0 - b1 + 4 bm, 2 (b0 + b1 - 2 bm)}
@@ -32,16 +34,34 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
    * @param b0
    * @param bm
    * @param b1 */
-  public LagrangeQuadratic(Scalar b0, Scalar bm, Scalar b1) {
-    c0 = b0;
-    Scalar b2 = bm.add(bm);
-    c1 = b2.add(b2).subtract(b0.multiply(_3).add(b1));
-    Scalar t2 = b0.add(b1).subtract(b2);
-    c2 = t2.add(t2);
+  public static LagrangeQuadratic interp(Scalar b0, Scalar bm, Scalar b1) {
+    Scalar bm2 = bm.add(bm);
+    Scalar t2 = b0.add(b1).subtract(bm2);
+    return new LagrangeQuadratic( //
+        b0, //
+        bm2.add(bm2).subtract(b0.multiply(_3).add(b1)), //
+        t2.add(t2));
+  }
+
+  /***************************************************/
+  public final Scalar c0;
+  public final Scalar c1;
+  public final Scalar c2;
+
+  private LagrangeQuadratic(Scalar c0, Scalar c1, Scalar c2) {
+    this.c0 = c0;
+    this.c1 = c1;
+    this.c2 = c2;
   }
 
   @Override
   public Scalar apply(Scalar s) {
     return c2.multiply(s).add(c1).multiply(s).add(c0);
+  }
+
+  /** @param length
+   * @return linear polynomial */
+  public LagrangeQuadraticD derivative(Scalar length) {
+    return new LagrangeQuadraticD(c1.divide(length), c2.add(c2).divide(length));
   }
 }

@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 public class LagrangeQuadraticTest extends TestCase {
   public void testSimple() {
     LagrangeQuadratic lagrangeQuadratic = //
-        new LagrangeQuadratic(RealScalar.of(2), RealScalar.of(-3), RealScalar.of(7));
+        LagrangeQuadratic.interp(RealScalar.of(2), RealScalar.of(-3), RealScalar.of(7));
     Scalar p0 = lagrangeQuadratic.apply(RealScalar.ZERO);
     Scalar pm = lagrangeQuadratic.apply(RationalScalar.HALF);
     Scalar p1 = lagrangeQuadratic.apply(RealScalar.ONE);
@@ -28,7 +28,7 @@ public class LagrangeQuadraticTest extends TestCase {
 
   public void testExamples() {
     LagrangeQuadratic lagrangeQuadratic = //
-        new LagrangeQuadratic(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
+        LagrangeQuadratic.interp(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
     Scalar angle = lagrangeQuadratic.apply(RealScalar.of(11));
     assertEquals(angle, RealScalar.of(973));
     Scalar p0 = lagrangeQuadratic.apply(RealScalar.ZERO);
@@ -43,7 +43,7 @@ public class LagrangeQuadraticTest extends TestCase {
     ScalarUnaryOperator scalarUnaryOperator = InterpolatingPolynomial.of( //
         Tensors.vector(0, 0.5, 1)).scalarUnaryOperator(Tensors.vector(5, 7, 13));
     LagrangeQuadratic clothoidQuadratic = //
-        new LagrangeQuadratic(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
+        LagrangeQuadratic.interp(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
     Distribution distribution = UniformDistribution.of(-1, 2);
     Tensor domain = RandomVariate.of(distribution, 10);
     Tolerance.CHOP.requireClose(domain.map(clothoidQuadratic), domain.map(scalarUnaryOperator));

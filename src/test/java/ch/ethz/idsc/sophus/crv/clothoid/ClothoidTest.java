@@ -29,7 +29,7 @@ public class ClothoidTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      Clothoid curve = Serialization.copy(new Clothoid(p, q));
+      Clothoid curve = Serialization.copy(new Se2Clothoid(p, q));
       Scalar length = Serialization.copy(curve).length();
       Scalar between = Norm._2.between(p.extract(0, 2), q.extract(0, 2));
       assertTrue(Scalars.lessEquals(between, length));
@@ -40,7 +40,7 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      Clothoid clothoid = new Clothoid(p, p);
+      Clothoid clothoid = new Se2Clothoid(p, p);
       Scalar length = clothoid.length();
       Chop.NONE.requireZero(length);
     }
@@ -50,7 +50,7 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = DiscreteUniformDistribution.of(-3, +3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      Clothoid clothoid = new Clothoid(p, p);
+      Clothoid clothoid = new Se2Clothoid(p, p);
       Scalar length = clothoid.length();
       Chop.NONE.requireZero(length);
     }
@@ -60,7 +60,7 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD curvature = new Clothoid(p, p).curvature();
+      LagrangeQuadraticD curvature = new Se2Clothoid(p, p).curvature();
       Scalar scalar = curvature.head();
       assertFalse(NumberQ.of(scalar));
     }
@@ -70,7 +70,7 @@ public class ClothoidTest extends TestCase {
     Distribution distribution = DiscreteUniformDistribution.of(-3, +3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD curvature = new Clothoid(p, p).curvature();
+      LagrangeQuadraticD curvature = new Se2Clothoid(p, p).curvature();
       Scalar scalar = curvature.head();
       assertFalse(NumberQ.of(scalar));
     }
@@ -81,7 +81,7 @@ public class ClothoidTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      HeadTailInterface headTailInterface = new Clothoid(p, q).curvature();
+      HeadTailInterface headTailInterface = new Se2Clothoid(p, q).curvature();
       Scalar head = Serialization.copy(headTailInterface).head();
       assertTrue(head instanceof RealScalar);
     }
@@ -92,16 +92,16 @@ public class ClothoidTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      Clothoid clothoid = new Clothoid(p, q);
+      Clothoid clothoid = new Se2Clothoid(p, q);
       Tensor m = clothoid.apply(RationalScalar.HALF);
-      Scalar l1 = new Clothoid(p, m).length();
-      Scalar l2 = new Clothoid(m, q).length();
+      Scalar l1 = new Se2Clothoid(p, m).length();
+      Scalar l2 = new Se2Clothoid(m, q).length();
       Chop._01.requireClose(l1, l2);
     }
   }
 
   public void testQuantity() {
-    Clothoid clothoid = new Clothoid(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{7[m], -2[m], 4}"));
+    Clothoid clothoid = new Se2Clothoid(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{7[m], -2[m], 4}"));
     Tensor tensor = clothoid.apply(RealScalar.of(0.3));
     Chop._08.requireClose(tensor, Tensors.fromString("{0.8746294996808981[m], -0.3733524277684044[m], -0.4007683806054648}"));
     Chop._10.requireClose(clothoid.length(), Quantity.of(11.538342088739874, "m^1.0"));
@@ -116,9 +116,9 @@ public class ClothoidTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(1, 2, 1);
     Tensor q = Tensors.vector(8, 6, 2);
-    HeadTailInterface clothoidTerminalRatio = new Clothoid(p, q).curvature();
+    HeadTailInterface clothoidTerminalRatio = new Se2Clothoid(p, q).curvature();
     Scalar head = clothoidTerminalRatio.head();
-    LagrangeQuadraticD clothoidCurvature = Serialization.copy(new Clothoid(p, q).curvature());
+    LagrangeQuadraticD clothoidCurvature = Serialization.copy(new Se2Clothoid(p, q).curvature());
     Scalar scalar = clothoidCurvature.head();
     Chop._01.requireClose(head, scalar);
   }
@@ -126,10 +126,10 @@ public class ClothoidTest extends TestCase {
   public void testStraight() {
     Tensor p = Tensors.vector(1, 2, 0);
     Tensor q = Tensors.vector(10, 2, 0);
-    HeadTailInterface clothoidTerminalRatio = new Clothoid(p, q).curvature();
+    HeadTailInterface clothoidTerminalRatio = new Se2Clothoid(p, q).curvature();
     Chop._12.requireClose(clothoidTerminalRatio.head(), RealScalar.ZERO);
     Chop._12.requireClose(clothoidTerminalRatio.tail(), RealScalar.ZERO);
-    LagrangeQuadraticD clothoidCurvature = new Clothoid(p, q).curvature();
+    LagrangeQuadraticD clothoidCurvature = new Se2Clothoid(p, q).curvature();
     Chop._12.requireClose(clothoidCurvature.head(), RealScalar.ZERO);
     Chop._12.requireClose(clothoidCurvature.tail(), RealScalar.ZERO);
   }
@@ -137,9 +137,9 @@ public class ClothoidTest extends TestCase {
   public void testAlmostStraight() {
     Tensor p = Tensors.vector(1, 2, 0);
     Tensor q = Tensors.vector(10, 3, 0);
-    HeadTailInterface headTailInterface1 = new Clothoid(p, q).curvature();
+    HeadTailInterface headTailInterface1 = new Se2Clothoid(p, q).curvature();
     Scalar head = headTailInterface1.head();
-    LagrangeQuadraticD lagrangeQuadraticD = new Clothoid(p, q).curvature();
+    LagrangeQuadraticD lagrangeQuadraticD = new Se2Clothoid(p, q).curvature();
     Scalar scalar = lagrangeQuadraticD.apply(RealScalar.ZERO);
     Chop._12.requireClose(lagrangeQuadraticD.head(), scalar);
     Chop._02.requireClose(head, scalar);
@@ -148,7 +148,7 @@ public class ClothoidTest extends TestCase {
   public void testSingular() {
     Tensor p = Tensors.vector(1, 2, 1);
     Tensor q = Tensors.vector(1, 2, 1);
-    LagrangeQuadraticD clothoidCurvature = new Clothoid(p, q).curvature();
+    LagrangeQuadraticD clothoidCurvature = new Se2Clothoid(p, q).curvature();
     Scalar head = clothoidCurvature.head();
     Scalar tail = clothoidCurvature.tail();
     assertFalse(NumberQ.of(head));
@@ -160,7 +160,7 @@ public class ClothoidTest extends TestCase {
     Tensor qxy = Tensors.vector(1, 0);
     Tensor angles = Range.of(-3, 4).map(Pi.TWO::multiply);
     for (Tensor angle : angles) {
-      Clothoid clothoid = new Clothoid(pxy.append(angle), qxy.append(angle));
+      Clothoid clothoid = new Se2Clothoid(pxy.append(angle), qxy.append(angle));
       Tensor r = clothoid.apply(RationalScalar.HALF);
       Chop._13.requireClose(r, Tensors.vector(0.5, 0, 0));
     }
@@ -168,27 +168,27 @@ public class ClothoidTest extends TestCase {
 
   public void testLeft() {
     HeadTailInterface headTailInterface = //
-        new Clothoid(Tensors.vector(0, 1, 0), Tensors.vector(2, 2, 0)).curvature();
+        new Se2Clothoid(Tensors.vector(0, 1, 0), Tensors.vector(2, 2, 0)).curvature();
     Chop._10.requireClose(headTailInterface.head(), RealScalar.of(+1.2149956565247715));
     Chop._10.requireClose(headTailInterface.tail(), RealScalar.of(-1.2149956565247715));
   }
 
   public void testRight() {
     HeadTailInterface headTailInterface = //
-        new Clothoid(Tensors.vector(0, 1, 0), Tensors.vector(2, 0, 0)).curvature();
+        new Se2Clothoid(Tensors.vector(0, 1, 0), Tensors.vector(2, 0, 0)).curvature();
     Chop._10.requireClose(headTailInterface.head(), RealScalar.of(-1.2149956565247713));
     Chop._10.requireClose(headTailInterface.tail(), RealScalar.of(+1.2149956565247713));
   }
 
   public void testFixedLeftUnit() {
-    HeadTailInterface headTailInterface = new Clothoid( //
+    HeadTailInterface headTailInterface = new Se2Clothoid( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
     Chop._10.requireClose(headTailInterface.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
     Chop._10.requireClose(headTailInterface.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
   }
 
   public void testOfLeftUnit() {
-    HeadTailInterface clothoidTerminalRatio = new Clothoid( //
+    HeadTailInterface clothoidTerminalRatio = new Se2Clothoid( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
     System.out.println(clothoidTerminalRatio.head());
     Chop._10.requireClose(clothoidTerminalRatio.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3

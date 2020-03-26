@@ -1,24 +1,24 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
+import java.util.function.BinaryOperator;
+
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
-/** Reference: U. Reif slide 9/32 */
-/* package */ enum ClothoidApproximation {
-  ;
+/** The input parameters b0, b1 are real numbers and represent angles.
+ * The return value tilde f(b0, b1) is also a real number.
+ * 
+ * Reference: U. Reif slide 9/32 */
+/* package */ enum MidpointTangentApproximation implements BinaryOperator<Scalar> {
+  INSTANCE;
+
   private static final Scalar _68 = RealScalar.of(68.0);
   private static final Scalar _46 = RealScalar.of(46.0);
   private static final Scalar _1_4 = RealScalar.of(0.25);
 
-  /** Typically, the input parameters b0, b1 are real numbers and
-   * represent angles. In that case, the return value is also a
-   * real number.
-   * 
-   * @param b0
-   * @param b1
-   * @return tilde f(b0, b1) */
-  static Scalar f(Scalar b0, Scalar b1) {
+  @Override
+  public Scalar apply(Scalar b0, Scalar b1) {
     Scalar f1 = b0.multiply(b0).add(b1.multiply(b1)).divide(_68);
     Scalar f2 = b0.multiply(b1).divide(_46);
     Scalar f3 = _1_4;

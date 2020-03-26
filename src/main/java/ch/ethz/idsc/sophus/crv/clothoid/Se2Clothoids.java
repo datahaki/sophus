@@ -5,7 +5,6 @@ import ch.ethz.idsc.sophus.crv.subdiv.LaneRiesenfeldCurveSubdivision;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** factory of {@link Clothoid}
  *
@@ -15,12 +14,12 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * <p>In order to obtain samples of a clothoid that interpolates p and q the
  * recommended method is to use {@link LaneRiesenfeldCurveSubdivision} with
  * Clothoids and degrees 1 or 3. */
-public enum Clothoids implements GeodesicInterface {
+public enum Se2Clothoids implements GeodesicInterface {
   INSTANCE;
 
   @Override // from GeodesicInterface
-  public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return new Clothoid(p, q);
+  public Clothoid curve(Tensor p, Tensor q) {
+    return new Se2Clothoid(p, q);
   }
 
   @Override // from GeodesicInterface

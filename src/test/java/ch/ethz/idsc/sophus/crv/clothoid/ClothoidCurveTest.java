@@ -46,7 +46,7 @@ public class ClothoidCurveTest extends TestCase {
     Scalar z = ComplexScalar.of(2, 3);
     Scalar a = ComplexScalar.of(5, 11);
     Tensor vector = Tensors.vector(5, 11);
-    Tensor tensor = Clothoid.prod(z, vector);
+    Tensor tensor = Se2Clothoid.prod(z, vector);
     assertEquals(tensor, Tensors.vector(-23, 37));
     ExactTensorQ.require(tensor);
     Scalar compare = z.multiply(a);
@@ -58,7 +58,7 @@ public class ClothoidCurveTest extends TestCase {
     Tensor q = Tensors.vector(-3.7, 0.3, 3.142);
     Tensor m1 = Clothoid1.INSTANCE.curve(p, q).apply(RationalScalar.HALF);
     Tensor m2 = Clothoid2.INSTANCE.curve(p, q).apply(RationalScalar.HALF);
-    Tensor m3 = Clothoids.INSTANCE.curve(p, q).apply(RationalScalar.HALF);
+    Tensor m3 = Se2Clothoids.INSTANCE.curve(p, q).apply(RationalScalar.HALF);
     assertFalse(Chop._01.close(m1, m2));
     assertFalse(Chop._01.close(m1, m3));
     assertFalse(Chop._01.close(m2, m3));

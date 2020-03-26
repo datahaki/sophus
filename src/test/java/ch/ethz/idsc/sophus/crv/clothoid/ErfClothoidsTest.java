@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 
 public class ErfClothoidsTest extends TestCase {
   public void testSimple() {
-    ScalarTensorFunction scalarTensorFunction = Clothoids.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
+    ScalarTensorFunction scalarTensorFunction = Se2Clothoids.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertTrue(scalarTensorFunction instanceof Clothoid);
   }
 }
