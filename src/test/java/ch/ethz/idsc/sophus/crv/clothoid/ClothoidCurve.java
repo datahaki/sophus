@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   private final Tensor pxy;
   private final Tensor diff;
   private final Scalar da;
-  protected final ScalarUnaryOperator clothoidQuadratic;
+  protected final ScalarUnaryOperator lagrangeQuadratic;
 
   public ClothoidCurve(Tensor p, Tensor q) {
     pxy = p.extract(0, 2);
@@ -31,7 +31,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
     Scalar b0 = So2.MOD.apply(pa.subtract(da)); // normal form T0 == b0
     Scalar b1 = So2.MOD.apply(qa.subtract(da)); // normal form T1 == b1
     // ---
-    clothoidQuadratic = LagrangeQuadratic.interp(b0, MidpointTangentApproximation.INSTANCE.apply(b0, b1), b1);
+    lagrangeQuadratic = LagrangeQuadratic.interp(b0, MidpointTangentApproximation.INSTANCE.apply(b0, b1), b1);
   }
 
   /** @param t
@@ -50,11 +50,11 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
      * t == 0 -> (0, 0)
      * t == 1 -> (1, 0) */
     Scalar z = il.divide(il.add(ir));
-    return pxy.add(Se2Clothoid.prod(z, diff)) //
-        .append(clothoidQuadratic.apply(t).add(da));
+    return pxy.add(StaticHelper.prod(z, diff)) //
+        .append(lagrangeQuadratic.apply(t).add(da));
   }
 
   public Scalar exp_i(Scalar s) {
-    return ComplexScalar.unit(clothoidQuadratic.apply(s));
+    return ComplexScalar.unit(lagrangeQuadratic.apply(s));
   }
 }

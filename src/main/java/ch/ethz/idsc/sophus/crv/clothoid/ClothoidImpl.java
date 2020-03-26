@@ -15,8 +15,9 @@ public abstract class ClothoidImpl implements Clothoid {
   private final Scalar length;
   private final Scalar da;
 
-  /** @param p vector of the form {px, py, pa}
-   * @param q vector of the form {qx, qy, qa} */
+  /** @param lagrangeQuadratic
+   * @param dxy non-negative
+   * @param da angle at parameter 0 */
   public ClothoidImpl(LagrangeQuadratic lagrangeQuadratic, Scalar dxy, Scalar da) {
     this.lagrangeQuadratic = lagrangeQuadratic;
     clothoidIntegral = ErfClothoidIntegral.interp(lagrangeQuadratic);
@@ -24,18 +25,18 @@ public abstract class ClothoidImpl implements Clothoid {
     this.da = da;
   }
 
-  @Override
+  @Override // from Clothoid
   public final Scalar length() {
     return length;
   }
 
-  @Override
+  @Override // from Clothoid
   public final LagrangeQuadraticD curvature() {
     return lagrangeQuadratic.derivative(length);
   }
 
-  @Override
+  @Override // from Clothoid
   public final Scalar angle(Scalar t) {
-    return da.add(lagrangeQuadratic.apply(t));
+    return lagrangeQuadratic.apply(t).add(da);
   }
 }
