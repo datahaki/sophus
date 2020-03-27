@@ -9,7 +9,9 @@ import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.win.InverseDiagonal;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -17,6 +19,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public final class HsBiinvariantCoordinate extends HsProjection implements ProjectedCoordinate {
+  private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
+
   /** @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
@@ -50,6 +54,13 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
     return custom(flattenLogManifold, InverseDiagonal.of(RnNormSquared.INSTANCE));
   }
 
+  /** @param flattenLogManifold
+   * @return biinvariant coordinates */
+  public static ProjectedCoordinate affine(FlattenLogManifold flattenLogManifold) {
+    // HsBarycentricCoordinate uses more efficient matrix multiplication
+    return HsBarycentricCoordinate.custom(flattenLogManifold, AFFINE);
+  }
+
   /***************************************************/
   private final TensorUnaryOperator target;
 
@@ -60,7 +71,7 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
   }
 
   @Override // from BarycentricCoordinate
-  public final Tensor weights(Tensor sequence, Tensor point) {
+  public Tensor weights(Tensor sequence, Tensor point) {
     Tensor projection = projection(sequence, point);
     return NormalizeAffine.of( //
         target.apply(IdentityMatrix.of(sequence.length()).subtract(projection)), // typically: inverse norm of rows

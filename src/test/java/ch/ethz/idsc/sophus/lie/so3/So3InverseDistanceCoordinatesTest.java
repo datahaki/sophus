@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.so3;
 
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -76,7 +77,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
     int fail = 0;
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    ProjectedCoordinate AFFINE = HsBarycentricCoordinate.affine(So3Manifold.INSTANCE);
+    ProjectedCoordinate AFFINE = HsBiinvariantCoordinate.affine(So3Manifold.INSTANCE);
     for (int n = 4; n < 10; ++n)
       try {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));

@@ -27,7 +27,7 @@ public class Se2CoveringAffineCoordinatesTest extends TestCase {
       Se2CoveringManifold.INSTANCE, //
       InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBarycentricCoordinate.affine(Se2CoveringManifold.INSTANCE), //
+      HsBiinvariantCoordinate.affine(Se2CoveringManifold.INSTANCE), //
       HsBiinvariantCoordinate.linear(Se2CoveringManifold.INSTANCE), //
       HsBiinvariantCoordinate.smooth(Se2CoveringManifold.INSTANCE), //
       AD_INVAR };

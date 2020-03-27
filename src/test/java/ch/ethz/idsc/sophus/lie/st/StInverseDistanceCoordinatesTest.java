@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -19,7 +18,7 @@ import junit.framework.TestCase;
 
 public class StInverseDistanceCoordinatesTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
-  private static final ProjectedCoordinate AFFINE = HsBarycentricCoordinate.affine(StManifold.INSTANCE);
+  private static final ProjectedCoordinate AFFINE = HsBiinvariantCoordinate.affine(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       HsBiinvariantCoordinate.linear(StManifold.INSTANCE), //
       HsBiinvariantCoordinate.smooth(StManifold.INSTANCE), //
@@ -61,36 +60,37 @@ public class StInverseDistanceCoordinatesTest extends TestCase {
         }
   }
 
-  public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
+  public void testAffineBiinvariant() {
     int fails = 0;
-    for (int n = 1; n < 3; ++n)
-      for (int length = n + 2; length < n + 8; ++length)
-        try {
-          int fn = n;
-          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
-          Tensor mean1 = TestHelper.spawn_St(n);
-          Tensor weights1 = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = StBiinvariantMean.INSTANCE.mean(sequence, weights1);
-          Tolerance.CHOP.requireClose(mean1, mean2); // linear reproduction
-          // ---
-          Tensor shift = TestHelper.spawn_St(n);
-          { // invariant under left action
-            Tensor weightsL = barycentricCoordinate.weights(LIE_GROUP_OPS.allLeft(sequence, shift), LIE_GROUP_OPS.combine(shift, mean1));
-            Chop._08.requireClose(weights1, weightsL);
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+      for (int n = 1; n < 3; ++n)
+        for (int length = n + 2; length < n + 8; ++length)
+          try {
+            barycentricCoordinate = Serialization.copy(barycentricCoordinate);
+            int fn = n;
+            Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
+            Tensor mean1 = TestHelper.spawn_St(n);
+            Tensor weights1 = barycentricCoordinate.weights(sequence, mean1);
+            Tensor mean2 = StBiinvariantMean.INSTANCE.mean(sequence, weights1);
+            Tolerance.CHOP.requireClose(mean1, mean2); // linear reproduction
+            // ---
+            Tensor shift = TestHelper.spawn_St(n);
+            { // invariant under left action
+              Tensor weightsL = barycentricCoordinate.weights(LIE_GROUP_OPS.allLeft(sequence, shift), LIE_GROUP_OPS.combine(shift, mean1));
+              Chop._08.requireClose(weights1, weightsL);
+            }
+            { // invariant under right action
+              Tensor weightsR = barycentricCoordinate.weights(LIE_GROUP_OPS.allRight(sequence, shift), LIE_GROUP_OPS.combine(mean1, shift));
+              Chop._10.requireClose(weights1, weightsR);
+            }
+            { // invariant under inversion
+              Tensor weightsI = barycentricCoordinate.weights( //
+                  LIE_GROUP_OPS.allInvert(sequence), LIE_GROUP_OPS.invert(mean1));
+              Chop._06.requireClose(weights1, weightsI);
+            }
+          } catch (Exception exception) {
+            ++fails;
           }
-          { // invariant under right action
-            Tensor weightsR = barycentricCoordinate.weights(LIE_GROUP_OPS.allRight(sequence, shift), LIE_GROUP_OPS.combine(mean1, shift));
-            Chop._10.requireClose(weights1, weightsR);
-          }
-          { // invariant under inversion
-            Tensor weightsI = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allInvert(sequence), LIE_GROUP_OPS.invert(mean1));
-            Chop._06.requireClose(weights1, weightsI);
-          }
-        } catch (Exception exception) {
-          ++fails;
-        }
     assertTrue(fails < 3);
   }
 

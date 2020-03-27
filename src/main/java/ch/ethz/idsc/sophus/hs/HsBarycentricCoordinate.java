@@ -8,9 +8,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -37,18 +35,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * and inversion is guaranteed.
  * 
  * If the target mapping correlates to inverse distances then the coordinates
- * satisfy the Lagrange property.
- * 
- * @see LieBiinvariantCoordinate */
+ * satisfy the Lagrange property. */
 public final class HsBarycentricCoordinate extends HsProjection implements ProjectedCoordinate {
-  private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
-
-  /** @param flattenLogManifold
-   * @return biinvariant coordinates */
-  public static ProjectedCoordinate affine(FlattenLogManifold flattenLogManifold) {
-    return new HsBarycentricCoordinate(flattenLogManifold, AFFINE);
-  }
-
   /** @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
@@ -71,14 +59,13 @@ public final class HsBarycentricCoordinate extends HsProjection implements Proje
   /***************************************************/
   private final TensorUnaryOperator target;
 
-  /** @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
   private HsBarycentricCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     super(flattenLogManifold);
     this.target = Objects.requireNonNull(target);
   }
 
   @Override // from BarycentricCoordinate
-  public final Tensor weights(Tensor sequence, Tensor point) {
+  public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
     return NormalizeAffine.of(target.apply(levers), PseudoInverse.of(nullsp), nullsp);

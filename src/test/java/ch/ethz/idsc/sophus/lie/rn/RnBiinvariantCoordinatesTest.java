@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -15,7 +16,7 @@ public class RnBiinvariantCoordinatesTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(RnManifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(RnManifold.INSTANCE), //
-      HsBarycentricCoordinate.affine(RnManifold.INSTANCE), //
+      HsBiinvariantCoordinate.affine(RnManifold.INSTANCE), //
   };
 
   public void testColinear() {

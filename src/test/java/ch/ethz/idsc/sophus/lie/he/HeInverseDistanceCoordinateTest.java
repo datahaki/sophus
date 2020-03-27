@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeInverseDistanceCoordinateTest extends TestCase {
-  private static final ProjectedCoordinate AFFINE = HsBarycentricCoordinate.affine(HeManifold.INSTANCE);
+  private static final ProjectedCoordinate AFFINE = HsBiinvariantCoordinate.affine(HeManifold.INSTANCE);
   public static final ProjectedCoordinate INSTANCE = HsBarycentricCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //

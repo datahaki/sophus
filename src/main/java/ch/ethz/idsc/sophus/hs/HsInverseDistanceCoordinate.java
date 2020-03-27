@@ -10,7 +10,9 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
-/** barycentric coordinates for inverse distance weights using distance measurements */
+/** barycentric coordinates for inverse distance weights using distance measurements
+ * 
+ * @see HsBarycentricCoordinate */
 public final class HsInverseDistanceCoordinate extends HsProjection implements ProjectedCoordinate {
   /** @param flattenLogManifold
    * @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
@@ -27,7 +29,7 @@ public final class HsInverseDistanceCoordinate extends HsProjection implements P
   }
 
   @Override // from BarycentricCoordinate
-  public final Tensor weights(Tensor sequence, Tensor point) {
+  public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
     Tensor target = barycentricCoordinate.weights(sequence, point);

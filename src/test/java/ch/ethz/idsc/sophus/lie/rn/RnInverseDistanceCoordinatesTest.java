@@ -117,7 +117,7 @@ public class RnInverseDistanceCoordinatesTest extends TestCase {
   }
 
   public void testAffineSimple() {
-    ProjectedCoordinate projectedCoordinate = HsBarycentricCoordinate.affine(RnManifold.INSTANCE);
+    ProjectedCoordinate projectedCoordinate = HsBiinvariantCoordinate.affine(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 10; ++length) {
         Distribution distribution = NormalDistribution.standard();
