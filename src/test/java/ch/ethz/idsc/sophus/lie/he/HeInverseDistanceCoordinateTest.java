@@ -3,9 +3,15 @@ package ch.ethz.idsc.sophus.lie.he;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
@@ -15,9 +21,14 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeInverseDistanceCoordinateTest extends TestCase {
+  private static final ProjectedCoordinate AFFINE = HsBarycentricCoordinate.affine(HeManifold.INSTANCE);
+  public static final ProjectedCoordinate INSTANCE = HsBarycentricCoordinate.custom( //
+      HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HeBiinvariantCoordinates.AFFINE, //
-      HeInverseDistanceCoordinate.INSTANCE, //
+      HsBiinvariantCoordinate.linear(HeManifold.INSTANCE), //
+      HsBiinvariantCoordinate.smooth(HeManifold.INSTANCE), //
+      AFFINE, //
+      INSTANCE //
   };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(HeGroup.INSTANCE);
 
@@ -60,7 +71,7 @@ public class HeInverseDistanceCoordinateTest extends TestCase {
   }
 
   public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate barycentricCoordinate = Serialization.copy(HeBiinvariantCoordinates.AFFINE);
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
         int fn = n;
@@ -89,7 +100,7 @@ public class HeInverseDistanceCoordinateTest extends TestCase {
   }
 
   public void testAffineCenter() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate barycentricCoordinate = Serialization.copy(HeBiinvariantCoordinates.AFFINE);
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
         int fn = n;

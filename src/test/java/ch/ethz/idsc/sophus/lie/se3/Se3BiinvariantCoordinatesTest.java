@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -14,8 +15,8 @@ import junit.framework.TestCase;
 
 public class Se3BiinvariantCoordinatesTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      Se3BiinvariantCoordinates.LINEAR, //
-      Se3BiinvariantCoordinates.SMOOTH };
+      HsBiinvariantCoordinate.linear(Se3Manifold.INSTANCE), //
+      HsBiinvariantCoordinate.smooth(Se3Manifold.INSTANCE) };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);
 
   public void testRandom() {

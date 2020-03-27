@@ -1,10 +1,15 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -18,11 +23,14 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se2CoveringAffineCoordinatesTest extends TestCase {
+  private static final ProjectedCoordinate AD_INVAR = HsBarycentricCoordinate.custom( //
+      Se2CoveringManifold.INSTANCE, //
+      InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      Se2CoveringBiinvariantCoordinates.AFFINE, //
-      Se2CoveringBiinvariantCoordinates.LINEAR, //
-      Se2CoveringBiinvariantCoordinates.SMOOTH, //
-      Se2CoveringInverseDistanceCoordinates.AD_INVAR };
+      HsBarycentricCoordinate.affine(Se2CoveringManifold.INSTANCE), //
+      HsBiinvariantCoordinate.linear(Se2CoveringManifold.INSTANCE), //
+      HsBiinvariantCoordinate.smooth(Se2CoveringManifold.INSTANCE), //
+      AD_INVAR };
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();
@@ -62,53 +70,58 @@ public class Se2CoveringAffineCoordinatesTest extends TestCase {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
+    int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distributiox, n, 3);
-        Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights1 = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights1);
-        Tensor check1 = biinvariantMean.mean(points, weights1);
-        Chop._10.requireClose(check1, xya);
-        Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights1);
-        Chop._06.requireClose(xya, x_recreated);
-        Tensor shift = TestHelper.spawn_Se2C();
-        { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-          Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
-          Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
-          Chop._10.requireClose(xyalft, x_lft);
-          Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
-          Chop._10.requireClose(weights1, weightsL);
+      for (int n = 4; n < 10; ++n)
+        try {
+          Tensor points = RandomVariate.of(distributiox, n, 3);
+          Tensor xya = RandomVariate.of(distribution, 3);
+          Tensor weights1 = barycentricCoordinate.weights(points, xya);
+          AffineQ.require(weights1);
+          Tensor check1 = biinvariantMean.mean(points, weights1);
+          Chop._10.requireClose(check1, xya);
+          Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
+          Tensor x_recreated = biinvariantMean.mean(points, weights1);
+          Chop._06.requireClose(xya, x_recreated);
+          Tensor shift = TestHelper.spawn_Se2C();
+          { // invariant under left action
+            Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
+            Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
+            Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
+            Chop._10.requireClose(xyalft, x_lft);
+            Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
+            Chop._10.requireClose(weights1, weightsL);
+          }
+          { // invariant under right action
+            Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
+            Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
+            Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
+            Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
+            Chop._10.requireClose(xyargt, x_rgt);
+            Chop._10.requireClose(weights1, weightsR);
+          }
+          { // invariant under inversion
+            Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
+            Tensor xyainv = LIE_GROUP_OPS.invert(xya);
+            Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
+            Tensor check2 = biinvariantMean.mean(seqinv, weightsI);
+            Chop._10.requireClose(check2, xyainv);
+            AffineQ.require(weightsI);
+            Chop._10.requireClose(weights1, weightsI);
+          }
+        } catch (Exception exception) {
+          ++fails;
         }
-        { // invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-          Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
-          Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
-          Chop._10.requireClose(xyargt, x_rgt);
-          Chop._10.requireClose(weights1, weightsR);
-        }
-        { // invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-          Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
-          Tensor check2 = biinvariantMean.mean(seqinv, weightsI);
-          Chop._10.requireClose(check2, xyainv);
-          AffineQ.require(weightsI);
-          Chop._10.requireClose(weights1, weightsI);
-        }
-      }
+    assertTrue(fails <= 2);
   }
 
   public void testNullFail() {
-    BarycentricCoordinate barycentricCoordinate = Se2CoveringBiinvariantCoordinates.AFFINE;
-    try {
-      barycentricCoordinate.weights(null, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+      try {
+        barycentricCoordinate.weights(null, null);
+        fail();
+      } catch (Exception exception) {
+        // ---
+      }
   }
 }

@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
+import ch.ethz.idsc.sophus.math.win.InverseDiagonal;
 import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -22,7 +23,9 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
     return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
   }
 
-  /** @param flattenLogManifold
+  /** most common choice
+   * 
+   * @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate smooth(FlattenLogManifold flattenLogManifold) {
     return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
@@ -33,6 +36,18 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
    * @return */
   public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     return new HsBiinvariantCoordinate(flattenLogManifold, target);
+  }
+
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate diagonal_linear(FlattenLogManifold flattenLogManifold) {
+    return custom(flattenLogManifold, InverseDiagonal.of(RnNorm.INSTANCE));
+  }
+
+  /** @param flattenLogManifold
+   * @return */
+  public static ProjectedCoordinate diagonal_smooth(FlattenLogManifold flattenLogManifold) {
+    return custom(flattenLogManifold, InverseDiagonal.of(RnNormSquared.INSTANCE));
   }
 
   /***************************************************/

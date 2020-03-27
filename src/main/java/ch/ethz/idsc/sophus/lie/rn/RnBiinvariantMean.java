@@ -9,7 +9,6 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** Careful: The weights are not checked to be affine.
  * 
- * @see RnBarycenter
  * @see AffineQ
  * @see BiinvariantMeans */
 public enum RnBiinvariantMean implements BiinvariantMean {

@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.util.function.BinaryOperator;
 
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** The input parameters b0, b1 are real numbers and represent angles.
@@ -15,10 +15,12 @@ import ch.ethz.idsc.tensor.Scalar;
 /* package */ enum MidpointTangentApproximation implements BinaryOperator<Scalar> {
   INSTANCE;
 
+  private static final Scalar HALF = RealScalar.of(0.5);
+
   @Override
   public Scalar apply(Scalar b0, Scalar b1) {
     return MidpointTangentOrder2.INSTANCE.apply( //
-        b0.add(b1).multiply(RationalScalar.HALF), //
-        b0.subtract(b1).multiply(RationalScalar.HALF));
+        b0.add(b1).multiply(HALF), //
+        b0.subtract(b1).multiply(HALF));
   }
 }

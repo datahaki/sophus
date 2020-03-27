@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Remark:
- * Functionality is superseded by {@link Se2CoveringInverseDistanceCoordinates}
+ * Functionality is superseded by Se2CoveringInverseDistanceCoordinates
  * 
  * Se2CoveringBarycenter remains only for testing purpose.
  * 

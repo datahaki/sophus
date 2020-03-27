@@ -12,11 +12,16 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
 /** barycentric coordinates for inverse distance weights using distance measurements */
 public final class HsInverseDistanceCoordinate extends HsProjection implements ProjectedCoordinate {
-  private final BarycentricCoordinate barycentricCoordinate;
-
   /** @param flattenLogManifold
    * @param barycentricCoordinate that maps a sequence and a point to a vector, for instance the inverse distances */
-  public HsInverseDistanceCoordinate(FlattenLogManifold flattenLogManifold, BarycentricCoordinate target) {
+  public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, BarycentricCoordinate target) {
+    return new HsInverseDistanceCoordinate(flattenLogManifold, target);
+  }
+
+  /***************************************************/
+  private final BarycentricCoordinate barycentricCoordinate;
+
+  private HsInverseDistanceCoordinate(FlattenLogManifold flattenLogManifold, BarycentricCoordinate target) {
     super(flattenLogManifold);
     this.barycentricCoordinate = Objects.requireNonNull(target);
   }

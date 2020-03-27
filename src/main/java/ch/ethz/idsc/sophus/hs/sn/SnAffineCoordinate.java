@@ -29,9 +29,9 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public enum SnAffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 
-  @Override // from BarycentricCoordinates
-  public Tensor weights(Tensor sequence, Tensor weighted_mean) {
-    return of(sequence).apply(weighted_mean);
+  @Override // from BarycentricCoordinate
+  public Tensor weights(Tensor sequence, Tensor point) {
+    return of(sequence).apply(point);
   }
 
   /** @param sequence matrix with dimensions n x d

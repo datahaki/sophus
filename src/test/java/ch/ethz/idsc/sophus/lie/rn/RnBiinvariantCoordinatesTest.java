@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -10,13 +12,21 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class RnBiinvariantCoordinatesTest extends TestCase {
+  private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
+      HsBarycentricCoordinate.linear(RnManifold.INSTANCE), //
+      HsBarycentricCoordinate.smooth(RnManifold.INSTANCE), //
+      HsBarycentricCoordinate.affine(RnManifold.INSTANCE), //
+  };
+
   public void testColinear() {
     int d = 2;
     int n = 5;
-    Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
-    sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
-    Tensor weights = RnBiinvariantCoordinates.LINEAR.weights(sequence, Array.zeros(d));
-    assertEquals(sequence.length(), n + 1);
-    AffineQ.require(weights);
+    for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES) {
+      Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
+      sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
+      Tensor weights = projectedCoordinate.weights(sequence, Array.zeros(d));
+      assertEquals(sequence.length(), n + 1);
+      AffineQ.require(weights);
+    }
   }
 }

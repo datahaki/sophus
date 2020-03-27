@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.se3;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
@@ -12,18 +13,18 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se3InverseDistanceCoordinatesTest extends TestCase {
-  static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      Se3InverseDistanceCoordinates.LINEAR, //
-      Se3InverseDistanceCoordinates.SMOOTH //
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
+      HsBarycentricCoordinate.linear(Se3Manifold.INSTANCE), //
+      HsBarycentricCoordinate.smooth(Se3Manifold.INSTANCE) //
   };
 
   public void testRandom() {
     int fails = 0;
-    for (int count = 0; count < 10; ++count)
-      for (int n = 7; n < 13; ++n) {
-        Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
-        Tensor point = TestHelper.spawn_Se3();
-        for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+      for (int count = 0; count < 10; ++count)
+        for (int n = 7; n < 13; ++n) {
+          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
+          Tensor point = TestHelper.spawn_Se3();
           try {
             Tensor weights = barycentricCoordinate.weights(sequence, point);
             AffineQ.require(weights);
@@ -34,7 +35,7 @@ public class Se3InverseDistanceCoordinatesTest extends TestCase {
           } catch (Exception exception) {
             ++fails;
           }
-      }
+        }
     assertTrue(fails < 5);
   }
 }

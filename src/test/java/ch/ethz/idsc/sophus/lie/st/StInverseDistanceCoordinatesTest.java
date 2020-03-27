@@ -3,6 +3,9 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -16,10 +19,11 @@ import junit.framework.TestCase;
 
 public class StInverseDistanceCoordinatesTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
+  private static final ProjectedCoordinate AFFINE = HsBarycentricCoordinate.affine(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      // StInverseDistanceCoordinate.INSTANCE, //
-      // StInverseDistanceCoordinate.SQUARED, //
-      StBiinvariantCoordinates.AFFINE };
+      HsBiinvariantCoordinate.linear(StManifold.INSTANCE), //
+      HsBiinvariantCoordinate.smooth(StManifold.INSTANCE), //
+      AFFINE };
 
   public void testSimple() {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
@@ -58,7 +62,7 @@ public class StInverseDistanceCoordinatesTest extends TestCase {
   }
 
   public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate barycentricCoordinate = Serialization.copy(StBiinvariantCoordinates.AFFINE);
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     int fails = 0;
     for (int n = 1; n < 3; ++n)
       for (int length = n + 2; length < n + 8; ++length)
@@ -91,7 +95,7 @@ public class StInverseDistanceCoordinatesTest extends TestCase {
   }
 
   public void testAffineCenter() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate barycentricCoordinate = Serialization.copy(StBiinvariantCoordinates.AFFINE);
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = n + 2; length < n + 8; ++length) {
         int fn = n;

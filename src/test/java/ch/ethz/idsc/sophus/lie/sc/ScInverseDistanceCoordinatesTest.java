@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.sc;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.math.win.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -10,10 +13,13 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class ScInverseDistanceCoordinatesTest extends TestCase {
+  public static final ProjectedCoordinate INSTANCE = //
+      HsBarycentricCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
+
   public void testSimple() {
     Tensor sequence = Tensors.vector(2, 4).map(Tensors::of);
     Tensor target = Tensors.vector(1);
-    Tensor weights = ScInverseDistanceCoordinates.INSTANCE.weights(sequence, target);
+    Tensor weights = INSTANCE.weights(sequence, target);
     Tensor mean = ScBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._10.requireClose(target, mean);
   }
@@ -23,7 +29,7 @@ public class ScInverseDistanceCoordinatesTest extends TestCase {
       Distribution distribution = ExponentialDistribution.of(1);
       Tensor sequence = RandomVariate.of(distribution, n, 1);
       Tensor target = Tensors.vector(1);
-      Tensor weights = ScInverseDistanceCoordinates.INSTANCE.weights(sequence, target);
+      Tensor weights = INSTANCE.weights(sequence, target);
       Tensor mean = ScBiinvariantMean.INSTANCE.mean(sequence, weights);
       Chop._10.requireClose(target, mean);
     }

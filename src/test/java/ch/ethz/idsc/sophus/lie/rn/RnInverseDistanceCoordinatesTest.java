@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.win.AffineCoordinate;
@@ -21,10 +24,10 @@ import junit.framework.TestCase;
 
 public class RnInverseDistanceCoordinatesTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      RnInverseDistanceCoordinates.LINEAR, //
-      RnInverseDistanceCoordinates.SMOOTH, //
-      RnBiinvariantCoordinates.LINEAR, //
-      RnBiinvariantCoordinates.SMOOTH };
+      HsBarycentricCoordinate.linear(RnManifold.INSTANCE), //
+      HsBarycentricCoordinate.smooth(RnManifold.INSTANCE), //
+      HsBiinvariantCoordinate.linear(RnManifold.INSTANCE), //
+      HsBiinvariantCoordinate.smooth(RnManifold.INSTANCE) };
 
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
@@ -114,23 +117,25 @@ public class RnInverseDistanceCoordinatesTest extends TestCase {
   }
 
   public void testAffineSimple() {
+    ProjectedCoordinate projectedCoordinate = HsBarycentricCoordinate.affine(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 10; ++length) {
         Distribution distribution = NormalDistribution.standard();
         Tensor sequence = RandomVariate.of(distribution, length, dim);
         Tensor mean = RandomVariate.of(distribution, dim);
-        Tensor lhs = RnBiinvariantCoordinates.AFFINE.weights(sequence, mean);
+        Tensor lhs = projectedCoordinate.weights(sequence, mean);
         Tensor rhs = AffineCoordinate.INSTANCE.weights(sequence, mean);
         Chop._10.requireClose(lhs, rhs);
       }
   }
 
   public void testNullFail() {
-    try {
-      RnInverseDistanceCoordinates.LINEAR.weights(null, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+      try {
+        barycentricCoordinate.weights(null, null);
+        fail();
+      } catch (Exception exception) {
+        // ---
+      }
   }
 }

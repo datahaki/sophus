@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.Mahalanobis.Norm;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantCoordinates;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
@@ -44,7 +43,7 @@ public class MahalanobisTest extends TestCase {
     // Tensor weights2 =
     lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));
     // System.out.println(weights2);
-    Tensor affine = Se2CoveringBiinvariantCoordinates.AFFINE.weights(centralized, Tensors.vector(0, 0, 0));
+    Tensor affine = HsBarycentricCoordinate.affine(Se2CoveringManifold.INSTANCE).weights(centralized, Tensors.vector(0, 0, 0));
     Tolerance.CHOP.requireClose(weights, affine);
   }
 }
