@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * </pre>
  * 
  * @see InterpolatingPolynomial */
-/* package */ class LagrangeQuadratic implements ScalarUnaryOperator {
+public class LagrangeQuadratic implements ScalarUnaryOperator {
   private static final Scalar _3 = RealScalar.of(+3.0);
 
   /** The Lagrange interpolating polynomial has the following coefficients
@@ -44,9 +44,9 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   }
 
   /***************************************************/
-  public final Scalar c0;
-  public final Scalar c1;
-  public final Scalar c2;
+  final Scalar c0;
+  final Scalar c1;
+  final Scalar c2;
 
   private LagrangeQuadratic(Scalar c0, Scalar c1, Scalar c2) {
     this.c0 = c0;

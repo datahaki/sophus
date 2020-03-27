@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.sca.Imag;
 import ch.ethz.idsc.tensor.sca.Real;
 
 /** maps arc length to elements in SE(2) covering group */
-public enum FresnelCurve implements ScalarTensorFunction {
+public enum EulerSpiral implements ScalarTensorFunction {
   FUNCTION;
 
   @Override

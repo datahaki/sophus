@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.math.ScalarBinaryOperator;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
-/* package */ class MidpointTangentApproximation implements ScalarBinaryOperator {
+public class MidpointTangentApproximation implements ScalarBinaryOperator {
   private static final Scalar HALF = RealScalar.of(0.5);
   /** The input parameters b0, b1 are real numbers and represent angles.
    * The return value tilde f(b0, b1) is also a real number.

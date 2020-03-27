@@ -13,7 +13,10 @@ import ch.ethz.idsc.tensor.Scalar;
    * @param lagrangeQuadratic
    * @return */
   public static ClothoidIntegral interp(LagrangeQuadratic lagrangeQuadratic) {
-    return new ClothoidIntegral(PartialInterface.of(lagrangeQuadratic.c0, lagrangeQuadratic.c1, lagrangeQuadratic.c2));
+    return new ClothoidIntegral(PartialInterface.of( //
+        lagrangeQuadratic.c0, //
+        lagrangeQuadratic.c1, //
+        lagrangeQuadratic.c2));
   }
 
   /***************************************************/
