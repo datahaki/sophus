@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.clothoid;
 
+import java.lang.reflect.Modifier;
+
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.opt.Pi;
 import junit.framework.TestCase;
@@ -13,5 +15,9 @@ public class ClothoidImplTest extends TestCase {
     } catch (Exception exception) {
       // ---
     }
+  }
+
+  public void testFinal() {
+    assertTrue(Modifier.isFinal(ClothoidImpl.class.getModifiers()));
   }
 }

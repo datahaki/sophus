@@ -24,8 +24,8 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
     this.log = Objects.requireNonNull(log);
   }
 
-  @Override // from HsBiinvariantCoordinate
-  public final FlattenLog logAt(Tensor point) {
+  @Override // from FlattenLogManifold
+  public FlattenLog logAt(Tensor point) {
     LieGroupElement lieGroupElement = lieGroup.element(point).inverse();
     return q -> log.apply(lieGroupElement.combine(q));
   }

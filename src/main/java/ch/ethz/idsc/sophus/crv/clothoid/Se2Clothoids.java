@@ -5,7 +5,6 @@ import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2Group;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -13,7 +12,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * @param p vector of the form {px, py, pa}
  * @param q vector of the form {qx, qy, qa} */
-public enum Se2Clothoids implements GeodesicInterface {
+public enum Se2Clothoids implements ClothoidInterface {
   INSTANCE;
 
   @Override // from ParametricCurve

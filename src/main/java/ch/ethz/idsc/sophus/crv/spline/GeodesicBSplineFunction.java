@@ -71,7 +71,7 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
         control);
   }
 
-  // ---
+  /***************************************************/
   private final BinaryAverage binaryAverage;
   private final int degree;
   private final Tensor control;
