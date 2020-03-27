@@ -11,7 +11,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** samples a given window function uniformly in the interval [-1/2, +1/2] */
 public class UniformWindowSampler extends BaseWindowSampler {
-  /** @param windowFunction for evaluation in the interval [-1/2, +1/2] */
+  /** @param windowFunction for evaluation in the interval [-1/2, +1/2]
+   * @return */
   public static Function<Integer, Tensor> of(ScalarUnaryOperator windowFunction) {
     return MemoFunction.wrap(new UniformWindowSampler(windowFunction));
   }

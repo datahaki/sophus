@@ -23,15 +23,14 @@ import junit.framework.TestCase;
 
 public class InverseDistanceWeightingTest extends TestCase {
   public void testSimple() {
-    BarycentricCoordinate barycentricCoordinate = //
-        InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
-    Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
+    WeightingInterface weightingInterface = InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
+    Tensor weights = weightingInterface.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
 
   public void testExact() {
-    BarycentricCoordinate barycentricCoordinate = InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
-    Tensor weights = barycentricCoordinate.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
+    WeightingInterface weightingInterface = InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
+    Tensor weights = weightingInterface.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
     ExactTensorQ.require(weights);
     assertEquals(weights, UnitVector.of(2, 1));
   }
@@ -40,10 +39,9 @@ public class InverseDistanceWeightingTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
-      BarycentricCoordinate barycentricCoordinate = //
-          InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
+      WeightingInterface weightingInterface = InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
       for (int index = 0; index < p1.length(); ++index) {
-        Tensor q = barycentricCoordinate.weights(p1, p1.get(index));
+        Tensor q = weightingInterface.weights(p1, p1.get(index));
         Chop._10.requireClose(q, UnitVector.of(n, index));
       }
     }
@@ -55,9 +53,8 @@ public class InverseDistanceWeightingTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
         Tensor x = RandomVariate.of(distribution, d);
-        BarycentricCoordinate barycentricCoordinate = //
-            Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
-        Tensor weights = barycentricCoordinate.weights(points, x);
+        WeightingInterface weightingInterface = Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
+        Tensor weights = weightingInterface.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       }
   }

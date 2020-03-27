@@ -2,8 +2,6 @@
 package ch.ethz.idsc.sophus.math.win;
 
 import ch.ethz.idsc.sophus.lie.BiinvariantMean;
-import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.tensor.Tensor;
 
 /** Inverse Distance Coordinates are generalized barycentric coordinates with the properties
  * partition of unity
@@ -25,10 +23,6 @@ import ch.ethz.idsc.tensor.Tensor;
  * given anchor points and a target point."
  * 
  * @see BiinvariantMean */
-public interface BarycentricCoordinate {
-  /** @param sequence
-   * @param point
-   * @return vector of affine weights corresponding to given point
-   * @see AffineQ */
-  Tensor weights(Tensor sequence, Tensor point);
+public interface BarycentricCoordinate extends WeightingInterface {
+  // ---
 }

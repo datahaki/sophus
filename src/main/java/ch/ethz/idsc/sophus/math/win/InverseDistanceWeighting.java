@@ -7,26 +7,28 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMetric;
-import ch.ethz.idsc.tensor.NumberQ;
+import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 
-/** Careful: Inverse distance weights fall not in the category of generalized barycentric
- * coordinates, because Inverse Distance Weighting does not reproduce linear functions!
+/** Inverse Distance Weighting does not reproduce linear functions in general. Therefore,
+ * Inverse distance weights <b>do not</b> fall in the category of generalized barycentric
+ * coordinates.
  * 
- * Reference:
+ * <p>Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
-public class InverseDistanceWeighting implements BarycentricCoordinate, Serializable {
+public class InverseDistanceWeighting implements WeightingInterface, Serializable {
   /** @param tensorMetric non-null, for instance {@link RnMetric#INSTANCE}
    * @return */
-  public static BarycentricCoordinate of(TensorMetric tensorMetric) {
+  public static WeightingInterface of(TensorMetric tensorMetric) {
     return new InverseDistanceWeighting(tensorMetric);
   }
 
+  /***************************************************/
   private final TensorMetric tensorMetric;
 
   private InverseDistanceWeighting(TensorMetric tensorMetric) {
@@ -42,7 +44,7 @@ public class InverseDistanceWeighting implements BarycentricCoordinate, Serializ
       if (Scalars.isZero(distance))
         return UnitVector.of(sequence.length(), count);
       Scalar reciprocal = distance.reciprocal();
-      if (!NumberQ.of(reciprocal))
+      if (!DeterminateScalarQ.of(reciprocal))
         return UnitVector.of(sequence.length(), count);
       weights.append(reciprocal);
       ++count;

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorNorm;
-import ch.ethz.idsc.tensor.NumberQ;
+import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -35,7 +35,7 @@ public class InverseNorm implements TensorUnaryOperator {
       if (Scalars.isZero(norm))
         return UnitVector.of(tensor.length(), index);
       Scalar reciprocal = norm.reciprocal();
-      if (!NumberQ.of(reciprocal))
+      if (!DeterminateScalarQ.of(reciprocal))
         return UnitVector.of(tensor.length(), index);
       weights.append(reciprocal);
       ++index;
