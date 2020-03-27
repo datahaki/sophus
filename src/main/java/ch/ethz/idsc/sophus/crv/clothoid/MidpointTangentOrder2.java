@@ -1,14 +1,13 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import java.util.function.BinaryOperator;
-
+import ch.ethz.idsc.sophus.math.ScalarBinaryOperator;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** function is odd in s1
  * function is even in s2 */
-/* package */ enum MidpointTangentOrder2 implements BinaryOperator<Scalar> {
+/* package */ enum MidpointTangentOrder2 implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar N1_2 = RealScalar.of(-0.5);

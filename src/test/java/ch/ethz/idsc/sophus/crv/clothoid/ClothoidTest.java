@@ -3,6 +3,8 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.lie.so2.So2;
+import ch.ethz.idsc.sophus.lie.so2.So2Metric;
 import ch.ethz.idsc.sophus.math.HeadTailInterface;
 import ch.ethz.idsc.tensor.NumberQ;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -104,8 +106,10 @@ public class ClothoidTest extends TestCase {
   public void testQuantity() {
     Clothoid clothoid = Se2Clothoids.INSTANCE.curve(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{7[m], -2[m], 4}"));
     Tensor tensor = clothoid.apply(RealScalar.of(0.3));
-    System.out.println(tensor);
-    Chop._08.requireClose(tensor, Tensors.fromString("{0.8746294996808981[m], -0.3733524277684044[m], -0.4007683806054648}"));
+    {
+      Chop._08.requireClose(tensor.extract(0, 2), Tensors.fromString("{0.8746294996808981[m], -0.3733524277684044[m]}"));
+      Chop._08.requireZero(So2Metric.INSTANCE.distance(tensor.get(2), RealScalar.of(-0.4007683806054648)));
+    }
     Chop._10.requireClose(clothoid.length(), Quantity.of(11.538342088739874, "m^1.0"));
     LagrangeQuadraticD curvature = clothoid.curvature();
     Chop._12.requireClose(curvature.head(), curvature.apply(RealScalar.ZERO));
@@ -164,7 +168,8 @@ public class ClothoidTest extends TestCase {
     for (Tensor angle : angles) {
       Clothoid clothoid = Se2Clothoids.INSTANCE.curve(pxy.append(angle), qxy.append(angle));
       Tensor r = clothoid.apply(RationalScalar.HALF);
-      Chop._08.requireClose(r, Tensors.vector(0.5, 0, 0));
+      Chop._08.requireClose(r.extract(0, 2), Tensors.vector(0.5, 0));
+      Chop._08.requireZero(So2.MOD.apply(r.Get(2)));
     }
   }
 
