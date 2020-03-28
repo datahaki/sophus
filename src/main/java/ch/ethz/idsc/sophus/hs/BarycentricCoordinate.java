@@ -1,7 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 
 /** Inverse Distance Coordinates are generalized barycentric coordinates with the properties
  * partition of unity
@@ -23,6 +23,7 @@ import ch.ethz.idsc.sophus.lie.BiinvariantMean;
  * given anchor points and a target point."
  * 
  * @see BiinvariantMean */
+@FunctionalInterface
 public interface BarycentricCoordinate extends WeightingInterface {
   // ---
 }

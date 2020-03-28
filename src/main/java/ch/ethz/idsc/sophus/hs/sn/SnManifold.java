@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.lie.FlattenLog;
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 
 public enum SnManifold implements FlattenLogManifold {

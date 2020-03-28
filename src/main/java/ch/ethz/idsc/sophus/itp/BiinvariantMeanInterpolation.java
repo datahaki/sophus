@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.itp;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;

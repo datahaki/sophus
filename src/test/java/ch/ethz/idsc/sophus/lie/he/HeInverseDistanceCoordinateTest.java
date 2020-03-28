@@ -3,13 +3,13 @@ package ch.ethz.idsc.sophus.lie.he;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;

@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
 import ch.ethz.idsc.sophus.srf.SurfaceMesh;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -30,7 +30,7 @@ public class LinearMeshRefinement implements SurfaceMeshRefinement, Serializable
     return new LinearMeshRefinement(Objects.requireNonNull(biinvariantMean));
   }
 
-  // ---
+  /***************************************************/
   private final BiinvariantMean biinvariantMean;
 
   /* package */ LinearMeshRefinement(BiinvariantMean biinvariantMean) {

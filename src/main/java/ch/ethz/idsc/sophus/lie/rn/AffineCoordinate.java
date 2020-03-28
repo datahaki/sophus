@@ -1,6 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -28,7 +29,7 @@ import ch.ethz.idsc.tensor.red.Mean;
 public enum AffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 
-  @Override // from BarycentricCoordinates
+  @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     return of(sequence).apply(point);
   }

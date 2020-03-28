@@ -13,14 +13,14 @@ import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.sca.Cos;
 
-public class DooSabinWeights implements Function<Integer, Tensor>, Serializable {
+/* package */ class DooSabinWeights implements Function<Integer, Tensor>, Serializable {
   private static final Function<Integer, Tensor> INSTANCE = MemoFunction.wrap(new DooSabinWeights());
 
   public static Function<Integer, Tensor> instance() {
     return INSTANCE;
   }
 
-  // ---
+  /***************************************************/
   private DooSabinWeights() {
     // ---
   }

@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;

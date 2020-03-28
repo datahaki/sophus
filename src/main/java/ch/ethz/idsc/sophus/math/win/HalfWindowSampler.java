@@ -17,7 +17,7 @@ public class HalfWindowSampler extends BaseWindowSampler {
     return MemoFunction.wrap(new HalfWindowSampler(windowFunction));
   }
 
-  // ---
+  /***************************************************/
   private HalfWindowSampler(ScalarUnaryOperator windowFunction) {
     super(windowFunction);
   }

@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;

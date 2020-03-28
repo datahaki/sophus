@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.itp;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;

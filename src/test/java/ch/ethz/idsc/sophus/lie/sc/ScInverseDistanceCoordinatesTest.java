@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.sc;
 
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.pdf.Distribution;

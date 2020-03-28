@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import ch.ethz.idsc.java.util.MemoFunction;
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;

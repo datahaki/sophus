@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.math.id;
 
 import java.util.Objects;
 
@@ -13,16 +13,17 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class InverseNorm implements TensorUnaryOperator {
-  /** @param tensorMetric non-null */
+public class InverseDiagonal implements TensorUnaryOperator {
+  /** @param tensorMetric non-null
+   * @return */
   public static TensorUnaryOperator of(TensorNorm tensorNorm) {
-    return new InverseNorm(Objects.requireNonNull(tensorNorm));
+    return new InverseDiagonal(Objects.requireNonNull(tensorNorm));
   }
 
   /***************************************************/
   private final TensorNorm tensorNorm;
 
-  private InverseNorm(TensorNorm tensorNorm) {
+  private InverseDiagonal(TensorNorm tensorNorm) {
     this.tensorNorm = tensorNorm;
   }
 
@@ -31,7 +32,7 @@ public class InverseNorm implements TensorUnaryOperator {
     Tensor weights = Tensors.reserve(tensor.length());
     int index = 0;
     for (Tensor p : tensor) {
-      Scalar norm = tensorNorm.norm(p);
+      Scalar norm = tensorNorm.norm(p.extract(index, index + 1));
       if (Scalars.isZero(norm))
         return UnitVector.of(tensor.length(), index);
       Scalar reciprocal = norm.reciprocal();

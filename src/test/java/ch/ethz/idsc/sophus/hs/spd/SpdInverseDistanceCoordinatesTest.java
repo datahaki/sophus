@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.sca.Chop;

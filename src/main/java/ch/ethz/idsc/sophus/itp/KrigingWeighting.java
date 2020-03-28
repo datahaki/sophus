@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.itp;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.math.win.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 

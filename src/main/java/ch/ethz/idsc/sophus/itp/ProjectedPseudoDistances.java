@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.itp;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.ProjectionInterface;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
-import ch.ethz.idsc.sophus.math.win.ProjectionInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;

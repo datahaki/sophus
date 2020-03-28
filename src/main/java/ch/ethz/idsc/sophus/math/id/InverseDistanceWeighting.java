@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.math.id;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMetric;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;

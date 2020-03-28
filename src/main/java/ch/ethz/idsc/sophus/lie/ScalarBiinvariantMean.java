@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 

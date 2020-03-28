@@ -1,7 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.st;
 
-import ch.ethz.idsc.sophus.lie.FlattenLog;
+import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.math.Expc;
 import ch.ethz.idsc.sophus.math.Logc;

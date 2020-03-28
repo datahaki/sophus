@@ -1,10 +1,11 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.math.id;
 
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.lie.rn.RnMetricSquared;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;

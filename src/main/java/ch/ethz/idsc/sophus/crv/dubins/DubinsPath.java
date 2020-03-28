@@ -93,7 +93,7 @@ public class DubinsPath implements Serializable {
             .reduce(Scalar::add).get());
   }
 
-  // ---
+  /***************************************************/
   private final Type type;
   private final Scalar radius;
   private final Tensor segLength;

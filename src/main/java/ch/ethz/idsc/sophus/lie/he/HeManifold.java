@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
 
 public enum HeManifold {

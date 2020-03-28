@@ -3,12 +3,11 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.NormalizeAffine;
-import ch.ethz.idsc.sophus.math.win.InverseDiagonal;
-import ch.ethz.idsc.sophus.math.win.InverseNorm;
+import ch.ethz.idsc.sophus.math.id.InverseDiagonal;
+import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;

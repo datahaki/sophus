@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.srf.SurfaceMesh;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Range;
@@ -22,7 +22,7 @@ public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
     return new DooSabinRefinement(Objects.requireNonNull(biinvariantMean));
   }
 
-  // ---
+  /***************************************************/
   private final BiinvariantMean biinvariantMean;
 
   private DooSabinRefinement(BiinvariantMean biinvariantMean) {

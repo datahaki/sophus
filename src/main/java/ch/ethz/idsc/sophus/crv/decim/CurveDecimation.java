@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.decim;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;

@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Any m from the group that satisfies the equation below is refers to as

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.ArgMax;

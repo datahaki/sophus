@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.se2;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;

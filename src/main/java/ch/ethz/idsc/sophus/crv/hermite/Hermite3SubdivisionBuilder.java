@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;

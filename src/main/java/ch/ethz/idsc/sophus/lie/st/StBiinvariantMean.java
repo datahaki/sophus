@@ -1,7 +1,7 @@
 // code by ob, jph
 package ch.ethz.idsc.sophus.lie.st;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.sc.ScBiinvariantMean;
 import ch.ethz.idsc.sophus.math.Logc;

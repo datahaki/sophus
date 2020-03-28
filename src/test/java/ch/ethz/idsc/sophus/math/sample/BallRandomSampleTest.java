@@ -67,7 +67,6 @@ public class BallRandomSampleTest extends TestCase {
     Tensor center = Tensors.vector(10, 20, 3);
     Scalar radius = RealScalar.of(0.0);
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(center, radius);
-    assertTrue(randomSampleInterface instanceof ConstantRandomSample);
     assertEquals(randomSampleInterface.randomSample(RANDOM), center);
   }
 

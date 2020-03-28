@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
 
 public enum Se2CoveringManifold {

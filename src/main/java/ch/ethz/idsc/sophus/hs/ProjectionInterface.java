@@ -1,10 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** @see ProjectedCoordinate */
+@FunctionalInterface
 public interface ProjectionInterface {
   /** projection matrix defines a projection of a tangent vector at given point to a vector in
    * the subspace of the tangent space at given point. The subspace depends on the given sequence.

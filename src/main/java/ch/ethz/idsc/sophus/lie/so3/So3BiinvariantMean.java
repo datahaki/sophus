@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanImplicit;
 import ch.ethz.idsc.tensor.Tensor;
 

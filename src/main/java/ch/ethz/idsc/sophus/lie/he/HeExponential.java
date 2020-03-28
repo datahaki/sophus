@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.lie.FlattenLog;
+import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;

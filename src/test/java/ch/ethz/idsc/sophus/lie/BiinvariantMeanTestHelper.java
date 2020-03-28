@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie;
 
 import java.util.stream.IntStream;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 
 public enum BiinvariantMeanTestHelper {

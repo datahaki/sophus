@@ -7,9 +7,7 @@ import java.util.Random;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -21,8 +19,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
 /** uniform random samples from the interior of a n-dimensional sphere
  * 
  * implementation supports the use of Quantity
- * 
- * implementation generalizes {@link UniformRandomSample} and {@link DiskRandomSample}
  * 
  * <p>Reference:
  * "Spheres and Rotations" in NR, 2007
@@ -38,22 +34,9 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
    * @throws Exception if center is not a vector
    * @throws Exception if radius is negative */
   public static RandomSampleInterface of(Tensor center, Scalar radius) {
-    Sign.requirePositiveOrZero(radius);
-    switch (center.length()) {
-    case 0:
-      throw TensorRuntimeException.of(center, radius);
-    case 1: {
-      Scalar middle = center.Get(0);
-      Distribution distribution = UniformDistribution.of( //
-          middle.subtract(radius), //
-          middle.add(radius));
-      return new UniformRandomSample(distribution, 1);
-    }
-    }
-    VectorQ.require(center);
-    return Scalars.isZero(radius) //
-        ? new ConstantRandomSample(center)
-        : new BallRandomSample(center, radius);
+    return new BallRandomSample( //
+        VectorQ.require(center), //
+        Sign.requirePositiveOrZero(radius));
   }
 
   /***************************************************/

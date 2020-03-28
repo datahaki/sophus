@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.subdiv;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;

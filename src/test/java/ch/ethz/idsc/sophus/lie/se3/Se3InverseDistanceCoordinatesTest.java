@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.lie.se3;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;

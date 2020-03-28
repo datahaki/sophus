@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.hermite;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.math.TensorIteration;

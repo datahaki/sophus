@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.itp;
 
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.hs.HsProjection;
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;

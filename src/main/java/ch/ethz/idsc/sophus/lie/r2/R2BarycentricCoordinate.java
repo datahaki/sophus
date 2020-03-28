@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -44,7 +44,7 @@ public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializa
    * @param x vector of length 2
    * @return vector of length n
    * @throws Exception if polygon is empty */
-  @Override // from BarycentricCoordinates
+  @Override // from BarycentricCoordinate
   public Tensor weights(Tensor polygon, Tensor x) {
     int length = polygon.length();
     Tensor[] auxs = new Tensor[length];

@@ -1,13 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.sophus.math.win.AffineCoordinate;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;

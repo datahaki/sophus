@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.lie.se2c;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;

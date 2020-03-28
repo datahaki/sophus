@@ -22,7 +22,7 @@ public class BoxRandomSample implements RandomSampleInterface, Serializable {
     return new BoxRandomSample(min, max);
   }
 
-  // ---
+  /***************************************************/
   private final List<Distribution> distributions = new LinkedList<>();
 
   private BoxRandomSample(Tensor min, Tensor max) {

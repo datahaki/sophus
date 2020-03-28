@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.lie.FlattenLog;
+import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;

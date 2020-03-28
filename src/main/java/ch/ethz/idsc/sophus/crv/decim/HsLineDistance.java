@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.crv.decim;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.FlattenLog;
-import ch.ethz.idsc.sophus.lie.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

@@ -1,10 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.win;
+package ch.ethz.idsc.sophus.math;
 
-import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 
-/** weighting without linear reproduction property, otherwise use {@link BarycentricCoordinate} */
+/** weighting without linear reproduction property, otherwise use BarycentricCoordinate */
+@FunctionalInterface
 public interface WeightingInterface {
   /** @param sequence
    * @param point

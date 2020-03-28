@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Phong mean with 1-step correction towards {@link SnMean} */

@@ -3,11 +3,11 @@ package ch.ethz.idsc.sophus.lie.r2;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.BoxRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
-import ch.ethz.idsc.sophus.math.win.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

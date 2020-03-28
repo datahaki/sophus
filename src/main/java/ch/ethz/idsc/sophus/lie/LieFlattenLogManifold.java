@@ -4,6 +4,8 @@ package ch.ethz.idsc.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
