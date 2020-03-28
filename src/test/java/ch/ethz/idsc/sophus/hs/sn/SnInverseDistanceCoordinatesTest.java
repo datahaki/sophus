@@ -34,7 +34,7 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
             Tensor weights = projectedCoordinate.weights(sequence, mean);
             VectorQ.requireLength(weights, n);
             AffineQ.require(weights);
-            Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);
+            Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
             Chop._12.requireAllZero(evaluate);
             Tensor point = SnMean.INSTANCE.mean(sequence, weights);
             Chop._12.requireClose(mean, point);
@@ -55,7 +55,7 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
             Tensor weights = projectedCoordinate.weights(sequence, mean);
             VectorQ.requireLength(weights, n);
             AffineQ.require(weights);
-            Tensor evaluate = SnMean.INSTANCE.defect(sequence, weights, mean);
+            Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
             Chop._06.requireAllZero(evaluate);
             Tensor point = SnMean.INSTANCE.mean(sequence, weights);
             Chop._06.requireClose(mean, point);

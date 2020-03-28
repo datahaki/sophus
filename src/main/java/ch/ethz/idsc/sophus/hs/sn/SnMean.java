@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -15,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * Reference:
  * "Spherical averages and applications to spherical splines and interpolation"
  * by S. R. Buss, J. P. Fillmore, 2001 */
-public class SnMean implements BiinvariantMean, MeanDefect {
+public class SnMean implements BiinvariantMean {
   private static final int MAX_ITERATIONS = 100;
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   /** high-precision for testing */
@@ -32,7 +31,7 @@ public class SnMean implements BiinvariantMean, MeanDefect {
     Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights); // initial guess
     int count = 0;
     while (++count < MAX_ITERATIONS) {
-      Tensor log = defect(sequence, weights, mean);
+      Tensor log = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
       if (chop.allZero(Norm._2.ofVector(log)))
         return NORMALIZE.apply(mean);
       mean = new SnExp(mean).exp(log);
@@ -43,10 +42,5 @@ public class SnMean implements BiinvariantMean, MeanDefect {
     // TensorRuntimeException.of(sequence, weights).printStackTrace();
     // throw new RuntimeException("iteration limit reached");
     return NORMALIZE.apply(mean);
-  }
-
-  @Override
-  public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
-    return weights.dot(Tensor.of(sequence.stream().map(new SnExp(mean)::log)));
   }
 }

@@ -1,8 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -19,6 +21,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(So3Manifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(So3Manifold.INSTANCE) };
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
 
   public void testSimple() {
     Tensor g1 = So3Exponential.INSTANCE.exp(Tensors.vector(0.2, 0.3, 0.4));
@@ -29,7 +32,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
     Tensor mean = So3Exponential.INSTANCE.exp(Tensors.vector(0.4, 0.2, 0.3));
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES) {
       Tensor weights = projectedCoordinate.weights(sequence, mean);
-      Tensor defect = So3BiinvariantMeanDefect.INSTANCE.defect(sequence, weights, mean);
+      Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
       Chop._10.requireAllZero(defect);
     }
   }

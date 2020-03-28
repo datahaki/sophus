@@ -1,10 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Any m from the group that satisfies the equation below is refers to as
@@ -24,20 +23,20 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
 public class BiinvariantMeanDefect implements MeanDefect, Serializable {
-  private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  /** @param flattenLogManifold
+   * @return */
+  public static MeanDefect of(FlattenLogManifold flattenLogManifold) {
+    return new BiinvariantMeanDefect(Objects.requireNonNull(flattenLogManifold));
+  }
 
-  /** @param lieGroup
-   * @param lieExponential */
-  public BiinvariantMeanDefect(LieGroup lieGroup, LieExponential lieExponential) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.lieExponential = Objects.requireNonNull(lieExponential);
+  private final FlattenLogManifold flattenLogManifold;
+
+  private BiinvariantMeanDefect(FlattenLogManifold flattenLogManifold) {
+    this.flattenLogManifold = flattenLogManifold;
   }
 
   @Override // from MeanDefect
   public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
-    return weights.dot(Tensor.of(sequence.stream() //
-        .map(lieGroup.element(mean).inverse()::combine) //
-        .map(lieExponential::log)));
+    return weights.dot(Tensor.of(sequence.stream().map(flattenLogManifold.logAt(mean)::flattenLog)));
   }
 }

@@ -11,6 +11,6 @@ public enum SnFastMean implements BiinvariantMean {
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights);
-    return new SnExp(mean).exp(SnMean.INSTANCE.defect(sequence, weights, mean));
+    return new SnExp(mean).exp(SnMeanDefect.INSTANCE.defect(sequence, weights, mean));
   }
 }

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -35,7 +36,7 @@ public class BiinvariantMeanImplicit implements Serializable {
   public BiinvariantMeanImplicit(LieGroup lieGroup, LieExponential lieExponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.lieExponential = Objects.requireNonNull(lieExponential);
-    meanDefect = new BiinvariantMeanDefect(lieGroup, lieExponential);
+    meanDefect = BiinvariantMeanDefect.of(LieFlattenLogManifold.of(lieGroup, lieExponential::log));
   }
 
   /** @param sequence

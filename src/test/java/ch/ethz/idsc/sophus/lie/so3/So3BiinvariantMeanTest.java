@@ -1,7 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,13 +19,14 @@ public class So3BiinvariantMeanTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(So3Manifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(So3Manifold.INSTANCE) };
+  public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //
         So3Exponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         So3Exponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
         So3Exponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = So3BiinvariantMeanDefect.INSTANCE.defect( //
+    Tensor log = INSTANCE.defect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), So3Exponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)));
     Chop._10.requireAllZero(log);
   }

@@ -3,7 +3,9 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.BiinvariantMeanImplicit;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -24,11 +26,12 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
       HsBarycentricCoordinate.smooth(RnManifold.INSTANCE) };
 
   public void testSimple() {
+    MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.INSTANCE);
     Tensor sequence = Tensors.of( //
         RnExponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = RnBiinvariantMeanDefect.INSTANCE.defect( //
+    Tensor log = meanDefect.defect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)));
     Chop._10.requireAllZero(log);
   }
