@@ -7,13 +7,14 @@ import ch.ethz.idsc.sophus.math.MidpointInterface;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 
-public class LieMidpointInterface implements MidpointInterface {
+// TODO can use HsMidpoint + EXP
+public class LieMidpoint implements MidpointInterface {
   private final LieGroup lieGroup;
   private final LieExponential lieExponential;
 
   /** @param lieGroup non-null
    * @param lieExponential non-null */
-  public LieMidpointInterface(LieGroup lieGroup, LieExponential lieExponential) {
+  public LieMidpoint(LieGroup lieGroup, LieExponential lieExponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }

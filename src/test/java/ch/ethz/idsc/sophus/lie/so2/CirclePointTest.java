@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so2;
 
+import java.lang.reflect.Modifier;
 import java.util.Optional;
 
 import ch.ethz.idsc.tensor.ExactScalarQ;
@@ -14,6 +15,10 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class CirclePointTest extends TestCase {
+  public void testNonPublic() {
+    assertFalse(Modifier.isPublic(CirclePoint.class.getModifiers()));
+  }
+
   public void testExact() {
     for (int count = 0; count < 12; ++count) {
       Scalar scalar = RationalScalar.of(count, 12);

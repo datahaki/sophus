@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeans;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeans;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;

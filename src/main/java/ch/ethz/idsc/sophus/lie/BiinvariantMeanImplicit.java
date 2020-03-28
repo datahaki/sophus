@@ -23,6 +23,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.19-21, 2012 */
+// TODO unify with SnMean and SpdMean ! also LieMidpoint
 public class BiinvariantMeanImplicit implements Serializable {
   private static final int MAX_ITERATIONS = 100;
   private static final Chop CHOP = Chop._12;

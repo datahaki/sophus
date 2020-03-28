@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so2;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;

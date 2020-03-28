@@ -8,10 +8,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
 
-public class LieMidpointInterfaceTest extends TestCase {
+public class LieMidpointTest extends TestCase {
   public void testSimple() {
-    LieMidpointInterface lieMidpointInterface = //
-        new LieMidpointInterface(RnGroup.INSTANCE, RnExponential.INSTANCE);
+    LieMidpoint lieMidpointInterface = //
+        new LieMidpoint(RnGroup.INSTANCE, RnExponential.INSTANCE);
     Tensor tensor = lieMidpointInterface.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
     ExactTensorQ.require(tensor);
     assertEquals(tensor, Tensors.vector(3, 1, 9));
@@ -19,7 +19,7 @@ public class LieMidpointInterfaceTest extends TestCase {
 
   public void testFailNull1() {
     try {
-      new LieMidpointInterface(null, RnExponential.INSTANCE);
+      new LieMidpoint(null, RnExponential.INSTANCE);
       fail();
     } catch (Exception exception) {
       // ---
@@ -28,7 +28,7 @@ public class LieMidpointInterfaceTest extends TestCase {
 
   public void testFailNull2() {
     try {
-      new LieMidpointInterface(RnGroup.INSTANCE, null);
+      new LieMidpoint(RnGroup.INSTANCE, null);
       fail();
     } catch (Exception exception) {
       // ---

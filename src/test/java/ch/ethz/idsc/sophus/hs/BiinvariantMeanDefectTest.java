@@ -1,7 +1,6 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import junit.framework.TestCase;
 
 public class BiinvariantMeanDefectTest extends TestCase {

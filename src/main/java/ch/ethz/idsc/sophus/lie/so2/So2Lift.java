@@ -14,6 +14,7 @@ public class So2Lift implements ScalarUnaryOperator {
     return Tensor.of(vector.stream().map(Scalar.class::cast).map(new So2Lift()));
   }
 
+  /***************************************************/
   private Scalar prev = null;
 
   @Override

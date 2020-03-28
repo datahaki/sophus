@@ -6,9 +6,9 @@ import junit.framework.TestCase;
 
 public class So2HelperTest extends TestCase {
   public void testSimple() {
-    So2Helper.rangeQ(Tensors.vector(1, 2, 3));
+    StaticHelper.rangeQ(Tensors.vector(1, 2, 3));
     try {
-      So2Helper.rangeQ(Tensors.vector(1, 2, 7));
+      StaticHelper.rangeQ(Tensors.vector(1, 2, 7));
       fail();
     } catch (Exception exception) {
       // ---

@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se2;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeans;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2FilterBiinvariantMean;

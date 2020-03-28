@@ -1,9 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
 import java.util.stream.IntStream;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 
 public enum BiinvariantMeanTestHelper {

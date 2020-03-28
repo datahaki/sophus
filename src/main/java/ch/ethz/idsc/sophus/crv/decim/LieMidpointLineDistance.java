@@ -6,15 +6,15 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.crv.decim.LieGroupLineDistance.NormImpl;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.lie.LieMidpointInterface;
+import ch.ethz.idsc.sophus.lie.LieMidpoint;
 import ch.ethz.idsc.tensor.Tensor;
 
 public class LieMidpointLineDistance implements LineDistance, Serializable {
-  private final LieMidpointInterface lieMidpointInterface;
+  private final LieMidpoint lieMidpointInterface;
   private final LieGroupLineDistance lieGroupLineDistance;
 
   public LieMidpointLineDistance(LieGroup lieGroup, LieExponential lieExponential) {
-    lieMidpointInterface = new LieMidpointInterface(lieGroup, lieExponential);
+    lieMidpointInterface = new LieMidpoint(lieGroup, lieExponential);
     lieGroupLineDistance = new LieGroupLineDistance(lieGroup, lieExponential::log);
   }
 

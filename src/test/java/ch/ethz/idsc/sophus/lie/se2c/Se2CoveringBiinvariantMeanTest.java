@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;

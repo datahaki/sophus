@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.crv.subdiv;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeans;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeans;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;

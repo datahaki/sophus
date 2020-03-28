@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

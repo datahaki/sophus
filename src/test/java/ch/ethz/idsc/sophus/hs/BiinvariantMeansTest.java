@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
 import ch.ethz.idsc.sophus.lie.so2c.So2CoveringBiinvariantMean;
 import ch.ethz.idsc.tensor.Tensors;
