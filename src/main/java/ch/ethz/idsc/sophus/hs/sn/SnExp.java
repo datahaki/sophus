@@ -5,17 +5,14 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.NormalizeUnlessZero;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.Projection;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.red.VectorAngle;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
@@ -32,40 +29,33 @@ import ch.ethz.idsc.tensor.sca.Sinc;
 public class SnExp implements LieExponential, FlattenLog, Serializable {
   private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Norm._2);
   // ---
-  private final Tensor point;
+  private final Tensor x;
   private final TensorUnaryOperator projection;
 
-  /** @param point on S^n
+  /** @param x on S^n
    * @throws Exception if p is not a vector of Euclidean norm 1 */
-  public SnExp(Tensor point) {
-    this.point = requireNorm1(point);
-    projection = Projection.on(point);
-    if (point.length() < 2)
-      throw TensorRuntimeException.of(point);
+  public SnExp(Tensor x) {
+    this.x = StaticHelper.requirePoint(x);
+    projection = Projection.on(x);
+    if (x.length() < 2)
+      throw TensorRuntimeException.of(x);
   }
 
   @Override // from LieExponential
-  public Tensor exp(Tensor x) {
-    // x is orthogonal to base point
-    Chop._07.requireZero(point.dot(x).Get()); // errors of up to 1E-9 are expected
-    Scalar norm = Norm._2.ofVector(x);
-    return point.multiply(Cos.FUNCTION.apply(norm)).add(x.multiply(Sinc.FUNCTION.apply(norm)));
+  public Tensor exp(Tensor v) {
+    StaticHelper.requireTangent(x, v);
+    Scalar vn = Norm._2.ofVector(v);
+    return x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
   }
 
   @Override // from LieExponential
-  public Tensor log(Tensor q) {
-    requireNorm1(q);
-    return NORMALIZE.apply(q.subtract(projection.apply(q))).multiply(VectorAngle.of(point, q).get());
+  public Tensor log(Tensor y) {
+    StaticHelper.requirePoint(y);
+    return NORMALIZE.apply(y.subtract(projection.apply(y))).multiply(VectorAngle.of(x, y).get());
   }
 
   @Override
-  public Tensor flattenLog(Tensor q) {
-    return log(q);
-  }
-
-  // helper function
-  private static Tensor requireNorm1(Tensor g) {
-    Tolerance.CHOP.requireZero(Norm._2.ofVector(g).subtract(RealScalar.ONE));
-    return g;
+  public Tensor flattenLog(Tensor y) {
+    return log(y);
   }
 }

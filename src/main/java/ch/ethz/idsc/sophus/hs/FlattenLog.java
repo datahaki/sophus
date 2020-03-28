@@ -8,4 +8,5 @@ public interface FlattenLog {
   /** @param q
    * @return */
   Tensor flattenLog(Tensor q);
+  // TODO flattenExp
 }
