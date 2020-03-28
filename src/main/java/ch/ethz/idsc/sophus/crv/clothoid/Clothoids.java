@@ -1,9 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
-import ch.ethz.idsc.sophus.math.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -14,14 +11,11 @@ import ch.ethz.idsc.tensor.Tensor;
 public abstract class Clothoids implements ClothoidInterface {
   @Override // from ClothoidInterface
   public final Clothoid curve(Tensor p, Tensor q) {
-    LieGroupElement lieGroupElement = Se2CoveringGroup.INSTANCE.element(p);
-    Tensor _q = lieGroupElement.inverse().combine(q);
-    Tensor diff = _q.extract(0, 2);
-    Scalar da = ArcTan2D.of(diff); // special case when diff == {0, 0}
+    ClothoidContext clothoidContext = new ClothoidContext(p, q);
     return new ClothoidImpl( //
-        lieGroupElement, //
-        lagrangeQuadratic(da.negate(), _q.Get(2).subtract(da)), //
-        diff);
+        clothoidContext.lieGroupElement, //
+        lagrangeQuadratic(clothoidContext.b0(), clothoidContext.b1()), //
+        clothoidContext.diff);
   }
 
   @Override // from BinaryAverage

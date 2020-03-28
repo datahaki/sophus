@@ -15,7 +15,7 @@ public class MidpointTangentApproximation implements ScalarBinaryOperator {
    * The approximation quality is very good for |b0|, |b1| <= pi/2
    * 
    * Reference: U. Reif slide 9/32 */
-  public static final ScalarBinaryOperator INSTANCE = new MidpointTangentApproximation(MidpointTangentOrder2.INSTANCE);
+  public static final ScalarBinaryOperator LOCAL = new MidpointTangentApproximation(MidpointTangentOrder2.INSTANCE);
 
   /** @param scalarBinaryOperator
    * @return */
@@ -32,8 +32,7 @@ public class MidpointTangentApproximation implements ScalarBinaryOperator {
 
   @Override
   public Scalar apply(Scalar b0, Scalar b1) {
-    return scalarBinaryOperator.apply( //
-        b0.add(b1).multiply(HALF), //
-        b0.subtract(b1).multiply(HALF));
+    Scalar s1 = b0.add(b1).multiply(HALF);
+    return scalarBinaryOperator.apply(s1, b0.subtract(b1).multiply(HALF)).add(s1);
   }
 }
