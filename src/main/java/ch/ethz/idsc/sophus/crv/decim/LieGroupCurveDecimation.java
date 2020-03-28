@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
@@ -10,25 +10,29 @@ public enum LieGroupCurveDecimation {
   STANDARD() {
     @Override
     public CurveDecimation of(LieGroup lieGroup, LieExponential lieExponential, Scalar epsilon) {
-      return CurveDecimation.of(lieGroup, lieExponential::log, epsilon);
+      return new RamerDouglasPeucker(new LieGroupLineDistance(lieGroup, lieExponential::log), epsilon);
     }
   }, //
   MIDPOINT() {
     @Override
     public CurveDecimation of(LieGroup lieGroup, LieExponential lieExponential, Scalar epsilon) {
-      return CurveDecimation.midpoint(lieGroup, lieExponential, epsilon);
+      return new RamerDouglasPeucker(new LieMidpointLineDistance(lieGroup, lieExponential), epsilon);
     }
   }, //
   SYMMETRIZED() {
     @Override
     public CurveDecimation of(LieGroup lieGroup, LieExponential lieExponential, Scalar epsilon) {
-      return CurveDecimation.symmetric(lieGroup, lieExponential::log, epsilon);
+      return new RamerDouglasPeucker( //
+          new SymmetricLineDistance(new LieGroupLineDistance(lieGroup, lieExponential::log)), //
+          epsilon);
     }
   }, //
   PROJECT() {
     @Override
     public CurveDecimation of(LieGroup lieGroup, LieExponential lieExponential, Scalar epsilon) {
-      return CurveDecimation.projected(lieGroup, lieExponential, epsilon);
+      return new RamerDouglasPeucker( //
+          new LieProjectedLineDistance(lieGroup, lieExponential), //
+          epsilon);
     }
   };
 

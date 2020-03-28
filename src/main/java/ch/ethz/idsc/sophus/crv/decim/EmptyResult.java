@@ -1,7 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
-import ch.ethz.idsc.sophus.crv.CurveDecimation.Result;
+import ch.ethz.idsc.sophus.crv.decim.CurveDecimation.Result;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 

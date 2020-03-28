@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
   private final Scalar epsilon;
 
   /** @param lineDistance
-   * @param epsilon */
+   * @param epsilon non-negative */
   public RamerDouglasPeucker(LineDistance lineDistance, Scalar epsilon) {
     this.lineDistance = lineDistance;
     this.epsilon = Sign.requirePositiveOrZero(epsilon);

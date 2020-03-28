@@ -70,7 +70,7 @@ public class BarycentricRationalInterpolationTest extends TestCase {
       } catch (Exception exception) {
         ++fails;
       }
-    assertTrue(fails <= 1);
+    assertTrue(fails <= 2);
   }
 
   public void testUnorderedFail() {

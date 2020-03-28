@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.crv.CurveDecimation;
+import ch.ethz.idsc.sophus.crv.decim.CurveDecimation;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** Quote from Wikipedia:
@@ -17,6 +17,6 @@ public enum RnCurveDecimation {
    * @param epsilon
    * @return */
   public static CurveDecimation of(Scalar epsilon) {
-    return CurveDecimation.of(RnGroup.INSTANCE, tensor -> tensor, epsilon);
+    return CurveDecimation.of(RnManifold.INSTANCE, epsilon);
   }
 }

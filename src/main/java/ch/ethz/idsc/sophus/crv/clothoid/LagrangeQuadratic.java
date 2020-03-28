@@ -1,8 +1,10 @@
 // code by ureif
 package ch.ethz.idsc.sophus.crv.clothoid;
 
+import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -62,6 +64,13 @@ public class LagrangeQuadratic implements ScalarUnaryOperator {
   /** @param length
    * @return linear polynomial */
   public LagrangeQuadraticD derivative(Scalar length) {
-    return new LagrangeQuadraticD(c1.divide(length), c2.add(c2).divide(length));
+    if (Scalars.isZero(length))
+      return new LagrangeQuadraticD(c1.zero(), c2.zero());
+    Scalar d_c0 = c1.divide(length);
+    Scalar d_c1 = c2.add(c2).divide(length);
+    return DeterminateScalarQ.of(d_c0) //
+        && DeterminateScalarQ.of(d_c1) //
+            ? new LagrangeQuadraticD(d_c0, d_c1)
+            : new LagrangeQuadraticD(c1.zero(), c2.zero());
   }
 }

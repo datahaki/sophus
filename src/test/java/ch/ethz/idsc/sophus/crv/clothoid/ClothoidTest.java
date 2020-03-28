@@ -6,7 +6,6 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.lie.so2.So2Metric;
 import ch.ethz.idsc.sophus.math.HeadTailInterface;
-import ch.ethz.idsc.tensor.NumberQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -157,8 +156,8 @@ public class ClothoidTest extends TestCase {
     LagrangeQuadraticD clothoidCurvature = Se2Clothoids.INSTANCE.curve(p, q).curvature();
     Scalar head = clothoidCurvature.head();
     Scalar tail = clothoidCurvature.tail();
-    assertFalse(NumberQ.of(head));
-    assertFalse(NumberQ.of(tail));
+    assertTrue(Scalars.isZero(head));
+    assertTrue(Scalars.isZero(tail));
   }
 
   public void testAngles() {

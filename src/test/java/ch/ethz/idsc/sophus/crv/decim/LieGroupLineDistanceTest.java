@@ -1,9 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.crv.LieGroupLineDistance.NormImpl;
+import ch.ethz.idsc.sophus.crv.decim.LieGroupLineDistance.NormImpl;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.sophus.lie.rn.RnGroup;
 import ch.ethz.idsc.tensor.RealScalar;

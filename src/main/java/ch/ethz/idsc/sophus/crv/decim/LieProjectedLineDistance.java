@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
 import java.io.Serializable;
 import java.util.Objects;

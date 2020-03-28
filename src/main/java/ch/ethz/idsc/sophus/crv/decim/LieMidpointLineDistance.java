@@ -1,9 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.crv.LieGroupLineDistance.NormImpl;
+import ch.ethz.idsc.sophus.crv.decim.LieGroupLineDistance.NormImpl;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieMidpointInterface;

@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv;
+package ch.ethz.idsc.sophus.crv.decim;
 
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.sophus.lie.rn.RnGroup;
