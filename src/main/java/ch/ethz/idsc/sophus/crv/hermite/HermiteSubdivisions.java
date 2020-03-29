@@ -10,83 +10,83 @@ import ch.ethz.idsc.tensor.Scalar;
 public enum HermiteSubdivisions {
   HERMITE1() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite1Subdivisions.of(lieGroup, lieExponential, LAMBDA, MU);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite1Subdivisions.of(lieGroup, exponential, LAMBDA, MU);
     }
   }, //
   H1STANDARD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite1Subdivisions.standard(lieGroup, lieExponential);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite1Subdivisions.standard(lieGroup, exponential);
     }
   }, //
   /***************************************************/
   HERMITE2() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite2Subdivisions.of(lieGroup, lieExponential, LAMBDA, MU);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite2Subdivisions.of(lieGroup, exponential, LAMBDA, MU);
     }
   }, //
   H2STANDARD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite2Subdivisions.standard(lieGroup, lieExponential);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite2Subdivisions.standard(lieGroup, exponential);
     }
   }, //
   H2MANIFOLD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite2Subdivisions.manifold(lieGroup, lieExponential);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite2Subdivisions.manifold(lieGroup, exponential);
     }
   }, //
   /***************************************************/
   HERMITE3() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, lieExponential, THETA, OMEGA);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(lieGroup, exponential, THETA, OMEGA);
     }
   }, //
   H3STANDARD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, lieExponential);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(lieGroup, exponential);
     }
   }, //
   H3A1() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a1(lieGroup, lieExponential);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a1(lieGroup, exponential);
     }
   }, //
   H3A2() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a2(lieGroup, lieExponential);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a2(lieGroup, exponential);
     }
   }, //
   /***************************************************/
   HERMITE3_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, lieExponential, biinvariantMean, THETA, OMEGA);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(lieGroup, exponential, biinvariantMean, THETA, OMEGA);
     }
   }, //
   H3STANDARD_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, lieExponential, biinvariantMean);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(lieGroup, exponential, biinvariantMean);
     }
   }, //
   H3A1_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a1(lieGroup, lieExponential, biinvariantMean);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a1(lieGroup, exponential, biinvariantMean);
     }
   }, //
   H3A2_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a2(lieGroup, lieExponential, biinvariantMean);
+    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a2(lieGroup, exponential, biinvariantMean);
     }
   };
 
@@ -96,10 +96,10 @@ public enum HermiteSubdivisions {
   public static Scalar OMEGA = RationalScalar.of(-1, 16);
 
   /** @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @param biinvariantMean
    * @return
    * @throws Exception if either input parameter is null */
   public abstract HermiteSubdivision supply( //
-      LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean);
+      LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean);
 }

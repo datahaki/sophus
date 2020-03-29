@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
 public enum StExponential implements Exponential, FlattenLog {
   INSTANCE;
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor dlambda_dt) {
     Scalar dl = dlambda_dt.Get(0);
     return Tensors.of( //
@@ -35,7 +35,7 @@ public enum StExponential implements Exponential, FlattenLog {
         dlambda_dt.get(1).multiply(Expc.FUNCTION.apply(dl)));
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor lambda_t) {
     Scalar lambda = Sign.requirePositive(lambda_t.Get(0));
     Scalar log_l = Log.FUNCTION.apply(lambda);

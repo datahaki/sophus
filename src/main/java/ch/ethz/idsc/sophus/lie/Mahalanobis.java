@@ -15,12 +15,12 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class Mahalanobis {
   private final LieGroup lieGroup;
-  private final Exponential lieExponential;
+  private final Exponential exponential;
   private final BiinvariantMean biinvariantMean;
 
-  public Mahalanobis(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
+  public Mahalanobis(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
     this.lieGroup = lieGroup;
-    this.lieExponential = lieExponential;
+    this.exponential = exponential;
     this.biinvariantMean = biinvariantMean;
   }
 
@@ -34,14 +34,14 @@ public class Mahalanobis {
       lieGroupElement = lieGroup.element(mean).inverse();
       sigma = weights.dot(Tensor.of(sequence.stream() //
           .map(lieGroupElement::combine) //
-          .map(lieExponential::log) //
+          .map(exponential::log) //
           .map(vector -> TensorProduct.of(vector, vector))));
       inverse = Inverse.of(sigma);
     }
 
     @Override
     public Scalar norm(Tensor tensor) {
-      Tensor log = lieExponential.log(lieGroupElement.combine(tensor));
+      Tensor log = exponential.log(lieGroupElement.combine(tensor));
       return Sqrt.FUNCTION.apply(inverse.dot(log).dot(log).Get());
     }
   }

@@ -9,36 +9,36 @@ import ch.ethz.idsc.tensor.Scalar;
 public enum LieGroupCurveDecimation {
   STANDARD() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential lieExponential, Scalar epsilon) {
-      return new RamerDouglasPeucker(new LieGroupLineDistance(lieGroup, lieExponential::log), epsilon);
+    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
+      return new RamerDouglasPeucker(new LieGroupLineDistance(lieGroup, exponential::log), epsilon);
     }
   }, //
   MIDPOINT() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential lieExponential, Scalar epsilon) {
-      return new RamerDouglasPeucker(new LieMidpointLineDistance(lieGroup, lieExponential), epsilon);
+    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
+      return new RamerDouglasPeucker(new LieMidpointLineDistance(lieGroup, exponential), epsilon);
     }
   }, //
   SYMMETRIZED() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential lieExponential, Scalar epsilon) {
+    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
       return new RamerDouglasPeucker( //
-          new SymmetricLineDistance(new LieGroupLineDistance(lieGroup, lieExponential::log)), //
+          new SymmetricLineDistance(new LieGroupLineDistance(lieGroup, exponential::log)), //
           epsilon);
     }
   }, //
   PROJECT() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential lieExponential, Scalar epsilon) {
+    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
       return new RamerDouglasPeucker( //
-          new LieProjectedLineDistance(lieGroup, lieExponential), //
+          new LieProjectedLineDistance(lieGroup, exponential), //
           epsilon);
     }
   };
 
   /** @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @param epsilon non-negative
    * @return */
-  public abstract CurveDecimation of(LieGroup lieGroup, Exponential lieExponential, Scalar epsilon);
+  public abstract CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon);
 }

@@ -18,11 +18,11 @@ public class LieProjectedLineDistance implements LineDistance, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final LieGroup lieGroup;
-  private final Exponential lieExponential;
+  private final Exponential exponential;
 
-  public LieProjectedLineDistance(LieGroup lieGroup, Exponential lieExponential) {
+  public LieProjectedLineDistance(LieGroup lieGroup, Exponential exponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.lieExponential = Objects.requireNonNull(lieExponential);
+    this.exponential = Objects.requireNonNull(exponential);
   }
 
   @Override // from LineDistance
@@ -38,16 +38,16 @@ public class LieProjectedLineDistance implements LineDistance, Serializable {
     public NormImpl(Tensor beg, Tensor end) {
       lieBeg = lieGroup.element(beg);
       lieInv = lieBeg.inverse();
-      this.normal = NORMALIZE_UNLESS_ZERO.apply(lieExponential.log(lieInv.combine(end)));
+      this.normal = NORMALIZE_UNLESS_ZERO.apply(exponential.log(lieInv.combine(end)));
     }
 
     @Override // from TensorNorm
     public Scalar norm(Tensor tensor) {
-      Tensor vector = lieExponential.log(lieInv.combine(tensor));
+      Tensor vector = exponential.log(lieInv.combine(tensor));
       Tensor project = vector.dot(normal).pmul(normal);
-      Tensor along = lieBeg.combine(lieExponential.exp(project));
+      Tensor along = lieBeg.combine(exponential.exp(project));
       Tensor dir = lieGroup.element(along).inverse().combine(tensor);
-      return Norm._2.ofVector(lieExponential.log(dir));
+      return Norm._2.ofVector(exponential.log(dir));
     }
   }
 }

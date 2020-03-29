@@ -36,11 +36,11 @@ public enum Hermite2Subdivisions {
    * by Conti, Huening, 2018, p. 14
    * 
    * @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(LieGroup lieGroup, Exponential lieExponential, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(LieGroup lieGroup, Exponential exponential, Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.of(2).add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.of(2), lambda, RealScalar.of(2).add(mu));
     Scalar an2_21 = Series.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -52,7 +52,7 @@ public enum Hermite2Subdivisions {
     Scalar an1_21 = an2_21;
     Scalar an1_22 = mu.multiply(mu).subtract(Times.of(RealScalar.of(8), lambda, RealScalar.ONE.subtract(mu))).add(mu).add(mu);
     Tensor ALP = Tensors.of(Tensors.of(an1_11, an1_12.negate()), Tensors.of(an1_21.negate(), an1_22)).multiply(_1_8);
-    return new Hermite2Subdivision(lieGroup, lieExponential, //
+    return new Hermite2Subdivision(lieGroup, exponential, //
         ALQ.Get(0, 0), // lgg
         ALP.Get(0, 1), // lgv
         ALQ.Get(0, 1), // hgv
@@ -71,8 +71,8 @@ public enum Hermite2Subdivisions {
    * 
    * @return
    * @see Hermite1Subdivision */
-  public static HermiteSubdivision standard(LieGroup lieGroup, Exponential lieExponential) {
-    return of(lieGroup, lieExponential, N1_8, N1_2);
+  public static HermiteSubdivision standard(LieGroup lieGroup, Exponential exponential) {
+    return of(lieGroup, exponential, N1_8, N1_2);
   }
 
   /***************************************************/
@@ -84,9 +84,9 @@ public enum Hermite2Subdivisions {
    * by Moosmueller, 2017
    * 
    * @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @return */
-  public static HermiteSubdivision manifold(LieGroup lieGroup, Exponential lieExponential) {
-    return of(lieGroup, lieExponential, N1_5, _9_10);
+  public static HermiteSubdivision manifold(LieGroup lieGroup, Exponential exponential) {
+    return of(lieGroup, exponential, N1_5, _9_10);
   }
 }

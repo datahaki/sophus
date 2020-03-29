@@ -25,7 +25,7 @@ public enum Se2CoveringExponential implements Exponential {
    * 
    * @param x element in the se2 Lie-algebra of the form {vx, vy, beta}
    * @return element g in SE2 as vector with coordinates of g == exp x */
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor x) {
     Scalar be = x.Get(2);
     if (Scalars.isZero(be))
@@ -42,7 +42,7 @@ public enum Se2CoveringExponential implements Exponential {
 
   /** @param g element in the SE2 Lie group of the form {px, py, beta}
    * @return element x in the se2 Lie algebra with x == log g, and g == exp x */
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor g) {
     Scalar be = g.Get(2);
     Scalar be2 = be.multiply(HALF);

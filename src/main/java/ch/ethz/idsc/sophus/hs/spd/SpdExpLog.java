@@ -35,7 +35,7 @@ import ch.ethz.idsc.tensor.sca.Log;
 public enum SpdExpLog implements Exponential {
   INSTANCE;
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor x) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(x);
     Tensor avec = eigensystem.vectors();
@@ -43,7 +43,7 @@ public enum SpdExpLog implements Exponential {
     return Symmetrize.of(ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(avec)));
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor g) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
     Tensor avec = eigensystem.vectors();

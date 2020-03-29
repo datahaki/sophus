@@ -5,8 +5,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsGeodesic;
+import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -22,8 +23,8 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
   private final LieGroup lieGroup;
-  private final Exponential lieExponential;
-  private final LieGroupGeodesic lieGroupGeodesic;
+  private final Exponential exponential;
+  private final HsGeodesic lieGroupGeodesic;
   private final Scalar lgg;
   private final Scalar lgv;
   private final Scalar hgv;
@@ -32,7 +33,7 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
   private final Tensor vpq;
 
   /** @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @param lgg
    * @param lgv
    * @param hgv
@@ -40,11 +41,11 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
    * @param vpq
    * @throws Exception if either parameters is null */
   public Hermite2Subdivision( //
-      LieGroup lieGroup, Exponential lieExponential, //
+      LieGroup lieGroup, Exponential exponential, //
       Scalar lgg, Scalar lgv, Scalar hgv, Scalar hvg, Tensor vpq) {
     this.lieGroup = lieGroup;
-    this.lieExponential = lieExponential;
-    lieGroupGeodesic = new LieGroupGeodesic(lieGroup, lieExponential);
+    this.exponential = exponential;
+    lieGroupGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
     this.lgg = lgg;
     hgg = RealScalar.ONE.subtract(this.lgg);
     this.lgv = Objects.requireNonNull(lgv);
@@ -82,11 +83,11 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
       Tensor qg = q.get(0);
       Tensor qv = q.get(1);
       ScalarTensorFunction scalarTensorFunction = lieGroupGeodesic.curve(pg, qg);
-      Tensor log = lieExponential.log(lieGroup.element(pg).inverse().combine(qg)); // q - p
+      Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(qg)); // q - p
       Tensor rv1 = log.multiply(rvk);
       {
         Tensor rg1 = scalarTensorFunction.apply(lgg);
-        Tensor rg2 = lieExponential.exp(pv.multiply(rgp).subtract(qv.multiply(rgq)));
+        Tensor rg2 = exponential.exp(pv.multiply(rgp).subtract(qv.multiply(rgq)));
         Tensor rg = lieGroup.element(rg1).combine(rg2);
         // ---
         Tensor rv2 = vpq.dot(Tensors.of(pv, qv));
@@ -95,7 +96,7 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
       }
       {
         Tensor rg1 = scalarTensorFunction.apply(hgg);
-        Tensor rg2 = lieExponential.exp(pv.multiply(rgq).subtract(qv.multiply(rgp)));
+        Tensor rg2 = exponential.exp(pv.multiply(rgq).subtract(qv.multiply(rgp)));
         Tensor rg = lieGroup.element(rg1).combine(rg2);
         // ---
         Tensor rv2 = vpq.dot(Tensors.of(qv, pv));

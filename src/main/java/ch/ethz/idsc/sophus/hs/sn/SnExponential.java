@@ -43,7 +43,7 @@ public class SnExponential implements Exponential, FlattenLog, Serializable {
       throw TensorRuntimeException.of(x);
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor v) {
     StaticHelper.requireTangent(x, v);
     Scalar vn = Norm._2.ofVector(v);
@@ -51,7 +51,7 @@ public class SnExponential implements Exponential, FlattenLog, Serializable {
     return NORMALIZE.apply(y);
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor y) {
     StaticHelper.requirePoint(y);
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(VectorAngle.of(x, y).get());

@@ -3,12 +3,10 @@ package ch.ethz.idsc.sophus.flt.ga;
 
 import ch.ethz.idsc.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.ethz.idsc.sophus.flt.CausalFilter;
-import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
-import ch.ethz.idsc.sophus.lie.rn.RnExponential;
+import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.lie.rn.RnGroup;
-import ch.ethz.idsc.sophus.lie.se2.Se2Group;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
+import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -25,8 +23,7 @@ import junit.framework.TestCase;
 
 public class GeodesicIIR2Test extends TestCase {
   public void testSimple() {
-    GeodesicInterface geodesicInterface = //
-        new LieGroupGeodesic(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE);
+    GeodesicInterface geodesicInterface = new HsGeodesic(Se2Manifold.HS_EXP);
     Scalar alpha = RationalScalar.HALF;
     GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicInterface, alpha);
     Tensor vector0 = Tensors.vector(1, 2, 0.25);
@@ -38,8 +35,7 @@ public class GeodesicIIR2Test extends TestCase {
   }
 
   public void testLinear() {
-    GeodesicInterface geodesicInterface = //
-        new LieGroupGeodesic(RnGroup.INSTANCE, RnExponential.INSTANCE);
+    GeodesicInterface geodesicInterface = new HsGeodesic(RnManifold.HS_EXP);
     Scalar alpha = RationalScalar.HALF;
     TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicInterface, alpha);
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));

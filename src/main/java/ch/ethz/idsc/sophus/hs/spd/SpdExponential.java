@@ -40,12 +40,12 @@ public class SpdExponential implements Exponential, FlattenLog, Serializable {
     pn = matrixSqrt.inverse();
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor w) {
     return Symmetrize.of(pp.dot(SpdExpLog.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp));
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor q) {
     Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
     return Symmetrize.of(pp.dot(SpdExpLog.INSTANCE.log(pq)).dot(pp));

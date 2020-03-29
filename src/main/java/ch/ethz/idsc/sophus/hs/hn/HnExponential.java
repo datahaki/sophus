@@ -19,14 +19,14 @@ public class HnExponential implements Exponential, FlattenLog, Serializable {
     this.x = StaticHelper.requirePoint(x);
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor v) {
     StaticHelper.requireTangent(x, v);
     Scalar vn = HnNorm.INSTANCE.norm(v);
     return x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinh.FUNCTION.apply(vn).divide(vn)));
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor y) {
     StaticHelper.requirePoint(y);
     Scalar theta = HnMetric.INSTANCE.distance(x, y);

@@ -18,14 +18,14 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * </pre> */
 public final class LieDifferences implements TensorUnaryOperator {
   private final LieGroup lieGroup;
-  private final Exponential lieExponential;
+  private final Exponential exponential;
 
   /** @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @throws Exception if either parameter is null */
-  public LieDifferences(LieGroup lieGroup, Exponential lieExponential) {
+  public LieDifferences(LieGroup lieGroup, Exponential exponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.lieExponential = Objects.requireNonNull(lieExponential);
+    this.exponential = Objects.requireNonNull(exponential);
   }
 
   @Override
@@ -41,6 +41,6 @@ public final class LieDifferences implements TensorUnaryOperator {
    * @param q element of the lie group
    * @return vector == log(p^-1 . q) so that exp(vector) == p^-1 . q */
   public Tensor pair(Tensor p, Tensor q) {
-    return lieExponential.log(lieGroup.element(p).inverse().combine(q));
+    return exponential.log(lieGroup.element(p).inverse().combine(q));
   }
 }

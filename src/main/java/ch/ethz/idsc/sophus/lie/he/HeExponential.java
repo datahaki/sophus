@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.alg.Flatten;
 public enum HeExponential implements Exponential, FlattenLog {
   INSTANCE;
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor uvw) {
     Tensor u = uvw.get(0);
     Tensor v = uvw.get(1);
@@ -22,7 +22,7 @@ public enum HeExponential implements Exponential, FlattenLog {
         w.add(u.dot(v).multiply(RationalScalar.HALF)));
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor xyz) {
     Tensor x = xyz.get(0);
     Tensor y = xyz.get(1);

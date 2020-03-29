@@ -39,12 +39,12 @@ public enum Hermite1Subdivisions {
    * by Conti, Merrien, Romani, 2015, p. 11, H1[lambda, mu]
    * 
    * @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(LieGroup lieGroup, Exponential lieExponential, Scalar lambda, Scalar mu) {
-    return new Hermite1Subdivision(lieGroup, lieExponential, //
+  public static HermiteSubdivision of(LieGroup lieGroup, Exponential exponential, Scalar lambda, Scalar mu) {
+    return new Hermite1Subdivision(lieGroup, exponential, //
         lambda, //
         RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
         mu.multiply(_1_4));
@@ -58,9 +58,9 @@ public enum Hermite1Subdivisions {
    * by Byeongseon Jeong, Jungho Yoon, 2017
    * 
    * @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @return */
-  public static HermiteSubdivision standard(LieGroup lieGroup, Exponential lieExponential) {
-    return of(lieGroup, lieExponential, N1_8, N1_2);
+  public static HermiteSubdivision standard(LieGroup lieGroup, Exponential exponential) {
+    return of(lieGroup, exponential, N1_8, N1_2);
   }
 }

@@ -29,7 +29,7 @@ public enum Se3Exponential implements Exponential {
 
   private static final Tensor ID3 = IdentityMatrix.of(3);
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor u_w) {
     Tensor u = u_w.get(0); // translation
     Tensor w = u_w.get(1); // rotation
@@ -43,7 +43,7 @@ public enum Se3Exponential implements Exponential {
     return Se3Matrix.of(R, Vu);
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor g) {
     Tensor R = Se3Matrix.rotation(g);
     Tensor wx = So3Exponential.logMatrix(R);

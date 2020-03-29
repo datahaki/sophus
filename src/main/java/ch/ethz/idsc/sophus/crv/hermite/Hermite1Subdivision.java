@@ -4,8 +4,9 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsGeodesic;
+import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Nocopy;
 import ch.ethz.idsc.sophus.math.TensorIteration;
@@ -16,24 +17,24 @@ import ch.ethz.idsc.tensor.Tensors;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final LieGroup lieGroup;
-  private final Exponential lieExponential;
-  private final LieGroupGeodesic lieGroupGeodesic;
+  private final Exponential exponential;
+  private final HsGeodesic lieGroupGeodesic;
   private final Scalar lgv;
   private final Scalar lvg;
   private final Scalar lvv;
 
   /** @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @param lgv
    * @param lvg
    * @param lvv
    * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      LieGroup lieGroup, Exponential lieExponential, //
+      LieGroup lieGroup, Exponential exponential, //
       Scalar lgv, Scalar lvg, Scalar lvv) {
     this.lieGroup = lieGroup;
-    this.lieExponential = lieExponential;
-    lieGroupGeodesic = new LieGroupGeodesic(lieGroup, lieExponential);
+    this.exponential = exponential;
+    lieGroupGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
     this.lgv = Objects.requireNonNull(lgv);
     this.lvg = lvg.add(lvg);
     this.lvv = lvv.add(lvv);
@@ -73,10 +74,10 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
         Tensor rg1 = lieGroupGeodesic.midpoint(pg, qg);
         Tensor rpv = pv;
         Tensor rqv = qv;
-        Tensor rg2 = lieExponential.exp(rpv.subtract(rqv).multiply(rgk));
+        Tensor rg2 = exponential.exp(rpv.subtract(rqv).multiply(rgk));
         rg = lieGroup.element(rg1).combine(rg2);
       }
-      Tensor log = lieExponential.log(lieGroup.element(pg).inverse().combine(qg));
+      Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(qg));
       Tensor rv1 = log.multiply(rvk);
       Tensor pqv = qv;
       Tensor rv2 = pqv.add(pv).multiply(lvv);

@@ -34,7 +34,7 @@ public enum So3Exponential implements Exponential {
   private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
   private static final Scalar HALF = DoubleScalar.of(0.5);
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor vector) {
     Scalar beta = Norm._2.ofVector(vector);
     Scalar s1 = Sinc.FUNCTION.apply(beta);
@@ -58,7 +58,7 @@ public enum So3Exponential implements Exponential {
     throw TensorRuntimeException.of(matrix);
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor matrix) {
     Tensor log = logMatrix(matrix);
     return Tensors.of(log.Get(2, 1), log.Get(0, 2), log.Get(1, 0));

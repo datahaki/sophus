@@ -8,45 +8,45 @@ import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
-public class PointLieExponential implements HsExponential, Serializable {
+public class LieExponential implements HsExponential, Serializable {
   /** @param lieGroup
-   * @param lieExponential
+   * @param exponential
    * @return */
-  public static HsExponential of(LieGroup lieGroup, Exponential lieExponential) {
-    return new PointLieExponential(lieGroup, lieExponential);
+  public static HsExponential of(LieGroup lieGroup, Exponential exponential) {
+    return new LieExponential(lieGroup, exponential);
   }
 
   /***************************************************/
   private final LieGroup lieGroup;
-  private final Exponential lieExponential;
+  private final Exponential exponential;
 
-  private PointLieExponential(LieGroup lieGroup, Exponential lieExponential) {
+  private LieExponential(LieGroup lieGroup, Exponential lieExponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.lieExponential = Objects.requireNonNull(lieExponential);
+    this.exponential = Objects.requireNonNull(lieExponential);
   }
 
   @Override
   public Exponential exponential(Tensor point) {
-    return new PointExp(point);
+    return new ExponentialImpl(point);
   }
 
-  public class PointExp implements Exponential, Serializable {
+  private class ExponentialImpl implements Exponential, Serializable {
     private final LieGroupElement element;
     private final LieGroupElement inverse;
 
-    public PointExp(Tensor point) {
+    public ExponentialImpl(Tensor point) {
       element = lieGroup.element(point);
       inverse = element.inverse();
     }
 
-    @Override
+    @Override // from Exponential
     public Tensor exp(Tensor x) {
-      return element.combine(lieExponential.exp(x));
+      return element.combine(exponential.exp(x));
     }
 
-    @Override
+    @Override // from Exponential
     public Tensor log(Tensor g) {
-      return lieExponential.log(inverse.combine(g));
+      return exponential.log(inverse.combine(g));
     }
   }
 }

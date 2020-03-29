@@ -9,12 +9,12 @@ import ch.ethz.idsc.tensor.sca.Log;
 public enum ScExponential implements Exponential {
   INSTANCE;
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor x) {
     return x.map(Exp.FUNCTION);
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor g) {
     return g.map(Log.FUNCTION);
   }

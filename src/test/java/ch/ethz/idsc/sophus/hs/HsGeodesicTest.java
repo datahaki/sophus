@@ -1,19 +1,17 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
 
-public class LieGroupGeodesicTest extends TestCase {
+public class HsGeodesicTest extends TestCase {
   public void testSe2() {
-    LieGroupGeodesic lieGroupGeodesic = //
-        new LieGroupGeodesic(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE);
+    HsGeodesic lieGroupGeodesic = new HsGeodesic(Se2CoveringManifold.HS_EXP);
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(4, 5, 6);
     Scalar lambda = RealScalar.of(0.7);
@@ -24,13 +22,7 @@ public class LieGroupGeodesicTest extends TestCase {
 
   public void testNullFail() {
     try {
-      new LieGroupGeodesic(Se2CoveringGroup.INSTANCE, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      new LieGroupGeodesic(null, Se2CoveringExponential.INSTANCE);
+      new HsGeodesic(null);
       fail();
     } catch (Exception exception) {
       // ---

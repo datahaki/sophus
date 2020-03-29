@@ -74,7 +74,7 @@ public class LieDifferencesTest extends TestCase {
     }
   }
 
-  public void testLieExponentialNullFail() {
+  public void testExponentialNullFail() {
     try {
       new LieDifferences(Se2Group.INSTANCE, null);
       fail();

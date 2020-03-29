@@ -10,12 +10,12 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum RnExponential implements Exponential {
   INSTANCE;
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor exp(Tensor x) {
     return x.copy();
   }
 
-  @Override // from LieExponential
+  @Override // from Exponential
   public Tensor log(Tensor g) {
     return g.copy();
   }
