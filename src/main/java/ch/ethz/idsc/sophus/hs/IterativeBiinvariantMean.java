@@ -36,8 +36,8 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private final MeanDefect meanDefect;
 
   /** @param hsExponential
-   * @param chop
-   * @param initialGuess */
+   * @param initialGuess
+   * @param chop */
   protected IterativeBiinvariantMean(HsExponential hsExponential, BiinvariantMean initialGuess, Chop chop) {
     this.hsExponential = hsExponential;
     this.initialGuess = Objects.requireNonNull(initialGuess);
@@ -56,8 +56,8 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
     Tensor mean = initialGuess.mean(sequence, weights); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      Tensor next = hsExponential.exponentialAt(mean).exp(meanDefect.defect(sequence, weights, mean));
-      Exponential exponential = hsExponential.exponentialAt(next);
+      Tensor next = hsExponential.exponential(mean).exp(meanDefect.defect(sequence, weights, mean));
+      Exponential exponential = hsExponential.exponential(next);
       if (chop.allZero(exponential.log(mean)))
         return Optional.of(next);
       mean = next;

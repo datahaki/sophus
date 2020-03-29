@@ -8,5 +8,5 @@ import ch.ethz.idsc.tensor.Tensor;
 public interface HsExponential {
   /** @param point
    * @return */
-  Exponential exponentialAt(Tensor point);
+  Exponential exponential(Tensor point);
 }

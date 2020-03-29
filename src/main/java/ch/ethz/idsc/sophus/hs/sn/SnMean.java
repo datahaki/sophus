@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class SnMean extends IterativeBiinvariantMean {
+public final class SnMean extends IterativeBiinvariantMean {
   public static final BiinvariantMean INSTANCE = new SnMean(Chop._14);
 
   public SnMean(Chop chop) {

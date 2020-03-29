@@ -26,7 +26,7 @@ public class PointLieExponential implements HsExponential, Serializable {
   }
 
   @Override
-  public Exponential exponentialAt(Tensor point) {
+  public Exponential exponential(Tensor point) {
     return new PointExp(point);
   }
 

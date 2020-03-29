@@ -11,7 +11,7 @@ public enum SnManifold implements HsExponential, FlattenLogManifold {
   INSTANCE;
 
   @Override
-  public Exponential exponentialAt(Tensor point) {
+  public Exponential exponential(Tensor point) {
     return new SnExponential(point);
   }
 

@@ -37,6 +37,6 @@ public class BiinvariantMeanDefect implements MeanDefect, Serializable {
 
   @Override // from MeanDefect
   public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
-    return weights.dot(Tensor.of(sequence.stream().map(hsExponential.exponentialAt(mean)::log)));
+    return weights.dot(Tensor.of(sequence.stream().map(hsExponential.exponential(mean)::log)));
   }
 }
