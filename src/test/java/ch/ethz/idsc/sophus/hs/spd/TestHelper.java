@@ -20,6 +20,6 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
   /** @param n
    * @return symmetric positive definite */
   static Tensor generateSpd(int n) {
-    return SpdExpLog.INSTANCE.exp(generateSim(n));
+    return SpdMatrixExponential.INSTANCE.exp(generateSim(n));
   }
 }

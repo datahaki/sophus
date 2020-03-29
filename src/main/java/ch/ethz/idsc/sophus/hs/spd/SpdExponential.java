@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * 
  * @see MatrixExp
  * @see MatrixLog
- * @see SpdExpLog */
+ * @see SpdMatrixExponential */
 public class SpdExponential implements Exponential, FlattenLog, Serializable {
   private final Tensor pp;
   private final Tensor pn;
@@ -42,13 +42,13 @@ public class SpdExponential implements Exponential, FlattenLog, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor w) {
-    return Symmetrize.of(pp.dot(SpdExpLog.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp));
+    return Symmetrize.of(pp.dot(SpdMatrixExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp));
   }
 
   @Override // from Exponential
   public Tensor log(Tensor q) {
     Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
-    return Symmetrize.of(pp.dot(SpdExpLog.INSTANCE.log(pq)).dot(pp));
+    return Symmetrize.of(pp.dot(SpdMatrixExponential.INSTANCE.log(pq)).dot(pp));
   }
 
   @Override

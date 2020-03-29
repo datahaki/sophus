@@ -1,55 +1,54 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import java.io.IOException;
+
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.lie.MatrixExp;
-import ch.ethz.idsc.tensor.lie.MatrixLog;
-import ch.ethz.idsc.tensor.mat.LowerTriangularize;
+import ch.ethz.idsc.tensor.io.Serialization;
+import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SpdExponentialTest extends TestCase {
-  public void testSimple() {
+  public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
-      Tensor x = TestHelper.generateSim(n);
-      Tensor g = SpdExpLog.INSTANCE.exp(x);
-      Tensor r = SpdExpLog.INSTANCE.log(g);
-      Chop._07.requireClose(x, r);
+      Tensor p = TestHelper.generateSpd(n);
+      Tensor q = TestHelper.generateSpd(n);
+      SpdExponential spdExp = Serialization.copy(new SpdExponential(p));
+      Tensor w = spdExp.log(q);
+      Tensor exp = spdExp.exp(w);
+      Chop._08.requireClose(q, exp);
     }
   }
 
-  public void testMatrixExp() {
+  public void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
-      Tensor x = TestHelper.generateSim(n);
-      Tensor exp1 = SpdExpLog.INSTANCE.exp(x);
-      Tensor exp2 = MatrixExp.of(x);
-      Chop._07.requireClose(exp1, exp2);
+      Tensor p = TestHelper.generateSpd(n);
+      Tensor q = TestHelper.generateSpd(n);
+      SpdExponential spdExpP = new SpdExponential(p);
+      SpdExponential spdExpQ = new SpdExponential(q);
+      Tensor pqw = spdExpP.log(q);
+      Tensor qpw = spdExpQ.log(p);
+      Tensor ph = spdExpP.exp(pqw.multiply(RationalScalar.HALF));
+      Tensor qh = spdExpQ.exp(qpw.multiply(RationalScalar.HALF));
+      Chop._08.requireClose(ph, qh);
     }
   }
 
-  public void testMatrixLog() {
-    for (int count = 0; count < 10; ++count) {
-      Tensor x = TestHelper.generateSpd(2);
-      Tensor exp1 = SpdExpLog.INSTANCE.log(x);
-      Tensor exp2 = MatrixLog.of(x);
-      Chop._08.requireClose(exp1, exp2);
-    }
-  }
-
-  public void testExpNonSymmetricFail() {
-    Tensor x = LowerTriangularize.of(TestHelper.generateSim(4));
+  public void testNonSymmetricFail() {
     try {
-      SpdExpLog.INSTANCE.exp(x);
+      new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3));
       fail();
     } catch (Exception exception) {
       // ---
     }
   }
 
-  public void testLogNonSymmetricFail() {
-    Tensor g = LowerTriangularize.of(TestHelper.generateSpd(4));
+  public void testNullFail() {
     try {
-      SpdExpLog.INSTANCE.log(g);
+      new SpdExponential(null);
       fail();
     } catch (Exception exception) {
       // ---

@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.itp;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
-import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public class LogPseudoDistances implements PseudoDistances, Serializable {
@@ -23,7 +23,7 @@ public class LogPseudoDistances implements PseudoDistances, Serializable {
   public Tensor pseudoDistances(Tensor point) {
     return Tensor.of(sequence.stream() //
         .map(flattenLogManifold.logAt(point)::flattenLog) //
-        .map(RnNorm.INSTANCE::norm) //
+        .map(Norm._2::ofVector) //
         .map(variogram));
   }
 }

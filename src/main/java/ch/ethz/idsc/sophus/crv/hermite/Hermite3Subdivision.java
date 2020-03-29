@@ -26,7 +26,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
   // ---
   private final LieGroup lieGroup;
   private final Exponential exponential;
-  private final HsGeodesic lieGroupGeodesic;
+  private final HsGeodesic hsGeodesic;
   private final TensorUnaryOperator tripleCenter;
   private final Scalar mgv;
   private final Scalar mvv;
@@ -52,7 +52,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Scalar cgv, Scalar vpr, Tensor vpqr) {
     this.lieGroup = lieGroup;
     this.exponential = exponential;
-    lieGroupGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
+    hsGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
     this.tripleCenter = Objects.requireNonNull(tripleCenter);
     this.mgv = Objects.requireNonNull(mgv);
     this.mvg = mvg.add(mvg);
@@ -115,7 +115,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Tensor pv = p.get(1);
       Tensor qg = q.get(0);
       Tensor qv = q.get(1);
-      Tensor rg1 = lieGroupGeodesic.midpoint(pg, qg);
+      Tensor rg1 = hsGeodesic.midpoint(pg, qg);
       Tensor rg2 = exponential.exp(qv.subtract(pv).multiply(rgk));
       Tensor rg = lieGroup.element(rg1).combine(rg2);
       // ---

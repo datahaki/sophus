@@ -1,13 +1,11 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.so2;
 
-import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
-/** @see SnGeodesic */
 public enum So2Geodesic implements GeodesicInterface {
   INSTANCE;
 

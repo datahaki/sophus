@@ -26,7 +26,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   /** @param hsExponential
    * @return */
   public static IterativeBiinvariantMean of(HsExponential hsExponential) {
-    return new IterativeBiinvariantMean(hsExponential, ArgMaxBiinvariantMean.INSTANCE, Chop._12);
+    return new IterativeBiinvariantMean(hsExponential, Chop._12);
   }
 
   /***************************************************/
@@ -43,6 +43,12 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     this.initialGuess = Objects.requireNonNull(initialGuess);
     this.chop = Objects.requireNonNull(chop);
     meanDefect = BiinvariantMeanDefect.of(hsExponential);
+  }
+
+  /** @param hsExponential
+   * @param chop */
+  protected IterativeBiinvariantMean(HsExponential hsExponential, Chop chop) {
+    this(hsExponential, ArgMaxBiinvariantMean.INSTANCE, chop);
   }
 
   @Override // from BiinvariantMean

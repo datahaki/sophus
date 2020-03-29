@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.hs.s2.S2Geodesic;
 import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -87,13 +88,16 @@ public class SnGeodesicTest extends TestCase {
 
   public void testComparison() {
     Distribution distribution = NormalDistribution.standard();
+    HsGeodesic hsGeodesic = new HsGeodesic(SnManifold.INSTANCE);
     for (int index = 0; index < 10; ++index) {
       Tensor p = NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Tensor q = NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Scalar scalar = RandomVariate.of(distribution);
       Tensor split2 = S2Geodesic.INSTANCE.split(p, q, scalar);
       Tensor splitn = SnGeodesic.INSTANCE.split(p, q, scalar);
+      Tensor splith = hsGeodesic.split(p, q, scalar);
       Chop._10.requireClose(split2, splitn);
+      Chop._10.requireClose(split2, splith);
     }
   }
 

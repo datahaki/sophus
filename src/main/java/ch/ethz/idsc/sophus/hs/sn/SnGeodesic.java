@@ -19,7 +19,10 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * 
  * implementation is based on the function "slerp" taken from
  * "Freeform Curves on Spheres of Arbitrary Dimension"
- * by Scott Schaefer and Ron Goldman, 2005, page 2 */
+ * by Scott Schaefer and Ron Goldman, 2005, page 2
+ * 
+ * <p>the use of SnGeodesic.INSTANCE is preferred over HsGeodesic.
+ * The implementation is symmetric in p and q and more efficient than HsGeodesic. */
 public enum SnGeodesic implements GeodesicInterface {
   INSTANCE;
 

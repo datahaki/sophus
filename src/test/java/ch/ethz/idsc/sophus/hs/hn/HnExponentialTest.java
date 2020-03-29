@@ -40,9 +40,9 @@ public class HnExponentialTest extends TestCase {
       // Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, 3));
       // Tensor y = hnExp.exp(v);
       // StaticHelper.requirePoint(y); // FIXME
-      System.out.println("---");
-      System.out.println(dxy);
-      System.out.println(vn1);
+      // System.out.println("---");
+      // System.out.println(dxy);
+      // System.out.println(vn1);
       // Tensor w = hnExp.log(y);
     }
   }

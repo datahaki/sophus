@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.Tensors;
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final LieGroup lieGroup;
   private final Exponential exponential;
-  private final HsGeodesic lieGroupGeodesic;
+  private final HsGeodesic hsGeodesic;
   private final Scalar lgv;
   private final Scalar lvg;
   private final Scalar lvv;
@@ -34,7 +34,7 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
       Scalar lgv, Scalar lvg, Scalar lvv) {
     this.lieGroup = lieGroup;
     this.exponential = exponential;
-    lieGroupGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
+    hsGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
     this.lgv = Objects.requireNonNull(lgv);
     this.lvg = lvg.add(lvg);
     this.lvv = lvv.add(lvv);
@@ -71,7 +71,7 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
       Tensor qv = q.get(1);
       Tensor rg;
       {
-        Tensor rg1 = lieGroupGeodesic.midpoint(pg, qg);
+        Tensor rg1 = hsGeodesic.midpoint(pg, qg);
         Tensor rpv = pv;
         Tensor rqv = qv;
         Tensor rg2 = exponential.exp(rpv.subtract(rqv).multiply(rgk));

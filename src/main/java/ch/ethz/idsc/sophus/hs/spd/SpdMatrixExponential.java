@@ -32,7 +32,7 @@ import ch.ethz.idsc.tensor.sca.Log;
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdExponential */
-public enum SpdExpLog implements Exponential {
+public enum SpdMatrixExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential

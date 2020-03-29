@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum SnManifold implements HsExponential, FlattenLogManifold {
   INSTANCE;
 
-  @Override
+  @Override // from HsExponential
   public Exponential exponential(Tensor point) {
     return new SnExponential(point);
   }
