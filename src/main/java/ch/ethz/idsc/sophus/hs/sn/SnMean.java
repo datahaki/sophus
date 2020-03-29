@@ -34,7 +34,7 @@ public class SnMean implements BiinvariantMean {
       Tensor log = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
       if (chop.allZero(Norm._2.ofVector(log)))
         return NORMALIZE.apply(mean);
-      mean = new SnExp(mean).exp(log);
+      mean = new SnExponential(mean).exp(log);
       // normalization for numerical stability
       // if (count % 10 == 0)
       mean = NORMALIZE.apply(mean);

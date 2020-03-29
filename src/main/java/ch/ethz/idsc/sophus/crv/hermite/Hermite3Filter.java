@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -17,14 +17,14 @@ import ch.ethz.idsc.tensor.Unprotect;
 /**  */
 public class Hermite3Filter implements HermiteFilter {
   private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final Exponential lieExponential;
   private final BiinvariantMean biinvariantMean;
 
   /** @param lieGroup
    * @param lieExponential
    * @param biinvariantMean
    * @throws Exception if either parameters is null */
-  public Hermite3Filter(LieGroup lieGroup, LieExponential lieExponential, BiinvariantMean biinvariantMean) {
+  public Hermite3Filter(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.lieExponential = Objects.requireNonNull(lieExponential);
     this.biinvariantMean = Objects.requireNonNull(biinvariantMean);

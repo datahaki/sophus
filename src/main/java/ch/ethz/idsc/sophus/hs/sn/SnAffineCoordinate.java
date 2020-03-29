@@ -43,12 +43,12 @@ public enum SnAffineCoordinate implements BarycentricCoordinate {
 
   private static class Operator implements TensorUnaryOperator {
     private final Scalar _1_n;
-    private final SnExp snExp;
+    private final SnExponential snExp;
     private final Tensor pinv;
 
     private Operator(Tensor sequence) {
       _1_n = RationalScalar.of(1, sequence.length());
-      snExp = new SnExp(SnMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
+      snExp = new SnExponential(SnMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
       pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(snExp::log)));
     }
 

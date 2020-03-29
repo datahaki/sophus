@@ -9,6 +9,6 @@ public enum SpdMeanDefect implements MeanDefect {
 
   @Override // from MeanDefect
   public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
-    return weights.dot(Tensor.of(sequence.stream().map(new SpdExp(mean)::log)));
+    return weights.dot(Tensor.of(sequence.stream().map(new SpdExponential(mean)::log)));
   }
 }

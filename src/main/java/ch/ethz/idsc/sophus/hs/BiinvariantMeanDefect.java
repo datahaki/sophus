@@ -23,20 +23,20 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
 public class BiinvariantMeanDefect implements MeanDefect, Serializable {
-  /** @param flattenLogManifold
+  /** @param hsExponential
    * @return */
-  public static MeanDefect of(FlattenLogManifold flattenLogManifold) {
-    return new BiinvariantMeanDefect(Objects.requireNonNull(flattenLogManifold));
+  public static MeanDefect of(HsExponential hsExponential) {
+    return new BiinvariantMeanDefect(Objects.requireNonNull(hsExponential));
   }
 
-  private final FlattenLogManifold flattenLogManifold;
+  private final HsExponential hsExponential;
 
-  private BiinvariantMeanDefect(FlattenLogManifold flattenLogManifold) {
-    this.flattenLogManifold = flattenLogManifold;
+  private BiinvariantMeanDefect(HsExponential flattenLogManifold) {
+    this.hsExponential = flattenLogManifold;
   }
 
   @Override // from MeanDefect
   public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
-    return weights.dot(Tensor.of(sequence.stream().map(flattenLogManifold.logAt(mean)::flattenLog)));
+    return weights.dot(Tensor.of(sequence.stream().map(hsExponential.exponentialAt(mean)::log)));
   }
 }

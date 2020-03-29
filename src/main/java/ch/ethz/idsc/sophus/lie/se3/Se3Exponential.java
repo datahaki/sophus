@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.gl.LinearGroup;
 import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * 
  * @see LinearGroup
  * @see LieGroupElement */
-public enum Se3Exponential implements LieExponential {
+public enum Se3Exponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

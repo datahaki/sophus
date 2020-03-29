@@ -6,5 +6,5 @@ import ch.ethz.idsc.sophus.hs.MeanDefect;
 
 public enum Se2CoveringBiinvariantMeanDefect {
   ;
-  public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(Se2CoveringManifold.INSTANCE);
+  public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(Se2CoveringManifold.HS_EXP);
 }

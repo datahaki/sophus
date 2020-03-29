@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie;
 
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
@@ -17,12 +18,12 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * </pre> */
 public final class LieDifferences implements TensorUnaryOperator {
   private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final Exponential lieExponential;
 
   /** @param lieGroup
    * @param lieExponential
    * @throws Exception if either parameter is null */
-  public LieDifferences(LieGroup lieGroup, LieExponential lieExponential) {
+  public LieDifferences(LieGroup lieGroup, Exponential lieExponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }

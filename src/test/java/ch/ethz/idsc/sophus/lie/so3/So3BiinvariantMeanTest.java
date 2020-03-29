@@ -19,7 +19,7 @@ public class So3BiinvariantMeanTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(So3Manifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(So3Manifold.INSTANCE) };
-  public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
+  public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(So3Manifold.HS_EXP);
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //

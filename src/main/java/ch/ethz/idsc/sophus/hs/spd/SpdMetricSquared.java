@@ -17,6 +17,6 @@ public enum SpdMetricSquared implements TensorMetric {
   public Scalar distance(Tensor p, Tensor q) {
     Tensor pn = MatrixSqrt.ofSymmetric(p).inverse();
     Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
-    return SpdExponential.nSquared(pq);
+    return SpdExpLog.nSquared(pq);
   }
 }

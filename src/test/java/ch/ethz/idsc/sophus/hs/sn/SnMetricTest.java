@@ -38,7 +38,7 @@ public class SnMetricTest extends TestCase {
       Scalar a1 = SnMetric.INSTANCE.distance(p, q);
       Scalar a2 = _check(p, q);
       Chop._12.requireClose(a1, a2);
-      Scalar norm = RnNorm.INSTANCE.norm(new SnExp(p).log(q));
+      Scalar norm = RnNorm.INSTANCE.norm(new SnExponential(p).log(q));
       Tolerance.CHOP.requireClose(norm, a1);
     }
   }

@@ -29,6 +29,7 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
   @Override // from FlattenLogManifold
   public FlattenLog logAt(Tensor point) {
     LieGroupElement lieGroupElement = lieGroup.element(point).inverse();
+    // TODO not serializable!
     return q -> log.apply(lieGroupElement.combine(q));
   }
 }

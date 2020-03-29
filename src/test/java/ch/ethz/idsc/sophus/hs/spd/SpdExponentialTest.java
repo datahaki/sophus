@@ -12,8 +12,8 @@ public class SpdExponentialTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
       Tensor x = TestHelper.generateSim(n);
-      Tensor g = SpdExponential.INSTANCE.exp(x);
-      Tensor r = SpdExponential.INSTANCE.log(g);
+      Tensor g = SpdExpLog.INSTANCE.exp(x);
+      Tensor r = SpdExpLog.INSTANCE.log(g);
       Chop._07.requireClose(x, r);
     }
   }
@@ -21,7 +21,7 @@ public class SpdExponentialTest extends TestCase {
   public void testMatrixExp() {
     for (int n = 1; n < 5; ++n) {
       Tensor x = TestHelper.generateSim(n);
-      Tensor exp1 = SpdExponential.INSTANCE.exp(x);
+      Tensor exp1 = SpdExpLog.INSTANCE.exp(x);
       Tensor exp2 = MatrixExp.of(x);
       Chop._07.requireClose(exp1, exp2);
     }
@@ -30,7 +30,7 @@ public class SpdExponentialTest extends TestCase {
   public void testMatrixLog() {
     for (int count = 0; count < 10; ++count) {
       Tensor x = TestHelper.generateSpd(2);
-      Tensor exp1 = SpdExponential.INSTANCE.log(x);
+      Tensor exp1 = SpdExpLog.INSTANCE.log(x);
       Tensor exp2 = MatrixLog.of(x);
       Chop._08.requireClose(exp1, exp2);
     }
@@ -39,7 +39,7 @@ public class SpdExponentialTest extends TestCase {
   public void testExpNonSymmetricFail() {
     Tensor x = LowerTriangularize.of(TestHelper.generateSim(4));
     try {
-      SpdExponential.INSTANCE.exp(x);
+      SpdExpLog.INSTANCE.exp(x);
       fail();
     } catch (Exception exception) {
       // ---
@@ -49,7 +49,7 @@ public class SpdExponentialTest extends TestCase {
   public void testLogNonSymmetricFail() {
     Tensor g = LowerTriangularize.of(TestHelper.generateSpd(4));
     try {
-      SpdExponential.INSTANCE.log(g);
+      SpdExpLog.INSTANCE.log(g);
       fail();
     } catch (Exception exception) {
       // ---

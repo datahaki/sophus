@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanImplicit;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -19,14 +19,14 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class RnBiinvariantMeanEquationTest extends TestCase {
-  private static final BiinvariantMeanImplicit BIINVARIANT_MEAN_IMPLICIT = //
-      new BiinvariantMeanImplicit(RnGroup.INSTANCE, RnExponential.INSTANCE);
+  private static final IterativeBiinvariantMean BIINVARIANT_MEAN_IMPLICIT = //
+      new IterativeBiinvariantMean(RnManifold.HS_EXP);
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(RnManifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(RnManifold.INSTANCE) };
 
   public void testSimple() {
-    MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.INSTANCE);
+    MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.HS_EXP);
     Tensor sequence = Tensors.of( //
         RnExponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //

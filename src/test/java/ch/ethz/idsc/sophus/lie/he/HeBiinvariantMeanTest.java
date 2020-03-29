@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeBiinvariantMeanTest extends TestCase {
-  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(HeManifold.INSTANCE);
+  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(HeManifold.HS_EXP);
 
   public void testTrivial() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");

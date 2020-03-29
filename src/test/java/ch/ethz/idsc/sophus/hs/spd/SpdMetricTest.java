@@ -12,9 +12,9 @@ public class SpdMetricTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {
       Tensor g = TestHelper.generateSpd(n);
-      Scalar dP = SpdExponential.nSquared(g);
+      Scalar dP = SpdExpLog.nSquared(g);
       Tensor ginv = Symmetrize.of(Inverse.of(g));
-      Scalar dN = SpdExponential.nSquared(ginv);
+      Scalar dN = SpdExpLog.nSquared(ginv);
       Chop._06.requireClose(dP, dN);
     }
   }
@@ -32,7 +32,7 @@ public class SpdMetricTest extends TestCase {
   public void testExpLog() {
     for (int n = 1; n < 2; ++n) {
       Tensor p = TestHelper.generateSpd(n);
-      SpdExp spdExp = new SpdExp(p);
+      SpdExponential spdExp = new SpdExponential(p);
       Tensor q = TestHelper.generateSpd(n);
       Tensor log = spdExp.log(q);
       log.add(log);

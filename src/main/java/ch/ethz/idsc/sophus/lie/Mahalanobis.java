@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -14,10 +15,10 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class Mahalanobis {
   private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final Exponential lieExponential;
   private final BiinvariantMean biinvariantMean;
 
-  public Mahalanobis(LieGroup lieGroup, LieExponential lieExponential, BiinvariantMean biinvariantMean) {
+  public Mahalanobis(LieGroup lieGroup, Exponential lieExponential, BiinvariantMean biinvariantMean) {
     this.lieGroup = lieGroup;
     this.lieExponential = lieExponential;
     this.biinvariantMean = biinvariantMean;

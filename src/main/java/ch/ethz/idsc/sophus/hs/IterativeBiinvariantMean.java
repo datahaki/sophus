@@ -1,13 +1,12 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.ArgMax;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -24,20 +23,24 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.19-21, 2012 */
 // TODO unify with SnMean and SpdMean ! also LieMidpoint
-public class BiinvariantMeanImplicit implements Serializable {
+// TODO rename
+public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private static final int MAX_ITERATIONS = 100;
   private static final Chop CHOP = Chop._12;
   // ---
-  private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final HsExponential hsExponential;
   private final MeanDefect meanDefect;
 
   /** @param lieGroup
    * @param lieExponential */
-  public BiinvariantMeanImplicit(LieGroup lieGroup, LieExponential lieExponential) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.lieExponential = Objects.requireNonNull(lieExponential);
-    meanDefect = BiinvariantMeanDefect.of(LieFlattenLogManifold.of(lieGroup, lieExponential::log));
+  public IterativeBiinvariantMean(HsExponential hsExponential) {
+    this.hsExponential = Objects.requireNonNull(hsExponential);
+    meanDefect = BiinvariantMeanDefect.of(hsExponential);
+  }
+
+  @Override
+  public Tensor mean(Tensor sequence, Tensor weights) {
+    return apply(sequence, weights).get();
   }
 
   /** @param sequence
@@ -48,7 +51,8 @@ public class BiinvariantMeanImplicit implements Serializable {
     Tensor mean = sequence.get(ArgMax.of(weights)); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
       Tensor next = update(sequence, weights, mean);
-      if (CHOP.allZero(lieExponential.log(lieGroup.element(next).inverse().combine(mean))))
+      Exponential lieExponential = hsExponential.exponentialAt(next);
+      if (CHOP.allZero(lieExponential.log(mean)))
         return Optional.of(next);
       mean = next;
     }
@@ -56,7 +60,7 @@ public class BiinvariantMeanImplicit implements Serializable {
   }
 
   private Tensor update(Tensor sequence, Tensor weights, Tensor mean) {
-    return lieGroup.element(mean).combine( //
-        lieExponential.exp(meanDefect.defect(sequence, weights, mean)));
+    Exponential lieExponential = hsExponential.exponentialAt(mean);
+    return lieExponential.exp(meanDefect.defect(sequence, weights, mean));
   }
 }

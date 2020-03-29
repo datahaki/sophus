@@ -14,7 +14,7 @@ public class HnExpTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor xn = RandomVariate.of(distribution, 3);
       Tensor x = HnWeierstrassCoordinate.toPoint(xn);
-      HnExp hnExp = new HnExp(x);
+      HnExponential hnExp = new HnExponential(x);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, 3));
       Tensor y = hnExp.exp(v);
       // StaticHelper.requirePoint(y); // FIXME
@@ -31,7 +31,7 @@ public class HnExpTest extends TestCase {
       // Tensor xn = ;
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
       Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
-      HnExp hnExp = new HnExp(x);
+      HnExponential hnExp = new HnExponential(x);
       Tensor v = hnExp.log(y);
       // System.out.println(v);
       // StaticHelper.requireTangent(x, v); // FIXME

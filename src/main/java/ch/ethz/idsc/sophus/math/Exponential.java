@@ -1,10 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Log[g.m.g^-1] == Ad[g].Log[m] */
-public interface LieExponential {
+public interface Exponential {
   /** @param x in the Lie-algebra
    * @return element g of the Lie-group with x == log g, and g == exp x */
   Tensor exp(Tensor x);

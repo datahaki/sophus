@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -28,7 +28,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * p. 131
  * 
  * <p>The formula for the logarithm is taken from a book by Chirikjian */
-public enum So3Exponential implements LieExponential {
+public enum So3Exponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));

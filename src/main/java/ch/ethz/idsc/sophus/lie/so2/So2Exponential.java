@@ -1,7 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.so2;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * an element of the algebra so(2) is represented as 'vector' of length 1
  * (Actually a scalar, but LieExponential requires a vector) */
-public enum So2Exponential implements LieExponential {
+public enum So2Exponential implements Exponential {
   INSTANCE;
 
   @Override // from LieExponential

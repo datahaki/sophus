@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class StBiinvariantMeanTest extends TestCase {
-  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(StManifold.INSTANCE);
+  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(StManifold.HS_EXP);
 
   public void testTrivial() {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));

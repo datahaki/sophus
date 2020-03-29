@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
@@ -26,7 +26,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * implementation is based on the function "strans" taken from
  * "Freeform Curves on Spheres of Arbitrary Dimension"
  * by Scott Schaefer and Ron Goldman, 2005, page 5 */
-public class SnExp implements LieExponential, FlattenLog, Serializable {
+public class SnExponential implements Exponential, FlattenLog, Serializable {
   private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final Tensor x;
@@ -34,7 +34,7 @@ public class SnExp implements LieExponential, FlattenLog, Serializable {
 
   /** @param x on S^n
    * @throws Exception if p is not a vector of Euclidean norm 1 */
-  public SnExp(Tensor x) {
+  public SnExponential(Tensor x) {
     this.x = StaticHelper.requirePoint(x);
     projection = Projection.on(x);
     if (x.length() < 2)

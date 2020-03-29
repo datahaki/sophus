@@ -4,10 +4,10 @@ package ch.ethz.idsc.sophus.lie;
 import java.io.IOException;
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.lie.se2.Se2Group;
+import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -42,7 +42,7 @@ public class BiinvariantMeanImplicitTest extends TestCase {
     double nom = Math.sqrt(2) - Math.PI / 4;
     double denom = 1 + Math.PI / 4 * (Math.sqrt(2) / (2 - Math.sqrt(2)));
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
-    BiinvariantMeanImplicit bMI = new BiinvariantMeanImplicit(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE);
+    IterativeBiinvariantMean bMI = new IterativeBiinvariantMean(Se2Manifold.HS_EXP);
     Tensor actual = bMI.apply(sequenceUnordered, weights).get();
     Chop._11.requireClose(actual, expected);
   }
@@ -55,8 +55,8 @@ public class BiinvariantMeanImplicitTest extends TestCase {
       Tensor sequence = RandomVariate.of(UniformDistribution.unit(), length, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
       Tensor actual = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      BiinvariantMeanImplicit biinvariantMeanImplicit = //
-          Serialization.copy(new BiinvariantMeanImplicit(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE));
+      IterativeBiinvariantMean biinvariantMeanImplicit = //
+          Serialization.copy(new IterativeBiinvariantMean(Se2CoveringManifold.HS_EXP));
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
         Chop._11.requireClose(actual, result.get());

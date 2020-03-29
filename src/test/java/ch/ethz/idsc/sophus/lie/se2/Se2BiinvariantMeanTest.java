@@ -26,7 +26,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
 public class Se2BiinvariantMeanTest extends TestCase {
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se2Manifold.INSTANCE);
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se2Manifold.HS_EXP);
 
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38

@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class Se2CoveringExponentialTest extends TestCase {
-  private static final LieExponential LIE_EXPONENTIAL = Se2CoveringExponential.INSTANCE;
+  private static final Exponential LIE_EXPONENTIAL = Se2CoveringExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se2CoveringGroup.INSTANCE;
 
   public void testSimpleXY() {

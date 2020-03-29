@@ -1,16 +1,16 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.st;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class StGroupTest extends TestCase {
-  private static final LieExponential LIE_EXPONENTIAL = StExponential.INSTANCE;
+  private static final Exponential LIE_EXPONENTIAL = StExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = StGroup.INSTANCE;
 
   public void testSt1Inverse() {

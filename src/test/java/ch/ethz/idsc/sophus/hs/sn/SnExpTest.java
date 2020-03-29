@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class SnExpTest extends TestCase {
   public void test2D() throws ClassNotFoundException, IOException {
-    SnExp snExp = Serialization.copy(new SnExp(UnitVector.of(2, 0)));
+    SnExponential snExp = Serialization.copy(new SnExponential(UnitVector.of(2, 0)));
     Scalar dist = RealScalar.of(0.2);
     Tensor log = snExp.log(AngleVector.of(dist));
     Chop._12.requireClose(log, UnitVector.of(2, 1).multiply(dist));
@@ -28,7 +28,7 @@ public class SnExpTest extends TestCase {
 
   public void test2DNormFail() {
     try {
-      new SnExp(Tensors.vector(2, 1));
+      new SnExponential(Tensors.vector(2, 1));
       fail();
     } catch (Exception exception) {
       // ---
@@ -36,7 +36,7 @@ public class SnExpTest extends TestCase {
   }
 
   public void test2DExpFail() {
-    SnExp snExp = new SnExp(UnitVector.of(2, 0));
+    SnExponential snExp = new SnExponential(UnitVector.of(2, 0));
     Scalar dist = RealScalar.of(0.2);
     try {
       snExp.exp(AngleVector.of(dist));
@@ -47,12 +47,12 @@ public class SnExpTest extends TestCase {
   }
 
   public void test3D() {
-    Tensor tensor = new SnExp(UnitVector.of(3, 0)).exp(UnitVector.of(3, 1).multiply(RealScalar.of(Math.PI / 2)));
+    Tensor tensor = new SnExponential(UnitVector.of(3, 0)).exp(UnitVector.of(3, 1).multiply(RealScalar.of(Math.PI / 2)));
     Chop._12.requireClose(tensor, UnitVector.of(3, 1));
   }
 
   public void test4D() {
-    Tensor tensor = new SnExp(UnitVector.of(4, 0)).exp(UnitVector.of(4, 1).multiply(RealScalar.of(Math.PI)));
+    Tensor tensor = new SnExponential(UnitVector.of(4, 0)).exp(UnitVector.of(4, 1).multiply(RealScalar.of(Math.PI)));
     Chop._12.requireClose(tensor, UnitVector.of(4, 0).negate());
   }
 
@@ -60,14 +60,14 @@ public class SnExpTest extends TestCase {
     for (int dim = 2; dim < 6; ++dim)
       for (int count = 0; count < 20; ++count) {
         Tensor point = Normalize.with(Norm._2).apply(RandomVariate.of(NormalDistribution.standard(), dim));
-        Tensor apply = new SnExp(point).exp(point.map(Scalar::zero));
+        Tensor apply = new SnExponential(point).exp(point.map(Scalar::zero));
         assertEquals(point, apply);
       }
   }
 
   public void testLog() {
     Tensor point = UnitVector.of(3, 0);
-    SnExp snExp = new SnExp(point);
+    SnExponential snExp = new SnExponential(point);
     Tensor g = Normalize.with(Norm._2).apply(Tensors.vector(1, 1, 1));
     Tensor vector = snExp.log(g);
     Tensor retr = snExp.exp(vector);
@@ -76,7 +76,7 @@ public class SnExpTest extends TestCase {
 
   public void test0Fail() {
     try {
-      new SnExp(Tensors.empty());
+      new SnExponential(Tensors.empty());
       fail();
     } catch (Exception exception) {
       // ---
@@ -85,7 +85,7 @@ public class SnExpTest extends TestCase {
 
   public void test1Fail() {
     try {
-      new SnExp(UnitVector.of(1, 0));
+      new SnExponential(UnitVector.of(1, 0));
       fail();
     } catch (Exception exception) {
       // ---
@@ -94,7 +94,7 @@ public class SnExpTest extends TestCase {
 
   public void testMatrixFail() {
     try {
-      new SnExp(HilbertMatrix.of(3));
+      new SnExponential(HilbertMatrix.of(3));
       fail();
     } catch (Exception exception) {
       // ---

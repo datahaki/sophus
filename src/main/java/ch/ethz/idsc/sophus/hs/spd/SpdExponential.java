@@ -1,67 +1,58 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.tensor.Scalar;
+import java.io.Serializable;
+
+import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
-import ch.ethz.idsc.tensor.mat.Eigensystem;
-import ch.ethz.idsc.tensor.sca.AbsSquared;
-import ch.ethz.idsc.tensor.sca.Exp;
-import ch.ethz.idsc.tensor.sca.Log;
 
-/** SPD == Symmetric positive definite == Sym+
+/** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
+ * 
+ * SPD == Symmetric positive definite == Sym+
  * 
  * <pre>
  * Exp: sim (n) -> Sym+(n)
  * Log: Sym+(n) -> sim (n)
  * </pre>
  * 
- * <p>
- * Exp is equivalent to MatrixExp
- * Log is equivalent to MatrixLog
- * 
- * <p>
  * Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
  * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 79
  * 
  * @see MatrixExp
  * @see MatrixLog
- * @see SpdExp */
-public enum SpdExponential implements LieExponential {
-  INSTANCE;
+ * @see SpdExpLog */
+public class SpdExponential implements Exponential, FlattenLog, Serializable {
+  private final Tensor pp;
+  private final Tensor pn;
 
-  @Override // from LieExponential
-  public Tensor exp(Tensor x) {
-    Eigensystem eigensystem = Eigensystem.ofSymmetric(x);
-    Tensor avec = eigensystem.vectors();
-    Tensor ainv = Transpose.of(avec);
-    return Symmetrize.of(ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(avec)));
+  /** @param p symmetric
+   * @throws Exception if p is not symmetric */
+  public SpdExponential(Tensor p) {
+    MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
+    pp = matrixSqrt.forward();
+    pn = matrixSqrt.inverse();
   }
 
   @Override // from LieExponential
-  public Tensor log(Tensor g) {
-    Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
-    Tensor avec = eigensystem.vectors();
-    Tensor ainv = Transpose.of(avec);
-    return Symmetrize.of(ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(avec)));
+  public Tensor exp(Tensor w) {
+    return Symmetrize.of(pp.dot(SpdExpLog.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp));
   }
 
-  /** n(g) == n(Inverse[g])
-   * 
-   * @param g spd
-   * @return */
-  public static Scalar nSquared(Tensor g) {
-    Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
-    return eigensystem.values().stream() //
-        .map(Scalar.class::cast) //
-        .map(Log.FUNCTION) //
-        .map(AbsSquared.FUNCTION) //
-        .reduce(Scalar::add) //
-        .get();
+  @Override // from LieExponential
+  public Tensor log(Tensor q) {
+    Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
+    return Symmetrize.of(pp.dot(SpdExpLog.INSTANCE.log(pq)).dot(pp));
+  }
+
+  @Override
+  public Tensor flattenLog(Tensor q) {
+    return Flatten.of(log(q));
   }
 }

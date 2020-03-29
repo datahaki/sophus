@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.Tan;
  * https://www.youtube.com/watch?v=2vDciaUgL4E
  * 
  * @see Se2Skew */
-public enum Se2CoveringExponential implements LieExponential {
+public enum Se2CoveringExponential implements Exponential {
   INSTANCE;
 
   private static final Scalar HALF = RealScalar.of(0.5);

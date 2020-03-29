@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class So3GroupElementTest extends TestCase {
-  private static final LieExponential LIE_EXPONENTIAL = So3Exponential.INSTANCE;
+  private static final Exponential LIE_EXPONENTIAL = So3Exponential.INSTANCE;
   private static final LieGroup LIE_GROUP = So3Group.INSTANCE;
 
   public void testBlub() {

@@ -21,7 +21,7 @@ public class So3InverseDistanceCoordinatesTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(So3Manifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(So3Manifold.INSTANCE) };
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.HS_EXP);
 
   public void testSimple() {
     Tensor g1 = So3Exponential.INSTANCE.exp(Tensors.vector(0.2, 0.3, 0.4));

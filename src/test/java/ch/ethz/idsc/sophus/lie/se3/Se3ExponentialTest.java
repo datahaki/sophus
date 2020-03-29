@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se3ExponentialTest extends TestCase {
-  private static final LieExponential LIE_EXPONENTIAL = Se3Exponential.INSTANCE;
+  private static final Exponential LIE_EXPONENTIAL = Se3Exponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se3Group.INSTANCE;
 
   public void testSimple() {

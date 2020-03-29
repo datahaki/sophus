@@ -2,13 +2,13 @@
 package ch.ethz.idsc.sophus.lie.he;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Flatten;
 
-public enum HeExponential implements LieExponential, FlattenLog {
+public enum HeExponential implements Exponential, FlattenLog {
   INSTANCE;
 
   @Override // from LieExponential

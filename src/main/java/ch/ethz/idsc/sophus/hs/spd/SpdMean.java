@@ -22,7 +22,7 @@ public enum SpdMean implements BiinvariantMean {
       Tensor log = SpdMeanDefect.INSTANCE.defect(sequence, weights, mean); // sim matrix
       if (CHOP.allZero(Frobenius.NORM.ofMatrix(log)))
         return mean;
-      mean = new SpdExp(mean).exp(log);
+      mean = new SpdExponential(mean).exp(log);
     }
     throw TensorRuntimeException.of(sequence, weights);
   }

@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.hermite;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -40,7 +40,7 @@ public enum Hermite2Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(LieGroup lieGroup, LieExponential lieExponential, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(LieGroup lieGroup, Exponential lieExponential, Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.of(2).add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.of(2), lambda, RealScalar.of(2).add(mu));
     Scalar an2_21 = Series.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -71,7 +71,7 @@ public enum Hermite2Subdivisions {
    * 
    * @return
    * @see Hermite1Subdivision */
-  public static HermiteSubdivision standard(LieGroup lieGroup, LieExponential lieExponential) {
+  public static HermiteSubdivision standard(LieGroup lieGroup, Exponential lieExponential) {
     return of(lieGroup, lieExponential, N1_8, N1_2);
   }
 
@@ -86,7 +86,7 @@ public enum Hermite2Subdivisions {
    * @param lieGroup
    * @param lieExponential
    * @return */
-  public static HermiteSubdivision manifold(LieGroup lieGroup, LieExponential lieExponential) {
+  public static HermiteSubdivision manifold(LieGroup lieGroup, Exponential lieExponential) {
     return of(lieGroup, lieExponential, N1_5, _9_10);
   }
 }

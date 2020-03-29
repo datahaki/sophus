@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.so3;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.BiinvariantMeanImplicit;
+import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Reference:
@@ -11,8 +11,8 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum So3BiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
-  private static final BiinvariantMeanImplicit BIINVARIANT_MEAN_IMPLICIT = //
-      new BiinvariantMeanImplicit(So3Group.INSTANCE, So3Exponential.INSTANCE);
+  private static final IterativeBiinvariantMean BIINVARIANT_MEAN_IMPLICIT = //
+      new IterativeBiinvariantMean(So3Manifold.HS_EXP);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {

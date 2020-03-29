@@ -16,7 +16,7 @@ public class SpdExpTest extends TestCase {
     for (int n = 1; n < 5; ++n) {
       Tensor p = TestHelper.generateSpd(n);
       Tensor q = TestHelper.generateSpd(n);
-      SpdExp spdExp = Serialization.copy(new SpdExp(p));
+      SpdExponential spdExp = Serialization.copy(new SpdExponential(p));
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);
       Chop._08.requireClose(q, exp);
@@ -27,8 +27,8 @@ public class SpdExpTest extends TestCase {
     for (int n = 1; n < 5; ++n) {
       Tensor p = TestHelper.generateSpd(n);
       Tensor q = TestHelper.generateSpd(n);
-      SpdExp spdExpP = new SpdExp(p);
-      SpdExp spdExpQ = new SpdExp(q);
+      SpdExponential spdExpP = new SpdExponential(p);
+      SpdExponential spdExpQ = new SpdExponential(q);
       Tensor pqw = spdExpP.log(q);
       Tensor qpw = spdExpQ.log(p);
       Tensor ph = spdExpP.exp(pqw.multiply(RationalScalar.HALF));
@@ -39,7 +39,7 @@ public class SpdExpTest extends TestCase {
 
   public void testNonSymmetricFail() {
     try {
-      new SpdExp(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3));
+      new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3));
       fail();
     } catch (Exception exception) {
       // ---
@@ -48,7 +48,7 @@ public class SpdExpTest extends TestCase {
 
   public void testNullFail() {
     try {
-      new SpdExp(null);
+      new SpdExponential(null);
       fail();
     } catch (Exception exception) {
       // ---

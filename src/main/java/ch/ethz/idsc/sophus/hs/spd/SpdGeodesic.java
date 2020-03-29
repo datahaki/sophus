@@ -25,7 +25,7 @@ public enum SpdGeodesic implements GeodesicInterface {
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    SpdExp spdExp = new SpdExp(p);
+    SpdExponential spdExp = new SpdExponential(p);
     Tensor w = spdExp.log(q);
     return scalar -> spdExp.exp(w.multiply(scalar));
   }

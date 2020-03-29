@@ -7,16 +7,16 @@ import java.util.Objects;
 import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
   private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final Exponential lieExponential;
   private final Tensor cgw;
   private final Scalar mgv;
   private final Scalar mvg;
@@ -25,7 +25,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
   private final Scalar vpr;
   private final Tensor vpqr;
 
-  public Hermite3SubdivisionBuilder(LieGroup lieGroup, LieExponential lieExponential, //
+  public Hermite3SubdivisionBuilder(LieGroup lieGroup, Exponential lieExponential, //
       Tensor cgw, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {

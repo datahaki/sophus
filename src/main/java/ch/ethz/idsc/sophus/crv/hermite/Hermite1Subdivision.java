@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Nocopy;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.Tensors;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final Exponential lieExponential;
   private final LieGroupGeodesic lieGroupGeodesic;
   private final Scalar lgv;
   private final Scalar lvg;
@@ -29,7 +29,7 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
    * @param lvv
    * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      LieGroup lieGroup, LieExponential lieExponential, //
+      LieGroup lieGroup, Exponential lieExponential, //
       Scalar lgv, Scalar lvg, Scalar lvv) {
     this.lieGroup = lieGroup;
     this.lieExponential = lieExponential;

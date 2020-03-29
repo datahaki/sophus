@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.hn;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Cosh;
@@ -12,10 +12,10 @@ import ch.ethz.idsc.tensor.sca.Sinh;
 
 /** Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
-public class HnExp implements LieExponential, FlattenLog, Serializable {
+public class HnExponential implements Exponential, FlattenLog, Serializable {
   private final Tensor x;
 
-  public HnExp(Tensor x) {
+  public HnExponential(Tensor x) {
     this.x = StaticHelper.requirePoint(x);
   }
 

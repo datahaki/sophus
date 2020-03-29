@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupGeodesic;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
   private final LieGroup lieGroup;
-  private final LieExponential lieExponential;
+  private final Exponential lieExponential;
   private final LieGroupGeodesic lieGroupGeodesic;
   private final Scalar lgg;
   private final Scalar lgv;
@@ -40,7 +40,7 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
    * @param vpq
    * @throws Exception if either parameters is null */
   public Hermite2Subdivision( //
-      LieGroup lieGroup, LieExponential lieExponential, //
+      LieGroup lieGroup, Exponential lieExponential, //
       Scalar lgg, Scalar lgv, Scalar hgv, Scalar hvg, Tensor vpq) {
     this.lieGroup = lieGroup;
     this.lieExponential = lieExponential;

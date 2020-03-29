@@ -10,6 +10,6 @@ public enum SpdManifold implements FlattenLogManifold {
 
   @Override // from FlattenLogManifold
   public FlattenLog logAt(Tensor point) {
-    return new SpdExp(point);
+    return new SpdExponential(point);
   }
 }

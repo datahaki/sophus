@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.hermite;
 
-import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -43,7 +43,7 @@ public enum Hermite1Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(LieGroup lieGroup, LieExponential lieExponential, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(LieGroup lieGroup, Exponential lieExponential, Scalar lambda, Scalar mu) {
     return new Hermite1Subdivision(lieGroup, lieExponential, //
         lambda, //
         RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
@@ -60,7 +60,7 @@ public enum Hermite1Subdivisions {
    * @param lieGroup
    * @param lieExponential
    * @return */
-  public static HermiteSubdivision standard(LieGroup lieGroup, LieExponential lieExponential) {
+  public static HermiteSubdivision standard(LieGroup lieGroup, Exponential lieExponential) {
     return of(lieGroup, lieExponential, N1_8, N1_2);
   }
 }
