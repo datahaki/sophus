@@ -36,8 +36,9 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
             AffineQ.require(weights);
             Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
             Chop._12.requireAllZero(evaluate);
-            Tensor point = SnMean.INSTANCE.mean(sequence, weights);
-            Chop._12.requireClose(mean, point);
+            // Tensor point = ;
+            Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
+            Chop._06.requireClose(mean, SnMean.INSTANCE.mean(sequence, weights));
           } catch (Exception exception) {
             ++fail;
           }
@@ -51,14 +52,18 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
         for (int n = d + 1; n < 10; ++n) {
           Tensor center = UnitVector.of(d, 0);
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
+          int count = 0;
           for (Tensor mean : sequence) {
             Tensor weights = projectedCoordinate.weights(sequence, mean);
+            // System.out.println(weights);
             VectorQ.requireLength(weights, n);
             AffineQ.require(weights);
+            Chop._06.requireClose(weights, UnitVector.of(n, count));
             Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
             Chop._06.requireAllZero(evaluate);
-            Tensor point = SnMean.INSTANCE.mean(sequence, weights);
-            Chop._06.requireClose(mean, point);
+            Chop._06.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
+            Chop._03.requireClose(mean, new SnMean(Chop._06).mean(sequence, weights));
+            ++count;
           }
         }
   }

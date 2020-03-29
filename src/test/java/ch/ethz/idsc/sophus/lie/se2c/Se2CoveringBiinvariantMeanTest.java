@@ -1,7 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -25,6 +27,8 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantMeanTest extends TestCase {
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se2CoveringManifold.HS_EXP);
+
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
@@ -48,7 +52,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor defect = Se2CoveringBiinvariantMeanDefect.INSTANCE.defect(sequence, weights, mean);
+      Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }
@@ -65,7 +69,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       QuantityMagnitude.SI().in("m").apply(mean.Get(0));
       QuantityMagnitude.SI().in("m").apply(mean.Get(1));
-      Tensor defect = Se2CoveringBiinvariantMeanDefect.INSTANCE.defect(sequence, weights, mean);
+      Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }

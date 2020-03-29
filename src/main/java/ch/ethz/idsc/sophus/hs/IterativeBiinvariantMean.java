@@ -5,10 +5,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.ArgMax;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Barycentric Fixed Point Iteration
@@ -22,23 +20,32 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.19-21, 2012 */
-// TODO unify with SnMean and SpdMean ! also LieMidpoint
-// TODO rename
 public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private static final int MAX_ITERATIONS = 100;
-  private static final Chop CHOP = Chop._12;
-  // ---
+
+  /** @param hsExponential
+   * @return */
+  public static IterativeBiinvariantMean of(HsExponential hsExponential) {
+    return new IterativeBiinvariantMean(hsExponential, ArgMaxBiinvariantMean.INSTANCE, Chop._12);
+  }
+
+  /***************************************************/
   private final HsExponential hsExponential;
+  private final BiinvariantMean initialGuess;
+  private final Chop chop;
   private final MeanDefect meanDefect;
 
-  /** @param lieGroup
-   * @param lieExponential */
-  public IterativeBiinvariantMean(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
+  /** @param hsExponential
+   * @param chop
+   * @param initialGuess */
+  protected IterativeBiinvariantMean(HsExponential hsExponential, BiinvariantMean initialGuess, Chop chop) {
+    this.hsExponential = hsExponential;
+    this.initialGuess = Objects.requireNonNull(initialGuess);
+    this.chop = Objects.requireNonNull(chop);
     meanDefect = BiinvariantMeanDefect.of(hsExponential);
   }
 
-  @Override
+  @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     return apply(sequence, weights).get();
   }
@@ -46,21 +53,15 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   /** @param sequence
    * @param weights
    * @return approximate biinvariant mean */
-  public Optional<Tensor> apply(Tensor sequence, Tensor weights) {
-    AffineQ.require(weights);
-    Tensor mean = sequence.get(ArgMax.of(weights)); // initial guess
+  public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
+    Tensor mean = initialGuess.mean(sequence, weights); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      Tensor next = update(sequence, weights, mean);
-      Exponential lieExponential = hsExponential.exponentialAt(next);
-      if (CHOP.allZero(lieExponential.log(mean)))
+      Tensor next = hsExponential.exponentialAt(mean).exp(meanDefect.defect(sequence, weights, mean));
+      Exponential exponential = hsExponential.exponentialAt(next);
+      if (chop.allZero(exponential.log(mean)))
         return Optional.of(next);
       mean = next;
     }
     return Optional.empty();
-  }
-
-  private Tensor update(Tensor sequence, Tensor weights, Tensor mean) {
-    Exponential lieExponential = hsExponential.exponentialAt(mean);
-    return lieExponential.exp(meanDefect.defect(sequence, weights, mean));
   }
 }

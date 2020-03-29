@@ -4,7 +4,10 @@ package ch.ethz.idsc.sophus.lie.se3;
 import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -13,6 +16,9 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se3InverseDistanceCoordinatesTest extends TestCase {
+  private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
+      IterativeBiinvariantMean.of(Se3Manifold.HS_EXP);
+  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se3Manifold.HS_EXP);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       HsBarycentricCoordinate.linear(Se3Manifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(Se3Manifold.INSTANCE) //
@@ -28,9 +34,9 @@ public class Se3InverseDistanceCoordinatesTest extends TestCase {
           try {
             Tensor weights = barycentricCoordinate.weights(sequence, point);
             AffineQ.require(weights);
-            Tensor mean = Se3BiinvariantMean.INSTANCE.mean(sequence, weights);
+            Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
             assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
-            Tensor defect = Se3BiinvariantMeanDefect.INSTANCE.defect(sequence, weights, mean);
+            Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
             Chop._08.requireAllZero(defect);
           } catch (Exception exception) {
             ++fails;

@@ -40,7 +40,7 @@ public class SnMeanTest extends TestCase {
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
         Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
         Chop._12.requireAllZero(evaluate);
-        Tensor point = SnMean.INSTANCE.mean(sequence, weights);
+        Tensor point = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
         Chop._12.requireClose(mean, point);
       }
   }
@@ -54,7 +54,7 @@ public class SnMeanTest extends TestCase {
           Tensor angles = RandomVariate.of(distribution, n);
           Tensor sequence = angles.map(AngleVector::of);
           Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
-          Tensor point = SnMean.INSTANCE.mean(sequence, weights);
+          Tensor point = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
           Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
         } catch (Exception exception) {
           ++fail;

@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
-public class HnExpTest extends TestCase {
+public class HnExponentialTest extends TestCase {
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {

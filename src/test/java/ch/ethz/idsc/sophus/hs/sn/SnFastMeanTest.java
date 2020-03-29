@@ -21,9 +21,11 @@ public class SnFastMeanTest extends TestCase {
       for (int n = d + 1; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(NORMALIZE));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
-        Tensor mean1 = SnMean.INSTANCE.mean(sequence, weights);
+        Tensor mean1 = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
         Tensor mean2 = SnFastMean.INSTANCE.mean(sequence, weights);
+        Tensor mean3 = SnMean.INSTANCE.mean(sequence, weights);
         Chop._04.close(mean1, mean2);
+        Chop._04.close(mean1, mean3);
       }
   }
 }

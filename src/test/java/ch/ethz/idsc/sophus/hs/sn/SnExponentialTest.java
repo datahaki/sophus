@@ -12,13 +12,14 @@ import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SnExpTest extends TestCase {
+public class SnExponentialTest extends TestCase {
   public void test2D() throws ClassNotFoundException, IOException {
     SnExponential snExp = Serialization.copy(new SnExponential(UnitVector.of(2, 0)));
     Scalar dist = RealScalar.of(0.2);
@@ -61,7 +62,7 @@ public class SnExpTest extends TestCase {
       for (int count = 0; count < 20; ++count) {
         Tensor point = Normalize.with(Norm._2).apply(RandomVariate.of(NormalDistribution.standard(), dim));
         Tensor apply = new SnExponential(point).exp(point.map(Scalar::zero));
-        assertEquals(point, apply);
+        Tolerance.CHOP.requireClose(point, apply);
       }
   }
 

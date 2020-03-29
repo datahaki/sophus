@@ -19,8 +19,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class RnBiinvariantMeanEquationTest extends TestCase {
-  private static final IterativeBiinvariantMean BIINVARIANT_MEAN_IMPLICIT = //
-      new IterativeBiinvariantMean(RnManifold.HS_EXP);
+  private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
+      IterativeBiinvariantMean.of(RnManifold.HS_EXP);
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(RnManifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(RnManifold.INSTANCE) };
@@ -42,10 +42,10 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
       for (int n = 3; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-        Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
+        Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);
         Tensor mean = optional.get();
         Tensor w2 = projectedCoordinate.weights(sequence, mean);
-        Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
+        Optional<Tensor> o2 = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, w2);
         Chop._08.requireClose(mean, o2.get());
       }
   }
@@ -56,10 +56,10 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-      Optional<Tensor> optional = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights);
+      Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);
       Tensor mean = optional.get();
       Tensor w2 = projectedCoordinate.weights(sequence, mean);
-      Optional<Tensor> o2 = BIINVARIANT_MEAN_IMPLICIT.apply(sequence, w2);
+      Optional<Tensor> o2 = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, w2);
       Chop._08.requireClose(mean, o2.get());
       Chop._08.requireClose(weights, w2);
     }
