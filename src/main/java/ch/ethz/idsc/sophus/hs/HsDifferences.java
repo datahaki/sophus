@@ -1,31 +1,28 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** LieDifferences is the generalization of {@link Differences}
+/** HsDifferences is the generalization of {@link Differences}
  * The input are elements from the Lie group.
  * The return sequence consists of elements from the Lie algebra.
  * 
  * <pre>
- * LieDifferences[{a, b, c, d, e}] == {log a^-1.b, log b^-1.c, log c^-1.d, log d^-1.e}
+ * HsDifferences[{a, b, c, d, e}] == {log a^-1.b, log b^-1.c, log c^-1.d, log d^-1.e}
  * </pre> */
-public final class LieDifferences implements TensorUnaryOperator {
-  private final LieGroup lieGroup;
-  private final Exponential exponential;
+public final class HsDifferences implements TensorUnaryOperator {
+  private final HsExponential flattenLogManifold;
 
   /** @param lieGroup
    * @param exponential
    * @throws Exception if either parameter is null */
-  public LieDifferences(LieGroup lieGroup, Exponential exponential) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.exponential = Objects.requireNonNull(exponential);
+  public HsDifferences(HsExponential flattenLogManifold) {
+    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
   }
 
   @Override
@@ -41,6 +38,6 @@ public final class LieDifferences implements TensorUnaryOperator {
    * @param q element of the lie group
    * @return vector == log(p^-1 . q) so that exp(vector) == p^-1 . q */
   public Tensor pair(Tensor p, Tensor q) {
-    return exponential.log(lieGroup.element(p).inverse().combine(q));
+    return flattenLogManifold.exponential(p).log(q);
   }
 }

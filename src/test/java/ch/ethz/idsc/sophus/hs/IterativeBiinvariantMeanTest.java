@@ -1,10 +1,9 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.lie;
+package ch.ethz.idsc.sophus.hs;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
@@ -23,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
-public class BiinvariantMeanImplicitTest extends TestCase {
+public class IterativeBiinvariantMeanTest extends TestCase {
   public void testSE2() {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
