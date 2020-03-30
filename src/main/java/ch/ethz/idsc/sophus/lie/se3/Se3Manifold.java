@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
 public enum Se3Manifold {
   ;
   public static final FlattenLogManifold INSTANCE = //
-      LieFlattenLogManifold.of(Se3Group.INSTANCE, Se3Exponential::flattenLog);
+      LieFlattenLogManifold.of(Se3Group.INSTANCE, Se3Exponential.INSTANCE::flattenLog);
   public static final HsExponential HS_EXP = //
       LieExponential.of(Se3Group.INSTANCE, Se3Exponential.INSTANCE);
 }

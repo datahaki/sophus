@@ -40,7 +40,8 @@ public class HnMetricTest extends TestCase {
       Tensor x = HnWeierstrassCoordinate.toPoint(xn);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, 3));
       assertEquals(v.length(), 4);
-      Scalar vn1 = HnNorm.INSTANCE.norm(v);
+      Scalar vn1 = HnNormSquared.INSTANCE.norm(v);
+      System.out.println(vn1);
     }
   }
 }

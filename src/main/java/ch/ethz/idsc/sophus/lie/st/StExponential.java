@@ -47,6 +47,6 @@ public enum StExponential implements Exponential, FlattenLog {
 
   @Override
   public Tensor flattenLog(Tensor lambda_t) {
-    return Flatten.of(INSTANCE.log(lambda_t));
+    return Flatten.of(log(lambda_t));
   }
 }

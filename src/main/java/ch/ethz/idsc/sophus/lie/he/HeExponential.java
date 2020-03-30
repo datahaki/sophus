@@ -35,6 +35,6 @@ public enum HeExponential implements Exponential, FlattenLog {
 
   @Override
   public Tensor flattenLog(Tensor xyz) {
-    return Flatten.of(INSTANCE.log(xyz));
+    return Flatten.of(log(xyz));
   }
 }

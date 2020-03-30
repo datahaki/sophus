@@ -5,8 +5,10 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Cosh;
 import ch.ethz.idsc.tensor.sca.Sinh;
 
@@ -28,10 +30,9 @@ public class HnExponential implements Exponential, FlattenLog, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    StaticHelper.requirePoint(y);
-    Scalar theta = HnMetric.INSTANCE.distance(x, y);
-    // FIXME use series of theta/sinh(theta) if theta is small
-    return y.subtract(x.multiply(theta)).multiply(theta).divide(Sinh.FUNCTION.apply(theta));
+    Scalar cosh_d = HnMetric.cosh_d(x, y);
+    Scalar theta = ArcCosh.FUNCTION.apply(cosh_d);
+    return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(theta));
   }
 
   @Override // from FlattenLog
