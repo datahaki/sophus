@@ -38,7 +38,7 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
             Chop._12.requireAllZero(evaluate);
             // Tensor point = ;
             Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
-            Chop._06.requireClose(mean, SnMean.INSTANCE.mean(sequence, weights));
+            Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
           } catch (Exception exception) {
             ++fail;
           }
@@ -62,7 +62,7 @@ public class SnInverseDistanceCoordinatesTest extends TestCase {
             Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
             Chop._06.requireAllZero(evaluate);
             Chop._06.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
-            Chop._03.requireClose(mean, new SnMean(Chop._06).mean(sequence, weights));
+            Chop._03.requireClose(mean, new SnBiinvariantMean(Chop._06).mean(sequence, weights));
             ++count;
           }
         }

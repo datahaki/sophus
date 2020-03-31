@@ -5,10 +5,10 @@ import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public final class SnMean extends IterativeBiinvariantMean {
-  public static final BiinvariantMean INSTANCE = new SnMean(Chop._14);
+public final class SnBiinvariantMean extends IterativeBiinvariantMean {
+  public static final BiinvariantMean INSTANCE = new SnBiinvariantMean(Chop._14);
 
-  public SnMean(Chop chop) {
+  public SnBiinvariantMean(Chop chop) {
     super(SnManifold.INSTANCE, SnPhongMean.INSTANCE, chop);
   }
 }

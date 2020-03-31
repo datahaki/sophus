@@ -48,7 +48,7 @@ public enum SnAffineCoordinate implements BarycentricCoordinate {
 
     private Operator(Tensor sequence) {
       _1_n = RationalScalar.of(1, sequence.length());
-      snExp = new SnExponential(SnMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
+      snExp = new SnExponential(SnBiinvariantMean.INSTANCE.mean(sequence, ConstantArray.of(_1_n, sequence.length())));
       pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(snExp::log)));
     }
 

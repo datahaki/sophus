@@ -12,9 +12,9 @@ import ch.ethz.idsc.tensor.sca.Sign;
 
 /* package */ enum StaticHelper {
   ;
-  private static final Chop CHOP = Chop._10;
+  private static final Chop CHOP = Chop._06;
 
-  /** @param x
+  /** @param x in H^n
    * @return */
   public static Tensor requirePoint(Tensor x) {
     Scalar xn = Last.of(x);
@@ -25,8 +25,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
     return x;
   }
 
-  /** @param x
-   * @param v
+  /** @param x in H^n
+   * @param v tangent vector at x
    * @return */
   public static Tensor requireTangent(Tensor x, Tensor v) {
     CHOP.requireZero(HnBilinearForm.between(x, v));

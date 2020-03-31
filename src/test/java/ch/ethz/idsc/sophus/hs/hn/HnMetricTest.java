@@ -37,11 +37,10 @@ public class HnMetricTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor xn = RandomVariate.of(distribution, 3);
-      Tensor x = HnWeierstrassCoordinate.toPoint(xn);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, 3));
       assertEquals(v.length(), 4);
       Scalar vn1 = HnNormSquared.INSTANCE.norm(v);
-      System.out.println(vn1);
+      Sign.requirePositiveOrZero(vn1);
     }
   }
 }

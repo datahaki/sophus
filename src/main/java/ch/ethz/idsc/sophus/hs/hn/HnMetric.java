@@ -6,9 +6,12 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
+import ch.ethz.idsc.tensor.sca.Chop;
 
+/** Reference:
+ * "Metric Spaces of Non-Positive Curvature"
+ * by Martin R. Bridson, Andre Haefliger, 2020 */
 public enum HnMetric implements TensorMetric {
   INSTANCE;
 
@@ -26,7 +29,7 @@ public enum HnMetric implements TensorMetric {
     Scalar xy = HnBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, xy))
       return xy;
-    Tolerance.CHOP.requireClose(xy, RealScalar.ONE);
+    Chop._08.requireClose(xy, RealScalar.ONE);
     return RealScalar.ONE;
   }
 }

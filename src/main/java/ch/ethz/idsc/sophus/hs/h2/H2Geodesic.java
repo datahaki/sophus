@@ -15,7 +15,9 @@ import ch.ethz.idsc.tensor.sca.Sign;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 import ch.ethz.idsc.tensor.sca.Tanh;
 
-/** geodesic on 2-dimensional hyperbolic half
+/** Careful: H2Geodesic uses different coordinates than HnGeodesic for n == 2!
+ * 
+ * geodesic on 2-dimensional hyperbolic half-plane
  * 
  * half-plane coordinates are of the form {x, y} with y strictly positive
  * 

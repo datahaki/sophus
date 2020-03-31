@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sinh;
 
-/** Sinhc[z] := Sinh[z] / z */
+/** SinhcInverse[z] := z / Sinh[z] */
 public enum SinhcInverse implements ScalarUnaryOperator {
   FUNCTION;
 

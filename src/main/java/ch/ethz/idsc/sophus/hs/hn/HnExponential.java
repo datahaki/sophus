@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.Sinhc;
 import ch.ethz.idsc.sophus.math.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Cosh;
-import ch.ethz.idsc.tensor.sca.Sinh;
 
 /** Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
@@ -25,7 +25,8 @@ public class HnExponential implements Exponential, FlattenLog, Serializable {
   public Tensor exp(Tensor v) {
     StaticHelper.requireTangent(x, v);
     Scalar vn = HnNorm.INSTANCE.norm(v);
-    return x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinh.FUNCTION.apply(vn).divide(vn)));
+    Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
+    return HnProjection.INSTANCE.apply(exp);
   }
 
   @Override // from Exponential

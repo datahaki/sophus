@@ -9,7 +9,9 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.red.Norm2Squared;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/** H2 parameterized with coordinates in unit disc
+/** Careful: H2Midpoint uses different coordinates than HnGeodesic for n == 2!
+ * 
+ * H2 parameterized with coordinates in unit disc
  * Poincaré disk model of hyperbolic geometry
  * 
  * Reference:

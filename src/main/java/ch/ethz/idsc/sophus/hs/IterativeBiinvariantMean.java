@@ -26,7 +26,14 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   /** @param hsExponential
    * @return */
   public static IterativeBiinvariantMean of(HsExponential hsExponential) {
-    return new IterativeBiinvariantMean(hsExponential, Chop._12);
+    return of(hsExponential, Chop._12);
+  }
+
+  /** @param hsExponential
+   * @param chop
+   * @return */
+  public static IterativeBiinvariantMean of(HsExponential hsExponential, Chop chop) {
+    return new IterativeBiinvariantMean(hsExponential, chop);
   }
 
   /***************************************************/

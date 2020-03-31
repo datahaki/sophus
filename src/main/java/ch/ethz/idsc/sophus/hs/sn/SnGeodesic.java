@@ -47,4 +47,9 @@ public enum SnGeodesic implements GeodesicInterface {
   public Tensor split(Tensor p, Tensor q, Scalar scalar) {
     return curve(p, q).apply(scalar);
   }
+
+  @Override // from MidpointInterface
+  public Tensor midpoint(Tensor p, Tensor q) {
+    return NORMALIZE.apply(p.add(q));
+  }
 }
