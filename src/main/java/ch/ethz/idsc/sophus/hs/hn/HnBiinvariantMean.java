@@ -6,7 +6,7 @@ import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class HnBiinvariantMean extends IterativeBiinvariantMean {
-  public static final BiinvariantMean INSTANCE = new HnBiinvariantMean(Chop._05);
+  public static final BiinvariantMean INSTANCE = new HnBiinvariantMean(Chop._06);
 
   /** @param chop non-null */
   public HnBiinvariantMean(Chop chop) {

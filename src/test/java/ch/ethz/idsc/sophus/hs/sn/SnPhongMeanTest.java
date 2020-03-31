@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Normalize;
+import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -43,5 +44,17 @@ public class SnPhongMeanTest extends TestCase {
         Tensor mp = SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
         Chop._08.requireClose(m1, mp);
       }
+  }
+
+  public void testAffineFail() {
+    Tensor x = UnitVector.of(3, 0);
+    Tensor y = UnitVector.of(3, 1);
+    SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
+    try {
+      SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

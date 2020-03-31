@@ -25,4 +25,16 @@ public class HnPhongMeanTest extends TestCase {
       Chop._08.requireClose(m1, mp);
     }
   }
+
+  public void testAffineFail() {
+    Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
+    Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
+    HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
+    try {
+      HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.6, 0.5));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

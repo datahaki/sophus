@@ -8,7 +8,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.Last;
 import ch.ethz.idsc.tensor.sca.Chop;
-import ch.ethz.idsc.tensor.sca.Sign;
 
 /* package */ enum StaticHelper {
   ;
@@ -18,11 +17,11 @@ import ch.ethz.idsc.tensor.sca.Sign;
    * @return */
   public static Tensor requirePoint(Tensor x) {
     Scalar xn = Last.of(x);
-    Sign.requirePositive(xn);
-    if (!Scalars.lessEquals(RealScalar.ONE, xn))
-      throw TensorRuntimeException.of(x, xn);
-    CHOP.requireClose(HnNormSquared.INSTANCE.norm(x), RealScalar.ONE.negate());
-    return x;
+    if (Scalars.lessEquals(RealScalar.ONE, xn)) {
+      CHOP.requireClose(HnNormSquared.INSTANCE.norm(x), RealScalar.ONE.negate());
+      return x;
+    }
+    throw TensorRuntimeException.of(x, xn);
   }
 
   /** @param x in H^n
