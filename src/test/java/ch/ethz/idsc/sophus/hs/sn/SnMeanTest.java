@@ -1,7 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.so2.AngleVector;
 import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
@@ -28,6 +30,7 @@ public class SnMeanTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       HsBarycentricCoordinate.linear(SnManifold.INSTANCE), //
       HsBarycentricCoordinate.smooth(SnManifold.INSTANCE) };
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(SnManifold.INSTANCE);
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
@@ -38,7 +41,7 @@ public class SnMeanTest extends TestCase {
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = projectedCoordinate.weights(sequence, mean);
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
-        Tensor evaluate = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
+        Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
         Chop._12.requireAllZero(evaluate);
         Tensor point = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
         Chop._12.requireClose(mean, point);

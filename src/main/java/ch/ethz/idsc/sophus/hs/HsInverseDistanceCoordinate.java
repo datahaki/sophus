@@ -18,7 +18,7 @@ public final class HsInverseDistanceCoordinate extends HsProjection implements P
   /** @param flattenLogManifold
    * @param weightingInterface that maps a sequence and a point to a vector, for instance the inverse distances */
   public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, WeightingInterface weightingInterface) {
-    return new HsInverseDistanceCoordinate(flattenLogManifold, weightingInterface);
+    return new HsInverseDistanceCoordinate(flattenLogManifold, Objects.requireNonNull(weightingInterface));
   }
 
   /***************************************************/
@@ -26,7 +26,7 @@ public final class HsInverseDistanceCoordinate extends HsProjection implements P
 
   private HsInverseDistanceCoordinate(FlattenLogManifold flattenLogManifold, WeightingInterface weightingInterface) {
     super(flattenLogManifold);
-    this.weightingInterface = Objects.requireNonNull(weightingInterface);
+    this.weightingInterface = weightingInterface;
   }
 
   @Override // from BarycentricCoordinate

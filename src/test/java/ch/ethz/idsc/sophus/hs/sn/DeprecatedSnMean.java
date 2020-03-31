@@ -2,6 +2,8 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -19,6 +21,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   /** high-precision for testing */
   public static final DeprecatedSnMean INSTANCE = new DeprecatedSnMean(Chop._14);
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(SnManifold.INSTANCE);
   /***************************************************/
   private final Chop chop;
 
@@ -31,7 +34,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
     Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights); // initial guess
     int count = 0;
     while (++count < MAX_ITERATIONS) {
-      Tensor log = SnMeanDefect.INSTANCE.defect(sequence, weights, mean);
+      Tensor log = MEAN_DEFECT.defect(sequence, weights, mean);
       if (chop.allZero(Norm._2.ofVector(log)))
         return NORMALIZE.apply(mean);
       mean = new SnExponential(mean).exp(log);

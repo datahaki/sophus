@@ -23,16 +23,17 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
 public class BiinvariantMeanDefect implements MeanDefect, Serializable {
-  /** @param hsExponential
+  /** @param hsExponential non-null
    * @return */
   public static MeanDefect of(HsExponential hsExponential) {
     return new BiinvariantMeanDefect(Objects.requireNonNull(hsExponential));
   }
 
+  /***************************************************/
   private final HsExponential hsExponential;
 
-  private BiinvariantMeanDefect(HsExponential flattenLogManifold) {
-    this.hsExponential = flattenLogManifold;
+  private BiinvariantMeanDefect(HsExponential hsExponential) {
+    this.hsExponential = hsExponential;
   }
 
   @Override // from MeanDefect

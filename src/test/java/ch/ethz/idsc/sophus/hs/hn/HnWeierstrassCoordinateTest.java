@@ -10,11 +10,11 @@ import junit.framework.TestCase;
 public class HnWeierstrassCoordinateTest extends TestCase {
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
-    for (int count = 0; count < 10; ++count) {
-      Tensor xn = RandomVariate.of(distribution, 3);
+    for (int d = 1; d < 5; ++d) {
+      Tensor xn = RandomVariate.of(distribution, d);
       Tensor x = HnWeierstrassCoordinate.toPoint(xn);
       StaticHelper.requirePoint(x);
-      Tensor vn = RandomVariate.of(distribution, 3);
+      Tensor vn = RandomVariate.of(distribution, d);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, vn);
       StaticHelper.requireTangent(x, v);
     }

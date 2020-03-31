@@ -15,8 +15,8 @@ import junit.framework.TestCase;
 public class HnMetricTest extends TestCase {
   public void testZero() {
     Distribution distribution = NormalDistribution.standard();
-    for (int count = 0; count < 10; ++count) {
-      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
+    for (int d = 1; d < 5; ++d) {
+      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Scalar dxy = HnMetric.INSTANCE.distance(x, x);
       Chop._06.requireZero(dxy);
       assertTrue(Scalars.isZero(Imag.FUNCTION.apply(dxy)));
@@ -25,9 +25,9 @@ public class HnMetricTest extends TestCase {
 
   public void testPositive() {
     Distribution distribution = NormalDistribution.standard();
-    for (int count = 0; count < 10; ++count) {
-      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
-      Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
+    for (int d = 1; d < 5; ++d) {
+      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Sign.requirePositiveOrZero(dxy);
     }
@@ -35,10 +35,10 @@ public class HnMetricTest extends TestCase {
 
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
-    for (int count = 0; count < 10; ++count) {
-      Tensor xn = RandomVariate.of(distribution, 3);
-      Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, 3));
-      assertEquals(v.length(), 4);
+    for (int d = 1; d < 5; ++d) {
+      Tensor xn = RandomVariate.of(distribution, d);
+      Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
+      assertEquals(v.length(), d + 1);
       Scalar vn1 = HnNormSquared.INSTANCE.norm(v);
       Sign.requirePositiveOrZero(vn1);
     }

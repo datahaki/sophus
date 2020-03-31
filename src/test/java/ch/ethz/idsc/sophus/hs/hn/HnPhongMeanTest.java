@@ -13,17 +13,16 @@ import junit.framework.TestCase;
 public class HnPhongMeanTest extends TestCase {
   public void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);
-    for (int d = 2; d < 4; ++d)
-      for (int count = 0; count < 10; ++count) {
-        Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor m1 = HnGeodesic.INSTANCE.midpoint(x, y);
-        StaticHelper.requirePoint(m1);
-        Tensor m2 = HnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
-        StaticHelper.requirePoint(m2);
-        Chop._08.requireClose(m1, m2);
-        Tensor mp = HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
-        Chop._08.requireClose(m1, mp);
-      }
+    for (int d = 1; d < 6; ++d) {
+      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor m1 = HnGeodesic.INSTANCE.midpoint(x, y);
+      StaticHelper.requirePoint(m1);
+      Tensor m2 = HnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
+      StaticHelper.requirePoint(m2);
+      Chop._08.requireClose(m1, m2);
+      Tensor mp = HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
+      Chop._08.requireClose(m1, mp);
+    }
   }
 }

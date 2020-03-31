@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public class HnBiinvariantMean extends IterativeBiinvariantMean {
   public static final BiinvariantMean INSTANCE = new HnBiinvariantMean(Chop._05);
 
+  /** @param chop non-null */
   public HnBiinvariantMean(Chop chop) {
     super(HnManifold.INSTANCE, HnPhongMean.INSTANCE, chop);
   }

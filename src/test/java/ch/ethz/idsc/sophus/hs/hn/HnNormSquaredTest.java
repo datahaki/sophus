@@ -12,9 +12,9 @@ import junit.framework.TestCase;
 public class HnNormSquaredTest extends TestCase {
   public void testNegative() {
     Distribution distribution = NormalDistribution.standard();
-    for (int count = 0; count < 10; ++count) {
-      Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
-      Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
+    for (int d = 1; d < 5; ++d) {
+      Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       StaticHelper.requirePoint(p);
       StaticHelper.requirePoint(q);
       Tensor dif = p.subtract(q);

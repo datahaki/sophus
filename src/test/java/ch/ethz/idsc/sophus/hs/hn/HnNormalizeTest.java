@@ -12,9 +12,9 @@ import junit.framework.TestCase;
 public class HnNormalizeTest extends TestCase {
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
-    for (int count = 0; count < 10; ++count) {
-      Tensor xn = RandomVariate.of(distribution, 3);
-      Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, 3));
+    for (int d = 1; d < 5; ++d) {
+      Tensor xn = RandomVariate.of(distribution, d);
+      Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
       v = HnNormalize.INSTANCE.apply(v);
       Tolerance.CHOP.requireClose(HnNorm.INSTANCE.norm(v), RealScalar.ONE);
     }

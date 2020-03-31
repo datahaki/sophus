@@ -19,25 +19,23 @@ public class HnGeodesicTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     GeodesicInterface geodesicInterface = Serialization.copy(HnGeodesic.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
-    for (int d = 2; d < 4; ++d)
-      for (int count = 0; count < 10; ++count) {
-        Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor midpoint = geodesicInterface.midpoint(p, q);
-        StaticHelper.requirePoint(midpoint);
-      }
+    for (int d = 1; d < 4; ++d) {
+      Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor midpoint = geodesicInterface.midpoint(p, q);
+      StaticHelper.requirePoint(midpoint);
+    }
   }
 
   public void testSubdiv() {
     BSpline2CurveSubdivision bSpline2CurveSubdivision = new BSpline2CurveSubdivision(HnGeodesic.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
-    for (int d = 2; d < 4; ++d)
-      for (int count = 0; count < 10; ++count) {
-        Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor r = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor result = Nest.of(bSpline2CurveSubdivision::cyclic, Tensors.of(p, q, r), 3);
-        assertTrue(result.flatten(-1).allMatch(NumberQ::of));
-      }
+    for (int d = 1; d < 4; ++d) {
+      Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor r = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor result = Nest.of(bSpline2CurveSubdivision::cyclic, Tensors.of(p, q, r), 3);
+      assertTrue(result.flatten(-1).allMatch(NumberQ::of));
+    }
   }
 }

@@ -5,9 +5,11 @@ import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Tensor;
 
+/** fast midpoint computation */
 public class HnGeodesic extends HsGeodesic {
   public static final GeodesicInterface INSTANCE = new HnGeodesic();
 
+  /***************************************************/
   private HnGeodesic() {
     super(HnManifold.INSTANCE);
   }

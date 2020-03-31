@@ -16,13 +16,12 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * HsDifferences[{a, b, c, d, e}] == {log a^-1.b, log b^-1.c, log c^-1.d, log d^-1.e}
  * </pre> */
 public final class HsDifferences implements TensorUnaryOperator {
-  private final HsExponential flattenLogManifold;
+  private final HsExponential hsExponential;
 
-  /** @param lieGroup
-   * @param exponential
+  /** @param hsExponential
    * @throws Exception if either parameter is null */
-  public HsDifferences(HsExponential flattenLogManifold) {
-    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
+  public HsDifferences(HsExponential hsExponential) {
+    this.hsExponential = Objects.requireNonNull(hsExponential);
   }
 
   @Override
@@ -38,6 +37,6 @@ public final class HsDifferences implements TensorUnaryOperator {
    * @param q element of the lie group
    * @return vector == log(p^-1 . q) so that exp(vector) == p^-1 . q */
   public Tensor pair(Tensor p, Tensor q) {
-    return flattenLogManifold.exponential(p).log(q);
+    return hsExponential.exponential(p).log(q);
   }
 }
