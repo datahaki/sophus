@@ -8,10 +8,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sign;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/** norm for tangent vectors
+/** hyperboloid model
+ * norm for tangent vectors
  * 
  * "Metric Spaces of Non-Positive Curvature"
- * by Martin R. Bridson, Andre Haefliger, 2020 */
+ * by Martin R. Bridson, Andre Haefliger, 1999 */
 public enum HnNorm implements TensorNorm {
   INSTANCE;
 

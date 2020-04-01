@@ -9,7 +9,8 @@ import ch.ethz.idsc.tensor.red.Norm2Squared;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Sign;
 
-/** Careful: H2Metric uses different coordinates than HnMetric for n == 2!
+/** Careful: H2Metric uses as coordinates the Klein model
+ * whereas HnMetric uses as coordinates the hyperboloid model!
  * 
  * Source:
  * https://en.wikipedia.org/wiki/Poincar%C3%A9_half-plane_model#Distance_calculation */

@@ -9,9 +9,11 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-/** Reference:
+/** hyperboloid model
+ * 
+ * Reference:
  * "Metric Spaces of Non-Positive Curvature"
- * by Martin R. Bridson, Andre Haefliger, 2020 */
+ * by Martin R. Bridson, Andre Haefliger, 1999 */
 public enum HnMetric implements TensorMetric {
   INSTANCE;
 

@@ -12,7 +12,9 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Cosh;
 
-/** Reference:
+/** hyperboloid model
+ * 
+ * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
 public class HnExponential implements Exponential, FlattenLog, Serializable {
   private final Tensor x;
