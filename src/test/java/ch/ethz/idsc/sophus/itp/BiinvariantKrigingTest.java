@@ -27,7 +27,7 @@ public class BiinvariantKrigingTest extends TestCase {
       Tensor xya = RandomVariate.of(distribution, 3);
       Tensor values = RandomVariate.of(distributiox, n);
       Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
-      Kriging kriging1 = ProjectedKriging.regression( //
+      Kriging kriging1 = Krigings.PROJECT.regression( //
           Se2CoveringManifold.INSTANCE, powerVariogram, //
           points, values, covariance);
       Tensor est1 = kriging1.estimate(xya);
@@ -35,7 +35,7 @@ public class BiinvariantKrigingTest extends TestCase {
       Tensor shift = RandomVariate.of(distribution, 3);
       { // invariant under left action
         Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-        Kriging krigingL = ProjectedKriging.regression( //
+        Kriging krigingL = Krigings.PROJECT.regression( //
             Se2CoveringManifold.INSTANCE, powerVariogram, //
             seqlft, values, covariance);
         Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
@@ -44,7 +44,7 @@ public class BiinvariantKrigingTest extends TestCase {
       }
       { // invariant under right action
         Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-        Kriging krigingR = ProjectedKriging.regression( //
+        Kriging krigingR = Krigings.PROJECT.regression( //
             Se2CoveringManifold.INSTANCE, powerVariogram, //
             seqrgt, values, covariance);
         Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
@@ -53,7 +53,7 @@ public class BiinvariantKrigingTest extends TestCase {
       }
       { // invariant under inversion
         Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-        Kriging krigingI = ProjectedKriging.regression( //
+        Kriging krigingI = Krigings.PROJECT.regression( //
             Se2CoveringManifold.INSTANCE, powerVariogram, //
             seqinv, values, covariance);
         Tensor xyainv = LIE_GROUP_OPS.invert(xya);

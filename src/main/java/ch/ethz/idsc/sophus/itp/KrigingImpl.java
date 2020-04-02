@@ -6,6 +6,9 @@ import java.io.Serializable;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
+/** <p>Reference:
+ * "3.7.4 Interpolation by Kriging"
+ * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 /* package */ class KrigingImpl implements Kriging, Serializable {
   private final PseudoDistances pseudoDistances;
   private final Scalar one;

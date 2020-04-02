@@ -18,7 +18,9 @@ import ch.ethz.idsc.tensor.red.ScalarSummaryStatistics;
  * 
  * Reference:
  * "Polygon Laplacian Made Simple"
- * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020 */
+ * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020
+ * 
+ * Remark: the matrix also appears in Kriging */
 public enum MinTriangleAreaSquared {
   ;
   private static final Scalar HALF = DoubleScalar.of(0.5);

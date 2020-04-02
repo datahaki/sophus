@@ -25,7 +25,7 @@ public interface Kriging {
   static Kriging of(PseudoDistances pseudoDistances, Tensor sequence, Tensor values, Tensor covariance) {
     Tensor vardst = Tensor.of(sequence.stream().map(pseudoDistances::pseudoDistances));
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
-    Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.unique(matrix));
+    Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.uniqueUnit(matrix));
     matrix.stream().forEach(row -> row.append(one));
     int n = sequence.length();
     Tensor inverse = PseudoInverse.of(matrix.append(Tensors.vector(i -> i < n ? one : one.zero(), n + 1)));

@@ -22,8 +22,20 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * 
  * @see ExponentialVariogram
  * @see PowerVariogram */
-public enum ProjectedKriging {
-  ;
+public enum Krigings {
+  LOGNORM {
+    @Override
+    public PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return new LognormPseudoDistances(flattenLogManifold, variogram, sequence);
+    }
+  },
+  PROJECT {
+    @Override
+    public PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return new ProjectPseudoDistances(new HsProjection(flattenLogManifold), variogram, sequence);
+    }
+  };
+
   /** Gaussian process regression
    * 
    * @param flattenLogManifold
@@ -32,12 +44,11 @@ public enum ProjectedKriging {
    * @param values
    * @param covariance symmetric matrix
    * @return */
-  public static Kriging regression( //
+  public Kriging regression( //
       FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, //
       Tensor sequence, Tensor values, Tensor covariance) {
-    return Kriging.of( //
-        new ProjectedPseudoDistances(new HsProjection(flattenLogManifold), variogram, sequence), //
-        sequence, values, covariance);
+    PseudoDistances pseudoDistances = pseudoDistances(flattenLogManifold, variogram, sequence);
+    return Kriging.of(pseudoDistances, sequence, values, covariance);
   }
 
   /** @param flattenLogManifold to measure the length of the difference between two points
@@ -45,19 +56,28 @@ public enum ProjectedKriging {
    * @param sequence of points
    * @param values associated to points in given sequence
    * @return */
-  public static Kriging interpolation( //
+  public Kriging interpolation( //
       FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
     int n = values.length();
     // TODO Array.zeros(n, n) is not generic!
     return regression(flattenLogManifold, variogram, sequence, values, Array.zeros(n, n));
   }
 
-  /** @param flattenLogManifold to measure the length of the difference between two points
+  /** uses unit vectors as target values
+   * 
+   * @param flattenLogManifold to measure the length of the difference between two points
    * @param variogram
    * @param sequence of points
    * @return */
-  public static Kriging barycentric( //
+  public Kriging barycentric( //
       FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     return interpolation(flattenLogManifold, variogram, sequence, IdentityMatrix.of(sequence.length()));
   }
+
+  /** @param flattenLogManifold
+   * @param variogram
+   * @param sequence
+   * @return */
+  public abstract PseudoDistances pseudoDistances( //
+      FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 }

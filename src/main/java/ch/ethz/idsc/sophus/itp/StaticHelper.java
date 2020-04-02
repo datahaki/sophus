@@ -12,9 +12,9 @@ import ch.ethz.idsc.tensor.qty.Unit;
 /* package */ enum StaticHelper {
   ;
   /** @param tensor
-   * @return
+   * @return unit that is common to all scalars in given tensor
    * @throws Exception */
-  public static Unit unique(Tensor tensor) {
+  public static Unit uniqueUnit(Tensor tensor) {
     List<Unit> list = tensor.flatten(-1) //
         .map(Scalar.class::cast) //
         .map(QuantityUnit::of) //

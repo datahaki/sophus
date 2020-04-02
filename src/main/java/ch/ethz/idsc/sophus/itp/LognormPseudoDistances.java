@@ -8,12 +8,18 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-public class LogPseudoDistances implements PseudoDistances, Serializable {
+/** uses left invariant metric on tangent space
+ * 
+ * @see ProjectPseudoDistances */
+public class LognormPseudoDistances implements PseudoDistances, Serializable {
   private final FlattenLogManifold flattenLogManifold;
   private final ScalarUnaryOperator variogram;
   private final Tensor sequence;
 
-  public LogPseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  /** @param flattenLogManifold
+   * @param variogram
+   * @param sequence */
+  public LognormPseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.flattenLogManifold = flattenLogManifold;
     this.variogram = variogram;
     this.sequence = sequence;
