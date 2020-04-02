@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import java.util.List;
 import java.util.stream.Collectors;

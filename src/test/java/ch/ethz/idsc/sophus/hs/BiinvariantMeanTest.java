@@ -50,18 +50,20 @@ public class BiinvariantMeanTest extends TestCase {
   public void testSe2CSimple() {
     Distribution distribution = UniformDistribution.unit();
     int fails = 0;
-    for (int n = 1; n < 7; ++n) {
-      Tensor origin = RandomVariate.of(distribution, n, 3);
-      Tensor matrix = affine(n);
-      Tensor invers = Inverse.of(matrix);
-      Tensor mapped = Tensor.of(matrix.stream() //
-          .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(origin, weights)));
-      Tensor result = Tensor.of(invers.stream() //
-          .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(mapped, weights)));
-      Chop._10.requireClose(origin.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
-      if (!Chop._01.close(origin, result))
+    for (int n = 1; n < 7; ++n)
+      try {
+        Tensor origin = RandomVariate.of(distribution, n, 3);
+        Tensor matrix = affine(n);
+        Tensor invers = Inverse.of(matrix);
+        Tensor mapped = Tensor.of(matrix.stream() //
+            .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(origin, weights)));
+        Tensor result = Tensor.of(invers.stream() //
+            .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(mapped, weights)));
+        Chop._10.requireClose(origin.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
+        Chop._01.requireClose(origin, result);
+      } catch (Exception exception) {
         ++fails;
-    }
+      }
     assertTrue(fails <= 2);
   }
 }

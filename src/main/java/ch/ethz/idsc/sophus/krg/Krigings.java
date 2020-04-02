@@ -1,11 +1,16 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
-import ch.ethz.idsc.sophus.hs.HsProjection;
+import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.PseudoInverse;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
+import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference:
@@ -32,7 +37,7 @@ public enum Krigings {
   PROJECT {
     @Override
     public PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return new ProjectPseudoDistances(new HsProjection(flattenLogManifold), variogram, sequence);
+      return new ProjectPseudoDistances(flattenLogManifold, variogram, sequence);
     }
   };
 
@@ -48,7 +53,14 @@ public enum Krigings {
       FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, //
       Tensor sequence, Tensor values, Tensor covariance) {
     PseudoDistances pseudoDistances = pseudoDistances(flattenLogManifold, variogram, sequence);
-    return Kriging.of(pseudoDistances, sequence, values, covariance);
+    Tensor vardst = Tensor.of(sequence.stream().map(pseudoDistances::pseudoDistances));
+    Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
+    Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.uniqueUnit(matrix));
+    matrix.stream().forEach(row -> row.append(one));
+    int n = sequence.length();
+    Tensor inverse = PseudoInverse.of(matrix.append(Tensors.vector(i -> i < n ? one : one.zero(), n + 1)));
+    Tensor weights = inverse.dot(values.copy().append(values.get(0).map(Scalar::zero)));
+    return new KrigingImpl(pseudoDistances, one, weights, inverse);
   }
 
   /** @param flattenLogManifold to measure the length of the difference between two points

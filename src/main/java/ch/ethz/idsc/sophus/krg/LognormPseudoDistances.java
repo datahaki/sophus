@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** uses left invariant metric on tangent space
  * 
  * @see ProjectPseudoDistances */
-public class LognormPseudoDistances implements PseudoDistances, Serializable {
+/* package */ class LognormPseudoDistances implements PseudoDistances, Serializable {
   private final FlattenLogManifold flattenLogManifold;
   private final ScalarUnaryOperator variogram;
   private final Tensor sequence;

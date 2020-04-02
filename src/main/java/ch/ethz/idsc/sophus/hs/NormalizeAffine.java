@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.red.Total;
 /* package */ enum NormalizeAffine {
   ;
   /** @param target
-   * @param projection symmetric square matrix
+   * @param projection symmetric square matrix enforces linear reproduction
    * @return */
   public static Tensor fromProjection(Tensor target, Tensor projection) {
     return of(target.dot(projection));

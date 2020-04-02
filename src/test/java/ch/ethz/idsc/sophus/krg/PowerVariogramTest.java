@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.RealScalar;

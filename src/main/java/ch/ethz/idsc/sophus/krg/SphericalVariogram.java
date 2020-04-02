@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import java.util.Objects;
 
@@ -12,12 +12,19 @@ import ch.ethz.idsc.tensor.alg.Series;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 
+/** Reference:
+ * Eq (15.9.6) "Gaussian Process Regression" in NR, 2007 */
 public class SphericalVariogram implements ScalarUnaryOperator {
+  /** @param a positive
+   * @param b
+   * @return */
   public static ScalarUnaryOperator of(Scalar a, Scalar b) {
-    return new SphericalVariogram(Sign.requirePositive(a), Objects.requireNonNull(b));
+    return new SphericalVariogram( //
+        Sign.requirePositive(a), //
+        Objects.requireNonNull(b));
   }
 
-  /** @param a
+  /** @param a positive
    * @param b
    * @return */
   public static ScalarUnaryOperator of(Number a, Number b) {

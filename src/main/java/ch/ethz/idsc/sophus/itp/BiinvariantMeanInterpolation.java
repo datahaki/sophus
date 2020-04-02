@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.sca.Floor;
     return new BiinvariantMeanInterpolation(Objects.requireNonNull(biinvariantMean), tensor);
   }
 
-  // ---
+  /***************************************************/
   private final BiinvariantMean biinvariantMean;
   private final Tensor tensor;
 
@@ -36,19 +36,21 @@ import ch.ethz.idsc.tensor.sca.Floor;
     this.tensor = Unprotect.references(tensor);
   }
 
-  @Override
+  @Override // from Interpolation
   public Tensor get(Tensor index) {
     // TODO JPH implement
     throw new UnsupportedOperationException();
   }
 
-  @Override
+  @Override // from Interpolation
   public Tensor at(Scalar index) {
     Scalar floor = Floor.FUNCTION.apply(index);
     Scalar remain = index.subtract(floor);
     int below = floor.number().intValue();
     if (Scalars.isZero(remain))
       return tensor.get(below);
-    return biinvariantMean.mean(tensor.extract(below, below + 2), Tensors.of(RealScalar.ONE.subtract(remain), remain));
+    return biinvariantMean.mean( //
+        tensor.extract(below, below + 2), // sequence
+        Tensors.of(RealScalar.ONE.subtract(remain), remain));
   }
 }

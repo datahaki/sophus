@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import java.util.Objects;
 
@@ -10,8 +10,13 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public class ExponentialVariogram implements ScalarUnaryOperator {
+  /** @param a
+   * @param b
+   * @return */
   public static ScalarUnaryOperator of(Scalar a, Scalar b) {
-    return new ExponentialVariogram(Sign.requirePositive(a), Objects.requireNonNull(b));
+    return new ExponentialVariogram( //
+        Sign.requirePositive(a), //
+        Objects.requireNonNull(b));
   }
 
   /** @param a

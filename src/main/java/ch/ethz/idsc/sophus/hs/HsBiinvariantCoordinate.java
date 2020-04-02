@@ -2,21 +2,23 @@
 package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.id.InverseDiagonal;
 import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public final class HsBiinvariantCoordinate extends HsProjection implements ProjectedCoordinate {
+  private static final Scalar ONE = RealScalar.of(1.0);
   private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
 
   /** @param flattenLogManifold
@@ -71,8 +73,13 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor projection = projection(sequence, point);
-    return NormalizeAffine.fromProjection( //
-        target.apply(IdentityMatrix.of(sequence.length()).subtract(projection)), // typically: inverse norm of rows
-        projection); // projection enforces linear reproduction
+    AtomicInteger atomicInteger = new AtomicInteger();
+    Tensor complement = Tensor.of(projection.stream() //
+        .map(Tensor::negate) //
+        .map(row -> {
+          row.set(ONE::add, atomicInteger.getAndIncrement());
+          return row;
+        }));
+    return NormalizeAffine.fromProjection(target.apply(complement), projection);
   }
 }

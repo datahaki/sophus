@@ -1,14 +1,14 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
+import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Power;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
@@ -18,6 +18,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 public class PowerVariogram implements ScalarUnaryOperator {
+  private static final Scalar TWO = RealScalar.of(2);
+
   /** Quote:
    * "A good general choice is beta=3/2, but for functions with a strong linear trend,
    * you may want to experiment with values as large as 1.99."
@@ -26,9 +28,9 @@ public class PowerVariogram implements ScalarUnaryOperator {
    * @param beta in the range [1, 2) "The value 2 gives a degenerate matrix and meaningless results."
    * @return */
   public static PowerVariogram of(Scalar alpha, Scalar beta) {
-    if (beta.equals(RealScalar.of(2)))
+    if (beta.equals(TWO))
       throw TensorRuntimeException.of(beta);
-    return new PowerVariogram(Objects.requireNonNull(alpha), beta);
+    return new PowerVariogram(Objects.requireNonNull(alpha), Power.function(beta));
   }
 
   /** @param alpha
@@ -49,33 +51,29 @@ public class PowerVariogram implements ScalarUnaryOperator {
     Scalar[] y = values.stream().map(Scalar.class::cast).toArray(Scalar[]::new);
     final int n = sequence.length();
     Scalar num = RealScalar.ZERO;
-    Scalar denom = RealScalar.ZERO;
+    Scalar den = RealScalar.ZERO;
     Scalar nugsq = RealScalar.ZERO;
     ScalarUnaryOperator power = Power.function(beta);
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
-        Scalar rb = power.apply(RnMetric.INSTANCE.distance(sequence.get(i), sequence.get(j)));
+        Scalar rb = power.apply(Norm._2.between(sequence.get(i), sequence.get(j)));
         num = num.add(AbsSquared.FUNCTION.apply(y[i].subtract(y[j])).multiply(RationalScalar.HALF).subtract(nugsq).multiply(rb));
-        denom = denom.add(rb.multiply(rb));
+        den = den.add(rb.multiply(rb));
       }
-    return of(num.divide(denom), beta);
+    return new PowerVariogram(num.divide(den), power);
   }
 
   /***************************************************/
   private final Scalar alpha;
   private final ScalarUnaryOperator power;
 
-  private PowerVariogram(Scalar alpha, Scalar beta) {
+  private PowerVariogram(Scalar alpha, ScalarUnaryOperator power) {
     this.alpha = alpha;
-    power = Power.function(beta);
+    this.power = power;
   }
 
   @Override
   public Scalar apply(Scalar r) {
     return power.apply(r).multiply(alpha);
-  }
-
-  public Scalar alpha() {
-    return alpha;
   }
 }
