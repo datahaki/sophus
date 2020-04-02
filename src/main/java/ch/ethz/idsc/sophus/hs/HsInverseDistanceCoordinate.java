@@ -3,12 +3,10 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
-import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
 /** barycentric coordinates for inverse distance weights using distance measurements
  * 
@@ -34,6 +32,6 @@ public final class HsInverseDistanceCoordinate extends HsProjection implements P
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
     Tensor target = weightingInterface.weights(sequence, point);
-    return NormalizeAffine.of(target, PseudoInverse.of(nullsp), nullsp);
+    return NormalizeAffine.fromNullspace(target, nullsp);
   }
 }

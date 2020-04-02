@@ -24,6 +24,7 @@ public class Mahalanobis {
     this.biinvariantMean = biinvariantMean;
   }
 
+  // TODO pick different class name!
   public class Norm implements TensorNorm {
     private final Tensor sigma;
     private final Tensor inverse;

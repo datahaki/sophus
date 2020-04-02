@@ -5,11 +5,9 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
-import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Lie affine coordinates are generalized barycentric coordinates for
@@ -34,7 +32,11 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * and inversion is guaranteed.
  * 
  * If the target mapping correlates to inverse distances then the coordinates
- * satisfy the Lagrange property. */
+ * satisfy the Lagrange property.
+ * 
+ * Reference:
+ * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+ * by Jan Hakenberg, 2020 */
 public final class HsBarycentricCoordinate extends HsProjection implements ProjectedCoordinate {
   /** @param flattenLogManifold
    * @return */
@@ -52,7 +54,7 @@ public final class HsBarycentricCoordinate extends HsProjection implements Proje
    * @param target
    * @return */
   public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
-    return new HsBarycentricCoordinate(flattenLogManifold, target);
+    return new HsBarycentricCoordinate(flattenLogManifold, Objects.requireNonNull(target));
   }
 
   /***************************************************/
@@ -60,13 +62,13 @@ public final class HsBarycentricCoordinate extends HsProjection implements Proje
 
   private HsBarycentricCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     super(flattenLogManifold);
-    this.target = Objects.requireNonNull(target);
+    this.target = target;
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.of(levers);
-    return NormalizeAffine.of(target.apply(levers), PseudoInverse.of(nullsp), nullsp);
+    return NormalizeAffine.fromNullspace(target.apply(levers), nullsp);
   }
 }

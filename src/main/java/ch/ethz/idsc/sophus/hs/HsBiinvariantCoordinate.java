@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.NormalizeAffine;
 import ch.ethz.idsc.sophus.math.id.InverseDiagonal;
 import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -26,7 +25,7 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
     return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
   }
 
-  /** most common choice
+  /** Hint: most common choice since coordinates vary smoothly
    * 
    * @param flattenLogManifold
    * @return */
@@ -35,10 +34,10 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
   }
 
   /** @param flattenLogManifold
-   * @param target
+   * @param target non-null
    * @return */
   public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
-    return new HsBiinvariantCoordinate(flattenLogManifold, target);
+    return new HsBiinvariantCoordinate(flattenLogManifold, Objects.requireNonNull(target));
   }
 
   /** @param flattenLogManifold
@@ -66,13 +65,13 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
   /** @param target typically {@link InverseNorm} */
   private HsBiinvariantCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     super(flattenLogManifold);
-    this.target = Objects.requireNonNull(target);
+    this.target = target;
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor projection = projection(sequence, point);
-    return NormalizeAffine.of( //
+    return NormalizeAffine.fromProjection( //
         target.apply(IdentityMatrix.of(sequence.length()).subtract(projection)), // typically: inverse norm of rows
         projection); // projection enforces linear reproduction
   }
