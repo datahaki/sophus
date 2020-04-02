@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -72,7 +73,27 @@ public class KrigingsTest extends TestCase {
     }
   }
 
-  public void testQuantity() {
+  public void testWeighting() throws ClassNotFoundException, IOException {
+    Distribution distribution = NormalDistribution.standard();
+    int n = 6;
+    ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
+    for (Krigings krigings : Krigings.values()) {
+      WeightingInterface weightingInterface = Serialization.copy(krigings.weighting(RnManifold.INSTANCE, variogram));
+      for (int d = 1; d < 4; ++d) {
+        Tensor sequence = RandomVariate.of(distribution, n, d);
+        for (int index = 0; index < sequence.length(); ++index) {
+          Tensor tensor = weightingInterface.weights(sequence, sequence.get(index));
+          Chop._10.requireClose(tensor, UnitVector.of(n, index));
+          // ---
+          Tensor point = RandomVariate.of(distribution, d);
+          Tensor weights = weightingInterface.weights(sequence, point);
+          AffineQ.require(weights, Chop._08);
+        }
+      }
+    }
+  }
+
+  public void testQuantityLognorm() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
     int n = 10;
@@ -80,11 +101,23 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    // for (Krigings krigings : Krigings.values())
-    { // TODO doesn't work! for project
-      Kriging kriging = Krigings.LOGNORM.interpolation(RnManifold.INSTANCE, variogram, sequence, values);
-      Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
-      QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
-    }
+    Krigings krigings = Krigings.LOGNORM;
+    Kriging kriging = krigings.interpolation(RnManifold.INSTANCE, variogram, sequence, values);
+    Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
+    QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
+  }
+
+  public void testQuantityProject() {
+    Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
+    ScalarUnaryOperator variogram = ExponentialVariogram.of(3, 2);
+    int n = 10;
+    int d = 3;
+    Tensor sequence = RandomVariate.of(distributionX, n, d);
+    Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
+    Tensor values = RandomVariate.of(distributionY, n);
+    Krigings krigings = Krigings.PROJECT;
+    Kriging kriging = krigings.interpolation(RnManifold.INSTANCE, variogram, sequence, values);
+    Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
+    QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
 }
