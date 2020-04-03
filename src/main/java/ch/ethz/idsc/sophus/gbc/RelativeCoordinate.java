@@ -1,9 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.gbc;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.id.InverseDiagonal;
@@ -14,17 +15,19 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** Reference:
+/** relative coordinates are biinvariant
+ * 
+ * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public final class HsBiinvariantCoordinate extends HsProjection implements ProjectedCoordinate {
+public final class RelativeCoordinate extends HsProjection implements ProjectedCoordinate {
   private static final Scalar ONE = RealScalar.of(1.0);
   private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
 
   /** @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
-    return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
+    return new RelativeCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
   }
 
   /** Hint: most common choice since coordinates vary smoothly
@@ -32,16 +35,17 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
    * @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate smooth(FlattenLogManifold flattenLogManifold) {
-    return new HsBiinvariantCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
+    return new RelativeCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
   }
 
   /** @param flattenLogManifold
    * @param target non-null
    * @return */
   public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
-    return new HsBiinvariantCoordinate(flattenLogManifold, Objects.requireNonNull(target));
+    return new RelativeCoordinate(flattenLogManifold, Objects.requireNonNull(target));
   }
 
+  /***************************************************/
   /** @param flattenLogManifold
    * @return */
   public static ProjectedCoordinate diagonal_linear(FlattenLogManifold flattenLogManifold) {
@@ -58,14 +62,13 @@ public final class HsBiinvariantCoordinate extends HsProjection implements Proje
    * @return biinvariant coordinates */
   public static ProjectedCoordinate affine(FlattenLogManifold flattenLogManifold) {
     // HsBarycentricCoordinate uses more efficient matrix multiplication
-    return HsBarycentricCoordinate.custom(flattenLogManifold, AFFINE);
+    return AbsoluteCoordinate.custom(flattenLogManifold, AFFINE);
   }
 
   /***************************************************/
   private final TensorUnaryOperator target;
 
-  /** @param target typically {@link InverseNorm} */
-  private HsBiinvariantCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
+  private RelativeCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
     super(flattenLogManifold);
     this.target = target;
   }

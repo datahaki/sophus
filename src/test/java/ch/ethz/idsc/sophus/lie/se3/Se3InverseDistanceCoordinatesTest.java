@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.lie.se3;
 
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -20,8 +20,8 @@ public class Se3InverseDistanceCoordinatesTest extends TestCase {
       IterativeBiinvariantMean.of(Se3Manifold.HS_EXP);
   public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se3Manifold.HS_EXP);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBarycentricCoordinate.linear(Se3Manifold.INSTANCE), //
-      HsBarycentricCoordinate.smooth(Se3Manifold.INSTANCE) //
+      AbsoluteCoordinate.linear(Se3Manifold.INSTANCE), //
+      AbsoluteCoordinate.smooth(Se3Manifold.INSTANCE) //
   };
 
   public void testRandom() {

@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.lie.he;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
-import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.id.InverseNorm;
@@ -21,12 +21,12 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeInverseDistanceCoordinateTest extends TestCase {
-  private static final ProjectedCoordinate AFFINE = HsBiinvariantCoordinate.affine(HeManifold.INSTANCE);
-  public static final ProjectedCoordinate INSTANCE = HsBarycentricCoordinate.custom( //
+  private static final ProjectedCoordinate AFFINE = RelativeCoordinate.affine(HeManifold.INSTANCE);
+  public static final ProjectedCoordinate INSTANCE = AbsoluteCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBiinvariantCoordinate.linear(HeManifold.INSTANCE), //
-      HsBiinvariantCoordinate.smooth(HeManifold.INSTANCE), //
+      RelativeCoordinate.linear(HeManifold.INSTANCE), //
+      RelativeCoordinate.smooth(HeManifold.INSTANCE), //
       AFFINE, //
       INSTANCE //
   };

@@ -4,17 +4,17 @@ package ch.ethz.idsc.sophus.krg;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.ethz.idsc.sophus.gbc.HsProjection;
+import ch.ethz.idsc.sophus.gbc.ProjectionInterface;
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
-import ch.ethz.idsc.sophus.hs.HsProjection;
-import ch.ethz.idsc.sophus.hs.ProjectionInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** @see LognormPseudoDistances */
-/* package */ class ProjectPseudoDistances implements PseudoDistances, Serializable {
+/** @see AbsoluteDistances */
+/* package */ class RelativeDistances implements PseudoDistances, Serializable {
   private static final Scalar ONE_NEGATE = RealScalar.of(-1.0);
   // ---
   private final ProjectionInterface projectionInterface;
@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   /** @param flattenLogManifold
    * @param variogram
    * @param sequence */
-  public ProjectPseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public RelativeDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.projectionInterface = new HsProjection(flattenLogManifold);
     this.variogram = variogram;
     this.sequence = sequence;

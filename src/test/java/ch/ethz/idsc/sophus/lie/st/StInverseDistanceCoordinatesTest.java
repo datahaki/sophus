@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -18,10 +18,10 @@ import junit.framework.TestCase;
 
 public class StInverseDistanceCoordinatesTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
-  private static final ProjectedCoordinate AFFINE = HsBiinvariantCoordinate.affine(StManifold.INSTANCE);
+  private static final ProjectedCoordinate AFFINE = RelativeCoordinate.affine(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBiinvariantCoordinate.linear(StManifold.INSTANCE), //
-      HsBiinvariantCoordinate.smooth(StManifold.INSTANCE), //
+      RelativeCoordinate.linear(StManifold.INSTANCE), //
+      RelativeCoordinate.smooth(StManifold.INSTANCE), //
       AFFINE };
 
   public void testSimple() {

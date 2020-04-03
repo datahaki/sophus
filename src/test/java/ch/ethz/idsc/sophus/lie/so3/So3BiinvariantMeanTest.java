@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -17,8 +17,8 @@ import junit.framework.TestCase;
 
 public class So3BiinvariantMeanTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
-      HsBarycentricCoordinate.linear(So3Manifold.INSTANCE), //
-      HsBarycentricCoordinate.smooth(So3Manifold.INSTANCE) };
+      AbsoluteCoordinate.linear(So3Manifold.INSTANCE), //
+      AbsoluteCoordinate.smooth(So3Manifold.INSTANCE) };
   public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(So3Manifold.HS_EXP);
 
   public void testSimple() {

@@ -29,25 +29,26 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007
  * 
+ * @see PowerVariogram
  * @see ExponentialVariogram
- * @see PowerVariogram */
+ * @see SphericalVariogram */
 public enum Krigings {
-  LOGNORM {
+  ABSOLUTE {
     @Override
     PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return new LognormPseudoDistances(flattenLogManifold, variogram, sequence);
+      return new AbsoluteDistances(flattenLogManifold, variogram, sequence);
     }
   },
-  PROJECT {
+  RELATIVE {
     @Override
     PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return new ProjectPseudoDistances(flattenLogManifold, variogram, sequence);
+      return new RelativeDistances(flattenLogManifold, variogram, sequence);
     }
   };
 
   /** @param pseudoDistances
    * @param sequence
-   * @param values
+   * @param values vector or matrix
    * @param covariance
    * @return */
   public static Kriging of(PseudoDistances pseudoDistances, Tensor sequence, Tensor values, Tensor covariance) {
@@ -67,7 +68,7 @@ public enum Krigings {
    * @param flattenLogManifold
    * @param variogram
    * @param sequence
-   * @param values
+   * @param values vector or matrix
    * @param covariance symmetric matrix
    * @return */
   public Kriging regression( //
@@ -79,7 +80,7 @@ public enum Krigings {
   /** @param flattenLogManifold to measure the length of the difference between two points
    * @param variogram
    * @param sequence of points
-   * @param values associated to points in given sequence
+   * @param values vector or matrix associated to points in given sequence
    * @return */
   public Kriging interpolation( //
       FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {

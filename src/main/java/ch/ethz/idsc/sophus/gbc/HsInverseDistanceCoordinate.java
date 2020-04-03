@@ -1,8 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.gbc;
 
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
@@ -10,7 +11,7 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 
 /** barycentric coordinates for inverse distance weights using distance measurements
  * 
- * @see HsBarycentricCoordinate
+ * @see AbsoluteCoordinate
  * @see InverseDistanceWeighting */
 public final class HsInverseDistanceCoordinate extends HsProjection implements ProjectedCoordinate {
   /** @param flattenLogManifold

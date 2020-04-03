@@ -93,7 +93,7 @@ public class KrigingsTest extends TestCase {
     }
   }
 
-  public void testQuantityLognorm() {
+  public void testQuantityAbsolute() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
     int n = 10;
@@ -101,13 +101,13 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Krigings krigings = Krigings.LOGNORM;
+    Krigings krigings = Krigings.ABSOLUTE;
     Kriging kriging = krigings.interpolation(RnManifold.INSTANCE, variogram, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
 
-  public void testQuantityProject() {
+  public void testQuantityRelative() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = ExponentialVariogram.of(3, 2);
     int n = 10;
@@ -115,7 +115,7 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Krigings krigings = Krigings.PROJECT;
+    Krigings krigings = Krigings.RELATIVE;
     Kriging kriging = krigings.interpolation(RnManifold.INSTANCE, variogram, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);

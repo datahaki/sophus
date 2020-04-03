@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
-import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -18,8 +18,8 @@ public class Se3BiinvariantCoordinatesTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(Se3Manifold.HS_EXP);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBiinvariantCoordinate.linear(Se3Manifold.INSTANCE), //
-      HsBiinvariantCoordinate.smooth(Se3Manifold.INSTANCE) };
+      RelativeCoordinate.linear(Se3Manifold.INSTANCE), //
+      RelativeCoordinate.smooth(Se3Manifold.INSTANCE) };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);
 
   public void testRandom() {

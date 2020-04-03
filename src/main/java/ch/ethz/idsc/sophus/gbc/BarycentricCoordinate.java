@@ -1,6 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 
 /** Inverse Distance Coordinates are generalized barycentric coordinates with the properties

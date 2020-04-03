@@ -1,11 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
-import ch.ethz.idsc.sophus.hs.HsBiinvariantCoordinate;
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -23,13 +23,13 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se2CoveringAffineCoordinatesTest extends TestCase {
-  private static final ProjectedCoordinate AD_INVAR = HsBarycentricCoordinate.custom( //
+  private static final ProjectedCoordinate AD_INVAR = AbsoluteCoordinate.custom( //
       Se2CoveringManifold.INSTANCE, //
       InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBiinvariantCoordinate.affine(Se2CoveringManifold.INSTANCE), //
-      HsBiinvariantCoordinate.linear(Se2CoveringManifold.INSTANCE), //
-      HsBiinvariantCoordinate.smooth(Se2CoveringManifold.INSTANCE), //
+      RelativeCoordinate.affine(Se2CoveringManifold.INSTANCE), //
+      RelativeCoordinate.linear(Se2CoveringManifold.INSTANCE), //
+      RelativeCoordinate.smooth(Se2CoveringManifold.INSTANCE), //
       AD_INVAR };
 
   public void test4Exact() {

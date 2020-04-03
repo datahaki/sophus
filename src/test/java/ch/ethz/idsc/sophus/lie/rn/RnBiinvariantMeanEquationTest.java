@@ -3,11 +3,11 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -22,8 +22,8 @@ public class RnBiinvariantMeanEquationTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(RnManifold.HS_EXP);
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
-      HsBarycentricCoordinate.linear(RnManifold.INSTANCE), //
-      HsBarycentricCoordinate.smooth(RnManifold.INSTANCE) };
+      AbsoluteCoordinate.linear(RnManifold.INSTANCE), //
+      AbsoluteCoordinate.smooth(RnManifold.INSTANCE) };
 
   public void testSimple() {
     MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.HS_EXP);

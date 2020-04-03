@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.sc;
 
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
-import ch.ethz.idsc.sophus.hs.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.math.id.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -14,7 +14,7 @@ import junit.framework.TestCase;
 
 public class ScInverseDistanceCoordinatesTest extends TestCase {
   public static final ProjectedCoordinate INSTANCE = //
-      HsBarycentricCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
+      AbsoluteCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
 
   public void testSimple() {
     Tensor sequence = Tensors.vector(2, 4).map(Tensors::of);

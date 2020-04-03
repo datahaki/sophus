@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.HsBarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -20,8 +20,8 @@ import junit.framework.TestCase;
 
 public class Se2CoveringInverseDistanceCoordinatesTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      HsBarycentricCoordinate.linear(Se2CoveringManifold.INSTANCE), //
-      HsBarycentricCoordinate.smooth(Se2CoveringManifold.INSTANCE) //
+      AbsoluteCoordinate.linear(Se2CoveringManifold.INSTANCE), //
+      AbsoluteCoordinate.smooth(Se2CoveringManifold.INSTANCE) //
   };
 
   public void test4Exact() {
