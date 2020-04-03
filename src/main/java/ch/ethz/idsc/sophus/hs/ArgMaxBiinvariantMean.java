@@ -5,6 +5,10 @@ import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.ArgMax;
 
+/** serves as initial guess at begin of fix point iteration that
+ * converges to exact mean.
+ * 
+ * @see IterativeBiinvariantMean */
 /* package */ enum ArgMaxBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 

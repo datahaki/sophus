@@ -25,7 +25,10 @@ import ch.ethz.idsc.tensor.red.Mean;
  * Quote: "Among all generalized barycentric coordinates with respect to a
  * scattered set of points, Waldron suggests to consider those with minimal
  * L2-norm, which are uniquely defined as the affine functions."
- * in Kai Hormann, N. Sukumar, 2017 */
+ * in Kai Hormann, N. Sukumar, 2017
+ * 
+ * The concept of a one-time computation of a pseudoinverse at a central
+ * location does not generalize to non-linear spaces. */
 public enum AffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 

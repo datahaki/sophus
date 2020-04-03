@@ -8,16 +8,9 @@ import ch.ethz.idsc.tensor.Tensor;
  * Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Pennec, Arsigny, 2012, p.13 */
-public interface LieGroupElement {
-  /** @return unique coordinate that represents this lie group element */
-  Tensor toCoordinate();
-
-  /** @return inverse of this element */
+public interface LieGroupElement extends GroupElement {
+  @Override
   LieGroupElement inverse();
-
-  /** @param tensor
-   * @return group action of this element and the element defined by given tensor */
-  Tensor combine(Tensor tensor);
 
   /** the adjoint map is a linear map on the lie algebra with full rank
    * the adjoint map is the differential at the neutral element of the conjugation

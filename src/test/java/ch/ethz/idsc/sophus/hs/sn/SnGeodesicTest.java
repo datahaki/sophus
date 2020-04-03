@@ -122,13 +122,21 @@ public class SnGeodesicTest extends TestCase {
     Chop._12.requireClose(tensor, expect);
   }
 
-  public void testFail() {
+  public void testDimensionsFail() {
     try {
       SnGeodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO);
       fail();
     } catch (Exception exception) {
       // ---
     }
-    SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF);
+  }
+
+  public void testNormFail() {
+    try {
+      SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

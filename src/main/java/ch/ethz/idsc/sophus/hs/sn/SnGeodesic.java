@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Normalize;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -33,7 +34,7 @@ public enum SnGeodesic implements GeodesicInterface {
     Scalar a = SnMetric.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();
-    if (Pi.VALUE.equals(a))
+    if (Tolerance.CHOP.close(a, Pi.VALUE))
       throw TensorRuntimeException.of(p, q); // when p == -q
     return scalar -> NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //

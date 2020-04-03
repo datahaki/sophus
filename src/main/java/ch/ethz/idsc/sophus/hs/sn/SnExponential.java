@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.alg.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.opt.Projection;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.red.VectorAngle;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
@@ -54,10 +53,11 @@ public class SnExponential implements Exponential, FlattenLog, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor y) {
     StaticHelper.requirePoint(y);
-    return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(VectorAngle.of(x, y).get());
+    Scalar d_xy = SnMetric.INSTANCE.distance(x, y);
+    return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xy);
   }
 
-  @Override
+  @Override // from FlattenLog
   public Tensor flattenLog(Tensor y) {
     return log(y);
   }
