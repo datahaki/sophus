@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.math.GroupElement;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** interface of an element of a Lie-group

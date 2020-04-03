@@ -28,4 +28,13 @@ public class SonRandomSampleTest extends TestCase {
       }
     }
   }
+
+  public void testZeroFail() {
+    try {
+      SonRandomSample.of(0);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }
