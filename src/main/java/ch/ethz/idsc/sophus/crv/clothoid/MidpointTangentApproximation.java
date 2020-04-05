@@ -33,6 +33,7 @@ public class MidpointTangentApproximation implements ScalarBinaryOperator {
   @Override
   public Scalar apply(Scalar b0, Scalar b1) {
     Scalar s1 = b0.add(b1).multiply(HALF);
-    return scalarBinaryOperator.apply(s1, b0.subtract(b1).multiply(HALF)).add(s1);
+    Scalar s2 = b0.subtract(b1).multiply(HALF);
+    return scalarBinaryOperator.apply(s1, s2).add(s1);
   }
 }

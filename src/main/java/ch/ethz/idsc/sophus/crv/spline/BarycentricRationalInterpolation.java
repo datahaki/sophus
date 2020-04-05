@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.OrderedQ;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.io.ScalarArray;
 import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
@@ -49,7 +50,7 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
   private final Scalar[] w;
 
   private BarycentricRationalInterpolation(Tensor _knots, int d) {
-    knots = _knots.stream().map(Scalar.class::cast).toArray(Scalar[]::new);
+    knots = ScalarArray.ofVector(_knots);
     w = new Scalar[knots.length];
     for (int k = 0; k < knots.length; ++k) {
       int imin = Math.max(k - d, 0);

@@ -3,6 +3,8 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import ch.ethz.idsc.sophus.math.HeadTailInterface;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.Scalars;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterface {
@@ -14,6 +16,11 @@ public class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterfac
   public LagrangeQuadraticD(Scalar c0, Scalar c1) {
     this.c0 = c0;
     this.c1 = c1;
+  }
+
+  public boolean isZero() {
+    return Scalars.isZero(Tolerance.CHOP.apply(c0)) //
+        && Scalars.isZero(Tolerance.CHOP.apply(c1));
   }
 
   @Override

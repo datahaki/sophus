@@ -6,7 +6,7 @@ import java.io.Serializable;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
-/* package */ class ClothoidIntegral implements Serializable {
+public class ClothoidIntegral implements Serializable {
   /** The integral of exp i*clothoidQuadratic as suggested in U. Reif slides has the
    * property, that the values of the polynomial correspond to the tangent angle.
    * 

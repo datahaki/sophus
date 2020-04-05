@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
+import ch.ethz.idsc.tensor.io.ScalarArray;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Power;
@@ -48,7 +49,7 @@ public class PowerVariogram implements ScalarUnaryOperator {
    * @return
    * @throws Exception if values is not a tensor of rank 1 */
   public static PowerVariogram fit(Tensor sequence, Tensor values, Scalar beta) {
-    Scalar[] y = values.stream().map(Scalar.class::cast).toArray(Scalar[]::new);
+    Scalar[] y = ScalarArray.ofVector(values);
     final int n = sequence.length();
     Scalar num = RealScalar.ZERO;
     Scalar den = RealScalar.ZERO;

@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * @param p vector of the form {px, py, pa}
  * @param q vector of the form {qx, qy, qa} */
-public abstract class Clothoids implements ClothoidInterface {
+public abstract class Clothoids implements ClothoidInterface, ClothoidQuadratic {
   @Override // from ClothoidInterface
   public final Clothoid curve(Tensor p, Tensor q) {
     ClothoidContext clothoidContext = new ClothoidContext(p, q);
@@ -22,9 +22,4 @@ public abstract class Clothoids implements ClothoidInterface {
   public final Tensor split(Tensor p, Tensor q, Scalar t) {
     return curve(p, q).apply(t);
   }
-
-  /** @param b0 angle
-   * @param b1 angle
-   * @return */
-  protected abstract LagrangeQuadratic lagrangeQuadratic(Scalar b0, Scalar b1);
 }

@@ -22,7 +22,7 @@ public class MemoFunction<K, V> implements Function<K, V>, Serializable {
         : new MemoFunction<>(Objects.requireNonNull(function));
   }
 
-  // ---
+  /***************************************************/
   private final Map<K, V> memo = new HashMap<>();
   private final Function<K, V> function;
 
