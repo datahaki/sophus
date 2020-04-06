@@ -19,7 +19,7 @@ public class MidpointTangentApproximationTest extends TestCase {
       Scalar b0 = RandomVariate.of(NormalDistribution.standard());
       Scalar b1 = RandomVariate.of(NormalDistribution.standard());
       Scalar f1 = OriginalApproximation.INSTANCE.apply(b0, b1);
-      Scalar f2 = MidpointTangentApproximation.LOCAL.apply(b0, b1);
+      Scalar f2 = MidpointTangentApproximation.ORDER2.apply(b0, b1);
       Tolerance.CHOP.requireClose(f1, f2);
     }
   }

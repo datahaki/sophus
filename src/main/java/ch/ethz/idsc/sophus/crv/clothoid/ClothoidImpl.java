@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.math.ArcTan2D;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
@@ -33,7 +34,15 @@ import ch.ethz.idsc.tensor.red.Norm;
     // ---
     clothoidIntegral = ClothoidIntegral.interp(lagrangeQuadratic);
     Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
-    this.length = Norm._2.of(diff).divide(one.abs());
+    Scalar plength = RealScalar.ZERO;
+    try {
+      plength = Norm._2.of(diff).divide(one.abs());
+    } catch (Exception exception) {
+      System.err.println("---");
+      System.err.println(diff);
+      System.err.println(one);
+    }
+    this.length = plength;
     this.da = ArcTan2D.of(diff);
   }
 
