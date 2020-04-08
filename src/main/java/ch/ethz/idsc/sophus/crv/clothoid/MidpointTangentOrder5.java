@@ -11,22 +11,22 @@ import ch.ethz.idsc.tensor.Scalar;
  * 
  * function is odd in s1
  * function is even in s2 */
-public enum MidpointTangentOrder4 implements ScalarBinaryOperator {
+public enum MidpointTangentOrder5 implements ScalarBinaryOperator {
   INSTANCE;
 
-  private static final Scalar F10 = RealScalar.of(-1.5132991172677746);
-  private static final Scalar F30 = RealScalar.of(+0.025958842855190786);
-  private static final Scalar F50 = RealScalar.of(-0.0016715415881496136);
-  private static final Scalar F70 = RealScalar.of(+0.00007142487216111225);
+  private static final Scalar F10 = RealScalar.of(-1.5006205701038964);
+  private static final Scalar F30 = RealScalar.of(+0.020348415382503517);
+  private static final Scalar F50 = RealScalar.of(-0.0005328054077587399);
+  private static final Scalar F70 = RealScalar.of(-0.000010474446207605217);
   // ---
-  private static final Scalar F12 = RealScalar.of(+0.10442930473762928);
-  private static final Scalar F14 = RealScalar.of(+0.0014895792174595167);
-  private static final Scalar F16 = RealScalar.of(+0.00042434570303820097);
+  private static final Scalar F12 = RealScalar.of(+0.09257648911893812);
+  private static final Scalar F14 = RealScalar.of(+0.003922452795500254);
+  private static final Scalar F16 = RealScalar.of(+0.00031770814964551277);
   // ---
-  private static final Scalar F32 = RealScalar.of(-0.005501332153052616);
-  private static final Scalar F34 = RealScalar.of(-0.0009630817093057504);
+  private static final Scalar F32 = RealScalar.of(-0.00453786314493132);
+  private static final Scalar F34 = RealScalar.of(-0.0011608780624864858);
   // ---
-  private static final Scalar F52 = RealScalar.of(+0.0004176683497549008);
+  private static final Scalar F52 = RealScalar.of(+0.0004860300460672423);
 
   @Override
   public Scalar apply(Scalar s1, Scalar s2) {

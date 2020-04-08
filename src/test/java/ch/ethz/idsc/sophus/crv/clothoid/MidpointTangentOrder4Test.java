@@ -24,8 +24,13 @@ public class MidpointTangentOrder4Test extends TestCase {
     }
   }
 
-  public void testMathematicaSync() {
+  public void test4MathematicaSync() {
     Scalar scalar = MidpointTangentOrder4.INSTANCE.apply(RealScalar.of(1), RealScalar.of(2));
+    Tolerance.CHOP.requireClose(scalar, RealScalar.of(-1.055975742266341));
+  }
+
+  public void test5MathematicaSync() {
+    Scalar scalar = MidpointTangentOrder5.INSTANCE.apply(RealScalar.of(1), RealScalar.of(2));
     Tolerance.CHOP.requireClose(scalar, RealScalar.of(-1.0621982931895297));
   }
 }

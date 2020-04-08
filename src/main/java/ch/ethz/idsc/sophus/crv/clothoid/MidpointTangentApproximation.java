@@ -20,6 +20,7 @@ public class MidpointTangentApproximation implements ScalarBinaryOperator {
    * Reference: U. Reif slide 9/32 */
   public static final ScalarBinaryOperator ORDER2 = new MidpointTangentApproximation(MidpointTangentOrder2.INSTANCE);
   public static final ScalarBinaryOperator ORDER4 = new MidpointTangentApproximation(MidpointTangentOrder4.INSTANCE);
+  public static final ScalarBinaryOperator LAYERS = new MidpointTangentApproximation(MidpointTangentLayers.INSTANCE);
 
   /** @param scalarBinaryOperator
    * @return */

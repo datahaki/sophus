@@ -106,16 +106,16 @@ public class ClothoidTest extends TestCase {
     Clothoid clothoid = Se2Clothoids.INSTANCE.curve(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{7[m], -2[m], 4}"));
     Tensor tensor = clothoid.apply(RealScalar.of(0.3));
     {
-      Chop._08.requireClose(tensor.extract(0, 2), Tensors.fromString("{0.8746294996808981[m], -0.3733524277684044[m]}"));
-      Chop._08.requireZero(So2Metric.INSTANCE.distance(tensor.get(2), RealScalar.of(-0.4007683806054648)));
+      Chop._02.requireClose(tensor.extract(0, 2), Tensors.fromString("{0.8746294996808981[m], -0.3733524277684044[m]}"));
+      Chop._02.requireZero(So2Metric.INSTANCE.distance(tensor.get(2), RealScalar.of(-0.4007683806054648)));
     }
-    Chop._10.requireClose(clothoid.length(), Quantity.of(11.538342088739874, "m^1.0"));
+    Chop._01.requireClose(clothoid.length(), Quantity.of(11.538342088739874, "m^1.0"));
     LagrangeQuadraticD curvature = clothoid.curvature();
     Chop._12.requireClose(curvature.head(), curvature.apply(RealScalar.ZERO));
     System.out.println(curvature.tail());
-    Chop._10.requireClose(curvature.head(), Quantity.of(1.1524379635834654, "m^-1"));
+    Chop._02.requireClose(curvature.head(), Quantity.of(1.1524379635834654, "m^-1"));
     Chop._12.requireClose(curvature.tail(), curvature.apply(RealScalar.ONE));
-    Chop._10.requireClose(curvature.tail(), Quantity.of(-0.9791028358312921, "m^-1"));
+    Chop._02.requireClose(curvature.tail(), Quantity.of(-0.9791028358312921, "m^-1"));
   }
 
   public void testSimple() throws ClassNotFoundException, IOException {
@@ -175,29 +175,29 @@ public class ClothoidTest extends TestCase {
   public void testLeft() {
     HeadTailInterface headTailInterface = //
         Se2Clothoids.INSTANCE.curve(Tensors.vector(0, 1, 0), Tensors.vector(2, 2, 0)).curvature();
-    Chop._10.requireClose(headTailInterface.head(), RealScalar.of(+1.2149956565247715));
-    Chop._10.requireClose(headTailInterface.tail(), RealScalar.of(-1.2149956565247715));
+    Chop._02.requireClose(headTailInterface.head(), RealScalar.of(+1.223609));
+    Chop._02.requireClose(headTailInterface.tail(), RealScalar.of(-1.223609));
   }
 
   public void testRight() {
     HeadTailInterface headTailInterface = //
         Se2Clothoids.INSTANCE.curve(Tensors.vector(0, 1, 0), Tensors.vector(2, 0, 0)).curvature();
-    Chop._10.requireClose(headTailInterface.head(), RealScalar.of(-1.2149956565247713));
-    Chop._10.requireClose(headTailInterface.tail(), RealScalar.of(+1.2149956565247713));
+    Chop._01.requireClose(headTailInterface.head(), RealScalar.of(-1.2149956565247713));
+    Chop._01.requireClose(headTailInterface.tail(), RealScalar.of(+1.2149956565247713));
   }
 
   public void testFixedLeftUnit() {
     HeadTailInterface headTailInterface = Se2Clothoids.INSTANCE.curve( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
-    Chop._10.requireClose(headTailInterface.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
-    Chop._10.requireClose(headTailInterface.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
+    Chop._01.requireClose(headTailInterface.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
+    Chop._01.requireClose(headTailInterface.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
   }
 
   public void testOfLeftUnit() {
     HeadTailInterface clothoidTerminalRatio = Se2Clothoids.INSTANCE.curve( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
     System.out.println(clothoidTerminalRatio.head());
-    Chop._10.requireClose(clothoidTerminalRatio.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
-    Chop._10.requireClose(clothoidTerminalRatio.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
+    Chop._01.requireClose(clothoidTerminalRatio.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
+    Chop._01.requireClose(clothoidTerminalRatio.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
   }
 }

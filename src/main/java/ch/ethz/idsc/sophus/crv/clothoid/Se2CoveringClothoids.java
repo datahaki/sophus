@@ -16,6 +16,6 @@ public class Se2CoveringClothoids extends Clothoids implements Serializable {
   @Override // from Clothoids
   public LagrangeQuadratic lagrangeQuadratic(Scalar b0, Scalar b1) {
     // TODO not final implementation
-    return LagrangeQuadratic.interp(b0, MidpointTangentApproximation.ORDER4.apply(b0, b1), b1);
+    return LagrangeQuadratic.interp(b0, MidpointTangentApproximation.LAYERS.apply(b0, b1), b1);
   }
 }
