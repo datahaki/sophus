@@ -39,7 +39,6 @@ public class HeInverseDistanceCoordinateTest extends TestCase {
         for (int length = 2 * n + 2; length < 2 * n + 10; ++length)
           try {
             int fn = n;
-            // System.out.println("HERE");
             Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
             Tensor mean1 = TestHelper.spawn_He(n);
             Tensor weights1 = barycentricCoordinate.weights(sequence, mean1);

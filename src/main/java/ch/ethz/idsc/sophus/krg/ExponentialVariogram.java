@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public class ExponentialVariogram implements ScalarUnaryOperator {
-  /** @param a
+  /** @param a positive
    * @param b
    * @return */
   public static ScalarUnaryOperator of(Scalar a, Scalar b) {
@@ -19,7 +19,7 @@ public class ExponentialVariogram implements ScalarUnaryOperator {
         Objects.requireNonNull(b));
   }
 
-  /** @param a
+  /** @param a positive
    * @param b
    * @return */
   public static ScalarUnaryOperator of(Number a, Number b) {

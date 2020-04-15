@@ -6,8 +6,8 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
-import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
 /** Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
@@ -23,7 +23,8 @@ public class HsProjection implements ProjectionInterface, Serializable {
   @Override // from ProjectionInterface
   public final Tensor projection(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
-    Tensor nullsp = LeftNullSpace.of(levers);
-    return PseudoInverse.of(nullsp).dot(nullsp);
+    Tensor nullsp = LeftNullSpace.usingQR(levers);
+    // PseudoInverse.of(nullsp).dot(nullsp);
+    return Transpose.of(nullsp).dot(nullsp);
   }
 }

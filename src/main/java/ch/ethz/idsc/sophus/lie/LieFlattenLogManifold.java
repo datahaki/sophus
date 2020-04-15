@@ -14,7 +14,7 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
    * @param log
    * @return */
   public static FlattenLogManifold of(LieGroup lieGroup, TensorUnaryOperator log) {
-    return new LieFlattenLogManifold(lieGroup, log);
+    return new LieFlattenLogManifold(Objects.requireNonNull(lieGroup), Objects.requireNonNull(log));
   }
 
   /***************************************************/
@@ -22,14 +22,26 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
   private final TensorUnaryOperator log;
 
   private LieFlattenLogManifold(LieGroup lieGroup, TensorUnaryOperator log) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.log = Objects.requireNonNull(log);
+    this.lieGroup = lieGroup;
+    this.log = log;
   }
 
   @Override // from FlattenLogManifold
   public FlattenLog logAt(Tensor point) {
-    LieGroupElement lieGroupElement = lieGroup.element(point).inverse();
-    // TODO not serializable!
-    return q -> log.apply(lieGroupElement.combine(q));
+    return new FlattenLogImpl(point);
+  }
+
+  /***************************************************/
+  private class FlattenLogImpl implements FlattenLog, Serializable {
+    private final LieGroupElement lieGroupElement;
+
+    public FlattenLogImpl(Tensor point) {
+      this.lieGroupElement = lieGroup.element(point).inverse();
+    }
+
+    @Override
+    public Tensor flattenLog(Tensor q) {
+      return log.apply(lieGroupElement.combine(q));
+    }
   }
 }

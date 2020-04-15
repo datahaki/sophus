@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -18,7 +19,8 @@ public class NormalizeAffineTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int count = 0; count < 10; ++count) {
       Tensor vector = RandomVariate.of(distribution, 10);
-      Tensor nullsp = RandomVariate.of(distribution, 3, 10);
+      Tensor matrix = RandomVariate.of(distribution, 10, 3);
+      Tensor nullsp = LeftNullSpace.usingQR(matrix);
       Tensor p1 = deprec(vector, nullsp);
       Tensor p2 = NormalizeAffine.product(vector, nullsp);
       Tolerance.CHOP.requireClose(p1, p2);
