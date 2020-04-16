@@ -19,11 +19,16 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * 
  * @see BinningMethod */
 public class ThinPlateSplineNorm implements TensorNorm, Serializable {
+  /** @param r0 positive */
+  public static TensorNorm of(Scalar r0) {
+    return new ThinPlateSplineNorm(Sign.requirePositive(r0));
+  }
+
+  /***************************************************/
   private final Scalar r0;
 
-  /** @param r0 positive */
-  public ThinPlateSplineNorm(Scalar r0) {
-    this.r0 = Sign.requirePositive(r0);
+  private ThinPlateSplineNorm(Scalar r0) {
+    this.r0 = r0;
   }
 
   @Override // from TensorNorm

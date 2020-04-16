@@ -17,12 +17,17 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * @see BinningMethod */
 public class GaussianRadialBasisFunction implements TensorNorm, Serializable {
+  /** @param r0 non-negative */
+  public static TensorNorm of(Scalar r0) {
+    return new GaussianRadialBasisFunction(Sign.requirePositiveOrZero(r0));
+  }
+
+  /***************************************************/
   /** -2*r0*r0 */
   private final Scalar n2r0;
 
-  /** @param r0 non-negative */
-  public GaussianRadialBasisFunction(Scalar r0) {
-    Scalar r0_squared = Sign.requirePositiveOrZero(r0).multiply(r0);
+  private GaussianRadialBasisFunction(Scalar r0) {
+    Scalar r0_squared = r0.multiply(r0);
     n2r0 = r0_squared.add(r0_squared).negate();
   }
 

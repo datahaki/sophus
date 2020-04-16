@@ -34,7 +34,7 @@ public class SnExponential implements Exponential, FlattenLog, Serializable {
   private final TensorUnaryOperator projection;
 
   /** @param x on S^n
-   * @throws Exception if p is not a vector of Euclidean norm 1 */
+   * @throws Exception if x is not a vector of Euclidean norm 1 */
   public SnExponential(Tensor x) {
     this.x = StaticHelper.requirePoint(x);
     projection = Projection.on(x);

@@ -30,13 +30,14 @@ import ch.ethz.idsc.tensor.red.Total;
 
   /** VISIBILITY ONLY FOR TESTING
    * 
+   * for the orthogonal matrix nullsp, the relation hold:
+   * Transpose[nullsp] == PseudoInverse[nullsp]
+   * 
    * @param vector
    * @param nullsp orthogonal matrix
-   * @return vector . PseudoInverse[nullsp] . nullsp
+   * @return vector . Transpose[nullsp] . nullsp
    * @see OrthogonalMatrixQ */
   /* package */ static Tensor product(Tensor vector, Tensor nullsp) {
-    // return LeastSquares.usingSvd(Transpose.of(nullsp), vector).dot(nullsp);
-    // return vector.dot(Transpose.of(nullsp)).dot(nullsp);
     return nullsp.dot(vector).dot(nullsp);
   }
 

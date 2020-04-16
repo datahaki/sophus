@@ -24,7 +24,7 @@ public class HsProjection implements ProjectionInterface, Serializable {
   public final Tensor projection(Tensor sequence, Tensor point) {
     Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
     Tensor nullsp = LeftNullSpace.usingQR(levers);
-    // PseudoInverse.of(nullsp).dot(nullsp);
+    // OrthogonalMatrixQ.require(nullsp);
     return Transpose.of(nullsp).dot(nullsp);
   }
 }
