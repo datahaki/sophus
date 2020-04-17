@@ -34,27 +34,25 @@ public class SnProjectedCoordinateTest extends TestCase {
 
   public void testLinearReproduction() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    // int fails = 0;
+    int fails = 0;
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int d = 3; d < 7; ++d)
         for (int n = d + 1; n < 10; ++n)
-        // try
-        {
-          Tensor mean = UnitVector.of(d, 0);
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
-          Tensor weights = projectedCoordinate.weights(sequence, mean);
-          VectorQ.requireLength(weights, n);
-          AffineQ.require(weights);
-          Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
-          Chop._12.requireAllZero(evaluate);
-          // Tensor point = ;
-          Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
-          Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
-        }
-    // catch (Exception exception) {
-    // ++fails;
-    // }
-    // assertTrue(fails < 5);
+          try {
+            Tensor mean = UnitVector.of(d, 0);
+            Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
+            Tensor weights = projectedCoordinate.weights(sequence, mean);
+            VectorQ.requireLength(weights, n);
+            AffineQ.require(weights);
+            Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
+            Chop._12.requireAllZero(evaluate);
+            // Tensor point = ;
+            Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
+            Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
+          } catch (Exception exception) {
+            ++fails;
+          }
+    assertTrue(fails < 3);
   }
 
   public void testLagrangeProperty() {

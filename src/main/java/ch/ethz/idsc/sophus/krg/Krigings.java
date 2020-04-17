@@ -116,6 +116,7 @@ public enum Krigings {
       FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /***************************************************/
+  // class non-static since invokes #barycentric
   private class WeightingImpl implements WeightingInterface, Serializable {
     private final FlattenLogManifold flattenLogManifold;
     private final ScalarUnaryOperator variogram;
@@ -125,7 +126,7 @@ public enum Krigings {
       this.variogram = variogram;
     }
 
-    @Override
+    @Override // from WeightingInterface
     public Tensor weights(Tensor sequence, Tensor point) {
       return barycentric(flattenLogManifold, variogram, sequence).estimate(point);
     }

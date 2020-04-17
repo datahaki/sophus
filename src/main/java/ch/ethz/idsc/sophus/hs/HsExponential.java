@@ -7,6 +7,6 @@ import ch.ethz.idsc.tensor.Tensor;
 @FunctionalInterface
 public interface HsExponential {
   /** @param point
-   * @return */
+   * @return exponential map at given point on manifold */
   Exponential exponential(Tensor point);
 }

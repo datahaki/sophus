@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
+/** @see HnGeodesic */
 public enum HnProjection implements TensorUnaryOperator {
   INSTANCE;
 

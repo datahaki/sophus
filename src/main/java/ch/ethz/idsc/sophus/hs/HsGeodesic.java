@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
+/** general implementation of geodesic using exp/log */
 public class HsGeodesic implements GeodesicInterface, Serializable {
   private final HsExponential hsExponential;
 

@@ -22,10 +22,10 @@ public enum SnPhongMean implements BiinvariantMean {
   INSTANCE;
 
   /** R^n+1 -> S^n */
-  private static final TensorUnaryOperator PROJECT = Normalize.with(Norm._2);
+  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return PROJECT.apply(AffineQ.require(weights).dot(sequence));
+    return NORMALIZE.apply(AffineQ.require(weights).dot(sequence));
   }
 }
