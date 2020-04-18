@@ -1,10 +1,11 @@
 // code by jph
 // adapted from document by Tobias Ewald
 // sign convention by gjoel
-package ch.ethz.idsc.sophus.math;
+package ch.ethz.idsc.sophus.crv;
 
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;

@@ -16,10 +16,17 @@ import ch.ethz.idsc.tensor.Tensor;
  * @see InverseDistanceWeighting
  * @see Krigings */
 public class RadialBasisFunctionWeighting implements WeightingInterface, Serializable {
+  /** @param tensorNorm
+   * @return */
+  public static WeightingInterface of(TensorNorm tensorNorm) {
+    return new RadialBasisFunctionWeighting(Objects.requireNonNull(tensorNorm));
+  }
+
+  /***************************************************/
   private final TensorNorm tensorNorm;
 
-  public RadialBasisFunctionWeighting(TensorNorm tensorNorm) {
-    this.tensorNorm = Objects.requireNonNull(tensorNorm);
+  private RadialBasisFunctionWeighting(TensorNorm tensorNorm) {
+    this.tensorNorm = tensorNorm;
   }
 
   @Override // from WeightingInterface

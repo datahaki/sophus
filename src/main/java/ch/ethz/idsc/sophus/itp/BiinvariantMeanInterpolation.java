@@ -31,7 +31,7 @@ import ch.ethz.idsc.tensor.sca.Floor;
   private final BiinvariantMean biinvariantMean;
   private final Tensor tensor;
 
-  public BiinvariantMeanInterpolation(BiinvariantMean biinvariantMean, Tensor tensor) {
+  private BiinvariantMeanInterpolation(BiinvariantMean biinvariantMean, Tensor tensor) {
     this.biinvariantMean = biinvariantMean;
     this.tensor = Unprotect.references(tensor);
   }

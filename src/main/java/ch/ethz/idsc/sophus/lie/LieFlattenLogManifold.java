@@ -11,19 +11,21 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
   /** @param lieGroup
-   * @param log
+   * @param flattenLog
    * @return */
-  public static FlattenLogManifold of(LieGroup lieGroup, TensorUnaryOperator log) {
-    return new LieFlattenLogManifold(Objects.requireNonNull(lieGroup), Objects.requireNonNull(log));
+  public static FlattenLogManifold of(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
+    return new LieFlattenLogManifold( //
+        Objects.requireNonNull(lieGroup), //
+        Objects.requireNonNull(flattenLog));
   }
 
   /***************************************************/
   private final LieGroup lieGroup;
-  private final TensorUnaryOperator log;
+  private final TensorUnaryOperator flattenLog;
 
-  private LieFlattenLogManifold(LieGroup lieGroup, TensorUnaryOperator log) {
+  private LieFlattenLogManifold(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
     this.lieGroup = lieGroup;
-    this.log = log;
+    this.flattenLog = flattenLog;
   }
 
   @Override // from FlattenLogManifold
@@ -41,7 +43,7 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
 
     @Override
     public Tensor flattenLog(Tensor q) {
-      return log.apply(lieGroupElement.combine(q));
+      return flattenLog.apply(lieGroupElement.combine(q));
     }
   }
 }

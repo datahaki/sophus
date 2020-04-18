@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math;
+package ch.ethz.idsc.sophus.crv;
 
 import java.util.Optional;
 

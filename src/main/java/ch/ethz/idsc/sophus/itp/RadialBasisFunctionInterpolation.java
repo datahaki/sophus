@@ -42,9 +42,6 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
   private final Tensor sequence;
   private final Tensor weights;
 
-  /** @param tensorNorm
-   * @param sequence
-   * @param values */
   private RadialBasisFunctionInterpolation(TensorUnaryOperator normalize, TensorNorm tensorNorm, Tensor sequence, Tensor values) {
     this.normalize = normalize;
     this.tensorNorm = tensorNorm;

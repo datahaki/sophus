@@ -20,12 +20,12 @@ public class LieExponential implements HsExponential, Serializable {
   private final LieGroup lieGroup;
   private final Exponential exponential;
 
-  private LieExponential(LieGroup lieGroup, Exponential lieExponential) {
+  private LieExponential(LieGroup lieGroup, Exponential exponential) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.exponential = Objects.requireNonNull(lieExponential);
+    this.exponential = Objects.requireNonNull(exponential);
   }
 
-  @Override
+  @Override // from HsExponential
   public Exponential exponential(Tensor point) {
     return new ExponentialImpl(point);
   }

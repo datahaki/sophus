@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.crv;
 
 import java.util.Iterator;
 
-import ch.ethz.idsc.sophus.math.SignedCurvature2D;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;

@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 
 public enum Normal2D {
   ;
-  private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Norm._2);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param points of the form {{p1x, p1y}, {p2x, p2y}, ..., {pNx, pNy}}
@@ -42,6 +42,6 @@ public enum Normal2D {
   }
 
   private static Tensor process(Tensor tangent) {
-    return NORMALIZE.apply(Cross.of(tangent));
+    return NORMALIZE_UNLESS_ZERO.apply(Cross.of(tangent));
   }
 }
