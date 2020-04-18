@@ -28,7 +28,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * @see Curvature2D */
 public enum CurvatureComb {
   ;
-  private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Norm._2);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param tensor with dimensions n x 2 with points of curve
@@ -71,7 +71,7 @@ public enum CurvatureComb {
   private static Tensor normal(Tensor a, Tensor b, Tensor c, Tensor tangent) {
     Optional<Scalar> optional = SignedCurvature2D.of(a, b, c);
     return optional.isPresent() //
-        ? NORMALIZE.apply(Cross.of(tangent)).multiply(optional.get())
+        ? NORMALIZE_UNLESS_ZERO.apply(Cross.of(tangent)).multiply(optional.get())
         : ZEROS;
   }
 }

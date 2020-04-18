@@ -20,7 +20,7 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
     NavigableMap<Scalar, Tensor> navigableMap = new TreeMap<>();
     navigableMap.put(RealScalar.ONE, Tensors.vector(1, 1, 0));
     NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
-        Serialization.copy(new NonuniformFixedRadiusGeodesicCenter(Se2Geodesic.INSTANCE));
+        Serialization.copy(NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE));
     Scalar key = RealScalar.of(1);
     // --
     Tensor actual = nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
@@ -37,7 +37,8 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
       navigableMap.put(key, tensor);
     }
     // ---
-    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = new NonuniformFixedRadiusGeodesicCenter(Se2Geodesic.INSTANCE);
+    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
+        NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(5);
     // ---
     Tensor actual = nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
@@ -51,7 +52,8 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
       navigableMap.put(RealScalar.of(index * index), Tensors.of(RealScalar.of(index * index), RealScalar.of(index * index)));
     }
     // ---
-    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = new NonuniformFixedRadiusGeodesicCenter(RnGeodesic.INSTANCE);
+    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
+        NonuniformFixedRadiusGeodesicCenter.of(RnGeodesic.INSTANCE);
     Scalar key = RealScalar.of(25);
     Tensor actual = nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
     assertEquals(actual.get(0), actual.get(1));
@@ -63,7 +65,8 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
       navigableMap.put(RealScalar.of(index * index), Tensors.of(RealScalar.of(index * index), RealScalar.of(index * index), RealScalar.ZERO));
     }
     // ---
-    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = new NonuniformFixedRadiusGeodesicCenter(Se2Geodesic.INSTANCE);
+    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
+        NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(25);
     Tensor actual = nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
     assertEquals(actual.get(0), actual.get(1));
@@ -75,7 +78,8 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
     navigableMap.put(RealScalar.ONE, Tensors.vector(1, 0, 0));
     navigableMap.put(RealScalar.of(100), Tensors.vector(100, 0, 0));
     // ---
-    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = new NonuniformFixedRadiusGeodesicCenter(Se2Geodesic.INSTANCE);
+    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
+        NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(1);
     // ---
     Tensor actual = nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
@@ -87,7 +91,8 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
     NavigableMap<Scalar, Tensor> navigableMap = new TreeMap<>();
     navigableMap.put(RealScalar.of(-1), Tensors.vector(0, 0, 0));
     // ---
-    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = new NonuniformFixedRadiusGeodesicCenter(Se2Geodesic.INSTANCE);
+    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
+        NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(-1);
     try {
       nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
@@ -103,7 +108,8 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
     navigableMap.put(RealScalar.ONE, Tensors.vector(2, 2, 0));
     navigableMap.put(RealScalar.ONE, Tensors.vector(3, 3, 0));
     navigableMap.put(RealScalar.ONE, Tensors.vector(4, 4, 0));
-    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = new NonuniformFixedRadiusGeodesicCenter(Se2Geodesic.INSTANCE);
+    NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
+        NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(2);
     try {
       nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);

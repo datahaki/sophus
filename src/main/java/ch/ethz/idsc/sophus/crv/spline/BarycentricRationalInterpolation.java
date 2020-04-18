@@ -81,7 +81,6 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
       if (Scalars.isZero(h))
         return UnitVector.of(knots.length, i);
       Tensor weight = w[i].divide(h);
-      // TODO check in code base where NumberQ is needed vs. DetScQ
       if (!DeterminateScalarQ.of(weight))
         return UnitVector.of(knots.length, i);
       weights.append(weight);

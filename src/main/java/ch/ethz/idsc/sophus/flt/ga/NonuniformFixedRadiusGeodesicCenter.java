@@ -25,10 +25,10 @@ public class NonuniformFixedRadiusGeodesicCenter implements Serializable {
     return new NonuniformFixedRadiusGeodesicCenter(Objects.requireNonNull(splitInterface));
   }
 
-  // ---
+  /***************************************************/
   private final SplitInterface splitInterface;
 
-  /* package */ NonuniformFixedRadiusGeodesicCenter(SplitInterface splitInterface) {
+  private NonuniformFixedRadiusGeodesicCenter(SplitInterface splitInterface) {
     this.splitInterface = splitInterface;
   }
 

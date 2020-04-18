@@ -28,7 +28,7 @@ public class NonuniformFixedIntervalGeodesicCenterFilterTest extends TestCase {
     // ---
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
         NonuniformFixedIntervalGeodesicCenter.of(geodesicInterface, GaussianWindow.FUNCTION);
-    NonuniformFixedIntervalGeodesicCenterFilter nonuniformFixedIntervalGeodesicCenterFilter = //
+    ScalarTensorMapUnaryOperator nonuniformFixedIntervalGeodesicCenterFilter = //
         Serialization.copy(NonuniformFixedIntervalGeodesicCenterFilter.of(nonuniformFixedIntervalGeodesicCenter, interval.divide(samplingFrequency)));
     Tensor actual = Tensor.of(nonuniformFixedIntervalGeodesicCenterFilter.apply(navigableMap).values().stream());
     Tensor expected = Tensors.of(Tensors.vector(1, 1, 1));

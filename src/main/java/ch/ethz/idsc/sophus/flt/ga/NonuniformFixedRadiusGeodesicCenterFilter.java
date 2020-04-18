@@ -6,26 +6,25 @@ import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import ch.ethz.idsc.sophus.math.NavigableMapUnaryOperator;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Max;
 import ch.ethz.idsc.tensor.red.Min;
 
-public class NonuniformFixedRadiusGeodesicCenterFilter implements NavigableMapUnaryOperator, Serializable {
+public class NonuniformFixedRadiusGeodesicCenterFilter implements ScalarTensorMapUnaryOperator, Serializable {
   /** @param nonuniformFixedRadiusGeodesicCenter
    * @param radius non-negative
    * @return
    * @throws Exception given if nonuniformFixedRadiusGeodesicCenter is null */
-  public static NonuniformFixedRadiusGeodesicCenterFilter of( //
+  public static ScalarTensorMapUnaryOperator of( //
       NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter, int radius) {
     return new NonuniformFixedRadiusGeodesicCenterFilter( //
         Objects.requireNonNull(nonuniformFixedRadiusGeodesicCenter), //
         Integers.requirePositiveOrZero(radius));
   }
 
-  // ---
+  /***************************************************/
   private final NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter;
   private final int radius;
 

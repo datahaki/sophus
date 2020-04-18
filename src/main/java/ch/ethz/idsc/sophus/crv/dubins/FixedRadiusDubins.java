@@ -25,11 +25,15 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     return new FixedRadiusDubins(xya, radius);
   }
 
+  /** @param start
+   * @param end
+   * @param radius
+   * @return */
   public static DubinsPathGenerator of(Tensor start, Tensor end, Scalar radius) {
     return of(Se2CoveringGroup.INSTANCE.element(start).inverse().combine(end), radius);
   }
 
-  // ---
+  /***************************************************/
   private final Tensor xya;
   private final Scalar radius;
   private final Scalar zero;

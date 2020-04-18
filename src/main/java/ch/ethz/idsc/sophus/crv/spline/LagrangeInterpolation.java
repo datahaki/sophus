@@ -26,7 +26,8 @@ public class LagrangeInterpolation extends AbstractInterpolation {
   private final ScalarTensorFunction scalarTensorFunction;
 
   private LagrangeInterpolation(BinaryAverage binaryAverage, Tensor tensor) {
-    scalarTensorFunction = InterpolatingPolynomial.of(binaryAverage, Range.of(0, tensor.length())).scalarTensorFunction(tensor);
+    scalarTensorFunction = InterpolatingPolynomial.of(binaryAverage, Range.of(0, tensor.length())) //
+        .scalarTensorFunction(tensor);
   }
 
   @Override // from Interpolation

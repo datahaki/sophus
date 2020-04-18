@@ -12,6 +12,12 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public enum BiinvariantMeanFIRnFilter {
   ;
+  /** @param biinvariantMean
+   * @param function
+   * @param binaryAverage
+   * @param radius
+   * @param alpha
+   * @return */
   public static TensorUnaryOperator of( //
       BiinvariantMean biinvariantMean, Function<Integer, Tensor> function, //
       BinaryAverage binaryAverage, int radius, Scalar alpha) {

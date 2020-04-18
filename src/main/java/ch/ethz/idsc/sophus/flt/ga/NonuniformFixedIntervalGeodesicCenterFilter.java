@@ -6,22 +6,21 @@ import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import ch.ethz.idsc.sophus.math.NavigableMapUnaryOperator;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Min;
 
-public class NonuniformFixedIntervalGeodesicCenterFilter implements NavigableMapUnaryOperator, Serializable {
+public class NonuniformFixedIntervalGeodesicCenterFilter implements ScalarTensorMapUnaryOperator, Serializable {
   /** @param nonuniformGeodesicCenter
    * @param (temporal) interval radius
    * @return
    * @throws Exception if given geodesicCenter is null */
-  public static NonuniformFixedIntervalGeodesicCenterFilter of( //
+  public static ScalarTensorMapUnaryOperator of( //
       NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter, Scalar interval) {
     return new NonuniformFixedIntervalGeodesicCenterFilter(Objects.requireNonNull(nonuniformFixedIntervalGeodesicCenter), interval);
   }
 
-  // ---
+  /***************************************************/
   private final NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter;
   private final Scalar interval;
 

@@ -25,11 +25,11 @@ public class NonuniformFixedIntervalGeodesicCenter implements Serializable {
         Objects.requireNonNull(windowFunction));
   }
 
-  // ---
-  public final SplitInterface splitInterface;
+  /***************************************************/
+  private final SplitInterface splitInterface;
   private final ScalarUnaryOperator windowFunction;
 
-  /* package */ NonuniformFixedIntervalGeodesicCenter(SplitInterface splitInterface, ScalarUnaryOperator windowFunction) {
+  private NonuniformFixedIntervalGeodesicCenter(SplitInterface splitInterface, ScalarUnaryOperator windowFunction) {
     this.splitInterface = splitInterface;
     this.windowFunction = windowFunction;
   }
@@ -85,7 +85,6 @@ public class NonuniformFixedIntervalGeodesicCenter implements Serializable {
       tempR = splitInterface.split(tempR, subMap.get(tailMapKey), splits.Get(1, index));
       ++index;
     }
-    Tensor result = splitInterface.split(tempL, tempR, splits.Get(2, 0));
-    return result;
+    return splitInterface.split(tempL, tempR, splits.Get(2, 0));
   }
 }

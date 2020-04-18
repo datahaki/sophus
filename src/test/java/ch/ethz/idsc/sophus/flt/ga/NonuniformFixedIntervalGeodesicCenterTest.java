@@ -21,7 +21,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
     NavigableMap<Scalar, Tensor> navigableMap = new TreeMap<>();
     navigableMap.put(RealScalar.ONE, Tensors.vector(1, 1, 0));
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
-        Serialization.copy(new NonuniformFixedIntervalGeodesicCenter(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION));
+        Serialization.copy(NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION));
     Scalar interval = RealScalar.of(Math.random());
     Scalar key = RealScalar.of(1);
     // --
@@ -38,7 +38,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
     }
     // ---
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
-        new NonuniformFixedIntervalGeodesicCenter(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
+        NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(5);
     Scalar key = RealScalar.of(5);
     // ---
@@ -54,7 +54,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
     }
     // ---
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
-        new NonuniformFixedIntervalGeodesicCenter(RnGeodesic.INSTANCE, GaussianWindow.FUNCTION);
+        NonuniformFixedIntervalGeodesicCenter.of(RnGeodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(9 * 9 / 2);
     Scalar key = RealScalar.of(9 * 9 / 2 + 1);
     // ---
@@ -69,7 +69,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
     }
     // ---
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
-        new NonuniformFixedIntervalGeodesicCenter(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
+        NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(9 * 9 / 2);
     Scalar key = RealScalar.of(9 * 9 / 2 + 1);
     // ---
@@ -81,7 +81,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
     NavigableMap<Scalar, Tensor> navigableMap = new TreeMap<>();
     navigableMap.put(RealScalar.ONE, Tensors.vector(1, 1, 0));
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
-        new NonuniformFixedIntervalGeodesicCenter(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
+        NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(-1);
     Scalar key = RealScalar.of(1);
     try {
@@ -96,7 +96,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
     NavigableMap<Scalar, Tensor> navigableMap = new TreeMap<>();
     navigableMap.put(RealScalar.ONE, Tensors.vector(1, 1, 0));
     NonuniformFixedIntervalGeodesicCenter nonuniformFixedIntervalGeodesicCenter = //
-        new NonuniformFixedIntervalGeodesicCenter(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
+        NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(-1);
     Scalar key = RealScalar.of(1);
     try {

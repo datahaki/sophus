@@ -19,7 +19,7 @@ public class GeodesicExtrapolationFilter implements TensorUnaryOperator {
     return new GeodesicExtrapolationFilter(geodesicExtrapolation, binaryAverage, radius);
   }
 
-  // ---
+  /***************************************************/
   private final TensorUnaryOperator geodesicExtrapolation;
   private final BinaryAverage binaryAverage;
   private final BoundedLinkedList<Tensor> boundedLinkedList;

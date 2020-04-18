@@ -9,6 +9,9 @@ import ch.ethz.idsc.tensor.Tensor;
 public class GeodesicBSplineInterpolation extends AbstractBSplineInterpolation {
   private static final Scalar TWO = RealScalar.of(2);
 
+  /** @param binaryAverage
+   * @param degree
+   * @param target */
   public GeodesicBSplineInterpolation(SplitInterface binaryAverage, int degree, Tensor target) {
     super(binaryAverage, degree, target);
   }

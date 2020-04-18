@@ -30,7 +30,7 @@ public class BezierFunction implements ScalarTensorFunction {
     return new BezierFunction(Objects.requireNonNull(binaryAverage), control);
   }
 
-  // ---
+  /***************************************************/
   private final BinaryAverage binaryAverage;
   private final Tensor control;
 

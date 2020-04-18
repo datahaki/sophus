@@ -49,6 +49,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
     return new GeodesicCenter(binaryAverage, UniformWindowSampler.of(windowFunction));
   }
 
+  /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
     private static final Scalar TWO = RealScalar.of(2);
     // ---
@@ -85,7 +86,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
     }
   }
 
-  // ---
+  /***************************************************/
   private final BinaryAverage binaryAverage;
   private final Function<Integer, Tensor> function;
 

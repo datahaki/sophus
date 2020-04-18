@@ -24,6 +24,23 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * <p>Careful: the implementation only supports sequences with ODD number of elements!
  * When a sequence of even length is provided an Exception is thrown. */
 public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
+  /** @param splitInterface
+   * @param function that maps an extent to a weight mask of length == 2 * extent + 1
+   * @return operator that maps a sequence of odd number of points to their geodesic center
+   * @throws Exception if either input parameter is null */
+  public static TensorUnaryOperator of(SplitInterface splitInterface, Function<Integer, Tensor> function) {
+    return new GeodesicCenterMidSeeded(splitInterface, function);
+  }
+
+  /** @param splitInterface
+   * @param windowFunction
+   * @return
+   * @throws Exception if either input parameter is null */
+  public static TensorUnaryOperator of(SplitInterface splitInterface, ScalarUnaryOperator windowFunction) {
+    return new GeodesicCenterMidSeeded(splitInterface, UniformWindowSampler.of(windowFunction));
+  }
+
+  /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
     private static final Scalar TWO = RealScalar.of(2);
     // ---
@@ -60,23 +77,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     }
   }
 
-  /** @param splitInterface
-   * @param function that maps an extent to a weight mask of length == 2 * extent + 1
-   * @return operator that maps a sequence of odd number of points to their geodesic center
-   * @throws Exception if either input parameter is null */
-  public static TensorUnaryOperator of(SplitInterface splitInterface, Function<Integer, Tensor> function) {
-    return new GeodesicCenterMidSeeded(splitInterface, function);
-  }
-
-  /** @param splitInterface
-   * @param windowFunction
-   * @return
-   * @throws Exception if either input parameter is null */
-  public static TensorUnaryOperator of(SplitInterface splitInterface, ScalarUnaryOperator windowFunction) {
-    return new GeodesicCenterMidSeeded(splitInterface, UniformWindowSampler.of(windowFunction));
-  }
-
-  // ---
+  /***************************************************/
   private final SplitInterface splitInterface;
   private final Function<Integer, Tensor> function;
 
