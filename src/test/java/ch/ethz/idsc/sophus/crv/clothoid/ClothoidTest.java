@@ -112,7 +112,7 @@ public class ClothoidTest extends TestCase {
     Chop._01.requireClose(clothoid.length(), Quantity.of(11.538342088739874, "m^1.0"));
     LagrangeQuadraticD curvature = clothoid.curvature();
     Chop._12.requireClose(curvature.head(), curvature.apply(RealScalar.ZERO));
-    System.out.println(curvature.tail());
+    // System.out.println(curvature.tail());
     Chop._02.requireClose(curvature.head(), Quantity.of(1.1524379635834654, "m^-1"));
     Chop._12.requireClose(curvature.tail(), curvature.apply(RealScalar.ONE));
     Chop._02.requireClose(curvature.tail(), Quantity.of(-0.9791028358312921, "m^-1"));
@@ -196,7 +196,7 @@ public class ClothoidTest extends TestCase {
   public void testOfLeftUnit() {
     HeadTailInterface clothoidTerminalRatio = Se2Clothoids.INSTANCE.curve( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
-    System.out.println(clothoidTerminalRatio.head());
+    // System.out.println(clothoidTerminalRatio.head());
     Chop._01.requireClose(clothoidTerminalRatio.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
     Chop._01.requireClose(clothoidTerminalRatio.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
   }

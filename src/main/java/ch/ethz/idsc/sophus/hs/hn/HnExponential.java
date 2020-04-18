@@ -5,8 +5,8 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.Sinhc;
-import ch.ethz.idsc.sophus.math.SinhcInverse;
+import ch.ethz.idsc.sophus.math.sca.Sinhc;
+import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ArcCosh;

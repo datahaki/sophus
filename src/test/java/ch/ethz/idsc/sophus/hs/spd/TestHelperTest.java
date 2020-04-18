@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;

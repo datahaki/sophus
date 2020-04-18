@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math;
+package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.Serializable;
 
@@ -7,14 +7,17 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
+import ch.ethz.idsc.tensor.mat.MatrixPower;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Determines the square root of a symmetric positive definite matrix.
  * 
  * Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
- * Edited by Xavier Pennec, Sommer, P. Thomas Fletcher, p. 80 */
-public class MatrixSqrt implements Serializable {
+ * Edited by Xavier Pennec, Sommer, P. Thomas Fletcher, p. 80
+ * 
+ * @see MatrixPower */
+/* package */ class MatrixSqrt implements Serializable {
   /** @param matrix symmetric
    * @return
    * @throws Exception if matrix is not symmetric */
@@ -22,6 +25,7 @@ public class MatrixSqrt implements Serializable {
     return new MatrixSqrt(matrix);
   }
 
+  /***************************************************/
   private final Tensor avec;
   private final Tensor ainv;
   private final Tensor sqrt;

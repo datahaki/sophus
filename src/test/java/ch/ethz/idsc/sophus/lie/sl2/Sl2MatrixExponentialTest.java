@@ -29,7 +29,6 @@ public class Sl2MatrixExponentialTest extends TestCase {
   public void testNegativeDelta() {
     Tensor x = Tensors.fromString("{{2, -3}, {4, -2}}");
     Tensor exp = Sl2MatrixExponential.INSTANCE.exp(x);
-    System.out.println(exp);
     Chop._10.requireClose(exp, MatrixExp.of(x));
     Chop._10.requireClose(Det.of(exp), RealScalar.ONE);
     Tensor log = Sl2MatrixExponential.INSTANCE.log(exp);

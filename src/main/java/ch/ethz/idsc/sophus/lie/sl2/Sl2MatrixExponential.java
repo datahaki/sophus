@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.sl2;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.Sinhc;
+import ch.ethz.idsc.sophus.math.sca.Sinhc;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;

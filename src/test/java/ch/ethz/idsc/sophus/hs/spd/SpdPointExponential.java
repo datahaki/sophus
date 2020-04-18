@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
-import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;

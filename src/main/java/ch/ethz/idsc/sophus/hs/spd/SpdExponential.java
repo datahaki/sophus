@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.MatrixSqrt;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;

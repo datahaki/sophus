@@ -6,22 +6,30 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.opt.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 public class SplitParametricCurve implements GeodesicInterface, Serializable {
-  private final SplitInterface splitInterface;
+  /** @param binaryAverage
+   * @return */
+  public static GeodesicInterface of(BinaryAverage binaryAverage) {
+    return new SplitParametricCurve(Objects.requireNonNull(binaryAverage));
+  }
 
-  public SplitParametricCurve(SplitInterface splitInterface) {
-    this.splitInterface = Objects.requireNonNull(splitInterface);
+  /***************************************************/
+  private final BinaryAverage binaryAverage;
+
+  private SplitParametricCurve(BinaryAverage binaryAverage) {
+    this.binaryAverage = binaryAverage;
   }
 
   @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return scalar -> splitInterface.split(p, q, scalar);
+    return scalar -> binaryAverage.split(p, q, scalar);
   }
 
   @Override // from SplitInterface
   public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return splitInterface.split(p, q, scalar);
+    return binaryAverage.split(p, q, scalar);
   }
 }

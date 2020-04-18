@@ -57,32 +57,30 @@ public class SnProjectedCoordinateTest extends TestCase {
 
   public void testLagrangeProperty() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    // int fails = 0;
+    int fails = 0;
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int d = 3; d < 7; ++d)
         for (int n = d + 1; n < 10; ++n)
-        // try
-        {
-          Tensor center = UnitVector.of(d, 0);
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
-          int count = 0;
-          for (Tensor mean : sequence) {
-            Tensor weights = projectedCoordinate.weights(sequence, mean);
-            // System.out.println(weights);
-            VectorQ.requireLength(weights, n);
-            AffineQ.require(weights);
-            Chop._06.requireClose(weights, UnitVector.of(n, count));
-            Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
-            Chop._06.requireAllZero(evaluate);
-            Chop._06.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
-            Chop._03.requireClose(mean, new SnBiinvariantMean(Chop._06).mean(sequence, weights));
-            ++count;
+          try {
+            Tensor center = UnitVector.of(d, 0);
+            Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
+            int count = 0;
+            for (Tensor mean : sequence) {
+              Tensor weights = projectedCoordinate.weights(sequence, mean);
+              // System.out.println(weights);
+              VectorQ.requireLength(weights, n);
+              AffineQ.require(weights);
+              Chop._06.requireClose(weights, UnitVector.of(n, count));
+              Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
+              Chop._06.requireAllZero(evaluate);
+              Chop._06.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
+              Chop._03.requireClose(mean, new SnBiinvariantMean(Chop._06).mean(sequence, weights));
+              ++count;
+            }
+          } catch (Exception exception) {
+            ++fails;
           }
-        }
-    // catch (Exception exception) {
-    // ++fails;
-    // }
-    // assertTrue(fails < 3);
+    assertTrue(fails < 3);
   }
 
   public void testBiinvariance() {

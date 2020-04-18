@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Ralf Zimmermann, 2017
  * https://arxiv.org/pdf/1604.05054.pdf */
 public class StExponential implements Exponential, FlattenLog, Serializable {
+  @SuppressWarnings("unused")
   private final Tensor x;
 
   public StExponential(Tensor x) {

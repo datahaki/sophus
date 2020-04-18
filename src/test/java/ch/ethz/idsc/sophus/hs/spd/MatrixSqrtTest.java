@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math;
+package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
