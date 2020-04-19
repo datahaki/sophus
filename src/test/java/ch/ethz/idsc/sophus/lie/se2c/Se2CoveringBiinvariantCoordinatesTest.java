@@ -109,7 +109,7 @@ public class Se2CoveringBiinvariantCoordinatesTest extends TestCase {
           Tensor weightsR = biinvariantCoordinate.weights(seqrgt, xyargt);
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._10.requireClose(xyargt, x_rgt);
-          Chop._10.requireClose(weights1, weightsR);
+          Chop._08.requireClose(weights1, weightsR);
           Tensor projR = biinvariantCoordinate.projection(seqrgt, xyargt);
           Chop._10.requireClose(projection, projR);
         }

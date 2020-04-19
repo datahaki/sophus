@@ -7,9 +7,6 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.hs.HsTransport;
-import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Nocopy;
 import ch.ethz.idsc.sophus.math.TensorIteration;
@@ -19,23 +16,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
-  /** @param lieGroup
-   * @param exponential
-   * @param lgv
-   * @param lvg
-   * @param lvv
-   * @return
-   * @throws Exception if either parameters is null */
-  public static HermiteSubdivision of( //
-      LieGroup lieGroup, Exponential exponential, //
-      Scalar lgv, Scalar lvg, Scalar lvv) {
-    return new Hermite1Subdivision( //
-        LieExponential.of(lieGroup, exponential), //
-        RnTransport.INSTANCE, // FIXME
-        lgv, lvg, lvv);
-  }
-
-  /***************************************************/
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;
@@ -43,6 +23,13 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final Scalar lvg;
   private final Scalar lvv;
 
+  /** @param hsExponential
+   * @param hsTransport
+   * @param lgv
+   * @param lvg
+   * @param lvv
+   * @return
+   * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
       HsExponential hsExponential, HsTransport hsTransport, Scalar lgv, Scalar lvg, Scalar lvv) {
     this.hsExponential = hsExponential;

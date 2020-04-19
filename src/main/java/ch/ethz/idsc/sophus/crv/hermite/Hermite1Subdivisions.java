@@ -3,7 +3,9 @@ package ch.ethz.idsc.sophus.crv.hermite;
 
 import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsTransport;
+import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -72,10 +74,8 @@ public enum Hermite1Subdivisions {
    * @param mu
    * @return */
   public static HermiteSubdivision of(LieGroup lieGroup, Exponential exponential, Scalar lambda, Scalar mu) {
-    return Hermite1Subdivision.of(lieGroup, exponential, //
-        lambda, //
-        RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
-        mu.multiply(_1_4));
+    return of(LieExponential.of(lieGroup, exponential), RnTransport.INSTANCE, // FIXME
+        lambda, mu);
   }
 
   /** @param lieGroup

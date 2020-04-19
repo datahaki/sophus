@@ -63,7 +63,7 @@ public class KrigingsTest extends TestCase {
         Kriging kriging = Serialization.copy(krigings.barycentric(RnManifold.INSTANCE, variogram, sequence));
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor tensor = kriging.estimate(sequence.get(index));
-          Chop._10.requireClose(tensor, UnitVector.of(n, index));
+          Chop._08.requireClose(tensor, UnitVector.of(n, index));
           // ---
           Tensor point = RandomVariate.of(distribution, d);
           Tensor weights = kriging.estimate(point);
