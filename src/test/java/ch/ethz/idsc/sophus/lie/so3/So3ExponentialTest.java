@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 
 public class So3ExponentialTest extends TestCase {
   public void testSimple() {
-    Tensor vector = Tensors.vector(.2, .3, -.4);
+    Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor m1 = So3Exponential.INSTANCE.exp(vector);
     Tensor m2 = So3Exponential.INSTANCE.exp(vector.negate());
     assertFalse(Chop._12.close(m1, IdentityMatrix.of(3)));
@@ -40,7 +40,7 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testLog() {
-    Tensor vector = Tensors.vector(.2, .3, -.4);
+    Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor matrix = So3Exponential.INSTANCE.exp(vector);
     Tensor result = So3Exponential.INSTANCE.log(matrix);
     assertEquals(result, vector);
@@ -69,10 +69,10 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testFormula() {
-    checkDiff(Tensors.vector(-.2, .1, .3));
-    checkDiff(Tensors.vector(-.5, -.1, .03));
-    checkDiff(Tensors.vector(-.3, -.2, .1));
-    checkDiff(Tensors.vector(-.3, -.2, -.3));
+    checkDiff(Tensors.vector(-0.2, 0.1, 0.3));
+    checkDiff(Tensors.vector(-0.5, -0.1, 0.03));
+    checkDiff(Tensors.vector(-0.3, -0.2, 0.1));
+    checkDiff(Tensors.vector(-0.3, -0.2, -0.3));
   }
 
   public void testRotZ() {
@@ -177,7 +177,7 @@ public class So3ExponentialTest extends TestCase {
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
       Scalar infNorm = Norm.INFINITY.ofVector(Diagonal.of(qr.getR()).map(Decrement.ONE));
-      assertTrue(Scalars.lessThan(infNorm, RealScalar.of(.1)));
+      assertTrue(Scalars.lessThan(infNorm, RealScalar.of(0.1)));
     }
   }
 

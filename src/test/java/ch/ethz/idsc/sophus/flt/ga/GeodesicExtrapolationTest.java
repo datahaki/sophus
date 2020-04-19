@@ -103,7 +103,7 @@ public class GeodesicExtrapolationTest extends TestCase {
   }
 
   public void testSplits2() {
-    Tensor mask = Tensors.vector(.5, .5);
+    Tensor mask = Tensors.vector(0.5, 0.5);
     Tensor result = GeodesicExtrapolation.Splits.of(mask);
     assertEquals(Tensors.vector(2), result);
   }
@@ -126,7 +126,7 @@ public class GeodesicExtrapolationTest extends TestCase {
   }
 
   public void testAffinityFail() {
-    Tensor mask = Tensors.vector(.5, .8);
+    Tensor mask = Tensors.vector(0.5, 0.8);
     try {
       GeodesicExtrapolation.Splits.of(mask);
       fail();

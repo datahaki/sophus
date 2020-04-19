@@ -116,7 +116,7 @@ public class SnGeodesicTest extends TestCase {
   public void testArticle() {
     Tensor p = Tensors.vector(1, 0, 0);
     Tensor q = Tensors.vector(0, 1 / Math.sqrt(5), 2 / Math.sqrt(5));
-    Tensor tensor = SnGeodesic.INSTANCE.split(p, q, RealScalar.of(.4));
+    Tensor tensor = SnGeodesic.INSTANCE.split(p, q, RealScalar.of(0.4));
     // in sync with Mathematica
     Tensor expect = Tensors.vector(0.8090169943749473, 0.2628655560595668, 0.5257311121191336);
     Chop._12.requireClose(tensor, expect);

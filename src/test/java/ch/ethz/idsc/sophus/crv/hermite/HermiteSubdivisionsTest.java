@@ -69,7 +69,7 @@ public class HermiteSubdivisionsTest extends TestCase {
 
   public void testSe2LinearReproduction() {
     Tensor pg = Tensors.vector(1, 2, 3);
-    Tensor pv = Tensors.vector(.3, -.2, -.1);
+    Tensor pv = Tensors.vector(0.3, -0.2, -0.1);
     Tensor control = Tensors.empty();
     for (int count = 0; count < 10; ++count) {
       control.append(Tensors.of(pg, pv));

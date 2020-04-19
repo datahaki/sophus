@@ -33,7 +33,7 @@ public class FixedRadiusDubinsTest extends TestCase {
   public void testMin2() {
     for (int count = 0; count < 100; ++count) {
       Tensor tensor = RandomVariate.of(NormalDistribution.standard(), 3);
-      DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(tensor, RealScalar.of(.1));
+      DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(tensor, RealScalar.of(0.1));
       assertTrue(2 <= dubinsPathGenerator.allValid().count());
     }
   }

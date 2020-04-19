@@ -44,7 +44,7 @@ public enum Hermite1Subdivisions {
    * @param mu
    * @return */
   public static HermiteSubdivision of(LieGroup lieGroup, Exponential exponential, Scalar lambda, Scalar mu) {
-    return new Hermite1Subdivision(lieGroup, exponential, //
+    return Hermite1Subdivision.of(lieGroup, exponential, //
         lambda, //
         RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
         mu.multiply(_1_4));

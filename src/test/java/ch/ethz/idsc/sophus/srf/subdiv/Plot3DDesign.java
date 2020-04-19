@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 class Plot3DDesign {
-  private static final Scalar DT = RealScalar.of(.01);
+  private static final Scalar DT = RealScalar.of(0.01);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   // ---
   private final TensorScalarFunction tensorScalarFunction;

@@ -20,7 +20,7 @@ public class Se3ExponentialTest extends TestCase {
   public void testSimple() {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
-        Tensors.vector(.2, .3, -.1));
+        Tensors.vector(0.2, 0.3, -0.1));
     Tensor g = Se3Exponential.INSTANCE.exp(input);
     Tensor u_w = Se3Exponential.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
@@ -29,7 +29,7 @@ public class Se3ExponentialTest extends TestCase {
   public void testUnits() {
     Tensor input = Tensors.of( //
         Tensors.fromString("{1[m*s^-1], 2[m*s^-1], 3[m*s^-1]}"), //
-        Tensors.vector(.2, .3, -.1));
+        Tensors.vector(0.2, 0.3, -0.1));
     Tensor g = Se3Exponential.INSTANCE.exp(input);
     Tensor u_w = Se3Exponential.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);

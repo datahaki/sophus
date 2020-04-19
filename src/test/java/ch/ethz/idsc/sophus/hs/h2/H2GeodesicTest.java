@@ -31,8 +31,8 @@ public class H2GeodesicTest extends TestCase {
   public void testCurve() {
     Tensor e = Tensors.vector(0.9999999999999999, 2.010051514185878);
     Tensor t = Tensors.vector(1.0, 2.0);
-    Tensor split = H2Geodesic.INSTANCE.split(e, t, RealScalar.of(.2));
-    assertEquals(split, H2Geodesic.INSTANCE.split(e, t, RealScalar.of(.2)));
+    Tensor split = H2Geodesic.INSTANCE.split(e, t, RealScalar.of(0.2));
+    assertEquals(split, H2Geodesic.INSTANCE.split(e, t, RealScalar.of(0.2)));
   }
 
   public void testSingularityExact() {

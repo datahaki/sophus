@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Normalize;
+import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -23,7 +24,7 @@ public class RotationMatrix3DTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   public void testSimple() {
-    Scalar scalar = RealScalar.of(.5);
+    Scalar scalar = RealScalar.of(0.5);
     Tensor tensor = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"), //
         Tensors.fromString("{{1, 0, 0}, {0, 1, 0}}"), scalar);
@@ -35,10 +36,18 @@ public class RotationMatrix3DTest extends TestCase {
     for (int count = 0; count < 20; ++count) {
       Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
       Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
-      Tensor rotation = RotationMatrix3D.of(a, b);
-      assertTrue(OrthogonalMatrixQ.of(rotation, Chop._10));
-      Chop._08.requireClose(rotation.dot(a), b);
-      Chop._08.requireClose(Det.of(rotation), RealScalar.ONE);
+      Tensor w = Cross.of(a, b);
+      Tensor wx = Cross.skew3(w);
+      Tensor rotation1 = RotationMatrix3D.of(a, b);
+      assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._10));
+      Chop._08.requireClose(rotation1.dot(a), b);
+      Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
+      // System.out.println(Pretty.of(TensorWedge.of(a, b).multiply(RealScalar.of(2)).map(Round._4)));
+      // HodgeDual.of(tensor)
+      // System.out.println(Pretty.of(wx.map(Round._4)));
+      // Tensor rotation2 = MatrixExp.of(wx);
+      // Chop._10.requireClose(rotation1, rotation2);
+      // System.out.println("---");
     }
   }
 }

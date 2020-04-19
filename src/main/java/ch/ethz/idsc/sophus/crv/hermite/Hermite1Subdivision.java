@@ -4,9 +4,12 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
+import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Nocopy;
 import ch.ethz.idsc.sophus.math.TensorIteration;
@@ -16,8 +19,15 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
-  private final LieGroup lieGroup;
-  private final Exponential exponential;
+  public static HermiteSubdivision of( //
+      LieGroup lieGroup, Exponential exponential, //
+      Scalar lgv, Scalar lvg, Scalar lvv) {
+    return new Hermite1Subdivision( //
+        LieExponential.of(lieGroup, exponential), RnTransport.INSTANCE, lgv, lvg, lvv);
+  }
+
+  private final HsExponential hsExponential;
+  private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;
   private final Scalar lgv;
   private final Scalar lvg;
@@ -30,11 +40,11 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
    * @param lvv
    * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      LieGroup lieGroup, Exponential exponential, //
+      HsExponential hsExponential, HsTransport hsTransport, //
       Scalar lgv, Scalar lvg, Scalar lvv) {
-    this.lieGroup = lieGroup;
-    this.exponential = exponential;
-    hsGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
+    this.hsExponential = hsExponential;
+    this.hsTransport = hsTransport;
+    hsGeodesic = new HsGeodesic(hsExponential);
     this.lgv = Objects.requireNonNull(lgv);
     this.lvg = lvg.add(lvg);
     this.lvv = lvv.add(lvv);
@@ -69,18 +79,18 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
       Tensor pv = p.get(1);
       Tensor qg = q.get(0);
       Tensor qv = q.get(1);
-      Tensor rg;
+      final Tensor rg;
       {
         Tensor rg1 = hsGeodesic.midpoint(pg, qg);
-        Tensor rpv = pv;
-        Tensor rqv = qv;
-        Tensor rg2 = exponential.exp(rpv.subtract(rqv).multiply(rgk));
-        rg = lieGroup.element(rg1).combine(rg2);
+        Tensor rpv = hsTransport.shift(pg, rg1).apply(pv); // at rg1
+        Tensor rqv = hsTransport.shift(qg, rg1).apply(qv);
+        rg = hsExponential.exponential(rg1).exp(rpv.subtract(rqv).multiply(rgk));
       }
-      Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(qg));
-      Tensor rv1 = log.multiply(rvk);
-      Tensor pqv = qv;
-      Tensor rv2 = pqv.add(pv).multiply(lvv);
+      Tensor pvq = hsExponential.exponential(pg).log(qg); // vector pointing from p to q
+      Tensor rv1 = hsTransport.shift(pg, rg).apply(pvq.multiply(rvk)); // at rg
+      Tensor rpv = hsTransport.shift(pg, rg).apply(pv); // at rg
+      Tensor rqv = hsTransport.shift(qg, rg).apply(qv); // at rg
+      Tensor rv2 = rpv.add(rqv).multiply(lvv); // at rg
       Tensor rv = rv1.add(rv2);
       Tensor rrv = rv;
       return Tensors.of(rg, rrv);

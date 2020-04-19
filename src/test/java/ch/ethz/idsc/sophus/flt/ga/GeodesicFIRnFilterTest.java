@@ -49,7 +49,7 @@ public class GeodesicFIRnFilterTest extends TestCase {
     Tensor control = Tensors.of(p, q, r, s);
     GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
-    Tensor refined = GeodesicFIRnFilter.of(tensorUnaryOperator, geodesicInterface, 2, RealScalar.of(.5)).apply(control);
+    Tensor refined = GeodesicFIRnFilter.of(tensorUnaryOperator, geodesicInterface, 2, RealScalar.of(0.5)).apply(control);
     assertEquals(refined.get(0), p);
     assertEquals(refined.get(1), q);
     Chop._12.requireClose(refined.get(3), Tensors.vector(2.3494156605301217, 3.190886645338018, 3.0));
