@@ -6,6 +6,8 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** Reference: U. Reif slides
  * 
+ * maps to SE(2) or SE(2) Covering
+ * 
  * @param p vector of the form {px, py, pa}
  * @param q vector of the form {qx, qy, qa} */
 public abstract class Clothoids implements ClothoidInterface, ClothoidQuadratic {
