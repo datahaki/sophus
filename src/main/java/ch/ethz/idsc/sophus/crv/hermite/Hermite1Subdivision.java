@@ -19,13 +19,23 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
+  /** @param lieGroup
+   * @param exponential
+   * @param lgv
+   * @param lvg
+   * @param lvv
+   * @return
+   * @throws Exception if either parameters is null */
   public static HermiteSubdivision of( //
       LieGroup lieGroup, Exponential exponential, //
       Scalar lgv, Scalar lvg, Scalar lvv) {
     return new Hermite1Subdivision( //
-        LieExponential.of(lieGroup, exponential), RnTransport.INSTANCE, lgv, lvg, lvv);
+        LieExponential.of(lieGroup, exponential), //
+        RnTransport.INSTANCE, // FIXME
+        lgv, lvg, lvv);
   }
 
+  /***************************************************/
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;
@@ -33,15 +43,8 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final Scalar lvg;
   private final Scalar lvv;
 
-  /** @param lieGroup
-   * @param exponential
-   * @param lgv
-   * @param lvg
-   * @param lvv
-   * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      HsExponential hsExponential, HsTransport hsTransport, //
-      Scalar lgv, Scalar lvg, Scalar lvv) {
+      HsExponential hsExponential, HsTransport hsTransport, Scalar lgv, Scalar lvg, Scalar lvv) {
     this.hsExponential = hsExponential;
     this.hsTransport = hsTransport;
     hsGeodesic = new HsGeodesic(hsExponential);
@@ -86,14 +89,21 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
         Tensor rqv = hsTransport.shift(qg, rg1).apply(qv);
         rg = hsExponential.exponential(rg1).exp(rpv.subtract(rqv).multiply(rgk));
       }
-      Tensor pvq = hsExponential.exponential(pg).log(qg); // vector pointing from p to q
-      Tensor rv1 = hsTransport.shift(pg, rg).apply(pvq.multiply(rvk)); // at rg
-      Tensor rpv = hsTransport.shift(pg, rg).apply(pv); // at rg
-      Tensor rqv = hsTransport.shift(qg, rg).apply(qv); // at rg
-      Tensor rv2 = rpv.add(rqv).multiply(lvv); // at rg
-      Tensor rv = rv1.add(rv2);
-      Tensor rrv = rv;
-      return Tensors.of(rg, rrv);
+      final Tensor rv1;
+      {
+        Exponential exponential = hsExponential.exponential(rg);
+        Tensor lrq = exponential.log(qg); // at rg pointing to q
+        Tensor lrp = exponential.log(pg); // at rg pointing to p
+        rv1 = lrq.subtract(lrp).multiply(rvk); // at rg
+      }
+      final Tensor rv2;
+      {
+        Tensor rpv = hsTransport.shift(pg, rg).apply(pv); // at rg
+        Tensor rqv = hsTransport.shift(qg, rg).apply(qv); // at rg
+        rv2 = rpv.add(rqv).multiply(lvv); // at rg
+      }
+      Tensor rv = rv1.add(rv2); // average
+      return Tensors.of(rg, rv);
     }
 
     private class StringIteration implements TensorIteration {

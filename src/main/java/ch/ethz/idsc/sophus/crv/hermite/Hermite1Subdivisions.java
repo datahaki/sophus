@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.hermite;
 
+import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -38,13 +40,13 @@ public enum Hermite1Subdivisions {
    * "Dual Hermite subdivision schemes of de Rham-type"
    * by Conti, Merrien, Romani, 2015, p. 11, H1[lambda, mu]
    * 
-   * @param lieGroup
-   * @param exponential
+   * @param hsExponential
+   * @param hsTransport
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(LieGroup lieGroup, Exponential exponential, Scalar lambda, Scalar mu) {
-    return Hermite1Subdivision.of(lieGroup, exponential, //
+  public static HermiteSubdivision of(HsExponential hsExponential, HsTransport hsTransport, Scalar lambda, Scalar mu) {
+    return new Hermite1Subdivision(hsExponential, hsTransport, //
         lambda, //
         RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
         mu.multiply(_1_4));
@@ -58,6 +60,25 @@ public enum Hermite1Subdivisions {
    * by Byeongseon Jeong, Jungho Yoon, 2017
    * 
    * @param lieGroup
+   * @param exponential
+   * @return */
+  public static HermiteSubdivision standard(HsExponential hsExponential, HsTransport hsTransport) {
+    return of(hsExponential, hsTransport, N1_8, N1_2);
+  }
+
+  /** @param lieGroup
+   * @param exponential
+   * @param lambda
+   * @param mu
+   * @return */
+  public static HermiteSubdivision of(LieGroup lieGroup, Exponential exponential, Scalar lambda, Scalar mu) {
+    return Hermite1Subdivision.of(lieGroup, exponential, //
+        lambda, //
+        RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
+        mu.multiply(_1_4));
+  }
+
+  /** @param lieGroup
    * @param exponential
    * @return */
   public static HermiteSubdivision standard(LieGroup lieGroup, Exponential exponential) {
