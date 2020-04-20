@@ -43,7 +43,7 @@ public class LieProjectedLineDistance implements LineDistance, Serializable {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor tensor) {
-      Tensor vector = exponential.log(lieInv.combine(tensor));
+      Tensor vector = exponential.log(lieInv.combine(tensor)); // tensor - p
       Tensor project = vector.dot(normal).pmul(normal);
       Tensor along = lieBeg.combine(exponential.exp(project));
       Tensor dir = lieGroup.element(along).inverse().combine(tensor);

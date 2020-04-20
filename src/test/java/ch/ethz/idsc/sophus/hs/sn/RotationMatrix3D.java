@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.s2;
+package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
  * 
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/RotationMatrix.html">RotationMatrix</a> */
-public enum RotationMatrix3D {
+/* package */ enum RotationMatrix3D {
   ;
   private static final Tensor ID3 = IdentityMatrix.of(3);
 
