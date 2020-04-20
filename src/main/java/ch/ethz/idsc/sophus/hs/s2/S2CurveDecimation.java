@@ -10,6 +10,6 @@ public enum S2CurveDecimation {
   /** @param epsilon
    * @return */
   public static CurveDecimation of(Scalar epsilon) {
-    return CurveDecimation.of(S2Line.INSTANCE, Sign.requirePositiveOrZero(epsilon));
+    return CurveDecimation.of(S2LineDistance.INSTANCE, Sign.requirePositiveOrZero(epsilon));
   }
 }

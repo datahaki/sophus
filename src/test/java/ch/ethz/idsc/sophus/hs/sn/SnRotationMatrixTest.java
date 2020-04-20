@@ -55,7 +55,7 @@ public class SnRotationMatrixTest extends TestCase {
         Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor rotation1 = SnRotationMatrix.of(a, b);
-        assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._10));
+        assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
         Chop._08.requireClose(rotation1.dot(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
       }

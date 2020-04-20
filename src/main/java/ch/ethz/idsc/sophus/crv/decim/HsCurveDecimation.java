@@ -1,45 +1,44 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.decim;
 
-import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
-import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** various norms for curve decimation */
 public enum HsCurveDecimation {
   STANDARD() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
-      HsLineDistance hsLineDistance = new HsLineDistance(LieFlattenLogManifold.of(lieGroup, exponential::log));
+    public CurveDecimation of(FlattenLogManifold flattenLogManifold, HsExponential hsExponential, Scalar epsilon) {
+      HsLineDistance hsLineDistance = new HsLineDistance(flattenLogManifold);
       return new RamerDouglasPeucker(hsLineDistance, epsilon);
     }
   }, //
   MIDPOINT() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
-      return new RamerDouglasPeucker(HsMidpointLineDistance.of(lieGroup, exponential), epsilon);
+    public CurveDecimation of(FlattenLogManifold flattenLogManifold, HsExponential hsExponential, Scalar epsilon) {
+      return new RamerDouglasPeucker(HsMidpointLineDistance.of(flattenLogManifold, hsExponential), epsilon);
     }
   }, //
   SYMMETRIZED() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
-      HsLineDistance hsLineDistance = new HsLineDistance(LieFlattenLogManifold.of(lieGroup, exponential::log));
+    public CurveDecimation of(FlattenLogManifold flattenLogManifold, HsExponential hsExponential, Scalar epsilon) {
+      HsLineDistance hsLineDistance = new HsLineDistance(flattenLogManifold);
       return new RamerDouglasPeucker(new SymmetricLineDistance(hsLineDistance), epsilon);
     }
   }, //
   LIE_PROJECT() {
     @Override
-    public CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon) {
+    public CurveDecimation of(FlattenLogManifold flattenLogManifold, HsExponential hsExponential, Scalar epsilon) {
       return new RamerDouglasPeucker( //
-          new LieProjectedLineDistance(lieGroup, exponential), //
+          new HsProjectedLineDistance(hsExponential), //
           epsilon);
     }
   };
 
-  /** @param lieGroup
-   * @param exponential
+  /** @param flattenLogManifold
+   * @param hsExponential
    * @param epsilon non-negative
    * @return */
-  public abstract CurveDecimation of(LieGroup lieGroup, Exponential exponential, Scalar epsilon);
+  public abstract CurveDecimation of(FlattenLogManifold flattenLogManifold, HsExponential hsExponential, Scalar epsilon);
 }

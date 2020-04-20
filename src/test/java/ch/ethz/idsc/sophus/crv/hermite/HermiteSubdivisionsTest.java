@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2.Se2Group;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringTransport;
 import ch.ethz.idsc.sophus.math.Do;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -28,7 +29,9 @@ public class HermiteSubdivisionsTest extends TestCase {
     cp2.set(Tensor::negate, Tensor.ALL, 1);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE);
+          RnManifold.HS_EXP, //
+          RnTransport.INSTANCE, //
+          RnBiinvariantMean.INSTANCE);
       TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
       TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
       for (int count = 0; count < 3; ++count) {
@@ -46,7 +49,8 @@ public class HermiteSubdivisionsTest extends TestCase {
     cp2.set(Tensor::negate, Tensor.ALL, 1);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Manifold.HS_EXP, RnTransport.INSTANCE, // FIXME
+          Se2Manifold.HS_EXP, //
+          Se2CoveringTransport.INSTANCE, //
           Se2BiinvariantMean.LINEAR);
       TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
       TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
@@ -63,7 +67,8 @@ public class HermiteSubdivisionsTest extends TestCase {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Manifold.HS_EXP, RnTransport.INSTANCE, // FIXME
+          Se2Manifold.HS_EXP, //
+          Se2CoveringTransport.INSTANCE, //
           Se2BiinvariantMean.LINEAR);
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
       Tensor iterate = Do.of(tensorIteration::iterate, 2);
@@ -81,8 +86,10 @@ public class HermiteSubdivisionsTest extends TestCase {
     }
     control = control.unmodifiable();
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
+      // System.out.println(hermiteSubdivisions);
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Manifold.HS_EXP, RnTransport.INSTANCE, // FIXME
+          Se2Manifold.HS_EXP, //
+          Se2CoveringTransport.INSTANCE, //
           Se2BiinvariantMean.LINEAR);
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
       Tensor iterate = Do.of(tensorIteration::iterate, 2);

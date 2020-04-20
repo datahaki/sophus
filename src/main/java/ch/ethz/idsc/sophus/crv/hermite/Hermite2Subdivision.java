@@ -89,14 +89,12 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
         Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv.multiply(rgp));
         Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv.multiply(rgq));
         Tensor rv1df = rg1v1.subtract(rg1v2);
-        // Tensor rg2 = exponential.exp(pv.multiply(rgp).subtract(qv.multiply(rgq)));
         Tensor rg = hsExponential.exponential(rg1).exp(rv1df);
         // ---
         Exponential exponential = hsExponential.exponential(rg);
         Tensor lrp = exponential.log(pg); // p - r
         Tensor lrq = exponential.log(qg); // q - r
         Tensor rv1 = lrq.subtract(lrp).multiply(rvk);
-        // lieGroup.element(rg1).combine(rg2);
         // ---
         Tensor rgv1 = hsTransport.shift(pg, rg).apply(pv);
         Tensor rgv2 = hsTransport.shift(qg, rg).apply(qv);
@@ -109,21 +107,15 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
         Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv.multiply(rgq));
         Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv.multiply(rgp));
         Tensor rv1df = rg1v1.subtract(rg1v2);
-        // Tensor rg2 = exponential.exp(pv.multiply(rgq).subtract(qv.multiply(rgp)));
-        // LieGroup lieGroup = null;
-        // Tensor rg = lieGroup.element(rg1).combine(rg2);
         Tensor rg = hsExponential.exponential(rg1).exp(rv1df);
         // ---
         Exponential exponential = hsExponential.exponential(rg);
         Tensor lrp = exponential.log(pg); // p - r
         Tensor lrq = exponential.log(qg); // q - r
         Tensor rv1 = lrq.subtract(lrp).multiply(rvk);
-        // Tensor rv2 = vpq.dot(Tensors.of(qv, pv));
         Tensor rgv1 = hsTransport.shift(pg, rg).apply(pv);
         Tensor rgv2 = hsTransport.shift(qg, rg).apply(qv);
         Tensor rv2 = vpq.dot(Tensors.of(rgv2, rgv1));
-        // Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(qg)); // q - p
-        // Tensor rv1 = log.multiply(rvk);
         Tensor rv = rv1.add(rv2);
         curve.append(Tensors.of(rg, rv));
       }

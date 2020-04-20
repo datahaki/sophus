@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 
 public class S2LineDistanceTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    TensorNorm tensorNorm = Serialization.copy(new S2LineDistance(Tensors.vector(1, 0, 0), Tensors.vector(0, 1, 0)));
+    TensorNorm tensorNorm = Serialization.copy(S2LineDistance.INSTANCE.tensorNorm(Tensors.vector(1, 0, 0), Tensors.vector(0, 1, 0)));
     Chop._12.requireZero(tensorNorm.norm(Tensors.vector(-1, 0, 0)));
     Chop._12.requireClose(tensorNorm.norm(Tensors.vector(0, 0, +1)), Pi.HALF);
     Chop._12.requireClose(tensorNorm.norm(Tensors.vector(0, 0, -1)), Pi.HALF);
