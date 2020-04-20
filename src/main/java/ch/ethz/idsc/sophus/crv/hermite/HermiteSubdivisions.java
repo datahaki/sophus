@@ -2,91 +2,91 @@
 package ch.ethz.idsc.sophus.crv.hermite;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
 public enum HermiteSubdivisions {
   HERMITE1() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite1Subdivisions.of(lieGroup, exponential, LAMBDA, MU);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite1Subdivisions.of(hsExponential, hsTransport, LAMBDA, MU);
     }
   }, //
   H1STANDARD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite1Subdivisions.standard(lieGroup, exponential);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite1Subdivisions.standard(hsExponential, hsTransport);
     }
   }, //
   /***************************************************/
   HERMITE2() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite2Subdivisions.of(lieGroup, exponential, LAMBDA, MU);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite2Subdivisions.of(hsExponential, hsTransport, LAMBDA, MU);
     }
   }, //
   H2STANDARD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite2Subdivisions.standard(lieGroup, exponential);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite2Subdivisions.standard(hsExponential, hsTransport);
     }
   }, //
   H2MANIFOLD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite2Subdivisions.manifold(lieGroup, exponential);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite2Subdivisions.manifold(hsExponential, hsTransport);
     }
   }, //
   /***************************************************/
   HERMITE3() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, exponential, THETA, OMEGA);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(hsExponential, hsTransport, THETA, OMEGA);
     }
   }, //
   H3STANDARD() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, exponential);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(hsExponential, hsTransport);
     }
   }, //
   H3A1() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a1(lieGroup, exponential);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a1(hsExponential, hsTransport);
     }
   }, //
   H3A2() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a2(lieGroup, exponential);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a2(hsExponential, hsTransport);
     }
   }, //
   /***************************************************/
   HERMITE3_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, exponential, biinvariantMean, THETA, OMEGA);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(hsExponential, hsTransport, biinvariantMean, THETA, OMEGA);
     }
   }, //
   H3STANDARD_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.of(lieGroup, exponential, biinvariantMean);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.of(hsExponential, hsTransport, biinvariantMean);
     }
   }, //
   H3A1_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a1(lieGroup, exponential, biinvariantMean);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a1(hsExponential, hsTransport, biinvariantMean);
     }
   }, //
   H3A2_BM() {
     @Override
-    public HermiteSubdivision supply(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
-      return Hermite3Subdivisions.a2(lieGroup, exponential, biinvariantMean);
+    public HermiteSubdivision supply(HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+      return Hermite3Subdivisions.a2(hsExponential, hsTransport, biinvariantMean);
     }
   };
 
@@ -102,5 +102,5 @@ public enum HermiteSubdivisions {
    * @return
    * @throws Exception if either input parameter is null */
   public abstract HermiteSubdivision supply( //
-      LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean);
+      HsExponential hsExponential, HsTransport hsTransport, BiinvariantMean biinvariantMean);
 }

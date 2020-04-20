@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
-import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.sophus.lie.LieGroup;
+import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Nocopy;
 import ch.ethz.idsc.sophus.math.TensorIteration;
@@ -24,8 +24,8 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * factor in position (1, 1) of matrices A(-1) A(1)
    * with same sign and equal to 1/2 */
   // ---
-  private final LieGroup lieGroup;
-  private final Exponential exponential;
+  private final HsExponential hsExponential;
+  private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;
   private final TensorUnaryOperator tripleCenter;
   private final Scalar mgv;
@@ -47,12 +47,13 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * @param vpqr
    * @throws Exception if either parameters is null */
   public Hermite3Subdivision( //
-      LieGroup lieGroup, Exponential exponential, TensorUnaryOperator tripleCenter, //
+      HsExponential hsExponential, HsTransport hsTransport, //
+      TensorUnaryOperator tripleCenter, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
-    this.lieGroup = lieGroup;
-    this.exponential = exponential;
-    hsGeodesic = new HsGeodesic(LieExponential.of(lieGroup, exponential));
+    this.hsExponential = hsExponential;
+    this.hsTransport = hsTransport;
+    hsGeodesic = new HsGeodesic(hsExponential);
     this.tripleCenter = Objects.requireNonNull(tripleCenter);
     this.mgv = Objects.requireNonNull(mgv);
     this.mvg = mvg.add(mvg);
@@ -97,12 +98,20 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Tensor qv = q.get(1);
       Tensor rg = r.get(0);
       Tensor rv = r.get(1);
-      Tensor cg1 = tripleCenter.apply(Unprotect.byRef(pg, qg, rg));
-      Tensor cg2 = rv.subtract(pv).multiply(cgk);
-      Tensor cg = lieGroup.element(cg1).combine(cg2);
-      Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(rg)); // r - p
-      Tensor cv1 = log.multiply(cvk);
-      Tensor cv2 = cvw.dot(Unprotect.byRef(pv, qv, rv));
+      Tensor cg1 = tripleCenter.apply(Unprotect.byRef(pg, qg, rg)); // initial guess
+      Tensor cv1v1 = hsTransport.shift(pg, cg1).apply(pv); // at cg1
+      Tensor cv1v2 = hsTransport.shift(rg, cg1).apply(rv); // at cg1
+      Tensor cv1df = cv1v2.subtract(cv1v1).multiply(cgk);
+      Tensor cg = hsExponential.exponential(cg1).exp(cv1df);
+      // ---
+      Exponential exponential = hsExponential.exponential(cg);
+      Tensor clpg = exponential.log(pg); // p - c
+      Tensor clrg = exponential.log(rg); // r - c
+      Tensor cv1 = clrg.subtract(clpg).multiply(cvk); // r - p
+      Tensor cpv = hsTransport.shift(pg, cg).apply(pv);
+      Tensor cqv = hsTransport.shift(qg, cg).apply(qv);
+      Tensor crv = hsTransport.shift(rg, cg).apply(rv);
+      Tensor cv2 = cvw.dot(Unprotect.byRef(cpv, cqv, crv));
       Tensor cv = cv1.add(cv2);
       return Tensors.of(cg, cv);
     }
@@ -115,13 +124,20 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Tensor pv = p.get(1);
       Tensor qg = q.get(0);
       Tensor qv = q.get(1);
-      Tensor rg1 = hsGeodesic.midpoint(pg, qg);
-      Tensor rg2 = exponential.exp(qv.subtract(pv).multiply(rgk));
-      Tensor rg = lieGroup.element(rg1).combine(rg2);
+      Tensor rg1 = hsGeodesic.midpoint(pg, qg); // initial guess
+      Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv);
+      Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv);
+      Tensor rg1df = rg1v2.subtract(rg1v1).multiply(rgk);
+      Tensor rg = hsExponential.exponential(rg1).exp(rg1df);
       // ---
-      Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(qg)); // q - p
-      Tensor rv1 = log.multiply(rvk);
-      Tensor rv2 = qv.add(pv).multiply(mvv);
+      Exponential exponential = hsExponential.exponential(rg);
+      Tensor rlpg = exponential.log(pg); // p - r
+      Tensor rlqg = exponential.log(qg); // q - r
+      Tensor rv1 = rlqg.subtract(rlpg).multiply(rvk); // q - p
+      // ---
+      Tensor rgv1 = hsTransport.shift(pg, rg).apply(pv);
+      Tensor rgv2 = hsTransport.shift(qg, rg).apply(qv);
+      Tensor rv2 = rgv2.add(rgv1).multiply(mvv);
       Tensor rv = rv1.add(rv2);
       return Tensors.of(rg, rv);
     }

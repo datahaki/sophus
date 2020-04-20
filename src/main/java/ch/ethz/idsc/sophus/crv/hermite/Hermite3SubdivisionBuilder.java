@@ -7,17 +7,16 @@ import java.util.Objects;
 import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
-import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
-  private final LieGroup lieGroup;
-  private final Exponential exponential;
+  private final HsExponential hsExponential;
+  private final HsTransport hsTransport;
   private final Tensor cgw;
   private final Scalar mgv;
   private final Scalar mvg;
@@ -26,12 +25,13 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
   private final Scalar vpr;
   private final Tensor vpqr;
 
-  public Hermite3SubdivisionBuilder(LieGroup lieGroup, Exponential exponential, //
+  public Hermite3SubdivisionBuilder( //
+      HsExponential hsExponential, HsTransport hsTransport, //
       Tensor cgw, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
-    this.lieGroup = lieGroup;
-    this.exponential = exponential;
+    this.hsExponential = hsExponential;
+    this.hsTransport = hsTransport;
     this.cgw = cgw;
     this.mgv = mgv;
     this.mvg = mvg;
@@ -53,11 +53,11 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
    * for computing weighted averages in the Lie group */
   public HermiteSubdivision create() {
     IntegerFunction<Tensor> integerTensorFunction = i -> cgw;
-    return get(GeodesicCenter.of(new HsGeodesic(LieExponential.of(lieGroup, exponential)), integerTensorFunction));
+    return get(GeodesicCenter.of(new HsGeodesic(hsExponential), integerTensorFunction));
   }
 
   private HermiteSubdivision get(TensorUnaryOperator tripleCenter) {
-    return new Hermite3Subdivision(lieGroup, exponential, //
+    return new Hermite3Subdivision(hsExponential, hsTransport, //
         tripleCenter, //
         mgv, mvg, mvv, //
         cgv, vpr, vpqr);

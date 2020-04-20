@@ -4,10 +4,9 @@ package ch.ethz.idsc.sophus.crv.hermite;
 import java.util.Arrays;
 import java.util.List;
 
-import ch.ethz.idsc.sophus.lie.rn.RnExponential;
-import ch.ethz.idsc.sophus.lie.rn.RnGroup;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.lie.rn.RnTransport;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,13 +18,13 @@ import junit.framework.TestCase;
 
 public class Hermite2SubdivisionsTest extends TestCase {
   public void testSimple() {
-    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnGroup.INSTANCE, RnExponential.INSTANCE));
-    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnGroup.INSTANCE, RnExponential.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnManifold.HS_EXP, RnTransport.INSTANCE));
   }
 
   static final List<HermiteSubdivision> LIST = Arrays.asList( //
-      Hermite2Subdivisions.standard(RnGroup.INSTANCE, RnExponential.INSTANCE), //
-      Hermite2Subdivisions.manifold(RnGroup.INSTANCE, RnExponential.INSTANCE));
+      Hermite2Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE), //
+      Hermite2Subdivisions.manifold(RnManifold.HS_EXP, RnTransport.INSTANCE));
 
   public void testStringReverseRn() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
@@ -45,13 +44,13 @@ public class Hermite2SubdivisionsTest extends TestCase {
 
   public void testNullA1Fail() {
     try {
-      Hermite2Subdivisions.standard(Se2CoveringGroup.INSTANCE, null);
+      Hermite2Subdivisions.standard(Se2CoveringManifold.HS_EXP, null);
       fail();
     } catch (Exception exception) {
       // ---
     }
     try {
-      Hermite2Subdivisions.standard(null, Se2CoveringExponential.INSTANCE);
+      Hermite2Subdivisions.standard(null, RnTransport.INSTANCE);
       fail();
     } catch (Exception exception) {
       // ---
@@ -60,13 +59,13 @@ public class Hermite2SubdivisionsTest extends TestCase {
 
   public void testNullA2Fail() {
     try {
-      Hermite2Subdivisions.manifold(Se2CoveringGroup.INSTANCE, null);
+      Hermite2Subdivisions.manifold(Se2CoveringManifold.HS_EXP, null);
       fail();
     } catch (Exception exception) {
       // ---
     }
     try {
-      Hermite2Subdivisions.manifold(null, Se2CoveringExponential.INSTANCE);
+      Hermite2Subdivisions.manifold(null, RnTransport.INSTANCE);
       fail();
     } catch (Exception exception) {
       // ---
