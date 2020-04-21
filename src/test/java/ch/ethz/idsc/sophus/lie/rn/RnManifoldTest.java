@@ -39,7 +39,7 @@ public class RnManifoldTest extends TestCase {
         for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
           Tensor weights = barycentricCoordinate.weights(points, mean);
           Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
-          Chop._10.requireClose(mean, result);
+          Chop._08.requireClose(mean, result);
         }
       }
   }
