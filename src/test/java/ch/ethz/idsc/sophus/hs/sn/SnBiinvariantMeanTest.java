@@ -25,7 +25,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SnMeanTest extends TestCase {
+public class SnBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       AbsoluteCoordinate.linear(SnManifold.INSTANCE), //

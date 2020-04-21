@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class So3InverseDistanceCoordinatesTest extends TestCase {
+public class So3ManifoldTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       AbsoluteCoordinate.linear(So3Manifold.INSTANCE), //
       AbsoluteCoordinate.smooth(So3Manifold.INSTANCE) };

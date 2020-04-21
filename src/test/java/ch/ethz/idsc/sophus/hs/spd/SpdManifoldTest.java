@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SpdInverseDistanceCoordinatesTest extends TestCase {
+public class SpdManifoldTest extends TestCase {
   public static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       RelativeCoordinate.linear(SpdManifold.INSTANCE), //
       RelativeCoordinate.smooth(SpdManifold.INSTANCE), //

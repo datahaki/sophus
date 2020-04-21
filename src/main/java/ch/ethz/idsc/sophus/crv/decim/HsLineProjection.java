@@ -28,7 +28,7 @@ public class HsLineProjection {
     // return p;
     // p = exponential.exp(project);
     // }
-    for (int count = 0; count < 4; ++count) {
+    for (int count = 0; count < 6; ++count) {
       Exponential exponential = hsExponential.exponential(p);
       Tensor lq = exponential.log(q);
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);

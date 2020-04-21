@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class ClothoidTerminalRatioTest extends TestCase {
+public class ClothoidIntegralTest extends TestCase {
   public void testReverse() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {

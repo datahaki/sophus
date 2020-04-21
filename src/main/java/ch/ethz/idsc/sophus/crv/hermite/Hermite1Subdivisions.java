@@ -61,8 +61,8 @@ public enum Hermite1Subdivisions {
    * "Construction of Hermite subdivision schemes reproducing polynomials"
    * by Byeongseon Jeong, Jungho Yoon, 2017
    * 
-   * @param lieGroup
-   * @param exponential
+   * @param hsExponential
+   * @param hsTransport
    * @return */
   public static HermiteSubdivision standard(HsExponential hsExponential, HsTransport hsTransport) {
     return of(hsExponential, hsTransport, N1_8, N1_2);

@@ -25,6 +25,7 @@ public class SurfaceMesh implements Serializable {
     ind.append(Tensors.vectorInt(values));
   }
 
+  /** @return tensor of coordinates */
   public Tensor polygons() {
     return Tensor.of(ind.stream() //
         .map(face -> Tensor.of(IntStream.of(Primitives.toIntArray(face)).mapToObj(vrt::get))));

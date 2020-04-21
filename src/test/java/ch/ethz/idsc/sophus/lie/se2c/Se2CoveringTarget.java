@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Sign;
 
+/** only for testing ad-invariance */
 public class Se2CoveringTarget implements TensorNorm, Serializable {
   private final TensorNorm tensorNorm;
   private final Scalar offset;

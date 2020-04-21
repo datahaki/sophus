@@ -1,31 +1,81 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
+import java.util.Arrays;
+
+import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Dimensions;
+import ch.ethz.idsc.tensor.pdf.Distribution;
+import ch.ethz.idsc.tensor.pdf.NormalDistribution;
+import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class Se3BiinvariantCoordinatesTest extends TestCase {
+public class Se3ManifoldTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(Se3Manifold.HS_EXP);
+  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se3Manifold.HS_EXP);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
+      AbsoluteCoordinate.linear(Se3Manifold.INSTANCE), //
+      AbsoluteCoordinate.smooth(Se3Manifold.INSTANCE) //
+  };
+  private static final BarycentricCoordinate[] REL_BARYCENTRIC_COORDINATES = { //
       RelativeCoordinate.linear(Se3Manifold.INSTANCE), //
       RelativeCoordinate.smooth(Se3Manifold.INSTANCE) };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);
 
   public void testRandom() {
-    BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+      for (int count = 0; count < 10; ++count)
+        for (int n = 7; n < 13; ++n) {
+          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
+          Tensor point = TestHelper.spawn_Se3();
+          try {
+            Tensor weights = barycentricCoordinate.weights(sequence, point);
+            AffineQ.require(weights);
+            Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
+            assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
+            Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
+            Chop._08.requireAllZero(defect);
+          } catch (Exception exception) {
+            ++fails;
+          }
+        }
+    assertTrue(fails < 5);
+  }
+
+  public void testMeanRandom() {
+    Distribution distributiont = NormalDistribution.of(4, 1);
+    for (int count = 0; count < 10; ++count)
+      for (int n = 7; n < 13; ++n) {
+        Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
+        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distributiont, n));
+        Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
+        assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
+        Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
+        assertEquals(Dimensions.of(defect), Arrays.asList(2, 3));
+        Chop._08.requireAllZero(defect);
+      }
+  }
+
+  public void testRelativeRandom() {
+    BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
+    int fails = 0;
+    for (BarycentricCoordinate barycentricCoordinate : REL_BARYCENTRIC_COORDINATES)
       for (int n = 7; n < 12; ++n)
         try {
           Tensor points = Tensors.vector(i -> TestHelper.spawn_Se3(), n);

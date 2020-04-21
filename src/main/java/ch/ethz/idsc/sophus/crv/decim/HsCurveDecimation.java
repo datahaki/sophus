@@ -27,7 +27,7 @@ public enum HsCurveDecimation {
       return new RamerDouglasPeucker(new SymmetricLineDistance(hsLineDistance), epsilon);
     }
   }, //
-  LIE_PROJECT() {
+  PROJECTED() {
     @Override
     public CurveDecimation of(FlattenLogManifold flattenLogManifold, HsExponential hsExponential, Scalar epsilon) {
       return new RamerDouglasPeucker( //

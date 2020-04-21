@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class StInverseDistanceCoordinatesTest extends TestCase {
+public class StManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
   private static final ProjectedCoordinate AFFINE = RelativeCoordinate.affine(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //

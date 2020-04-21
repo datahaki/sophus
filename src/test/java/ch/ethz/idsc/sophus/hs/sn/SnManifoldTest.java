@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SnProjectedCoordinateTest extends TestCase {
+public class SnManifoldTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       AbsoluteCoordinate.linear(SnManifold.INSTANCE), //
@@ -74,7 +74,7 @@ public class SnProjectedCoordinateTest extends TestCase {
               Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
               Chop._06.requireAllZero(evaluate);
               Chop._06.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
-              Chop._03.requireClose(mean, new SnBiinvariantMean(Chop._06).mean(sequence, weights));
+              Chop._03.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
               ++count;
             }
           } catch (Exception exception) {

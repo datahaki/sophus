@@ -33,12 +33,14 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * @see ExponentialVariogram
  * @see SphericalVariogram */
 public enum Krigings {
+  /** left-invariant */
   ABSOLUTE {
     @Override
     PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return new AbsoluteDistances(flattenLogManifold, variogram, sequence);
     }
   },
+  /** bi-invariant */
   RELATIVE {
     @Override
     PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {

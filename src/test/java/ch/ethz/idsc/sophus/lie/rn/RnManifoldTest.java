@@ -7,8 +7,10 @@ import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -21,7 +23,7 @@ import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class RnInverseDistanceCoordinatesTest extends TestCase {
+public class RnManifoldTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       AbsoluteCoordinate.linear(RnManifold.INSTANCE), //
       AbsoluteCoordinate.smooth(RnManifold.INSTANCE), //
@@ -136,5 +138,17 @@ public class RnInverseDistanceCoordinatesTest extends TestCase {
       } catch (Exception exception) {
         // ---
       }
+  }
+
+  public void testColinear() {
+    int d = 2;
+    int n = 5;
+    for (BarycentricCoordinate projectedCoordinate : BARYCENTRIC_COORDINATES) {
+      Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
+      sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
+      Tensor weights = projectedCoordinate.weights(sequence, Array.zeros(d));
+      assertEquals(sequence.length(), n + 1);
+      AffineQ.require(weights);
+    }
   }
 }

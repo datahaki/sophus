@@ -6,7 +6,10 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.io.Serialization;
+import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -24,5 +27,10 @@ public class Se2ClothoidsTest extends TestCase {
       Chop._07.requireZero(So2.MOD.apply(clothoid.apply(RealScalar.ZERO).Get(2).subtract(p.get(2))));
       Chop._07.requireZero(So2.MOD.apply(clothoid.apply(RealScalar.ONE).Get(2).subtract(q.get(2))));
     }
+  }
+
+  public void testErf() {
+    ScalarTensorFunction scalarTensorFunction = Se2Clothoids.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
+    assertTrue(scalarTensorFunction instanceof Clothoid);
   }
 }

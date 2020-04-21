@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** uses left invariant metric on tangent space
+/** uses left-invariant metric on tangent space
  * 
  * @see RelativeDistances */
 /* package */ class AbsoluteDistances implements PseudoDistances, Serializable {

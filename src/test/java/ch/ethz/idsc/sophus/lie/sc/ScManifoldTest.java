@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class ScInverseDistanceCoordinatesTest extends TestCase {
+public class ScManifoldTest extends TestCase {
   public static final ProjectedCoordinate INSTANCE = //
       AbsoluteCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
 

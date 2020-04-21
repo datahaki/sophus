@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
 import ch.ethz.idsc.tensor.sca.win.HannWindow;
 import junit.framework.TestCase;
 
-public class SmoothingKernelTest extends TestCase {
+public class BaseWindowSamplerTest extends TestCase {
   private static Tensor constant(int i) {
     int width = 2 * i + 1;
     Scalar weight = RationalScalar.of(1, width);

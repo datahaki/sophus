@@ -165,11 +165,11 @@ public enum Hermite3Subdivisions {
    * order 7. We show that the spectral condition up to order 2 is satisfied,
    * but higher spectral conditions are not satisfied."
    * 
-   * @param lieGroup
-   * @param exponential
+   * @param hsExponential
+   * @param hsTransport
    * @return */
   private static Hermite3SubdivisionBuilder _a2(HsExponential hsExponential, HsTransport hsTransport) {
-    return new Hermite3SubdivisionBuilder(hsExponential, hsTransport, // FIXME
+    return new Hermite3SubdivisionBuilder(hsExponential, hsTransport, //
         Tensors.fromString("{7/96, 41/48, 7/96}"), //
         RationalScalar.of(-5, 56), RationalScalar.of(7, 12), RationalScalar.of(-1, 24), //
         RationalScalar.of(-25, 1344), //

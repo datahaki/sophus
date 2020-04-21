@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class HeInverseDistanceCoordinateTest extends TestCase {
+public class HeManifoldTest extends TestCase {
   private static final ProjectedCoordinate AFFINE = RelativeCoordinate.affine(HeManifold.INSTANCE);
   public static final ProjectedCoordinate INSTANCE = AbsoluteCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
