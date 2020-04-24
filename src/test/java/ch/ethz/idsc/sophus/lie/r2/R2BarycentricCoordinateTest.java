@@ -149,4 +149,13 @@ public class R2BarycentricCoordinateTest extends TestCase {
       }
     }
   }
+
+  public void testNullFail() {
+    try {
+      R2BarycentricCoordinate.of(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

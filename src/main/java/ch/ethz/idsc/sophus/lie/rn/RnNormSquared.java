@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.red.Norm2Squared;
 public enum RnNormSquared implements TensorNorm {
   INSTANCE;
 
-  @Override
+  @Override // from TensorNorm
   public Scalar norm(Tensor vector) {
     return Norm2Squared.ofVector(vector);
   }

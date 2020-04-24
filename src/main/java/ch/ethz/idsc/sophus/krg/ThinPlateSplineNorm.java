@@ -1,26 +1,21 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
-
-import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
-import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.BinningMethod;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
 import ch.ethz.idsc.tensor.sca.Log;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Reference:
  * "Radial Basis Functions in General Use", eq (3.7.7)
  * in NR, 2007
  * 
  * @see BinningMethod */
-public class ThinPlateSplineNorm implements TensorNorm, Serializable {
+public class ThinPlateSplineNorm implements ScalarUnaryOperator {
   /** @param r0 positive */
-  public static TensorNorm of(Scalar r0) {
+  public static ScalarUnaryOperator of(Scalar r0) {
     return new ThinPlateSplineNorm(Sign.requirePositive(r0));
   }
 
@@ -32,10 +27,9 @@ public class ThinPlateSplineNorm implements TensorNorm, Serializable {
   }
 
   @Override // from TensorNorm
-  public Scalar norm(Tensor vector) {
-    Scalar r2 = Norm2Squared.ofVector(vector);
-    return Scalars.isZero(r2) //
-        ? r2
-        : r2.multiply(Log.FUNCTION.apply(Sqrt.FUNCTION.apply(r2).divide(r0)));
+  public Scalar apply(Scalar r) {
+    return Scalars.isZero(r) //
+        ? r
+        : r.multiply(r).multiply(Log.FUNCTION.apply(r.divide(r0)));
   }
 }

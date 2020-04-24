@@ -1,9 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.sca;
 
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Scalars;
+import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Series;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Log;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sinc;
@@ -15,11 +18,14 @@ import ch.ethz.idsc.tensor.sca.Sinc;
 public enum Logc implements ScalarUnaryOperator {
   FUNCTION;
 
+  private static final ScalarUnaryOperator SERIES = //
+      Series.of(Tensors.vector(i -> RationalScalar.of(i % 2 == 0 ? 1 : -1, i + 1), 10));
+
   @Override
   public Scalar apply(Scalar lambda) {
     Scalar den = lambda.subtract(RealScalar.ONE);
-    return Scalars.isZero(den) //
-        ? RealScalar.ONE
+    return Chop._10.allZero(den) //
+        ? SERIES.apply(den)
         : Log.FUNCTION.apply(lambda).divide(den);
   }
 }

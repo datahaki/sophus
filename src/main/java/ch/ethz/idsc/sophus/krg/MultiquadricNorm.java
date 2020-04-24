@@ -1,12 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
-
-import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
@@ -24,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * Reference:
  * "Radial Basis Functions in General Use", eq (3.7.5)
  * in NR, 2007 */
-public class MultiquadricNorm implements TensorNorm, Serializable {
+public class MultiquadricNorm implements ScalarUnaryOperator {
   private final Scalar r0_squared;
 
   /** @param r0 non-negative */
@@ -33,7 +29,7 @@ public class MultiquadricNorm implements TensorNorm, Serializable {
   }
 
   @Override // from TensorNorm
-  public Scalar norm(Tensor tensor) {
-    return Sqrt.FUNCTION.apply(r0_squared.add(Norm2Squared.ofVector(tensor)));
+  public Scalar apply(Scalar r) {
+    return Sqrt.FUNCTION.apply(r0_squared.add(r.multiply(r)));
   }
 }

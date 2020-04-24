@@ -1,14 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
-
-import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.BinningMethod;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
 import ch.ethz.idsc.tensor.sca.Exp;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 /** Reference:
@@ -16,9 +12,9 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * in NR, 2007
  * 
  * @see BinningMethod */
-public class GaussianRadialBasisFunction implements TensorNorm, Serializable {
+public class GaussianRadialBasisFunction implements ScalarUnaryOperator {
   /** @param r0 non-negative */
-  public static TensorNorm of(Scalar r0) {
+  public static ScalarUnaryOperator of(Scalar r0) {
     return new GaussianRadialBasisFunction(Sign.requirePositiveOrZero(r0));
   }
 
@@ -32,7 +28,7 @@ public class GaussianRadialBasisFunction implements TensorNorm, Serializable {
   }
 
   @Override // from TensorNorm
-  public Scalar norm(Tensor tensor) {
-    return Exp.FUNCTION.apply(Norm2Squared.ofVector(tensor).divide(n2r0));
+  public Scalar apply(Scalar r) {
+    return Exp.FUNCTION.apply(r.multiply(r).divide(n2r0));
   }
 }

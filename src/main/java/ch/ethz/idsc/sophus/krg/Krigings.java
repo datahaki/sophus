@@ -1,11 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
-import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,7 +10,6 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.qty.Quantity;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference:
  * "Biinvariant Kriging on Lie Groups"
@@ -33,21 +27,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * @see ExponentialVariogram
  * @see SphericalVariogram */
 public enum Krigings {
-  /** left-invariant */
-  ABSOLUTE {
-    @Override
-    PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return new AbsoluteDistances(flattenLogManifold, variogram, sequence);
-    }
-  },
-  /** bi-invariant */
-  RELATIVE {
-    @Override
-    PseudoDistances pseudoDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return new RelativeDistances(flattenLogManifold, variogram, sequence);
-    }
-  };
-
+  ;
   /** @param pseudoDistances
    * @param sequence
    * @param values vector or matrix
@@ -73,10 +53,10 @@ public enum Krigings {
    * @param values vector or matrix
    * @param covariance symmetric matrix
    * @return */
-  public Kriging regression( //
-      FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, //
+  public static Kriging regression( //
+      PseudoDistances pseudoDistances, //
       Tensor sequence, Tensor values, Tensor covariance) {
-    return of(pseudoDistances(flattenLogManifold, variogram, sequence), sequence, values, covariance);
+    return of(pseudoDistances, sequence, values, covariance);
   }
 
   /** @param flattenLogManifold to measure the length of the difference between two points
@@ -84,11 +64,11 @@ public enum Krigings {
    * @param sequence of points
    * @param values vector or matrix associated to points in given sequence
    * @return */
-  public Kriging interpolation( //
-      FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
+  public static Kriging interpolation( //
+      PseudoDistances pseudoDistances, Tensor sequence, Tensor values) {
     int n = values.length();
     // TODO Array.zeros(n, n) is not generic!
-    return regression(flattenLogManifold, variogram, sequence, values, Array.zeros(n, n));
+    return regression(pseudoDistances, sequence, values, Array.zeros(n, n));
   }
 
   /** uses unit vectors as target values
@@ -97,40 +77,8 @@ public enum Krigings {
    * @param variogram
    * @param sequence of points
    * @return */
-  public Kriging barycentric( //
-      FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return interpolation(flattenLogManifold, variogram, sequence, IdentityMatrix.of(sequence.length()));
-  }
-
-  /***************************************************/
-  /** Careful: Every evaluation of returned WeightingInterface is expensive!
-   * If multiple evaluations are required for the same sequence, then use
-   * {@link #barycentric(FlattenLogManifold, ScalarUnaryOperator, Tensor)}
-   * 
-   * @param flattenLogManifold
-   * @param variogram
-   * @return */
-  public WeightingInterface weighting(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-    return new WeightingImpl(Objects.requireNonNull(flattenLogManifold), Objects.requireNonNull(variogram));
-  }
-
-  /* package */ abstract PseudoDistances pseudoDistances( //
-      FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
-
-  /***************************************************/
-  // class non-static since invokes #barycentric
-  private class WeightingImpl implements WeightingInterface, Serializable {
-    private final FlattenLogManifold flattenLogManifold;
-    private final ScalarUnaryOperator variogram;
-
-    public WeightingImpl(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-      this.flattenLogManifold = flattenLogManifold;
-      this.variogram = variogram;
-    }
-
-    @Override // from WeightingInterface
-    public Tensor weights(Tensor sequence, Tensor point) {
-      return barycentric(flattenLogManifold, variogram, sequence).estimate(point);
-    }
+  public static Kriging barycentric( //
+      PseudoDistances pseudoDistances, Tensor sequence) {
+    return interpolation(pseudoDistances, sequence, IdentityMatrix.of(sequence.length()));
   }
 }

@@ -1,11 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.krg.Krigings;
-import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
@@ -18,19 +16,19 @@ import ch.ethz.idsc.tensor.Tensor;
 public class RadialBasisFunctionWeighting implements WeightingInterface, Serializable {
   /** @param tensorNorm
    * @return */
-  public static WeightingInterface of(TensorNorm tensorNorm) {
-    return new RadialBasisFunctionWeighting(Objects.requireNonNull(tensorNorm));
+  public static WeightingInterface of(PseudoDistances pseudoDistances) {
+    return new RadialBasisFunctionWeighting(Objects.requireNonNull(pseudoDistances));
   }
 
   /***************************************************/
-  private final TensorNorm tensorNorm;
+  private final PseudoDistances pseudoDistances;
 
-  private RadialBasisFunctionWeighting(TensorNorm tensorNorm) {
-    this.tensorNorm = tensorNorm;
+  private RadialBasisFunctionWeighting(PseudoDistances pseudoDistances) {
+    this.pseudoDistances = pseudoDistances;
   }
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return RadialBasisFunctionInterpolation.barycentric(tensorNorm, sequence).apply(point);
+    return RadialBasisFunctionInterpolation.barycentric(pseudoDistances, sequence).apply(point);
   }
 }

@@ -27,16 +27,18 @@ public class KrigingTest extends TestCase {
       Tensor xya = RandomVariate.of(distribution, 3);
       Tensor values = RandomVariate.of(distributiox, n);
       Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
-      Kriging kriging1 = Krigings.RELATIVE.regression( //
-          Se2CoveringManifold.INSTANCE, powerVariogram, //
+      PseudoDistances pseudoDistances = FlattenLogWarp.RELATIVE.pseudoDistances(Se2CoveringManifold.INSTANCE, powerVariogram, points);
+      Kriging kriging1 = Krigings.regression( //
+          pseudoDistances, //
           points, values, covariance);
       Tensor est1 = kriging1.estimate(xya);
       Scalar var1 = kriging1.variance(xya);
       Tensor shift = RandomVariate.of(distribution, 3);
       { // invariant under left action
         Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-        Kriging krigingL = Krigings.RELATIVE.regression( //
-            Se2CoveringManifold.INSTANCE, powerVariogram, //
+        PseudoDistances pseudoDL = FlattenLogWarp.RELATIVE.pseudoDistances(Se2CoveringManifold.INSTANCE, powerVariogram, seqlft);
+        Kriging krigingL = Krigings.regression( //
+            pseudoDL, //
             seqlft, values, covariance);
         Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
         Chop._10.requireClose(est1, krigingL.estimate(xyalft));
@@ -44,8 +46,9 @@ public class KrigingTest extends TestCase {
       }
       { // invariant under right action
         Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-        Kriging krigingR = Krigings.RELATIVE.regression( //
-            Se2CoveringManifold.INSTANCE, powerVariogram, //
+        PseudoDistances pseudoDR = FlattenLogWarp.RELATIVE.pseudoDistances(Se2CoveringManifold.INSTANCE, powerVariogram, seqrgt);
+        Kriging krigingR = Krigings.regression( //
+            pseudoDR, //
             seqrgt, values, covariance);
         Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
         Chop._10.requireClose(est1, krigingR.estimate(xyargt));
@@ -53,8 +56,9 @@ public class KrigingTest extends TestCase {
       }
       { // invariant under inversion
         Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-        Kriging krigingI = Krigings.RELATIVE.regression( //
-            Se2CoveringManifold.INSTANCE, powerVariogram, //
+        PseudoDistances pseudoDI = FlattenLogWarp.RELATIVE.pseudoDistances(Se2CoveringManifold.INSTANCE, powerVariogram, seqinv);
+        Kriging krigingI = Krigings.regression( //
+            pseudoDI, //
             seqinv, values, covariance);
         Tensor xyainv = LIE_GROUP_OPS.invert(xya);
         Chop._10.requireClose(est1, krigingI.estimate(xyainv));

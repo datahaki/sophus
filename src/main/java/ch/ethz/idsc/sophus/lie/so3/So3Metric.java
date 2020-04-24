@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.red.Norm;
 
-/** Invariant Riemannian distance on SO(3)
+/** left-invariant Riemannian distance on SO(3)
  * 
  * Reference:
  * "Computing the Mean of Geometric Features Application to the Mean Rotation"

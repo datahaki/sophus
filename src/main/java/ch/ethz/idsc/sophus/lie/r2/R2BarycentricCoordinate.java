@@ -27,14 +27,14 @@ import ch.ethz.idsc.tensor.red.Hypot;
 public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializable {
   /** @param biFunction for instance {@link Barycenter#MEAN_VALUE} */
   public static BarycentricCoordinate of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new R2BarycentricCoordinate(biFunction);
+    return new R2BarycentricCoordinate(Objects.requireNonNull(biFunction));
   }
 
   /***************************************************/
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
 
   private R2BarycentricCoordinate(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    this.biFunction = Objects.requireNonNull(biFunction);
+    this.biFunction = biFunction;
   }
 
   /** function takes vector x of length 2 that is strictly inside polygon and

@@ -1,8 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.itp;
+package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.BinningMethod;
 
 /** Reference:
@@ -17,7 +16,7 @@ public class InverseMultiquadricNorm extends MultiquadricNorm {
   }
 
   @Override // from TensorNorm
-  public Scalar norm(Tensor vector) {
-    return super.norm(vector).reciprocal();
+  public Scalar apply(Scalar r) {
+    return super.apply(r).reciprocal();
   }
 }
