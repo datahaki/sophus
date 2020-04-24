@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ch.ethz.idsc.sophus.gbc.HsProjection;
 import ch.ethz.idsc.sophus.gbc.ProjectionInterface;
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -14,24 +15,22 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** @see AbsoluteDistances */
-/* package */ class RelativeDistances implements PseudoDistances, Serializable {
+/* package */ class RelativeDistances implements WeightingInterface, Serializable {
   private static final Scalar ONE_NEGATE = RealScalar.of(-1.0);
   // ---
   private final ProjectionInterface projectionInterface;
   private final ScalarUnaryOperator variogram;
-  private final Tensor sequence;
 
   /** @param flattenLogManifold
    * @param variogram
    * @param sequence */
-  public RelativeDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public RelativeDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
     this.projectionInterface = new HsProjection(flattenLogManifold);
     this.variogram = variogram;
-    this.sequence = sequence;
   }
 
-  @Override // from PseudoDistances
-  public Tensor pseudoDistances(Tensor point) {
+  @Override // from WeightingInterface
+  public Tensor weights(Tensor sequence, Tensor point) {
     AtomicInteger atomicInteger = new AtomicInteger();
     return Tensor.of(projectionInterface.projection(sequence, point).stream() //
         .map(row -> {

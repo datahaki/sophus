@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -14,8 +15,8 @@ public enum RadialBasisFunctionInterpolation {
    * @param sequence
    * @param values
    * @return */
-  public static TensorUnaryOperator normalized(PseudoDistances pseudoDistances, Tensor sequence, Tensor values) {
-    return new RadialBasisFunctionImpl(pseudoDistances, NormalizeTotal.FUNCTION, sequence, values);
+  public static TensorUnaryOperator normalized(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
+    return new RadialBasisFunctionImpl(weightingInterface, NormalizeTotal.FUNCTION, sequence, values);
   }
 
   /** Careful: {@link #apply(Tensor)} returns weights that sum up to one but do not reproduce the identity!
@@ -23,7 +24,7 @@ public enum RadialBasisFunctionInterpolation {
    * @param tensorNorm
    * @param sequence of points in R^n
    * @return */
-  public static TensorUnaryOperator barycentric(PseudoDistances pseudoDistances, Tensor sequence) {
-    return normalized(pseudoDistances, sequence, IdentityMatrix.of(sequence.length()));
+  public static TensorUnaryOperator barycentric(WeightingInterface weightingInterface, Tensor sequence) {
+    return normalized(weightingInterface, sequence, IdentityMatrix.of(sequence.length()));
   }
 }

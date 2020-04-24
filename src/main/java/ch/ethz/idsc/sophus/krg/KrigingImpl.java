@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -10,13 +11,15 @@ import ch.ethz.idsc.tensor.Tensor;
  * "3.7.4 Interpolation by Kriging"
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 /* package */ class KrigingImpl implements Kriging, Serializable {
-  private final PseudoDistances pseudoDistances;
+  private final WeightingInterface weightingInterface;
+  private final Tensor sequence;
   private final Scalar one;
   private final Tensor weights;
   private final Tensor inverse;
 
-  public KrigingImpl(PseudoDistances pseudoDistances, Scalar one, Tensor weights, Tensor inverse) {
-    this.pseudoDistances = pseudoDistances;
+  public KrigingImpl(WeightingInterface weightingInterface, Tensor sequence, Scalar one, Tensor weights, Tensor inverse) {
+    this.weightingInterface = weightingInterface;
+    this.sequence = sequence;
     this.one = one;
     this.weights = weights;
     this.inverse = inverse;
@@ -24,12 +27,12 @@ import ch.ethz.idsc.tensor.Tensor;
 
   @Override // from Kriging
   public Tensor estimate(Tensor point) {
-    return pseudoDistances.pseudoDistances(point).append(one).dot(weights);
+    return weightingInterface.weights(sequence, point).append(one).dot(weights);
   }
 
   @Override // from Kriging
   public Scalar variance(Tensor point) {
-    Tensor y = pseudoDistances.pseudoDistances(point).append(one);
+    Tensor y = weightingInterface.weights(sequence, point).append(one);
     return inverse.dot(y).dot(y).Get();
   }
 }

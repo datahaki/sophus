@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -27,16 +28,16 @@ public class PowerVariogramTest extends TestCase {
     Tensor values = RandomVariate.of(distributionY, n);
     {
       ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
-      PseudoDistances pseudoDistances = FlattenLogWarp.ABSOLUTE.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-      Kriging kriging = Krigings.interpolation(pseudoDistances, sequence, values);
+      WeightingInterface weightingInterface = PseudoDistances.ABSOLUTE.of(RnManifold.INSTANCE, variogram);
+      Kriging kriging = Krigings.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
       PowerVariogram variogram = PowerVariogram.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE);
       Tensor covariance = IdentityMatrix.of(n, Quantity.of(1, "s^2"));
-      PseudoDistances pseudoDistances = FlattenLogWarp.ABSOLUTE.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-      Kriging kriging = Krigings.regression(pseudoDistances, sequence, values, covariance);
+      WeightingInterface weightingInterface = PseudoDistances.ABSOLUTE.of(RnManifold.INSTANCE, variogram);
+      Kriging kriging = Krigings.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }

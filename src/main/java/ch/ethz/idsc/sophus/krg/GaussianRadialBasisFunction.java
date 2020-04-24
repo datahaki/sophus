@@ -19,16 +19,15 @@ public class GaussianRadialBasisFunction implements ScalarUnaryOperator {
   }
 
   /***************************************************/
-  /** -2*r0*r0 */
-  private final Scalar n2r0;
+  private final Scalar r0;
 
   private GaussianRadialBasisFunction(Scalar r0) {
-    Scalar r0_squared = r0.multiply(r0);
-    n2r0 = r0_squared.add(r0_squared).negate();
+    this.r0 = r0;
   }
 
   @Override // from TensorNorm
   public Scalar apply(Scalar r) {
-    return Exp.FUNCTION.apply(r.multiply(r).divide(n2r0));
+    Scalar factor = r.divide(r0);
+    return Exp.FUNCTION.apply(factor.multiply(factor).negate());
   }
 }

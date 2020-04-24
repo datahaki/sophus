@@ -16,19 +16,19 @@ import ch.ethz.idsc.tensor.Tensor;
 public class RadialBasisFunctionWeighting implements WeightingInterface, Serializable {
   /** @param tensorNorm
    * @return */
-  public static WeightingInterface of(PseudoDistances pseudoDistances) {
-    return new RadialBasisFunctionWeighting(Objects.requireNonNull(pseudoDistances));
+  public static WeightingInterface of(WeightingInterface weightingInterface) {
+    return new RadialBasisFunctionWeighting(Objects.requireNonNull(weightingInterface));
   }
 
   /***************************************************/
-  private final PseudoDistances pseudoDistances;
+  private final WeightingInterface weightingInterface;
 
-  private RadialBasisFunctionWeighting(PseudoDistances pseudoDistances) {
-    this.pseudoDistances = pseudoDistances;
+  private RadialBasisFunctionWeighting(WeightingInterface weightingInterface) {
+    this.weightingInterface = weightingInterface;
   }
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return RadialBasisFunctionInterpolation.barycentric(pseudoDistances, sequence).apply(point);
+    return RadialBasisFunctionInterpolation.barycentric(weightingInterface, sequence).apply(point);
   }
 }

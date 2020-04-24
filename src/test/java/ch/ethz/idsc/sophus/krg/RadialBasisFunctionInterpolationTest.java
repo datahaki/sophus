@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -18,8 +19,8 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
-    PseudoDistances pseudoDistances = FlattenLogWarp.RELATIVE.pseudoDistances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
-    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.normalized(pseudoDistances, sequence, values);
+    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.of(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
+    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.normalized(weightingInterface, sequence, values);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, values.get(index));
@@ -31,8 +32,8 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
-    PseudoDistances pseudoDistances = FlattenLogWarp.RELATIVE.pseudoDistances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
-    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.normalized(pseudoDistances, sequence, values);
+    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.of(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
+    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.normalized(weightingInterface, sequence, values);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, values.get(index));
@@ -43,8 +44,8 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
-    PseudoDistances pseudoDistances = FlattenLogWarp.RELATIVE.pseudoDistances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
-    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.barycentric(pseudoDistances, sequence);
+    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.of(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
+    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.barycentric(weightingInterface, sequence);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));

@@ -29,9 +29,9 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    for (FlattenLogWarp krigings : FlattenLogWarp.values()) {
-      PseudoDistances pseudoDistances = krigings.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-      Kriging kriging = Serialization.copy(Krigings.interpolation(pseudoDistances, sequence, values));
+    for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
+      WeightingInterface weightingInterface = pseudoDistances.of(RnManifold.INSTANCE, variogram);
+      Kriging kriging = Serialization.copy(Krigings.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
         Tolerance.CHOP.requireClose(tensor, values.get(index));
@@ -45,9 +45,9 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n);
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    for (FlattenLogWarp krigings : FlattenLogWarp.values()) {
-      PseudoDistances pseudoDistances = krigings.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-      Kriging kriging = Serialization.copy(Krigings.interpolation(pseudoDistances, sequence, values));
+    for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
+      WeightingInterface weightingInterface = pseudoDistances.of(RnManifold.INSTANCE, variogram);
+      Kriging kriging = Serialization.copy(Krigings.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
         Tolerance.CHOP.requireClose(tensor, values.get(index));
@@ -61,9 +61,9 @@ public class KrigingsTest extends TestCase {
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (int d = 1; d < 4; ++d) {
       Tensor sequence = RandomVariate.of(distribution, n, d);
-      for (FlattenLogWarp krigings : FlattenLogWarp.values()) {
-        PseudoDistances pseudoDistances = krigings.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-        Kriging kriging = Serialization.copy(Krigings.barycentric(pseudoDistances, sequence));
+      for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
+        WeightingInterface weightingInterface = pseudoDistances.of(RnManifold.INSTANCE, variogram);
+        Kriging kriging = Serialization.copy(Krigings.barycentric(weightingInterface, sequence));
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor tensor = kriging.estimate(sequence.get(index));
           Chop._08.requireClose(tensor, UnitVector.of(n, index));
@@ -80,8 +80,8 @@ public class KrigingsTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     int n = 6;
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    for (FlattenLogWarp krigings : FlattenLogWarp.values()) {
-      WeightingInterface weightingInterface = Serialization.copy(krigings.weighting(RnManifold.INSTANCE, variogram));
+    for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
+      WeightingInterface weightingInterface = Serialization.copy(pseudoDistances.weighting(RnManifold.INSTANCE, variogram));
       for (int d = 1; d < 4; ++d) {
         Tensor sequence = RandomVariate.of(distribution, n, d);
         for (int index = 0; index < sequence.length(); ++index) {
@@ -104,9 +104,8 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    PseudoDistances pseudoDistances = FlattenLogWarp.ABSOLUTE.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-    // Krigings krigings = Krigings.ABSOLUTE;
-    Kriging kriging = Krigings.interpolation(pseudoDistances, sequence, values);
+    WeightingInterface weightingInterface = PseudoDistances.ABSOLUTE.of(RnManifold.INSTANCE, variogram);
+    Kriging kriging = Krigings.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
@@ -119,8 +118,8 @@ public class KrigingsTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    PseudoDistances pseudoDistances = FlattenLogWarp.RELATIVE.pseudoDistances(RnManifold.INSTANCE, variogram, sequence);
-    Kriging kriging = Krigings.interpolation(pseudoDistances, sequence, values);
+    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.of(RnManifold.INSTANCE, variogram);
+    Kriging kriging = Krigings.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
