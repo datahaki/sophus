@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.crv.spline;
 import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -80,10 +79,7 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
       Scalar h = x.subtract(knots[i]);
       if (Scalars.isZero(h))
         return UnitVector.of(knots.length, i);
-      Tensor weight = w[i].divide(h);
-      if (!DeterminateScalarQ.of(weight))
-        return UnitVector.of(knots.length, i);
-      weights.append(weight);
+      weights.append(w[i].divide(h));
     }
     return NormalizeTotal.FUNCTION.apply(weights);
   }

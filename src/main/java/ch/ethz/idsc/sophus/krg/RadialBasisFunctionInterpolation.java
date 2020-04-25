@@ -8,19 +8,13 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-/** Reference:
+/** implementation of radial basis function for homogeneous spaces
+ * 
+ * <p>Reference:
  * "Radial Basis Function Interpolation" in NR, 2007 */
 public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
   /** @param weightingInterface to measure the length of the difference between two points
-   * @param sequence
-   * @param values
-   * @return */
-  public static TensorUnaryOperator of(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
-    return new RadialBasisFunctionInterpolation(weightingInterface, t -> t, sequence, values);
-  }
-
-  /** @param weightingInterface to measure the length of the difference between two points
-   * @param sequence
+   * @param sequence of points
    * @param values
    * @return */
   public static TensorUnaryOperator normalized(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
@@ -30,10 +24,18 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
   /** Careful: {@link #apply(Tensor)} returns weights that sum up to one but do not reproduce the identity!
    * 
    * @param weightingInterface
-   * @param sequence of points in R^n
+   * @param sequence of points
    * @return */
   public static TensorUnaryOperator partitions(WeightingInterface weightingInterface, Tensor sequence) {
     return normalized(weightingInterface, sequence, IdentityMatrix.of(sequence.length()));
+  }
+
+  /** @param weightingInterface to measure the length of the difference between two points
+   * @param sequence of points
+   * @param values
+   * @return */
+  public static TensorUnaryOperator directized(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
+    return new RadialBasisFunctionInterpolation(weightingInterface, t -> t, sequence, values);
   }
 
   /***************************************************/

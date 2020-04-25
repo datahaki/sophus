@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.pdf.BinningMethod;
@@ -17,6 +18,10 @@ public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
   /** @param r0 positive */
   public static ScalarUnaryOperator of(Scalar r0) {
     return new ThinPlateSplineVariogram(Sign.requirePositive(r0));
+  }
+
+  public static ScalarUnaryOperator of(Number r0) {
+    return of(RealScalar.of(r0));
   }
 
   /***************************************************/

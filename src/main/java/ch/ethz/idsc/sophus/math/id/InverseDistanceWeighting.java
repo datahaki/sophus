@@ -8,7 +8,6 @@ import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -44,10 +43,7 @@ public class InverseDistanceWeighting implements WeightingInterface, Serializabl
       Scalar distance = tensorMetric.distance(p, point);
       if (Scalars.isZero(distance))
         return UnitVector.of(sequence.length(), count);
-      Scalar reciprocal = distance.reciprocal();
-      if (!DeterminateScalarQ.of(reciprocal))
-        return UnitVector.of(sequence.length(), count);
-      weights.append(reciprocal);
+      weights.append(distance.reciprocal());
       ++count;
     }
     return NormalizeTotal.FUNCTION.apply(weights);

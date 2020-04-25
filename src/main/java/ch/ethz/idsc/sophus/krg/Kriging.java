@@ -14,7 +14,9 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.qty.Quantity;
 
-/** Reference:
+/** implementation of kriging for homogeneous spaces
+ * 
+ * Reference:
  * "Biinvariant Kriging on Lie Groups"
  * by Jan Hakenberg, 2020
  * 

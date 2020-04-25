@@ -1,8 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
+import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Total;
 
@@ -19,6 +21,10 @@ public enum NormalizeTotal implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor vector) {
+    int length = vector.length();
+    for (int index = 0; index < length; ++index)
+      if (!DeterminateScalarQ.of(vector.Get(index)))
+        return UnitVector.of(length, index);
     return NORMALIZE.apply(vector);
   }
 }
