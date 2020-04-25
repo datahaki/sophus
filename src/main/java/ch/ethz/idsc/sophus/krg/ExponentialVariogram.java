@@ -9,6 +9,8 @@ import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 
+/** <p>The input of the variogram has unit of a.
+ * The output of the variogram has unit of b. */
 public class ExponentialVariogram implements ScalarUnaryOperator {
   /** @param a positive
    * @param b

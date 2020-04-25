@@ -13,6 +13,9 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * "Radial Basis Functions in General Use", eq (3.7.7)
  * in NR, 2007
  * 
+ * <p>The returned values have the unit of r0 squared.
+ * For example if r0 has unit "m" then the returned unit is "m^2".
+ * 
  * @see BinningMethod */
 public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
   /** @param r0 positive */
@@ -20,6 +23,8 @@ public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
     return new ThinPlateSplineVariogram(Sign.requirePositive(r0));
   }
 
+  /** @param r0 positive
+   * @return */
   public static ScalarUnaryOperator of(Number r0) {
     return of(RealScalar.of(r0));
   }
@@ -31,10 +36,10 @@ public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
     this.r0 = r0;
   }
 
-  @Override // from TensorNorm
+  @Override
   public Scalar apply(Scalar r) {
     return Scalars.isZero(r) //
-        ? r
+        ? r.multiply(r)
         : r.multiply(r).multiply(Log.FUNCTION.apply(r.divide(r0)));
   }
 }

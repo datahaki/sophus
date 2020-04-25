@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.sn;
+package ch.ethz.idsc.sophus.hs.rpn;
 
 import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
@@ -25,12 +25,12 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SnBiinvariantMeanTest extends TestCase {
+public class RpnBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
-      AbsoluteCoordinate.linear(SnManifold.INSTANCE), //
-      AbsoluteCoordinate.smooth(SnManifold.INSTANCE) };
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(SnManifold.INSTANCE);
+      AbsoluteCoordinate.linear(RpnManifold.INSTANCE), //
+      AbsoluteCoordinate.smooth(RpnManifold.INSTANCE) };
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(RpnManifold.INSTANCE);
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
@@ -41,28 +41,28 @@ public class SnBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = projectedCoordinate.weights(sequence, mean);
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
-        Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
-        Chop._12.requireAllZero(evaluate);
-        Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
-        Chop._05.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
+        Chop._12.requireAllZero(MEAN_DEFECT.defect(sequence, weights, mean));
+        {
+          Tensor point = RpnBiinvariantMean.of(Chop._06).mean(sequence, weights);
+          Chop._05.requireAllZero(MEAN_DEFECT.defect(sequence, weights, point));
+        }
       }
   }
 
-  public void testS1Linear() {
-    Distribution distribution = UniformDistribution.of(0, Math.PI);
-    for (int n = 2; n < 10; ++n)
-      for (int count = 0; count < 10; ++count) {
-        Tensor angles = RandomVariate.of(distribution, n);
-        Tensor sequence = angles.map(AngleVector::of);
-        Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
-        {
-          Tensor point = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
+  public void testRp1Linear() {
+    int fails = 0;
+    Distribution distribution = UniformDistribution.of(0, Math.PI / 4);
+    for (int n = 2; n < 5; ++n)
+      for (int count = 0; count < 5; ++count)
+        try {
+          Tensor angles = RandomVariate.of(distribution, n);
+          Tensor sequence = angles.map(AngleVector::of);
+          Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
+          Tensor point = RpnBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
+        } catch (Exception exception) {
+          ++fails;
         }
-        {
-          Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);
-          Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
-        }
-      }
+    assertTrue(fails < 3);
   }
 }

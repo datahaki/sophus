@@ -11,6 +11,9 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * "Radial Basis Functions in General Use", eq (3.7.8)
  * in NR, 2007
  * 
+ * <p>The input of the variogram has unit of r0.
+ * The output of the variogram is unitless.
+ * 
  * @see BinningMethod */
 public class GaussianVariogram implements ScalarUnaryOperator {
   /** @param r0 non-negative */
@@ -25,7 +28,7 @@ public class GaussianVariogram implements ScalarUnaryOperator {
     this.r0 = r0;
   }
 
-  @Override // from TensorNorm
+  @Override
   public Scalar apply(Scalar r) {
     Scalar factor = r.divide(r0);
     return Exp.FUNCTION.apply(factor.multiply(factor).negate());

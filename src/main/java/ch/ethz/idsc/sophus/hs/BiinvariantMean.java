@@ -41,7 +41,7 @@ public interface BiinvariantMean {
   /** Hint: implementations treat both parameters as immutable.
    * Implementations are not required to check for affinity of the weight vector.
    * 
-   * @param sequence of points in Lie group
+   * @param sequence of points in Lie group or homogeneous space
    * @param weights vector typically affine, and non-negative
    * @return bi-invariant mean
    * @throws Exception if sequence and weights are empty

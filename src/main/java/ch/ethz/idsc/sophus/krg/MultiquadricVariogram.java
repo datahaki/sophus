@@ -2,6 +2,8 @@
 package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.Scalars;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 import ch.ethz.idsc.tensor.sca.Sqrt;
@@ -19,13 +21,23 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * 
  * Reference:
  * "Radial Basis Functions in General Use", eq (3.7.5)
- * in NR, 2007 */
+ * in NR, 2007
+ * 
+ * <p>The unit of r0 is also the unit of the returned values.
+ * For example, if r0 has unit "m" then a returned value has unit "m". */
 public class MultiquadricVariogram implements ScalarUnaryOperator {
+  /** @param r0 non-negative */
+  public static ScalarUnaryOperator of(Scalar r0) {
+    return Scalars.isZero(r0) //
+        ? Abs.FUNCTION
+        : new MultiquadricVariogram(Sign.requirePositive(r0));
+  }
+
+  /***************************************************/
   private final Scalar r0_squared;
 
-  /** @param r0 non-negative */
-  public MultiquadricVariogram(Scalar r0) {
-    r0_squared = Sign.requirePositiveOrZero(r0).multiply(r0);
+  protected MultiquadricVariogram(Scalar r0) {
+    r0_squared = r0.multiply(r0);
   }
 
   @Override // from TensorNorm
