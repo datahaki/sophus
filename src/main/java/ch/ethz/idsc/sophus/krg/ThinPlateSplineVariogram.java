@@ -13,16 +13,16 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * in NR, 2007
  * 
  * @see BinningMethod */
-public class ThinPlateSplineNorm implements ScalarUnaryOperator {
+public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
   /** @param r0 positive */
   public static ScalarUnaryOperator of(Scalar r0) {
-    return new ThinPlateSplineNorm(Sign.requirePositive(r0));
+    return new ThinPlateSplineVariogram(Sign.requirePositive(r0));
   }
 
   /***************************************************/
   private final Scalar r0;
 
-  private ThinPlateSplineNorm(Scalar r0) {
+  private ThinPlateSplineVariogram(Scalar r0) {
     this.r0 = r0;
   }
 

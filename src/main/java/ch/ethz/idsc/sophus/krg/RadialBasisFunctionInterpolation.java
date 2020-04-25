@@ -15,6 +15,14 @@ public enum RadialBasisFunctionInterpolation {
    * @param sequence
    * @param values
    * @return */
+  public static TensorUnaryOperator of(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
+    return new RadialBasisFunctionImpl(weightingInterface, t -> t, sequence, values);
+  }
+
+  /** @param tensorNorm to measure the length of the difference between two points
+   * @param sequence
+   * @param values
+   * @return */
   public static TensorUnaryOperator normalized(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
     return new RadialBasisFunctionImpl(weightingInterface, NormalizeTotal.FUNCTION, sequence, values);
   }
@@ -24,7 +32,7 @@ public enum RadialBasisFunctionInterpolation {
    * @param tensorNorm
    * @param sequence of points in R^n
    * @return */
-  public static TensorUnaryOperator barycentric(WeightingInterface weightingInterface, Tensor sequence) {
+  public static TensorUnaryOperator partitions(WeightingInterface weightingInterface, Tensor sequence) {
     return normalized(weightingInterface, sequence, IdentityMatrix.of(sequence.length()));
   }
 }

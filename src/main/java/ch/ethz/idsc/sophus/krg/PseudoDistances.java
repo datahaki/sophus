@@ -45,18 +45,16 @@ public enum PseudoDistances {
   /***************************************************/
   // class non-static since invokes #barycentric
   private class WeightingImpl implements WeightingInterface, Serializable {
-    private final FlattenLogManifold flattenLogManifold;
-    private final ScalarUnaryOperator variogram;
+    private final WeightingInterface weightingInterface;
 
     public WeightingImpl(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-      this.flattenLogManifold = flattenLogManifold;
-      this.variogram = variogram;
+      weightingInterface = of(flattenLogManifold, variogram);
     }
 
     @Override // from WeightingInterface
     public Tensor weights(Tensor sequence, Tensor point) {
       // TODO is this the same as radial basis functions!?
-      return Krigings.barycentric(of(flattenLogManifold, variogram), sequence).estimate(point);
+      return Krigings.barycentric(weightingInterface, sequence).estimate(point);
     }
   }
 }

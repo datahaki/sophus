@@ -12,16 +12,16 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * in NR, 2007
  * 
  * @see BinningMethod */
-public class GaussianRadialBasisFunction implements ScalarUnaryOperator {
+public class GaussianVariogram implements ScalarUnaryOperator {
   /** @param r0 non-negative */
   public static ScalarUnaryOperator of(Scalar r0) {
-    return new GaussianRadialBasisFunction(Sign.requirePositiveOrZero(r0));
+    return new GaussianVariogram(Sign.requirePositiveOrZero(r0));
   }
 
   /***************************************************/
   private final Scalar r0;
 
-  private GaussianRadialBasisFunction(Scalar r0) {
+  private GaussianVariogram(Scalar r0) {
     this.r0 = r0;
   }
 

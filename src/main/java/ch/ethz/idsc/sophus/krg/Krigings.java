@@ -48,8 +48,7 @@ public enum Krigings {
   /***************************************************/
   /** Gaussian process regression
    * 
-   * @param flattenLogManifold
-   * @param variogram
+   * @param weightingInterface
    * @param sequence
    * @param values vector or matrix
    * @param covariance symmetric matrix
@@ -59,8 +58,7 @@ public enum Krigings {
     return of(weightingInterface, sequence, values, covariance);
   }
 
-  /** @param flattenLogManifold to measure the length of the difference between two points
-   * @param variogram
+  /** @param weightingInterface
    * @param sequence of points
    * @param values vector or matrix associated to points in given sequence
    * @return */
@@ -72,8 +70,7 @@ public enum Krigings {
 
   /** uses unit vectors as target values
    * 
-   * @param flattenLogManifold to measure the length of the difference between two points
-   * @param variogram
+   * @param weightingInterface
    * @param sequence of points
    * @return */
   public static Kriging barycentric(WeightingInterface weightingInterface, Tensor sequence) {

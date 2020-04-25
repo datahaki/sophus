@@ -45,7 +45,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     WeightingInterface weightingInterface = PseudoDistances.RELATIVE.of(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
-    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.barycentric(weightingInterface, sequence);
+    TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.partitions(weightingInterface, sequence);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
       Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));

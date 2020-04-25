@@ -9,9 +9,9 @@ import ch.ethz.idsc.tensor.pdf.BinningMethod;
  * in NR, 2007
  * 
  * @see BinningMethod */
-public class InverseMultiquadricNorm extends MultiquadricNorm {
+public class InverseMultiquadricVariogram extends MultiquadricVariogram {
   /** @param r0 non-negative */
-  public InverseMultiquadricNorm(Scalar r0) {
+  public InverseMultiquadricVariogram(Scalar r0) {
     super(r0);
   }
 

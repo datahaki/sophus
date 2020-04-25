@@ -29,6 +29,6 @@ public class RadialBasisFunctionWeighting implements WeightingInterface, Seriali
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return RadialBasisFunctionInterpolation.barycentric(weightingInterface, sequence).apply(point);
+    return RadialBasisFunctionInterpolation.partitions(weightingInterface, sequence).apply(point);
   }
 }

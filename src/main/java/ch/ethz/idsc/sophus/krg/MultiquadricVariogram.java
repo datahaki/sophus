@@ -20,11 +20,11 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * Reference:
  * "Radial Basis Functions in General Use", eq (3.7.5)
  * in NR, 2007 */
-public class MultiquadricNorm implements ScalarUnaryOperator {
+public class MultiquadricVariogram implements ScalarUnaryOperator {
   private final Scalar r0_squared;
 
   /** @param r0 non-negative */
-  public MultiquadricNorm(Scalar r0) {
+  public MultiquadricVariogram(Scalar r0) {
     r0_squared = Sign.requirePositiveOrZero(r0).multiply(r0);
   }
 
