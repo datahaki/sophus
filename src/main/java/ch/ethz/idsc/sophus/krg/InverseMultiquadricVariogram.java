@@ -1,8 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.pdf.BinningMethod;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.sca.Sign;
 
 /** Reference:
  * "Radial Basis Functions in General Use", eq (3.7.6)
@@ -11,7 +14,17 @@ import ch.ethz.idsc.tensor.pdf.BinningMethod;
  * @see BinningMethod */
 public class InverseMultiquadricVariogram extends MultiquadricVariogram {
   /** @param r0 non-negative */
-  public InverseMultiquadricVariogram(Scalar r0) {
+  public static ScalarUnaryOperator of(Scalar r0) {
+    return new InverseMultiquadricVariogram(Sign.requirePositiveOrZero(r0));
+  }
+
+  /** @param r0 non-negative */
+  public static ScalarUnaryOperator of(Number r0) {
+    return of(RealScalar.of(r0));
+  }
+
+  /***************************************************/
+  private InverseMultiquadricVariogram(Scalar r0) {
     super(r0);
   }
 

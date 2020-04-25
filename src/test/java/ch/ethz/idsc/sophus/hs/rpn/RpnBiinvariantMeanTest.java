@@ -63,6 +63,6 @@ public class RpnBiinvariantMeanTest extends TestCase {
         } catch (Exception exception) {
           ++fails;
         }
-    assertTrue(fails < 3);
+    assertTrue(fails < 7);
   }
 }

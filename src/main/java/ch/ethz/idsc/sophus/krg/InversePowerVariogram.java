@@ -1,8 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.util.Objects;
-
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -15,28 +13,23 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 public class InversePowerVariogram implements ScalarUnaryOperator {
-  /** @param alpha
-   * @param exponent
+  /** @param exponent
    * @return */
-  public static InversePowerVariogram of(Scalar alpha, Scalar exponent) {
-    return new InversePowerVariogram( //
-        Objects.requireNonNull(alpha), //
-        Power.function(exponent.negate()));
+  public static ScalarUnaryOperator of(Scalar exponent) {
+    return new InversePowerVariogram(Power.function(exponent.negate()));
   }
 
   /** @param alpha
    * @param exponent
    * @return */
-  public static InversePowerVariogram of(Number alpha, Number exponent) {
-    return of(RealScalar.of(alpha), RealScalar.of(exponent));
+  public static ScalarUnaryOperator of(Number exponent) {
+    return of(RealScalar.of(exponent));
   }
 
   /***************************************************/
-  private final Scalar alpha;
   private final ScalarUnaryOperator power;
 
-  private InversePowerVariogram(Scalar alpha, ScalarUnaryOperator power) {
-    this.alpha = alpha;
+  private InversePowerVariogram(ScalarUnaryOperator power) {
     this.power = power;
   }
 
@@ -44,6 +37,6 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
   public Scalar apply(Scalar r) {
     return Scalars.isZero(r) //
         ? DoubleScalar.POSITIVE_INFINITY
-        : power.apply(r).multiply(alpha);
+        : power.apply(r);
   }
 }

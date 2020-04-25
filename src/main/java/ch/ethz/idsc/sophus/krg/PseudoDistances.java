@@ -13,14 +13,14 @@ public enum PseudoDistances {
   /** left-invariant */
   ABSOLUTE {
     @Override
-    public WeightingInterface of(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
+    public WeightingInterface create(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
       return new AbsoluteDistances(flattenLogManifold, variogram);
     }
   },
   /** bi-invariant */
   RELATIVE {
     @Override
-    public WeightingInterface of(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
+    public WeightingInterface create(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
       return new RelativeDistances(flattenLogManifold, variogram);
     }
   };
@@ -28,7 +28,7 @@ public enum PseudoDistances {
   /** @param flattenLogManifold
    * @param variogram
    * @return */
-  public abstract WeightingInterface of(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram);
+  public abstract WeightingInterface create(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram);
 
   /***************************************************/
   /** Careful: Every evaluation of returned WeightingInterface is expensive!
@@ -48,7 +48,7 @@ public enum PseudoDistances {
     private final WeightingInterface weightingInterface;
 
     public WeightingImpl(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-      weightingInterface = of(flattenLogManifold, variogram);
+      weightingInterface = create(flattenLogManifold, variogram);
     }
 
     @Override // from WeightingInterface

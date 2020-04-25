@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.qty.Quantity;
 import junit.framework.TestCase;
 
 public class MinTriangleAreaSquaredTest extends TestCase {
@@ -19,6 +20,16 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
+      Tensor weights = MinTriangleAreaSquared.weights(polygon);
+      Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
+    }
+  }
+
+  public void testSimpleUnit() {
+    for (int n = 3; n <= 6; ++n) {
+      Tensor polygon = CirclePoints.of(n);
+      polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
+      polygon = polygon.map(s -> Quantity.of(s, "s"));
       Tensor weights = MinTriangleAreaSquared.weights(polygon);
       Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
     }

@@ -43,6 +43,7 @@ public class LinearGroupElementTest extends TestCase {
       Tensor uvw = RandomVariate.of(distribution, 3);
       Tensor adjoint = new Se2GroupElement(g).adjoint(uvw);
       LinearGroupElement linearGroupElement = LinearGroupElement.of(Se2Matrix.of(g));
+      assertEquals(linearGroupElement.toCoordinate(), Se2Matrix.of(g));
       Tensor X = Tensors.matrix(new Scalar[][] { //
           { RealScalar.ZERO, uvw.Get(2).negate(), uvw.Get(0) }, //
           { uvw.Get(2), RealScalar.ZERO, uvw.Get(1) }, //

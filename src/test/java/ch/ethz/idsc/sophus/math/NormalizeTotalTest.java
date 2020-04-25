@@ -1,8 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.opt.Pi;
 import junit.framework.TestCase;
@@ -11,6 +13,11 @@ public class NormalizeTotalTest extends TestCase {
   public void testSimple() {
     Tensor tensor = NormalizeTotal.FUNCTION.apply(Tensors.vector(2, -3, 4, 5));
     assertEquals(tensor, Tensors.fromString("{1/4, -3/8, 1/2, 5/8}"));
+  }
+
+  public void testUnitVector() {
+    Tensor tensor = NormalizeTotal.FUNCTION.apply(Tensors.vector(2, 0.0, 4, 5).map(Scalar::reciprocal));
+    assertEquals(tensor, UnitVector.of(4, 1));
   }
 
   public void testEmpty() {
