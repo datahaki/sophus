@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
   /** @param x
    * @return */
   public static Tensor requirePoint(Tensor x) {
-    CHOP.requireZero(Norm._2.ofVector(x).subtract(RealScalar.ONE));
+    CHOP.requireClose(Norm._2.ofVector(x), RealScalar.ONE);
     return x;
   }
 

@@ -12,9 +12,9 @@ import ch.ethz.idsc.tensor.Tensor;
  * coordinates, because Radial Basis Function Weighting does not reproduce linear functions!
  * 
  * @see InverseDistanceWeighting
- * @see Krigings */
+ * @see Kriging */
 public class RadialBasisFunctionWeighting implements WeightingInterface, Serializable {
-  /** @param tensorNorm
+  /** @param weightingInterface
    * @return */
   public static WeightingInterface of(WeightingInterface weightingInterface) {
     return new RadialBasisFunctionWeighting(Objects.requireNonNull(weightingInterface));

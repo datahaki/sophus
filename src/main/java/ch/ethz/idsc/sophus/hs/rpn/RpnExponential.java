@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.opt.Projection;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 
-/**  */
+/** real projective plane */
 public class RpnExponential implements Exponential, FlattenLog, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---

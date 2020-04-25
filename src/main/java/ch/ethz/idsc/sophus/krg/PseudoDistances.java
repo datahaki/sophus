@@ -54,7 +54,7 @@ public enum PseudoDistances {
     @Override // from WeightingInterface
     public Tensor weights(Tensor sequence, Tensor point) {
       // TODO is this the same as radial basis functions!?
-      return Krigings.barycentric(weightingInterface, sequence).estimate(point);
+      return Kriging.barycentric(weightingInterface, sequence).estimate(point);
     }
   }
 }

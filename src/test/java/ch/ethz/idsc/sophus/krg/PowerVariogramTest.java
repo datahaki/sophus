@@ -29,7 +29,7 @@ public class PowerVariogramTest extends TestCase {
     {
       ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
       WeightingInterface weightingInterface = PseudoDistances.ABSOLUTE.of(RnManifold.INSTANCE, variogram);
-      Kriging kriging = Krigings.interpolation(weightingInterface, sequence, values);
+      Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
@@ -37,7 +37,7 @@ public class PowerVariogramTest extends TestCase {
       PowerVariogram variogram = PowerVariogram.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE);
       Tensor covariance = IdentityMatrix.of(n, Quantity.of(1, "s^2"));
       WeightingInterface weightingInterface = PseudoDistances.ABSOLUTE.of(RnManifold.INSTANCE, variogram);
-      Kriging kriging = Krigings.regression(weightingInterface, sequence, values, covariance);
+      Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
