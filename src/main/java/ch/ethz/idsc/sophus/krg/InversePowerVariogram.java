@@ -19,8 +19,7 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
     return new InversePowerVariogram(Power.function(exponent.negate()));
   }
 
-  /** @param alpha
-   * @param exponent
+  /** @param exponent
    * @return */
   public static ScalarUnaryOperator of(Number exponent) {
     return of(RealScalar.of(exponent));

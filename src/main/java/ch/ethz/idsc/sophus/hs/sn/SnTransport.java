@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 public enum SnTransport implements HsTransport {
   INSTANCE;
 
-  @Override
+  @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
     Tensor matrix = SnRotationMatrix.of(orig, dest);
     return vector -> {
