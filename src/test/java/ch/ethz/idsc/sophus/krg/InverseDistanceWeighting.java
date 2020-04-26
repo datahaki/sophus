@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.id;
+package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.alg.UnitVector;
  * <p>Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
-public class InverseDistanceWeighting implements WeightingInterface, Serializable {
+/* package */ class InverseDistanceWeighting implements WeightingInterface, Serializable {
   /** @param tensorMetric non-null, for instance {@link RnMetric#INSTANCE}
    * @return */
   public static WeightingInterface of(TensorMetric tensorMetric) {

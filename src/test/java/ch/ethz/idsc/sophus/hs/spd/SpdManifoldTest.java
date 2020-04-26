@@ -5,8 +5,8 @@ import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
@@ -20,8 +20,8 @@ public class SpdManifoldTest extends TestCase {
       RelativeCoordinate.smooth(SpdManifold.INSTANCE), //
       AbsoluteCoordinate.linear(SpdManifold.INSTANCE), //
       AbsoluteCoordinate.smooth(SpdManifold.INSTANCE), //
-      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, InverseDistanceWeighting.of(SpdMetric.INSTANCE)), //
-      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, InverseDistanceWeighting.of(SpdMetricSquared.INSTANCE)) };
+      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, 1)), //
+      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, 2)) };
 
   public void testSimple() {
     int d = 2;

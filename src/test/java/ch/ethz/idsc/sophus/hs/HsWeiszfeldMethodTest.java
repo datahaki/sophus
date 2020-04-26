@@ -1,8 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.rn.RnMetric;
+import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.SpatialMedian;
@@ -15,7 +16,10 @@ import junit.framework.TestCase;
 
 public class HsWeiszfeldMethodTest extends TestCase {
   public void testSimple() {
-    SpatialMedian sm1 = HsWeiszfeldMethod.of(RnBiinvariantMean.INSTANCE, RnMetric.INSTANCE, Tolerance.CHOP);
+    SpatialMedian sm1 = HsWeiszfeldMethod.of( //
+        RnBiinvariantMean.INSTANCE, //
+        ShepardWeighting.absolute(RnManifold.INSTANCE, 1), //
+        Tolerance.CHOP);
     SpatialMedian sm2 = WeiszfeldMethod.with(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
     int fails = 0;

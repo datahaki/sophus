@@ -6,10 +6,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 
+import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
@@ -21,16 +20,21 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * 
  * <p>implementation based on
  * "Weiszfeld’s Method: Old and New Results"
- * by Amir Beck, Shoham Sabach */
+ * by Amir Beck, Shoham Sabach
+ * 
+ * @see ShepardWeighting */
 public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
   private static final int MAX_ITERATIONS = 512;
 
   /** @param biinvariantMean
-   * @param tensorMetric
+   * @param weightingInterface for instance ShepardWeighting
    * @param chop
    * @return */
-  public static SpatialMedian of(BiinvariantMean biinvariantMean, TensorMetric tensorMetric, Chop chop) {
-    return new HsWeiszfeldMethod(Objects.requireNonNull(biinvariantMean), tensorMetric, Objects.requireNonNull(chop));
+  public static SpatialMedian of(BiinvariantMean biinvariantMean, WeightingInterface weightingInterface, Chop chop) {
+    return new HsWeiszfeldMethod( //
+        Objects.requireNonNull(biinvariantMean), //
+        Objects.requireNonNull(weightingInterface), //
+        Objects.requireNonNull(chop));
   }
 
   /***************************************************/
@@ -38,9 +42,9 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
   private final WeightingInterface weightingInterface;
   private final Chop chop;
 
-  private HsWeiszfeldMethod(BiinvariantMean biinvariantMean, TensorMetric tensorMetric, Chop chop) {
+  private HsWeiszfeldMethod(BiinvariantMean biinvariantMean, WeightingInterface weightingInterface, Chop chop) {
     this.biinvariantMean = biinvariantMean;
-    weightingInterface = InverseDistanceWeighting.of(tensorMetric);
+    this.weightingInterface = weightingInterface;
     this.chop = chop;
   }
 

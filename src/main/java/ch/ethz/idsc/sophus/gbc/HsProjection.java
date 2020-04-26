@@ -20,9 +20,13 @@ public class HsProjection implements ProjectionInterface, Serializable {
     this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
   }
 
+  public final Tensor levers(Tensor sequence, Tensor point) {
+    return Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
+  }
+
   @Override // from ProjectionInterface
   public final Tensor projection(Tensor sequence, Tensor point) {
-    Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
+    Tensor levers = levers(sequence, point);
     Tensor nullsp = LeftNullSpace.usingQR(levers);
     return Transpose.of(nullsp).dot(nullsp);
   }

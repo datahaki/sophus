@@ -68,7 +68,7 @@ public final class AbsoluteCoordinate extends HsProjection implements ProjectedC
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
+    Tensor levers = levers(sequence, point);
     Tensor nullsp = LeftNullSpace.usingQR(levers);
     return NormalizeAffine.fromNullspace(target.apply(levers), nullsp);
   }

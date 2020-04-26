@@ -5,14 +5,12 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.sophus.math.id.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 
 /** barycentric coordinates for inverse distance weights using distance measurements
  * 
- * @see AbsoluteCoordinate
- * @see InverseDistanceWeighting */
+ * @see AbsoluteCoordinate */
 public final class HsInverseDistanceCoordinate extends HsProjection implements ProjectedCoordinate {
   /** @param flattenLogManifold
    * @param weightingInterface that maps a sequence and a point to a vector, for instance the inverse distances */
