@@ -54,7 +54,7 @@ public class HsDifferencesTest extends TestCase {
     Tensor tensor = Tensors.empty();
     for (int index = 0; index < 10; ++index)
       tensor.append(Se3Matrix.of( //
-          So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
+          So3Exponential.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
     HsDifferences lieDifferences = Se3Differences.INSTANCE;
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 2, 3));
   }

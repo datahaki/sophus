@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.FoldList;
+import ch.ethz.idsc.tensor.alg.Accumulate;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Power;
@@ -47,21 +47,20 @@ public class KnotSpacing implements TensorUnaryOperator {
 
   /***************************************************/
   private final TensorMetric tensorMetric;
-  private final ScalarUnaryOperator distanceFunction;
+  private final ScalarUnaryOperator variogram;
 
-  private KnotSpacing(TensorMetric tensorMetric, ScalarUnaryOperator distanceFunction) {
+  private KnotSpacing(TensorMetric tensorMetric, ScalarUnaryOperator variogram) {
     this.tensorMetric = tensorMetric;
-    this.distanceFunction = distanceFunction;
+    this.variogram = variogram;
   }
 
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor control) {
-    Tensor knots = Tensors.reserve(control.length() - 1);
+    Tensor knots = Tensors.reserve(control.length());
     Tensor prev = control.get(0);
-    for (int index = 1; index < control.length(); ++index) {
-      Scalar scalar = distanceFunction.apply(tensorMetric.distance(prev, prev = control.get(index)));
-      knots.append(Sign.requirePositiveOrZero(scalar));
-    }
-    return FoldList.of(Tensor::add, RealScalar.ZERO, knots);
+    knots.append(variogram.apply(tensorMetric.distance(prev, prev)).zero());
+    for (int index = 1; index < control.length(); ++index)
+      knots.append(Sign.requirePositiveOrZero(variogram.apply(tensorMetric.distance(prev, prev = control.get(index)))));
+    return Accumulate.of(knots);
   }
 }

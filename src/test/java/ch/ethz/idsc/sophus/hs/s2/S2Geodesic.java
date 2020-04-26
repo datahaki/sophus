@@ -28,7 +28,7 @@ public enum S2Geodesic implements GeodesicInterface {
       return scalar -> p.copy();
     Scalar prod = a.divide(sina);
     Tensor cross = Cross.of(p, q);
-    return scalar -> So3Exponential.INSTANCE.exp(cross.multiply(scalar).multiply(prod)).dot(p);
+    return scalar -> So3Exponential.vectorExp(cross.multiply(scalar).multiply(prod)).dot(p);
   }
 
   /** p and q are vectors of length 3 with unit length

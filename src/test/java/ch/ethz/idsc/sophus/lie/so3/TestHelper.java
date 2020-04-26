@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.so3;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -19,6 +20,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
   }
 
   static Tensor spawn_so3() {
-    return RandomVariate.of(DISTRIBUTION, 3);
+    Tensor m = RandomVariate.of(DISTRIBUTION, 3, 3);
+    return Transpose.of(m).subtract(m);
   }
 }

@@ -36,7 +36,7 @@ public class SnBiinvariantMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int count = 0; count < 10; ++count) {
-        Tensor rotation = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
+        Tensor rotation = So3Exponential.vectorExp(RandomVariate.of(distribution, 3));
         Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = projectedCoordinate.weights(sequence, mean);

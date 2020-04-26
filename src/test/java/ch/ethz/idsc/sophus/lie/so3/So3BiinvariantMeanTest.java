@@ -23,11 +23,11 @@ public class So3BiinvariantMeanTest extends TestCase {
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //
-        So3Exponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
-        So3Exponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
-        So3Exponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
+        So3Exponential.vectorExp(Tensors.vector(+1 + 0.3, 0, 0)), //
+        So3Exponential.vectorExp(Tensors.vector(+0 + 0.3, 0, 0)), //
+        So3Exponential.vectorExp(Tensors.vector(-1 + 0.3, 0, 0)));
     Tensor log = INSTANCE.defect( //
-        sequence, Tensors.vector(0.25, 0.5, 0.25), So3Exponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)));
+        sequence, Tensors.vector(0.25, 0.5, 0.25), So3Exponential.vectorExp(Tensors.vector(+0.3, 0, 0)));
     Chop._10.requireAllZero(log);
   }
 
@@ -35,7 +35,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int n = 3; n < 10; ++n) {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
+        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential::vectorExp));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
         Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
         Tensor w2 = projectedCoordinate.weights(sequence, mean);
@@ -48,7 +48,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES) {
-      Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
+      Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential::vectorExp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
       Tensor w2 = projectedCoordinate.weights(sequence, mean);

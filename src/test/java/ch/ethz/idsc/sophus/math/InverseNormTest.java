@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math.id;
+package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;

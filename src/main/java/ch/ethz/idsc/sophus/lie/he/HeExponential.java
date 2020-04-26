@@ -33,7 +33,7 @@ public enum HeExponential implements Exponential, FlattenLog {
         z.subtract(x.dot(y).multiply(RationalScalar.HALF)));
   }
 
-  @Override
+  @Override // from FlattenLog
   public Tensor flattenLog(Tensor xyz) {
     return Flatten.of(log(xyz));
   }

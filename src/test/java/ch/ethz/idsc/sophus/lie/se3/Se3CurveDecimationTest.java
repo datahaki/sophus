@@ -15,9 +15,9 @@ import junit.framework.TestCase;
 public class Se3CurveDecimationTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     CurveDecimation curveDecimation = Serialization.copy(Se3CurveDecimation.of(RealScalar.of(0.3)));
-    Tensor p = Se3Matrix.of(So3Exponential.INSTANCE.exp(Tensors.vector(0.1, -.2, -.3)), Tensors.vector(4, 3, 7));
+    Tensor p = Se3Matrix.of(So3Exponential.vectorExp(Tensors.vector(0.1, -.2, -.3)), Tensors.vector(4, 3, 7));
     // Se3GroupElement pe = new Se3GroupElement(p);
-    Tensor q = Se3Matrix.of(So3Exponential.INSTANCE.exp(Tensors.vector(0.2, .3, -.1)), Tensors.vector(1, 2, 5));
+    Tensor q = Se3Matrix.of(So3Exponential.vectorExp(Tensors.vector(0.2, .3, -.1)), Tensors.vector(1, 2, 5));
     // Se3GroupElement qe = new Se3GroupElement(q);
     ScalarTensorFunction scalarTensorFunction = Se3Geodesic.INSTANCE.curve(p, q);
     Tensor m1 = scalarTensorFunction.apply(RealScalar.of(0.3));

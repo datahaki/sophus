@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 
 public class Se3GroupElementTest extends TestCase {
   public void testSimple() {
-    Tensor R = So3Exponential.INSTANCE.exp(Tensors.vector(-1, -.2, .3));
+    Tensor R = So3Exponential.vectorExp(Tensors.vector(-1, -.2, .3));
     Tensor t = Tensors.vector(4, 5, 6);
     Se3GroupElement g = new Se3GroupElement(R, t);
     Tensor adjoint = g.inverse().adjoint(Tensors.fromString("{{1, 2, 3}, {4, 5, 6}}"));

@@ -69,7 +69,7 @@ public class CenterFilterTest extends TestCase {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Geodesic.INSTANCE, HammingWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 1);
     Distribution distribution = UniformDistribution.unit();
-    Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(So3Exponential.INSTANCE::exp));
+    Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(So3Exponential::vectorExp));
     Tensor result = geodesicCenterFilter.apply(tensor);
     assertEquals(Dimensions.of(tensor), Dimensions.of(result));
   }
