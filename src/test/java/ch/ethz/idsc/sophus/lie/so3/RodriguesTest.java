@@ -30,38 +30,38 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Decrement;
 import junit.framework.TestCase;
 
-public class So3ExponentialTest extends TestCase {
+public class RodriguesTest extends TestCase {
   public void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
-    Tensor m1 = So3Exponential.vectorExp(vector);
-    Tensor m2 = So3Exponential.vectorExp(vector.negate());
+    Tensor m1 = Rodrigues.vectorExp(vector);
+    Tensor m2 = Rodrigues.vectorExp(vector.negate());
     assertFalse(Chop._12.close(m1, IdentityMatrix.of(3)));
     Chop._12.requireClose(m1.dot(m2), IdentityMatrix.of(3));
   }
 
   public void testLog() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
-    Tensor matrix = So3Exponential.vectorExp(vector);
-    Tensor result = So3Exponential.INSTANCE.flattenLog(matrix);
+    Tensor matrix = Rodrigues.vectorExp(vector);
+    Tensor result = Rodrigues.INSTANCE.flattenLog(matrix);
     assertEquals(result, vector);
   }
 
   public void testTranspose() {
     Tensor vector = Tensors.vector(Math.random(), Math.random(), -Math.random());
-    Tensor m1 = So3Exponential.vectorExp(vector);
-    Tensor m2 = Transpose.of(So3Exponential.vectorExp(vector));
+    Tensor m1 = Rodrigues.vectorExp(vector);
+    Tensor m2 = Transpose.of(Rodrigues.vectorExp(vector));
     Chop._12.requireClose(IdentityMatrix.of(3), m1.dot(m2));
   }
 
   private static void checkDiff(Tensor c) {
-    Tensor e = So3Exponential.vectorExp(c);
+    Tensor e = Rodrigues.vectorExp(c);
     Chop._14.requireClose(e, MatrixExp.of(Cross.skew3(c)));
     Chop._14.requireClose(e.dot(c), c);
   }
 
   public void testXY() {
     Tensor m22 = RotationMatrix.of(RealScalar.ONE);
-    Tensor mat = So3Exponential.vectorExp(Tensors.vector(0, 0, 1));
+    Tensor mat = Rodrigues.vectorExp(Tensors.vector(0, 0, 1));
     Tensor blu = Tensors.of( //
         mat.get(0).extract(0, 2), //
         mat.get(1).extract(0, 2));
@@ -76,7 +76,7 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testRotZ() {
-    Tensor matrix = So3Exponential.vectorExp(Tensors.vector(0, 0, 1));
+    Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, 1));
     assertEquals(matrix.get(2, 0), RealScalar.ZERO);
     assertEquals(matrix.get(2, 1), RealScalar.ZERO);
     assertEquals(matrix.get(0, 2), RealScalar.ZERO);
@@ -85,28 +85,28 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testPi() {
-    Tensor matrix = So3Exponential.vectorExp(Tensors.vector(0, 0, Math.PI));
+    Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, Math.PI));
     Tensor expected = DiagonalMatrix.of(-1, -1, 1);
     Chop._14.requireClose(matrix, expected);
   }
 
   public void testTwoPi() {
-    Tensor matrix = So3Exponential.vectorExp(Tensors.vector(0, 0, 2 * Math.PI));
+    Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, 2 * Math.PI));
     Tensor expected = DiagonalMatrix.of(1, 1, 1);
     Chop._14.requireClose(matrix, expected);
   }
 
   public void testLogEye() {
     Tensor matrix = IdentityMatrix.of(3);
-    Tensor log = So3Exponential.INSTANCE.log(matrix);
+    Tensor log = Rodrigues.INSTANCE.log(matrix);
     assertTrue(Chop.NONE.allZero(log));
   }
 
   public void testLog1() {
     Tensor vec = Tensors.vector(.3, .5, -0.4);
-    Tensor matrix = So3Exponential.vectorExp(vec);
-    Tensor lom = So3Exponential.INSTANCE.log(matrix);
-    Tensor log = So3Exponential.INSTANCE.flattenLog(matrix);
+    Tensor matrix = Rodrigues.vectorExp(vec);
+    Tensor lom = Rodrigues.INSTANCE.log(matrix);
+    Tensor log = Rodrigues.INSTANCE.flattenLog(matrix);
     Chop._14.requireClose(vec, log);
     Chop._14.requireClose(lom, Cross.skew3(vec));
   }
@@ -117,27 +117,26 @@ public class So3ExponentialTest extends TestCase {
     do {
       v = v / 1.1;
       Tensor vec = Tensors.vector(v, v, v);
-      Tensor matrix = So3Exponential.vectorExp(vec);
+      Tensor matrix = Rodrigues.vectorExp(vec);
       {
-        Tensor logM = So3Exponential.INSTANCE.log(matrix);
+        Tensor logM = Rodrigues.INSTANCE.log(matrix);
         Chop._13.requireClose(logM.negate(), Transpose.of(logM));
       }
-      log = So3Exponential.INSTANCE.log(matrix);
+      log = Rodrigues.INSTANCE.log(matrix);
     } while (!Chop._20.allZero(log));
   }
 
   public void testLogEps2() {
     double eps = Double.MIN_VALUE; // 4.9e-324
     Tensor vec = Tensors.vector(eps, 0, 0);
-    Tensor matrix = So3Exponential.vectorExp(vec);
-    Tensor log = So3Exponential.INSTANCE.log(matrix);
+    Tensor matrix = Rodrigues.vectorExp(vec);
+    Tensor log = Rodrigues.INSTANCE.log(matrix);
     assertTrue(Chop._50.allZero(log));
   }
 
   public void testRodriques() {
-    Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 20; ++count) {
-      Tensor matrix = So3Exponential.vectorExp(RandomVariate.of(distribution, 3));
+      Tensor matrix = TestHelper.spawn_So3();
       assertTrue(OrthogonalMatrixQ.of(matrix));
       OrthogonalMatrixQ.require(matrix);
     }
@@ -159,9 +158,8 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testRandomOrthogonal() {
-    Distribution distribution = NormalDistribution.of(0, 5);
     for (int count = 0; count < 5; ++count) {
-      Tensor matrix = So3Exponential.vectorExp(RandomVariate.of(distribution, 3));
+      Tensor matrix = TestHelper.spawn_So3();
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
       Chop._13.requireClose(qr.getR(), IdentityMatrix.of(3));
@@ -170,10 +168,9 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testRandomOrthogonal2() {
-    Distribution distribution = NormalDistribution.of(0, 5);
     Distribution noise = UniformDistribution.of(-0.03, 0.03);
     for (int count = 0; count < 5; ++count) {
-      Tensor matrix = So3Exponential.vectorExp(RandomVariate.of(distribution, 3)).add(RandomVariate.of(noise, 3, 3));
+      Tensor matrix = TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
       Scalar infNorm = Norm.INFINITY.ofVector(Diagonal.of(qr.getR()).map(Decrement.ONE));
@@ -184,13 +181,12 @@ public class So3ExponentialTest extends TestCase {
   public void testRodriguez() {
     Tensor vector = RandomVariate.of(NormalDistribution.standard(), 3);
     Tensor wedge = Cross.skew3(vector);
-    Chop._13.requireClose(MatrixExp.of(wedge), So3Exponential.vectorExp(vector));
+    Chop._13.requireClose(MatrixExp.of(wedge), Rodrigues.vectorExp(vector));
   }
 
   public void testRodriques2() {
-    Distribution dis = NormalDistribution.standard();
     for (int c = 0; c < 20; ++c) {
-      Tensor matrix = So3Exponential.vectorExp(RandomVariate.of(dis, 3));
+      Tensor matrix = TestHelper.spawn_So3();
       assertTrue(UnitaryMatrixQ.of(matrix));
     }
   }
@@ -199,7 +195,7 @@ public class So3ExponentialTest extends TestCase {
     Scalar one = RealScalar.ONE;
     Tensor eyestr = Tensors.matrix((i, j) -> i.equals(j) ? one : one.zero(), 3, 4);
     try {
-      So3Exponential.INSTANCE.log(eyestr);
+      Rodrigues.INSTANCE.log(eyestr);
       fail();
     } catch (Exception exception) {
       // ---
@@ -211,7 +207,7 @@ public class So3ExponentialTest extends TestCase {
     Tensor orthog = Orthogonalize.of(matrix);
     assertTrue(OrthogonalMatrixQ.of(orthog));
     try {
-      So3Exponential.INSTANCE.log(orthog);
+      Rodrigues.INSTANCE.log(orthog);
       fail();
     } catch (Exception exception) {
       // ---
@@ -227,19 +223,19 @@ public class So3ExponentialTest extends TestCase {
 
   public void testFail() {
     try {
-      So3Exponential.INSTANCE.exp(RealScalar.ZERO);
+      Rodrigues.INSTANCE.exp(RealScalar.ZERO);
       fail();
     } catch (Exception exception) {
       // ---
     }
     try {
-      So3Exponential.INSTANCE.exp(Tensors.vector(0, 0));
+      Rodrigues.INSTANCE.exp(Tensors.vector(0, 0));
       fail();
     } catch (Exception exception) {
       // ---
     }
     try {
-      So3Exponential.INSTANCE.exp(Tensors.vector(0, 0, 0, 0));
+      Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0));
       fail();
     } catch (Exception exception) {
       // ---
@@ -249,7 +245,7 @@ public class So3ExponentialTest extends TestCase {
   public void testLogTrash() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 3);
     try {
-      So3Exponential.INSTANCE.log(matrix);
+      Rodrigues.INSTANCE.log(matrix);
       fail();
     } catch (Exception exception) {
       // ---
@@ -258,19 +254,19 @@ public class So3ExponentialTest extends TestCase {
 
   public void testLogFail() {
     try {
-      So3Exponential.INSTANCE.log(Array.zeros(3));
+      Rodrigues.INSTANCE.log(Array.zeros(3));
       fail();
     } catch (Exception exception) {
       // ---
     }
     try {
-      So3Exponential.INSTANCE.log(Array.zeros(3, 4));
+      Rodrigues.INSTANCE.log(Array.zeros(3, 4));
       fail();
     } catch (Exception exception) {
       // ---
     }
     try {
-      So3Exponential.INSTANCE.log(Array.zeros(3, 3, 3));
+      Rodrigues.INSTANCE.log(Array.zeros(3, 3, 3));
       fail();
     } catch (Exception exception) {
       // ---

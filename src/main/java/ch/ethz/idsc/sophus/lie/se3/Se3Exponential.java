@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.se3;
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.gl.LinearGroup;
-import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -47,7 +47,7 @@ public enum Se3Exponential implements Exponential, FlattenLog {
   @Override // from Exponential
   public Tensor log(Tensor g) {
     Tensor R = Se3Matrix.rotation(g);
-    Tensor wx = So3Exponential.INSTANCE.log(R);
+    Tensor wx = Rodrigues.INSTANCE.log(R);
     Tensor w = Tensors.of(wx.Get(2, 1), wx.Get(0, 2), wx.Get(1, 0)); // copied from So3Exponential
     Scalar theta = Norm._2.ofVector(w);
     Tensor wx2 = wx.dot(wx);

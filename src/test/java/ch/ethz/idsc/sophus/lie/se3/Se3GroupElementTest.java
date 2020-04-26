@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.se3;
 
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 
 public class Se3GroupElementTest extends TestCase {
   public void testSimple() {
-    Tensor R = So3Exponential.vectorExp(Tensors.vector(-1, -.2, .3));
+    Tensor R = Rodrigues.vectorExp(Tensors.vector(-1, -.2, .3));
     Tensor t = Tensors.vector(4, 5, 6);
     Se3GroupElement g = new Se3GroupElement(R, t);
     Tensor adjoint = g.inverse().adjoint(Tensors.fromString("{{1, 2, 3}, {4, 5, 6}}"));

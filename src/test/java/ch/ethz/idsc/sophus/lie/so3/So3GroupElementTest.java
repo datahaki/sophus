@@ -14,13 +14,13 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class So3GroupElementTest extends TestCase {
-  private static final Exponential EXPONENTIAL = So3Exponential.INSTANCE;
-  private static final FlattenLog FLATTEN_LOG = So3Exponential.INSTANCE;
+  private static final Exponential EXPONENTIAL = Rodrigues.INSTANCE;
+  private static final FlattenLog FLATTEN_LOG = Rodrigues.INSTANCE;
   private static final LieGroup LIE_GROUP = So3Group.INSTANCE;
 
   public void testBlub() {
-    Tensor orth = So3Exponential.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
-    Tensor matr = So3Exponential.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
+    Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
+    Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
     So3GroupElement.of(orth).combine(matr);
     try {
       So3GroupElement.of(orth).combine(matr.add(matr));
@@ -31,7 +31,7 @@ public class So3GroupElementTest extends TestCase {
   }
 
   public void testAdjoint() {
-    Tensor orth = So3Exponential.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
+    Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     So3GroupElement so3GroupElement = So3GroupElement.of(orth);
     Tensor vector = Tensors.vector(1, 2, 3);
     Tensor adjoint = so3GroupElement.adjoint(vector);
@@ -45,7 +45,7 @@ public class So3GroupElementTest extends TestCase {
       Tensor g = TestHelper.spawn_So3(); // element
       Tensor x = TestHelper.spawn_so3(); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = ge.combine(So3Exponential.INSTANCE.exp(x)); // g.Exp[x]
+      Tensor lhs = ge.combine(Rodrigues.INSTANCE.exp(x)); // g.Exp[x]
       // FIXME
       // Tensor rhs = LIE_GROUP.element(EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
       // Chop._10.requireClose(lhs, rhs);

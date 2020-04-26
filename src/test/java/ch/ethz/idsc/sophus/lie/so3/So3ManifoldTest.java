@@ -21,15 +21,15 @@ public class So3ManifoldTest extends TestCase {
   private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
       AbsoluteCoordinate.linear(So3Manifold.INSTANCE), //
       AbsoluteCoordinate.smooth(So3Manifold.INSTANCE) };
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.HS_EXP);
+  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
 
   public void testSimple() {
-    Tensor g1 = So3Exponential.vectorExp(Tensors.vector(0.2, 0.3, 0.4));
-    Tensor g2 = So3Exponential.vectorExp(Tensors.vector(0.1, 0.0, 0.5));
-    Tensor g3 = So3Exponential.vectorExp(Tensors.vector(0.3, 0.5, 0.2));
-    Tensor g4 = So3Exponential.vectorExp(Tensors.vector(0.5, 0.2, 0.1));
+    Tensor g1 = Rodrigues.vectorExp(Tensors.vector(0.2, 0.3, 0.4));
+    Tensor g2 = Rodrigues.vectorExp(Tensors.vector(0.1, 0.0, 0.5));
+    Tensor g3 = Rodrigues.vectorExp(Tensors.vector(0.3, 0.5, 0.2));
+    Tensor g4 = Rodrigues.vectorExp(Tensors.vector(0.5, 0.2, 0.1));
     Tensor sequence = Tensors.of(g1, g2, g3, g4);
-    Tensor mean = So3Exponential.vectorExp(Tensors.vector(0.4, 0.2, 0.3));
+    Tensor mean = Rodrigues.vectorExp(Tensors.vector(0.4, 0.2, 0.3));
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES) {
       Tensor weights = projectedCoordinate.weights(sequence, mean);
       Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
@@ -44,8 +44,8 @@ public class So3ManifoldTest extends TestCase {
       int fails = 0;
       for (int n = 4; n < 10; ++n)
         try {
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential::vectorExp));
-          Tensor mean = So3Exponential.vectorExp(RandomVariate.of(d2, 3));
+          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
+          Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
           Tensor weights1 = projectedCoordinate.weights(sequence, mean);
           Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
           Chop._08.requireClose(mean, o2);
@@ -70,7 +70,7 @@ public class So3ManifoldTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0.0, 0.1);
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int n = 4; n < 10; ++n) {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential::vectorExp));
+        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
         int index = 0;
         for (Tensor mean : sequence) {
           Tensor weights = projectedCoordinate.weights(sequence, mean);
@@ -89,8 +89,8 @@ public class So3ManifoldTest extends TestCase {
     ProjectedCoordinate AFFINE = RelativeCoordinate.affine(So3Manifold.INSTANCE);
     for (int n = 4; n < 10; ++n)
       try {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential::vectorExp));
-        Tensor mean = So3Exponential.vectorExp(RandomVariate.of(d2, 3));
+        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
+        Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
         Tensor weights1 = AFFINE.weights(sequence, mean);
         Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
         Chop._08.requireClose(mean, o2);
@@ -116,8 +116,8 @@ public class So3ManifoldTest extends TestCase {
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int n = 1; n < 4; ++n)
         try {
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(So3Exponential.INSTANCE::exp));
-          Tensor mean = So3Exponential.INSTANCE.exp(RandomVariate.of(d2, 3));
+          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues.INSTANCE::exp));
+          Tensor mean = Rodrigues.INSTANCE.exp(RandomVariate.of(d2, 3));
           projectedCoordinate.weights(sequence, mean);
           fail();
         } catch (Exception exception) {

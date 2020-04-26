@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Matrix;
-import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
@@ -54,7 +54,7 @@ public class HsDifferencesTest extends TestCase {
     Tensor tensor = Tensors.empty();
     for (int index = 0; index < 10; ++index)
       tensor.append(Se3Matrix.of( //
-          So3Exponential.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
+          Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
     HsDifferences lieDifferences = Se3Differences.INSTANCE;
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 2, 3));
   }

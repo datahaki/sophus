@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.flt.ga.BinomialWeights;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.lie.so3.So3Geodesic;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -69,7 +69,7 @@ public class CenterFilterTest extends TestCase {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Geodesic.INSTANCE, HammingWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 1);
     Distribution distribution = UniformDistribution.unit();
-    Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(So3Exponential::vectorExp));
+    Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(Rodrigues::vectorExp));
     Tensor result = geodesicCenterFilter.apply(tensor);
     assertEquals(Dimensions.of(tensor), Dimensions.of(result));
   }

@@ -12,8 +12,8 @@ public enum So3Geodesic implements GeodesicInterface {
 
   @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Tensor log = So3Exponential.INSTANCE.log(LinearSolve.of(p, q));
-    return scalar -> p.dot(So3Exponential.INSTANCE.exp(log.multiply(scalar)));
+    Tensor log = Rodrigues.INSTANCE.log(LinearSolve.of(p, q));
+    return scalar -> p.dot(Rodrigues.INSTANCE.exp(log.multiply(scalar)));
   }
 
   /** p and q are orthogonal matrices with dimension 3 x 3 */

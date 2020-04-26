@@ -18,8 +18,8 @@ public class So3MetricTest extends TestCase {
   public void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.5, 0.3);
     Scalar distance = So3Metric.INSTANCE.distance( //
-        So3Exponential.vectorExp(Tensors.vector(0, 0, 0)), //
-        So3Exponential.vectorExp(vector));
+        Rodrigues.vectorExp(Tensors.vector(0, 0, 0)), //
+        Rodrigues.vectorExp(vector));
     Chop._15.requireClose(distance, Norm._2.ofVector(vector));
   }
 

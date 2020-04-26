@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so2.AngleVector;
-import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -36,7 +36,7 @@ public class RpnBiinvariantMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
       for (int count = 0; count < 10; ++count) {
-        Tensor rotation = So3Exponential.vectorExp(RandomVariate.of(distribution, 3));
+        Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
         Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = projectedCoordinate.weights(sequence, mean);

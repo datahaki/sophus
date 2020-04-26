@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.io.HomeDirectory;
   private static Scalar Z;
 
   private static Scalar function(int y, int x) {
-    Tensor mat = So3Exponential.INSTANCE.exp(Tensors.of(RE.Get(x), IM.Get(y), Z));
+    Tensor mat = Rodrigues.INSTANCE.exp(Tensors.of(RE.Get(x), IM.Get(y), Z));
     return mat.Get(0, 2);
   }
 

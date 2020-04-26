@@ -1,15 +1,22 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.hs.HsExponential;
-import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
+import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.tensor.Tensor;
 
-public enum So3Manifold {
-  ;
-  public static final FlattenLogManifold INSTANCE = //
-      LieFlattenLogManifold.of(So3Group.INSTANCE, So3Exponential.INSTANCE::flattenLog);
-  public static final HsExponential HS_EXP = //
-      LieExponential.of(So3Group.INSTANCE, So3Exponential.INSTANCE);
+public enum So3Manifold implements HsExponential, FlattenLogManifold {
+  INSTANCE;
+
+  @Override // from HsExponential
+  public Exponential exponential(Tensor point) {
+    return new So3Exponential(point);
+  }
+
+  @Override // from FlattenLogManifold
+  public FlattenLog logAt(Tensor point) {
+    return new So3Exponential(point);
+  }
 }
