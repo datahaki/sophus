@@ -6,15 +6,16 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 
 public class So3Exponential implements Exponential, FlattenLog, Serializable {
   private final Tensor p;
   private final Tensor pinv;
 
   public So3Exponential(Tensor p) {
-    this.p = p;
-    pinv = Inverse.of(p);
+    this.p = OrthogonalMatrixQ.require(p);
+    pinv = Transpose.of(p);
   }
 
   @Override // from Exponential

@@ -49,7 +49,12 @@ public class LinearGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
-  public Tensor adjoint(Tensor tensor) {
-    return matrix.dot(SquareMatrixQ.require(tensor)).dot(inverse);
+  public Tensor adjoint(Tensor v) { // v is square
+    return dL(v).dot(inverse);
+  }
+
+  @Override // from LieGroupElement
+  public Tensor dL(Tensor v) { // v is square
+    return matrix.dot(SquareMatrixQ.require(v));
   }
 }

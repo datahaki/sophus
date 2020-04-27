@@ -1,12 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -14,8 +13,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class So3GroupElementTest extends TestCase {
-  private static final Exponential EXPONENTIAL = Rodrigues.INSTANCE;
-  private static final FlattenLog FLATTEN_LOG = Rodrigues.INSTANCE;
   private static final LieGroup LIE_GROUP = So3Group.INSTANCE;
 
   public void testBlub() {
@@ -33,9 +30,9 @@ public class So3GroupElementTest extends TestCase {
   public void testAdjoint() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     So3GroupElement so3GroupElement = So3GroupElement.of(orth);
-    Tensor vector = Tensors.vector(1, 2, 3);
+    Tensor vector = TestHelper.spawn_so3();
     Tensor adjoint = so3GroupElement.adjoint(vector);
-    Chop._12.requireClose(orth.dot(vector), adjoint);
+    AntisymmetricMatrixQ.require(adjoint);
   }
 
   public void testAdjointExp() {
@@ -46,9 +43,8 @@ public class So3GroupElementTest extends TestCase {
       Tensor x = TestHelper.spawn_so3(); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
       Tensor lhs = ge.combine(Rodrigues.INSTANCE.exp(x)); // g.Exp[x]
-      // FIXME
-      // Tensor rhs = LIE_GROUP.element(EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
-      // Chop._10.requireClose(lhs, rhs);
+      Tensor rhs = LIE_GROUP.element(Rodrigues.INSTANCE.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
+      Chop._10.requireClose(lhs, rhs);
     }
   }
 
@@ -61,9 +57,9 @@ public class So3GroupElementTest extends TestCase {
         Tensor g = TestHelper.spawn_So3();
         Tensor m = TestHelper.spawn_So3();
         LieGroupElement ge = LIE_GROUP.element(g);
-        Tensor lhs = FLATTEN_LOG.flattenLog( //
+        Tensor lhs = Rodrigues.INSTANCE.log( //
             LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
-        Tensor rhs = ge.adjoint(FLATTEN_LOG.flattenLog(m)); // Ad(g).Log[m]
+        Tensor rhs = ge.adjoint(Rodrigues.INSTANCE.log(m)); // Ad(g).Log[m]
         Chop._10.requireClose(lhs, rhs);
       } catch (Exception exception) {
         ++fails;

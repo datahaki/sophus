@@ -5,8 +5,8 @@ import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
-import ch.ethz.idsc.tensor.alg.MatrixQ;
 import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -43,14 +43,14 @@ public class So3GroupElement implements LieGroupElement {
     return matrix.dot(requireSO(tensor));
   }
 
-  @Override
-  public Tensor dL(Tensor v) {
-    return matrix.dot(MatrixQ.requireSize(v, 3, 3)); // consistent with So3Transport
+  @Override // from LieGroupElement
+  public Tensor dL(Tensor v) { // v is skew with dimensions 3 x 3
+    return matrix.dot(AntisymmetricMatrixQ.require(v)); // consistent with So3Transport
   }
 
   @Override // from LieGroupElement
-  public Tensor adjoint(Tensor tensor) {
-    return matrix.dot(tensor);
+  public Tensor adjoint(Tensor v) { // v is skew with dimensions 3 x 3
+    return dL(v).dot(Transpose.of(matrix));
   }
 
   /** @param tensor

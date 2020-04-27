@@ -18,4 +18,14 @@ public enum Do {
       value = supplier.get();
     return value;
   }
+
+  /** @param fallback
+   * @param supplier
+   * @param n non-negative
+   * @return fallback if n == 0, otherwise return value of suppliers after n invocations */
+  public static <T> T of(T fallback, Supplier<T> supplier, final int n) {
+    return n == 0 //
+        ? fallback
+        : of(supplier, n);
+  }
 }

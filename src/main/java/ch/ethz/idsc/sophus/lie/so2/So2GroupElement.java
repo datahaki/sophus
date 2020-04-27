@@ -33,4 +33,9 @@ public class So2GroupElement implements LieGroupElement {
   public Scalar adjoint(Tensor tensor) {
     return (Scalar) tensor;
   }
+
+  @Override // from LieGroupElement
+  public Scalar dL(Tensor tensor) {
+    return (Scalar) tensor;
+  }
 }

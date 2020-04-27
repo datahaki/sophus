@@ -34,9 +34,7 @@ public interface LieGroupElement extends GroupElement {
    * 
    * @param tensor
    * @return */
-  default Tensor dL(Tensor tensor) {
-    throw new UnsupportedOperationException();
-  }
+  Tensor dL(Tensor tensor);
 
   /** dR
    * 

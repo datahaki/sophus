@@ -39,4 +39,9 @@ public class ScGroupElement implements LieGroupElement {
   public Tensor adjoint(Tensor tensor) {
     throw new UnsupportedOperationException();
   }
+
+  @Override // from LieGroupElement
+  public Tensor dL(Tensor tensor) {
+    throw new UnsupportedOperationException();
+  }
 }

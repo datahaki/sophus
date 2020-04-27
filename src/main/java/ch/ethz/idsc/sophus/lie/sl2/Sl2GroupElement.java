@@ -79,4 +79,9 @@ public class Sl2GroupElement implements LieGroupElement {
   public Tensor adjoint(Tensor tensor) {
     return adjoint().dot(VectorQ.require(tensor));
   }
+
+  @Override // from LieGroupElement
+  public Tensor dL(Tensor tensor) {
+    throw new UnsupportedOperationException();
+  }
 }

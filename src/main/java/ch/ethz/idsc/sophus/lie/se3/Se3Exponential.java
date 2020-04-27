@@ -59,7 +59,7 @@ public enum Se3Exponential implements Exponential, FlattenLog {
 
   /** @param g matrix of dimensions 4 x 4
    * @return vector of length 6 */
-  @Override
+  @Override // from FlattenLog
   public Tensor flattenLog(Tensor g) {
     return Flatten.of(log(g));
   }

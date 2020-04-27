@@ -45,12 +45,7 @@ public class KnotSpacingTest extends TestCase {
 
   public void testEmpty() {
     TensorUnaryOperator centripetalKnotSpacing = KnotSpacing.centripetal(Se2ParametricDistance.INSTANCE, 0.75);
-    try {
-      centripetalKnotSpacing.apply(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    assertEquals(centripetalKnotSpacing.apply(Tensors.empty()), Tensors.empty());
     assertEquals(centripetalKnotSpacing.apply(Tensors.fromString("{{2, 3, 4}}")), Tensors.vector(0));
   }
 

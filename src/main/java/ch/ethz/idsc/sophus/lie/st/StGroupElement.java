@@ -71,4 +71,9 @@ public class StGroupElement implements LieGroupElement, Serializable {
         dlambda, //
         dlambda_dt.get(1).multiply(lambda).subtract(t.multiply(dlambda)));
   }
+
+  @Override // from LieGroupElement
+  public Tensor dL(Tensor tensor) {
+    throw new UnsupportedOperationException();
+  }
 }

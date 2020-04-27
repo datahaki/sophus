@@ -29,6 +29,9 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * "Lebesgue constant minimizing linear rational interpolation of continuous functions over the interval"
  * by J.-P. Berrut, H. D. Mittelmann, 1997
  * 
+ * "Pyramid algorithms for barycentric rational interpolation"
+ * by Kai Hormann, Scott Schaefer, 2016
+ * 
  * @see InterpolatingPolynomial */
 public class BarycentricRationalInterpolation implements ScalarTensorFunction {
   /** sign toggle is cancelled in normalization */

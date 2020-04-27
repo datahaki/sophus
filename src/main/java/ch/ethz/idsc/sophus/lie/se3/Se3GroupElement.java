@@ -57,6 +57,11 @@ public class Se3GroupElement implements LieGroupElement {
         rw);
   }
 
+  @Override // from LieGroupElement
+  public Tensor dL(Tensor tensor) {
+    throw new UnsupportedOperationException();
+  }
+
   public Tensor rotation() {
     return R.unmodifiable();
   }
