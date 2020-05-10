@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.opt.TensorScalarFunction;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.qty.QuantityUnit;
 import ch.ethz.idsc.tensor.qty.Unit;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 import ch.ethz.idsc.tensor.sca.Sign;
 import ch.ethz.idsc.tensor.sca.SignInterface;
@@ -54,7 +55,7 @@ public class Se2AxisYProject implements TensorScalarFunction {
   private final Scalar se;
 
   private Se2AxisYProject(Scalar vx, Scalar be) {
-    this.vx = vx.abs();
+    this.vx = Abs.FUNCTION.apply(vx);
     this.be = be;
     se = be.multiply(Sign.of(vx));
   }

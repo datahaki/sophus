@@ -24,7 +24,7 @@ public class CurveSubdivisionTest extends TestCase {
       _checkSym(new BSpline1CurveSubdivision(RnGeodesic.INSTANCE), tensor);
       _checkSym(new BSpline2CurveSubdivision(RnGeodesic.INSTANCE), tensor);
       _checkSym(new BSpline3CurveSubdivision(RnGeodesic.INSTANCE), tensor);
-      _checkSym(BSpline4CurveSubdivision.of(RnGeodesic.INSTANCE), tensor);
+      _checkSym(BSpline4CurveSubdivision.dynSharon(RnGeodesic.INSTANCE), tensor);
       _checkSym(new FourPointCurveSubdivision(RnGeodesic.INSTANCE), tensor);
       _checkSym(DodgsonSabinCurveSubdivision.INSTANCE, tensor);
       _checkSym(HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE), tensor);

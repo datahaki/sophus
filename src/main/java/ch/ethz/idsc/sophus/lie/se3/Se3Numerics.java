@@ -36,7 +36,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
   public Se3Numerics(Scalar theta) {
     A = Sinc.FUNCTION.apply(theta);
     Scalar theta2 = theta.multiply(theta);
-    series = Chop._04.allZero(theta2.abs());
+    series = Chop._04.allZero(theta2.abs()); // TODO abs should not be necessary
     if (series) {
       B = SERIES1.apply(theta);
       C = SERIES2.apply(theta);

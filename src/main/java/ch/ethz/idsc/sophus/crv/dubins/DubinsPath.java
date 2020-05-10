@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Accumulate;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 /** compatible with the use of Quantity:
@@ -39,7 +40,7 @@ public class DubinsPath implements Serializable {
 
     private Type(int s0s, int s1s, int s2s, DubinsSteer dubinsSteer) {
       signature = Tensors.vector(s0s, s1s, s2s).unmodifiable();
-      signatureAbs = signature.map(Scalar::abs).unmodifiable();
+      signatureAbs = signature.map(Abs.FUNCTION).unmodifiable();
       isFirstTurnRight = s0s == -1;
       isFirstEqualsLast = s0s == s2s;
       containsStraight = s1s == 0;

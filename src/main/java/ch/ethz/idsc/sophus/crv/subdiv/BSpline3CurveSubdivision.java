@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.subdiv;
 
+import java.util.Objects;
+
 import ch.ethz.idsc.sophus.math.SplitInterface;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -15,24 +17,18 @@ public class BSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision {
   // ---
   protected final SplitInterface splitInterface;
 
+  /** @param splitInterface */
   public BSpline3CurveSubdivision(SplitInterface splitInterface) {
-    this.splitInterface = splitInterface;
+    this.splitInterface = Objects.requireNonNull(splitInterface);
   }
 
-  /** @param p
-   * @param q
-   * @return point between p and q */
-  @Override
-  public final Tensor midpoint(Tensor p, Tensor q) {
+  @Override // from MidpointInterface
+  public final Tensor midpoint(Tensor p, Tensor q) { // point between p and q
     return splitInterface.midpoint(p, q);
   }
 
-  /** @param p
-   * @param q
-   * @param r
-   * @return reposition of point q */
-  @Override
-  protected final Tensor center(Tensor p, Tensor q, Tensor r) {
+  @Override // from AbstractBSpline3CurveSubdivision
+  protected final Tensor center(Tensor p, Tensor q, Tensor r) { // reposition of point q
     return midpoint( //
         splitInterface.split(p, q, _3_4), //
         splitInterface.split(q, r, _1_4));

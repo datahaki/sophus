@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public class MidpointTangentApproximation implements ScalarBinaryOperator {
@@ -49,7 +50,7 @@ public class MidpointTangentApproximation implements ScalarBinaryOperator {
       ns1 = Pi.TWO.subtract(ns1);
       signum = signum.negate();
     }
-    Scalar ns2 = s2.abs();
+    Scalar ns2 = Abs.FUNCTION.apply(s2);
     return scalarBinaryOperator.apply(ns1, ns2).multiply(signum).add(s1);
   }
 }

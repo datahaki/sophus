@@ -50,7 +50,7 @@ public class SpdExponential implements Exponential, FlattenLog, Serializable {
     return Symmetrize.of(pp.dot(SpdMatrixExponential.INSTANCE.log(pq)).dot(pp));
   }
 
-  @Override
+  @Override // from FlattenLog
   public Tensor flattenLog(Tensor q) {
     return Flatten.of(log(q));
   }

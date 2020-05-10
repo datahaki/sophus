@@ -53,4 +53,13 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
       clip.requireInside(Total.of(tensor).Get());
     }
   }
+
+  public void testNullFail() {
+    try {
+      new BSpline5CurveSubdivision(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.sca.Abs;
 
 public enum S2LineDistance implements LineDistance {
   INSTANCE;
@@ -33,7 +34,7 @@ public enum S2LineDistance implements LineDistance {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
-      return Pi.HALF.subtract(SnMetric.INSTANCE.distance(cross, r)).abs();
+      return Abs.between(Pi.HALF, SnMetric.INSTANCE.distance(cross, r));
     }
   }
 }

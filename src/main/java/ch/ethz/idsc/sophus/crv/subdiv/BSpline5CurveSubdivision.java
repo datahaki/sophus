@@ -14,8 +14,10 @@ import ch.ethz.idsc.tensor.alg.Last;
 public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
   private static final Scalar _5_8 = RationalScalar.of(5, 8);
   private static final Scalar _15_16 = RationalScalar.of(15, 16);
+  private static final Scalar _3_8 = RationalScalar.of(3, 8);
+  private static final Scalar _1_16 = RationalScalar.of(1, 16);
 
-  // ---
+  /** @param splitInterface */
   public BSpline5CurveSubdivision(SplitInterface splitInterface) {
     super(splitInterface);
   }
@@ -64,11 +66,11 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
     }
     {
       int last = length - 1;
-      Tensor q = tensor.get(last);
-      Tensor r = tensor.get(last - 1);
       Tensor s = tensor.get(last - 2);
-      curve.append(quinte(q, r, s));
-      curve.append(midpoint(q, r));
+      Tensor r = tensor.get(last - 1);
+      Tensor q = tensor.get(last);
+      curve.append(quinte(s, r, q));
+      curve.append(midpoint(r, q));
       curve.append(q);
     }
     return curve.tensor();
@@ -78,13 +80,13 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
   private Tensor quinte(Tensor p, Tensor q, Tensor r) {
     return midpoint( //
         splitInterface.split(p, q, _5_8), //
-        splitInterface.split(r, q, _5_8));
+        splitInterface.split(q, r, _3_8));
   }
 
   // insertion between points q and r
   private Tensor center(Tensor p, Tensor q, Tensor r, Tensor s) {
     return midpoint( //
         splitInterface.split(p, q, _15_16), //
-        splitInterface.split(s, r, _15_16));
+        splitInterface.split(r, s, _1_16));
   }
 }

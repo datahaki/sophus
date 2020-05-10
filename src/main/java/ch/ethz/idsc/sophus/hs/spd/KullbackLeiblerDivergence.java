@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.red.Trace;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Log;
 
 /** Reference:
@@ -24,7 +25,7 @@ public enum KullbackLeiblerDivergence {
     SymmetricMatrixQ.require(q);
     Tensor qinvp = LinearSolve.of(q, p);
     Scalar n = RealScalar.of(p.length());
-    return Trace.of(qinvp).subtract(n).subtract(Log.FUNCTION.apply(Det.of(qinvp).abs())) //
+    return Trace.of(qinvp).subtract(n).subtract(Log.FUNCTION.apply(Abs.FUNCTION.apply(Det.of(qinvp)))) //
         .multiply(RationalScalar.HALF);
   }
 }

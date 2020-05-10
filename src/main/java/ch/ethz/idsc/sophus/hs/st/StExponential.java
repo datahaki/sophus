@@ -6,18 +6,26 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 
-/** Reference:
+/** In the literature, the Stiefel manifold is denoted either as
+ * St(n,p), or V_k(R^n)
+ * 
+ * Reference:
  * "A matrix-algebraic algorithm for the Riemannian logarithm on the Stiefel manifold
  * under the canonical metric"
  * by Ralf Zimmermann, 2017
- * https://arxiv.org/pdf/1604.05054.pdf */
+ * https://arxiv.org/pdf/1604.05054.pdf
+ * 
+ * "Eichfeldtheorie"
+ * by Helga Baum, 2005 */
 public class StExponential implements Exponential, FlattenLog, Serializable {
   @SuppressWarnings("unused")
   private final Tensor x;
 
+  /** @param x column-orthogonal rectangular matrix with dimensions n x p */
   public StExponential(Tensor x) {
-    this.x = x;
+    this.x = OrthogonalMatrixQ.require(x);
   }
 
   @Override

@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 /** @see Se2ParametricDistance */
@@ -27,7 +28,7 @@ public enum Se2CoveringParametricDistance implements TensorMetric, TensorNorm {
       return norm;
     Scalar ahalf = alpha.multiply(HALF);
     Scalar radius = norm.multiply(HALF).divide(Sin.FUNCTION.apply(ahalf));
-    return radius.multiply(alpha).abs();
+    return Abs.FUNCTION.apply(radius.multiply(alpha));
   }
 
   @Override // from TensorNorm
