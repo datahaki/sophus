@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.VectorAngle;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
@@ -35,7 +36,7 @@ public class ArcTan2DTest extends TestCase {
       Tensor u = RandomVariate.of(distribution, 2);
       Optional<Scalar> optional = VectorAngle.of(u, v);
       Scalar scalar = ArcTan2D.of(u);
-      Chop._10.requireClose(scalar.abs(), optional.get());
+      Chop._10.requireClose(Abs.FUNCTION.apply(scalar), optional.get());
     }
   }
 

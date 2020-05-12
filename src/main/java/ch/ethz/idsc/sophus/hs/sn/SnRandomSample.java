@@ -24,7 +24,9 @@ import ch.ethz.idsc.tensor.red.Norm;
 public class SnRandomSample implements RandomSampleInterface, Serializable {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
-  /** Example: dimension == 1 corresponds to the unit circle in the plane
+  /** Example:
+   * dimension == 1 corresponds to the unit circle in the plane
+   * dimension == 2 corresponds to the "standard", surface sphere embedded in 3-dimensional Euclidean space
    * 
    * @param dimension of sphere as manifold
    * @return */

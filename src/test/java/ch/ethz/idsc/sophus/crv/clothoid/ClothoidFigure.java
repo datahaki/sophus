@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.img.ColorDataGradients;
 import ch.ethz.idsc.tensor.io.Export;
 import ch.ethz.idsc.tensor.io.HomeDirectory;
 import ch.ethz.idsc.tensor.red.Max;
+import ch.ethz.idsc.tensor.sca.Abs;
 
 /* package */ class ClothoidFigure {
   private static final int RES = 192;
@@ -31,8 +32,8 @@ import ch.ethz.idsc.tensor.red.Max;
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
     HeadTailInterface headTailInterface = Se2Clothoids.INSTANCE.curve(q.map(Scalar::zero), q).curvature();
     return Max.of( //
-        headTailInterface.head().abs(), //
-        headTailInterface.tail().abs()).reciprocal();
+        Abs.FUNCTION.apply(headTailInterface.head()), //
+        Abs.FUNCTION.apply(headTailInterface.tail())).reciprocal();
   }
 
   public static void main(String[] args) throws IOException {

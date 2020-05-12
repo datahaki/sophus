@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.qty.Quaternion;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
@@ -16,11 +17,11 @@ import junit.framework.TestCase;
 public class UnitQuaternionDistanceTest extends TestCase {
   public void testSimple() {
     Quaternion p = Quaternion.of(3, 1, 2, 3);
-    p = p.divide(p.abs());
+    p = p.divide(Abs.FUNCTION.apply(p));
     Quaternion q = Quaternion.of(-2, 0, -4, 7);
-    q = q.divide(q.abs());
-    Chop._14.requireClose(p.abs(), RealScalar.ONE);
-    Chop._14.requireClose(q.abs(), RealScalar.ONE);
+    q = q.divide(Abs.of(q));
+    Chop._14.requireClose(Abs.FUNCTION.apply(p), RealScalar.ONE);
+    Chop._14.requireClose(Abs.FUNCTION.apply(q), RealScalar.ONE);
     Scalar d1 = UnitQuaternionDistance.INSTANCE.distance(p, q);
     Scalar dq = UnitQuaternionDistance.INSTANCE.distance(p.multiply(q), q.multiply(q));
     Scalar dp = UnitQuaternionDistance.INSTANCE.distance(p.multiply(p), p.multiply(q));
@@ -44,10 +45,10 @@ public class UnitQuaternionDistanceTest extends TestCase {
     Scalar d23a = UnitQuaternionDistance.INSTANCE.distance(p2, p3);
     Scalar d23b = LogUnitQuaternionDistance.INSTANCE.distance(p2, p3);
     Chop._14.requireClose(d23a, d23b);
-    assertEquals(p0.abs(), RealScalar.ONE);
-    assertEquals(p1.abs(), RealScalar.ONE);
-    assertEquals(p2.abs(), RealScalar.ONE);
-    assertEquals(p3.abs(), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(p0), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(p1), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(p2), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(p3), RealScalar.ONE);
   }
 
   public void testQuaternionLogExp() {

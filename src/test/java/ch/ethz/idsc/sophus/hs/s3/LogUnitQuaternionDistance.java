@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.s3;
 import ch.ethz.idsc.sophus.math.Metric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.qty.Quaternion;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Log;
 
 /** implementation for evaluation or {@link UnitQuaternionDistance}
@@ -15,6 +16,6 @@ import ch.ethz.idsc.tensor.sca.Log;
 
   @Override // from Metric
   public Scalar distance(Quaternion p, Quaternion q) {
-    return Log.of(p.reciprocal().multiply(q)).abs();
+    return Abs.FUNCTION.apply(Log.FUNCTION.apply(p.reciprocal().multiply(q)));
   }
 }

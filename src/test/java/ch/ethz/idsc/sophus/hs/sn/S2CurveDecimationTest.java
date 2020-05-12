@@ -1,9 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.s2;
+package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.crv.decim.CurveDecimation;
+import ch.ethz.idsc.sophus.hs.sn.SnCurveDecimation;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -22,7 +23,7 @@ public class S2CurveDecimationTest extends TestCase {
     Tensor p1 = NORMALIZE.apply(Tensors.vector(0.5, 0.5, 0));
     Tensor p2 = NORMALIZE.apply(Tensors.vector(0, 1, 0));
     Tensor tensor = Tensors.of(p0, p1, p2);
-    CurveDecimation curveDecimation = S2CurveDecimation.of(RealScalar.of(0.1));
+    CurveDecimation curveDecimation = SnCurveDecimation.of(RealScalar.of(0.1));
     Tensor result = curveDecimation.apply(tensor);
     assertEquals(result, Tensors.of(UnitVector.of(3, 0), UnitVector.of(3, 1)));
   }
@@ -32,7 +33,7 @@ public class S2CurveDecimationTest extends TestCase {
     Tensor p1 = NORMALIZE.apply(Tensors.vector(0.5, 0.5, 0.8));
     Tensor p2 = NORMALIZE.apply(Tensors.vector(0, 1, 0));
     Tensor tensor = Tensors.of(p0, p1, p2);
-    CurveDecimation curveDecimation = Serialization.copy(S2CurveDecimation.of(RealScalar.of(0.1)));
+    CurveDecimation curveDecimation = Serialization.copy(SnCurveDecimation.of(RealScalar.of(0.1)));
     Tensor result = curveDecimation.apply(tensor);
     assertEquals(result, tensor);
   }
