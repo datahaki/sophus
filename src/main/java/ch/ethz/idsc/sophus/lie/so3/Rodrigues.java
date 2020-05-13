@@ -39,7 +39,7 @@ public enum Rodrigues implements Exponential, FlattenLog {
 
   @Override // from Exponential
   public Tensor exp(Tensor log) {
-    return vectorExp(flatten(AntisymmetricMatrixQ.require(log, Chop._10)));
+    return vectorExp(vectorize(AntisymmetricMatrixQ.require(log, Chop._10)));
   }
 
   /** @param vector of length 3
@@ -76,10 +76,12 @@ public enum Rodrigues implements Exponential, FlattenLog {
 
   @Override // from FlattenLog
   public Tensor flattenLog(Tensor q) {
-    return flatten(log(q));
+    return vectorize(log(q));
   }
 
-  private static Tensor flatten(Tensor log) {
+  /** @param log 3 x 3 matrix in so(3)
+   * @return vector of length 3 */
+  public static Tensor vectorize(Tensor log) {
     return Tensors.of(log.Get(2, 1), log.Get(0, 2), log.Get(1, 0));
   }
 }

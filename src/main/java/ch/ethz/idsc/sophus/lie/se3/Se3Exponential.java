@@ -48,7 +48,7 @@ public enum Se3Exponential implements Exponential, FlattenLog {
   public Tensor log(Tensor g) {
     Tensor R = Se3Matrix.rotation(g);
     Tensor wx = Rodrigues.INSTANCE.log(R);
-    Tensor w = Tensors.of(wx.Get(2, 1), wx.Get(0, 2), wx.Get(1, 0)); // copied from So3Exponential
+    Tensor w = Rodrigues.vectorize(wx);
     Scalar theta = Norm._2.ofVector(w);
     Tensor wx2 = wx.dot(wx);
     Se3Numerics se3Numerics = new Se3Numerics(theta);

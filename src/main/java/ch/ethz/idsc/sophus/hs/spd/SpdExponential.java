@@ -6,7 +6,7 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.hs.FlattenLog;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Flatten;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
@@ -52,6 +52,11 @@ public class SpdExponential implements Exponential, FlattenLog, Serializable {
 
   @Override // from FlattenLog
   public Tensor flattenLog(Tensor q) {
-    return Flatten.of(log(q));
+    int n = q.length();
+    Tensor flatten = Tensors.reserve(n * (n + 1) / 2);
+    int index = 0;
+    for (Tensor row : log(q))
+      row.stream().limit(++index).forEach(flatten::append);
+    return flatten;
   }
 }
