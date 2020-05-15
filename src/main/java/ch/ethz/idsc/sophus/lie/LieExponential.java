@@ -8,6 +8,9 @@ import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
+/**
+ * 
+ */
 public class LieExponential implements HsExponential, Serializable {
   /** @param lieGroup
    * @param exponential

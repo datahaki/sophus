@@ -80,10 +80,12 @@ Jan Hakenberg, Oliver Brinkmann, Joel Gächter
 
 * *Curve Subdivision in SE(2)*
 by Jan Hakenberg,
+[pdf](https://github.com/datahaki/sophus/files/4634210/1807.0463v1.pdf),
 [viXra:1807.0463](https://vixra.org/abs/1807.0463),
 [video](https://www.youtube.com/watch?v=2vDciaUgL4E)
 * *Smoothing using Geodesic Averages*
 by Jan Hakenberg,
+[pdf](https://github.com/datahaki/sophus/files/4634192/1810.0283v1.pdf),
 [viXra:1810.0283](https://vixra.org/abs/1810.0283),
 [video](https://www.youtube.com/watch?v=dmFO72Pigb4)
 
@@ -91,15 +93,18 @@ by Jan Hakenberg,
 
 * *Curve Decimation in SE(2) and SE(3)*
 by Jan Hakenberg,
+[pdf](https://github.com/datahaki/sophus/files/4634185/1909.0174v1.pdf),
 [viXra:1909.0174](https://vixra.org/abs/1909.0174)
 
 ##### 2020
 
 * *Inverse Distance Coordinates for Scattered Sets of Points*
 by Jan Hakenberg,
+[pdf](https://github.com/datahaki/sophus/files/4628374/2002.0129v1.pdf),
 [viXra:2002.0129](https://vixra.org/abs/2002.0129)
 * *Biinvariant Generalized Barycentric Coordinates on Lie Groups*
 by Jan Hakenberg,
+[pdf](https://github.com/datahaki/sophus/files/4628337/2002.0584v1.pdf),
 [viXra:2002.0129](https://vixra.org/abs/2002.0584),
 [video](https://www.youtube.com/watch?v=n0-YJE15m90)
 
