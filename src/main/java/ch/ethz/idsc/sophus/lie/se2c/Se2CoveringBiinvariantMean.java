@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.se2.Se2Group;
 import ch.ethz.idsc.sophus.lie.so2c.So2CoveringBiinvariantMean;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -21,7 +22,19 @@ import ch.ethz.idsc.tensor.Tensors;
 public class Se2CoveringBiinvariantMean implements BiinvariantMean, Serializable {
   public static final BiinvariantMean INSTANCE = //
       new Se2CoveringBiinvariantMean(Se2CoveringGroup.INSTANCE, So2CoveringBiinvariantMean.INSTANCE);
-  // ---
+
+  /** @param scalarBiinvariantMean
+   * @return */
+  public static BiinvariantMean se2Covering(ScalarBiinvariantMean scalarBiinvariantMean) {
+    return new Se2CoveringBiinvariantMean(Se2CoveringGroup.INSTANCE, scalarBiinvariantMean);
+  }
+
+  /** @param scalarBiinvariantMean
+   * @return */
+  public static BiinvariantMean se2(ScalarBiinvariantMean scalarBiinvariantMean) {
+    return new Se2CoveringBiinvariantMean(Se2Group.INSTANCE, scalarBiinvariantMean);
+  }
+
   private static final Scalar ZERO = RealScalar.ZERO;
   // ---
   private final LieGroup lieGroup;
@@ -29,7 +42,7 @@ public class Se2CoveringBiinvariantMean implements BiinvariantMean, Serializable
 
   /** @param lieGroup either se2 or se2c
    * @param scalarBiinvariantMean */
-  public Se2CoveringBiinvariantMean(LieGroup lieGroup, ScalarBiinvariantMean scalarBiinvariantMean) {
+  private Se2CoveringBiinvariantMean(LieGroup lieGroup, ScalarBiinvariantMean scalarBiinvariantMean) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
     this.scalarBiinvariantMean = Objects.requireNonNull(scalarBiinvariantMean);
   }

@@ -45,7 +45,7 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
 
   /** @param scalarBiinvariantMean */
   private Se2BiinvariantMean(ScalarBiinvariantMean scalarBiinvariantMean) {
-    biinvariantMean = new Se2CoveringBiinvariantMean(Se2Group.INSTANCE, scalarBiinvariantMean);
+    biinvariantMean = Se2CoveringBiinvariantMean.se2(scalarBiinvariantMean);
   }
 
   @Override // from BiinvariantMean
