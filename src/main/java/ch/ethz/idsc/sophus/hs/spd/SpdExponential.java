@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdMatrixExponential */
-public class SpdExponential implements Exponential, FlattenLog, Serializable {
+public class SpdExponential implements Exponential, TangentSpace, Serializable {
   private final Tensor pp;
   private final Tensor pn;
 
@@ -51,7 +51,7 @@ public class SpdExponential implements Exponential, FlattenLog, Serializable {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor q) {
+  public Tensor vectorLog(Tensor q) {
     int n = q.length();
     Tensor flatten = Tensors.reserve(n * (n + 1) / 2);
     int index = 0;

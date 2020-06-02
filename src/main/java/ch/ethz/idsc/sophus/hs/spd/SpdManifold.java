@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * Reference:
  * "Riemannian Geometry for the Statistical Analysis of Diffusion Tensor Data"
  * by P. Thomas Fletcher, Sarang Joshi */
-public enum SpdManifold implements HsExponential, FlattenLogManifold {
+public enum SpdManifold implements HsExponential, VectorLogManifold {
   INSTANCE;
 
   @Override // from HsExponential
@@ -23,7 +23,7 @@ public enum SpdManifold implements HsExponential, FlattenLogManifold {
   }
 
   @Override // from FlattenLogManifold
-  public FlattenLog logAt(Tensor point) {
+  public TangentSpace logAt(Tensor point) {
     return new SpdExponential(point);
   }
 }

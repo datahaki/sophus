@@ -3,13 +3,13 @@ package ch.ethz.idsc.sophus.lie.so3;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 
-public class So3Exponential implements Exponential, FlattenLog, Serializable {
+public class So3Exponential implements Exponential, TangentSpace, Serializable {
   private final Tensor p;
   private final Tensor pinv;
 
@@ -29,7 +29,7 @@ public class So3Exponential implements Exponential, FlattenLog, Serializable {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor q) {
-    return Rodrigues.INSTANCE.flattenLog(pinv.dot(q));
+  public Tensor vectorLog(Tensor q) {
+    return Rodrigues.INSTANCE.vectorLog(pinv.dot(q));
   }
 }

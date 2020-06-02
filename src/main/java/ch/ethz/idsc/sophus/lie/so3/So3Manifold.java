@@ -1,13 +1,13 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
-public enum So3Manifold implements HsExponential, FlattenLogManifold {
+public enum So3Manifold implements HsExponential, VectorLogManifold {
   INSTANCE;
 
   @Override // from HsExponential
@@ -16,7 +16,7 @@ public enum So3Manifold implements HsExponential, FlattenLogManifold {
   }
 
   @Override // from FlattenLogManifold
-  public FlattenLog logAt(Tensor point) {
+  public TangentSpace logAt(Tensor point) {
     return new So3Exponential(point);
   }
 }

@@ -4,17 +4,17 @@ package ch.ethz.idsc.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
+public class LieVectorLogManifold implements VectorLogManifold, Serializable {
   /** @param lieGroup
    * @param flattenLog
    * @return */
-  public static FlattenLogManifold of(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
-    return new LieFlattenLogManifold( //
+  public static VectorLogManifold of(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
+    return new LieVectorLogManifold( //
         Objects.requireNonNull(lieGroup), //
         Objects.requireNonNull(flattenLog));
   }
@@ -23,18 +23,18 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
   private final LieGroup lieGroup;
   private final TensorUnaryOperator flattenLog;
 
-  private LieFlattenLogManifold(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
+  private LieVectorLogManifold(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
     this.lieGroup = lieGroup;
     this.flattenLog = flattenLog;
   }
 
   @Override // from FlattenLogManifold
-  public FlattenLog logAt(Tensor point) {
+  public TangentSpace logAt(Tensor point) {
     return new FlattenLogImpl(point);
   }
 
   /***************************************************/
-  private class FlattenLogImpl implements FlattenLog, Serializable {
+  private class FlattenLogImpl implements TangentSpace, Serializable {
     private final LieGroupElement lieGroupElement;
 
     public FlattenLogImpl(Tensor point) {
@@ -42,7 +42,7 @@ public class LieFlattenLogManifold implements FlattenLogManifold, Serializable {
     }
 
     @Override
-    public Tensor flattenLog(Tensor q) {
+    public Tensor vectorLog(Tensor q) {
       return flattenLog.apply(lieGroupElement.combine(q));
     }
   }

@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
@@ -17,8 +17,8 @@ public class HsProjectionTest extends TestCase {
   public void testSimple() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
-    FlattenLogManifold flattenLogManifold = RnManifold.INSTANCE;
-    Tensor levers = Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
+    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
     Tensor nullsp = LeftNullSpace.of(levers);
     assertTrue(OrthogonalMatrixQ.of(nullsp));
     PseudoInverse.of(nullsp).dot(nullsp);

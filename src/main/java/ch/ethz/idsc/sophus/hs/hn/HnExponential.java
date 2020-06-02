@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Sinhc;
 import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.Cosh;
  * 
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
-public class HnExponential implements Exponential, FlattenLog, Serializable {
+public class HnExponential implements Exponential, TangentSpace, Serializable {
   private final Tensor x;
 
   public HnExponential(Tensor x) {
@@ -39,7 +39,7 @@ public class HnExponential implements Exponential, FlattenLog, Serializable {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor y) {
+  public Tensor vectorLog(Tensor y) {
     return log(y);
   }
 }

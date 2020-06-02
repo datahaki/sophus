@@ -42,7 +42,7 @@ public class RodriguesTest extends TestCase {
   public void testLog() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor matrix = Rodrigues.vectorExp(vector);
-    Tensor result = Rodrigues.INSTANCE.flattenLog(matrix);
+    Tensor result = Rodrigues.INSTANCE.vectorLog(matrix);
     assertEquals(result, vector);
   }
 
@@ -106,7 +106,7 @@ public class RodriguesTest extends TestCase {
     Tensor vec = Tensors.vector(.3, .5, -0.4);
     Tensor matrix = Rodrigues.vectorExp(vec);
     Tensor lom = Rodrigues.INSTANCE.log(matrix);
-    Tensor log = Rodrigues.INSTANCE.flattenLog(matrix);
+    Tensor log = Rodrigues.INSTANCE.vectorLog(matrix);
     Chop._14.requireClose(vec, log);
     Chop._14.requireClose(lom, Cross.skew3(vec));
   }

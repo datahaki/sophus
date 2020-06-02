@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.hs;
 import ch.ethz.idsc.tensor.Tensor;
 
 @FunctionalInterface
-public interface FlattenLog {
+public interface TangentSpace {
   /** @param q point on manifold
    * @return vector in tangent space */
-  Tensor flattenLog(Tensor q);
+  Tensor vectorLog(Tensor q);
 }

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.krg;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
@@ -23,18 +23,18 @@ public class ShepardWeighting implements WeightingInterface, Serializable {
     return new ShepardWeighting(Objects.requireNonNull(weightingInterface));
   }
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param exponent
    * @return */
-  public static WeightingInterface absolute(FlattenLogManifold flattenLogManifold, Number exponent) {
-    return of(PseudoDistances.ABSOLUTE.create(flattenLogManifold, InversePowerVariogram.of(exponent)));
+  public static WeightingInterface absolute(VectorLogManifold vectorLogManifold, Number exponent) {
+    return of(PseudoDistances.ABSOLUTE.create(vectorLogManifold, InversePowerVariogram.of(exponent)));
   }
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param exponent
    * @return */
-  public static WeightingInterface relative(FlattenLogManifold flattenLogManifold, Number exponent) {
-    return of(PseudoDistances.RELATIVE.create(flattenLogManifold, InversePowerVariogram.of(exponent)));
+  public static WeightingInterface relative(VectorLogManifold vectorLogManifold, Number exponent) {
+    return of(PseudoDistances.RELATIVE.create(vectorLogManifold, InversePowerVariogram.of(exponent)));
   }
 
   /***************************************************/

@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.gl.LinearGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
@@ -25,7 +25,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * 
  * @see LinearGroup
  * @see LieGroupElement */
-public enum Se3Exponential implements Exponential, FlattenLog {
+public enum Se3Exponential implements Exponential, TangentSpace {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);
@@ -60,7 +60,7 @@ public enum Se3Exponential implements Exponential, FlattenLog {
   /** @param g matrix of dimensions 4 x 4
    * @return vector of length 6 */
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor g) {
+  public Tensor vectorLog(Tensor g) {
     return Flatten.of(log(g));
   }
 }

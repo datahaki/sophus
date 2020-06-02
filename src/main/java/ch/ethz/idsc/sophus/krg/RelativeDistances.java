@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.gbc.HsProjection;
 import ch.ethz.idsc.sophus.gbc.ProjectionInterface;
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -21,11 +21,11 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   private final ProjectionInterface projectionInterface;
   private final ScalarUnaryOperator variogram;
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param variogram
    * @param sequence */
-  public RelativeDistances(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-    this.projectionInterface = new HsProjection(flattenLogManifold);
+  public RelativeDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    this.projectionInterface = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
   }
 

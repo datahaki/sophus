@@ -4,16 +4,19 @@ package ch.ethz.idsc.sophus.gbc;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.InverseDiagonal;
-import ch.ethz.idsc.sophus.math.InverseNorm;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.sca.Power;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** relative coordinates are biinvariant
  * 
@@ -24,52 +27,62 @@ public final class RelativeCoordinate extends HsProjection implements ProjectedC
   private static final Scalar ONE = RealScalar.of(1.0);
   private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @return */
-  public static ProjectedCoordinate linear(FlattenLogManifold flattenLogManifold) {
-    return new RelativeCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
+  public static ProjectedCoordinate linear(VectorLogManifold vectorLogManifold) {
+    return nugenx(vectorLogManifold, Power.function(1));
+    // new RelativeCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
   }
 
   /** Hint: most common choice since coordinates vary smoothly
    * 
-   * @param flattenLogManifold
+   * @param vectorLogManifold
    * @return */
-  public static ProjectedCoordinate smooth(FlattenLogManifold flattenLogManifold) {
-    return new RelativeCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
+  public static ProjectedCoordinate smooth(VectorLogManifold vectorLogManifold) {
+    return nugenx(vectorLogManifold, Power.function(2));
+    // return new RelativeCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
   }
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param target non-null
    * @return */
-  public static ProjectedCoordinate custom(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
-    return new RelativeCoordinate(flattenLogManifold, Objects.requireNonNull(target));
+  public static ProjectedCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+    return new RelativeCoordinate(vectorLogManifold, Objects.requireNonNull(target));
+  }
+
+  public static ProjectedCoordinate nugenx(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
+        .map(Norm._2::ofVector) //
+        .map(variogram) //
+        .map(Scalar::reciprocal)));
+    return new RelativeCoordinate(vectorLogManifold, target);
   }
 
   /***************************************************/
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @return */
-  public static ProjectedCoordinate diagonal_linear(FlattenLogManifold flattenLogManifold) {
-    return custom(flattenLogManifold, InverseDiagonal.of(RnNorm.INSTANCE));
+  public static ProjectedCoordinate diagonal_linear(VectorLogManifold vectorLogManifold) {
+    return custom(vectorLogManifold, InverseDiagonal.of(RnNorm.INSTANCE));
   }
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @return */
-  public static ProjectedCoordinate diagonal_smooth(FlattenLogManifold flattenLogManifold) {
-    return custom(flattenLogManifold, InverseDiagonal.of(RnNormSquared.INSTANCE));
+  public static ProjectedCoordinate diagonal_smooth(VectorLogManifold vectorLogManifold) {
+    return custom(vectorLogManifold, InverseDiagonal.of(RnNormSquared.INSTANCE));
   }
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @return biinvariant coordinates */
-  public static ProjectedCoordinate affine(FlattenLogManifold flattenLogManifold) {
+  public static ProjectedCoordinate affine(VectorLogManifold vectorLogManifold) {
     // HsBarycentricCoordinate uses more efficient matrix multiplication
-    return AbsoluteCoordinate.custom(flattenLogManifold, AFFINE);
+    return AbsoluteCoordinate.custom(vectorLogManifold, AFFINE);
   }
 
   /***************************************************/
   private final TensorUnaryOperator target;
 
-  private RelativeCoordinate(FlattenLogManifold flattenLogManifold, TensorUnaryOperator target) {
-    super(flattenLogManifold);
+  private RelativeCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+    super(vectorLogManifold);
     this.target = target;
   }
 

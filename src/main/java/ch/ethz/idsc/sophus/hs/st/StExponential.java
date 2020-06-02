@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.st;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
@@ -19,7 +19,7 @@ import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
  * 
  * "Eichfeldtheorie"
  * by Helga Baum, 2005 */
-public class StExponential implements Exponential, FlattenLog, Serializable {
+public class StExponential implements Exponential, TangentSpace, Serializable {
   @SuppressWarnings("unused")
   private final Tensor x;
 
@@ -41,7 +41,7 @@ public class StExponential implements Exponential, FlattenLog, Serializable {
   }
 
   @Override
-  public Tensor flattenLog(Tensor y) {
+  public Tensor vectorLog(Tensor y) {
     // TODO Auto-generated method stub
     return null;
   }

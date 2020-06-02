@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.krg;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
@@ -13,33 +13,33 @@ public enum PseudoDistances {
   /** left-invariant */
   ABSOLUTE {
     @Override
-    public WeightingInterface create(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-      return new AbsoluteDistances(flattenLogManifold, variogram);
+    public WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+      return new AbsoluteDistances(vectorLogManifold, variogram);
     }
   },
   /** bi-invariant */
   RELATIVE {
     @Override
-    public WeightingInterface create(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-      return new RelativeDistances(flattenLogManifold, variogram);
+    public WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+      return new RelativeDistances(vectorLogManifold, variogram);
     }
   };
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param variogram
    * @return */
-  public abstract WeightingInterface create(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram);
+  public abstract WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram);
 
   /***************************************************/
   /** Careful: Every evaluation of returned WeightingInterface is expensive!
    * If multiple evaluations are required for the same sequence, then use
-   * {@link #barycentric(FlattenLogManifold, ScalarUnaryOperator, Tensor)}
+   * {@link #barycentric(VectorLogManifold, ScalarUnaryOperator, Tensor)}
    * 
-   * @param flattenLogManifold
+   * @param vectorLogManifold
    * @param variogram
    * @return */
-  public WeightingInterface weighting(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-    return new WeightingImpl(Objects.requireNonNull(flattenLogManifold), Objects.requireNonNull(variogram));
+  public WeightingInterface weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new WeightingImpl(Objects.requireNonNull(vectorLogManifold), Objects.requireNonNull(variogram));
   }
 
   /***************************************************/
@@ -47,8 +47,8 @@ public enum PseudoDistances {
   private class WeightingImpl implements WeightingInterface, Serializable {
     private final WeightingInterface weightingInterface;
 
-    public WeightingImpl(FlattenLogManifold flattenLogManifold, ScalarUnaryOperator variogram) {
-      weightingInterface = create(flattenLogManifold, variogram);
+    public WeightingImpl(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+      weightingInterface = create(vectorLogManifold, variogram);
     }
 
     @Override // from WeightingInterface

@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.crv.decim;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -16,40 +16,40 @@ import ch.ethz.idsc.tensor.red.Norm;
 public class HsLineDistance implements LineDistance, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
-  private final FlattenLogManifold flattenLogManifold;
+  private final VectorLogManifold vectorLogManifold;
 
-  public HsLineDistance(FlattenLogManifold flattenLogManifold) {
-    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
+  public HsLineDistance(VectorLogManifold vectorLogManifold) {
+    this.vectorLogManifold = Objects.requireNonNull(vectorLogManifold);
   }
 
   @Override // from LineDistance
   public NormImpl tensorNorm(Tensor beg, Tensor end) {
-    FlattenLog flattenLog = flattenLogManifold.logAt(beg);
+    TangentSpace vectorLog = vectorLogManifold.logAt(beg);
     return new NormImpl( //
-        flattenLog, //
-        NORMALIZE_UNLESS_ZERO.apply(flattenLog.flattenLog(end)));
+        vectorLog, //
+        NORMALIZE_UNLESS_ZERO.apply(vectorLog.vectorLog(end)));
   }
 
   public class NormImpl implements TensorNorm, Serializable {
-    private final FlattenLog flattenLog;
+    private final TangentSpace tangentSpace;
     private final Tensor normal;
 
-    public NormImpl(FlattenLog flattenLog, Tensor normal) {
-      this.flattenLog = flattenLog;
+    public NormImpl(TangentSpace tangentSpace, Tensor normal) {
+      this.tangentSpace = tangentSpace;
       this.normal = normal;
     }
 
     /** @param tensor of the lie group
      * @return element of the lie algebra */
     public Tensor project(Tensor tensor) {
-      Tensor vector = flattenLog.flattenLog(tensor);
+      Tensor vector = tangentSpace.vectorLog(tensor);
       return vector.dot(normal).pmul(normal);
     }
 
     /** @param tensor of the lie group
      * @return element of the lie algebra */
     public Tensor orthogonal(Tensor tensor) {
-      Tensor vector = flattenLog.flattenLog(tensor); // redundant to project
+      Tensor vector = tangentSpace.vectorLog(tensor); // redundant to project
       return vector.subtract(vector.dot(normal).pmul(normal)); // ... but vector has to be stored
     }
 

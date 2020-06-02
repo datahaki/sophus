@@ -1,7 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.st;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Expc;
 import ch.ethz.idsc.sophus.math.sca.Logc;
@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * Reference 2:
  * "Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations."
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, pp. 27-31, 2006 */
-public enum StExponential implements Exponential, FlattenLog {
+public enum StExponential implements Exponential, TangentSpace {
   INSTANCE;
 
   @Override // from Exponential
@@ -46,7 +46,7 @@ public enum StExponential implements Exponential, FlattenLog {
   }
 
   @Override
-  public Tensor flattenLog(Tensor lambda_t) {
+  public Tensor vectorLog(Tensor lambda_t) {
     return Flatten.of(log(lambda_t));
   }
 }

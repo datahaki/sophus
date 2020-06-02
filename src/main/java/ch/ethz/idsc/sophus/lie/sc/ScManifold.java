@@ -1,11 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.sc;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
-import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 
 public enum ScManifold {
   ;
-  public static final FlattenLogManifold INSTANCE = //
-      LieFlattenLogManifold.of(ScGroup.INSTANCE, ScExponential.INSTANCE::log);
+  public static final VectorLogManifold INSTANCE = //
+      LieVectorLogManifold.of(ScGroup.INSTANCE, ScExponential.INSTANCE::log);
 }

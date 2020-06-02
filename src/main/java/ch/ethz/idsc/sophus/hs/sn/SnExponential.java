@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -26,7 +26,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * implementation is based on the function "strans" taken from
  * "Freeform Curves on Spheres of Arbitrary Dimension"
  * by Scott Schaefer and Ron Goldman, 2005, page 5 */
-public class SnExponential implements Exponential, FlattenLog, Serializable {
+public class SnExponential implements Exponential, TangentSpace, Serializable {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
@@ -58,7 +58,7 @@ public class SnExponential implements Exponential, FlattenLog, Serializable {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor y) {
+  public Tensor vectorLog(Tensor y) {
     return log(y);
   }
 }

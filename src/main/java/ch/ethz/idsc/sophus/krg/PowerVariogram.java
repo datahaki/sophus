@@ -8,7 +8,6 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.io.ScalarArray;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Power;
@@ -29,8 +28,8 @@ public class PowerVariogram implements ScalarUnaryOperator {
    * @param exponent in the range [1, 2) "The value 2 gives a degenerate matrix and meaningless results."
    * @return */
   public static PowerVariogram of(Scalar alpha, Scalar exponent) {
-    if (exponent.equals(TWO))
-      throw TensorRuntimeException.of(exponent);
+    // if (exponent.equals(TWO))
+    // throw TensorRuntimeException.of(exponent);
     return new PowerVariogram(Objects.requireNonNull(alpha), Power.function(exponent));
   }
 

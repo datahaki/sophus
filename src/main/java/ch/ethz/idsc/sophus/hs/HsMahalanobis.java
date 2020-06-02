@@ -15,32 +15,32 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class HsMahalanobis implements Serializable {
-  private final FlattenLogManifold flattenLogManifold;
+  private final VectorLogManifold vectorLogManifold;
   private final BiinvariantMean biinvariantMean;
 
-  public HsMahalanobis(FlattenLogManifold flattenLogManifold, BiinvariantMean biinvariantMean) {
-    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
+  public HsMahalanobis(VectorLogManifold vectorLogManifold, BiinvariantMean biinvariantMean) {
+    this.vectorLogManifold = Objects.requireNonNull(vectorLogManifold);
     this.biinvariantMean = Objects.requireNonNull(biinvariantMean);
   }
 
   // TODO pick different class name!
   public class Norm implements TensorNorm, Serializable {
-    private final FlattenLog flattenLog;
+    private final TangentSpace tangentSpace;
     private final Tensor sigma;
     private final Tensor inverse;
 
     public Norm(Tensor sequence, Tensor weights) {
       Tensor mean = biinvariantMean.mean(sequence, weights);
-      flattenLog = flattenLogManifold.logAt(mean);
+      tangentSpace = vectorLogManifold.logAt(mean);
       sigma = weights.dot(Tensor.of(sequence.stream() //
-          .map(flattenLog::flattenLog) //
+          .map(tangentSpace::vectorLog) //
           .map(vector -> TensorProduct.of(vector, vector))));
       inverse = Inverse.of(sigma);
     }
 
     @Override
     public Scalar norm(Tensor tensor) {
-      Tensor log = flattenLog.flattenLog(tensor);
+      Tensor log = tangentSpace.vectorLog(tensor);
       return Sqrt.FUNCTION.apply(inverse.dot(log).dot(log).Get());
     }
   }

@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.rpn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.sn.SnMetric;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
@@ -19,7 +19,7 @@ import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** real projective plane */
-public class RpnExponential implements Exponential, FlattenLog, Serializable {
+public class RpnExponential implements Exponential, TangentSpace, Serializable {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
@@ -60,7 +60,7 @@ public class RpnExponential implements Exponential, FlattenLog, Serializable {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor y) {
+  public Tensor vectorLog(Tensor y) {
     return log(y);
   }
 }

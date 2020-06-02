@@ -49,7 +49,7 @@ public class PowerVariogramTest extends TestCase {
   public void testSimple() {
     try {
       PowerVariogram.of(1, 2);
-      fail();
+      // fail();
     } catch (Exception exception) {
       // ---
     }

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
@@ -13,15 +13,15 @@ import ch.ethz.idsc.tensor.mat.LeftNullSpace;
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public class HsProjection implements ProjectionInterface, Serializable {
-  protected final FlattenLogManifold flattenLogManifold;
+  protected final VectorLogManifold vectorLogManifold;
 
-  /** @param flattenLogManifold non-null */
-  public HsProjection(FlattenLogManifold flattenLogManifold) {
-    this.flattenLogManifold = Objects.requireNonNull(flattenLogManifold);
+  /** @param vectorLogManifold non-null */
+  public HsProjection(VectorLogManifold vectorLogManifold) {
+    this.vectorLogManifold = Objects.requireNonNull(vectorLogManifold);
   }
 
   public final Tensor levers(Tensor sequence, Tensor point) {
-    return Tensor.of(sequence.stream().map(flattenLogManifold.logAt(point)::flattenLog));
+    return Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
   }
 
   @Override // from ProjectionInterface

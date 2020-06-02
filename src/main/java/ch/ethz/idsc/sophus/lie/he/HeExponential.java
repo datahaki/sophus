@@ -1,14 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Flatten;
 
-public enum HeExponential implements Exponential, FlattenLog {
+public enum HeExponential implements Exponential, TangentSpace {
   INSTANCE;
 
   @Override // from Exponential
@@ -34,7 +34,7 @@ public enum HeExponential implements Exponential, FlattenLog {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor xyz) {
+  public Tensor vectorLog(Tensor xyz) {
     return Flatten.of(log(xyz));
   }
 }

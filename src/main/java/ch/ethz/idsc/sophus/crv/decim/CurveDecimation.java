@@ -3,26 +3,26 @@ package ch.ethz.idsc.sophus.crv.decim;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** http://vixra.org/abs/1909.0174 */
 public interface CurveDecimation extends TensorUnaryOperator {
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation of(FlattenLogManifold flattenLogManifold, Scalar epsilon) {
-    return new RamerDouglasPeucker(new HsLineDistance(flattenLogManifold), epsilon);
+  public static CurveDecimation of(VectorLogManifold vectorLogManifold, Scalar epsilon) {
+    return new RamerDouglasPeucker(new HsLineDistance(vectorLogManifold), epsilon);
   }
 
-  /** @param flattenLogManifold
+  /** @param vectorLogManifold
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation symmetric(FlattenLogManifold flattenLogManifold, Scalar epsilon) {
+  public static CurveDecimation symmetric(VectorLogManifold vectorLogManifold, Scalar epsilon) {
     return new RamerDouglasPeucker( //
-        new SymmetricLineDistance(new HsLineDistance(flattenLogManifold)), //
+        new SymmetricLineDistance(new HsLineDistance(vectorLogManifold)), //
         epsilon);
   }
 

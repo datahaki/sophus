@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.hs.FlattenLog;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -31,7 +31,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * p. 131
  * 
  * <p>The formula for the logarithm is taken from a book by Chirikjian */
-public enum Rodrigues implements Exponential, FlattenLog {
+public enum Rodrigues implements Exponential, TangentSpace {
   INSTANCE;
 
   private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
@@ -75,7 +75,7 @@ public enum Rodrigues implements Exponential, FlattenLog {
   }
 
   @Override // from FlattenLog
-  public Tensor flattenLog(Tensor q) {
+  public Tensor vectorLog(Tensor q) {
     return vectorize(log(q));
   }
 

@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.sca.Chop;
+import ch.ethz.idsc.tensor.sca.Power;
 import junit.framework.TestCase;
 
 public class Se2CoveringGroupTest extends TestCase {
@@ -34,9 +35,9 @@ public class Se2CoveringGroupTest extends TestCase {
         Tensor w2 = projectedCoordinate.weights(adSeq, adPnt);
         Chop._10.requireClose(w1, w2);
       }
-      {
-        GrCoordinate gr1 = new GrCoordinate(Se2CoveringManifold.INSTANCE, sequence);
-        GrCoordinate gr2 = new GrCoordinate(Se2CoveringManifold.INSTANCE, adSeq);
+      for (int exp = 0; exp < 3; ++exp) {
+        GrCoordinate gr1 = new GrCoordinate(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
+        GrCoordinate gr2 = new GrCoordinate(Se2CoveringManifold.INSTANCE, Power.function(exp), adSeq);
         Tensor w1 = gr1.apply(point);
         Tensor w2 = gr2.apply(adPnt);
         Chop._10.requireClose(w1, w2);
@@ -56,7 +57,7 @@ public class Se2CoveringGroupTest extends TestCase {
         // System.out.println(w1);
       }
       {
-        GrCoordinate gr1 = new GrCoordinate(Se2CoveringManifold.INSTANCE, sequence);
+        GrCoordinate gr1 = new GrCoordinate(Se2CoveringManifold.INSTANCE, Power.function(2), sequence);
         Tensor w1 = gr1.apply(point);
         // System.out.println(w1);
       }

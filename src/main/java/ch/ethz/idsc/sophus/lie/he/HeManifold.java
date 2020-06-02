@@ -1,15 +1,15 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.hs.FlattenLogManifold;
 import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.sophus.lie.LieFlattenLogManifold;
+import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 
 public enum HeManifold {
   ;
-  public static final FlattenLogManifold INSTANCE = //
-      LieFlattenLogManifold.of(HeGroup.INSTANCE, HeExponential.INSTANCE::flattenLog);
+  public static final VectorLogManifold INSTANCE = //
+      LieVectorLogManifold.of(HeGroup.INSTANCE, HeExponential.INSTANCE::vectorLog);
   public static final HsExponential HS_EXP = //
       LieExponential.of(HeGroup.INSTANCE, HeExponential.INSTANCE);
 }

@@ -17,6 +17,6 @@ public enum So3Metric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Norm._2.ofVector(Rodrigues.INSTANCE.flattenLog(LinearSolve.of(p, q)));
+    return Norm._2.ofVector(Rodrigues.INSTANCE.vectorLog(LinearSolve.of(p, q)));
   }
 }

@@ -35,7 +35,7 @@ public class SpdExponentialTest extends TestCase {
       Tensor ph = spdExpP.exp(pqw.multiply(RationalScalar.HALF));
       Tensor qh = spdExpQ.exp(qpw.multiply(RationalScalar.HALF));
       Chop._08.requireClose(ph, qh);
-      Tensor vector = spdExpP.flattenLog(q);
+      Tensor vector = spdExpP.vectorLog(q);
       VectorQ.requireLength(vector, n * (n + 1) / 2);
     }
   }
