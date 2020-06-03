@@ -4,11 +4,10 @@ package ch.ethz.idsc.sophus.lie.se2c;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.GrCoordinate;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Power;
 import junit.framework.TestCase;
@@ -44,20 +43,15 @@ public class Se2CoveringGroupTest extends TestCase {
     }
   }
 
-  public void testMean() {
-    for (int count = 5; count < 10; ++count) {
-      Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), count);
-      Tensor point = //
-          Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, ConstantArray.of(RationalScalar.of(1, count), count));
-      // System.out.println("---");
-      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.relatives(Se2CoveringManifold.INSTANCE)) {
-        Tensor w1 = barycentricCoordinate.weights(sequence, point);
-        // System.out.println(w1);
-      }
-      {
-        GrCoordinate gr1 = new GrCoordinate(Se2CoveringManifold.INSTANCE, Power.function(2), sequence);
-        Tensor w1 = gr1.apply(point);
-        // System.out.println(w1);
+  public void testLinearReproduction() {
+    for (int length = 5; length < 10; ++length) {
+      Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), length);
+      GrCoordinate grCoordinate = new GrCoordinate(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
+      for (int count = 0; count < 10; ++count) {
+        Tensor point = TestHelper.spawn_Se2C();
+        Tensor weights = grCoordinate.apply(point);
+        Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+        Chop._07.requireClose(point, mean);
       }
     }
   }

@@ -42,7 +42,7 @@ public class ShepardWeightingTest extends TestCase {
         RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
         Tensor values = RandomSample.of(randomSampleInterface, n);
         Tensor point = RandomVariate.of(distribution, 3);
-        Tensor evaluate = CrossAveraging.of(shepardInterpolation, sequence, SnPhongMean.INSTANCE, values).apply(point);
+        Tensor evaluate = CrossAveraging.of(p -> shepardInterpolation.weights(sequence, p), SnPhongMean.INSTANCE, values).apply(point);
         VectorQ.requireLength(evaluate, 5);
       }
     }
