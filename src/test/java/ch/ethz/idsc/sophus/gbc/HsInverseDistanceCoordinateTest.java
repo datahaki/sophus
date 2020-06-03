@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.lang.reflect.Modifier;
 
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -25,7 +26,7 @@ public class HsInverseDistanceCoordinateTest extends TestCase {
   }
 
   public void testNullManifoldFail() {
-    WeightingInterface weightingInterface = ShepardWeighting.absolute(RnManifold.INSTANCE, 1);
+    WeightingInterface weightingInterface = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1));
     try {
       HsInverseDistanceCoordinate.custom(null, weightingInterface);
       fail();

@@ -162,7 +162,7 @@ public class RodriguesTest extends TestCase {
       Tensor matrix = TestHelper.spawn_So3();
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
-      Chop._13.requireClose(qr.getR(), IdentityMatrix.of(3));
+      Chop._10.requireClose(qr.getR(), IdentityMatrix.of(3));
       Chop._12.requireClose(qr.getQ(), matrix);
     }
   }

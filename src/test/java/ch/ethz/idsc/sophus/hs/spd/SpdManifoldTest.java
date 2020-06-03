@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -16,12 +17,12 @@ import junit.framework.TestCase;
 
 public class SpdManifoldTest extends TestCase {
   public static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      RelativeCoordinate.linear(SpdManifold.INSTANCE), //
-      RelativeCoordinate.smooth(SpdManifold.INSTANCE), //
-      AbsoluteCoordinate.linear(SpdManifold.INSTANCE), //
-      AbsoluteCoordinate.smooth(SpdManifold.INSTANCE), //
-      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, 1)), //
-      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, 2)) };
+      AbsoluteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      AbsoluteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      RelativeCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      RelativeCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, InversePowerVariogram.of(1))), //
+      HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, InversePowerVariogram.of(2))) };
 
   public void testSimple() {
     int d = 2;

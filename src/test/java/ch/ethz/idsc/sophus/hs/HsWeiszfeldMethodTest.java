@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
@@ -18,7 +19,7 @@ public class HsWeiszfeldMethodTest extends TestCase {
   public void testSimple() {
     SpatialMedian sm1 = HsWeiszfeldMethod.of( //
         RnBiinvariantMean.INSTANCE, //
-        ShepardWeighting.absolute(RnManifold.INSTANCE, 1), //
+        ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1)), //
         Tolerance.CHOP);
     SpatialMedian sm2 = WeiszfeldMethod.with(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();

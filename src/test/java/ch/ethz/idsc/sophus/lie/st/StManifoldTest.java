@@ -6,6 +6,7 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -20,8 +21,8 @@ public class StManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
   private static final ProjectedCoordinate AFFINE = RelativeCoordinate.affine(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      RelativeCoordinate.linear(StManifold.INSTANCE), //
-      RelativeCoordinate.smooth(StManifold.INSTANCE), //
+      RelativeCoordinate.of(StManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      RelativeCoordinate.of(StManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE };
 
   public void testSimple() {

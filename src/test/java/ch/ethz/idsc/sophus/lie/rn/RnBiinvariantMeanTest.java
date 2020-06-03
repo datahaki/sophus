@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
@@ -57,9 +57,7 @@ public class RnBiinvariantMeanTest extends TestCase {
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(RnManifold.HS_EXP);
-  private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
-      AbsoluteCoordinate.linear(RnManifold.INSTANCE), //
-      AbsoluteCoordinate.smooth(RnManifold.INSTANCE) };
+  static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RnManifold.INSTANCE);
 
   public void testSimple2() {
     MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.HS_EXP);
@@ -74,13 +72,13 @@ public class RnBiinvariantMeanTest extends TestCase {
 
   public void testConvergence() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
-    for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 3; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
         Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);
         Tensor mean = optional.get();
-        Tensor w2 = projectedCoordinate.weights(sequence, mean);
+        Tensor w2 = barycentricCoordinate.weights(sequence, mean);
         Optional<Tensor> o2 = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, w2);
         Chop._08.requireClose(mean, o2.get());
       }
@@ -89,12 +87,12 @@ public class RnBiinvariantMeanTest extends TestCase {
   public void testConvergenceExact() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;
-    for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES) {
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);
       Tensor mean = optional.get();
-      Tensor w2 = projectedCoordinate.weights(sequence, mean);
+      Tensor w2 = barycentricCoordinate.weights(sequence, mean);
       Optional<Tensor> o2 = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, w2);
       Chop._08.requireClose(mean, o2.get());
       Chop._08.requireClose(weights, w2);

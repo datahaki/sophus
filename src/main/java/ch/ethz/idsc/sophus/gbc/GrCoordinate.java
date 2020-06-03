@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Frobenius;
@@ -28,9 +27,8 @@ public class GrCoordinate extends HsProjection implements TensorUnaryOperator {
   @Override // maps to weights
   public Tensor apply(Tensor point) {
     Tensor proj = projection(sequence, point);
-    Tensor dist = Tensor.of(grassmann.stream() //
+    return NormalizeTotal.FUNCTION.apply(Tensor.of(grassmann.stream() //
         .map(x -> Frobenius.between(x, proj)) //
-        .map(variogram));
-    return NormalizeTotal.FUNCTION.apply(dist.map(Scalar::reciprocal));
+        .map(variogram)));
   }
 }

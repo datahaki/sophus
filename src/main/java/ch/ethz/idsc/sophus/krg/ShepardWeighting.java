@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Careful: Shepard interpolation does not reproduce linear functions.
  * (Because the inverse norms are not projected to the proper subspace.)
@@ -26,15 +27,15 @@ public class ShepardWeighting implements WeightingInterface, Serializable {
   /** @param vectorLogManifold
    * @param exponent
    * @return */
-  public static WeightingInterface absolute(VectorLogManifold vectorLogManifold, Number exponent) {
-    return of(PseudoDistances.ABSOLUTE.create(vectorLogManifold, InversePowerVariogram.of(exponent)));
+  public static WeightingInterface absolute(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return of(PseudoDistances.ABSOLUTE.create(vectorLogManifold, variogram));
   }
 
   /** @param vectorLogManifold
    * @param exponent
    * @return */
-  public static WeightingInterface relative(VectorLogManifold vectorLogManifold, Number exponent) {
-    return of(PseudoDistances.RELATIVE.create(vectorLogManifold, InversePowerVariogram.of(exponent)));
+  public static WeightingInterface relative(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return of(PseudoDistances.RELATIVE.create(vectorLogManifold, variogram));
   }
 
   /***************************************************/

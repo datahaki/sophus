@@ -5,12 +5,10 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.Power;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Lie affine coordinates are generalized barycentric coordinates for
@@ -42,17 +40,12 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020 */
 public final class AbsoluteCoordinate extends HsProjection implements ProjectedCoordinate {
   /** @param vectorLogManifold
+   * @param variogram
    * @return */
-  public static ProjectedCoordinate linear(VectorLogManifold vectorLogManifold) {
-    // return new AbsoluteCoordinate(flattenLogManifold, InverseNorm.of(RnNorm.INSTANCE));
-    return nugenx(vectorLogManifold, s -> s);
-  }
-
-  /** @param vectorLogManifold
-   * @return */
-  public static ProjectedCoordinate smooth(VectorLogManifold vectorLogManifold) {
-    // return new AbsoluteCoordinate(flattenLogManifold, InverseNorm.of(RnNormSquared.INSTANCE));
-    return nugenx(vectorLogManifold, Power.function(2));
+  public static ProjectedCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply( //
+        Tensor.of(levers.stream().map(Norm._2::ofVector).map(variogram)));
+    return new AbsoluteCoordinate(vectorLogManifold, target);
   }
 
   /** @param vectorLogManifold
@@ -60,14 +53,6 @@ public final class AbsoluteCoordinate extends HsProjection implements ProjectedC
    * @return */
   public static ProjectedCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     return new AbsoluteCoordinate(vectorLogManifold, Objects.requireNonNull(target));
-  }
-
-  public static ProjectedCoordinate nugenx(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
-        .map(Norm._2::ofVector) //
-        .map(variogram) //
-        .map(Scalar::reciprocal)));
-    return new AbsoluteCoordinate(vectorLogManifold, target);
   }
 
   /***************************************************/

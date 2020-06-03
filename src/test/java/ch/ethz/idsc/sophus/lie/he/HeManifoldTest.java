@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.InverseNorm;
@@ -25,8 +26,8 @@ public class HeManifoldTest extends TestCase {
   public static final ProjectedCoordinate INSTANCE = AbsoluteCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      RelativeCoordinate.linear(HeManifold.INSTANCE), //
-      RelativeCoordinate.smooth(HeManifold.INSTANCE), //
+      RelativeCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      RelativeCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE, //
       INSTANCE //
   };

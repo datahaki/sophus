@@ -5,9 +5,11 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -35,10 +37,8 @@ import ch.ethz.idsc.tensor.sca.Unitize;
 import junit.framework.TestCase;
 
 public class Se2CoveringManifoldTest extends TestCase {
-  private static final BarycentricCoordinate[] ABSOLUTE_COORDINATES = { //
-      AbsoluteCoordinate.linear(Se2CoveringManifold.INSTANCE), //
-      AbsoluteCoordinate.smooth(Se2CoveringManifold.INSTANCE) //
-  };
+  private static final BarycentricCoordinate[] ABSOLUTE_COORDINATES = //
+      GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();
@@ -133,16 +133,17 @@ public class Se2CoveringManifoldTest extends TestCase {
       }
   }
 
-  private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
-      RelativeCoordinate.linear(Se2CoveringManifold.INSTANCE), //
-      RelativeCoordinate.smooth(Se2CoveringManifold.INSTANCE) //
-  };
+  private static final BarycentricCoordinate[] PROJECTED_COORDINATES = GbcHelper.relatives(Se2CoveringManifold.INSTANCE);
+  // { //
+  // RelativeCoordinate.linear(Se2CoveringManifold.INSTANCE), //
+  // RelativeCoordinate.smooth(Se2CoveringManifold.INSTANCE) //
+  // };
 
   public void testLagrange() {
     Distribution distribution = NormalDistribution.standard();
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
-      for (ProjectedCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
+      for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
           AffineQ.require(weights);
@@ -164,7 +165,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
       sequence.set(Se2CoveringManifoldTest::withUnits, Tensor.ALL);
-      for (ProjectedCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
+      for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
           AffineQ.require(weights);
@@ -181,12 +182,13 @@ public class Se2CoveringManifoldTest extends TestCase {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (ProjectedCoordinate biinvariantCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES)
       for (int n = 4; n < 10; ++n) {
+        ProjectedCoordinate projectedCoordinate = (ProjectedCoordinate) barycentricCoordinate;
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights1 = biinvariantCoordinate.weights(points, xya);
-        Tensor projection = biinvariantCoordinate.projection(points, xya);
+        Tensor weights1 = projectedCoordinate.weights(points, xya);
+        Tensor projection = projectedCoordinate.projection(points, xya);
         SymmetricMatrixQ.require(projection, Chop._10);
         Chop._10.requireClose(Symmetrize.of(projection), projection);
         AffineQ.require(weights1);
@@ -201,30 +203,30 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
           Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
           Chop._10.requireClose(xyalft, x_lft);
-          Tensor weightsL = biinvariantCoordinate.weights(seqlft, xyalft);
+          Tensor weightsL = projectedCoordinate.weights(seqlft, xyalft);
           Chop._10.requireClose(weights1, weightsL);
-          Tensor projL = biinvariantCoordinate.projection(seqlft, xyalft);
+          Tensor projL = projectedCoordinate.projection(seqlft, xyalft);
           Chop._10.requireClose(projection, projL);
         }
         { // invariant under right action
           Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
           Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Tensor weightsR = biinvariantCoordinate.weights(seqrgt, xyargt);
+          Tensor weightsR = projectedCoordinate.weights(seqrgt, xyargt);
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._10.requireClose(xyargt, x_rgt);
           Chop._08.requireClose(weights1, weightsR);
-          Tensor projR = biinvariantCoordinate.projection(seqrgt, xyargt);
+          Tensor projR = projectedCoordinate.projection(seqrgt, xyargt);
           Chop._10.requireClose(projection, projR);
         }
         { // invariant under inversion
           Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
           Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Tensor weightsI = biinvariantCoordinate.weights(seqinv, xyainv);
+          Tensor weightsI = projectedCoordinate.weights(seqinv, xyainv);
           Tensor check2 = biinvariantMean.mean(seqinv, weightsI);
           Chop._10.requireClose(check2, xyainv);
           AffineQ.require(weightsI);
           Chop._10.requireClose(weights1, weightsI);
-          Tensor projI = biinvariantCoordinate.projection(seqinv, xyainv);
+          Tensor projI = projectedCoordinate.projection(seqinv, xyainv);
           Chop._10.requireClose(projection, projI);
         }
       }
@@ -234,9 +236,10 @@ public class Se2CoveringManifoldTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     int fails = 0;
-    for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate_ : PROJECTED_COORDINATES)
       for (int n = 4; n < 10; ++n)
         try {
+          ProjectedCoordinate projectedCoordinate = (ProjectedCoordinate) barycentricCoordinate_;
           Tensor sequence = RandomVariate.of(distribution, n, 3);
           Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
           Tensor xya = biinvariantMean.mean(sequence, weights);
@@ -267,11 +270,10 @@ public class Se2CoveringManifoldTest extends TestCase {
       Se2CoveringManifold.INSTANCE, //
       InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
-      RelativeCoordinate.affine(Se2CoveringManifold.INSTANCE), //
-      RelativeCoordinate.linear(Se2CoveringManifold.INSTANCE), //
-      RelativeCoordinate.smooth(Se2CoveringManifold.INSTANCE), //
+      RelativeCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
+      RelativeCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      RelativeCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
-  // private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
 
   public void testA4Exact() {
     Distribution distribution = UniformDistribution.unit();

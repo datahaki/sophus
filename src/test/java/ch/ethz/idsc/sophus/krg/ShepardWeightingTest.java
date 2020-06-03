@@ -75,7 +75,7 @@ public class ShepardWeightingTest extends TestCase {
 
   public void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    WeightingInterface shw = ShepardWeighting.absolute(RnManifold.INSTANCE, 1);
+    WeightingInterface shw = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1));
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);

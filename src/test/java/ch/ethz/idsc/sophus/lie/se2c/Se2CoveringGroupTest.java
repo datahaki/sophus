@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.GrCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -29,10 +29,9 @@ public class Se2CoveringGroupTest extends TestCase {
       Tensor shift = TestHelper.spawn_Se2C();
       Tensor adSeq = LIE_GROUP_OPS.allConjugate(sequence, shift);
       Tensor adPnt = LIE_GROUP_OPS.conjugate(shift).apply(point);
-      {
-        ProjectedCoordinate projectedCoordinate = RelativeCoordinate.smooth(Se2CoveringManifold.INSTANCE);
-        Tensor w1 = projectedCoordinate.weights(sequence, point);
-        Tensor w2 = projectedCoordinate.weights(adSeq, adPnt);
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.relatives(Se2CoveringManifold.INSTANCE)) {
+        Tensor w1 = barycentricCoordinate.weights(sequence, point);
+        Tensor w2 = barycentricCoordinate.weights(adSeq, adPnt);
         Chop._10.requireClose(w1, w2);
       }
       for (int exp = 0; exp < 3; ++exp) {
@@ -51,9 +50,8 @@ public class Se2CoveringGroupTest extends TestCase {
       Tensor point = //
           Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, ConstantArray.of(RationalScalar.of(1, count), count));
       // System.out.println("---");
-      {
-        ProjectedCoordinate projectedCoordinate = RelativeCoordinate.smooth(Se2CoveringManifold.INSTANCE);
-        Tensor w1 = projectedCoordinate.weights(sequence, point);
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.relatives(Se2CoveringManifold.INSTANCE)) {
+        Tensor w1 = barycentricCoordinate.weights(sequence, point);
         // System.out.println(w1);
       }
       {

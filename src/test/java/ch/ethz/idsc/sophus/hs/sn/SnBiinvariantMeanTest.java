@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.crv.ArcTan2D;
-import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so2.AngleVector;
@@ -27,14 +27,12 @@ import junit.framework.TestCase;
 
 public class SnBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-  private static final ProjectedCoordinate[] PROJECTED_COORDINATES = { //
-      AbsoluteCoordinate.linear(SnManifold.INSTANCE), //
-      AbsoluteCoordinate.smooth(SnManifold.INSTANCE) };
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(SnManifold.INSTANCE);
   private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(SnManifold.INSTANCE);
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    for (ProjectedCoordinate projectedCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate projectedCoordinate : BARYCENTRIC_COORDINATES)
       for (int count = 0; count < 10; ++count) {
         Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
         Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));
