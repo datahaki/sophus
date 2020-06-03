@@ -5,9 +5,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.lie.rn.RnNorm;
-import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
-import ch.ethz.idsc.sophus.math.InverseDiagonal;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -30,6 +27,7 @@ public final class RelativeCoordinate extends HsProjection implements ProjectedC
    * @param variogram
    * @return */
   public static ProjectedCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    Objects.requireNonNull(variogram);
     TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply( //
         Tensor.of(levers.stream().map(Norm._2::ofVector).map(variogram)));
     return new RelativeCoordinate(vectorLogManifold, target);
@@ -45,14 +43,8 @@ public final class RelativeCoordinate extends HsProjection implements ProjectedC
   /***************************************************/
   /** @param vectorLogManifold
    * @return */
-  public static ProjectedCoordinate diagonal_linear(VectorLogManifold vectorLogManifold) {
-    return custom(vectorLogManifold, InverseDiagonal.of(RnNorm.INSTANCE));
-  }
-
-  /** @param vectorLogManifold
-   * @return */
-  public static ProjectedCoordinate diagonal_smooth(VectorLogManifold vectorLogManifold) {
-    return custom(vectorLogManifold, InverseDiagonal.of(RnNormSquared.INSTANCE));
+  public static ProjectedCoordinate diagonal(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return custom(vectorLogManifold, InverseDiagonal.of(variogram));
   }
 
   /** @param vectorLogManifold

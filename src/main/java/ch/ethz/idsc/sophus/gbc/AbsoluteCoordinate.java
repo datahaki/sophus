@@ -43,6 +43,7 @@ public final class AbsoluteCoordinate extends HsProjection implements ProjectedC
    * @param variogram
    * @return */
   public static ProjectedCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    Objects.requireNonNull(variogram);
     TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply( //
         Tensor.of(levers.stream().map(Norm._2::ofVector).map(variogram)));
     return new AbsoluteCoordinate(vectorLogManifold, target);

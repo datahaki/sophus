@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.math;
+package ch.ethz.idsc.sophus.gbc;
 
 import junit.framework.TestCase;
 
