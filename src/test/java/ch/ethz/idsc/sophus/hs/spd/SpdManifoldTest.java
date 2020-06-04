@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsInverseDistanceCoordinate;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -19,8 +19,8 @@ public class SpdManifoldTest extends TestCase {
   public static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       AbsoluteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
       AbsoluteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-      RelativeCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      RelativeCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      Relative1Coordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      Relative1Coordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
       HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, InversePowerVariogram.of(1))), //
       HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, ShepardWeighting.absolute(SpdManifold.INSTANCE, InversePowerVariogram.of(2))) };
 

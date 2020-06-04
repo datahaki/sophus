@@ -19,12 +19,12 @@ import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class AffineCoordinateTest extends TestCase {
+public class RnAffineCoordinateTest extends TestCase {
   public void testMean() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 3; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
-      TensorUnaryOperator affineCoordinates = AffineCoordinate.of(points);
+      TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
       Chop._10.requireClose(weights, ConstantArray.of(RealScalar.of(1.0 / n), n));
     }
@@ -34,7 +34,7 @@ public class AffineCoordinateTest extends TestCase {
     Distribution distribution = DiscreteUniformDistribution.of(-1000, 1000);
     for (int n = 3; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
-      TensorUnaryOperator affineCoordinates = AffineCoordinate.of(points);
+      TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
       Chop._10.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
       // ExactTensorQ.require(weights);
@@ -45,7 +45,7 @@ public class AffineCoordinateTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 3; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, n - 1);
-      TensorUnaryOperator affineCoordinates = AffineCoordinate.of(points);
+      TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
       Chop._10.requireClose(weights, ConstantArray.of(RealScalar.of(1.0 / n), n));
       Chop._10.requireClose(Tensor.of(points.stream().map(affineCoordinates)), IdentityMatrix.of(n));
@@ -56,7 +56,7 @@ public class AffineCoordinateTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
-      TensorUnaryOperator affineCoordinates = AffineCoordinate.of(p1);
+      TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(p1);
       Tensor p2 = Tensor.of(p1.stream().map(affineCoordinates)).dot(p1);
       Chop._08.requireClose(p1, p2);
     }
@@ -67,7 +67,7 @@ public class AffineCoordinateTest extends TestCase {
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator affineCoordinates = AffineCoordinate.of(points);
+        TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
         Tensor x = RandomVariate.of(distribution, d);
         Tensor weights = affineCoordinates.apply(x);
         VectorQ.requireLength(weights, n);
@@ -80,7 +80,7 @@ public class AffineCoordinateTest extends TestCase {
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor points = Array.zeros(n, d);
-        TensorUnaryOperator affineCoordinates = AffineCoordinate.of(points);
+        TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
         Tensor x = RandomVariate.of(distribution, d);
         Tensor weights = affineCoordinates.apply(x);
         VectorQ.requireLength(weights, n);
@@ -92,7 +92,7 @@ public class AffineCoordinateTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 3; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
-      TensorUnaryOperator affineCoordinates = AffineCoordinate.of(points);
+      TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor tensor = Tensor.of(points.stream().map(affineCoordinates));
       Chop._10.requireClose(tensor, IdentityMatrix.of(n));
     }
@@ -100,14 +100,14 @@ public class AffineCoordinateTest extends TestCase {
 
   public void testSinglePoint() {
     Tensor sequence = Tensors.fromString("{{1, 2, 3}}");
-    TensorUnaryOperator tensorUnaryOperator = AffineCoordinate.of(sequence);
+    TensorUnaryOperator tensorUnaryOperator = RnAffineCoordinate.of(sequence);
     Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 4));
     Chop._10.requireClose(Tensors.vector(1), tensor);
   }
 
   public void testVectorFail() {
     try {
-      AffineCoordinate.of(Tensors.vector(1, 2, 3, 4));
+      RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4));
       fail();
     } catch (Exception exception) {
       // ---
@@ -116,7 +116,7 @@ public class AffineCoordinateTest extends TestCase {
 
   public void testEmptyFail() {
     try {
-      AffineCoordinate.of(Tensors.empty());
+      RnAffineCoordinate.of(Tensors.empty());
       fail();
     } catch (Exception exception) {
       // ---

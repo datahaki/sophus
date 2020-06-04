@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 public class PowerVariogram implements ScalarUnaryOperator {
-  private static final Scalar TWO = RealScalar.of(2);
-
   /** Quote:
    * "A good general choice is exponent=3/2, but for functions with a strong linear trend,
    * you may want to experiment with values as large as 1.99."
@@ -28,8 +26,6 @@ public class PowerVariogram implements ScalarUnaryOperator {
    * @param exponent in the range [1, 2) "The value 2 gives a degenerate matrix and meaningless results."
    * @return */
   public static PowerVariogram of(Scalar alpha, Scalar exponent) {
-    // if (exponent.equals(TWO))
-    // throw TensorRuntimeException.of(exponent);
     return new PowerVariogram(Objects.requireNonNull(alpha), Power.function(exponent));
   }
 

@@ -3,8 +3,9 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -18,10 +19,10 @@ import junit.framework.TestCase;
 
 public class StManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = RelativeCoordinate.affine(StManifold.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      RelativeCoordinate.of(StManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      RelativeCoordinate.of(StManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      Relative1Coordinate.of(StManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      Relative1Coordinate.of(StManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE };
 
   public void testSimple() {

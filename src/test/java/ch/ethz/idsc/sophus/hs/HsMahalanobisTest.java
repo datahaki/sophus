@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.HsMahalanobis.Norm;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
@@ -47,7 +47,7 @@ public class HsMahalanobisTest extends TestCase {
     // Tensor weights2 =
     lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));
     // System.out.println(weights2);
-    Tensor affine = RelativeCoordinate.affine(Se2CoveringManifold.INSTANCE).weights(centralized, Tensors.vector(0, 0, 0));
+    Tensor affine = AffineCoordinate.of(Se2CoveringManifold.INSTANCE).weights(centralized, Tensors.vector(0, 0, 0));
     Tolerance.CHOP.requireClose(weights, affine);
   }
 }

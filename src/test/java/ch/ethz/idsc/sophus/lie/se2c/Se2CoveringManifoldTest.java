@@ -6,7 +6,7 @@ import java.util.Arrays;
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
@@ -270,9 +270,9 @@ public class Se2CoveringManifoldTest extends TestCase {
       Se2CoveringManifold.INSTANCE, //
       InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
-      RelativeCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
-      RelativeCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      RelativeCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      Relative1Coordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
+      Relative1Coordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      Relative1Coordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
   public void testA4Exact() {

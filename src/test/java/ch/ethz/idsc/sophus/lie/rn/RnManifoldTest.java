@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -110,14 +110,14 @@ public class RnManifoldTest extends TestCase {
   }
 
   public void testAffineSimple() {
-    BarycentricCoordinate projectedCoordinate = RelativeCoordinate.affine(RnManifold.INSTANCE);
+    BarycentricCoordinate projectedCoordinate = AffineCoordinate.of(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 10; ++length) {
         Distribution distribution = NormalDistribution.standard();
         Tensor sequence = RandomVariate.of(distribution, length, dim);
         Tensor mean = RandomVariate.of(distribution, dim);
         Tensor lhs = projectedCoordinate.weights(sequence, mean);
-        Tensor rhs = AffineCoordinate.INSTANCE.weights(sequence, mean);
+        Tensor rhs = RnAffineCoordinate.INSTANCE.weights(sequence, mean);
         Chop._08.requireClose(lhs, rhs);
       }
   }

@@ -29,7 +29,7 @@ import ch.ethz.idsc.tensor.red.Mean;
  * 
  * <p>The concept of a one-time computation of a pseudoinverse at a central
  * location does not generalize to non-linear spaces. */
-public enum AffineCoordinate implements BarycentricCoordinate {
+public enum RnAffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 
   @Override // from BarycentricCoordinate

@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** biinvariant coordinate
  * 
  * @see InversePowerVariogram */
-public class GrCoordinate implements TensorUnaryOperator {
+public class Relative2Coordinate implements TensorUnaryOperator {
   private final HsProjection hsProjection;
   private final ScalarUnaryOperator variogram;
   private final Tensor sequence;
@@ -22,7 +22,7 @@ public class GrCoordinate implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram for instance power to minus two
    * @param sequence */
-  public GrCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public Relative2Coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsProjection = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
     this.sequence = sequence;

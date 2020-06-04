@@ -2,18 +2,14 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** relative coordinates are biinvariant
@@ -21,46 +17,21 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public final class RelativeCoordinate implements BarycentricCoordinate, Serializable {
+public final class Relative1Coordinate implements BarycentricCoordinate, Serializable {
   private static final Scalar ONE = RealScalar.of(1.0);
-  private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
 
   /** @param vectorLogManifold
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    Objects.requireNonNull(variogram);
-    TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply( //
-        Tensor.of(levers.stream().map(Norm._2::ofVector).map(variogram)));
-    return new RelativeCoordinate(vectorLogManifold, target);
-  }
-
-  /** @param vectorLogManifold
-   * @param target non-null
-   * @return */
-  public static BarycentricCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    return new RelativeCoordinate(vectorLogManifold, Objects.requireNonNull(target));
-  }
-
-  /***************************************************/
-  /** @param vectorLogManifold
-   * @return */
-  public static BarycentricCoordinate diagonal(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return custom(vectorLogManifold, InverseDiagonal.of(variogram));
-  }
-
-  /** @param vectorLogManifold
-   * @return biinvariant coordinates */
-  public static BarycentricCoordinate affine(VectorLogManifold vectorLogManifold) {
-    // HsBarycentricCoordinate uses more efficient matrix multiplication
-    return AbsoluteCoordinate.custom(vectorLogManifold, AFFINE);
+    return new Relative1Coordinate(vectorLogManifold, new NormalizeLevers(variogram));
   }
 
   /***************************************************/
   private final HsProjection hsProjection;
   private final TensorUnaryOperator target;
 
-  private RelativeCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+  private Relative1Coordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     hsProjection = new HsProjection(vectorLogManifold);
     this.target = target;
   }

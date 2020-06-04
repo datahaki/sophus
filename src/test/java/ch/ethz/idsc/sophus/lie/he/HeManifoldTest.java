@@ -4,8 +4,9 @@ package ch.ethz.idsc.sophus.lie.he;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
+import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
@@ -21,12 +22,12 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeManifoldTest extends TestCase {
-  private static final BarycentricCoordinate AFFINE = RelativeCoordinate.affine(HeManifold.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = AbsoluteCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      RelativeCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      RelativeCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      Relative1Coordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      Relative1Coordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE, //
       INSTANCE //
   };

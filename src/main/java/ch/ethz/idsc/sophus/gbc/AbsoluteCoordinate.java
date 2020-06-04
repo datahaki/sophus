@@ -6,11 +6,9 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Lie affine coordinates are generalized barycentric coordinates for
@@ -45,10 +43,7 @@ public final class AbsoluteCoordinate implements BarycentricCoordinate, Serializ
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    Objects.requireNonNull(variogram);
-    TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply( //
-        Tensor.of(levers.stream().map(Norm._2::ofVector).map(variogram)));
-    return new AbsoluteCoordinate(vectorLogManifold, target);
+    return new AbsoluteCoordinate(vectorLogManifold, new NormalizeLevers(variogram));
   }
 
   /** @param vectorLogManifold
