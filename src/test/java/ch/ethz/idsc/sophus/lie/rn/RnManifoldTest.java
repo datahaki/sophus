@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -111,7 +110,7 @@ public class RnManifoldTest extends TestCase {
   }
 
   public void testAffineSimple() {
-    ProjectedCoordinate projectedCoordinate = RelativeCoordinate.affine(RnManifold.INSTANCE);
+    BarycentricCoordinate projectedCoordinate = RelativeCoordinate.affine(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 10; ++length) {
         Distribution distribution = NormalDistribution.standard();

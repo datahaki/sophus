@@ -34,6 +34,6 @@ public class HsWeiszfeldMethodTest extends TestCase {
         } catch (Exception exception) {
           ++fails;
         }
-    assertTrue(fails < 2);
+    assertTrue(fails < 4);
   }
 }

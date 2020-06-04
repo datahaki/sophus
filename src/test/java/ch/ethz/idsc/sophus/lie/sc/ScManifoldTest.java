@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.sc;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.math.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class ScManifoldTest extends TestCase {
-  public static final ProjectedCoordinate INSTANCE = //
+  public static final BarycentricCoordinate INSTANCE = //
       AbsoluteCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
 
   public void testSimple() {

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.hs.HsMahalanobis.Norm;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -42,7 +42,7 @@ public class HsMahalanobisTest extends TestCase {
     // System.out.println("---");
     // }
     Tensor target = Tensor.of(centralized.stream().map(norm::norm));
-    ProjectedCoordinate lieBarycentricCoordinate = AbsoluteCoordinate.custom( //
+    BarycentricCoordinate lieBarycentricCoordinate = AbsoluteCoordinate.custom( //
         Se2CoveringManifold.INSTANCE, t -> target.map(Scalar::reciprocal));
     // Tensor weights2 =
     lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));

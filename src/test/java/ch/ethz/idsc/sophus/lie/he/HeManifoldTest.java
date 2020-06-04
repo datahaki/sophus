@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.ProjectedCoordinate;
 import ch.ethz.idsc.sophus.gbc.RelativeCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -22,8 +21,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeManifoldTest extends TestCase {
-  private static final ProjectedCoordinate AFFINE = RelativeCoordinate.affine(HeManifold.INSTANCE);
-  public static final ProjectedCoordinate INSTANCE = AbsoluteCoordinate.custom( //
+  private static final BarycentricCoordinate AFFINE = RelativeCoordinate.affine(HeManifold.INSTANCE);
+  public static final BarycentricCoordinate INSTANCE = AbsoluteCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       RelativeCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //

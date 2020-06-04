@@ -1,8 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
@@ -38,11 +40,11 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public final class AbsoluteCoordinate extends HsProjection implements ProjectedCoordinate {
+public final class AbsoluteCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @return */
-  public static ProjectedCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     Objects.requireNonNull(variogram);
     TensorUnaryOperator target = levers -> NormalizeTotal.FUNCTION.apply( //
         Tensor.of(levers.stream().map(Norm._2::ofVector).map(variogram)));
@@ -52,21 +54,22 @@ public final class AbsoluteCoordinate extends HsProjection implements ProjectedC
   /** @param vectorLogManifold
    * @param target
    * @return */
-  public static ProjectedCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+  public static BarycentricCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     return new AbsoluteCoordinate(vectorLogManifold, Objects.requireNonNull(target));
   }
 
   /***************************************************/
+  private final HsLevers hsLevers;
   private final TensorUnaryOperator target;
 
   private AbsoluteCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    super(vectorLogManifold);
+    hsLevers = new HsLevers(vectorLogManifold);
     this.target = target;
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor levers = levers(sequence, point);
+    Tensor levers = hsLevers.levers(sequence, point);
     Tensor nullsp = LeftNullSpace.usingQR(levers);
     return NormalizeAffine.fromNullspace(target.apply(levers), nullsp);
   }
