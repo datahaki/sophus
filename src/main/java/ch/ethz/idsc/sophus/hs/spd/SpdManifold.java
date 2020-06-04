@@ -22,7 +22,7 @@ public enum SpdManifold implements HsExponential, VectorLogManifold {
     return new SpdExponential(point);
   }
 
-  @Override // from FlattenLogManifold
+  @Override // from VectorLogManifold
   public TangentSpace logAt(Tensor point) {
     return new SpdExponential(point);
   }

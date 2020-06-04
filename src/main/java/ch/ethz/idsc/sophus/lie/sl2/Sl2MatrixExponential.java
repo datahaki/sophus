@@ -63,7 +63,7 @@ public enum Sl2MatrixExponential implements Exponential, TangentSpace {
     return log;
   }
 
-  @Override // from FlattenLog
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
     return Flatten.of(log(q));
   }

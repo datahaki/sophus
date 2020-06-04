@@ -15,7 +15,7 @@ public enum RpnManifold implements HsExponential, VectorLogManifold {
     return new RpnExponential(point);
   }
 
-  @Override // from FlattenLogManifold
+  @Override // from VectorLogManifold
   public TangentSpace logAt(Tensor point) {
     return new RpnExponential(point);
   }

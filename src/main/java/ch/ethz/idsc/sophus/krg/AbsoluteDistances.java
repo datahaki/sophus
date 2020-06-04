@@ -2,7 +2,9 @@
 package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
@@ -13,21 +15,19 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * 
  * @see RelativeDistances */
 /* package */ class AbsoluteDistances implements WeightingInterface, Serializable {
-  private final VectorLogManifold vectorLogManifold;
+  private final HsLevers hsLevers;
   private final ScalarUnaryOperator variogram;
 
   /** @param vectorLogManifold
-   * @param variogram
-   * @param sequence */
+   * @param variogram */
   public AbsoluteDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    this.vectorLogManifold = vectorLogManifold;
-    this.variogram = variogram;
+    hsLevers = new HsLevers(vectorLogManifold);
+    this.variogram = Objects.requireNonNull(variogram);
   }
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return Tensor.of(sequence.stream() //
-        .map(vectorLogManifold.logAt(point)::vectorLog) //
+    return Tensor.of(hsLevers.levers(sequence, point).stream() //
         .map(Norm._2::ofVector) //
         .map(variogram));
   }

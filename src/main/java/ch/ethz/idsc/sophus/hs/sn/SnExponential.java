@@ -57,7 +57,7 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xy);
   }
 
-  @Override // from FlattenLog
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
     return log(y);
   }

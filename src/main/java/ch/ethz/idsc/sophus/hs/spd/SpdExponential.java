@@ -50,7 +50,7 @@ public class SpdExponential implements Exponential, TangentSpace, Serializable {
     return Symmetrize.of(pp.dot(SpdMatrixExponential.INSTANCE.log(pq)).dot(pp));
   }
 
-  @Override // from FlattenLog
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
     int n = q.length();
     Tensor flatten = Tensors.reserve(n * (n + 1) / 2);

@@ -11,39 +11,39 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class LieVectorLogManifold implements VectorLogManifold, Serializable {
   /** @param lieGroup
-   * @param flattenLog
+   * @param vectorLog
    * @return */
-  public static VectorLogManifold of(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
+  public static VectorLogManifold of(LieGroup lieGroup, TensorUnaryOperator vectorLog) {
     return new LieVectorLogManifold( //
         Objects.requireNonNull(lieGroup), //
-        Objects.requireNonNull(flattenLog));
+        Objects.requireNonNull(vectorLog));
   }
 
   /***************************************************/
   private final LieGroup lieGroup;
-  private final TensorUnaryOperator flattenLog;
+  private final TensorUnaryOperator vectorLog;
 
-  private LieVectorLogManifold(LieGroup lieGroup, TensorUnaryOperator flattenLog) {
+  private LieVectorLogManifold(LieGroup lieGroup, TensorUnaryOperator vectorLog) {
     this.lieGroup = lieGroup;
-    this.flattenLog = flattenLog;
+    this.vectorLog = vectorLog;
   }
 
-  @Override // from FlattenLogManifold
+  @Override // from VectorLogManifold
   public TangentSpace logAt(Tensor point) {
-    return new FlattenLogImpl(point);
+    return new TangentSpaceImpl(point);
   }
 
   /***************************************************/
-  private class FlattenLogImpl implements TangentSpace, Serializable {
+  private class TangentSpaceImpl implements TangentSpace, Serializable {
     private final LieGroupElement lieGroupElement;
 
-    public FlattenLogImpl(Tensor point) {
+    public TangentSpaceImpl(Tensor point) {
       this.lieGroupElement = lieGroup.element(point).inverse();
     }
 
     @Override
     public Tensor vectorLog(Tensor q) {
-      return flattenLog.apply(lieGroupElement.combine(q));
+      return vectorLog.apply(lieGroupElement.combine(q));
     }
   }
 }

@@ -38,7 +38,7 @@ public class HnExponential implements Exponential, TangentSpace, Serializable {
     return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(theta));
   }
 
-  @Override // from FlattenLog
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
     return log(y);
   }

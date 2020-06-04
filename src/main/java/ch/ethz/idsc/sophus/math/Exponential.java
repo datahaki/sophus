@@ -4,9 +4,7 @@ package ch.ethz.idsc.sophus.math;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Log[g.m.g^-1] == Ad[g].Log[m] */
-public interface Exponential
-// extends FlattenLog
-{
+public interface Exponential {
   // TODO
   /** @param x in the Lie-algebra
    * @return element g of the Lie-group with x == log g, and g == exp x */

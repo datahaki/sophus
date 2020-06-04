@@ -15,7 +15,7 @@ public enum SnManifold implements HsExponential, VectorLogManifold {
     return new SnExponential(point);
   }
 
-  @Override // from FlattenLogManifold
+  @Override // from VectorLogManifold
   public TangentSpace logAt(Tensor point) {
     return new SnExponential(point);
   }

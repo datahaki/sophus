@@ -28,7 +28,7 @@ public class So3Exponential implements Exponential, TangentSpace, Serializable {
     return p.dot(Rodrigues.INSTANCE.log(pinv.dot(q)));
   }
 
-  @Override // from FlattenLog
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
     return Rodrigues.INSTANCE.vectorLog(pinv.dot(q));
   }
