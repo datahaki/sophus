@@ -47,7 +47,7 @@ public class SpdManifoldTest extends TestCase {
     int d = 3;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       int errors = 0;
-      for (int len = 7; len < 16; ++len) {
+      for (int len = 7; len < 11; ++len) {
         Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
         Tensor point = TestHelper.generateSpd(d);
         Tensor weights = barycentricCoordinate.weights(sequence, point);

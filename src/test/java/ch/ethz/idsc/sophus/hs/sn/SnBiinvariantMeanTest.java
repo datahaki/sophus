@@ -32,12 +32,12 @@ public class SnBiinvariantMeanTest extends TestCase {
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    for (BarycentricCoordinate projectedCoordinate : BARYCENTRIC_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int count = 0; count < 10; ++count) {
         Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
         Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
-        Tensor weights = projectedCoordinate.weights(sequence, mean);
+        Tensor weights = barycentricCoordinate.weights(sequence, mean);
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
         Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
         Chop._12.requireAllZero(evaluate);

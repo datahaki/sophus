@@ -18,7 +18,7 @@ public class HsMidpointLineDistance implements LineDistance, Serializable {
    * @param exponential
    * @return */
   public static LineDistance of(LieGroup lieGroup, Exponential exponential) {
-    // TODO flatten log instead of log!
+    // FIXME flatten log instead of log!
     return of(LieVectorLogManifold.of(lieGroup, exponential::log), LieExponential.of(lieGroup, exponential));
   }
 

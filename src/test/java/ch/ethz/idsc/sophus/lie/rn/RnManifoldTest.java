@@ -72,7 +72,7 @@ public class RnManifoldTest extends TestCase {
         } catch (Exception exception) {
           ++fails;
         }
-    assertTrue(fails < 3);
+    assertTrue(fails < 5);
   }
 
   public void testLinearReproduction() {
@@ -110,13 +110,13 @@ public class RnManifoldTest extends TestCase {
   }
 
   public void testAffineSimple() {
-    BarycentricCoordinate projectedCoordinate = AffineCoordinate.of(RnManifold.INSTANCE);
+    BarycentricCoordinate barycentricCoordinate = AffineCoordinate.of(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 10; ++length) {
         Distribution distribution = NormalDistribution.standard();
         Tensor sequence = RandomVariate.of(distribution, length, dim);
         Tensor mean = RandomVariate.of(distribution, dim);
-        Tensor lhs = projectedCoordinate.weights(sequence, mean);
+        Tensor lhs = barycentricCoordinate.weights(sequence, mean);
         Tensor rhs = RnAffineCoordinate.INSTANCE.weights(sequence, mean);
         Chop._08.requireClose(lhs, rhs);
       }
@@ -135,10 +135,10 @@ public class RnManifoldTest extends TestCase {
   public void testColinear() {
     int d = 2;
     int n = 5;
-    for (BarycentricCoordinate projectedCoordinate : RnBiinvariantMeanTest.BARYCENTRIC_COORDINATES) {
+    for (BarycentricCoordinate barycentricCoordinate : RnBiinvariantMeanTest.BARYCENTRIC_COORDINATES) {
       Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
       sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
-      Tensor weights = projectedCoordinate.weights(sequence, Array.zeros(d));
+      Tensor weights = barycentricCoordinate.weights(sequence, Array.zeros(d));
       assertEquals(sequence.length(), n + 1);
       AffineQ.require(weights);
     }

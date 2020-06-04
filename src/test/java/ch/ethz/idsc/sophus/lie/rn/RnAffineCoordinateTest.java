@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -64,14 +66,17 @@ public class RnAffineCoordinateTest extends TestCase {
 
   public void testWeights() {
     Distribution distribution = UniformDistribution.unit();
+    BarycentricCoordinate barycentricCoordinate = AffineCoordinate.of(RnManifold.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
-        Tensor x = RandomVariate.of(distribution, d);
-        Tensor weights = affineCoordinates.apply(x);
-        VectorQ.requireLength(weights, n);
-        Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
+        Tensor sequence = RandomVariate.of(distribution, n, d);
+        TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(sequence);
+        Tensor point = RandomVariate.of(distribution, d);
+        Tensor w1 = affineCoordinates.apply(point);
+        VectorQ.requireLength(w1, n);
+        Chop._06.requireClose(Total.ofVector(w1), RealScalar.ONE);
+        Tensor w2 = barycentricCoordinate.weights(sequence, point);
+        Chop._06.requireClose(w1, w2);
       }
   }
 

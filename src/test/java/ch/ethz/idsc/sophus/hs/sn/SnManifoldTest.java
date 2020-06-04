@@ -32,7 +32,7 @@ public class SnManifoldTest extends TestCase {
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 3; d < 7; ++d)
-        for (int n = d + 1; n < 10; ++n)
+        for (int n = d + 1; n < d + 3; ++n)
           try {
             Tensor mean = UnitVector.of(d, 0);
             Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
@@ -54,7 +54,7 @@ public class SnManifoldTest extends TestCase {
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 3; d < 7; ++d)
-        for (int n = d + 1; n < 10; ++n)
+        for (int n = d + 1; n < d + 3; ++n)
           try {
             Tensor center = UnitVector.of(d, 0);
             Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
@@ -82,7 +82,7 @@ public class SnManifoldTest extends TestCase {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 3; d < 7; ++d) {
         RandomSampleInterface randomSampleInterface = SonRandomSample.of(d);
-        for (int n = d + 1; n < 10; ++n) {
+        for (int n = d + 1; n < d + 3; ++n) {
           Tensor mean = UnitVector.of(d, 0);
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
           Tensor weights = barycentricCoordinate.weights(sequence, mean);

@@ -34,21 +34,20 @@ public class Se3ManifoldTest extends TestCase {
   public void testRandom() {
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int count = 0; count < 10; ++count)
-        for (int n = 7; n < 13; ++n) {
-          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
-          Tensor point = TestHelper.spawn_Se3();
-          try {
-            Tensor weights = barycentricCoordinate.weights(sequence, point);
-            AffineQ.require(weights);
-            Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
-            assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
-            Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
-            Chop._08.requireAllZero(defect);
-          } catch (Exception exception) {
-            ++fails;
-          }
+      for (int n = 7; n < 13; ++n) {
+        Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
+        Tensor point = TestHelper.spawn_Se3();
+        try {
+          Tensor weights = barycentricCoordinate.weights(sequence, point);
+          AffineQ.require(weights);
+          Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
+          assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
+          Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
+          Chop._08.requireAllZero(defect);
+        } catch (Exception exception) {
+          ++fails;
         }
+      }
     assertTrue(fails < 5);
   }
 
@@ -70,7 +69,7 @@ public class Se3ManifoldTest extends TestCase {
     BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : REL_BARYCENTRIC_COORDINATES)
-      for (int n = 7; n < 12; ++n)
+      for (int n = 7; n < 11; ++n)
         try {
           Tensor points = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
           Tensor xya = TestHelper.spawn_Se3();
