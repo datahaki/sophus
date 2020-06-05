@@ -7,8 +7,8 @@ import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.red.Diagonal;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -30,12 +30,9 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
   @Override
   public Tensor apply(Tensor tensor) {
-    Tensor weights = Tensors.reserve(tensor.length());
-    int index = 0;
-    for (Tensor p : tensor) {
-      weights.append(variogram.apply(Abs.between(p.Get(index), ONE)));
-      ++index;
-    }
-    return NormalizeTotal.FUNCTION.apply(weights);
+    return NormalizeTotal.FUNCTION.apply(Tensor.of(Diagonal.of(tensor).stream() //
+        .map(Scalar.class::cast) //
+        .map(v -> Abs.between(v, ONE)) //
+        .map(variogram)));
   }
 }

@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class So3ManifoldTest extends TestCase {
-  private static final BarycentricCoordinate[] PROJECTED_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
   private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
 
   public void testSimple() {
@@ -28,7 +28,7 @@ public class So3ManifoldTest extends TestCase {
     Tensor g4 = Rodrigues.vectorExp(Tensors.vector(0.5, 0.2, 0.1));
     Tensor sequence = Tensors.of(g1, g2, g3, g4);
     Tensor mean = Rodrigues.vectorExp(Tensors.vector(0.4, 0.2, 0.3));
-    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor weights = barycentricCoordinate.weights(sequence, mean);
       Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
       Chop._10.requireAllZero(defect);
@@ -38,7 +38,7 @@ public class So3ManifoldTest extends TestCase {
   public void testLinearReproduction() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       int fails = 0;
       for (int n = 4; n < 10; ++n)
         try {
@@ -66,15 +66,15 @@ public class So3ManifoldTest extends TestCase {
 
   public void testLagrange() {
     Distribution distribution = NormalDistribution.of(0.0, 0.1);
-    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
         int index = 0;
         for (Tensor mean : sequence) {
           Tensor weights = barycentricCoordinate.weights(sequence, mean);
-          Chop._08.requireClose(weights, UnitVector.of(n, index));
+          Chop._06.requireClose(weights, UnitVector.of(n, index));
           Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._08.requireClose(mean, o2);
+          Chop._06.requireClose(mean, o2);
           ++index;
         }
       }
@@ -111,7 +111,7 @@ public class So3ManifoldTest extends TestCase {
   public void testSpanFail() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    for (BarycentricCoordinate projectedCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate projectedCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 4; ++n)
         try {
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues.INSTANCE::exp));

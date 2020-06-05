@@ -5,9 +5,9 @@ import java.lang.reflect.Modifier;
 
 import junit.framework.TestCase;
 
-public class Relative1CoordinateTest extends TestCase {
+public class ObsoleteCoordinateTest extends TestCase {
   public void testMod() {
-    int modifiers = Relative1Coordinate.class.getModifiers();
+    int modifiers = ObsoleteCoordinate.class.getModifiers();
     assertTrue(Modifier.isFinal(modifiers));
   }
 }
