@@ -22,7 +22,8 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
-    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.create(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
+    WeightingInterface weightingInterface = //
+        PseudoDistances.RELATIVE1.create(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
     TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
         RadialBasisFunctionInterpolation.normalized(weightingInterface, sequence, values));
     for (int index = 0; index < sequence.length(); ++index) {
@@ -36,7 +37,8 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
-    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.create(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
+    WeightingInterface weightingInterface = //
+        PseudoDistances.RELATIVE1.create(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
     TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.normalized(weightingInterface, sequence, values);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
@@ -48,7 +50,8 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
-    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.create(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5));
+    WeightingInterface weightingInterface = //
+        PseudoDistances.RELATIVE1.create(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
     TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.partitions(weightingInterface, sequence);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));

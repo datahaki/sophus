@@ -13,22 +13,22 @@ public enum PseudoDistances {
   /** left-invariant */
   ABSOLUTE {
     @Override
-    public WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    public WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return new AbsoluteDistances(vectorLogManifold, variogram);
     }
   },
   /** bi-invariant */
-  RELATIVE {
+  RELATIVE1 {
     @Override
-    public WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-      return new RelativeDistances(vectorLogManifold, variogram);
+    public WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return new Relative1Distances(vectorLogManifold, variogram);
     }
   };
 
   /** @param vectorLogManifold
    * @param variogram
    * @return */
-  public abstract WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram);
+  public abstract WeightingInterface create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /***************************************************/
   /** Careful: Every evaluation of returned WeightingInterface is expensive!
@@ -38,8 +38,8 @@ public enum PseudoDistances {
    * @param vectorLogManifold
    * @param variogram
    * @return */
-  public WeightingInterface weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new WeightingImpl(Objects.requireNonNull(vectorLogManifold), Objects.requireNonNull(variogram));
+  public WeightingInterface weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new WeightingImpl(Objects.requireNonNull(vectorLogManifold), Objects.requireNonNull(variogram), sequence);
   }
 
   /***************************************************/
@@ -47,8 +47,8 @@ public enum PseudoDistances {
   private class WeightingImpl implements WeightingInterface, Serializable {
     private final WeightingInterface weightingInterface;
 
-    public WeightingImpl(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-      weightingInterface = create(vectorLogManifold, variogram);
+    public WeightingImpl(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      weightingInterface = create(vectorLogManifold, variogram, sequence);
     }
 
     @Override // from WeightingInterface

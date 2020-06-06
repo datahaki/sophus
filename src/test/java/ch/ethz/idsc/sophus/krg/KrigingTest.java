@@ -39,7 +39,8 @@ public class KrigingTest extends TestCase {
       Tensor xya = RandomVariate.of(distribution, 3);
       Tensor values = RandomVariate.of(distributiox, n);
       Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
-      WeightingInterface weightingInterface = PseudoDistances.RELATIVE.create(Se2CoveringManifold.INSTANCE, powerVariogram);
+      WeightingInterface weightingInterface = //
+          PseudoDistances.RELATIVE1.create(Se2CoveringManifold.INSTANCE, powerVariogram, points);
       Kriging kriging1 = Kriging.regression(weightingInterface, points, values, covariance);
       Tensor est1 = kriging1.estimate(xya);
       Scalar var1 = kriging1.variance(xya);
@@ -75,7 +76,8 @@ public class KrigingTest extends TestCase {
     Tensor values = RandomVariate.of(distribution, n, 2);
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-      WeightingInterface weightingInterface = pseudoDistances.create(RnManifold.INSTANCE, variogram);
+      WeightingInterface weightingInterface = //
+          pseudoDistances.create(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
@@ -91,7 +93,8 @@ public class KrigingTest extends TestCase {
     Tensor values = RandomVariate.of(distribution, n);
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-      WeightingInterface weightingInterface = pseudoDistances.create(RnManifold.INSTANCE, variogram);
+      WeightingInterface weightingInterface = //
+          pseudoDistances.create(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
@@ -107,7 +110,8 @@ public class KrigingTest extends TestCase {
     for (int d = 1; d < 4; ++d) {
       Tensor sequence = RandomVariate.of(distribution, n, d);
       for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-        WeightingInterface weightingInterface = pseudoDistances.create(RnManifold.INSTANCE, variogram);
+        WeightingInterface weightingInterface = //
+            pseudoDistances.create(RnManifold.INSTANCE, variogram, sequence);
         Kriging kriging = Serialization.copy(Kriging.barycentric(weightingInterface, sequence));
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor tensor = kriging.estimate(sequence.get(index));
@@ -126,9 +130,9 @@ public class KrigingTest extends TestCase {
     int n = 6;
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-      WeightingInterface weightingInterface = Serialization.copy(pseudoDistances.weighting(RnManifold.INSTANCE, variogram));
       for (int d = 1; d < 4; ++d) {
         Tensor sequence = RandomVariate.of(distribution, n, d);
+        WeightingInterface weightingInterface = Serialization.copy(pseudoDistances.weighting(RnManifold.INSTANCE, variogram, sequence));
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor tensor = weightingInterface.weights(sequence, sequence.get(index));
           Chop._10.requireClose(tensor, UnitVector.of(n, index));
@@ -149,7 +153,8 @@ public class KrigingTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    WeightingInterface weightingInterface = PseudoDistances.ABSOLUTE.create(RnManifold.INSTANCE, variogram);
+    WeightingInterface weightingInterface = //
+        PseudoDistances.ABSOLUTE.create(RnManifold.INSTANCE, variogram, sequence);
     Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
@@ -163,7 +168,8 @@ public class KrigingTest extends TestCase {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    WeightingInterface weightingInterface = PseudoDistances.RELATIVE.create(RnManifold.INSTANCE, variogram);
+    WeightingInterface weightingInterface = //
+        PseudoDistances.RELATIVE1.create(RnManifold.INSTANCE, variogram, sequence);
     Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);

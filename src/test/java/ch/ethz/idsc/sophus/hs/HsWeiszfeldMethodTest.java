@@ -17,10 +17,6 @@ import junit.framework.TestCase;
 
 public class HsWeiszfeldMethodTest extends TestCase {
   public void testSimple() {
-    SpatialMedian sm1 = HsWeiszfeldMethod.of( //
-        RnBiinvariantMean.INSTANCE, //
-        ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        Tolerance.CHOP);
     SpatialMedian sm2 = WeiszfeldMethod.with(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
     int fails = 0;
@@ -28,6 +24,10 @@ public class HsWeiszfeldMethodTest extends TestCase {
       for (int n = 2; n < 20; n += 4)
         try {
           Tensor sequence = RandomVariate.of(distribution, n, d);
+          SpatialMedian sm1 = HsWeiszfeldMethod.of( //
+              RnBiinvariantMean.INSTANCE, //
+              ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence), //
+              Tolerance.CHOP);
           Tensor p1 = sm1.uniform(sequence).get();
           Tensor p2 = sm2.uniform(sequence).get();
           Chop._07.requireClose(p1, p2);

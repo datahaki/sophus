@@ -34,11 +34,11 @@ import junit.framework.TestCase;
 public class ShepardWeightingTest extends TestCase {
   public void testSimplePD() throws ClassNotFoundException, IOException {
     for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-      WeightingInterface shepardInterpolation = Serialization.copy(ShepardWeighting.of( //
-          pseudoDistances.create(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2))));
       Distribution distribution = NormalDistribution.standard();
       for (int n = 10; n < 20; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, 3);
+        WeightingInterface shepardInterpolation = Serialization.copy(ShepardWeighting.of( //
+            pseudoDistances.create(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence)));
         RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
         Tensor values = RandomSample.of(randomSampleInterface, n);
         Tensor point = RandomVariate.of(distribution, 3);
@@ -75,10 +75,10 @@ public class ShepardWeightingTest extends TestCase {
 
   public void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    WeightingInterface shw = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1));
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
+        WeightingInterface shw = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         WeightingInterface weightingInterface = Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
         Tensor weights1 = weightingInterface.weights(points, x);

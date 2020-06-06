@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** @see AbsoluteDistances */
-/* package */ class RelativeDistances implements WeightingInterface, Serializable {
+/* package */ class Relative1Distances implements WeightingInterface, Serializable {
   private static final Scalar ONE_NEGATE = RealScalar.of(-1.0);
   // ---
   private final HsProjection hsProjection;
@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence */
-  public RelativeDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public Relative1Distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     this.hsProjection = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
   }

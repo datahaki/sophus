@@ -26,7 +26,7 @@ public class HsInverseDistanceCoordinateTest extends TestCase {
   }
 
   public void testNullManifoldFail() {
-    WeightingInterface weightingInterface = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1));
+    WeightingInterface weightingInterface = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1), null);
     try {
       HsInverseDistanceCoordinate.custom(null, weightingInterface);
       fail();

@@ -27,15 +27,15 @@ public class ShepardWeighting implements WeightingInterface, Serializable {
   /** @param vectorLogManifold
    * @param exponent
    * @return */
-  public static WeightingInterface absolute(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return of(PseudoDistances.ABSOLUTE.create(vectorLogManifold, variogram));
+  public static WeightingInterface absolute(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return of(PseudoDistances.ABSOLUTE.create(vectorLogManifold, variogram, sequence));
   }
 
   /** @param vectorLogManifold
    * @param exponent
    * @return */
-  public static WeightingInterface relative(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return of(PseudoDistances.RELATIVE.create(vectorLogManifold, variogram));
+  public static WeightingInterface relative(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return of(PseudoDistances.RELATIVE1.create(vectorLogManifold, variogram, sequence));
   }
 
   /***************************************************/

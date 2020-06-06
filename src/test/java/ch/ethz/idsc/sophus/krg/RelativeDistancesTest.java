@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 public class RelativeDistancesTest extends TestCase {
   public void testVisibility() {
-    int modifiers = RelativeDistances.class.getModifiers();
+    int modifiers = Relative1Distances.class.getModifiers();
     assertFalse(Modifier.isPublic(modifiers));
   }
 }
