@@ -4,10 +4,6 @@ package ch.ethz.idsc.sophus.gbc;
 import java.lang.reflect.Modifier;
 
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
-import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
-import ch.ethz.idsc.sophus.krg.ShepardWeighting;
-import ch.ethz.idsc.sophus.lie.rn.RnManifold;
-import ch.ethz.idsc.sophus.math.WeightingInterface;
 import junit.framework.TestCase;
 
 public class HsInverseDistanceCoordinateTest extends TestCase {
@@ -19,16 +15,6 @@ public class HsInverseDistanceCoordinateTest extends TestCase {
   public void testNullWeightingFail() {
     try {
       HsInverseDistanceCoordinate.custom(SnManifold.INSTANCE, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-  }
-
-  public void testNullManifoldFail() {
-    WeightingInterface weightingInterface = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1), null);
-    try {
-      HsInverseDistanceCoordinate.custom(null, weightingInterface);
       fail();
     } catch (Exception exception) {
       // ---

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Careful: Radial Basis Function weights fall not in the category of generalized barycentric
  * coordinates, because Radial Basis Function Weighting does not reproduce linear functions!
@@ -14,14 +15,14 @@ import ch.ethz.idsc.tensor.Tensor;
 public class RadialBasisFunctionWeighting implements WeightingInterface, Serializable {
   /** @param weightingInterface
    * @return */
-  public static WeightingInterface of(WeightingInterface weightingInterface) {
+  public static WeightingInterface of(TensorUnaryOperator weightingInterface) {
     return new RadialBasisFunctionWeighting(Objects.requireNonNull(weightingInterface));
   }
 
   /***************************************************/
-  private final WeightingInterface weightingInterface;
+  private final TensorUnaryOperator weightingInterface;
 
-  private RadialBasisFunctionWeighting(WeightingInterface weightingInterface) {
+  private RadialBasisFunctionWeighting(TensorUnaryOperator weightingInterface) {
     this.weightingInterface = weightingInterface;
   }
 

@@ -6,13 +6,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 
-import ch.ethz.idsc.sophus.krg.ShepardWeighting;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.SpatialMedian;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** iterative method to find solution to Fermat-Weber Problem
@@ -20,9 +19,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * 
  * <p>implementation based on
  * "Weiszfeld’s Method: Old and New Results"
- * by Amir Beck, Shoham Sabach
- * 
- * @see ShepardWeighting */
+ * by Amir Beck, Shoham Sabach */
 public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
   private static final int MAX_ITERATIONS = 512;
 
@@ -30,7 +27,7 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
    * @param weightingInterface for instance ShepardWeighting
    * @param chop
    * @return */
-  public static SpatialMedian of(BiinvariantMean biinvariantMean, WeightingInterface weightingInterface, Chop chop) {
+  public static SpatialMedian of(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) {
     return new HsWeiszfeldMethod( //
         Objects.requireNonNull(biinvariantMean), //
         Objects.requireNonNull(weightingInterface), //
@@ -39,10 +36,10 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
 
   /***************************************************/
   private final BiinvariantMean biinvariantMean;
-  private final WeightingInterface weightingInterface;
+  private final TensorUnaryOperator weightingInterface;
   private final Chop chop;
 
-  private HsWeiszfeldMethod(BiinvariantMean biinvariantMean, WeightingInterface weightingInterface, Chop chop) {
+  private HsWeiszfeldMethod(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) {
     this.biinvariantMean = biinvariantMean;
     this.weightingInterface = weightingInterface;
     this.chop = chop;
@@ -64,7 +61,7 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
     int iteration = 0;
     while (++iteration < MAX_ITERATIONS) {
       Tensor prev = point;
-      Tensor weights = weightingInterface.weights(sequence, point);
+      Tensor weights = weightingInterface.apply(point);
       point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(weights)));
       if (chop.close(point, prev))
         return Optional.of(point);

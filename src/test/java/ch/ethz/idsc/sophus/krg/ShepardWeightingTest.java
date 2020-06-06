@@ -21,6 +21,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.io.Serialization;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -37,12 +38,12 @@ public class ShepardWeightingTest extends TestCase {
       Distribution distribution = NormalDistribution.standard();
       for (int n = 10; n < 20; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, 3);
-        WeightingInterface shepardInterpolation = Serialization.copy(ShepardWeighting.of( //
-            pseudoDistances.create(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence)));
+        TensorUnaryOperator shepardInterpolation = Serialization.copy( //
+            pseudoDistances.affine(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
         RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
         Tensor values = RandomSample.of(randomSampleInterface, n);
         Tensor point = RandomVariate.of(distribution, 3);
-        Tensor evaluate = CrossAveraging.of(p -> shepardInterpolation.weights(sequence, p), SnPhongMean.INSTANCE, values).apply(point);
+        Tensor evaluate = CrossAveraging.of(p -> shepardInterpolation.apply(p), SnPhongMean.INSTANCE, values).apply(point);
         VectorQ.requireLength(evaluate, 5);
       }
     }
@@ -78,12 +79,12 @@ public class ShepardWeightingTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        WeightingInterface shw = ShepardWeighting.absolute(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        TensorUnaryOperator shw = PseudoDistances.ABSOLUTE.affine(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         WeightingInterface weightingInterface = Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
         Tensor weights1 = weightingInterface.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor weights2 = shw.weights(points, x);
+        Tensor weights2 = shw.apply(x);
         Chop._10.requireClose(weights1, weights2);
       }
   }

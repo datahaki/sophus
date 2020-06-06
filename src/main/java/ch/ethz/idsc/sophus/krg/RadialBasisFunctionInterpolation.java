@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
@@ -17,7 +16,7 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
    * @param sequence of points
    * @param values
    * @return */
-  public static TensorUnaryOperator normalized(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
+  public static TensorUnaryOperator normalized(TensorUnaryOperator weightingInterface, Tensor sequence, Tensor values) {
     return new RadialBasisFunctionInterpolation(weightingInterface, NormalizeTotal.FUNCTION, sequence, values);
   }
 
@@ -26,7 +25,7 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
    * @param weightingInterface
    * @param sequence of points
    * @return */
-  public static TensorUnaryOperator partitions(WeightingInterface weightingInterface, Tensor sequence) {
+  public static TensorUnaryOperator partitions(TensorUnaryOperator weightingInterface, Tensor sequence) {
     return normalized(weightingInterface, sequence, IdentityMatrix.of(sequence.length()));
   }
 
@@ -34,28 +33,26 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
    * @param sequence of points
    * @param values
    * @return */
-  public static TensorUnaryOperator directized(WeightingInterface weightingInterface, Tensor sequence, Tensor values) {
+  public static TensorUnaryOperator directized(TensorUnaryOperator weightingInterface, Tensor sequence, Tensor values) {
     return new RadialBasisFunctionInterpolation(weightingInterface, t -> t, sequence, values);
   }
 
   /***************************************************/
-  private final WeightingInterface weightingInterface;
+  private final TensorUnaryOperator weightingInterface;
   private final TensorUnaryOperator normalize;
-  private final Tensor sequence;
   private final Tensor weights;
 
   private RadialBasisFunctionInterpolation( //
-      WeightingInterface weightingInterface, TensorUnaryOperator normalize, Tensor sequence, Tensor values) {
+      TensorUnaryOperator weightingInterface, TensorUnaryOperator normalize, Tensor sequence, Tensor values) {
     this.weightingInterface = weightingInterface;
     this.normalize = normalize;
-    this.sequence = sequence;
     weights = LinearSolve.of( //
-        Tensor.of(sequence.stream().map(point -> weightingInterface.weights(sequence, point)).map(normalize)), //
+        Tensor.of(sequence.stream().map(point -> weightingInterface.apply(point)).map(normalize)), //
         values);
   }
 
   @Override
   public Tensor apply(Tensor point) {
-    return normalize.apply(weightingInterface.weights(sequence, point)).dot(weights);
+    return normalize.apply(weightingInterface.apply(point)).dot(weights);
   }
 }
