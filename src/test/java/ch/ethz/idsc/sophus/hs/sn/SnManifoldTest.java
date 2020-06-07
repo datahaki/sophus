@@ -109,11 +109,11 @@ public class SnManifoldTest extends TestCase {
 
   public void testDiagonalNorm() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    Tensor betas = RandomVariate.of(UniformDistribution.of(0.25, 1), 4);
+    Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
       BarycentricCoordinate bc0 = Relative1Coordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = ObsoleteCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta.add(beta)));
+      BarycentricCoordinate bc1 = ObsoleteCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int d = 3; d < 7; ++d) {
         Tensor mean = UnitVector.of(d, 0);
         for (int n = d + 1; n < d + 3; ++n) {

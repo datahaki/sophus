@@ -21,15 +21,16 @@ public enum PseudoDistances {
   RELATIVE1 {
     @Override
     public TensorUnaryOperator create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      WeightingInterface weightingInterface = new Relative1Distances(vectorLogManifold, variogram);
-      return point -> weightingInterface.weights(sequence, point);
+      Relative1Distances weightingInterface = new Relative1Distances(vectorLogManifold, variogram);
+      return point -> weightingInterface.biinvariantVector(sequence, point).vector();
     }
   },
   /** bi-invariant */
   RELATIVE2 {
     @Override
     public TensorUnaryOperator create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return new Relative2Distances(vectorLogManifold, variogram, sequence);
+      Relative2Distances relative2Distances = new Relative2Distances(vectorLogManifold, variogram, sequence);
+      return point -> relative2Distances.biinvariantVector(point).vector();
     }
   };
 

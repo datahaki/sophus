@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Power;
 import junit.framework.TestCase;
@@ -34,8 +35,8 @@ public class Se2CoveringGroupTest extends TestCase {
         Chop._10.requireClose(w1, w2);
       }
       for (int exp = 0; exp < 3; ++exp) {
-        Relative2Coordinate gr1 = new Relative2Coordinate(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
-        Relative2Coordinate gr2 = new Relative2Coordinate(Se2CoveringManifold.INSTANCE, Power.function(exp), adSeq);
+        TensorUnaryOperator gr1 = Relative2Coordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
+        TensorUnaryOperator gr2 = Relative2Coordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), adSeq);
         Tensor w1 = gr1.apply(point);
         Tensor w2 = gr2.apply(adPnt);
         Chop._10.requireClose(w1, w2);
@@ -46,7 +47,7 @@ public class Se2CoveringGroupTest extends TestCase {
   public void testLinearReproduction() {
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), length);
-      Relative2Coordinate grCoordinate = new Relative2Coordinate(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
+      TensorUnaryOperator grCoordinate = Relative2Coordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
       for (int count = 0; count < 10; ++count) {
         Tensor point = TestHelper.spawn_Se2C();
         Tensor weights = grCoordinate.apply(point);

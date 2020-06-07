@@ -351,11 +351,11 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   public void testDiagonalNorm() {
-    Tensor betas = RandomVariate.of(UniformDistribution.of(0.25, 1), 4);
+    Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
       BarycentricCoordinate bc0 = Relative1Coordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta.add(beta)));
+      BarycentricCoordinate bc1 = ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
         Tensor mean = TestHelper.spawn_Se2C();

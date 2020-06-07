@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -46,6 +47,6 @@ public final class ObsoleteCoordinate implements BarycentricCoordinate, Serializ
           row.set(ONE::add, atomicInteger.getAndIncrement());
           return row;
         }));
-    return NormalizeAffine.fromProjection(target.apply(complement), projection);
+    return NormalizeTotal.FUNCTION.apply(target.apply(complement).dot(projection));
   }
 }

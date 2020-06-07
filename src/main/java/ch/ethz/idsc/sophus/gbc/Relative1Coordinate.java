@@ -3,10 +3,9 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.krg.Relative1Distances;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** relative coordinates are biinvariant
@@ -14,26 +13,23 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public final class Relative1Coordinate implements BarycentricCoordinate, Serializable {
+public class Relative1Coordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new Relative1Coordinate(vectorLogManifold, InverseDiagonal.of(variogram));
+    return new Relative1Coordinate(vectorLogManifold, variogram);
   }
 
   /***************************************************/
-  private final HsProjection hsProjection;
-  private final TensorUnaryOperator target;
+  private final Relative1Distances relative1Distances;
 
-  private Relative1Coordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    hsProjection = new HsProjection(vectorLogManifold);
-    this.target = target;
+  private Relative1Coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    relative1Distances = new Relative1Distances(vectorLogManifold, variogram);
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor projection = hsProjection.projection(sequence, point);
-    return NormalizeAffine.fromProjection(target.apply(projection), projection);
+    return relative1Distances.biinvariantVector(sequence, point).coordinate();
   }
 }

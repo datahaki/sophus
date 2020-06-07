@@ -1,25 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
-import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.red.ArgMax;
-import ch.ethz.idsc.tensor.red.Total;
 
 /** functionality makes strict assumptions on input parameters
  * therefore the implementation is restricted to package visibility */
 /* package */ enum NormalizeAffine {
   ;
-  /** @param target
-   * @param projection symmetric square matrix enforces linear reproduction
-   * @return */
-  public static Tensor fromProjection(Tensor target, Tensor projection) {
-    return of(target.dot(projection));
-  }
-
   /** @param vector
    * @param nullsp orthogonal matrix
    * @return
@@ -42,9 +31,6 @@ import ch.ethz.idsc.tensor.red.Total;
   }
 
   private static Tensor of(Tensor weights) {
-    Scalar total = Total.ofVector(weights);
-    return Tolerance.CHOP.allZero(total) //
-        ? UnitVector.of(weights.length(), ArgMax.of(weights))
-        : weights.divide(total);
+    return NormalizeTotal.FUNCTION.apply(weights);
   }
 }
