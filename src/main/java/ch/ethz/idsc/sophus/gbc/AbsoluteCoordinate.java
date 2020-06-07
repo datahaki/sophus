@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -66,6 +67,7 @@ public final class AbsoluteCoordinate implements BarycentricCoordinate, Serializ
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = hsLevers.levers(sequence, point);
     Tensor nullsp = LeftNullSpace.usingQR(levers);
-    return NormalizeAffine.fromNullspace(target.apply(levers), nullsp);
+    Tensor vector = target.apply(levers);
+    return NormalizeTotal.FUNCTION.apply(nullsp.dot(vector).dot(nullsp));
   }
 }

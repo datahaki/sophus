@@ -6,6 +6,7 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 
+/** immutable */
 public class BiinvariantVector implements Serializable {
   private final Tensor projection;
   private final Tensor vector;
@@ -16,7 +17,7 @@ public class BiinvariantVector implements Serializable {
   }
 
   public Tensor vector() {
-    return vector.unmodifiable();
+    return vector.copy();
   }
 
   /** @return vector of affine weights */

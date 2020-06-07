@@ -39,7 +39,7 @@ public enum PseudoDistances {
    * @return */
   public abstract TensorUnaryOperator create(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
-  public final TensorUnaryOperator affine(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public final TensorUnaryOperator normalized(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = create(vectorLogManifold, variogram, sequence);
     return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
   }

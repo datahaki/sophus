@@ -3,11 +3,9 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.HsInverseDistanceCoordinate;
 import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
 import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
-import ch.ethz.idsc.sophus.krg.PseudoDistances;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -24,12 +22,7 @@ public class SpdManifoldTest extends TestCase {
         Relative1Coordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         ObsoleteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         ObsoleteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, //
-            PseudoDistances.ABSOLUTE.affine(SpdManifold.INSTANCE, InversePowerVariogram.of(1), sequence)), //
-        HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, //
-            PseudoDistances.RELATIVE1.affine(SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence)), //
-        HsInverseDistanceCoordinate.custom(SpdManifold.INSTANCE, //
-            PseudoDistances.RELATIVE2.affine(SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence)) };
+    };
   }
 
   public void testSimple() {

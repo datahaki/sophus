@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Dot;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -22,7 +23,7 @@ public class NormalizeAffineTest extends TestCase {
       Tensor matrix = RandomVariate.of(distribution, 10, 3);
       Tensor nullsp = LeftNullSpace.usingQR(matrix);
       Tensor p1 = deprec(vector, nullsp);
-      Tensor p2 = NormalizeAffine.product(vector, nullsp);
+      Tensor p2 = Dot.of(nullsp, vector, nullsp);
       Tolerance.CHOP.requireClose(p1, p2);
     }
   }

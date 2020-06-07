@@ -39,7 +39,7 @@ public class ShepardWeightingTest extends TestCase {
       for (int n = 10; n < 20; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, 3);
         TensorUnaryOperator shepardInterpolation = Serialization.copy( //
-            pseudoDistances.affine(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
+            pseudoDistances.normalized(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
         RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
         Tensor values = RandomSample.of(randomSampleInterface, n);
         Tensor point = RandomVariate.of(distribution, 3);
@@ -79,7 +79,7 @@ public class ShepardWeightingTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator shw = PseudoDistances.ABSOLUTE.affine(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        TensorUnaryOperator shw = PseudoDistances.ABSOLUTE.normalized(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         WeightingInterface weightingInterface = Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
         Tensor weights1 = weightingInterface.weights(points, x);
