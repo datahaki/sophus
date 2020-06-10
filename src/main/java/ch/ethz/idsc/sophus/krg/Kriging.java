@@ -60,7 +60,11 @@ public class Kriging implements Serializable {
    * @param sequence of points
    * @return */
   public static Kriging barycentric(TensorUnaryOperator tensorUnaryOperator, Tensor sequence) {
-    return interpolation(tensorUnaryOperator, sequence, IdentityMatrix.of(sequence.length()));
+    return interpolation( //
+        tensorUnaryOperator, //
+        sequence, //
+        IdentityMatrix.of(sequence.length()) // unit vectors as values
+    );
   }
 
   /** @param tensorUnaryOperator
@@ -68,7 +72,8 @@ public class Kriging implements Serializable {
    * @param values vector or matrix
    * @param covariance
    * @return */
-  public static Kriging of(TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
+  public static Kriging of( //
+      TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
     Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
     Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.uniqueUnit(matrix));

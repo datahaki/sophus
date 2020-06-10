@@ -55,7 +55,7 @@ public class SnBiinvariantMeanTest extends TestCase {
         Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
         {
           Tensor point = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
-          Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
+          Chop._10.requireClose(ArcTan2D.of(point), Mean.of(angles));
         }
         {
           Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);

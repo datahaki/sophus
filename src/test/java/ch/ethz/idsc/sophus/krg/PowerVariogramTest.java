@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.Serialization;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -32,16 +32,16 @@ public class PowerVariogramTest extends TestCase {
     {
       ScalarUnaryOperator variogram = Serialization.copy(ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2)));
       TensorUnaryOperator weightingInterface = //
-          PseudoDistances.ABSOLUTE.create(RnManifold.INSTANCE, variogram, sequence);
+          PseudoDistances.ABSOLUTE.weighting(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
       PowerVariogram variogram = Serialization.copy(PowerVariogram.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
-      Tensor covariance = IdentityMatrix.of(n, Quantity.of(1, "s^2"));
+      Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       TensorUnaryOperator weightingInterface = //
-          PseudoDistances.ABSOLUTE.create(RnManifold.INSTANCE, variogram, sequence);
+          PseudoDistances.ABSOLUTE.weighting(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);

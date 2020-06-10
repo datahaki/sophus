@@ -16,6 +16,7 @@ public class BiinvariantVector implements Serializable {
     this.vector = vector;
   }
 
+  /** @return */
   public Tensor vector() {
     return vector.copy();
   }
