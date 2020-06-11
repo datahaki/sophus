@@ -57,7 +57,6 @@ public class RnBiinvariantMeanTest extends TestCase {
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(RnManifold.HS_EXP);
-  static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RnManifold.INSTANCE);
 
   public void testSimple2() {
     MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.HS_EXP);
@@ -72,7 +71,7 @@ public class RnBiinvariantMeanTest extends TestCase {
 
   public void testConvergence() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
       for (int n = 3; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
@@ -87,7 +86,7 @@ public class RnBiinvariantMeanTest extends TestCase {
   public void testConvergenceExact() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);

@@ -19,7 +19,7 @@ public class Relative2Coordinate implements TensorUnaryOperator {
     return new Relative2Coordinate(vectorLogManifold, variogram, sequence);
   }
 
-  // ---
+  /***************************************************/
   private final Relative2Distances relative2Distances;
 
   private Relative2Coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {

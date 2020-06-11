@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -22,13 +23,15 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class RnManifoldTest extends TestCase {
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(RnGroup.INSTANCE);
+
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int n = 2; n < 5; ++n)
       for (int length = n + 1; length < 10; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor mean = RandomVariate.of(distribution, n);
-        for (BarycentricCoordinate barycentricCoordinate : RnBiinvariantMeanTest.BARYCENTRIC_COORDINATES) {
+        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
           Tensor weights = barycentricCoordinate.weights(points, mean);
           Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
           Chop._08.requireClose(mean, result);
@@ -36,18 +39,16 @@ public class RnManifoldTest extends TestCase {
       }
   }
 
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(RnGroup.INSTANCE);
-
   public void testRandom() {
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
-    int fails = 0;
     for (int n = 2; n < 5; ++n)
-      for (int length = n + 1; length < 10; ++length)
+      for (int length = n + 1; length < 10; ++length) {
+        int fails = 0;
         try {
           Tensor points = RandomVariate.of(distribution, length, n);
           Tensor xya = RandomVariate.of(distribution, n);
-          for (BarycentricCoordinate barycentricCoordinate : RnBiinvariantMeanTest.BARYCENTRIC_COORDINATES) {
+          for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
             Tensor weights1 = barycentricCoordinate.weights(points, xya);
             Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
             Tensor x_recreated = biinvariantMean.mean(points, weights1);
@@ -72,7 +73,8 @@ public class RnManifoldTest extends TestCase {
         } catch (Exception exception) {
           ++fails;
         }
-    assertTrue(fails < 5);
+        assertTrue(fails < 3);
+      }
   }
 
   public void testLinearReproduction() {
@@ -123,7 +125,7 @@ public class RnManifoldTest extends TestCase {
   }
 
   public void testNullFail() {
-    for (BarycentricCoordinate barycentricCoordinate : RnBiinvariantMeanTest.BARYCENTRIC_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
       try {
         barycentricCoordinate.weights(null, null);
         fail();
@@ -135,7 +137,7 @@ public class RnManifoldTest extends TestCase {
   public void testColinear() {
     int d = 2;
     int n = 5;
-    for (BarycentricCoordinate barycentricCoordinate : RnBiinvariantMeanTest.BARYCENTRIC_COORDINATES) {
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
       Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
       sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
       Tensor weights = barycentricCoordinate.weights(sequence, Array.zeros(d));

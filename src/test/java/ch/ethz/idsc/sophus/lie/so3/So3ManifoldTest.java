@@ -51,12 +51,12 @@ public class So3ManifoldTest extends TestCase {
           LieGroupElement lieGroupElement = So3Group.INSTANCE.element(TestHelper.spawn_So3());
           Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
           Tensor weights2 = barycentricCoordinate.weights(seqlft, lieGroupElement.combine(mean));
-          Chop._10.requireClose(weights1, weights2);
+          Chop._06.requireClose(weights1, weights2);
           // ---
           Tensor seqinv = new LieGroupOps(So3Group.INSTANCE).allInvert(sequence);
           Tensor weights3 = barycentricCoordinate.weights( //
               seqinv, So3Group.INSTANCE.element(mean).inverse().toCoordinate());
-          Chop._10.requireClose(weights1, weights3);
+          Chop._06.requireClose(weights1, weights3);
         } catch (Exception exception) {
           ++fails;
         }

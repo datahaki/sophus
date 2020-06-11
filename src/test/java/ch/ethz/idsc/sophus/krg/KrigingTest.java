@@ -113,44 +113,25 @@ public class KrigingTest extends TestCase {
 
   public void testBarycentric() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
-    int n = 10;
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    for (int d = 1; d < 4; ++d) {
-      Tensor sequence = RandomVariate.of(distribution, n, d);
-      for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-        TensorUnaryOperator weightingInterface = //
-            pseudoDistances.weighting(RnManifold.INSTANCE, variogram, sequence);
-        Kriging kriging = Serialization.copy(Kriging.barycentric(weightingInterface, sequence));
-        for (int index = 0; index < sequence.length(); ++index) {
-          Tensor tensor = kriging.estimate(sequence.get(index));
-          Chop._08.requireClose(tensor, UnitVector.of(n, index));
-          // ---
-          Tensor point = RandomVariate.of(distribution, d);
-          Tensor weights = kriging.estimate(point);
-          AffineQ.require(weights, Chop._08);
+    for (int n = 5; n < 10; ++n)
+      for (int d = 1; d < 4; ++d) {
+        Tensor sequence = RandomVariate.of(distribution, n, d);
+        for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
+          TensorUnaryOperator tensorUnaryOperator = //
+              Serialization.copy(pseudoDistances.weighting(RnManifold.INSTANCE, variogram, sequence));
+          Kriging kriging = Serialization.copy(Kriging.barycentric(tensorUnaryOperator, sequence));
+          for (int index = 0; index < sequence.length(); ++index) {
+            Tensor tensor = kriging.estimate(sequence.get(index));
+            Chop._08.requireClose(tensor, UnitVector.of(n, index));
+            // ---
+            Tensor point = RandomVariate.of(distribution, d);
+            Tensor weights = kriging.estimate(point);
+            AffineQ.require(weights, Chop._08);
+          }
         }
       }
-    }
   }
-  // public void testWeighting() throws ClassNotFoundException, IOException {
-  // Distribution distribution = NormalDistribution.standard();
-  // int n = 6;
-  // ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-  // for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-  // for (int d = 1; d < 4; ++d) {
-  // Tensor sequence = RandomVariate.of(distribution, n, d);
-  // TensorUnaryOperator weightingInterface = Serialization.copy(pseudoDistances.weighting(RnManifold.INSTANCE, variogram, sequence));
-  // for (int index = 0; index < sequence.length(); ++index) {
-  // Tensor tensor = weightingInterface.apply(sequence.get(index));
-  // Chop._10.requireClose(tensor, UnitVector.of(n, index));
-  // // ---
-  // Tensor point = RandomVariate.of(distribution, d);
-  // Tensor weights = weightingInterface.apply(point);
-  // AffineQ.require(weights, Chop._08);
-  // }
-  // }
-  // }
-  // }
 
   public void testQuantityAbsolute() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));

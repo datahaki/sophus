@@ -32,7 +32,12 @@ public class Se2CoveringGroupTest extends TestCase {
       for (BarycentricCoordinate barycentricCoordinate : GbcHelper.relatives(Se2CoveringManifold.INSTANCE)) {
         Tensor w1 = barycentricCoordinate.weights(sequence, point);
         Tensor w2 = barycentricCoordinate.weights(adSeq, adPnt);
-        Chop._10.requireClose(w1, w2);
+        if (!Chop._03.close(w1, w2)) {
+          System.out.println("---");
+          System.out.println(w1);
+          System.out.println(w2);
+          fail();
+        }
       }
       for (int exp = 0; exp < 3; ++exp) {
         TensorUnaryOperator gr1 = Relative2Coordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
