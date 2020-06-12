@@ -1,11 +1,15 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.krg.PowerVariogram;
+import ch.ethz.idsc.sophus.krg.PseudoDistances;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.opt.DeBoor;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -38,6 +42,22 @@ public class RnGeodesicTest extends TestCase {
       fail();
     } catch (Exception exception) {
       // ---
+    }
+  }
+
+  public void testSymmetric() {
+    int d = 2;
+    int n = 5;
+    Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
+    for (PseudoDistances pseudoDistances : new PseudoDistances[] { PseudoDistances.ABSOLUTE, PseudoDistances.COMPLETE }) {
+      TensorUnaryOperator tensorUnaryOperator = pseudoDistances.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
+      Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
+      SymmetricMatrixQ.require(vardst);
+    }
+    {
+      TensorUnaryOperator tensorUnaryOperator = PseudoDistances.DIAGONAL.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
+      Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
+      assertFalse(SymmetricMatrixQ.of(vardst));
     }
   }
 }

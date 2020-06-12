@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.DiagonalCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
-import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
@@ -355,7 +355,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
-      BarycentricCoordinate bc0 = Relative1Coordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc0 = DiagonalCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       BarycentricCoordinate bc1 = ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);

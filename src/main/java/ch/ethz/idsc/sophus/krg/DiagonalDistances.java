@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** @see AbsoluteDistances */
-public class Relative1Distances implements Serializable {
+public class DiagonalDistances implements Serializable {
   private static final Scalar ONE = RealScalar.of(1.0);
   // ---
   private final HsProjection hsProjection;
@@ -22,7 +22,7 @@ public class Relative1Distances implements Serializable {
 
   /** @param vectorLogManifold
    * @param variogram */
-  public Relative1Distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public DiagonalDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     this.hsProjection = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
   }

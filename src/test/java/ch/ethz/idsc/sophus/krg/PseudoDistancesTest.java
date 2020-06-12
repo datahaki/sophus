@@ -26,7 +26,7 @@ public class PseudoDistancesTest extends TestCase {
 
   public void testRelative() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    PseudoDistances[] pda = { PseudoDistances.RELATIVE1, PseudoDistances.RELATIVE2 };
+    PseudoDistances[] pda = { PseudoDistances.DIAGONAL, PseudoDistances.COMPLETE };
     for (PseudoDistances pseudoDistances : pda) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
       TensorUnaryOperator weightingInterface = //

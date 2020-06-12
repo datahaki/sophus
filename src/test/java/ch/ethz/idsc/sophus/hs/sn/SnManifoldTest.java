@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.hs.sn;
 import java.util.Random;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.DiagonalCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
-import ch.ethz.idsc.sophus.gbc.Relative1Coordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
@@ -112,7 +112,7 @@ public class SnManifoldTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
-      BarycentricCoordinate bc0 = Relative1Coordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc0 = DiagonalCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       BarycentricCoordinate bc1 = ObsoleteCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int d = 3; d < 7; ++d) {
         Tensor mean = UnitVector.of(d, 0);
