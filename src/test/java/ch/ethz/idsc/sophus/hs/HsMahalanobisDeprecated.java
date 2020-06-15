@@ -14,16 +14,16 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 /** Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
-public class HsMahalanobis implements Serializable {
+/* package */ class HsMahalanobisDeprecated implements Serializable {
   private final VectorLogManifold vectorLogManifold;
   private final BiinvariantMean biinvariantMean;
 
-  public HsMahalanobis(VectorLogManifold vectorLogManifold, BiinvariantMean biinvariantMean) {
+  public HsMahalanobisDeprecated(VectorLogManifold vectorLogManifold, BiinvariantMean biinvariantMean) {
     this.vectorLogManifold = Objects.requireNonNull(vectorLogManifold);
     this.biinvariantMean = Objects.requireNonNull(biinvariantMean);
   }
 
-  // TODO pick different class name!
+  // pick different class name!
   public class Norm implements TensorNorm, Serializable {
     private final TangentSpace tangentSpace;
     private final Tensor sigma;

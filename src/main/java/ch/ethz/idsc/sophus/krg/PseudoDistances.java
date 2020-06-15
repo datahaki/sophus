@@ -5,6 +5,8 @@ import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.CompleteCoordinate;
 import ch.ethz.idsc.sophus.gbc.DiagonalCoordinate;
+import ch.ethz.idsc.sophus.gbc.Mahalanobis1Coordinate;
+import ch.ethz.idsc.sophus.gbc.Mahalanobis2Coordinate;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -45,6 +47,20 @@ public enum PseudoDistances {
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
+  MAHALAN1 {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator completeDistances = Mahalanobis1Distances.of(vectorLogManifold, variogram, sequence);
+      return point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return Mahalanobis1Coordinate.of(vectorLogManifold, variogram, sequence);
+    }
+  }, //
+  /** bi-invariant
+   * results in a symmetric distance matrix -> can use for kriging */
   COMPLETE {
     @Override
     public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -55,6 +71,20 @@ public enum PseudoDistances {
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return CompleteCoordinate.of(vectorLogManifold, variogram, sequence);
+    }
+  }, //
+  /** bi-invariant
+   * results in a symmetric distance matrix -> can use for kriging */
+  MAHALAN2 {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator completeDistances = Mahalanobis2Distances.of(vectorLogManifold, variogram, sequence);
+      return point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return Mahalanobis2Coordinate.of(vectorLogManifold, variogram, sequence);
     }
   }, //
   ;

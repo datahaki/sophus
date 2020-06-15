@@ -39,9 +39,13 @@ import ch.ethz.idsc.tensor.sca.Unitize;
 import junit.framework.TestCase;
 
 public class Se2CoveringManifoldTest extends TestCase {
-  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
+      GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
-  private static final BarycentricCoordinate[] PROJECTED_COORDINATES = GbcHelper.relatives(Se2CoveringManifold.INSTANCE);
+  private static final BarycentricCoordinate[] RELATIVE_COORDINATES = //
+      GbcHelper.relatives(Se2CoveringManifold.INSTANCE);
+  private static final BarycentricCoordinate[] QUANTITY_COORDINATES = //
+      GbcHelper.relatives_quantity(Se2CoveringManifold.INSTANCE);
   private static final BarycentricCoordinate AD_INVAR = AbsoluteCoordinate.custom( //
       Se2CoveringManifold.INSTANCE, //
       InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
@@ -142,7 +146,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
-      for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
+      for (BarycentricCoordinate barycentricCoordinate : RELATIVE_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
           AffineQ.require(weights);
@@ -164,7 +168,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     for (int n = 4; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
       sequence.set(Se2CoveringManifoldTest::withUnits, Tensor.ALL);
-      for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES) {
+      for (BarycentricCoordinate barycentricCoordinate : QUANTITY_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
           AffineQ.require(weights);
@@ -181,7 +185,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     HsProjection hsProjection = new HsProjection(Se2CoveringManifold.INSTANCE);
-    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : RELATIVE_COORDINATES)
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
@@ -235,7 +239,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     HsProjection hsProjection = new HsProjection(Se2CoveringManifold.INSTANCE);
     int fails = 0;
-    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : RELATIVE_COORDINATES)
       for (int n = 4; n < 10; ++n)
         try {
           Tensor sequence = RandomVariate.of(distribution, n, 3);

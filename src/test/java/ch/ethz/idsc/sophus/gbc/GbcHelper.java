@@ -19,6 +19,24 @@ public enum GbcHelper {
     };
   }
 
+  public static BarycentricCoordinate mahalan1Coordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new BarycentricCoordinate() {
+      @Override
+      public Tensor weights(Tensor sequence, Tensor point) {
+        return Mahalanobis1Coordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+      }
+    };
+  }
+
+  public static BarycentricCoordinate mahalan2Coordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new BarycentricCoordinate() {
+      @Override
+      public Tensor weights(Tensor sequence, Tensor point) {
+        return Mahalanobis2Coordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+      }
+    };
+  }
+
   public static BarycentricCoordinate kriging__Coordinate_of(PseudoDistances pseudoDistances, VectorLogManifold vectorLogManifold,
       ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
@@ -39,6 +57,10 @@ public enum GbcHelper {
         DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriging__Coordinate_of(PseudoDistances.ABSOLUTE, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriging__Coordinate_of(PseudoDistances.ABSOLUTE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1)), //
@@ -49,6 +71,23 @@ public enum GbcHelper {
   }
 
   public static BarycentricCoordinate[] relatives(VectorLogManifold vectorLogManifold) { //
+    return new BarycentricCoordinate[] { //
+        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+    };
+  }
+
+  public static BarycentricCoordinate[] relatives_quantity(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
         DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
