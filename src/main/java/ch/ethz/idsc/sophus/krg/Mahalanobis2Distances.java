@@ -31,7 +31,7 @@ public class Mahalanobis2Distances implements TensorUnaryOperator {
     this.variogram = Objects.requireNonNull(variogram);
     this.sequence = sequence;
     Mahalanobis mahalanobisForm = new Mahalanobis(vectorLogManifold);
-    forms = Tensor.of(sequence.stream().map(point -> mahalanobisForm.new Form(sequence, point).inverse()));
+    forms = Tensor.of(sequence.stream().map(point -> mahalanobisForm.new Form(sequence, point).sigma_inverse()));
   }
 
   @Override

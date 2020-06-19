@@ -60,6 +60,21 @@ public enum PseudoDistances {
   }, //
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
+  NORM2 {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      CompleteDistances completeDistances = CompleteDistances.norm2(vectorLogManifold, variogram, sequence);
+      return point -> completeDistances.biinvariantVector(point).vector();
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      CompleteDistances completeDistances = CompleteDistances.norm2(vectorLogManifold, variogram, sequence);
+      return point -> completeDistances.biinvariantVector(point).coordinate();
+    }
+  }, //
+  /** bi-invariant
+   * results in a symmetric distance matrix -> can use for kriging */
   MAHALAN2 {
     @Override
     public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {

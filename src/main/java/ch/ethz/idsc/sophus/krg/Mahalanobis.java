@@ -33,10 +33,12 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
       vs = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
     }
 
-    public Tensor inverse() {
-      return PseudoInverse.of(vs.stream() //
+    public Tensor sigma_inverse() {
+      Tensor sigma = vs.stream() //
           .map(v -> TensorProduct.of(v, v)) //
-          .reduce(Tensor::add).get());
+          .reduce(Tensor::add) //
+          .get(); // without scaling factor of 1/n
+      return PseudoInverse.of(sigma);
     }
 
     public Tensor vs() {

@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.hs.gr.GrMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Frobenius;
+import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public abstract class CompleteDistances implements Serializable {
@@ -21,6 +22,19 @@ public abstract class CompleteDistances implements Serializable {
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Frobenius.between(x, projection);
+      }
+    };
+  }
+
+  /** @param vectorLogManifold
+   * @param variogram
+   * @param sequence
+   * @return */
+  public static CompleteDistances norm2(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new CompleteDistances(vectorLogManifold, variogram, sequence) {
+      @Override
+      protected Scalar distance(Tensor x, Tensor projection) {
+        return Norm._2.ofMatrix(x.subtract(projection));
       }
     };
   }

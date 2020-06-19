@@ -40,7 +40,7 @@ public class Mahalanobis1Distances implements TensorUnaryOperator {
   @Override
   public Tensor apply(Tensor point) {
     Form form = mahalanobis.new Form(sequence, point);
-    Tensor bi = form.inverse();
+    Tensor bi = form.sigma_inverse();
     return Tensor.of(form.vs().stream() //
         .map(v -> bi.dot(v).dot(v)) //
         .map(Scalar.class::cast) //
