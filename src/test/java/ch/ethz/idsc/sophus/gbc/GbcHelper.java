@@ -10,11 +10,11 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public enum GbcHelper {
   ;
-  public static BarycentricCoordinate completeCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate pairwiseCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return CompleteCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+        return PairwiseCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
       }
     };
   }
@@ -23,16 +23,16 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return Mahalanobis1Coordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+        return SolitaryMahalanobisCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
       }
     };
   }
 
-  public static BarycentricCoordinate mahalan2Coordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate starlikeCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return Mahalanobis2Coordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+        return StarlikeCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
       }
     };
   }
@@ -53,48 +53,48 @@ public enum GbcHelper {
     return new BarycentricCoordinate[] { //
         AbsoluteCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         AbsoluteCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriging__Coordinate_of(PseudoDistances.ABSOLUTE, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriging__Coordinate_of(PseudoDistances.ABSOLUTE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 
-  public static BarycentricCoordinate[] relatives(VectorLogManifold vectorLogManifold) { //
+  public static BarycentricCoordinate[] biinvariant(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        mahalan2Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 
-  public static BarycentricCoordinate[] relatives_quantity(VectorLogManifold vectorLogManifold) { //
+  public static BarycentricCoordinate[] biinvariant_quantity(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        DiagonalCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        completeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriging__Coordinate_of(PseudoDistances.COMPLETE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };

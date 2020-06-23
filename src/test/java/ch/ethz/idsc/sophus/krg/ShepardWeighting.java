@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 3.7.3 Shepard Interpolation */
 /* package */ class ShepardWeighting implements TensorUnaryOperator {
   /** @param weightingInterface for example
-   * PseudoDistances.RELATIVE.create(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2))
+   * PseudoDistances.SOLITARY.create(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2))
    * @return */
   public static TensorUnaryOperator of(TensorUnaryOperator weightingInterface) {
     return new ShepardWeighting(Objects.requireNonNull(weightingInterface));

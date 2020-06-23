@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
@@ -14,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** @see AbsoluteDistances */
-public class DiagonalDistances implements Serializable {
+public class SolitaryDistances implements Serializable {
   private static final Scalar ONE = RealScalar.of(1.0);
   // ---
   private final HsProjection hsProjection;
@@ -22,9 +23,9 @@ public class DiagonalDistances implements Serializable {
 
   /** @param vectorLogManifold
    * @param variogram */
-  public DiagonalDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public SolitaryDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     this.hsProjection = new HsProjection(vectorLogManifold);
-    this.variogram = variogram;
+    this.variogram = Objects.requireNonNull(variogram);
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {

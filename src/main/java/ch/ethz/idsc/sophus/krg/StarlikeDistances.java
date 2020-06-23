@@ -5,19 +5,21 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/** @see CompleteDistances */
-public class Mahalanobis2Distances implements TensorUnaryOperator {
+/** @see PairwiseDistances */
+public class StarlikeDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new Mahalanobis2Distances(vectorLogManifold, variogram, sequence);
+    return new StarlikeDistances(vectorLogManifold, variogram, sequence);
   }
 
   /***************************************************/
@@ -26,12 +28,15 @@ public class Mahalanobis2Distances implements TensorUnaryOperator {
   private final Tensor sequence;
   private final Tensor forms;
 
-  private Mahalanobis2Distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  private StarlikeDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.vectorLogManifold = vectorLogManifold;
     this.variogram = Objects.requireNonNull(variogram);
     this.sequence = sequence;
-    Mahalanobis mahalanobisForm = new Mahalanobis(vectorLogManifold);
-    forms = Tensor.of(sequence.stream().map(point -> mahalanobisForm.new Form(sequence, point).sigma_inverse()));
+    Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
+    forms = Tensor.of(sequence.stream() //
+        .map(point -> mahalanobis.new Form(sequence, point)) //
+        .map(Form::sigma_inverse)) //
+        .multiply(RationalScalar.of(1, sequence.length()));
   }
 
   @Override

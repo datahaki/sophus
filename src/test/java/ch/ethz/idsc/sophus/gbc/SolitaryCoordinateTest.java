@@ -12,16 +12,16 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class DiagonalCoordinateTest extends TestCase {
+public class SolitaryCoordinateTest extends TestCase {
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       ScalarUnaryOperator variogram = s -> s;
-      BarycentricCoordinate diagonalDistances = DiagonalCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
-      Tensor weights = diagonalDistances.weights(sequence, point);
-      TensorUnaryOperator tensorUnaryOperator = Mahalanobis1Coordinate.of(Se2CoveringManifold.INSTANCE, variogram, sequence);
+      BarycentricCoordinate barycentricCoordinate = SolitaryCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
+      Tensor weights = barycentricCoordinate.weights(sequence, point);
+      TensorUnaryOperator tensorUnaryOperator = SolitaryMahalanobisCoordinate.of(Se2CoveringManifold.INSTANCE, variogram, sequence);
       Tensor dmah = tensorUnaryOperator.apply(point);
       Chop._10.requireClose(weights, dmah);
     }

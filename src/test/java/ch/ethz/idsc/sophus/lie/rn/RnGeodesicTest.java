@@ -49,13 +49,13 @@ public class RnGeodesicTest extends TestCase {
     int d = 2;
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
-    for (PseudoDistances pseudoDistances : new PseudoDistances[] { PseudoDistances.ABSOLUTE, PseudoDistances.COMPLETE }) {
+    for (PseudoDistances pseudoDistances : new PseudoDistances[] { PseudoDistances.ABSOLUTE, PseudoDistances.PAIRWISE }) {
       TensorUnaryOperator tensorUnaryOperator = pseudoDistances.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       SymmetricMatrixQ.require(vardst);
     }
     {
-      TensorUnaryOperator tensorUnaryOperator = PseudoDistances.DIAGONAL.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
+      TensorUnaryOperator tensorUnaryOperator = PseudoDistances.SOLITARY.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       assertFalse(SymmetricMatrixQ.of(vardst));
     }

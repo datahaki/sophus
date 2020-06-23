@@ -1,7 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -12,18 +14,21 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class DiagonalDistancesTest extends TestCase {
+public class SolitaryDistancesTest extends TestCase {
   public void testSimple() {
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    ScalarUnaryOperator variogram = s -> s;
+    SolitaryDistances solitaryDistances = new SolitaryDistances(vectorLogManifold, variogram);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      ScalarUnaryOperator variogram = s -> s;
-      DiagonalDistances diagonalDistances = new DiagonalDistances(Se2CoveringManifold.INSTANCE, variogram);
-      BiinvariantVector biinvariantVector = diagonalDistances.biinvariantVector(sequence, point);
-      TensorUnaryOperator tensorUnaryOperator = Mahalanobis1Distances.of(Se2CoveringManifold.INSTANCE, variogram, sequence);
+      BiinvariantVector biinvariantVector = solitaryDistances.biinvariantVector(sequence, point);
+      TensorUnaryOperator tensorUnaryOperator = //
+          SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
       Tensor dmah = tensorUnaryOperator.apply(point);
       Chop._10.requireClose(biinvariantVector.vector(), dmah);
+      Chop._10.requireClose(biinvariantVector.normalized(), NormalizeTotal.FUNCTION.apply(dmah));
     }
   }
 }

@@ -29,8 +29,8 @@ import junit.framework.TestCase;
 
 public class KrigingTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
-  private static final PseudoDistances[] BIINV = { PseudoDistances.COMPLETE };
-  private static final PseudoDistances[] SYMME = { PseudoDistances.ABSOLUTE, PseudoDistances.COMPLETE };
+  private static final PseudoDistances[] BIINV = { PseudoDistances.PAIRWISE };
+  private static final PseudoDistances[] SYMME = { PseudoDistances.ABSOLUTE, PseudoDistances.PAIRWISE };
 
   public void testSimple2() {
     Distribution distributiox = NormalDistribution.standard();
@@ -149,7 +149,7 @@ public class KrigingTest extends TestCase {
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
 
-  public void testQuantityRelative() {
+  public void testQuantityBiinvariant() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = ExponentialVariogram.of(3, 2);
     int n = 10;

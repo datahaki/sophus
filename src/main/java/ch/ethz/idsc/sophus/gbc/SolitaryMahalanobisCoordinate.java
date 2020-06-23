@@ -3,19 +3,19 @@ package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Mahalanobis2Distances;
+import ch.ethz.idsc.sophus.krg.SolitaryMahalanobisDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-public class Mahalanobis2Coordinate implements TensorUnaryOperator {
+public class SolitaryMahalanobisCoordinate implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new Mahalanobis2Coordinate(vectorLogManifold, variogram, sequence);
+    return new SolitaryMahalanobisCoordinate(vectorLogManifold, variogram, sequence);
   }
 
   /***************************************************/
@@ -23,8 +23,8 @@ public class Mahalanobis2Coordinate implements TensorUnaryOperator {
   private final HsProjection hsProjection;
   private final Tensor sequence;
 
-  private Mahalanobis2Coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    distances = Mahalanobis2Distances.of(vectorLogManifold, variogram, sequence);
+  private SolitaryMahalanobisCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    distances = SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
     hsProjection = new HsProjection(vectorLogManifold);
     this.sequence = sequence;
   }

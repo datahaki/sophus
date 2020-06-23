@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** uses left-invariant metric on tangent space
  * 
- * @see DiagonalDistances */
+ * @see SolitaryDistances */
 /* package */ class AbsoluteDistances implements WeightingInterface, Serializable {
   private final HsLevers hsLevers;
   private final ScalarUnaryOperator variogram;

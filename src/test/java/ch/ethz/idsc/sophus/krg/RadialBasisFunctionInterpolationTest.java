@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class RadialBasisFunctionInterpolationTest extends TestCase {
-  public static final PseudoDistances[] PDA = { PseudoDistances.DIAGONAL, PseudoDistances.COMPLETE };
+  public static final PseudoDistances[] PDA = { PseudoDistances.SOLITARY, PseudoDistances.PAIRWISE };
 
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();

@@ -24,9 +24,12 @@ public class PseudoDistancesTest extends TestCase {
     weights.map(QuantityMagnitude.singleton("s"));
   }
 
-  public void testRelative() {
+  public void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    PseudoDistances[] pda = { PseudoDistances.DIAGONAL, PseudoDistances.COMPLETE };
+    PseudoDistances[] pda = { //
+        PseudoDistances.SOLITARY, //
+        PseudoDistances.PAIRWISE, //
+        PseudoDistances.NORM2 };
     for (PseudoDistances pseudoDistances : pda) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
       TensorUnaryOperator weightingInterface = //

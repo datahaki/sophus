@@ -12,13 +12,16 @@ import ch.ethz.idsc.tensor.red.Frobenius;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-public abstract class CompleteDistances implements Serializable {
+/** for Rn and Sn the frobenius distance results in identical coordinates as the 2-norm distance
+ * 
+ * however, for SE(2) the frobenius and 2-norm coordinates do not match! */
+public abstract class PairwiseDistances implements Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return */
-  public static CompleteDistances frobenius(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new CompleteDistances(vectorLogManifold, variogram, sequence) {
+  public static PairwiseDistances frobenius(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new PairwiseDistances(vectorLogManifold, variogram, sequence) {
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Frobenius.between(x, projection);
@@ -30,8 +33,8 @@ public abstract class CompleteDistances implements Serializable {
    * @param variogram
    * @param sequence
    * @return */
-  public static CompleteDistances norm2(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new CompleteDistances(vectorLogManifold, variogram, sequence) {
+  public static PairwiseDistances norm2(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new PairwiseDistances(vectorLogManifold, variogram, sequence) {
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Norm._2.ofMatrix(x.subtract(projection));
@@ -43,8 +46,8 @@ public abstract class CompleteDistances implements Serializable {
    * @param variogram
    * @param sequence
    * @return */
-  public static CompleteDistances geodesic(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new CompleteDistances(vectorLogManifold, variogram, sequence) {
+  public static PairwiseDistances geodesic(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new PairwiseDistances(vectorLogManifold, variogram, sequence) {
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return GrMetric.INSTANCE.distance(x, projection);
@@ -62,7 +65,7 @@ public abstract class CompleteDistances implements Serializable {
    * @param variogram
    * @param sequence
    * @param tensorMetric */
-  private CompleteDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  private PairwiseDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.hsProjection = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
     this.sequence = sequence;

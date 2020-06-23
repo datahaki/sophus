@@ -27,14 +27,14 @@ public class Se3ManifoldTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(Se3Manifold.HS_EXP);
   public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se3Manifold.HS_EXP);
-  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(Se3Manifold.INSTANCE);
-  private static final BarycentricCoordinate[] REL_BARYCENTRIC_COORDINATES = //
-      GbcHelper.relatives(Se3Manifold.INSTANCE);
+  private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Manifold.INSTANCE);
+  private static final BarycentricCoordinate[] BII_COORDINATES = //
+      GbcHelper.biinvariant(Se3Manifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);
 
   public void testRandom() {
     int fails = 0;
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
       for (int n = 7; n < 13; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
         Tensor point = TestHelper.spawn_Se3();
@@ -68,7 +68,7 @@ public class Se3ManifoldTest extends TestCase {
 
   public void testRelativeRandom() {
     BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
-    for (BarycentricCoordinate barycentricCoordinate : REL_BARYCENTRIC_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES)
       for (int n = 7; n < 11; ++n) {
         int fails = 0;
         try {

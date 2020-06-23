@@ -3,9 +3,10 @@ package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.CompleteCoordinate;
-import ch.ethz.idsc.sophus.gbc.DiagonalCoordinate;
-import ch.ethz.idsc.sophus.gbc.Mahalanobis2Coordinate;
+import ch.ethz.idsc.sophus.gbc.PairwiseCoordinate;
+import ch.ethz.idsc.sophus.gbc.SolitaryCoordinate;
+import ch.ethz.idsc.sophus.gbc.SolitaryMahalanobisCoordinate;
+import ch.ethz.idsc.sophus.gbc.StarlikeCoordinate;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -31,31 +32,58 @@ public enum PseudoDistances {
   },
   /** bi-invariant
    * does not result in a symmetric distance matrix -> should not use for kriging */
-  DIAGONAL {
+  SOLITARY {
     @Override
     public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      DiagonalDistances diagonalDistances = new DiagonalDistances(vectorLogManifold, variogram);
+      SolitaryDistances diagonalDistances = new SolitaryDistances(vectorLogManifold, variogram);
       return point -> diagonalDistances.biinvariantVector(sequence, point).vector();
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = DiagonalCoordinate.of(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = SolitaryCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
+    }
+  },
+  /** bi-invariant */
+  MONOMAHA {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
+      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return SolitaryMahalanobisCoordinate.of(vectorLogManifold, variogram, sequence);
     }
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
-  COMPLETE {
+  PAIRWISE {
     @Override
     public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      CompleteDistances completeDistances = CompleteDistances.frobenius(vectorLogManifold, variogram, sequence);
+      PairwiseDistances completeDistances = PairwiseDistances.frobenius(vectorLogManifold, variogram, sequence);
       return point -> completeDistances.biinvariantVector(point).vector();
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return CompleteCoordinate.of(vectorLogManifold, variogram, sequence);
+      return PairwiseCoordinate.of(vectorLogManifold, variogram, sequence);
+    }
+  }, //
+  /** bi-invariant
+   * results in a symmetric distance matrix -> can use for kriging */
+  STARLIKE {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = StarlikeDistances.of(vectorLogManifold, variogram, sequence);
+      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return StarlikeCoordinate.of(vectorLogManifold, variogram, sequence);
     }
   }, //
   /** bi-invariant
@@ -63,28 +91,14 @@ public enum PseudoDistances {
   NORM2 {
     @Override
     public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      CompleteDistances completeDistances = CompleteDistances.norm2(vectorLogManifold, variogram, sequence);
+      PairwiseDistances completeDistances = PairwiseDistances.norm2(vectorLogManifold, variogram, sequence);
       return point -> completeDistances.biinvariantVector(point).vector();
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      CompleteDistances completeDistances = CompleteDistances.norm2(vectorLogManifold, variogram, sequence);
-      return point -> completeDistances.biinvariantVector(point).coordinate();
-    }
-  }, //
-  /** bi-invariant
-   * results in a symmetric distance matrix -> can use for kriging */
-  MAHALAN2 {
-    @Override
-    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator completeDistances = Mahalanobis2Distances.of(vectorLogManifold, variogram, sequence);
-      return point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
-    }
-
-    @Override
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return Mahalanobis2Coordinate.of(vectorLogManifold, variogram, sequence);
+      PairwiseDistances pairwiseDistances = PairwiseDistances.norm2(vectorLogManifold, variogram, sequence);
+      return point -> pairwiseDistances.biinvariantVector(point).coordinate();
     }
   }, //
   ;
