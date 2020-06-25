@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.lie.TensorProduct;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
@@ -34,13 +35,15 @@ public class Mahalanobis implements Serializable {
       levers = hsLevers.levers(sequence, point);
     }
 
+    /** @return symmetric positive semidefinite matrix */
     public Tensor sigma_inverse() {
       Tensor sigma = levers.stream() //
           .map(v -> TensorProduct.of(v, v)) //
           .reduce(Tensor::add) //
           .get() //
           .multiply(RationalScalar.of(1, levers.length()));
-      return PseudoInverse.of(sigma);
+      // computation of pseudo inverse may result in numerical deviation from true symmetric result
+      return Symmetrize.of(PseudoInverse.of(sigma));
     }
 
     public Tensor levers() {

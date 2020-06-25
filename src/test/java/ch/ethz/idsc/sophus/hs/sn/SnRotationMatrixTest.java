@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.Det;
+import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -55,9 +56,11 @@ public class SnRotationMatrixTest extends TestCase {
         Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor rotation1 = SnRotationMatrix.of(a, b);
+        Tensor rotation2 = SnRotationMatrix.of(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
         Chop._08.requireClose(rotation1.dot(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
+        Chop._10.requireClose(rotation1, Inverse.of(rotation2));
       }
   }
 }

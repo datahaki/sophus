@@ -1,12 +1,15 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.PairwiseCoordinate;
+import ch.ethz.idsc.sophus.gbc.ProjectedDistancesCoordinate;
 import ch.ethz.idsc.sophus.gbc.SolitaryCoordinate;
 import ch.ethz.idsc.sophus.gbc.SolitaryMahalanobisCoordinate;
-import ch.ethz.idsc.sophus.gbc.StarlikeCoordinate;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -45,19 +48,6 @@ public enum PseudoDistances {
       return point -> barycentricCoordinate.weights(sequence, point);
     }
   },
-  /** bi-invariant */
-  MONOMAHA {
-    @Override
-    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
-      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
-    }
-
-    @Override
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return SolitaryMahalanobisCoordinate.of(vectorLogManifold, variogram, sequence);
-    }
-  },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
   PAIRWISE {
@@ -83,7 +73,35 @@ public enum PseudoDistances {
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return StarlikeCoordinate.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = StarlikeDistances.of(vectorLogManifold, variogram, sequence);
+      return ProjectedDistancesCoordinate.of(vectorLogManifold, tensorUnaryOperator, sequence);
+    }
+  }, //
+  /** bi-invariant */
+  MONOMAHA {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
+      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return SolitaryMahalanobisCoordinate.of(vectorLogManifold, variogram, sequence);
+    }
+  },
+  /** bi-invariant */
+  PORTABLE {
+    @Override
+    public TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = PortableDistances.frobenius(vectorLogManifold, variogram, sequence);
+      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = PortableDistances.frobenius(vectorLogManifold, variogram, sequence);
+      return ProjectedDistancesCoordinate.of(vectorLogManifold, tensorUnaryOperator, sequence);
     }
   }, //
   /** bi-invariant
@@ -123,4 +141,12 @@ public enum PseudoDistances {
    * @param sequence
    * @return */
   public abstract TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
+
+  public static List<PseudoDistances> distinct() {
+    return Arrays.asList( //
+        ABSOLUTE, //
+        STARLIKE, //
+        SOLITARY, //
+        PAIRWISE);
+  }
 }

@@ -5,11 +5,23 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.krg.PowerVariogram;
 import ch.ethz.idsc.sophus.krg.PseudoDistances;
+import ch.ethz.idsc.sophus.krg.StarlikeDistances;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public enum GbcHelper {
   ;
+  public static BarycentricCoordinate starlikeCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new BarycentricCoordinate() {
+      @Override
+      public Tensor weights(Tensor sequence, Tensor point) {
+        TensorUnaryOperator tensorUnaryOperator = StarlikeDistances.of(vectorLogManifold, variogram, sequence);
+        return ProjectedDistancesCoordinate.of(vectorLogManifold, tensorUnaryOperator, sequence).apply(point);
+      }
+    };
+  }
+
   public static BarycentricCoordinate pairwiseCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
@@ -24,15 +36,6 @@ public enum GbcHelper {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return SolitaryMahalanobisCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
-      }
-    };
-  }
-
-  public static BarycentricCoordinate starlikeCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return StarlikeCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
       }
     };
   }
@@ -53,14 +56,14 @@ public enum GbcHelper {
     return new BarycentricCoordinate[] { //
         AbsoluteCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         AbsoluteCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriging__Coordinate_of(PseudoDistances.ABSOLUTE, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriging__Coordinate_of(PseudoDistances.ABSOLUTE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1)), //
@@ -72,14 +75,14 @@ public enum GbcHelper {
 
   public static BarycentricCoordinate[] biinvariant(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         SolitaryCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         pairwiseCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         mahalan1Coordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        starlikeCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriging__Coordinate_of(PseudoDistances.PAIRWISE, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //

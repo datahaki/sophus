@@ -45,6 +45,7 @@ public class SnRandomSample implements RandomSampleInterface, Serializable {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
+    // ignore the risk that random vector could be (0, 0, ..., 0)
     return NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), length));
   }
 }
