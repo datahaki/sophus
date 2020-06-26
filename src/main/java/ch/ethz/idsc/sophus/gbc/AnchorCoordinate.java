@@ -4,32 +4,32 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.SolitaryDistances;
+import ch.ethz.idsc.sophus.krg.AnchorDistances;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** solitary coordinates are biinvariant
+/** anchor coordinates are biinvariant
  * 
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public class SolitaryCoordinate implements BarycentricCoordinate, Serializable {
+public class AnchorCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new SolitaryCoordinate(vectorLogManifold, variogram);
+    return new AnchorCoordinate(vectorLogManifold, variogram);
   }
 
   /***************************************************/
-  private final SolitaryDistances solitaryDistances;
+  private final AnchorDistances anchorDistances;
 
-  private SolitaryCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    solitaryDistances = new SolitaryDistances(vectorLogManifold, variogram);
+  private AnchorCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    anchorDistances = new AnchorDistances(vectorLogManifold, variogram);
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    return solitaryDistances.biinvariantVector(sequence, point).coordinate();
+    return anchorDistances.biinvariantVector(sequence, point).coordinate();
   }
 }

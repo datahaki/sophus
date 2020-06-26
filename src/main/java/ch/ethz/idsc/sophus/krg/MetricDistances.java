@@ -13,14 +13,19 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** uses left-invariant metric on tangent space
  * 
- * @see SolitaryDistances */
-/* package */ class AbsoluteDistances implements WeightingInterface, Serializable {
+ * Careful: Shepard interpolation does not reproduce linear functions.
+ * (Because the inverse norms are not projected to the proper subspace.)
+ * 
+ * <p>Reference:
+ * "Interpolation on Scattered Data in Multidimensions" in NR, 2007
+ * 3.7.3 Shepard Interpolation */
+public class MetricDistances implements WeightingInterface, Serializable {
   private final HsLevers hsLevers;
   private final ScalarUnaryOperator variogram;
 
   /** @param vectorLogManifold
    * @param variogram */
-  public AbsoluteDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public MetricDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     hsLevers = new HsLevers(vectorLogManifold);
     this.variogram = Objects.requireNonNull(variogram);
   }

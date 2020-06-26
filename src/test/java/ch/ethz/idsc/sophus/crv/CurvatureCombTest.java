@@ -45,6 +45,7 @@ public class CurvatureCombTest extends TestCase {
   public void testEmpty() {
     assertTrue(Tensors.isEmpty(CurvatureComb.of(Tensors.empty(), RealScalar.of(2), true)));
     assertTrue(Tensors.isEmpty(CurvatureComb.of(Tensors.empty(), RealScalar.of(2), false)));
+    assertEquals(CurvatureComb.cyclic(Tensors.empty()), Tensors.empty());
   }
 
   public void testOne() {

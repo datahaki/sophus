@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class PairwiseDistancesTest extends TestCase {
+public class HarborDistancesTest extends TestCase {
   public void testRn() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
@@ -25,8 +25,8 @@ public class PairwiseDistancesTest extends TestCase {
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      PairwiseDistances d1 = PairwiseDistances.frobenius(vectorLogManifold, variogram, sequence);
-      PairwiseDistances d2 = PairwiseDistances.norm2(vectorLogManifold, variogram, sequence);
+      HarborDistances d1 = HarborDistances.frobenius(vectorLogManifold, variogram, sequence);
+      HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
       Chop._10.requireClose(v1.normalized(), v2.normalized());
@@ -40,8 +40,8 @@ public class PairwiseDistancesTest extends TestCase {
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomSample.of(randomSampleInterface, length);
       Tensor point = RandomSample.of(randomSampleInterface);
-      PairwiseDistances d1 = PairwiseDistances.frobenius(vectorLogManifold, variogram, sequence);
-      PairwiseDistances d2 = PairwiseDistances.norm2(vectorLogManifold, variogram, sequence);
+      HarborDistances d1 = HarborDistances.frobenius(vectorLogManifold, variogram, sequence);
+      HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
       Chop._01.requireClose(v1.normalized(), v2.normalized());
@@ -55,8 +55,8 @@ public class PairwiseDistancesTest extends TestCase {
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      PairwiseDistances d1 = PairwiseDistances.frobenius(vectorLogManifold, variogram, sequence);
-      PairwiseDistances d2 = PairwiseDistances.norm2(vectorLogManifold, variogram, sequence);
+      HarborDistances d1 = HarborDistances.frobenius(vectorLogManifold, variogram, sequence);
+      HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
       assertEquals(v1.coordinate().length(), v2.coordinate().length());

@@ -26,8 +26,9 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * Log[g.m.g^-1] == Ad[g].Log[m]
  * Log[g.m] == Ad[g].Log[m.g]
  * Log[g^-1.m] == Ad[g^-1].Log[m.g^-1]
- * Ad[g].Log[g^-1.m] == Log[m.g^-1] */
-/** invariance under left-action is guaranteed because
+ * Ad[g].Log[g^-1.m] == Log[m.g^-1]
+ * 
+ * invariance under left-action is guaranteed because
  * log [(g x)^-1 g p] == log [x^-1 p]
  * 
  * If the target mapping is Ad invariant then invariance under right action
@@ -38,27 +39,33 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * 
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
- * by Jan Hakenberg, 2020 */
-public final class AbsoluteCoordinate implements BarycentricCoordinate, Serializable {
+ * by Jan Hakenberg, 2020
+ * 
+ * @see MetD */
+public class MetricCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new AbsoluteCoordinate(vectorLogManifold, new NormalizeLevers(variogram));
+    return custom(vectorLogManifold, new LeversNorm(variogram));
   }
 
-  /** @param vectorLogManifold
-   * @param target
+  /** Careful:
+   * Distance may depend on sequence! In that case only the correct sequence
+   * should be passed to the function {@link #weights(Tensor, Tensor)}!
+   * 
+   * @param vectorLogManifold
+   * @param target operator with levers as input
    * @return */
   public static BarycentricCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    return new AbsoluteCoordinate(vectorLogManifold, Objects.requireNonNull(target));
+    return new MetricCoordinate(vectorLogManifold, Objects.requireNonNull(target));
   }
 
   /***************************************************/
   private final HsLevers hsLevers;
   private final TensorUnaryOperator target;
 
-  private AbsoluteCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+  private MetricCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     hsLevers = new HsLevers(vectorLogManifold);
     this.target = target;
   }
@@ -67,7 +74,7 @@ public final class AbsoluteCoordinate implements BarycentricCoordinate, Serializ
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = hsLevers.levers(sequence, point);
     Tensor nullsp = LeftNullSpace.usingQR(levers);
-    Tensor vector = target.apply(levers);
+    Tensor vector = NormalizeTotal.FUNCTION.apply(target.apply(levers)); // levers
     return NormalizeTotal.FUNCTION.apply(nullsp.dot(vector).dot(nullsp));
   }
 }

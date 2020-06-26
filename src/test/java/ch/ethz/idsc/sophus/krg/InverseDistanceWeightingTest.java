@@ -3,27 +3,19 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.sn.SnPhongMean;
-import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
-import ch.ethz.idsc.sophus.itp.CrossAveraging;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.sophus.lie.rn.RnMetricSquared;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.sophus.math.sample.RandomSample;
-import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
-import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.qty.Quantity;
@@ -32,23 +24,7 @@ import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class ShepardWeightingTest extends TestCase {
-  public void testSimplePD() throws ClassNotFoundException, IOException {
-    for (PseudoDistances pseudoDistances : PseudoDistances.values()) {
-      Distribution distribution = NormalDistribution.standard();
-      for (int n = 10; n < 20; ++n) {
-        Tensor sequence = RandomVariate.of(distribution, n, 3);
-        TensorUnaryOperator shepardInterpolation = Serialization.copy( //
-            pseudoDistances.normalized(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
-        RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
-        Tensor values = RandomSample.of(randomSampleInterface, n);
-        Tensor point = RandomVariate.of(distribution, 3);
-        Tensor evaluate = CrossAveraging.of(p -> shepardInterpolation.apply(p), SnPhongMean.INSTANCE, values).apply(point);
-        VectorQ.requireLength(evaluate, 5);
-      }
-    }
-  }
-
+public class InverseDistanceWeightingTest extends TestCase {
   public void testSimple() {
     WeightingInterface weightingInterface = InverseDistanceWeighting.of(RnMetricSquared.INSTANCE);
     Tensor weights = weightingInterface.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
@@ -79,7 +55,7 @@ public class ShepardWeightingTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator shw = PseudoDistances.ABSOLUTE.normalized(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        TensorUnaryOperator shw = Biinvariant.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         WeightingInterface weightingInterface = Serialization.copy(InverseDistanceWeighting.of(RnMetric.INSTANCE));
         Tensor weights1 = weightingInterface.weights(points, x);

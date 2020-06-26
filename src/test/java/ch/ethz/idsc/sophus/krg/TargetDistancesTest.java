@@ -16,13 +16,14 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class SolitaryMahalanobisDistancesTest extends TestCase {
+/** anchor == target */
+public class TargetDistancesTest extends TestCase {
   public void testRn() {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    TensorUnaryOperator w1 = PseudoDistances.SOLITARY.normalized(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator completeDistances = SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w1 = Biinvariant.ANCHOR.weighting(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator completeDistances = TargetDistances.of(vectorLogManifold, variogram, sequence);
     TensorUnaryOperator w2 = point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
@@ -35,8 +36,8 @@ public class SolitaryMahalanobisDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w1 = PseudoDistances.SOLITARY.normalized(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator completeDistances = SolitaryMahalanobisDistances.of(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w1 = Biinvariant.ANCHOR.weighting(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator completeDistances = TargetDistances.of(vectorLogManifold, variogram, sequence);
     TensorUnaryOperator w2 = point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);

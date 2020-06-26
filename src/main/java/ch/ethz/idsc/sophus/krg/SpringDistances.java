@@ -12,14 +12,14 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/** @see PairwiseDistances */
-public class StarlikeDistances implements TensorUnaryOperator {
+/** @see HarborDistances */
+public class SpringDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
-   * @param sequence
+   * @param sequence non-empty
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new StarlikeDistances(vectorLogManifold, variogram, sequence);
+    return new SpringDistances(vectorLogManifold, variogram, sequence);
   }
 
   /***************************************************/
@@ -28,7 +28,7 @@ public class StarlikeDistances implements TensorUnaryOperator {
   private final Tensor sequence;
   private final Tensor forms;
 
-  private StarlikeDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  private SpringDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.vectorLogManifold = vectorLogManifold;
     this.variogram = Objects.requireNonNull(variogram);
     this.sequence = sequence;

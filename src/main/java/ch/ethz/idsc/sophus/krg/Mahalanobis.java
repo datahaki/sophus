@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
@@ -31,7 +32,10 @@ public class Mahalanobis implements Serializable {
   public class Form implements Serializable {
     private final Tensor levers;
 
+    /** @param sequence of n anchor points
+     * @param point */
     public Form(Tensor sequence, Tensor point) {
+      Integers.requirePositive(sequence.length());
       levers = hsLevers.levers(sequence, point);
     }
 
@@ -42,7 +46,7 @@ public class Mahalanobis implements Serializable {
           .reduce(Tensor::add) //
           .get() //
           .multiply(RationalScalar.of(1, levers.length()));
-      // computation of pseudo inverse may result in numerical deviation from true symmetric result
+      // computation of pseudo inverse only may result in numerical deviation from true symmetric result
       return Symmetrize.of(PseudoInverse.of(sigma));
     }
 

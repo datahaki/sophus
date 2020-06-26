@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
-import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
+import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
-import ch.ethz.idsc.sophus.gbc.SolitaryCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,10 +17,10 @@ public class SpdManifoldTest extends TestCase {
   public static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES(Tensor sequence) {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
-        AbsoluteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        AbsoluteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        SolitaryCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        SolitaryCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        AnchorCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        AnchorCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         ObsoleteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         ObsoleteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };

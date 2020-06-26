@@ -17,14 +17,14 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39
  * 
- * @see SolitaryDistances */
-public class SolitaryMahalanobisDistances implements TensorUnaryOperator {
+ * @see AnchorDistances */
+public class TargetDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new SolitaryMahalanobisDistances(vectorLogManifold, variogram, sequence);
+    return new TargetDistances(vectorLogManifold, variogram, sequence);
   }
 
   /***************************************************/
@@ -33,7 +33,7 @@ public class SolitaryMahalanobisDistances implements TensorUnaryOperator {
   private final Tensor sequence;
   private final Scalar factor;
 
-  private SolitaryMahalanobisDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  private TargetDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     mahalanobis = new Mahalanobis(vectorLogManifold);
     this.variogram = variogram;
     this.sequence = sequence;

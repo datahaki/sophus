@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.gbc;
 
 import junit.framework.TestCase;
 
-public class NormalizeLeversTest extends TestCase {
+public class VectorLogNormTest extends TestCase {
   public void testSimple() {
     try {
-      new NormalizeLevers(null);
+      new LeversNorm(null);
       fail();
     } catch (Exception exception) {
       // ---

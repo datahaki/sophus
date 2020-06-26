@@ -16,16 +16,16 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class RadialBasisFunctionInterpolationTest extends TestCase {
-  public static final PseudoDistances[] PDA = { PseudoDistances.SOLITARY, PseudoDistances.PAIRWISE };
+  public static final Biinvariant[] PDA = { Biinvariant.ANCHOR, Biinvariant.HARBOR };
 
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
-    for (PseudoDistances pseudoDistances : PDA) {
+    for (Biinvariant pseudoDistances : PDA) {
       TensorUnaryOperator weightingInterface = //
-          pseudoDistances.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
+          pseudoDistances.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
           RadialBasisFunctionInterpolation.normalized(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
@@ -40,9 +40,9 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Tensor values = RandomVariate.of(distribution, n, 2);
-    for (PseudoDistances pseudoDistances : PDA) {
+    for (Biinvariant pseudoDistances : PDA) {
       TensorUnaryOperator weightingInterface = //
-          pseudoDistances.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
+          pseudoDistances.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.normalized(weightingInterface, sequence, values);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
@@ -55,9 +55,9 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
-    for (PseudoDistances pseudoDistances : PDA) {
+    for (Biinvariant pseudoDistances : PDA) {
       TensorUnaryOperator weightingInterface = //
-          pseudoDistances.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
+          pseudoDistances.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.5), sequence);
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.partitions(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));

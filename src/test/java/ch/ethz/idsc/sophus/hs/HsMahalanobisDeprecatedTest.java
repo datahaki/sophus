@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.gbc.AbsoluteCoordinate;
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsMahalanobisDeprecated.Norm;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
@@ -34,7 +34,7 @@ public class HsMahalanobisDeprecatedTest extends TestCase {
     Tensor centralized = lieGroupOps.allLeft(sequence, invert);
     Norm norm = Serialization.copy(mahalanobis.new Norm(centralized, weights));
     Tensor target = Tensor.of(centralized.stream().map(norm::norm));
-    BarycentricCoordinate lieBarycentricCoordinate = AbsoluteCoordinate.custom( //
+    BarycentricCoordinate lieBarycentricCoordinate = MetricCoordinate.custom( //
         Se2CoveringManifold.INSTANCE, t -> target.map(Scalar::reciprocal));
     lieBarycentricCoordinate.weights(centralized, Tensors.vector(0, 0, 0));
     Tensor affine = AffineCoordinate.of(Se2CoveringManifold.INSTANCE).weights(centralized, Tensors.vector(0, 0, 0));

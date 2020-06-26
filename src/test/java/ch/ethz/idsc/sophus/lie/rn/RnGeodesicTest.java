@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.krg.Biinvariant;
 import ch.ethz.idsc.sophus.krg.PowerVariogram;
-import ch.ethz.idsc.sophus.krg.PseudoDistances;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -49,13 +49,13 @@ public class RnGeodesicTest extends TestCase {
     int d = 2;
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
-    for (PseudoDistances pseudoDistances : new PseudoDistances[] { PseudoDistances.ABSOLUTE, PseudoDistances.PAIRWISE }) {
-      TensorUnaryOperator tensorUnaryOperator = pseudoDistances.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
+    for (Biinvariant biinvariant : new Biinvariant[] { Biinvariant.METRIC, Biinvariant.HARBOR }) {
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       SymmetricMatrixQ.require(vardst);
     }
     {
-      TensorUnaryOperator tensorUnaryOperator = PseudoDistances.SOLITARY.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
+      TensorUnaryOperator tensorUnaryOperator = Biinvariant.ANCHOR.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       assertFalse(SymmetricMatrixQ.of(vardst));
     }
