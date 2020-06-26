@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class SpringCoordinate implements BarycentricCoordinate, Serializable {
+public class GardenCoordinate implements BarycentricCoordinate, Serializable {
   /** Careful:
    * Distance may depend on sequence! In that case only the correct sequence
    * should be passed to the function {@link #weights(Tensor, Tensor)}!
@@ -19,14 +19,14 @@ public class SpringCoordinate implements BarycentricCoordinate, Serializable {
    * @param target operator with point as input parameter
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    return new SpringCoordinate(vectorLogManifold, target);
+    return new GardenCoordinate(vectorLogManifold, target);
   }
 
   /***************************************************/
   private final HsLevers hsLevers;
   private final TensorUnaryOperator target;
 
-  private SpringCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+  private GardenCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     hsLevers = new HsLevers(vectorLogManifold);
     this.target = target;
   }

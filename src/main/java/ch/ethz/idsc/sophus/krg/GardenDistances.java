@@ -13,13 +13,13 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** @see HarborDistances */
-public class SpringDistances implements TensorUnaryOperator {
+public class GardenDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence non-empty
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new SpringDistances(vectorLogManifold, variogram, sequence);
+    return new GardenDistances(vectorLogManifold, variogram, sequence);
   }
 
   /***************************************************/
@@ -28,7 +28,7 @@ public class SpringDistances implements TensorUnaryOperator {
   private final Tensor sequence;
   private final Tensor forms;
 
-  private SpringDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  private GardenDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.vectorLogManifold = vectorLogManifold;
     this.variogram = Objects.requireNonNull(variogram);
     this.sequence = sequence;

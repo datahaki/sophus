@@ -21,13 +21,13 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
 /** harbor == spring ! */
-public class SpringDistancesTest extends TestCase {
+public class GardenDistancesTest extends TestCase {
   public void testRn() {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     TensorUnaryOperator w1 = Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator completeDistances = SpringDistances.of(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator completeDistances = GardenDistances.of(vectorLogManifold, variogram, sequence);
     TensorUnaryOperator w2 = point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
@@ -41,7 +41,7 @@ public class SpringDistancesTest extends TestCase {
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
     TensorUnaryOperator w1 = Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator completeDistances = SpringDistances.of(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator completeDistances = GardenDistances.of(vectorLogManifold, variogram, sequence);
     TensorUnaryOperator w2 = point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
@@ -57,7 +57,7 @@ public class SpringDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = s -> s;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = SpringDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -69,7 +69,7 @@ public class SpringDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = s -> s;
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomSample.of(randomSampleInterface, length);
-      TensorUnaryOperator tensorUnaryOperator = SpringDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -81,7 +81,7 @@ public class SpringDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = s -> s;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = SpringDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }

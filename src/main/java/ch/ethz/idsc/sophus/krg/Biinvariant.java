@@ -6,9 +6,9 @@ import java.util.List;
 
 import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.SpringCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -64,17 +64,17 @@ public enum Biinvariant {
   }, //
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
-  SPRING {
+  GARDEN {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = SpringDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
       return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = SpringDistances.of(vectorLogManifold, variogram, sequence);
-      BarycentricCoordinate barycentricCoordinate = SpringCoordinate.of(vectorLogManifold, tensorUnaryOperator);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
+      BarycentricCoordinate barycentricCoordinate = GardenCoordinate.of(vectorLogManifold, tensorUnaryOperator);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
   }, //
@@ -132,7 +132,7 @@ public enum Biinvariant {
   public static List<Biinvariant> distinct() {
     return Arrays.asList( //
         METRIC, //
-        SPRING, //
+        GARDEN, //
         ANCHOR, //
         HARBOR);
   }

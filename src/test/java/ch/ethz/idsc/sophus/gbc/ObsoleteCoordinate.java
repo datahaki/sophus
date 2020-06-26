@@ -25,7 +25,7 @@ public final class ObsoleteCoordinate implements BarycentricCoordinate, Serializ
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new ObsoleteCoordinate(vectorLogManifold, new LeversNorm(variogram));
+    return new ObsoleteCoordinate(vectorLogManifold, new LeversWeighting(variogram));
   }
 
   /***************************************************/

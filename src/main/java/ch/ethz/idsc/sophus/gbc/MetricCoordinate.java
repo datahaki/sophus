@@ -47,7 +47,7 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return custom(vectorLogManifold, new LeversNorm(variogram));
+    return custom(vectorLogManifold, new LeversWeighting(variogram));
   }
 
   /** Careful:
@@ -74,7 +74,7 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = hsLevers.levers(sequence, point);
     Tensor nullsp = LeftNullSpace.usingQR(levers);
-    Tensor vector = NormalizeTotal.FUNCTION.apply(target.apply(levers)); // levers
+    Tensor vector = target.apply(levers); // levers
     return NormalizeTotal.FUNCTION.apply(nullsp.dot(vector).dot(nullsp));
   }
 }

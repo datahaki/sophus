@@ -7,7 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
-public class TensorMetricSquared implements TensorMetric, Serializable {
+/* package */ class TensorMetricSquared implements TensorMetric, Serializable {
   /** @param tensorMetric
    * @return */
   public static TensorMetric of(TensorMetric tensorMetric) {

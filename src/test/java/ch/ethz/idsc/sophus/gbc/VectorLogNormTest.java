@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 public class VectorLogNormTest extends TestCase {
   public void testSimple() {
     try {
-      new LeversNorm(null);
+      new LeversWeighting(null);
       fail();
     } catch (Exception exception) {
       // ---

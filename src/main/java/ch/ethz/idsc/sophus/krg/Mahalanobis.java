@@ -8,8 +8,8 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
-import ch.ethz.idsc.tensor.lie.TensorProduct;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
 /** The reference suggests to use the inverse and the biinvariant mean m as reference point.
@@ -41,11 +41,7 @@ public class Mahalanobis implements Serializable {
 
     /** @return symmetric positive semidefinite matrix */
     public Tensor sigma_inverse() {
-      Tensor sigma = levers.stream() //
-          .map(v -> TensorProduct.of(v, v)) //
-          .reduce(Tensor::add) //
-          .get() //
-          .multiply(RationalScalar.of(1, levers.length()));
+      Tensor sigma = Transpose.of(levers).dot(levers).multiply(RationalScalar.of(1, levers.length()));
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
       return Symmetrize.of(PseudoInverse.of(sigma));
     }
