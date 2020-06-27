@@ -1,37 +1,39 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.io.Serializable;
+
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.TargetDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-public class TargetCoordinate implements TensorUnaryOperator {
+/** target coordinate is identical to anchor coordinate
+ * 
+ * @see AnchorCoordinate */
+public class TargetCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
-   * @param sequence
    * @return */
-  public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new TargetCoordinate(vectorLogManifold, variogram, sequence);
+  public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new TargetCoordinate(vectorLogManifold, variogram);
   }
 
   /***************************************************/
-  private final TensorUnaryOperator distances;
+  private final WeightingInterface weightingInterface;
   private final HsProjection hsProjection;
-  private final Tensor sequence;
 
-  private TargetCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    distances = TargetDistances.of(vectorLogManifold, variogram, sequence);
+  private TargetCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
     hsProjection = new HsProjection(vectorLogManifold);
-    this.sequence = sequence;
   }
 
-  @Override
-  public Tensor apply(Tensor point) {
-    Tensor weights = NormalizeTotal.FUNCTION.apply(distances.apply(point));
+  @Override // from BarycentricCoordinate
+  public Tensor weights(Tensor sequence, Tensor point) {
+    Tensor weights = NormalizeTotal.FUNCTION.apply(weightingInterface.weights(sequence, point));
     return NormalizeTotal.FUNCTION.apply(hsProjection.projection(sequence, point).dot(weights));
   }
 }

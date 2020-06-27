@@ -68,7 +68,7 @@ public enum Biinvariant {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
-      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
+      return point -> tensorUnaryOperator.apply(point);
     }
 
     @Override
@@ -82,13 +82,14 @@ public enum Biinvariant {
   TARGET {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = TargetDistances.of(vectorLogManifold, variogram, sequence);
-      return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
+      WeightingInterface weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
+      return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return TargetCoordinate.of(vectorLogManifold, variogram, sequence);
+      BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
+      return point -> barycentricCoordinate.weights(sequence, point);
     }
   },
   /** bi-invariant

@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.lie.he;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
+import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
@@ -26,8 +26,8 @@ public class HeManifoldTest extends TestCase {
   public static final BarycentricCoordinate INSTANCE = MetricCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      ObsoleteCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      ObsoleteCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      AnchorCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      AnchorCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE, //
       INSTANCE //
   };

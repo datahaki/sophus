@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
+import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -21,8 +21,8 @@ public class SpdManifoldTest extends TestCase {
         MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         AnchorCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         AnchorCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        ObsoleteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        ObsoleteCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        TargetCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        TargetCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };
   }
 

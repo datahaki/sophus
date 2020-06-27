@@ -35,7 +35,8 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return TargetCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+        BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
+        return barycentricCoordinate.weights(sequence, point);
       }
     };
   }

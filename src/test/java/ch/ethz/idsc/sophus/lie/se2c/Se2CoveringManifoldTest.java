@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.ObsoleteCoordinate;
+import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
@@ -269,9 +269,9 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
-      ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
-      ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
+      AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
   public void testA4Exact() {
@@ -360,7 +360,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
       BarycentricCoordinate bc0 = AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = ObsoleteCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = TargetCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
         Tensor mean = TestHelper.spawn_Se2C();
