@@ -32,7 +32,7 @@ public class AnchorDistances implements Serializable {
     return new BiinvariantVector(projection, //
         Tensor.of(Diagonal.of(projection).stream() //
             .map(Scalar.class::cast) //
-            .map(v -> Abs.between(v, ONE)) //
+            .map(v -> Abs.between(v, ONE)) // theory asserts that v in [0, 1]
             .map(Sqrt.FUNCTION) //
             .map(variogram))); //
   }

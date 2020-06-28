@@ -5,13 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.tensor.RationalScalar;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** computes form at given point based on points in sequence and returns
  * vector of evaluations dMah_x(p_i) of points in sequence.
@@ -42,13 +38,6 @@ public class TargetDistances implements WeightingInterface, Serializable {
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    Form form = mahalanobis.new Form(sequence, point);
-    Scalar factor = RationalScalar.of(1, sequence.length());
-    Tensor bi = form.sigma_inverse().multiply(factor);
-    return Tensor.of(form.levers().stream() //
-        .map(v -> bi.dot(v).dot(v)) //
-        .map(Scalar.class::cast) //
-        .map(Sqrt.FUNCTION) //
-        .map(variogram));
+    return mahalanobis.new Form(sequence, point).leverage(variogram);
   }
 }

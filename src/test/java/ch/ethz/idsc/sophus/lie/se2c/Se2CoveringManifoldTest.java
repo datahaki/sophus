@@ -366,7 +366,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor mean = TestHelper.spawn_Se2C();
         Tensor w0 = bc0.weights(sequence, mean);
         Tensor w1 = bc1.weights(sequence, mean);
-        Chop._10.requireClose(w0, w1);
+        Chop._06.requireClose(w0, w1);
       }
     }
   }

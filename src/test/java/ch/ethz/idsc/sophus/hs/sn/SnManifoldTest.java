@@ -40,8 +40,8 @@ public class SnManifoldTest extends TestCase {
             VectorQ.requireLength(weights, n);
             AffineQ.require(weights);
             Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
-            Chop._12.requireAllZero(evaluate);
-            Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
+            Chop._10.requireAllZero(evaluate);
+            Chop._10.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
             Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
           } catch (Exception exception) {
             ++fails;

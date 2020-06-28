@@ -2,14 +2,18 @@
 package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
 /** Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
- * by Jan Hakenberg, 2020 */
+ * by Jan Hakenberg, 2020
+ * 
+ * "Proofs involving the Moore-Penrose inverse"
+ * wikipedia, 2020 */
 public final class HsProjection implements Serializable {
   private final HsLevers hsLevers;
 
@@ -28,10 +32,13 @@ public final class HsProjection implements Serializable {
    * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
   public Tensor projection(Tensor sequence, Tensor point) {
     Tensor levers = hsLevers.levers(sequence, point);
-    return IdentityMatrix.of(sequence.length()).subtract(levers.dot(PseudoInverse.of(levers)));
-    // ---
-    // alternative implementation:
-    // Tensor nullsp = LeftNullSpace.usingQR(levers);
-    // return Transpose.of(nullsp).dot(nullsp);
+    AtomicInteger atomicInteger = new AtomicInteger();
+    // I-X^+.X is projector on ker X
+    return Tensor.of(levers.dot(PseudoInverse.of(levers)).stream() //
+        .map(Tensor::negate) // copy
+        .map(row -> {
+          row.set(RealScalar.ONE::add, atomicInteger.getAndIncrement());
+          return row; // by ref
+        }));
   }
 }

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
@@ -41,7 +42,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020
  * 
- * @see MetD */
+ * @see MetricDistances */
 public class MetricCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
@@ -76,9 +77,5 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
     Tensor vector = target.apply(levers); // levers
     return NormalizeTotal.FUNCTION.apply( //
         vector.subtract(levers.dot(LeastSquares.usingSvd(levers, vector))));
-    // ---
-    // alternative implementation:
-    // Tensor nullsp = LeftNullSpace.usingQR(levers);
-    // return NormalizeTotal.FUNCTION.apply(nullsp.dot(vector).dot(nullsp));
   }
 }

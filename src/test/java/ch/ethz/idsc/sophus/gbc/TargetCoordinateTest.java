@@ -32,7 +32,7 @@ public class TargetCoordinateTest extends TestCase {
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
           Tensor w0 = bc0.weights(sequence, mean);
           Tensor w1 = bc1.weights(sequence, mean);
-          Chop._12.requireClose(w0, w1);
+          Chop._10.requireClose(w0, w1);
         }
       }
     }

@@ -4,8 +4,13 @@ package ch.ethz.idsc.sophus.gbc;
 import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.hs.sn.SnManifold;
+import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
+import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,6 +20,7 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
+import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -41,42 +47,70 @@ public class HsProjectionTest extends TestCase {
     Chop._08.requireClose(PseudoInverse.of(nullsp), Transpose.of(nullsp));
   }
 
+  private static Tensor _check(VectorLogManifold vectorLogManifold, Tensor sequence, Tensor point) {
+    HsLevers hsLevers = new HsLevers(vectorLogManifold);
+    Tensor X = hsLevers.levers(sequence, point);
+    Tensor XT = Transpose.of(X);
+    Tensor pinv = PseudoInverse.of(XT.dot(X));
+    SymmetricMatrixQ.require(pinv, Chop._04);
+    Tensor sigma_inverse = Symmetrize.of(pinv);
+    // ---
+    Tensor id = IdentityMatrix.of(sequence.length());
+    Tensor H = X.dot(sigma_inverse.dot(XT)); // "hat matrix"
+    // ---
+    Scalar scalar = Trace.of(H);
+    Chop._07.requireClose(scalar, Round.of(scalar));
+    // ---
+    Tensor m = new HsProjection(vectorLogManifold).projection(sequence, point);
+    Chop._08.requireClose(H, id.subtract(m));
+    Tensor n = LeftNullSpace.usingQR(X);
+    Chop._08.requireClose(m, Transpose.of(n).dot(n));
+    // ---
+    Tensor Xinv = PseudoInverse.of(X);
+    Tensor p = X.dot(Xinv);
+    Chop._08.requireClose(H, p);
+    // ---
+    Tensor d1 = Tensor.of(Diagonal.of(m).stream() //
+        .map(Scalar.class::cast) //
+        .map(RealScalar.ONE::subtract) //
+        .map(Sqrt.FUNCTION));
+    Tensor d2 = Tensor.of(IdentityMatrix.of(sequence.length()).subtract(m).stream().map(Norm._2::ofVector));
+    Chop._08.requireClose(d1, d2);
+    return sigma_inverse;
+  }
+
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      // ---
-      HsLevers hsLevers = new HsLevers(vectorLogManifold);
-      Tensor X = hsLevers.levers(sequence, point);
-      Tensor XT = Transpose.of(X);
-      Tensor pinv = PseudoInverse.of(XT.dot(X));
-      SymmetricMatrixQ.require(pinv, Chop._04);
-      Tensor sigma_inverse = Symmetrize.of(pinv);
+      Tensor sigma_inverse = _check(vectorLogManifold, sequence, point);
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
-      // ---
-      Tensor id = IdentityMatrix.of(count);
-      Tensor H = X.dot(sigma_inverse.dot(XT)); // "hat matrix"
-      // ---
-      Scalar scalar = Trace.of(H);
-      Chop._07.requireClose(scalar, Round.of(scalar));
-      // ---
-      Tensor m = new HsProjection(vectorLogManifold).projection(sequence, point);
-      Chop._08.requireClose(H, id.subtract(m));
-      Tensor n = LeftNullSpace.usingQR(X);
-      Chop._08.requireClose(m, Transpose.of(n).dot(n));
-      // ---
-      Tensor Xinv = PseudoInverse.of(X);
-      Tensor p = X.dot(Xinv);
-      Chop._08.requireClose(H, p);
-      // ---
-      Tensor d1 = Tensor.of(Diagonal.of(m).stream() //
-          .map(Scalar.class::cast) //
-          .map(RealScalar.ONE::subtract) //
-          .map(Sqrt.FUNCTION));
-      Tensor d2 = Tensor.of(IdentityMatrix.of(count).subtract(m).stream().map(Norm._2::ofVector));
-      Chop._08.requireClose(d1, d2);
+    }
+  }
+
+  public void testSe2AnchorIsTarget() {
+    Distribution distribution = UniformDistribution.of(-10, +10);
+    VectorLogManifold vectorLogManifold = Se2Manifold.INSTANCE;
+    for (int count = 4; count < 10; ++count) {
+      Tensor sequence = RandomVariate.of(distribution, count, 3);
+      Tensor point = RandomVariate.of(distribution, 3);
+      Tensor sigma_inverse = _check(vectorLogManifold, sequence, point);
+      assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
+    }
+  }
+
+  public void testSnCAnchorIsTarget() {
+    VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
+    for (int dimension = 2; dimension < 5; ++dimension) {
+      RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
+      for (int count = dimension + 1; count < 10; ++count) {
+        Tensor sequence = RandomSample.of(randomSampleInterface, count);
+        Tensor point = RandomSample.of(randomSampleInterface);
+        Tensor sigma_inverse = _check(vectorLogManifold, sequence, point);
+        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(sigma_inverse));
+      }
     }
   }
 }

@@ -6,7 +6,6 @@ import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
@@ -35,8 +34,7 @@ public class GardenDistances implements TensorUnaryOperator {
     Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
     forms = Tensor.of(sequence.stream() //
         .map(point -> mahalanobis.new Form(sequence, point)) //
-        .map(Form::sigma_inverse)) //
-        .multiply(RationalScalar.of(1, sequence.length()));
+        .map(Form::sigma_inverse));
   }
 
   @Override

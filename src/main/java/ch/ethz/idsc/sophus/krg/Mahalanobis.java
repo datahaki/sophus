@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** The reference suggests to use the inverse and the biinvariant mean m as reference point.
  * For our more general purposes, we employ the pseudo-inverse of the form evaluated at an
@@ -42,7 +44,7 @@ public class Mahalanobis implements Serializable {
       Scalar factor = RationalScalar.of(1, sequence.length());
       Tensor sigma = Transpose.of(levers).dot(levers).multiply(factor);
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
-      sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma));
+      sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
     }
 
     /** @return matrix with n rows as log_x(p_i)
@@ -60,6 +62,16 @@ public class Mahalanobis implements Serializable {
      * @see PositiveSemidefiniteMatrixQ */
     public Tensor sigma_inverse() {
       return sigma_inverse;
+    }
+
+    /** @param variogram
+     * @return */
+    public Tensor leverage(ScalarUnaryOperator variogram) {
+      return Tensor.of(levers.stream() //
+          .map(v -> sigma_inverse.dot(v).dot(v)) //
+          .map(Scalar.class::cast) //
+          .map(Sqrt.FUNCTION) //
+          .map(variogram));
     }
   }
 }

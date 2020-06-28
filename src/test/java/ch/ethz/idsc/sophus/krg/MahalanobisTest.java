@@ -10,7 +10,6 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
@@ -82,7 +81,7 @@ public class MahalanobisTest extends TestCase {
       // ---
       Tensor vt = form.levers();
       Tensor v = Transpose.of(vt);
-      Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)).multiply(RationalScalar.of(1, count)));
+      Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       HsProjection hsProjection = new HsProjection(vectorLogManifold);
       Tensor projection = hsProjection.projection(sequence, point);
       Chop._08.requireClose(dot, projection);

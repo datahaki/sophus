@@ -37,10 +37,5 @@ public class GardenCoordinate implements BarycentricCoordinate, Serializable {
     Tensor vector = NormalizeTotal.FUNCTION.apply(target.apply(point));
     return NormalizeTotal.FUNCTION.apply( //
         vector.subtract(levers.dot(LeastSquares.usingSvd(levers, vector))));
-    // ---
-    // alternative implementation:
-    // Tensor nullsp = LeftNullSpace.usingQR(levers);
-    // Tensor vector = NormalizeTotal.FUNCTION.apply(target.apply(point));
-    // return NormalizeTotal.FUNCTION.apply(nullsp.dot(vector).dot(nullsp));
   }
 }
