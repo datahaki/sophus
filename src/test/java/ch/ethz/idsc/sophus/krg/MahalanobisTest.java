@@ -62,15 +62,27 @@ public class MahalanobisTest extends TestCase {
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
-      Tensor forms = Tensor.of(sequence.stream().map(point -> mahalanobis.new Form(sequence, point).sigma_inverse()));
-      for (Tensor form : forms)
-        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(form));
+      for (Tensor point : sequence) {
+        Tensor sigma_inverse = mahalanobis.new Form(sequence, point).sigma_inverse();
+        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
+      }
+    }
+  }
+
+  public void testSe2CAnchorIsTarget() {
+    Distribution distribution = UniformDistribution.of(-10, +10);
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    for (int count = 4; count < 10; ++count) {
+      Tensor sequence = RandomVariate.of(distribution, count, 3);
+      Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
       Tensor point = RandomVariate.of(distribution, 3);
       Form form = mahalanobis.new Form(sequence, point);
       Tensor sigma_inverse = form.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
-      Tensor dot = form.levers().dot(sigma_inverse.dot(Transpose.of(form.levers()))).multiply(RationalScalar.of(1, count));
-      dot = IdentityMatrix.of(count).subtract(dot);
+      // ---
+      Tensor vt = form.levers();
+      Tensor v = Transpose.of(vt);
+      Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)).multiply(RationalScalar.of(1, count)));
       HsProjection hsProjection = new HsProjection(vectorLogManifold);
       Tensor projection = hsProjection.projection(sequence, point);
       Chop._08.requireClose(dot, projection);

@@ -5,11 +5,13 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
+import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
+import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 
 /** The reference suggests to use the inverse and the biinvariant mean m as reference point.
@@ -31,23 +33,33 @@ public class Mahalanobis implements Serializable {
    * @return n x n symmetric bilinear form */
   public class Form implements Serializable {
     private final Tensor levers;
+    private final Tensor sigma_inverse;
 
     /** @param sequence of n anchor points
      * @param point */
     public Form(Tensor sequence, Tensor point) {
-      Integers.requirePositive(sequence.length());
       levers = hsLevers.levers(sequence, point);
-    }
-
-    /** @return symmetric positive semidefinite matrix */
-    public Tensor sigma_inverse() {
-      Tensor sigma = Transpose.of(levers).dot(levers).multiply(RationalScalar.of(1, levers.length()));
+      Scalar factor = RationalScalar.of(1, sequence.length());
+      Tensor sigma = Transpose.of(levers).dot(levers).multiply(factor);
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
-      return Symmetrize.of(PseudoInverse.of(sigma));
+      sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma));
     }
 
+    /** @return matrix with n rows as log_x(p_i)
+     * 
+     * @see HsLevers */
     public Tensor levers() {
       return levers;
+    }
+
+    /** @return matrix that is symmetric positive definite if sequence contains sufficient points and
+     * parameterization of tangent space is tight, for example SE(2). Otherwise symmetric positive
+     * semidefinite matrix, for example S^d as embedded in R^(d+1).
+     * 
+     * @see PositiveDefiniteMatrixQ
+     * @see PositiveSemidefiniteMatrixQ */
+    public Tensor sigma_inverse() {
+      return sigma_inverse;
     }
   }
 }

@@ -204,7 +204,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
           Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
           Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
-          Chop._10.requireClose(xyalft, x_lft);
+          Chop._08.requireClose(xyalft, x_lft);
           Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
           Chop._06.requireClose(weights1, weightsL);
           Tensor projL = hsProjection.projection(seqlft, xyalft);
@@ -215,7 +215,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
           Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
-          Chop._10.requireClose(xyargt, x_rgt);
+          Chop._08.requireClose(xyargt, x_rgt);
           Chop._06.requireClose(weights1, weightsR);
           Tensor projR = hsProjection.projection(seqrgt, xyargt);
           Chop._10.requireClose(projection, projR);
@@ -366,7 +366,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor mean = TestHelper.spawn_Se2C();
         Tensor w0 = bc0.weights(sequence, mean);
         Tensor w1 = bc1.weights(sequence, mean);
-        Chop._12.requireClose(w0, w1);
+        Chop._10.requireClose(w0, w1);
       }
     }
   }

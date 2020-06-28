@@ -1,9 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.util.Arrays;
-import java.util.List;
-
 import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
@@ -34,7 +31,11 @@ public enum Biinvariant {
     }
   },
   /** bi-invariant
-   * does not result in a symmetric distance matrix -> should not use for kriging */
+   * does not result in a symmetric distance matrix -> should not use for kriging
+   * 
+   * Reference:
+   * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+   * by Jan Hakenberg, 2020 */
   ANCHOR {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -45,6 +46,20 @@ public enum Biinvariant {
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = AnchorCoordinate.of(vectorLogManifold, variogram);
+      return point -> barycentricCoordinate.weights(sequence, point);
+    }
+  },
+  /** bi-invariant, identical to anchor */
+  TARGET {
+    @Override
+    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      WeightingInterface weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
+      return point -> weightingInterface.weights(sequence, point);
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
   },
@@ -67,8 +82,7 @@ public enum Biinvariant {
   GARDEN {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
-      return point -> tensorUnaryOperator.apply(point);
+      return GardenDistances.of(vectorLogManifold, variogram, sequence);
     }
 
     @Override
@@ -78,20 +92,6 @@ public enum Biinvariant {
       return point -> barycentricCoordinate.weights(sequence, point);
     }
   }, //
-  /** bi-invariant */
-  TARGET {
-    @Override
-    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      WeightingInterface weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
-      return point -> weightingInterface.weights(sequence, point);
-    }
-
-    @Override
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
-      return point -> barycentricCoordinate.weights(sequence, point);
-    }
-  },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
   NORM2 {
@@ -112,7 +112,7 @@ public enum Biinvariant {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
-   * @return operator of weights that do not necessarily sum up to one */
+   * @return operator of weights that generally do not sum up to one */
   public abstract TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param vectorLogManifold
@@ -129,12 +129,4 @@ public enum Biinvariant {
    * @param sequence
    * @return operator that provides barycentric coordinates */
   public abstract TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
-
-  public static List<Biinvariant> distinct() {
-    return Arrays.asList( //
-        METRIC, //
-        GARDEN, //
-        ANCHOR, //
-        HARBOR);
-  }
 }

@@ -68,8 +68,6 @@ public enum GbcHelper {
         kriginCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 
@@ -85,21 +83,17 @@ public enum GbcHelper {
         targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 
   public static BarycentricCoordinate[] biinvariant_quantity(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        // kriging__Coordinate_of(PseudoDistances.GEODESIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        // AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        // AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        // harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        // harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        // kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        // kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 }
