@@ -10,12 +10,12 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Diagonal;
-import ch.ethz.idsc.tensor.sca.Abs;
+import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 public class AnchorDistances implements Serializable {
-  private static final Scalar ONE = RealScalar.of(1.0);
+  private static final ScalarUnaryOperator ONE_SUBTRACT = RealScalar.of(1.0)::subtract;
   // ---
   private final HsProjection hsProjection;
   private final ScalarUnaryOperator variogram;
@@ -32,7 +32,8 @@ public class AnchorDistances implements Serializable {
     return new BiinvariantVector(projection, //
         Tensor.of(Diagonal.of(projection).stream() //
             .map(Scalar.class::cast) //
-            .map(v -> Abs.between(v, ONE)) // theory asserts that v in [0, 1]
+            .map(ONE_SUBTRACT) //
+            .map(Clips.unit()) // theory asserts that leverage is in [0, 1]
             .map(Sqrt.FUNCTION) //
             .map(variogram))); //
   }

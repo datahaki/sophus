@@ -9,7 +9,6 @@ import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
 import ch.ethz.idsc.sophus.krg.TargetDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** target coordinate is identical to anchor coordinate
@@ -36,9 +35,8 @@ public class TargetCoordinate implements BarycentricCoordinate, Serializable {
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
     Form form = mahalanobis.new Form(sequence, point);
-    Tensor vector = NormalizeTotal.FUNCTION.apply(form.leverage(variogram));
-    Tensor levers = form.levers();
-    return NormalizeTotal.FUNCTION.apply( //
-        vector.subtract(levers.dot(LeastSquares.usingSvd(levers, vector))));
+    return StaticHelper.barycentric( //
+        form.levers(), //
+        NormalizeTotal.FUNCTION.apply(form.leverage(variogram)));
   }
 }

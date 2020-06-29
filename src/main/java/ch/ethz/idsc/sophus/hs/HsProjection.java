@@ -27,6 +27,8 @@ public final class HsProjection implements Serializable {
    * 
    * <p>The projection to the subspace complement is defined by the matrix Id - projection
    * 
+   * <p>In the literature the projection is referred to as residual marker matrix.
+   * 
    * @param sequence of length n
    * @param point
    * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */

@@ -7,7 +7,6 @@ import ch.ethz.idsc.sophus.hs.HsLevers;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class GardenCoordinate implements BarycentricCoordinate, Serializable {
@@ -33,9 +32,8 @@ public class GardenCoordinate implements BarycentricCoordinate, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor levers = hsLevers.levers(sequence, point);
-    Tensor vector = NormalizeTotal.FUNCTION.apply(target.apply(point));
-    return NormalizeTotal.FUNCTION.apply( //
-        vector.subtract(levers.dot(LeastSquares.usingSvd(levers, vector))));
+    return StaticHelper.barycentric( //
+        hsLevers.levers(sequence, point), //
+        NormalizeTotal.FUNCTION.apply(target.apply(point)));
   }
 }
