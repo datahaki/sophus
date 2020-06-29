@@ -73,7 +73,7 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
   public Tensor weights(Tensor sequence, Tensor point) {
     Tensor levers = hsLevers.levers(sequence, point);
     return StaticHelper.barycentric( //
-        levers, //
-        target.apply(levers)); // levers as input to target
+        target.apply(levers), // levers as input to target
+        levers);
   }
 }

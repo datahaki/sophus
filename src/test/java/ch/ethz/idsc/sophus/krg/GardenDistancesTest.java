@@ -6,10 +6,10 @@ import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -27,8 +27,7 @@ public class GardenDistancesTest extends TestCase {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     TensorUnaryOperator w1 = Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator completeDistances = GardenDistances.of(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
+    TensorUnaryOperator w2 = Biinvariant.GARDEN.weighting(vectorLogManifold, variogram, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
@@ -41,13 +40,10 @@ public class GardenDistancesTest extends TestCase {
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
     TensorUnaryOperator w1 = Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator completeDistances = GardenDistances.of(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = point -> NormalizeTotal.FUNCTION.apply(completeDistances.apply(point));
+    TensorUnaryOperator w2 = Biinvariant.GARDEN.weighting(vectorLogManifold, variogram, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
-      // boolean close =
       Chop._08.close(w1.apply(point), w2.apply(point));
-      // System.out.println(close);
     }
   }
 
@@ -85,5 +81,21 @@ public class GardenDistancesTest extends TestCase {
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
+  }
+
+  public void testEmpty() {
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    ScalarUnaryOperator variogram = s -> s;
+    TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, Tensors.empty());
+    Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
+    assertEquals(result, Tensors.empty());
+  }
+
+  public void testSingleton() {
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    ScalarUnaryOperator variogram = s -> s;
+    TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, Tensors.fromString("{{2,3,4}}"));
+    Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
+    assertEquals(result, Tensors.vector(0));
   }
 }

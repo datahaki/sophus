@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -8,27 +8,34 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 
-/* package */ enum SpanProjection {
+/** does not have equivalent in Mathematica */
+public enum LeftSpan {
   ;
   private static final Scalar _0 = RealScalar.of(0.0);
   private static final Scalar _1 = RealScalar.of(1.0);
 
-  /** @param matrix
+  /** function returns a vector vnull that satisfies
+   * vnull . matrix == 0
+   * 
    * @param vector
-   * @return (I - matrix^+ . matrix) . vector */
-  public static Tensor kernel(Tensor matrix, Tensor vector) {
-    return vector.subtract(image(matrix, vector));
+   * @param matrix transpose of matrix
+   * @return vector . (I - matrix . matrix^+) */
+  public static Tensor kernel(Tensor vector, Tensor matrix) {
+    return vector.subtract(image(vector, matrix));
   }
 
-  /** @param matrix
+  /** function returns a vector vimage that satisfies
+   * vimage . matrix == vector . matrix
+   * 
    * @param vector
-   * @return matrix^+ . matrix . vector */
-  public static Tensor image(Tensor matrix, Tensor vector) {
+   * @param matrix
+   * @return vector . matrix . matrix^+ */
+  public static Tensor image(Tensor vector, Tensor matrix) {
     SingularValueDecomposition svd = SingularValueDecomposition.of(matrix);
     Tensor u = svd.getU();
     Tensor kron = Tensor.of(svd.values().stream() //
         .map(Scalar.class::cast) //
-        .map(SpanProjection::unitize_chop));
+        .map(LeftSpan::unitize_chop));
     return u.dot(kron.pmul(vector.dot(u)));
   }
 

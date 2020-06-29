@@ -36,7 +36,7 @@ public class TargetCoordinate implements BarycentricCoordinate, Serializable {
   public Tensor weights(Tensor sequence, Tensor point) {
     Form form = mahalanobis.new Form(sequence, point);
     return StaticHelper.barycentric( //
-        form.levers(), //
-        NormalizeTotal.FUNCTION.apply(form.leverage(variogram)));
+        NormalizeTotal.FUNCTION.apply(form.leverage(variogram)), //
+        form.levers());
   }
 }

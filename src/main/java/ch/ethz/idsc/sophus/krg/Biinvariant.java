@@ -68,8 +68,8 @@ public enum Biinvariant {
   HARBOR {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      HarborDistances completeDistances = HarborDistances.frobenius(vectorLogManifold, variogram, sequence);
-      return point -> completeDistances.biinvariantVector(point).vector();
+      HarborDistances harborDistances = HarborDistances.frobenius(vectorLogManifold, variogram, sequence);
+      return point -> harborDistances.biinvariantVector(point).vector();
     }
 
     @Override
@@ -87,9 +87,7 @@ public enum Biinvariant {
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
-      BarycentricCoordinate barycentricCoordinate = GardenCoordinate.of(vectorLogManifold, tensorUnaryOperator);
-      return point -> barycentricCoordinate.weights(sequence, point);
+      return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
     }
   }, //
   /** bi-invariant
@@ -97,8 +95,8 @@ public enum Biinvariant {
   NORM2 {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      HarborDistances completeDistances = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
-      return point -> completeDistances.biinvariantVector(point).vector();
+      HarborDistances harborDistances = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
+      return point -> harborDistances.biinvariantVector(point).vector();
     }
 
     @Override

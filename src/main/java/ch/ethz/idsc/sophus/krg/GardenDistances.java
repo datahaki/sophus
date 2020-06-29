@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 public class GardenDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
-   * @param sequence non-empty
+   * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     return new GardenDistances(vectorLogManifold, variogram, sequence);

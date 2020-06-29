@@ -26,12 +26,12 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class BiinvariantTest extends TestCase {
-  public void testAbsolute() {
+  public void testAbsolute() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant biinvariant = Biinvariant.METRIC;
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
-    TensorUnaryOperator weightingInterface = //
-        biinvariant.distances(RnManifold.INSTANCE, SphericalVariogram.of(Quantity.of(10, "m"), Quantity.of(2, "s")), sequence);
+    TensorUnaryOperator weightingInterface = Serialization.copy( //
+        biinvariant.distances(RnManifold.INSTANCE, SphericalVariogram.of(Quantity.of(10, "m"), Quantity.of(2, "s")), sequence));
     Tensor point = RandomVariate.of(distribution, 3);
     Tensor weights = weightingInterface.apply(point);
     weights.map(QuantityMagnitude.singleton("s"));
@@ -56,8 +56,9 @@ public class BiinvariantTest extends TestCase {
   public void testWeighting() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     for (Biinvariant biinvariant : Biinvariant.values()) {
-      TensorUnaryOperator tensorUnaryOperator = Serialization.copy(biinvariant.weighting( //
-          RnManifold.INSTANCE, InversePowerVariogram.of(2), RandomVariate.of(distribution, 7, 3)));
+      Tensor sequence = RandomVariate.of(distribution, 7, 3);
+      TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
+          biinvariant.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
       Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
@@ -66,8 +67,9 @@ public class BiinvariantTest extends TestCase {
   public void testCoordinate() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     for (Biinvariant biinvariant : Biinvariant.values()) {
-      TensorUnaryOperator tensorUnaryOperator = Serialization.copy(biinvariant.coordinate( //
-          RnManifold.INSTANCE, InversePowerVariogram.of(2), RandomVariate.of(distribution, 7, 3)));
+      Tensor sequence = RandomVariate.of(distribution, 7, 3);
+      TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
+          biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
       Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }

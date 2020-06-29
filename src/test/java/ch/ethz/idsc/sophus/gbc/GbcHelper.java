@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.Biinvariant;
-import ch.ethz.idsc.sophus.krg.GardenDistances;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.krg.PowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,9 +14,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        BarycentricCoordinate barycentricCoordinate = //
-            GardenCoordinate.of(vectorLogManifold, GardenDistances.of(vectorLogManifold, variogram, sequence));
-        return barycentricCoordinate.weights(sequence, point);
+        return GardenCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
       }
     };
   }
