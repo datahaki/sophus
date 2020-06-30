@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class RadialBasisFunctionInterpolationTest extends TestCase {
-  public static final Biinvariant[] PDA = { Biinvariant.ANCHOR, Biinvariant.HARBOR };
+  public static final Biinvariant[] PDA = { Biinvariant.LEVERAGE, Biinvariant.HARBOR };
 
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();

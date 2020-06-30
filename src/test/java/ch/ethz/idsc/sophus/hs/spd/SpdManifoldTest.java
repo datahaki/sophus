@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
-import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
@@ -19,8 +19,8 @@ public class SpdManifoldTest extends TestCase {
     return new BarycentricCoordinate[] { //
         MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        AnchorCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        AnchorCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         TargetCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         TargetCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };

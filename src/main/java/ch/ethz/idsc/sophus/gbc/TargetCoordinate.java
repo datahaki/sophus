@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** target coordinate is identical to anchor coordinate
  * 
- * @see AnchorCoordinate
+ * @see LeverageCoordinate
  * @see TargetDistances */
 public class TargetCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold

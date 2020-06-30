@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.hs.HsLevers;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.Kriging;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,12 +17,12 @@ public class KrigingCoordinate implements TensorUnaryOperator {
   }
 
   /***************************************************/
-  private final HsLevers hsLevers;
+  private final HsDesign hsDesign;
   private final Kriging kriging;
   private final Tensor sequence;
 
   private KrigingCoordinate(TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
-    hsLevers = new HsLevers(vectorLogManifold);
+    hsDesign = new HsDesign(vectorLogManifold);
     this.kriging = Kriging.barycentric(tensorUnaryOperator, sequence);
     this.sequence = sequence;
   }
@@ -31,6 +31,6 @@ public class KrigingCoordinate implements TensorUnaryOperator {
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
         kriging.estimate(point), //
-        hsLevers.levers(sequence, point));
+        hsDesign.matrix(sequence, point));
   }
 }

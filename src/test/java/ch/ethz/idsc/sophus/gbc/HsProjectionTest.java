@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.hs.HsLevers;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
@@ -48,8 +48,8 @@ public class HsProjectionTest extends TestCase {
   }
 
   private static Tensor _check(VectorLogManifold vectorLogManifold, Tensor sequence, Tensor point) {
-    HsLevers hsLevers = new HsLevers(vectorLogManifold);
-    Tensor X = hsLevers.levers(sequence, point);
+    HsDesign hsDesign = new HsDesign(vectorLogManifold);
+    Tensor X = hsDesign.matrix(sequence, point);
     Tensor XT = Transpose.of(X);
     Tensor pinv = PseudoInverse.of(XT.dot(X));
     SymmetricMatrixQ.require(pinv, Chop._04);
@@ -61,7 +61,7 @@ public class HsProjectionTest extends TestCase {
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
     // ---
-    Tensor m = new HsProjection(vectorLogManifold).projection(sequence, point);
+    Tensor m = new HsProjection(vectorLogManifold).residualMarker(sequence, point);
     Chop._08.requireClose(H, id.subtract(m));
     Tensor n = LeftNullSpace.usingQR(X);
     Chop._08.requireClose(m, Transpose.of(n).dot(n));

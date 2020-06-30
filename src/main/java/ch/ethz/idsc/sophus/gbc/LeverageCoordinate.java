@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.AnchorDistances;
+import ch.ethz.idsc.sophus.krg.LeverageDistances;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -13,23 +13,23 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public class AnchorCoordinate implements BarycentricCoordinate, Serializable {
+public class LeverageCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new AnchorCoordinate(vectorLogManifold, variogram);
+    return new LeverageCoordinate(vectorLogManifold, variogram);
   }
 
   /***************************************************/
-  private final AnchorDistances anchorDistances;
+  private final LeverageDistances leverageDistances;
 
-  private AnchorCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    anchorDistances = new AnchorDistances(vectorLogManifold, variogram);
+  private LeverageCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    leverageDistances = new LeverageDistances(vectorLogManifold, variogram);
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    return anchorDistances.biinvariantVector(sequence, point).coordinate();
+    return leverageDistances.biinvariantVector(sequence, point).coordinate();
   }
 }

@@ -69,11 +69,11 @@ public abstract class HarborDistances implements Serializable {
     this.hsProjection = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
     this.sequence = sequence;
-    grassmann = Tensor.of(sequence.stream().map(point -> hsProjection.projection(sequence, point)));
+    grassmann = Tensor.of(sequence.stream().map(point -> hsProjection.influence(sequence, point)));
   }
 
   public BiinvariantVector biinvariantVector(Tensor point) {
-    Tensor projection = hsProjection.projection(sequence, point);
+    Tensor projection = hsProjection.influence(sequence, point);
     return new BiinvariantVector(projection, Tensor.of(grassmann.stream() //
         .map(x -> distance(x, projection)) //
         .map(variogram)));

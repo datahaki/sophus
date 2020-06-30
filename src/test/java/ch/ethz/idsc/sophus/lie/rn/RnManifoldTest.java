@@ -11,7 +11,6 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -44,36 +43,30 @@ public class RnManifoldTest extends TestCase {
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
     for (int n = 2; n < 5; ++n)
       for (int length = n + 1; length < 10; ++length) {
-        int fails = 0;
-        try {
-          Tensor points = RandomVariate.of(distribution, length, n);
-          Tensor xya = RandomVariate.of(distribution, n);
-          for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
-            Tensor weights1 = barycentricCoordinate.weights(points, xya);
-            Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-            Tensor x_recreated = biinvariantMean.mean(points, weights1);
-            Chop._06.requireClose(xya, x_recreated);
-            Tensor shift = RandomVariate.of(distribution, n);
-            { // invariant under left action
-              Tensor weightsL = barycentricCoordinate.weights( //
-                  LIE_GROUP_OPS.allLeft(points, shift), LIE_GROUP_OPS.combine(shift, xya));
-              Tolerance.CHOP.requireClose(weights1, weightsL);
-            }
-            { // invariant under left action
-              Tensor weightsR = barycentricCoordinate.weights( //
-                  LIE_GROUP_OPS.allRight(points, shift), LIE_GROUP_OPS.combine(xya, shift));
-              Tolerance.CHOP.requireClose(weights1, weightsR);
-            }
-            { // invariant under inversion
-              Tensor weightsI = barycentricCoordinate.weights( //
-                  LIE_GROUP_OPS.allInvert(points), LIE_GROUP_OPS.invert(xya));
-              Tolerance.CHOP.requireClose(weights1, weightsI);
-            }
+        Tensor points = RandomVariate.of(distribution, length, n);
+        Tensor xya = RandomVariate.of(distribution, n);
+        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+          Tensor weights1 = barycentricCoordinate.weights(points, xya);
+          Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
+          Tensor x_recreated = biinvariantMean.mean(points, weights1);
+          Chop._06.requireClose(xya, x_recreated);
+          Tensor shift = RandomVariate.of(distribution, n);
+          { // invariant under left action
+            Tensor weightsL = barycentricCoordinate.weights( //
+                LIE_GROUP_OPS.allLeft(points, shift), LIE_GROUP_OPS.combine(shift, xya));
+            Chop._04.requireClose(weights1, weightsL);
           }
-        } catch (Exception exception) {
-          ++fails;
+          { // invariant under left action
+            Tensor weightsR = barycentricCoordinate.weights( //
+                LIE_GROUP_OPS.allRight(points, shift), LIE_GROUP_OPS.combine(xya, shift));
+            Chop._04.requireClose(weights1, weightsR);
+          }
+          { // invariant under inversion
+            Tensor weightsI = barycentricCoordinate.weights( //
+                LIE_GROUP_OPS.allInvert(points), LIE_GROUP_OPS.invert(xya));
+            Chop._04.requireClose(weights1, weightsI);
+          }
         }
-        assertTrue(fails < 3);
       }
   }
 

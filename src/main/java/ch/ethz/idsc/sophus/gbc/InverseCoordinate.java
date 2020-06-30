@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.hs.HsLevers;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Inverse;
@@ -20,11 +20,11 @@ public class InverseCoordinate implements TensorUnaryOperator {
   /***************************************************/
   private final TensorUnaryOperator tensorUnaryOperator;
   private final Tensor weights;
-  private final HsLevers hsLevers;
+  private final HsDesign hsDesign;
   private final Tensor sequence;
 
   private InverseCoordinate(TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
-    hsLevers = new HsLevers(vectorLogManifold);
+    hsDesign = new HsDesign(vectorLogManifold);
     this.tensorUnaryOperator = tensorUnaryOperator;
     Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(tensorUnaryOperator)));
     weights = Inverse.of(vardst);
@@ -35,6 +35,6 @@ public class InverseCoordinate implements TensorUnaryOperator {
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
         tensorUnaryOperator.apply(point).dot(weights), //
-        hsLevers.levers(sequence, point));
+        hsDesign.matrix(sequence, point));
   }
 }

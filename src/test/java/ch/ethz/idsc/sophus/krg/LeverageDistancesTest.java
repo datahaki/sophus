@@ -14,11 +14,11 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class AnchorDistancesTest extends TestCase {
+public class LeverageDistancesTest extends TestCase {
   public void testSimple() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
-    AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold, variogram);
+    LeverageDistances anchorDistances = new LeverageDistances(vectorLogManifold, variogram);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -26,8 +26,8 @@ public class AnchorDistancesTest extends TestCase {
       BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
       WeightingInterface weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
       Tensor dmah = weightingInterface.weights(sequence, point);
-      Chop._10.requireClose(biinvariantVector.vector(), dmah);
-      Chop._10.requireClose(biinvariantVector.normalized(), NormalizeTotal.FUNCTION.apply(dmah));
+      Chop._10.requireClose(biinvariantVector.distances(), dmah);
+      Chop._10.requireClose(biinvariantVector.weighting(), NormalizeTotal.FUNCTION.apply(dmah));
     }
   }
 }

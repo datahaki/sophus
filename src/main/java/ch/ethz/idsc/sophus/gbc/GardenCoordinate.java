@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.hs.HsLevers;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.GardenDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -19,12 +19,12 @@ public class GardenCoordinate implements TensorUnaryOperator {
   }
 
   /***************************************************/
-  private final HsLevers hsLevers;
+  private final HsDesign hsDesign;
   private final TensorUnaryOperator target;
   private final Tensor sequence;
 
   private GardenCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    hsLevers = new HsLevers(vectorLogManifold);
+    hsDesign = new HsDesign(vectorLogManifold);
     target = GardenDistances.of(vectorLogManifold, variogram, sequence);
     this.sequence = sequence;
   }
@@ -33,6 +33,6 @@ public class GardenCoordinate implements TensorUnaryOperator {
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
         NormalizeTotal.FUNCTION.apply(target.apply(point)), // point as input to target
-        hsLevers.levers(sequence, point));
+        hsDesign.matrix(sequence, point));
   }
 }

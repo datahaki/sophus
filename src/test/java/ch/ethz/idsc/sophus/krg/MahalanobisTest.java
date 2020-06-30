@@ -83,7 +83,7 @@ public class MahalanobisTest extends TestCase {
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       HsProjection hsProjection = new HsProjection(vectorLogManifold);
-      Tensor projection = hsProjection.projection(sequence, point);
+      Tensor projection = hsProjection.residualMarker(sequence, point);
       Chop._08.requireClose(dot, projection);
     }
   }

@@ -29,7 +29,7 @@ public class HarborDistancesTest extends TestCase {
       HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
-      Chop._10.requireClose(v1.normalized(), v2.normalized());
+      Chop._10.requireClose(v1.weighting(), v2.weighting());
     }
   }
 
@@ -44,7 +44,7 @@ public class HarborDistancesTest extends TestCase {
       HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
-      Chop._01.requireClose(v1.normalized(), v2.normalized());
+      Chop._01.requireClose(v1.weighting(), v2.weighting());
     }
   }
 

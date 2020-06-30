@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.lie.se2c;
 
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.gbc.AnchorCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
+import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
@@ -190,7 +190,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights1 = barycentricCoordinate.weights(points, xya);
-        Tensor projection = hsProjection.projection(points, xya);
+        Tensor projection = hsProjection.influence(points, xya);
         SymmetricMatrixQ.require(projection, Chop._10);
         Chop._10.requireClose(Symmetrize.of(projection), projection);
         AffineQ.require(weights1);
@@ -207,7 +207,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Chop._08.requireClose(xyalft, x_lft);
           Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
           Chop._06.requireClose(weights1, weightsL);
-          Tensor projL = hsProjection.projection(seqlft, xyalft);
+          Tensor projL = hsProjection.influence(seqlft, xyalft);
           Chop._06.requireClose(projection, projL);
         }
         { // invariant under right action
@@ -217,7 +217,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._08.requireClose(xyargt, x_rgt);
           Chop._06.requireClose(weights1, weightsR);
-          Tensor projR = hsProjection.projection(seqrgt, xyargt);
+          Tensor projR = hsProjection.influence(seqrgt, xyargt);
           Chop._10.requireClose(projection, projR);
         }
         { // invariant under inversion
@@ -228,7 +228,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Chop._10.requireClose(check2, xyainv);
           AffineQ.require(weightsI);
           Chop._06.requireClose(weights1, weightsI);
-          Tensor projI = hsProjection.projection(seqinv, xyainv);
+          Tensor projI = hsProjection.influence(seqinv, xyainv);
           Chop._10.requireClose(projection, projI);
         }
       }
@@ -248,7 +248,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
           AffineQ.require(weights1);
           Tolerance.CHOP.requireClose(weights, weights);
-          Tensor projection = hsProjection.projection(sequence, xya);
+          Tensor projection = hsProjection.residualMarker(sequence, xya);
           Tolerance.CHOP.requireClose(projection.dot(weights), weights);
           assertEquals(Dimensions.of(projection), Arrays.asList(n, n));
           Tolerance.CHOP.requireClose(Symmetrize.of(projection), projection);
@@ -269,9 +269,9 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
-      AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
-      AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
+      LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
   public void testA4Exact() {
@@ -359,7 +359,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
-      BarycentricCoordinate bc0 = AnchorCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc0 = LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       BarycentricCoordinate bc1 = TargetCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);

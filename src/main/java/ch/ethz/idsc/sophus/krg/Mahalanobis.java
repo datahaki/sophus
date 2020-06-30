@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsLevers;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -24,10 +24,10 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class Mahalanobis implements Serializable {
-  private final HsLevers hsLevers;
+  private final HsDesign hsDesign;
 
   public Mahalanobis(VectorLogManifold vectorLogManifold) {
-    hsLevers = new HsLevers(vectorLogManifold);
+    hsDesign = new HsDesign(vectorLogManifold);
   }
 
   /** @param sequence of n anchor points
@@ -40,16 +40,16 @@ public class Mahalanobis implements Serializable {
     /** @param sequence of n anchor points
      * @param point */
     public Form(Tensor sequence, Tensor point) {
-      levers = hsLevers.levers(sequence, point);
+      levers = hsDesign.matrix(sequence, point);
       Scalar factor = RationalScalar.of(1, sequence.length());
       Tensor sigma = Transpose.of(levers).dot(levers).multiply(factor);
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
       sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
     }
 
-    /** @return matrix with n rows as log_x(p_i)
+    /** @return design matrix with n rows as log_x(p_i)
      * 
-     * @see HsLevers */
+     * @see HsDesign */
     public Tensor levers() {
       return levers;
     }

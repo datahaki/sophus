@@ -40,7 +40,7 @@ public class BiinvariantTest extends TestCase {
   public void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant[] pda = { //
-        Biinvariant.ANCHOR, //
+        Biinvariant.LEVERAGE, //
         Biinvariant.HARBOR, //
         Biinvariant.NORM2 };
     for (Biinvariant biinvariant : pda) {

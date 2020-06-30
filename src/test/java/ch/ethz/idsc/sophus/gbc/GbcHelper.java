@@ -66,8 +66,8 @@ public enum GbcHelper {
         MetricCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
@@ -87,8 +87,8 @@ public enum GbcHelper {
     return new BarycentricCoordinate[] { //
         springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //

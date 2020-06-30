@@ -7,6 +7,8 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
+/** Reference:
+ * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
 public enum RpnManifold implements HsExponential, VectorLogManifold {
   INSTANCE;
 

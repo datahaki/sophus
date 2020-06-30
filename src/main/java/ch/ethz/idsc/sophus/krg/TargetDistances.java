@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39
  * 
- * @see AnchorDistances */
+ * @see LeverageDistances */
 public class TargetDistances implements WeightingInterface, Serializable {
   /** @param vectorLogManifold
    * @param variogram

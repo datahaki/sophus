@@ -8,29 +8,30 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** immutable
  * 
- * @see AnchorDistances
+ * @see LeverageDistances
  * @see HarborDistances */
 public class BiinvariantVector implements Serializable {
-  private final Tensor projection;
+  private final Tensor influence;
   private final Tensor vector;
 
-  public BiinvariantVector(Tensor projection, Tensor vector) {
-    this.projection = projection;
+  public BiinvariantVector(Tensor influence, Tensor vector) {
+    this.influence = influence;
     this.vector = vector;
   }
 
   /** @return */
-  public Tensor vector() {
+  public Tensor distances() {
     return vector.copy();
   }
 
   /** @return vector of affine weights */
-  public Tensor normalized() {
+  public Tensor weighting() {
     return NormalizeTotal.FUNCTION.apply(vector);
   }
 
   /** @return generalized barycentric coordinate */
   public Tensor coordinate() {
-    return NormalizeTotal.FUNCTION.apply(normalized().dot(projection));
+    Tensor weights = weighting();
+    return NormalizeTotal.FUNCTION.apply(weights.subtract(influence.dot(weights)));
   }
 }

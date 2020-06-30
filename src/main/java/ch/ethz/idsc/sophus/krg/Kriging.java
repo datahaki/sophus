@@ -75,7 +75,8 @@ public class Kriging implements Serializable {
   public static Kriging of( //
       TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
     // symmetric distance matrix eq (3.7.13)
-    Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(tensorUnaryOperator)));
+    Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
+    SymmetricMatrixQ.require(vardst);
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
     Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.uniqueUnit(matrix));
     matrix.stream().forEach(row -> row.append(one));

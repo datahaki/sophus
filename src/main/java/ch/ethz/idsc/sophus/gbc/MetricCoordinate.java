@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsLevers;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.tensor.Tensor;
@@ -61,17 +61,17 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
   }
 
   /***************************************************/
-  private final HsLevers hsLevers;
+  private final HsDesign hsDesign;
   private final TensorUnaryOperator target;
 
   private MetricCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    hsLevers = new HsLevers(vectorLogManifold);
+    hsDesign = new HsDesign(vectorLogManifold);
     this.target = target;
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor levers = hsLevers.levers(sequence, point);
+    Tensor levers = hsDesign.matrix(sequence, point);
     return StaticHelper.barycentric( //
         target.apply(levers), // levers as input to target
         levers);
