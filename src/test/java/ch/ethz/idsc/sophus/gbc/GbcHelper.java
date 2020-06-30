@@ -38,11 +38,22 @@ public enum GbcHelper {
     };
   }
 
-  public static BarycentricCoordinate kriginCoordinate_of(Biinvariant biinvariant, VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate inversCoordinate_of(Biinvariant biinvariant, VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return InverseCoordinate.of( //
+            biinvariant.distances(vectorLogManifold, variogram, sequence), //
+            vectorLogManifold, sequence).apply(point);
+      }
+    };
+  }
+
+  public static BarycentricCoordinate kriginCoordinate_of(Biinvariant biinvariant, VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new BarycentricCoordinate() {
+      @Override
+      public Tensor weights(Tensor sequence, Tensor point) {
+        return KrigingCoordinate.of( //
             biinvariant.distances(vectorLogManifold, variogram, sequence), //
             vectorLogManifold, sequence).apply(point);
       }
@@ -61,6 +72,10 @@ public enum GbcHelper {
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        inversCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        inversCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        inversCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        inversCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         kriginCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriginCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //

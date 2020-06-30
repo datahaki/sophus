@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.r2.Se2ParametricDistance;
+import ch.ethz.idsc.sophus.hs.r2.Se2Parametric;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
@@ -42,7 +42,7 @@ public class GeodesicCatmullRomTest extends TestCase {
     for (int index = 0; index < 5; index++)
       control.append(Tensors.vector(Math.random(), Math.random(), Math.random()));
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(Se2ParametricDistance.INSTANCE, RealScalar.of(Math.random()));
+        KnotSpacing.centripetal(Se2Parametric.INSTANCE, RealScalar.of(Math.random()));
     Tensor knots = centripedalKnotSpacing.apply(control);
     GeodesicCatmullRom geodesicCatmullRom = GeodesicCatmullRom.of(geodesicInterface, knots, control);
     // ---

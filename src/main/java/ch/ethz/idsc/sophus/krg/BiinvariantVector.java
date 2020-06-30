@@ -6,7 +6,10 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 
-/** immutable */
+/** immutable
+ * 
+ * @see AnchorDistances
+ * @see HarborDistances */
 public class BiinvariantVector implements Serializable {
   private final Tensor projection;
   private final Tensor vector;

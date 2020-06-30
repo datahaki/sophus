@@ -39,8 +39,8 @@ public enum Biinvariant {
   ANCHOR {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      AnchorDistances diagonalDistances = new AnchorDistances(vectorLogManifold, variogram);
-      return point -> diagonalDistances.biinvariantVector(sequence, point).vector();
+      AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold, variogram);
+      return point -> anchorDistances.biinvariantVector(sequence, point).vector();
     }
 
     @Override
