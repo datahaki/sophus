@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.TensorProduct;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 
 /** formula generalized from
  * "Rotation Between Two Vectors in R^3"
@@ -25,8 +25,8 @@ public enum SnRotationMatrix {
    * @return orthogonal matrix with determinant +1 (only for valid input a and b) with matrix . a == b
    * @throws Exception if either a or b are not of Euclidean length 1 */
   public static Tensor of(Tensor a, Tensor b) {
-    Tolerance.CHOP.requireClose(Norm._2.ofVector(a), RealScalar.ONE);
-    Tolerance.CHOP.requireClose(Norm._2.ofVector(b), RealScalar.ONE);
+    Tolerance.CHOP.requireClose(Hypot.ofVector(a), RealScalar.ONE);
+    Tolerance.CHOP.requireClose(Hypot.ofVector(b), RealScalar.ONE);
     // Tensor w = TensorWedge.of(a, b).multiply(RealScalar.of(-2));
     // TODO Eade suggests to treat the case b ~= -a separately!
     Tensor ab = TensorProduct.of(a, b);

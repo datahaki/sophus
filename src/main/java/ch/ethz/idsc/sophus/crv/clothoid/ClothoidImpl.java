@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Abs;
 
 /** maps to SE(2) or SE(2) Covering
@@ -37,7 +37,7 @@ import ch.ethz.idsc.tensor.sca.Abs;
     Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
     Scalar plength = RealScalar.ZERO;
     try {
-      plength = Norm._2.of(diff).divide(Abs.FUNCTION.apply(one));
+      plength = Hypot.ofVector(diff).divide(Abs.FUNCTION.apply(one));
     } catch (Exception exception) {
       System.err.println("---");
       System.err.println(diff);

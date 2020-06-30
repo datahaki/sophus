@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.Norm;
 
 public class HsLineDistance implements LineDistance, Serializable {
@@ -55,7 +56,7 @@ public class HsLineDistance implements LineDistance, Serializable {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor tensor) {
-      return Norm._2.ofVector(orthogonal(tensor));
+      return Hypot.ofVector(orthogonal(tensor));
     }
   }
 }

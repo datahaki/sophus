@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.VectorAngle;
 import ch.ethz.idsc.tensor.sca.ArcCos;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -26,8 +26,8 @@ public enum SnMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    Chop._10.requireClose(Norm._2.ofVector(p), RealScalar.ONE);
-    Chop._10.requireClose(Norm._2.ofVector(q), RealScalar.ONE);
+    Chop._10.requireClose(Hypot.ofVector(p), RealScalar.ONE);
+    Chop._10.requireClose(Hypot.ofVector(q), RealScalar.ONE);
     return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(p.dot(q).Get()));
   }
 }

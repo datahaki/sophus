@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.rpn;
 
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /* package */ enum StaticHelper {
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
   /** @param x
    * @return */
   public static Tensor requirePoint(Tensor x) {
-    CHOP.requireClose(Norm._2.ofVector(x), RealScalar.ONE);
+    CHOP.requireClose(Hypot.ofVector(x), RealScalar.ONE);
     return x;
   }
 

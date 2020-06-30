@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.opt.Projection;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
@@ -45,7 +46,7 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     StaticHelper.requireTangent(x, v);
-    Scalar vn = Norm._2.ofVector(v);
+    Scalar vn = Hypot.ofVector(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     return NORMALIZE.apply(y);
   }

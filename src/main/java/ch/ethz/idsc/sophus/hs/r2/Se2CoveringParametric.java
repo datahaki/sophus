@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 
 /** Careful: Se2CoveringParametric is <em>not<em> a metric!
  * 
@@ -29,6 +29,6 @@ public class Se2CoveringParametric implements TensorMetric, Serializable {
   @Override // from TensorMetric
   public final Scalar distance(Tensor p, Tensor q) {
     Tensor log = Se2CoveringExponential.INSTANCE.log(lieGroup.element(p).inverse().combine(q));
-    return Norm._2.ofVector(log.extract(0, 2)); // degenerate bilinear form [1 1 0]
+    return Hypot.ofVector(log.extract(0, 2)); // degenerate bilinear form [1 1 0]
   }
 }

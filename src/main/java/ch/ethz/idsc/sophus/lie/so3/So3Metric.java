@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 
 /** left-invariant Riemannian distance on SO(3)
  * 
@@ -17,6 +17,6 @@ public enum So3Metric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Norm._2.ofVector(Rodrigues.INSTANCE.vectorLog(LinearSolve.of(p, q)));
+    return Hypot.ofVector(Rodrigues.INSTANCE.vectorLog(LinearSolve.of(p, q)));
   }
 }
