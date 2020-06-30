@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
+import ch.ethz.idsc.tensor.red.Diagonal;
 
 /** References:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
@@ -23,39 +24,51 @@ public final class HsProjection implements Serializable {
     hsDesign = new HsDesign(vectorLogManifold);
   }
 
-  /** projection matrix defines a projection of a tangent vector at given point to a vector in
-   * the subspace of the tangent space at given point. The subspace depends on the given sequence.
-   * 
-   * <p>The projection to the subspace complement is defined by the matrix Id - projection
-   * 
-   * <p>In the literature the projection is referred to as influence matrix, or hat matrix.
-   * 
-   * @param sequence of length n
-   * @param point
-   * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
-  public Tensor influence(Tensor sequence, Tensor point) {
-    Tensor levers = hsDesign.matrix(sequence, point);
-    return levers.dot(PseudoInverse.of(levers));
-  }
+  public class Matrix implements Serializable {
+    private final Tensor influence;
 
-  /** projection matrix defines a projection of a tangent vector at given point to a vector in
-   * the subspace of the tangent space at given point. The subspace depends on the given sequence.
-   * 
-   * <p>The projection to the subspace complement is defined by the matrix Id - projection
-   * 
-   * <p>In the literature the projection is referred to as residual marker matrix.
-   * 
-   * @param sequence of length n
-   * @param point
-   * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
-  public Tensor residualMarker(Tensor sequence, Tensor point) {
-    AtomicInteger atomicInteger = new AtomicInteger();
-    // I-X^+.X is projector on ker X
-    return Tensor.of(influence(sequence, point).stream() //
-        .map(Tensor::negate) // copy
-        .map(row -> {
-          row.set(RealScalar.ONE::add, atomicInteger.getAndIncrement());
-          return row; // by ref
-        }));
+    public Matrix(Tensor sequence, Tensor point) {
+      Tensor levers = hsDesign.matrix(sequence, point);
+      influence = levers.dot(PseudoInverse.of(levers));
+    }
+
+    /** projection matrix defines a projection of a tangent vector at given point to a vector in
+     * the subspace of the tangent space at given point. The subspace depends on the given sequence.
+     * 
+     * <p>The projection to the subspace complement is defined by the matrix Id - projection
+     * 
+     * <p>In the literature the projection is referred to as influence matrix, or hat matrix.
+     * 
+     * @param sequence of length n
+     * @param point
+     * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
+    public Tensor influence() {
+      return influence;
+    }
+
+    public Tensor leverages() {
+      return Diagonal.of(influence);
+    }
+
+    /** projection matrix defines a projection of a tangent vector at given point to a vector in
+     * the subspace of the tangent space at given point. The subspace depends on the given sequence.
+     * 
+     * <p>The projection to the subspace complement is defined by the matrix Id - projection
+     * 
+     * <p>In the literature the projection is referred to as residual marker matrix.
+     * 
+     * @param sequence of length n
+     * @param point
+     * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
+    public Tensor residualMarker() {
+      AtomicInteger atomicInteger = new AtomicInteger();
+      // I-X^+.X is projector on ker X
+      return Tensor.of(influence.stream() //
+          .map(Tensor::negate) // copy
+          .map(row -> {
+            row.set(RealScalar.ONE::add, atomicInteger.getAndIncrement());
+            return row; // by ref
+          }));
+    }
   }
 }

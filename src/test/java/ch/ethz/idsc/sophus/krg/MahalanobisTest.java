@@ -50,7 +50,7 @@ public class MahalanobisTest extends TestCase {
         for (Tensor form : forms)
           assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(form, Chop._08)); // has excess dimension
         Tensor point = RandomSample.of(randomSampleInterface);
-        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(mahalanobis.new Form(sequence, point).sigma_inverse()));
+        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(mahalanobis.new Form(sequence, point).sigma_inverse(), Chop._08));
       }
     }
   }
@@ -83,7 +83,7 @@ public class MahalanobisTest extends TestCase {
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       HsProjection hsProjection = new HsProjection(vectorLogManifold);
-      Tensor projection = hsProjection.residualMarker(sequence, point);
+      Tensor projection = hsProjection.new Matrix(sequence, point).residualMarker();
       Chop._08.requireClose(dot, projection);
     }
   }

@@ -190,7 +190,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights1 = barycentricCoordinate.weights(points, xya);
-        Tensor projection = hsProjection.influence(points, xya);
+        Tensor projection = hsProjection.new Matrix(points, xya).influence();
         SymmetricMatrixQ.require(projection, Chop._10);
         Chop._10.requireClose(Symmetrize.of(projection), projection);
         AffineQ.require(weights1);
@@ -207,7 +207,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Chop._08.requireClose(xyalft, x_lft);
           Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
           Chop._06.requireClose(weights1, weightsL);
-          Tensor projL = hsProjection.influence(seqlft, xyalft);
+          Tensor projL = hsProjection.new Matrix(seqlft, xyalft).influence();
           Chop._06.requireClose(projection, projL);
         }
         { // invariant under right action
@@ -217,7 +217,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._08.requireClose(xyargt, x_rgt);
           Chop._06.requireClose(weights1, weightsR);
-          Tensor projR = hsProjection.influence(seqrgt, xyargt);
+          Tensor projR = hsProjection.new Matrix(seqrgt, xyargt).influence();
           Chop._10.requireClose(projection, projR);
         }
         { // invariant under inversion
@@ -228,7 +228,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Chop._10.requireClose(check2, xyainv);
           AffineQ.require(weightsI);
           Chop._06.requireClose(weights1, weightsI);
-          Tensor projI = hsProjection.influence(seqinv, xyainv);
+          Tensor projI = hsProjection.new Matrix(seqinv, xyainv).influence();
           Chop._10.requireClose(projection, projI);
         }
       }
@@ -248,7 +248,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
           AffineQ.require(weights1);
           Tolerance.CHOP.requireClose(weights, weights);
-          Tensor projection = hsProjection.residualMarker(sequence, xya);
+          Tensor projection = hsProjection.new Matrix(sequence, xya).residualMarker();
           Tolerance.CHOP.requireClose(projection.dot(weights), weights);
           assertEquals(Dimensions.of(projection), Arrays.asList(n, n));
           Tolerance.CHOP.requireClose(Symmetrize.of(projection), projection);

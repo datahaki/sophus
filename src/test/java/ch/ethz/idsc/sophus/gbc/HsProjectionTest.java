@@ -61,7 +61,7 @@ public class HsProjectionTest extends TestCase {
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
     // ---
-    Tensor m = new HsProjection(vectorLogManifold).residualMarker(sequence, point);
+    Tensor m = new HsProjection(vectorLogManifold).new Matrix(sequence, point).residualMarker();
     Chop._08.requireClose(H, id.subtract(m));
     Tensor n = LeftNullSpace.usingQR(X);
     Chop._08.requireClose(m, Transpose.of(n).dot(n));

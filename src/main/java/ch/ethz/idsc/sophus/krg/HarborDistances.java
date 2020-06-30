@@ -4,11 +4,14 @@ package ch.ethz.idsc.sophus.krg;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.HsProjection;
+import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.gr.GrMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.red.Diagonal;
 import ch.ethz.idsc.tensor.red.Frobenius;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -25,6 +28,15 @@ public abstract class HarborDistances implements Serializable {
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Frobenius.between(x, projection);
+      }
+    };
+  }
+
+  public static HarborDistances diagonal(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new HarborDistances(vectorLogManifold, variogram, sequence) {
+      @Override
+      protected Scalar distance(Tensor x, Tensor projection) {
+        return Hypot.ofVector(Diagonal.of(x).subtract(Diagonal.of(projection)));
       }
     };
   }
@@ -63,20 +75,21 @@ public abstract class HarborDistances implements Serializable {
 
   /** @param vectorLogManifold
    * @param variogram
-   * @param sequence
-   * @param tensorMetric */
+   * @param sequence */
   private HarborDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     this.hsProjection = new HsProjection(vectorLogManifold);
     this.variogram = variogram;
     this.sequence = sequence;
-    grassmann = Tensor.of(sequence.stream().map(point -> hsProjection.influence(sequence, point)));
+    grassmann = Tensor.of(sequence.stream().map(point -> hsProjection.new Matrix(sequence, point).influence()));
   }
 
   public BiinvariantVector biinvariantVector(Tensor point) {
-    Tensor projection = hsProjection.influence(sequence, point);
-    return new BiinvariantVector(projection, Tensor.of(grassmann.stream() //
-        .map(x -> distance(x, projection)) //
-        .map(variogram)));
+    Matrix matrix = hsProjection.new Matrix(sequence, point);
+    return new BiinvariantVector( //
+        matrix.influence(), //
+        Tensor.of(grassmann.stream() //
+            .map(x -> distance(x, matrix.influence())) //
+            .map(variogram)));
   }
 
   protected abstract Scalar distance(Tensor x, Tensor projection);

@@ -5,10 +5,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsProjection;
+import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Diagonal;
 import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
@@ -26,9 +26,10 @@ public class LeverageDistances implements Serializable {
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    Tensor influence = hsProjection.influence(sequence, point); // hat matrix
-    return new BiinvariantVector(influence, //
-        Tensor.of(Diagonal.of(influence).stream() // stream of leverages
+    Matrix matrix = hsProjection.new Matrix(sequence, point);
+    return new BiinvariantVector( //
+        matrix.influence(), // influence matrix, or hat matrix
+        Tensor.of(matrix.leverages().stream() // stream of leverages
             .map(Scalar.class::cast) //
             .map(Clips.unit()) // theory asserts that leverage is in [0, 1]
             .map(Sqrt.FUNCTION) //
