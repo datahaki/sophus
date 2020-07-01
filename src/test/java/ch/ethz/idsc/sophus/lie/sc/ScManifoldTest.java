@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.sc;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.InverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.math.InverseNorm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -14,7 +14,7 @@ import junit.framework.TestCase;
 
 public class ScManifoldTest extends TestCase {
   public static final BarycentricCoordinate INSTANCE = //
-      InverseDistanceCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
+      MetricCoordinate.custom(ScManifold.INSTANCE, InverseNorm.of(ScVectorNorm.INSTANCE));
 
   public void testSimple() {
     Tensor sequence = Tensors.vector(2, 4).map(Tensors::of);

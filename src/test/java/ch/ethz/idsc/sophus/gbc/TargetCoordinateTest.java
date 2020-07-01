@@ -24,8 +24,8 @@ public class TargetCoordinateTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
-      BarycentricCoordinate bc0 = InverseLeverageCoordinate.slow(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = InverseLeverageCoordinate.fast(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc0 = LeverageCoordinate.slow(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeverageCoordinate.fast(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int d = 3; d < 7; ++d) {
         Tensor mean = UnitVector.of(d, 0);
         for (int n = d + 1; n < d + 3; ++n) {

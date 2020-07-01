@@ -14,6 +14,6 @@ public enum AffineCoordinate {
   /** @param vectorLogManifold
    * @return biinvariant generalized barycentric coordinates */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold) {
-    return InverseDistanceCoordinate.custom(vectorLogManifold, AFFINE);
+    return MetricCoordinate.custom(vectorLogManifold, AFFINE);
   }
 }

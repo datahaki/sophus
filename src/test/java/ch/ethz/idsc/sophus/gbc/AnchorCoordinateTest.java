@@ -15,8 +15,8 @@ public class AnchorCoordinateTest extends TestCase {
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
-    BarycentricCoordinate anchorCoordinate = InverseLeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, variogram);
-    BarycentricCoordinate targetCoordinate = InverseLeverageCoordinate.fast(Se2CoveringManifold.INSTANCE, variogram);
+    BarycentricCoordinate anchorCoordinate = LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, variogram);
+    BarycentricCoordinate targetCoordinate = LeverageCoordinate.fast(Se2CoveringManifold.INSTANCE, variogram);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);

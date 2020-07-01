@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.krg;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
-import ch.ethz.idsc.sophus.gbc.InverseDistanceCoordinate;
-import ch.ethz.idsc.sophus.gbc.InverseLeverageCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
+import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -25,7 +25,7 @@ public enum Biinvariant {
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = InverseDistanceCoordinate.of(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = MetricCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -35,7 +35,7 @@ public enum Biinvariant {
     }
   },
   /** bi-invariant, identical to anchor */
-  LEVERAGE1 {
+  TARGET {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       WeightingInterface weightingInterface = LeverageDistances.fast(vectorLogManifold, variogram);
@@ -44,7 +44,7 @@ public enum Biinvariant {
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = InverseLeverageCoordinate.fast(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.fast(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -59,7 +59,7 @@ public enum Biinvariant {
    * Reference:
    * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
    * by Jan Hakenberg, 2020 */
-  LEVERAGE2 {
+  ANCHOR {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       WeightingInterface weightingInterface = LeverageDistances.slow(vectorLogManifold, variogram);
@@ -68,7 +68,7 @@ public enum Biinvariant {
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = InverseLeverageCoordinate.slow(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.slow(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
