@@ -10,15 +10,6 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public enum GbcHelper {
   ;
-  public static BarycentricCoordinate springCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return GardenCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
-      }
-    };
-  }
-
   public static BarycentricCoordinate harborCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
@@ -28,12 +19,11 @@ public enum GbcHelper {
     };
   }
 
-  public static BarycentricCoordinate targetCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate gardenCoordinate_of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
-        return barycentricCoordinate.weights(sequence, point);
+        return GardenCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
       }
     };
   }
@@ -62,16 +52,16 @@ public enum GbcHelper {
 
   public static BarycentricCoordinate[] barycentrics(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        MetricCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        MetricCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        InverseDistanceCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        InverseDistanceCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        InverseLeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
+        InverseLeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        InverseLeverageCoordinate.fast(vectorLogManifold, InversePowerVariogram.of(1)), //
+        InverseLeverageCoordinate.fast(vectorLogManifold, InversePowerVariogram.of(2)), //
         inversCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
         inversCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         inversCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
@@ -85,14 +75,14 @@ public enum GbcHelper {
 
   public static BarycentricCoordinate[] biinvariant(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        springCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        InverseLeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
+        InverseLeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        targetCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        InverseLeverageCoordinate.fast(vectorLogManifold, InversePowerVariogram.of(1)), //
+        InverseLeverageCoordinate.fast(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };

@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
-import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseLeverageCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
@@ -23,11 +23,11 @@ import junit.framework.TestCase;
 
 public class HeManifoldTest extends TestCase {
   private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(HeManifold.INSTANCE);
-  public static final BarycentricCoordinate INSTANCE = MetricCoordinate.custom( //
+  public static final BarycentricCoordinate INSTANCE = InverseDistanceCoordinate.custom( //
       HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      LeverageCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      LeverageCoordinate.of(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      InverseLeverageCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      InverseLeverageCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE, //
       INSTANCE //
   };

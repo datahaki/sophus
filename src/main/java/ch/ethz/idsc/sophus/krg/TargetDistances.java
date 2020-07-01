@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -19,19 +18,11 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39
  * 
  * @see LeverageDistances */
-public class TargetDistances implements WeightingInterface, Serializable {
-  /** @param vectorLogManifold
-   * @param variogram
-   * @return */
-  public static WeightingInterface of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new TargetDistances(vectorLogManifold, Objects.requireNonNull(variogram));
-  }
-
-  /***************************************************/
+/* package */ class TargetDistances implements WeightingInterface, Serializable {
   private final Mahalanobis mahalanobis;
   private final ScalarUnaryOperator variogram;
 
-  private TargetDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public TargetDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     mahalanobis = new Mahalanobis(vectorLogManifold);
     this.variogram = variogram;
   }

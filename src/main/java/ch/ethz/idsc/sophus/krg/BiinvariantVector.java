@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** immutable
  * 
- * @see LeverageDistances
+ * @see AnchorDistances
  * @see HarborDistances */
 public class BiinvariantVector implements Serializable {
   private final Tensor influence;

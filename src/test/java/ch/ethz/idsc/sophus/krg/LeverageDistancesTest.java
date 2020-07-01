@@ -18,13 +18,13 @@ public class LeverageDistancesTest extends TestCase {
   public void testSimple() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
-    LeverageDistances anchorDistances = new LeverageDistances(vectorLogManifold, variogram);
+    AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold, variogram);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
-      WeightingInterface weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
+      WeightingInterface weightingInterface = LeverageDistances.fast(vectorLogManifold, variogram);
       Tensor dmah = weightingInterface.weights(sequence, point);
       Chop._10.requireClose(biinvariantVector.distances(), dmah);
       Chop._10.requireClose(biinvariantVector.weighting(), NormalizeTotal.FUNCTION.apply(dmah));

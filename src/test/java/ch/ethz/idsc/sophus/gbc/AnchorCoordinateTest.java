@@ -11,12 +11,12 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class LeverageCoordinateTest extends TestCase {
+public class AnchorCoordinateTest extends TestCase {
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
-    BarycentricCoordinate anchorCoordinate = LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
-    BarycentricCoordinate targetCoordinate = TargetCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
+    BarycentricCoordinate anchorCoordinate = InverseLeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, variogram);
+    BarycentricCoordinate targetCoordinate = InverseLeverageCoordinate.fast(Se2CoveringManifold.INSTANCE, variogram);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);

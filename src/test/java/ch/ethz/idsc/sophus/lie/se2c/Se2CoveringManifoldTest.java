@@ -5,9 +5,8 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
-import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseLeverageCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
@@ -46,7 +45,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE);
   private static final BarycentricCoordinate[] QUANTITY_COORDINATES = //
       GbcHelper.biinvariant_quantity(Se2CoveringManifold.INSTANCE);
-  private static final BarycentricCoordinate AD_INVAR = MetricCoordinate.custom( //
+  private static final BarycentricCoordinate AD_INVAR = InverseDistanceCoordinate.custom( //
       Se2CoveringManifold.INSTANCE, //
       InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
 
@@ -257,9 +256,9 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
-      LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
-      LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      InverseLeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
+      InverseLeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      InverseLeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
   public void testA4Exact() {
@@ -342,8 +341,8 @@ public class Se2CoveringManifoldTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
-      BarycentricCoordinate bc0 = LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = TargetCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc0 = InverseLeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = InverseLeverageCoordinate.fast(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
         Tensor mean = TestHelper.spawn_Se2C();

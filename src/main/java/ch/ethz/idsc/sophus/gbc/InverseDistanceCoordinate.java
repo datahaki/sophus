@@ -41,7 +41,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * @see MetricDistances */
-public class MetricCoordinate implements BarycentricCoordinate, Serializable {
+public class InverseDistanceCoordinate implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
    * @param variogram
    * @return */
@@ -57,14 +57,14 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
    * @param target operator with design matrix as input
    * @return */
   public static BarycentricCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    return new MetricCoordinate(vectorLogManifold, Objects.requireNonNull(target));
+    return new InverseDistanceCoordinate(vectorLogManifold, Objects.requireNonNull(target));
   }
 
   /***************************************************/
   private final HsDesign hsDesign;
   private final TensorUnaryOperator target;
 
-  private MetricCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
+  private InverseDistanceCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.target = target;
   }

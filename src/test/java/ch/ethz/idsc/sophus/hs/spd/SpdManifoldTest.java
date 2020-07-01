@@ -2,9 +2,8 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
-import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseLeverageCoordinate;
 import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,12 +16,12 @@ public class SpdManifoldTest extends TestCase {
   public static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES(Tensor sequence) {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
-        MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        TargetCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        TargetCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        InverseDistanceCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        InverseDistanceCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        InverseLeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        InverseLeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        InverseLeverageCoordinate.fast(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        InverseLeverageCoordinate.fast(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };
   }
 

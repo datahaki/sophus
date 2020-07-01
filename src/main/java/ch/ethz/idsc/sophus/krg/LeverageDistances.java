@@ -1,38 +1,25 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsProjection;
-import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Clips;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/** @see TargetDistances */
-public class LeverageDistances implements Serializable {
-  private final HsProjection hsProjection;
-  private final ScalarUnaryOperator variogram;
-
+public enum LeverageDistances {
+  ;
   /** @param vectorLogManifold
-   * @param variogram */
-  public LeverageDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    this.hsProjection = new HsProjection(vectorLogManifold);
-    this.variogram = Objects.requireNonNull(variogram);
+   * @param variogram
+   * @return */
+  public static WeightingInterface fast(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new TargetDistances(vectorLogManifold, Objects.requireNonNull(variogram));
   }
 
-  public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    Matrix matrix = hsProjection.new Matrix(sequence, point);
-    return new BiinvariantVector( //
-        matrix.influence(), // influence matrix, or hat matrix
-        Tensor.of(matrix.leverages().stream() // stream of leverages
-            .map(Scalar.class::cast) //
-            .map(Clips.unit()) // theory asserts that leverage is in [0, 1]
-            .map(Sqrt.FUNCTION) //
-            .map(variogram))); //
+  /** @param vectorLogManifold
+   * @param variogram
+   * @return */
+  public static WeightingInterface slow(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+    return new AnchorDistances(vectorLogManifold, Objects.requireNonNull(variogram));
   }
 }

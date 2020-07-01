@@ -55,7 +55,7 @@ public class RnGeodesicTest extends TestCase {
       SymmetricMatrixQ.require(vardst);
     }
     {
-      TensorUnaryOperator tensorUnaryOperator = Biinvariant.LEVERAGE.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
+      TensorUnaryOperator tensorUnaryOperator = Biinvariant.LEVERAGE2.distances(RnManifold.INSTANCE, PowerVariogram.of(1, 1.2), sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       assertFalse(SymmetricMatrixQ.of(vardst));
     }

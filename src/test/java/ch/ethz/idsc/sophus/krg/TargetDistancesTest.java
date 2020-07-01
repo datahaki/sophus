@@ -23,8 +23,8 @@ public class TargetDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(1.3);
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.LEVERAGE.distances(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = Biinvariant.TARGET.distances(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w1 = Biinvariant.LEVERAGE2.distances(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w2 = Biinvariant.LEVERAGE1.distances(vectorLogManifold, variogram, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
@@ -36,8 +36,8 @@ public class TargetDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(1.4);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.LEVERAGE.distances(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = Biinvariant.TARGET.distances(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w1 = Biinvariant.LEVERAGE2.distances(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w2 = Biinvariant.LEVERAGE1.distances(vectorLogManifold, variogram, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
@@ -49,8 +49,8 @@ public class TargetDistancesTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     VectorLogManifold vectorLogManifold = Se2Manifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.LEVERAGE.distances(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = Biinvariant.TARGET.distances(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w1 = Biinvariant.LEVERAGE2.distances(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w2 = Biinvariant.LEVERAGE1.distances(vectorLogManifold, variogram, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(distribution, 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
@@ -59,7 +59,7 @@ public class TargetDistancesTest extends TestCase {
 
   public void testNullFail() {
     try {
-      TargetDistances.of(Se2Manifold.INSTANCE, null);
+      LeverageDistances.fast(Se2Manifold.INSTANCE, null);
       fail();
     } catch (Exception exception) {
       // ---

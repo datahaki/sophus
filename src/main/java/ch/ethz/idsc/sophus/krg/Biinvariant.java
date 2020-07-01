@@ -4,9 +4,8 @@ package ch.ethz.idsc.sophus.krg;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
-import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseDistanceCoordinate;
+import ch.ethz.idsc.sophus.gbc.InverseLeverageCoordinate;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -26,7 +25,7 @@ public enum Biinvariant {
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = MetricCoordinate.of(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = InverseDistanceCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -35,22 +34,17 @@ public enum Biinvariant {
       return "Inverse Distance";
     }
   },
-  /** bi-invariant
-   * does not result in a symmetric distance matrix -> should not use for kriging
-   * 
-   * Reference:
-   * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
-   * by Jan Hakenberg, 2020 */
-  LEVERAGE {
+  /** bi-invariant, identical to anchor */
+  LEVERAGE1 {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      LeverageDistances leverageDistances = new LeverageDistances(vectorLogManifold, variogram);
-      return point -> leverageDistances.biinvariantVector(sequence, point).distances();
+      WeightingInterface weightingInterface = LeverageDistances.fast(vectorLogManifold, variogram);
+      return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.of(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = InverseLeverageCoordinate.fast(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -59,17 +53,22 @@ public enum Biinvariant {
       return "Inverse Leverage";
     }
   },
-  /** bi-invariant, identical to anchor */
-  TARGET {
+  /** bi-invariant
+   * does not result in a symmetric distance matrix -> should not use for kriging
+   * 
+   * Reference:
+   * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+   * by Jan Hakenberg, 2020 */
+  LEVERAGE2 {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      WeightingInterface weightingInterface = TargetDistances.of(vectorLogManifold, variogram);
+      WeightingInterface weightingInterface = LeverageDistances.slow(vectorLogManifold, variogram);
       return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = InverseLeverageCoordinate.slow(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
