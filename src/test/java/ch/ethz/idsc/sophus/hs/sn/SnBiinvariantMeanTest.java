@@ -41,7 +41,6 @@ public class SnBiinvariantMeanTest extends TestCase {
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
         Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
         Chop._12.requireAllZero(evaluate);
-        Chop._12.requireClose(mean, DeprecatedSnMean.INSTANCE.mean(sequence, weights));
         Chop._05.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
       }
   }
@@ -53,14 +52,8 @@ public class SnBiinvariantMeanTest extends TestCase {
         Tensor angles = RandomVariate.of(distribution, n);
         Tensor sequence = angles.map(AngleVector::of);
         Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
-        {
-          Tensor point = DeprecatedSnMean.INSTANCE.mean(sequence, weights);
-          Chop._10.requireClose(ArcTan2D.of(point), Mean.of(angles));
-        }
-        {
-          Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);
-          Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
-        }
+        Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);
+        Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
       }
   }
 }
