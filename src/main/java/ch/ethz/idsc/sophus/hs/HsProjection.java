@@ -27,9 +27,11 @@ public final class HsProjection implements Serializable {
   public class Matrix implements Serializable {
     private final Tensor influence;
 
+    /** @param sequence
+     * @param point */
     public Matrix(Tensor sequence, Tensor point) {
-      Tensor levers = hsDesign.matrix(sequence, point);
-      influence = levers.dot(PseudoInverse.of(levers));
+      Tensor matrix = hsDesign.matrix(sequence, point);
+      influence = matrix.dot(PseudoInverse.of(matrix));
     }
 
     /** projection matrix defines a projection of a tangent vector at given point to a vector in
@@ -37,10 +39,9 @@ public final class HsProjection implements Serializable {
      * 
      * <p>The projection to the subspace complement is defined by the matrix Id - projection
      * 
-     * <p>In the literature the projection is referred to as influence matrix, or hat matrix.
+     * <p>In the literature the projection is referred to as influence matrix, hat matrix. or
+     * predicted value maker matrix.
      * 
-     * @param sequence of length n
-     * @param point
      * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
     public Tensor influence() {
       return influence;
@@ -55,12 +56,10 @@ public final class HsProjection implements Serializable {
      * 
      * <p>The projection to the subspace complement is defined by the matrix Id - projection
      * 
-     * <p>In the literature the projection is referred to as residual marker matrix.
+     * <p>In the literature the projection is referred to as residual maker matrix.
      * 
-     * @param sequence of length n
-     * @param point
      * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
-    public Tensor residualMarker() {
+    public Tensor residualMaker() {
       AtomicInteger atomicInteger = new AtomicInteger();
       // I-X^+.X is projector on ker X
       return Tensor.of(influence.stream() //

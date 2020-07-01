@@ -17,8 +17,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   }
 
   @Override
-  public Tensor apply(Tensor levers) {
-    return NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
+  public Tensor apply(Tensor matrix) {
+    return NormalizeTotal.FUNCTION.apply(Tensor.of(matrix.stream() //
         .map(Norm._2::ofVector) //
         .map(variogram)));
   }

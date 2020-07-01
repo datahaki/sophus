@@ -10,12 +10,12 @@ import ch.ethz.idsc.tensor.mat.LeastSquares;
 /* package */ enum StaticHelper {
   ;
   /** function returns a vector vnull that satisfies
-   * vnull . levers == 0
+   * vnull . matrix == 0
    * 
    * @param vector
-   * @param levers
+   * @param matrix
    * @return barycentric projection of vector */
-  public static Tensor barycentric(Tensor vector, Tensor levers) {
-    return NormalizeTotal.FUNCTION.apply(LeftSpan.kernel(vector, levers));
+  public static Tensor barycentric(Tensor vector, Tensor matrix) {
+    return NormalizeTotal.FUNCTION.apply(LeftSpan.kernel(vector, matrix));
   }
 }

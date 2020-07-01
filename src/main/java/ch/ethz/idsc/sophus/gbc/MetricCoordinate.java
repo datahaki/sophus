@@ -54,7 +54,7 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
    * should be passed to the function {@link #weights(Tensor, Tensor)}!
    * 
    * @param vectorLogManifold
-   * @param target operator with levers as input
+   * @param target operator with design matrix as input
    * @return */
   public static BarycentricCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
     return new MetricCoordinate(vectorLogManifold, Objects.requireNonNull(target));
@@ -71,9 +71,9 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor levers = hsDesign.matrix(sequence, point);
+    Tensor matrix = hsDesign.matrix(sequence, point);
     return StaticHelper.barycentric( //
-        target.apply(levers), // levers as input to target
-        levers);
+        target.apply(matrix), // design matrix as input to target
+        matrix);
   }
 }

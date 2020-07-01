@@ -79,11 +79,11 @@ public class MahalanobisTest extends TestCase {
       Tensor sigma_inverse = form.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
       // ---
-      Tensor vt = form.levers();
+      Tensor vt = form.matrix();
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       HsProjection hsProjection = new HsProjection(vectorLogManifold);
-      Tensor projection = hsProjection.new Matrix(sequence, point).residualMarker();
+      Tensor projection = hsProjection.new Matrix(sequence, point).residualMaker();
       Chop._08.requireClose(dot, projection);
     }
   }

@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** biinvariant generalized barycentric coordinates that do not satisfy the lagrange property */
 public enum AffineCoordinate {
   ;
-  private static final TensorUnaryOperator AFFINE = levers -> ConstantArray.of(RealScalar.ONE, levers.length());
+  private static final TensorUnaryOperator AFFINE = matrix -> ConstantArray.of(RealScalar.ONE, matrix.length());
 
   /** @param vectorLogManifold
    * @return biinvariant generalized barycentric coordinates */

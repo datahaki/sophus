@@ -5,6 +5,8 @@ import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.krg.Biinvariant;
+import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -76,7 +78,9 @@ public class RnManifoldTest extends TestCase {
       for (int length = n + 1; length < 10; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor x = RandomVariate.of(distribution, n);
-        Tensor weights = OriginalInverseDistanceCoordinates.INSTANCE.weights(points, x);
+        TensorUnaryOperator tensorUnaryOperator = //
+            Biinvariant.METRIC.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        Tensor weights = tensorUnaryOperator.apply(x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(x, y);
       }
@@ -87,7 +91,8 @@ public class RnManifoldTest extends TestCase {
     for (int n = 2; n < 6; ++n)
       for (int length = n + 1; length < 10; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
-        TensorUnaryOperator tensorUnaryOperator = x -> OriginalInverseDistanceCoordinates.INSTANCE.weights(points, x);
+        TensorUnaryOperator tensorUnaryOperator = //
+            Biinvariant.METRIC.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
       }
   }
@@ -98,7 +103,9 @@ public class RnManifoldTest extends TestCase {
       for (int length = n + 1; length < 10; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor x = RandomVariate.of(distribution, n);
-        Tensor weights = OriginalInverseDistanceCoordinates.INSTANCE.weights(points, x);
+        TensorUnaryOperator tensorUnaryOperator = //
+            Biinvariant.METRIC.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        Tensor weights = tensorUnaryOperator.apply(x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._10.requireClose(x, y);
       }

@@ -248,7 +248,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
           AffineQ.require(weights1);
           Tolerance.CHOP.requireClose(weights, weights);
-          Tensor projection = hsProjection.new Matrix(sequence, xya).residualMarker();
+          Tensor projection = hsProjection.new Matrix(sequence, xya).residualMaker();
           Tolerance.CHOP.requireClose(projection.dot(weights), weights);
           assertEquals(Dimensions.of(projection), Arrays.asList(n, n));
           Tolerance.CHOP.requireClose(Symmetrize.of(projection), projection);

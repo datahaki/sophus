@@ -38,6 +38,6 @@ public class TargetDistances implements WeightingInterface, Serializable {
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return mahalanobis.new Form(sequence, point).leverage(variogram);
+    return mahalanobis.new Form(sequence, point).leverages(variogram);
   }
 }

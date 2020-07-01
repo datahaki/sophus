@@ -29,6 +29,11 @@ public enum Biinvariant {
       BarycentricCoordinate barycentricCoordinate = MetricCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
+
+    @Override
+    public String title() {
+      return "Inverse Distance";
+    }
   },
   /** bi-invariant
    * does not result in a symmetric distance matrix -> should not use for kriging
@@ -48,6 +53,11 @@ public enum Biinvariant {
       BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
+
+    @Override
+    public String title() {
+      return "Inverse Leverage";
+    }
   },
   /** bi-invariant, identical to anchor */
   TARGET {
@@ -61,6 +71,11 @@ public enum Biinvariant {
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = TargetCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
+    }
+
+    @Override
+    public String title() {
+      return "Inverse Leverage";
     }
   },
   /** bi-invariant
@@ -76,6 +91,11 @@ public enum Biinvariant {
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return HarborCoordinate.of(vectorLogManifold, variogram, sequence);
     }
+
+    @Override
+    public String title() {
+      return "Harbor";
+    }
   }, //
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
@@ -88,6 +108,11 @@ public enum Biinvariant {
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
+    }
+
+    @Override
+    public String title() {
+      return "Garden";
     }
   }, //
   /** bi-invariant
@@ -103,6 +128,11 @@ public enum Biinvariant {
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       HarborDistances harborDistances = HarborDistances.norm2(vectorLogManifold, variogram, sequence);
       return point -> harborDistances.biinvariantVector(point).coordinate();
+    }
+
+    @Override
+    public String title() {
+      return "Norm2";
     }
   }, //
   ;
@@ -127,4 +157,7 @@ public enum Biinvariant {
    * @param sequence
    * @return operator that provides barycentric coordinates */
   public abstract TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
+
+  /** @return */
+  public abstract String title();
 }

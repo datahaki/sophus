@@ -26,23 +26,21 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 public class Mahalanobis implements Serializable {
   private final HsDesign hsDesign;
 
+  /** @param vectorLogManifold non-null */
   public Mahalanobis(VectorLogManifold vectorLogManifold) {
     hsDesign = new HsDesign(vectorLogManifold);
   }
 
-  /** @param sequence of n anchor points
-   * @param point
-   * @return n x n symmetric bilinear form */
   public class Form implements Serializable {
-    private final Tensor levers;
+    private final Tensor matrix;
     private final Tensor sigma_inverse;
 
     /** @param sequence of n anchor points
      * @param point */
     public Form(Tensor sequence, Tensor point) {
-      levers = hsDesign.matrix(sequence, point);
+      matrix = hsDesign.matrix(sequence, point);
       Scalar factor = RationalScalar.of(1, sequence.length());
-      Tensor sigma = Transpose.of(levers).dot(levers).multiply(factor);
+      Tensor sigma = Transpose.of(matrix).dot(matrix).multiply(factor);
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
       sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
     }
@@ -50,8 +48,8 @@ public class Mahalanobis implements Serializable {
     /** @return design matrix with n rows as log_x(p_i)
      * 
      * @see HsDesign */
-    public Tensor levers() {
-      return levers;
+    public Tensor matrix() {
+      return matrix;
     }
 
     /** @return matrix that is symmetric positive definite if sequence contains sufficient points and
@@ -66,8 +64,8 @@ public class Mahalanobis implements Serializable {
 
     /** @param variogram
      * @return */
-    public Tensor leverage(ScalarUnaryOperator variogram) {
-      return Tensor.of(levers.stream() //
+    public Tensor leverages(ScalarUnaryOperator variogram) {
+      return Tensor.of(matrix.stream() //
           .map(v -> sigma_inverse.dot(v).dot(v)) //
           .map(Scalar.class::cast) //
           .map(Sqrt.FUNCTION) //

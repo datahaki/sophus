@@ -40,8 +40,8 @@ public class HsProjectionTest extends TestCase {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
-    Tensor nullsp = LeftNullSpace.of(levers);
+    Tensor matrix = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
+    Tensor nullsp = LeftNullSpace.of(matrix);
     OrthogonalMatrixQ.require(nullsp);
     PseudoInverse.of(nullsp).dot(nullsp);
     Chop._08.requireClose(PseudoInverse.of(nullsp), Transpose.of(nullsp));
@@ -61,7 +61,7 @@ public class HsProjectionTest extends TestCase {
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
     // ---
-    Tensor m = new HsProjection(vectorLogManifold).new Matrix(sequence, point).residualMarker();
+    Tensor m = new HsProjection(vectorLogManifold).new Matrix(sequence, point).residualMaker();
     Chop._08.requireClose(H, id.subtract(m));
     Tensor n = LeftNullSpace.usingQR(X);
     Chop._08.requireClose(m, Transpose.of(n).dot(n));
