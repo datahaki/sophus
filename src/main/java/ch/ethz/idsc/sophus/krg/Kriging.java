@@ -3,6 +3,9 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.math.var.ExponentialVariogram;
+import ch.ethz.idsc.sophus.math.var.PowerVariogram;
+import ch.ethz.idsc.sophus.math.var.SphericalVariogram;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

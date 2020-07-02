@@ -11,7 +11,6 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Diagonal;
 import ch.ethz.idsc.tensor.red.Frobenius;
-import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -36,7 +35,7 @@ public abstract class HarborDistances implements Serializable {
     return new HarborDistances(vectorLogManifold, variogram, sequence) {
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
-        return Hypot.ofVector(Diagonal.of(x).subtract(Diagonal.of(projection)));
+        return Norm._2.between(Diagonal.of(x), Diagonal.of(projection));
       }
     };
   }

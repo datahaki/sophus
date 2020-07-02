@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.AnchorDistances;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 

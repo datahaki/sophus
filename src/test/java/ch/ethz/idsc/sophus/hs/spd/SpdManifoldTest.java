@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
@@ -20,8 +20,8 @@ public class SpdManifoldTest extends TestCase {
         MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         LeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         LeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.fast(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.fast(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };
   }
 

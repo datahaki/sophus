@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
-import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
+import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
@@ -25,7 +25,7 @@ public class TargetCoordinateTest extends TestCase {
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
       BarycentricCoordinate bc0 = LeverageCoordinate.slow(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = LeverageCoordinate.fast(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeverageCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int d = 3; d < 7; ++d) {
         Tensor mean = UnitVector.of(d, 0);
         for (int n = d + 1; n < d + 3; ++n) {

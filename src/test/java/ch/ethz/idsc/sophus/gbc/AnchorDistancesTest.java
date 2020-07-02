@@ -1,7 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.krg.BiinvariantVector;
+import ch.ethz.idsc.sophus.krg.LeverageDistances;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -14,7 +16,22 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-public class LeverageDistancesTest extends TestCase {
+public class AnchorDistancesTest extends TestCase {
+  public void testDistances() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
+    ScalarUnaryOperator variogram = s -> s;
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold, variogram);
+    WeightingInterface w2 = new AnchorDistances(vectorLogManifold, variogram);
+    for (int length = 4; length < 10; ++length) {
+      Tensor sequence = RandomVariate.of(distribution, length, 3);
+      Tensor point = RandomVariate.of(distribution, 3);
+      Chop._10.requireClose( //
+          w1.weights(sequence, point), //
+          w2.weights(sequence, point));
+    }
+  }
+
   public void testSimple() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
@@ -24,7 +41,7 @@ public class LeverageDistancesTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
-      WeightingInterface weightingInterface = LeverageDistances.fast(vectorLogManifold, variogram);
+      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold, variogram);
       Tensor dmah = weightingInterface.weights(sequence, point);
       Chop._10.requireClose(biinvariantVector.distances(), dmah);
       Chop._10.requireClose(biinvariantVector.weighting(), NormalizeTotal.FUNCTION.apply(dmah));

@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.krg.Biinvariant;
-import ch.ethz.idsc.sophus.krg.PowerVariogram;
+import ch.ethz.idsc.sophus.math.var.PowerVariogram;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;

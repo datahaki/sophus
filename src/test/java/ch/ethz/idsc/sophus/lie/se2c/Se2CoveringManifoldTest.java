@@ -9,12 +9,12 @@ import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsProjection;
-import ch.ethz.idsc.sophus.krg.InversePowerVariogram;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.InverseNorm;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -342,7 +342,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     for (Tensor beta_ : betas) {
       Scalar beta = beta_.Get();
       BarycentricCoordinate bc0 = LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = LeverageCoordinate.fast(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
         Tensor mean = TestHelper.spawn_Se2C();

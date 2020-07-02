@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.krg.BiinvariantVector;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Hint: DO NOT USE AnchorDistances EXCEPT IN AnchorCoordinates !!! */
-public class AnchorDistances implements WeightingInterface, Serializable {
+/* package */ class AnchorDistances implements WeightingInterface, Serializable {
   private final HsProjection hsProjection;
   private final ScalarUnaryOperator variogram;
 

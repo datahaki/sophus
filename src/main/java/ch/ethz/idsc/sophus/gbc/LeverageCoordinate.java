@@ -17,7 +17,7 @@ public enum LeverageCoordinate {
    * @param vectorLogManifold
    * @param variogram
    * @return */
-  public static BarycentricCoordinate fast(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return new TargetCoordinate(vectorLogManifold, variogram);
   }
 

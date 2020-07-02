@@ -1,8 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.math.var;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.krg.Biinvariant;
+import ch.ethz.idsc.sophus.krg.Kriging;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
 import ch.ethz.idsc.tensor.RealScalar;

@@ -38,13 +38,13 @@ public enum Biinvariant {
   TARGET {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      WeightingInterface weightingInterface = LeverageDistances.fast(vectorLogManifold, variogram);
+      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold, variogram);
       return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.fast(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.of(vectorLogManifold, variogram);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -62,7 +62,7 @@ public enum Biinvariant {
   ANCHOR {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      WeightingInterface weightingInterface = LeverageDistances.slow(vectorLogManifold, variogram);
+      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold, variogram);
       return point -> weightingInterface.weights(sequence, point);
     }
 
