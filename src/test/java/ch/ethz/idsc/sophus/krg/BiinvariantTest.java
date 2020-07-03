@@ -11,7 +11,6 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
-import ch.ethz.idsc.sophus.math.var.SphericalVariogram;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
@@ -33,10 +32,10 @@ public class BiinvariantTest extends TestCase {
     Biinvariant biinvariant = Biinvariant.METRIC;
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     TensorUnaryOperator weightingInterface = Serialization.copy( //
-        biinvariant.distances(RnManifold.INSTANCE, SphericalVariogram.of(Quantity.of(10, "m"), Quantity.of(2, "s")), sequence));
+        biinvariant.distances(RnManifold.INSTANCE, sequence));
     Tensor point = RandomVariate.of(distribution, 3);
     Tensor weights = weightingInterface.apply(point);
-    weights.map(QuantityMagnitude.singleton("s"));
+    weights.map(QuantityMagnitude.singleton("m"));
   }
 
   public void testBiinvariant() {
@@ -48,10 +47,8 @@ public class BiinvariantTest extends TestCase {
     for (Biinvariant biinvariant : pda) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
       TensorUnaryOperator weightingInterface = //
-          biinvariant.distances(RnManifold.INSTANCE, SphericalVariogram.of(RealScalar.of(10), Quantity.of(2, "s")), sequence);
-      Tensor point = RandomVariate.of(distribution, 3);
-      Tensor weights = weightingInterface.apply(point);
-      weights.map(QuantityMagnitude.singleton("s"));
+          biinvariant.distances(RnManifold.INSTANCE, sequence);
+      weightingInterface.apply(RandomVariate.of(distribution, 3));
     }
   }
 

@@ -2,14 +2,12 @@
 package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** uses left-invariant metric on tangent space
  * 
@@ -21,19 +19,15 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * 3.7.3 Shepard Interpolation */
 public class MetricDistances implements WeightingInterface, Serializable {
   private final HsDesign hsDesign;
-  private final ScalarUnaryOperator variogram;
 
-  /** @param vectorLogManifold
-   * @param variogram */
-  public MetricDistances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  /** @param vectorLogManifold */
+  public MetricDistances(VectorLogManifold vectorLogManifold) {
     hsDesign = new HsDesign(vectorLogManifold);
-    this.variogram = Objects.requireNonNull(variogram);
   }
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
     return Tensor.of(hsDesign.stream(sequence, point) //
-        .map(Norm._2::ofVector) //
-        .map(variogram));
+        .map(Norm._2::ofVector));
   }
 }

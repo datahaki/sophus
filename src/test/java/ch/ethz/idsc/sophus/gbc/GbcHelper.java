@@ -33,7 +33,7 @@ public enum GbcHelper {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return InverseCoordinate.of( //
-            biinvariant.distances(vectorLogManifold, variogram, sequence), //
+            biinvariant.distances(vectorLogManifold, sequence), //
             vectorLogManifold, sequence).apply(point);
       }
     };
@@ -44,7 +44,7 @@ public enum GbcHelper {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return KrigingCoordinate.of( //
-            biinvariant.distances(vectorLogManifold, variogram, sequence), //
+            biinvariant.distances(vectorLogManifold, sequence), //
             vectorLogManifold, sequence).apply(point);
       }
     };

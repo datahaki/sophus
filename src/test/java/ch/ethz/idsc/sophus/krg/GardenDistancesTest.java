@@ -51,10 +51,9 @@ public class GardenDistancesTest extends TestCase {
   public void testRn1() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    ScalarUnaryOperator variogram = s -> s;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -63,10 +62,9 @@ public class GardenDistancesTest extends TestCase {
   public void testSn1() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    ScalarUnaryOperator variogram = s -> s;
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomSample.of(randomSampleInterface, length);
-      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -75,10 +73,9 @@ public class GardenDistancesTest extends TestCase {
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    ScalarUnaryOperator variogram = s -> s;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -86,16 +83,14 @@ public class GardenDistancesTest extends TestCase {
 
   public void testEmpty() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    ScalarUnaryOperator variogram = s -> s;
-    TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, Tensors.empty());
+    TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, Tensors.empty());
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.empty());
   }
 
   public void testSingleton() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    ScalarUnaryOperator variogram = s -> s;
-    TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, variogram, Tensors.fromString("{{2,3,4}}"));
+    TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, Tensors.fromString("{{2,3,4}}"));
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.vector(0));
   }

@@ -20,19 +20,21 @@ public class GardenCoordinate implements TensorUnaryOperator {
 
   /***************************************************/
   private final HsDesign hsDesign;
+  private final ScalarUnaryOperator variogram;
   private final TensorUnaryOperator target;
   private final Tensor sequence;
 
   private GardenCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
-    target = GardenDistances.of(vectorLogManifold, variogram, sequence);
+    this.variogram = variogram;
+    target = GardenDistances.of(vectorLogManifold, sequence);
     this.sequence = sequence;
   }
 
   @Override
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
-        NormalizeTotal.FUNCTION.apply(target.apply(point)), // point as input to target
+        NormalizeTotal.FUNCTION.apply(target.apply(point).map(variogram)), // point as input to target
         hsDesign.matrix(sequence, point));
   }
 }

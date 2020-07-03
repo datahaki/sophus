@@ -5,20 +5,17 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.LeverageDistances;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.io.Timing;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /* package */ enum LeverageDistancesDemo {
   ;
   public static void main(String[] args) {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold, variogram);
-    WeightingInterface w2 = new AnchorDistances(vectorLogManifold, variogram);
+    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold);
+    WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {

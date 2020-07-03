@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   public Tensor weights(Tensor sequence, Tensor point) {
     Form form = mahalanobis.new Form(sequence, point);
     return StaticHelper.barycentric( //
-        NormalizeTotal.FUNCTION.apply(form.leverages(variogram)), //
+        NormalizeTotal.FUNCTION.apply(form.leverages().map(variogram)), //
         form.matrix());
   }
 }

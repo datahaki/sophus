@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** The reference suggests to use the inverse and the biinvariant mean m as reference point.
@@ -62,14 +61,12 @@ public class Mahalanobis implements Serializable {
       return sigma_inverse;
     }
 
-    /** @param variogram
-     * @return */
-    public Tensor leverages(ScalarUnaryOperator variogram) {
+    /** @return diagonal of influence matrix */
+    public Tensor leverages() {
       return Tensor.of(matrix.stream() //
           .map(v -> sigma_inverse.dot(v).dot(v)) //
           .map(Scalar.class::cast) //
-          .map(Sqrt.FUNCTION) //
-          .map(variogram));
+          .map(Sqrt.FUNCTION));
     }
   }
 }

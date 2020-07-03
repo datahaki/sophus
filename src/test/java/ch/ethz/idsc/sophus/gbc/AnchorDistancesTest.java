@@ -19,10 +19,9 @@ import junit.framework.TestCase;
 public class AnchorDistancesTest extends TestCase {
   public void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    ScalarUnaryOperator variogram = s -> s;
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold, variogram);
-    WeightingInterface w2 = new AnchorDistances(vectorLogManifold, variogram);
+    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold);
+    WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -35,16 +34,16 @@ public class AnchorDistancesTest extends TestCase {
   public void testSimple() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
-    AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold, variogram);
+    AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
-      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold, variogram);
+      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
       Tensor dmah = weightingInterface.weights(sequence, point);
       Chop._10.requireClose(biinvariantVector.distances(), dmah);
-      Chop._10.requireClose(biinvariantVector.weighting(), NormalizeTotal.FUNCTION.apply(dmah));
+      Chop._10.requireClose(biinvariantVector.weighting(variogram), NormalizeTotal.FUNCTION.apply(dmah));
     }
   }
 }

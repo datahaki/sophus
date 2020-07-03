@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** immutable
  * 
@@ -24,13 +25,13 @@ public class BiinvariantVector implements Serializable {
   }
 
   /** @return vector of affine weights */
-  public Tensor weighting() {
-    return NormalizeTotal.FUNCTION.apply(vector);
+  public Tensor weighting(ScalarUnaryOperator variogram) {
+    return NormalizeTotal.FUNCTION.apply(vector.map(variogram));
   }
 
   /** @return generalized barycentric coordinate */
-  public Tensor coordinate() {
-    Tensor weights = weighting();
+  public Tensor coordinate(ScalarUnaryOperator variogram) {
+    Tensor weights = weighting(variogram);
     return NormalizeTotal.FUNCTION.apply(weights.subtract(influence.dot(weights)));
   }
 }
