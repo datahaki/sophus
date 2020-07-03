@@ -79,6 +79,24 @@ public enum Biinvariant {
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
+  GARDEN {
+    @Override
+    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return GardenDistances.of(vectorLogManifold, variogram, sequence);
+    }
+
+    @Override
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
+    }
+
+    @Override
+    public String title() {
+      return "Garden";
+    }
+  }, //
+  /** bi-invariant
+   * results in a symmetric distance matrix -> can use for kriging */
   HARBOR {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -94,24 +112,6 @@ public enum Biinvariant {
     @Override
     public String title() {
       return "Harbor";
-    }
-  }, //
-  /** bi-invariant
-   * results in a symmetric distance matrix -> can use for kriging */
-  GARDEN {
-    @Override
-    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return GardenDistances.of(vectorLogManifold, variogram, sequence);
-    }
-
-    @Override
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
-    }
-
-    @Override
-    public String title() {
-      return "Garden";
     }
   }, //
   /** bi-invariant

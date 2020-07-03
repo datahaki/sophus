@@ -12,7 +12,7 @@ import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
-import ch.ethz.idsc.sophus.math.InverseNorm;
+import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -47,7 +47,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       GbcHelper.biinvariant_quantity(Se2CoveringManifold.INSTANCE);
   private static final BarycentricCoordinate AD_INVAR = MetricCoordinate.custom( //
       Se2CoveringManifold.INSTANCE, //
-      InverseNorm.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE)));
+      NormWeighting.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE), InversePowerVariogram.of(1)));
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();

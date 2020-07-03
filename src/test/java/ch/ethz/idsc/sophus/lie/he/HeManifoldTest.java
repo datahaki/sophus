@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
-import ch.ethz.idsc.sophus.math.InverseNorm;
+import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -24,7 +24,9 @@ import junit.framework.TestCase;
 public class HeManifoldTest extends TestCase {
   private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = MetricCoordinate.custom( //
-      HeManifold.INSTANCE, InverseNorm.of(new HeTarget(RnNorm.INSTANCE, RealScalar.ONE)));
+      HeManifold.INSTANCE, NormWeighting.of( //
+          new HeTarget(RnNorm.INSTANCE, RealScalar.ONE), //
+          InversePowerVariogram.of(1)));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       LeverageCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
       LeverageCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
