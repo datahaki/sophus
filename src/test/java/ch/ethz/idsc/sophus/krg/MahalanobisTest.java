@@ -48,7 +48,7 @@ public class MahalanobisTest extends TestCase {
         Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
         Tensor forms = Tensor.of(sequence.stream().map(point -> mahalanobis.new Form(sequence, point).sigma_inverse()));
         for (Tensor form : forms)
-          assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(form, Chop._08)); // has excess dimension
+          assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(form, Chop._06)); // has excess dimension
         Tensor point = RandomSample.of(randomSampleInterface);
         assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(mahalanobis.new Form(sequence, point).sigma_inverse(), Chop._08));
       }

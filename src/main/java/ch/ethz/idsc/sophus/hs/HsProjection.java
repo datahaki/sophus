@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.red.Diagonal;
+import ch.ethz.idsc.tensor.sca.Clips;
 
 /** References:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
@@ -47,8 +48,11 @@ public final class HsProjection implements Serializable {
       return influence;
     }
 
+    /** @return */
     public Tensor leverages() {
-      return Diagonal.of(influence);
+      // theory guarantees that entries of diagonal are in interval [0, 1]
+      // but the numerics don't always reflect that.
+      return Diagonal.of(influence).map(Clips.unit());
     }
 
     /** projection matrix defines a projection of a tangent vector at given point to a vector in

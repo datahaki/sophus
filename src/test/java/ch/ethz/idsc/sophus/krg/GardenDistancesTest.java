@@ -23,18 +23,6 @@ import junit.framework.TestCase;
 
 /** harbor == spring ! */
 public class GardenDistancesTest extends TestCase {
-  public void testRn() {
-    ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = Biinvariant.GARDEN.weighting(vectorLogManifold, variogram, sequence);
-    for (int count = 0; count < 10; ++count) {
-      Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
-      Chop._08.requireClose(w1.apply(point), w2.apply(point));
-    }
-  }
-
   public void testSn() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);

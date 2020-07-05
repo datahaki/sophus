@@ -8,9 +8,7 @@ import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.BiinvariantVector;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Hint: DO NOT USE AnchorDistances EXCEPT IN AnchorCoordinates !!! */
@@ -26,10 +24,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     Matrix matrix = hsProjection.new Matrix(sequence, point);
     return new BiinvariantVector( //
         matrix.influence(), // influence matrix, or hat matrix
-        Tensor.of(matrix.leverages().stream() // stream of leverages
-            .map(Scalar.class::cast) // theory asserts that leverage is in [0, 1]
-            .map(Clips.unit()) // but the numerics don't always reflect that
-            .map(Sqrt.FUNCTION))); //
+        matrix.leverages().map(Sqrt.FUNCTION));
   }
 
   @Override // from WeightingInterface

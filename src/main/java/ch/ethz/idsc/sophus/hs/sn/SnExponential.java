@@ -24,9 +24,13 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * function exp throws an exception if input x is not orthogonal to given point
  * function log returns vector orthogonal to x when using the dot product in R^(n+1)
  * 
- * implementation is based on the function "strans" taken from
+ * implementation of exp is based on the function "strans" taken from
  * "Freeform Curves on Spheres of Arbitrary Dimension"
- * by Scott Schaefer and Ron Goldman, 2005, page 5 */
+ * by Scott Schaefer and Ron Goldman, 2005, page 5
+ * 
+ * implementation of log is based on
+ * "Barycentric Subspace Analysis on Manifolds"
+ * by Xavier Pennec, 2016, p. 8 */
 public class SnExponential implements Exponential, TangentSpace, Serializable {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);

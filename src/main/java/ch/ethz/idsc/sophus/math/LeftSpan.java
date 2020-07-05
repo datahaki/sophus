@@ -36,6 +36,7 @@ public enum LeftSpan {
     Tensor kron = Tensor.of(svd.values().stream() //
         .map(Scalar.class::cast) //
         .map(LeftSpan::unitize_chop));
+    // TODO can still optimize further
     return u.dot(kron.pmul(vector.dot(u)));
   }
 

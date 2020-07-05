@@ -1,8 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.util.Objects;
-
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
@@ -33,7 +31,7 @@ public enum Biinvariant {
 
     @Override
     public String title() {
-      return "Inverse Distance";
+      return "Metric";
     }
   },
   /** bi-invariant, identical to anchor */
@@ -52,7 +50,7 @@ public enum Biinvariant {
 
     @Override
     public String title() {
-      return "Inverse Leverage";
+      return "Leverage";
     }
   },
   /** bi-invariant
@@ -116,39 +114,17 @@ public enum Biinvariant {
       return "Harbor";
     }
   }, //
-  /** bi-invariant
-   * results in a symmetric distance matrix -> can use for kriging */
-  NORM2 {
-    @Override
-    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      HarborDistances harborDistances = HarborDistances.norm2(vectorLogManifold, sequence);
-      return point -> harborDistances.biinvariantVector(point).distances();
-    }
-
-    @Override
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      HarborDistances harborDistances = HarborDistances.norm2(vectorLogManifold, sequence);
-      Objects.requireNonNull(variogram);
-      return point -> harborDistances.biinvariantVector(point).coordinate(variogram);
-    }
-
-    @Override
-    public String title() {
-      return "Norm2";
-    }
-  }, //
   ;
 
   /** @param vectorLogManifold
-   * @param variogram
    * @param sequence
-   * @return operator of weights that generally do not sum up to one */
+   * @return operator that maps a point to a vector of relative distances to the elements in the given sequence */
   public abstract TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence);
 
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
-   * @return operator that provides affine weights */
+   * @return */
   public final TensorUnaryOperator var_dist(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
     return point -> tensorUnaryOperator.apply(point).map(variogram);

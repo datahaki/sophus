@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.mat.LeastSquares;
    * 
    * @param vector
    * @param matrix
-   * @return barycentric projection of vector */
+   * @return mapping of vector to solution of barycentric equation */
   public static Tensor barycentric(Tensor vector, Tensor matrix) {
     return NormalizeTotal.FUNCTION.apply(LeftSpan.kernel(vector, matrix));
   }

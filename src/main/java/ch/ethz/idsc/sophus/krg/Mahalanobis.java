@@ -66,6 +66,8 @@ public class Mahalanobis implements Serializable {
       return Tensor.of(matrix.stream() //
           .map(v -> sigma_inverse.dot(v).dot(v)) //
           .map(Scalar.class::cast) //
+          // theory guarantees that leverage is in interval [0, 1]
+          // so far the numerics did not result in values below 0 here
           .map(Sqrt.FUNCTION));
     }
   }

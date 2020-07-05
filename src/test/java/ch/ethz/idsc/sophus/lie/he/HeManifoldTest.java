@@ -44,7 +44,7 @@ public class HeManifoldTest extends TestCase {
           Tensor mean1 = TestHelper.spawn_He(n);
           Tensor weights1 = barycentricCoordinate.weights(sequence, mean1);
           Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights1);
-          Chop._08.requireClose(mean1, mean2);
+          Chop._05.requireClose(mean1, mean2);
           // ---
           Tensor shift = TestHelper.spawn_He(n);
           { // invariant under left action
