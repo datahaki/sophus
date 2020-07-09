@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.util.Objects;
+
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.GardenDistances;
@@ -9,13 +11,16 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
+/** Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020 */
 public class GardenCoordinate implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new GardenCoordinate(vectorLogManifold, variogram, sequence);
+    return new GardenCoordinate(vectorLogManifold, Objects.requireNonNull(variogram), sequence);
   }
 
   /***************************************************/

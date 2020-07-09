@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** References:
- * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+ * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
  * "Projection matrix"

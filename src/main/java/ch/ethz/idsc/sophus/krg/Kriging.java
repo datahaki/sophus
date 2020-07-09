@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.qty.Quantity;
 /** implementation of kriging for homogeneous spaces
  * 
  * Reference:
- * "Biinvariant Kriging on Lie Groups"
+ * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
  * <p>Quote:

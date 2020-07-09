@@ -9,7 +9,11 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/** @see HarborDistances */
+/** Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020
+ * 
+ * @see HarborDistances */
 public class GardenDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param sequence

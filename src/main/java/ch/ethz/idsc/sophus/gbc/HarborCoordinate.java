@@ -12,6 +12,10 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** biinvariant coordinate
  * 
+ * Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020
+ * 
  * @see InversePowerVariogram */
 public class HarborCoordinate implements TensorUnaryOperator {
   /** @param vectorLogManifold

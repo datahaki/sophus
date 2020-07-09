@@ -10,7 +10,14 @@ import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** target coordinate is identical to anchor coordinate */
+/** target coordinate is the preferred way to evaluate
+ * inverse leverage coordinates.
+ * 
+ * the slower alternative is {@link AnchorCoordinate}.
+ * 
+ * <p>Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020 */
 /* package */ class TargetCoordinate implements BarycentricCoordinate, Serializable {
   private final Mahalanobis mahalanobis;
   private final ScalarUnaryOperator variogram;

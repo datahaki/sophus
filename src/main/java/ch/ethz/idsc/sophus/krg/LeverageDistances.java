@@ -14,12 +14,11 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * target distances are identical to anchor distances
  * 
- * <p>Reference:
- * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
- * by Xavier Pennec, Vincent Arsigny, 2012, p. 39
- * 
- * Reference:
+ * <p>References:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+ * by Jan Hakenberg, 2020
+ * 
+ * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public class LeverageDistances implements WeightingInterface, Serializable {
   /** @param vectorLogManifold

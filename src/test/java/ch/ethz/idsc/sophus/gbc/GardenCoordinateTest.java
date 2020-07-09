@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.Biinvariant;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -29,5 +30,14 @@ public class GardenCoordinateTest extends TestCase {
             Biinvariant.GARDEN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
             Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence).apply(origin));
       }
+  }
+
+  public void testNullFail() {
+    try {
+      GardenCoordinate.of(RnManifold.INSTANCE, null, HilbertMatrix.of(10, 3));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

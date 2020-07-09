@@ -15,7 +15,11 @@ import ch.ethz.idsc.tensor.red.Norm;
 
 /** for Rn and Sn the frobenius distance results in identical coordinates as the 2-norm distance
  * 
- * however, for SE(2) the frobenius and 2-norm coordinates do not match! */
+ * however, for SE(2) the frobenius and 2-norm coordinates do not match!
+ * 
+ * Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020 */
 public abstract class HarborDistances implements Serializable {
   /** @param vectorLogManifold
    * @param sequence

@@ -1,10 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.HsProjection;
 import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;

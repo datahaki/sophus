@@ -6,7 +6,11 @@ import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
 
-/** @see LeastSquares */
+/** Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020
+ * 
+ * @see LeastSquares */
 /* package */ enum StaticHelper {
   ;
   /** function returns a vector vnull that satisfies

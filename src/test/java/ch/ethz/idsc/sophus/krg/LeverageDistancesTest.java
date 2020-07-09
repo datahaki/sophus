@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 /** anchor == target */
-public class TargetDistancesTest extends TestCase {
+public class LeverageDistancesTest extends TestCase {
   public void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;

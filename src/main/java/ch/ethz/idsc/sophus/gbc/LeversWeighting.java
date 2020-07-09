@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
+/** @author datahaki */
 /* package */ class LeversWeighting implements TensorUnaryOperator {
   private final ScalarUnaryOperator variogram;
 

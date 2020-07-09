@@ -11,7 +11,14 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-/** Lie affine coordinates are generalized barycentric coordinates for
+/** partition of unity
+ * linear reproduction
+ * Lagrange
+ * C^infinity (except at points from input set)
+ * 
+ * in general, the coordinates may evaluate to be negative
+ * 
+ * Lie affine coordinates are generalized barycentric coordinates for
  * scattered sets of points on a Lie-group with the properties:
  * 
  * coordinates sum up to 1
@@ -36,7 +43,10 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * If the target mapping correlates to inverse distances then the coordinates
  * satisfy the Lagrange property.
  * 
- * Reference:
+ * References:
+ * "Inverse Distance Coordinates for Scattered Sets of Points"
+ * by Jan Hakenberg, 2020
+ * 
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020
  * 

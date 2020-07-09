@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.Tensor;
 
+/** all instances of GroupElement are immutable */
 public interface GroupElement {
   /** @return unique coordinate that represents this group element */
   Tensor toCoordinate();

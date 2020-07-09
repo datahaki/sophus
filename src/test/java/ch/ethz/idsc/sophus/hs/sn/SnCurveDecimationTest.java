@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import junit.framework.TestCase;
 
-public class S2CurveDecimationTest extends TestCase {
+public class SnCurveDecimationTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   public void testGeodesic() {
