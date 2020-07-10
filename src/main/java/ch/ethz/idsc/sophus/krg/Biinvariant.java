@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference:
  * "Biinvariant Distance Vectors"
- * by Hakenberg, 2020 */
+ * by Jan Hakenberg, 2020 */
 public interface Biinvariant {
   /** @param vectorLogManifold
    * @param sequence

@@ -19,14 +19,14 @@ public enum Biinvariants implements Biinvariant {
   /** left-invariant (biinvariant only if a biinvariant metric exists)
    * results in a symmetric distance matrix -> can use for kriging */
   METRIC {
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       WeightingInterface weightingInterface = new MetricDistances(vectorLogManifold);
       Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
 
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = MetricCoordinate.of(vectorLogManifold, variogram);
       Objects.requireNonNull(sequence);
@@ -40,14 +40,14 @@ public enum Biinvariants implements Biinvariant {
   },
   /** bi-invariant, identical to anchor */
   TARGET {
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
       Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
 
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.of(vectorLogManifold, variogram);
       Objects.requireNonNull(sequence);
@@ -66,14 +66,14 @@ public enum Biinvariants implements Biinvariant {
    * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
    * by Jan Hakenberg, 2020 */
   ANCHOR {
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
       Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
 
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.slow(vectorLogManifold, variogram);
       Objects.requireNonNull(sequence);
@@ -88,12 +88,12 @@ public enum Biinvariants implements Biinvariant {
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
   GARDEN {
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       return GardenDistances.of(vectorLogManifold, sequence);
     }
 
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
     }
@@ -106,13 +106,13 @@ public enum Biinvariants implements Biinvariant {
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
   HARBOR {
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       HarborDistances harborDistances = HarborDistances.frobenius(vectorLogManifold, sequence);
       return point -> harborDistances.biinvariantVector(point).distances();
     }
 
-    @Override
+    @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return HarborCoordinate.of(vectorLogManifold, variogram, sequence);
     }
@@ -124,22 +124,14 @@ public enum Biinvariants implements Biinvariant {
   }, //
   ;
 
-  /** @param vectorLogManifold
-   * @param variogram
-   * @param sequence
-   * @return */
-  @Override
+  @Override // from Biinvariant
   public final TensorUnaryOperator var_dist(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
     Objects.requireNonNull(variogram);
     return point -> tensorUnaryOperator.apply(point).map(variogram);
   }
 
-  /** @param vectorLogManifold
-   * @param variogram
-   * @param sequence
-   * @return operator that provides affine weights */
-  @Override
+  @Override // from Biinvariant
   public final TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
     Objects.requireNonNull(variogram);
