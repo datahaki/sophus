@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.lang.reflect.Modifier;
+
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Scalar;
@@ -36,5 +38,9 @@ public class TargetCoordinateTest extends TestCase {
         }
       }
     }
+  }
+
+  public void testPackage() {
+    assertFalse(Modifier.isPublic(TargetCoordinate.class.getModifiers()));
   }
 }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.util.Objects;
+
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -18,7 +20,7 @@ public enum LeverageCoordinate {
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new TargetCoordinate(vectorLogManifold, variogram);
+    return new TargetCoordinate(vectorLogManifold, Objects.requireNonNull(variogram));
   }
 
   /** computes leverage coordinates via influence matrix which requires the computation of one
@@ -28,6 +30,6 @@ public enum LeverageCoordinate {
    * @param variogram
    * @return */
   public static BarycentricCoordinate slow(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new AnchorCoordinate(vectorLogManifold, variogram);
+    return new AnchorCoordinate(vectorLogManifold, Objects.requireNonNull(variogram));
   }
 }

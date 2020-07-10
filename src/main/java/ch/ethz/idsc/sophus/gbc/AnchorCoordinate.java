@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
@@ -21,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
    * @param variogram */
   public AnchorCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     anchorDistances = new AnchorDistances(vectorLogManifold);
-    this.variogram = Objects.requireNonNull(variogram);
+    this.variogram = variogram;
   }
 
   @Override // from BarycentricCoordinate

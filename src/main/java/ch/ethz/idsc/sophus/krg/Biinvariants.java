@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import java.util.Objects;
+
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
@@ -20,12 +22,14 @@ public enum Biinvariants implements Biinvariant {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       WeightingInterface weightingInterface = new MetricDistances(vectorLogManifold);
+      Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = MetricCoordinate.of(vectorLogManifold, variogram);
+      Objects.requireNonNull(sequence);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -39,12 +43,14 @@ public enum Biinvariants implements Biinvariant {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
+      Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.of(vectorLogManifold, variogram);
+      Objects.requireNonNull(sequence);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -63,12 +69,14 @@ public enum Biinvariants implements Biinvariant {
     @Override
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
+      Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
 
     @Override
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.slow(vectorLogManifold, variogram);
+      Objects.requireNonNull(sequence);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
 
@@ -123,6 +131,7 @@ public enum Biinvariants implements Biinvariant {
   @Override
   public final TensorUnaryOperator var_dist(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
+    Objects.requireNonNull(variogram);
     return point -> tensorUnaryOperator.apply(point).map(variogram);
   }
 
@@ -133,6 +142,7 @@ public enum Biinvariants implements Biinvariant {
   @Override
   public final TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
+    Objects.requireNonNull(variogram);
     return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point).map(variogram));
   }
 

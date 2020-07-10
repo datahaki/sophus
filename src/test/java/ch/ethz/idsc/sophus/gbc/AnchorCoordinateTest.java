@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.lang.reflect.Modifier;
+
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -24,5 +26,9 @@ public class AnchorCoordinateTest extends TestCase {
           anchorCoordinate.weights(sequence, point), //
           targetCoordinate.weights(sequence, point));
     }
+  }
+
+  public void testPackage() {
+    assertFalse(Modifier.isPublic(AnchorCoordinate.class.getModifiers()));
   }
 }
