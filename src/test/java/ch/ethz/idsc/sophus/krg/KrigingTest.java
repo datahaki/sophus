@@ -31,8 +31,8 @@ import junit.framework.TestCase;
 
 public class KrigingTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
-  private static final Biinvariant[] BIINV = { Biinvariant.HARBOR };
-  private static final Biinvariant[] SYMME = { Biinvariant.METRIC, Biinvariant.HARBOR };
+  private static final Biinvariant[] BIINV = { Biinvariants.HARBOR };
+  private static final Biinvariant[] SYMME = { Biinvariants.METRIC, Biinvariants.HARBOR };
 
   public void testSimple2() {
     Distribution distributiox = NormalDistribution.standard();
@@ -145,7 +145,7 @@ public class KrigingTest extends TestCase {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     TensorUnaryOperator weightingInterface = //
-        Biinvariant.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
+        Biinvariants.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
     Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);

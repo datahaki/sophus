@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.Biinvariant;
+import ch.ethz.idsc.sophus.krg.Biinvariants;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.sophus.math.var.PowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
@@ -62,14 +63,14 @@ public enum GbcHelper {
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        inversCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        inversCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        inversCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        inversCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        kriginCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(Biinvariant.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        inversCoordinate_of(Biinvariants.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        inversCoordinate_of(Biinvariants.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        kriginCoordinate_of(Biinvariants.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriginCoordinate_of(Biinvariants.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 
@@ -83,8 +84,8 @@ public enum GbcHelper {
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };
   }
 

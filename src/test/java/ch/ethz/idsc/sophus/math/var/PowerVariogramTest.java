@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.math.var;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.krg.Biinvariant;
+import ch.ethz.idsc.sophus.krg.Biinvariants;
 import ch.ethz.idsc.sophus.krg.Kriging;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
@@ -34,7 +34,7 @@ public class PowerVariogramTest extends TestCase {
     {
       ScalarUnaryOperator variogram = Serialization.copy(ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2)));
       TensorUnaryOperator weightingInterface = //
-          Biinvariant.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          Biinvariants.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
@@ -43,7 +43,7 @@ public class PowerVariogramTest extends TestCase {
       PowerVariogram variogram = Serialization.copy(PowerVariogram.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       TensorUnaryOperator weightingInterface = //
-          Biinvariant.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          Biinvariants.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);

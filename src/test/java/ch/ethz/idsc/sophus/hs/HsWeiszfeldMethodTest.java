@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.krg.Biinvariant;
+import ch.ethz.idsc.sophus.krg.Biinvariants;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -25,7 +25,7 @@ public class HsWeiszfeldMethodTest extends TestCase {
       for (int n = 2; n < 20; n += 4)
         try {
           Tensor sequence = RandomVariate.of(distribution, n, d);
-          TensorUnaryOperator create = Biinvariant.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence);
+          TensorUnaryOperator create = Biinvariants.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence);
           SpatialMedian sm1 = HsWeiszfeldMethod.of( //
               RnBiinvariantMean.INSTANCE, //
               create, //

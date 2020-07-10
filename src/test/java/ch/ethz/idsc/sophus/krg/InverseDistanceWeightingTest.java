@@ -58,7 +58,7 @@ public class InverseDistanceWeightingTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator shw = Biinvariant.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        TensorUnaryOperator shw = Biinvariants.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         Tensor weights1 = weightingInterface.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);

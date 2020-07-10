@@ -21,8 +21,8 @@ public class LeverageDistancesTest extends TestCase {
   public void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.ANCHOR.distances(vectorLogManifold, sequence);
-    TensorUnaryOperator w2 = Biinvariant.TARGET.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w1 = Biinvariants.ANCHOR.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w2 = Biinvariants.TARGET.distances(vectorLogManifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
@@ -33,8 +33,8 @@ public class LeverageDistancesTest extends TestCase {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.ANCHOR.distances(vectorLogManifold, sequence);
-    TensorUnaryOperator w2 = Biinvariant.TARGET.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w1 = Biinvariants.ANCHOR.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w2 = Biinvariants.TARGET.distances(vectorLogManifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
@@ -45,8 +45,8 @@ public class LeverageDistancesTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     VectorLogManifold vectorLogManifold = Se2Manifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.ANCHOR.distances(vectorLogManifold, sequence);
-    TensorUnaryOperator w2 = Biinvariant.TARGET.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w1 = Biinvariants.ANCHOR.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w2 = Biinvariants.TARGET.distances(vectorLogManifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(distribution, 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));

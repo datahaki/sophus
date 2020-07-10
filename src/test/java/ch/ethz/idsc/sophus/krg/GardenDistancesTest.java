@@ -28,8 +28,8 @@ public class GardenDistancesTest extends TestCase {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = Biinvariant.GARDEN.weighting(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w1 = Biinvariants.HARBOR.weighting(vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator w2 = Biinvariants.GARDEN.weighting(vectorLogManifold, variogram, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
       Chop._08.close(w1.apply(point), w2.apply(point));

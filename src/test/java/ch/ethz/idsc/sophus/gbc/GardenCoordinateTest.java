@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Biinvariant;
+import ch.ethz.idsc.sophus.krg.Biinvariants;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
@@ -27,8 +27,8 @@ public class GardenCoordinateTest extends TestCase {
         Tensor sequence = RandomVariate.of(distribution, length, d);
         Tensor origin = RandomVariate.of(distribution, d);
         Chop._08.requireClose( //
-            Biinvariant.GARDEN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
-            Biinvariant.HARBOR.weighting(vectorLogManifold, variogram, sequence).apply(origin));
+            Biinvariants.GARDEN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
+            Biinvariants.HARBOR.weighting(vectorLogManifold, variogram, sequence).apply(origin));
       }
   }
 

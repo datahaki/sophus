@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 public class BiinvariantTest extends TestCase {
   public void testAbsolute() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    Biinvariant biinvariant = Biinvariant.METRIC;
+    Biinvariant biinvariant = Biinvariants.METRIC;
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     TensorUnaryOperator weightingInterface = Serialization.copy( //
         biinvariant.distances(RnManifold.INSTANCE, sequence));
@@ -41,8 +41,8 @@ public class BiinvariantTest extends TestCase {
   public void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant[] pda = { //
-        Biinvariant.ANCHOR, //
-        Biinvariant.HARBOR };
+        Biinvariants.ANCHOR, //
+        Biinvariants.HARBOR };
     for (Biinvariant biinvariant : pda) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
       TensorUnaryOperator weightingInterface = //
@@ -53,7 +53,7 @@ public class BiinvariantTest extends TestCase {
 
   public void testWeighting() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
-    for (Biinvariant biinvariant : Biinvariant.values()) {
+    for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
           biinvariant.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
@@ -64,7 +64,7 @@ public class BiinvariantTest extends TestCase {
 
   public void testCoordinate() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
-    for (Biinvariant biinvariant : Biinvariant.values()) {
+    for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
           biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
@@ -74,7 +74,7 @@ public class BiinvariantTest extends TestCase {
   }
 
   public void testSimplePD() throws ClassNotFoundException, IOException {
-    for (Biinvariant biinvariant : Biinvariant.values()) {
+    for (Biinvariant biinvariant : Biinvariants.values()) {
       Distribution distribution = NormalDistribution.standard();
       for (int n = 10; n < 20; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, 3);
