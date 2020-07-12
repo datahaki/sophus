@@ -11,17 +11,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * Reference:
  * "Spherical averages and applications to spherical splines and interpolation"
  * by S. R. Buss, J. P. Fillmore, 2001 */
-public final class SnBiinvariantMean extends IterativeBiinvariantMean {
-  public static final BiinvariantMean INSTANCE = new SnBiinvariantMean(Chop._14);
+public enum SnBiinvariantMean {
+  ;
+  public static final BiinvariantMean INSTANCE = of(Chop._14);
 
-  /** @param chop
-   * @return */
   public static BiinvariantMean of(Chop chop) {
-    return new SnBiinvariantMean(chop);
-  }
-
-  /***************************************************/
-  private SnBiinvariantMean(Chop chop) {
-    super(SnManifold.INSTANCE, SnPhongMean.INSTANCE, chop);
+    return IterativeBiinvariantMean.of(SnManifold.INSTANCE, chop, SnPhongMean.INSTANCE);
   }
 }

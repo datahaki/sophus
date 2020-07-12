@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 
 public class Se3ManifoldTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(Se3Manifold.HS_EXP);
+      IterativeBiinvariantMean.of(Se3Manifold.HS_EXP, Chop._12);
   public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se3Manifold.HS_EXP);
   private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Manifold.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //

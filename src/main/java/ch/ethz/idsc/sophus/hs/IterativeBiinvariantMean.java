@@ -24,38 +24,31 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private static final int MAX_ITERATIONS = 100;
 
   /** @param hsExponential
+   * @param chop
+   * @param initialGuess
    * @return */
-  public static IterativeBiinvariantMean of(HsExponential hsExponential) {
-    return of(hsExponential, Chop._12);
+  public static IterativeBiinvariantMean of(HsExponential hsExponential, Chop chop, BiinvariantMean initialGuess) {
+    return new IterativeBiinvariantMean(hsExponential, chop, initialGuess);
   }
 
   /** @param hsExponential
    * @param chop
    * @return */
   public static IterativeBiinvariantMean of(HsExponential hsExponential, Chop chop) {
-    return new IterativeBiinvariantMean(hsExponential, chop);
+    return of(hsExponential, chop, ArgMaxBiinvariantMean.INSTANCE);
   }
 
   /***************************************************/
   private final HsExponential hsExponential;
-  private final BiinvariantMean initialGuess;
   private final Chop chop;
+  private final BiinvariantMean initialGuess;
   private final MeanDefect meanDefect;
 
-  /** @param hsExponential
-   * @param initialGuess
-   * @param chop */
-  protected IterativeBiinvariantMean(HsExponential hsExponential, BiinvariantMean initialGuess, Chop chop) {
+  private IterativeBiinvariantMean(HsExponential hsExponential, Chop chop, BiinvariantMean initialGuess) {
     this.hsExponential = hsExponential;
-    this.initialGuess = Objects.requireNonNull(initialGuess);
     this.chop = Objects.requireNonNull(chop);
+    this.initialGuess = Objects.requireNonNull(initialGuess);
     meanDefect = BiinvariantMeanDefect.of(hsExponential);
-  }
-
-  /** @param hsExponential
-   * @param chop */
-  protected IterativeBiinvariantMean(HsExponential hsExponential, Chop chop) {
-    this(hsExponential, ArgMaxBiinvariantMean.INSTANCE, chop);
   }
 
   @Override // from BiinvariantMean

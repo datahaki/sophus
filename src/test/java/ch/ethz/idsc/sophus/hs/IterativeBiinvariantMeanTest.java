@@ -41,7 +41,7 @@ public class IterativeBiinvariantMeanTest extends TestCase {
     double nom = Math.sqrt(2) - Math.PI / 4;
     double denom = 1 + Math.PI / 4 * (Math.sqrt(2) / (2 - Math.sqrt(2)));
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
-    IterativeBiinvariantMean bMI = IterativeBiinvariantMean.of(Se2Manifold.HS_EXP);
+    IterativeBiinvariantMean bMI = IterativeBiinvariantMean.of(Se2Manifold.HS_EXP, Chop._12);
     Tensor actual = bMI.apply(sequenceUnordered, weights).get();
     Chop._11.requireClose(actual, expected);
   }
@@ -55,7 +55,7 @@ public class IterativeBiinvariantMeanTest extends TestCase {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
       Tensor actual = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       IterativeBiinvariantMean biinvariantMeanImplicit = //
-          Serialization.copy(IterativeBiinvariantMean.of(Se2CoveringManifold.HS_EXP));
+          Serialization.copy(IterativeBiinvariantMean.of(Se2CoveringManifold.HS_EXP, Chop._12));
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
         Chop._11.requireClose(actual, result.get());

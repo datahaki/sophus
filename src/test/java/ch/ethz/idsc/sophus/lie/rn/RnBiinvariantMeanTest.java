@@ -56,7 +56,7 @@ public class RnBiinvariantMeanTest extends TestCase {
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(RnManifold.HS_EXP);
+      IterativeBiinvariantMean.of(RnManifold.HS_EXP, Chop._12);
 
   public void testSimple2() {
     MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.HS_EXP);

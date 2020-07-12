@@ -35,6 +35,7 @@ public class Hermite3Filter implements HermiteFilter {
     return new Control(delta, control).new StringIteration();
   }
 
+  // BiinvariantMeans
   private static final Tensor CGW = Tensors.fromString("{1/128, 63/64, 1/128}");
   private static final Tensor CVW = Tensors.fromString("{-1/16, 3/4, -1/16}");
 

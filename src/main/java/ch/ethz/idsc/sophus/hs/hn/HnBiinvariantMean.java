@@ -5,11 +5,13 @@ import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class HnBiinvariantMean extends IterativeBiinvariantMean {
-  public static final BiinvariantMean INSTANCE = new HnBiinvariantMean(Chop._06);
+public enum HnBiinvariantMean {
+  ;
+  public static final BiinvariantMean INSTANCE = of(Chop._06);
 
-  /** @param chop non-null */
-  public HnBiinvariantMean(Chop chop) {
-    super(HnManifold.INSTANCE, HnPhongMean.INSTANCE, chop);
+  /** @param chop
+   * @return */
+  public static BiinvariantMean of(Chop chop) {
+    return IterativeBiinvariantMean.of(HnManifold.INSTANCE, chop, HnPhongMean.INSTANCE);
   }
 }

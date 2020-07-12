@@ -22,7 +22,7 @@ public class HnBiinvariantMeanTest extends TestCase {
 
   public void testNullFail() {
     try {
-      new HnBiinvariantMean(null);
+      HnBiinvariantMean.of(null);
       fail();
     } catch (Exception exception) {
       // ---
