@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs;
 
 import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
+import ch.ethz.idsc.sophus.hs.gr.GrassmannQ;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
@@ -50,6 +51,7 @@ public class HsProjectionTest extends TestCase {
     Tensor sigma_inverse = Symmetrize.of(pinv);
     // ---
     Tensor H = V.dot(sigma_inverse.dot(VT)); // "hat matrix"
+    GrassmannQ.require(H);
     // ---
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
@@ -57,7 +59,9 @@ public class HsProjectionTest extends TestCase {
     Matrix matrix = new HsProjection(vectorLogManifold).new Matrix(sequence, point);
     Chop._08.requireClose(H, matrix.influence());
     Tensor n = LeftNullSpace.usingQR(V);
-    Chop._08.requireClose(matrix.residualMaker(), Transpose.of(n).dot(n));
+    Tensor M = matrix.residualMaker();
+    GrassmannQ.require(M);
+    Chop._08.requireClose(M, Transpose.of(n).dot(n));
     // ---
     Tensor Xinv = PseudoInverse.of(V);
     Tensor p = V.dot(Xinv);
@@ -101,7 +105,7 @@ public class HsProjectionTest extends TestCase {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
         Tensor point = RandomSample.of(randomSampleInterface);
         Tensor sigma_inverse = _check(vectorLogManifold, sequence, point);
-        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(sigma_inverse));
+        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(sigma_inverse, Chop._08));
       }
     }
   }

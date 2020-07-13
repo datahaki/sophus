@@ -41,7 +41,7 @@ public class LieVectorLogManifold implements VectorLogManifold, Serializable {
       this.lieGroupElement = lieGroup.element(point).inverse();
     }
 
-    @Override
+    @Override // from TangentSpace
     public Tensor vectorLog(Tensor q) {
       return vectorLog.apply(lieGroupElement.combine(q));
     }

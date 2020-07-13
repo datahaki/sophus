@@ -23,7 +23,7 @@ public class GrExponential implements Exponential, TangentSpace, Serializable {
 
   /** @param x rank k projector of Gr(n, k) */
   public GrExponential(Tensor x) {
-    this.x = x;
+    this.x = GrassmannQ.require(x);
     id = IdentityMatrix.of(x.length());
   }
 
@@ -35,11 +35,12 @@ public class GrExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    return MatrixLog.of(y.add(y).subtract(id).dot(x.add(x).subtract(id))).multiply(RationalScalar.HALF);
+    return MatrixLog.of(id.subtract(y.add(y)).dot(id.subtract(x.add(x)))).multiply(RationalScalar.HALF);
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
+    // TODO not efficient since log is in so(n), see SpdExponential
     return Flatten.of(log(y));
   }
 }

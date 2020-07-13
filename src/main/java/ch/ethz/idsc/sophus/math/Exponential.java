@@ -3,14 +3,15 @@ package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.Tensor;
 
-/** Log[g.m.g^-1] == Ad[g].Log[m] */
+/** map between manifold M and tangent space T_x M for some point x in M
+ * 
+ * Log[g.m.g^-1] == Ad[g].Log[m] */
 public interface Exponential {
-  // TODO
-  /** @param x in the Lie-algebra
-   * @return element g of the Lie-group with x == log g, and g == exp x */
-  Tensor exp(Tensor x);
+  /** @param vector in the tangent space
+   * @return point in the manifold */
+  Tensor exp(Tensor vector);
 
-  /** @param g element in the Lie group
-   * @return element x in the se2 Lie algebra with x == log g, and g == exp x */
-  Tensor log(Tensor g);
+  /** @param point in the manifold
+   * @return vector in the tangent space */
+  Tensor log(Tensor point);
 }

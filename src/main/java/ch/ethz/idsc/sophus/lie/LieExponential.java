@@ -16,7 +16,9 @@ public class LieExponential implements HsExponential, Serializable {
    * @param exponential
    * @return */
   public static HsExponential of(LieGroup lieGroup, Exponential exponential) {
-    return new LieExponential(lieGroup, exponential);
+    return new LieExponential( //
+        Objects.requireNonNull(lieGroup), //
+        Objects.requireNonNull(exponential));
   }
 
   /***************************************************/
@@ -24,8 +26,8 @@ public class LieExponential implements HsExponential, Serializable {
   private final Exponential exponential;
 
   private LieExponential(LieGroup lieGroup, Exponential exponential) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.exponential = Objects.requireNonNull(exponential);
+    this.lieGroup = lieGroup;
+    this.exponential = exponential;
   }
 
   @Override // from HsExponential
@@ -43,13 +45,13 @@ public class LieExponential implements HsExponential, Serializable {
     }
 
     @Override // from Exponential
-    public Tensor exp(Tensor x) { // TODO x is tangent vector at point (not at neutral elem.)
-      return element.combine(exponential.exp(x));
+    public Tensor exp(Tensor vector) { // TODO x is tangent vector at point (not at neutral elem.)
+      return element.combine(exponential.exp(vector));
     }
 
     @Override // from Exponential
-    public Tensor log(Tensor g) {
-      return exponential.log(inverse.combine(g));
+    public Tensor log(Tensor point) {
+      return exponential.log(inverse.combine(point));
     }
   }
 }
