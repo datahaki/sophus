@@ -31,6 +31,7 @@ public enum HnMetric implements TensorMetric {
     Scalar xy = HnBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, xy))
       return xy;
+    // TODO use taylor series
     Chop._08.requireClose(xy, RealScalar.ONE);
     return RealScalar.ONE;
   }

@@ -109,9 +109,8 @@ by Jan Hakenberg,
 [video](https://www.youtube.com/watch?v=n0-YJE15m90)
 * *Biinvariant Distance Vectors*
 by Jan Hakenberg,
-[pdf](https://github.com/datahaki/sophus/files/4628337/2002.07.pdf),
-[viXra:2002.0129](https://vixra.org/abs/2002.0584),
-[video](https://www.youtube.com/watch?v=n0-YJE15m90)
+[pdf](https://github.com/datahaki/sophus/files/4918840/biinvariant_distance_vectors.pdf),
+[viXra:2007.0043](https://vixra.org/abs/2007.0043)
 
 ## Integration
 

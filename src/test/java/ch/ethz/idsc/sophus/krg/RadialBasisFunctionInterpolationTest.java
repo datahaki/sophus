@@ -60,11 +60,11 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.partitions(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
-        Tolerance.CHOP.requireClose(tensor, UnitVector.of(n, index));
+        Chop._10.requireClose(tensor, UnitVector.of(n, index));
         // ---
         Tensor point = RandomVariate.of(distribution, 3);
         Tensor weights = tensorUnaryOperator.apply(point);
-        AffineQ.require(weights);
+        AffineQ.require(weights, Chop._10);
       }
     }
   }

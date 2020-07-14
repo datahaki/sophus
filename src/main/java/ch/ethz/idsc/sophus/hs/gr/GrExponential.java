@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Dot;
-import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
@@ -40,7 +40,6 @@ public class GrExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
-    // TODO not efficient since log is in so(n), see SpdExponential
-    return Flatten.of(log(y));
+    return Vectorize.lt(log(y), -1);
   }
 }
