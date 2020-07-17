@@ -6,7 +6,9 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
+import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
@@ -85,6 +87,24 @@ public class MahalanobisTest extends TestCase {
       HsProjection hsProjection = new HsProjection(vectorLogManifold);
       Tensor projection = hsProjection.new Matrix(sequence, point).residualMaker();
       Chop._08.requireClose(dot, projection);
+    }
+  }
+
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
+
+  public void testSe2CadInvariant() {
+    Distribution distribution = UniformDistribution.of(-10, +10);
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
+    for (int count = 4; count < 10; ++count) {
+      Tensor sequence = RandomVariate.of(distribution, count, 3);
+      Tensor point = RandomVariate.of(distribution, 3);
+      Tensor l1 = mahalanobis.new Form(sequence, point).leverages();
+      Tensor shift = RandomVariate.of(distribution, 3);
+      Tensor sequconj = LIE_GROUP_OPS.allConjugate(sequence, shift);
+      Tensor poinconj = LIE_GROUP_OPS.conjugate(shift).apply(point);
+      Tensor l2 = mahalanobis.new Form(sequconj, poinconj).leverages();
+      Chop._05.requireClose(l1, l2);
     }
   }
 

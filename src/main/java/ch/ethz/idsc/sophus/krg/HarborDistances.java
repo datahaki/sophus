@@ -79,6 +79,8 @@ public abstract class HarborDistances implements Serializable {
     grassmann = Tensor.of(sequence.stream().map(point -> hsProjection.new Matrix(sequence, point).influence()));
   }
 
+  /** @param point
+   * @return */
   public BiinvariantVector biinvariantVector(Tensor point) {
     Matrix matrix = hsProjection.new Matrix(sequence, point);
     return new BiinvariantVector( //
@@ -86,5 +88,8 @@ public abstract class HarborDistances implements Serializable {
         Tensor.of(grassmann.stream().map(x -> distance(x, matrix.influence()))));
   }
 
+  /** @param x
+   * @param projection
+   * @return */
   protected abstract Scalar distance(Tensor x, Tensor projection);
 }

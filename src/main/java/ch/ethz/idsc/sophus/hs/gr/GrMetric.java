@@ -14,6 +14,6 @@ public enum GrMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Frobenius.NORM.ofMatrix(new GrExponential(p).log(q));
+    return Frobenius.of(new GrExponential(p).log(q));
   }
 }
