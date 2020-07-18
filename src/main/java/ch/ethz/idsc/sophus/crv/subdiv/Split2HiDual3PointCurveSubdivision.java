@@ -16,7 +16,7 @@ public class Split2HiDual3PointCurveSubdivision extends Dual3PointCurveSubdivisi
     return new Split2HiDual3PointCurveSubdivision(binaryAverage, p_qr, q_r);
   }
 
-  // ---
+  /***************************************************/
   private final Scalar q_r;
   private final Scalar p_qr;
   private final Scalar p_q;
@@ -31,13 +31,13 @@ public class Split2HiDual3PointCurveSubdivision extends Dual3PointCurveSubdivisi
   }
 
   @Override // from Dual3PointCurveSubdivision
-  protected Tensor lo(Tensor p, Tensor q, Tensor r) {
+  public Tensor lo(Tensor p, Tensor q, Tensor r) {
     Tensor qr = binaryAverage.split(q, r, q_r);
     return binaryAverage.split(p, qr, p_qr);
   }
 
   @Override
-  protected Tensor hi(Tensor p, Tensor q, Tensor r) {
+  public Tensor hi(Tensor p, Tensor q, Tensor r) {
     Tensor pq = binaryAverage.split(p, q, p_q);
     return binaryAverage.split(pq, r, pq_r);
   }

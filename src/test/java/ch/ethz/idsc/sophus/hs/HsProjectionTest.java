@@ -51,7 +51,7 @@ public class HsProjectionTest extends TestCase {
     Tensor sigma_inverse = Symmetrize.of(pinv);
     // ---
     Tensor H = V.dot(sigma_inverse.dot(VT)); // "hat matrix"
-    GrassmannQ.require(H);
+    GrassmannQ.require(H, Chop._09);
     // ---
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
@@ -60,7 +60,7 @@ public class HsProjectionTest extends TestCase {
     Chop._08.requireClose(H, matrix.influence());
     Tensor n = LeftNullSpace.usingQR(V);
     Tensor M = matrix.residualMaker();
-    GrassmannQ.require(M);
+    GrassmannQ.require(M, Chop._09);
     Chop._08.requireClose(M, Transpose.of(n).dot(n));
     // ---
     Tensor Xinv = PseudoInverse.of(V);

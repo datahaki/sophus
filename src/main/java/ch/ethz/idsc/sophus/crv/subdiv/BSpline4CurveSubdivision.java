@@ -6,7 +6,7 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
-/** cubic B-spline */
+/** quartic B-spline */
 public enum BSpline4CurveSubdivision {
   ;
   private static final Scalar P5 = RealScalar.of(5);

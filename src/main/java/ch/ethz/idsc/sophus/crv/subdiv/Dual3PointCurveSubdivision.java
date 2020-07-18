@@ -60,17 +60,25 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
     return curve.tensor();
   }
 
-  /** @param p
+  /** Example:
+   * in quartic BSpline subdivision the weight mask to insert a point using lo is
+   * {5/16, 5/8, 1/16}
+   * 
+   * @param p
    * @param q
    * @param r
    * @return point between p and q but more towards q */
-  protected abstract Tensor lo(Tensor p, Tensor q, Tensor r);
+  public abstract Tensor lo(Tensor p, Tensor q, Tensor r);
 
-  /** @param p
+  /** Example:
+   * in quartic BSpline subdivision the weight mask to insert a point using hi is
+   * {1/16, 5/8, 5/16}
+   * 
+   * @param p
    * @param q
    * @param r
    * @return point between q and r but more towards q */
-  protected abstract Tensor hi(Tensor p, Tensor q, Tensor r);
+  public abstract Tensor hi(Tensor p, Tensor q, Tensor r);
 
   // point between p and q but more towards p
   private Tensor lo(Tensor p, Tensor q) {
