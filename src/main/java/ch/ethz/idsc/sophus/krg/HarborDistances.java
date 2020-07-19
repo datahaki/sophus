@@ -3,8 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsProjection;
-import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
+import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.gr.GrMetric;
 import ch.ethz.idsc.tensor.Scalar;
@@ -67,25 +66,27 @@ public abstract class HarborDistances implements Serializable {
   }
 
   /***************************************************/
-  private final HsProjection hsProjection;
+  private final VectorLogManifold vectorLogManifold;
   private final Tensor sequence;
-  private final Tensor grassmann;
+  private final Tensor influence;
 
   /** @param vectorLogManifold
    * @param sequence */
   private HarborDistances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    this.hsProjection = new HsProjection(vectorLogManifold);
+    this.vectorLogManifold = vectorLogManifold;
     this.sequence = sequence;
-    grassmann = Tensor.of(sequence.stream().map(point -> hsProjection.new Matrix(sequence, point).influence()));
+    influence = Tensor.of(sequence.stream() //
+        .map(vectorLogManifold::logAt) //
+        .map(tangentSpace -> new HsInfluence(tangentSpace, sequence).matrix()));
   }
 
   /** @param point
    * @return */
   public BiinvariantVector biinvariantVector(Tensor point) {
-    Matrix matrix = hsProjection.new Matrix(sequence, point);
+    HsInfluence hsInfluence = new HsInfluence(vectorLogManifold.logAt(point), sequence);
     return new BiinvariantVector( //
-        matrix.influence(), //
-        Tensor.of(grassmann.stream().map(x -> distance(x, matrix.influence()))));
+        hsInfluence.matrix(), //
+        Tensor.of(influence.stream().map(x -> distance(x, hsInfluence.matrix()))));
   }
 
   /** @param x

@@ -1,11 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import ch.ethz.idsc.sophus.hs.HsProjection;
+import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
-import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
@@ -13,7 +12,6 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
@@ -31,12 +29,12 @@ public class MahalanobisTest extends TestCase {
       Distribution distribution = UniformDistribution.unit();
       for (int count = dimension + 1; count < 10; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, dimension);
-        Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
-        Tensor forms = Tensor.of(sequence.stream().map(point -> mahalanobis.new Form(sequence, point).sigma_inverse()));
+        // Mahalanobis mahalanobis = ;
+        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(vectorLogManifold.logAt(point), sequence).sigma_inverse()));
         for (Tensor form : forms)
           assertTrue(PositiveDefiniteMatrixQ.ofHermitian(form));
         Tensor point = RandomVariate.of(distribution, dimension);
-        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(mahalanobis.new Form(sequence, point).sigma_inverse()));
+        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(new Mahalanobis(vectorLogManifold.logAt(point), sequence).sigma_inverse()));
       }
     }
   }
@@ -47,12 +45,12 @@ public class MahalanobisTest extends TestCase {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
       for (int count = dimension + 2; count < 10; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
-        Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
-        Tensor forms = Tensor.of(sequence.stream().map(point -> mahalanobis.new Form(sequence, point).sigma_inverse()));
+        // Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
+        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(vectorLogManifold.logAt(point), sequence).sigma_inverse()));
         for (Tensor form : forms)
           assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(form, Chop._06)); // has excess dimension
         Tensor point = RandomSample.of(randomSampleInterface);
-        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(mahalanobis.new Form(sequence, point).sigma_inverse(), Chop._08));
+        assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(new Mahalanobis(vectorLogManifold.logAt(point), sequence).sigma_inverse(), Chop._08));
       }
     }
   }
@@ -62,9 +60,9 @@ public class MahalanobisTest extends TestCase {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
-      Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
       for (Tensor point : sequence) {
-        Tensor sigma_inverse = mahalanobis.new Form(sequence, point).sigma_inverse();
+        Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold.logAt(point), sequence);
+        Tensor sigma_inverse = mahalanobis.sigma_inverse();
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
       }
     }
@@ -75,18 +73,17 @@ public class MahalanobisTest extends TestCase {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
-      Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
       Tensor point = RandomVariate.of(distribution, 3);
-      Form form = mahalanobis.new Form(sequence, point);
-      Tensor sigma_inverse = form.sigma_inverse();
+      Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold.logAt(point), sequence);
+      // Form form = mahalanobis.new Form(sequence, point);
+      Tensor sigma_inverse = mahalanobis.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
       // ---
-      Tensor vt = form.matrix();
+      Tensor vt = mahalanobis.matrix();
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
-      HsProjection hsProjection = new HsProjection(vectorLogManifold);
-      Tensor projection = hsProjection.new Matrix(sequence, point).residualMaker();
-      Chop._08.requireClose(dot, projection);
+      HsInfluence hsInfluence = new HsInfluence(vectorLogManifold.logAt(point), sequence);
+      Chop._08.requireClose(dot, hsInfluence.residualMaker());
     }
   }
 
@@ -95,35 +92,35 @@ public class MahalanobisTest extends TestCase {
   public void testSe2CadInvariant() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      Tensor l1 = mahalanobis.new Form(sequence, point).leverages();
+      Mahalanobis mahalanobis1 = new Mahalanobis(vectorLogManifold.logAt(point), sequence);
+      Tensor l1 = mahalanobis1.leverages_sqrt();
       Tensor shift = RandomVariate.of(distribution, 3);
       Tensor sequconj = LIE_GROUP_OPS.allConjugate(sequence, shift);
       Tensor poinconj = LIE_GROUP_OPS.conjugate(shift).apply(point);
-      Tensor l2 = mahalanobis.new Form(sequconj, poinconj).leverages();
+      Mahalanobis mahalanobis2 = new Mahalanobis(vectorLogManifold.logAt(poinconj), sequconj);
+      Tensor l2 = mahalanobis2.leverages_sqrt();
       Chop._05.requireClose(l1, l2);
     }
   }
 
   public void testNullFail() {
     try {
-      new Mahalanobis(null);
+      new Mahalanobis(null, null);
       fail();
     } catch (Exception exception) {
       // ---
     }
   }
-
-  public void testEmptyFail() {
-    Mahalanobis mahalanobis = new Mahalanobis(RnManifold.INSTANCE);
-    try {
-      mahalanobis.new Form(Tensors.empty(), Tensors.vector(1, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-  }
+  // public void testEmptyFail() {
+  // Mahalanobis mahalanobis = new Mahalanobis(RnManifold.INSTANCE);
+  // try {
+  // mahalanobis.new Form(Tensors.empty(), Tensors.vector(1, 2, 3));
+  // fail();
+  // } catch (Exception exception) {
+  // // ---
+  // }
+  // }
 }

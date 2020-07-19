@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
 import ch.ethz.idsc.sophus.hs.gr.GrassmannQ;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
@@ -28,10 +27,9 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.red.Trace;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Round;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
-public class HsProjectionTest extends TestCase {
+public class HsInfluenceTest extends TestCase {
   public void testSimple() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
@@ -56,10 +54,10 @@ public class HsProjectionTest extends TestCase {
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
     // ---
-    Matrix matrix = new HsProjection(vectorLogManifold).new Matrix(sequence, point);
-    Chop._08.requireClose(H, matrix.influence());
+    HsInfluence hsInfluence = new HsInfluence(vectorLogManifold.logAt(point), sequence);
+    Chop._08.requireClose(H, hsInfluence.matrix());
     Tensor n = LeftNullSpace.usingQR(V);
-    Tensor M = matrix.residualMaker();
+    Tensor M = hsInfluence.residualMaker();
     GrassmannQ.require(M, Chop._09);
     Chop._08.requireClose(M, Transpose.of(n).dot(n));
     // ---
@@ -67,10 +65,8 @@ public class HsProjectionTest extends TestCase {
     Tensor p = V.dot(Xinv);
     Chop._08.requireClose(H, p);
     // ---
-    Tensor d1 = Tensor.of(matrix.leverages().stream() //
-        .map(Scalar.class::cast) //
-        .map(Sqrt.FUNCTION));
-    Tensor d2 = Tensor.of(matrix.influence().stream().map(Norm._2::ofVector));
+    Tensor d1 = hsInfluence.leverages_sqrt();
+    Tensor d2 = Tensor.of(hsInfluence.matrix().stream().map(Norm._2::ofVector));
     Chop._08.requireClose(d1, d2);
     return sigma_inverse;
   }

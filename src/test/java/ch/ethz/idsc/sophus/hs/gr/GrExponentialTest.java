@@ -1,8 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
-import ch.ethz.idsc.sophus.hs.HsProjection;
-import ch.ethz.idsc.sophus.hs.HsProjection.Matrix;
+import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -50,10 +49,9 @@ public class GrExponentialTest extends TestCase {
 
   public void testDesign() {
     Distribution distribution = UniformDistribution.unit();
-    HsProjection hsProjection = new HsProjection(RnManifold.INSTANCE);
     int n = 6;
-    Matrix matrix = hsProjection.new Matrix(RandomVariate.of(distribution, n, 2), RandomVariate.of(distribution, 2));
-    Tensor x = matrix.influence();
+    HsInfluence hsInfluence = new HsInfluence(RnManifold.INSTANCE.logAt(RandomVariate.of(distribution, 2)), RandomVariate.of(distribution, n, 2));
+    Tensor x = hsInfluence.matrix();
     GrassmannQ.require(x);
     GrExponential grExponential = new GrExponential(x);
     Tensor vpre = RandomVariate.of(distribution, n, n);

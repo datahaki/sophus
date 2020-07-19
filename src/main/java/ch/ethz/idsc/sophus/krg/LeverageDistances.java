@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -24,18 +25,18 @@ public class LeverageDistances implements WeightingInterface, Serializable {
   /** @param vectorLogManifold
    * @return */
   public static WeightingInterface of(VectorLogManifold vectorLogManifold) {
-    return new LeverageDistances(vectorLogManifold);
+    return new LeverageDistances(Objects.requireNonNull(vectorLogManifold));
   }
 
   /***************************************************/
-  private final Mahalanobis mahalanobis;
+  private final VectorLogManifold vectorLogManifold;
 
   private LeverageDistances(VectorLogManifold vectorLogManifold) {
-    mahalanobis = new Mahalanobis(vectorLogManifold);
+    this.vectorLogManifold = vectorLogManifold;
   }
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return mahalanobis.new Form(sequence, point).leverages();
+    return new Mahalanobis(vectorLogManifold.logAt(point), sequence).leverages_sqrt();
   }
 }

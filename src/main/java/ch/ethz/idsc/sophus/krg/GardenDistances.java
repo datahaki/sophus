@@ -1,12 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Mahalanobis.Form;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -24,23 +21,17 @@ public class GardenDistances implements TensorUnaryOperator {
   }
 
   /***************************************************/
-  private final TangentSpace[] tangentSpaces;
-  private final Form[] forms;
+  private final Mahalanobis[] mahalanobis;
 
   private GardenDistances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    tangentSpaces = sequence.stream() //
+    mahalanobis = sequence.stream() //
         .map(vectorLogManifold::logAt) //
-        .toArray(TangentSpace[]::new);
-    Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold);
-    forms = sequence.stream() //
-        .map(point -> mahalanobis.new Form(sequence, point)) //
-        .toArray(Form[]::new);
+        .map(tangentSpace -> new Mahalanobis(tangentSpace, sequence)) //
+        .toArray(Mahalanobis[]::new);
   }
 
   @Override
   public Tensor apply(Tensor point) {
-    AtomicInteger atomicInteger = new AtomicInteger();
-    return Tensor.of(Stream.of(forms) //
-        .map(form -> form.distance(tangentSpaces[atomicInteger.getAndIncrement()].vectorLog(point))));
+    return Tensor.of(Stream.of(mahalanobis).map(m -> m.distance(point)));
   }
 }

@@ -20,7 +20,9 @@ public enum LeverageCoordinate {
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return new TargetCoordinate(vectorLogManifold, Objects.requireNonNull(variogram));
+    return new TargetCoordinate( //
+        Objects.requireNonNull(vectorLogManifold), //
+        Objects.requireNonNull(variogram));
   }
 
   /** computes leverage coordinates via influence matrix which requires the computation of one
