@@ -1,20 +1,50 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.subdiv;
 
+import ch.ethz.idsc.sophus.crv.clothoid.Clothoid;
 import ch.ethz.idsc.sophus.math.SplitInterface;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
-/** quartic B-spline */
+/** quartic B-spline
+ * 
+ * To encode the quartic B-spline mask, there are exactly two geodesic averages
+ * that consist of two splits, but infinitely many geodesic averages that consist
+ * of three splits. */
 public enum BSpline4CurveSubdivision {
   ;
+  private static final Scalar P2_3 = RationalScalar.of(2, 3);
+  private static final Scalar P1_16 = RationalScalar.of(1, 16);
+
+  /** geodesic split suggested by Dyn/Sharon 2014 p.16 who show that the scheme
+   * with this split has a contractivity factor of mu = 5/6. "The contractivity
+   * guarantees the convergence of these schemes from all initial data."
+   * 
+   * <p>experiments with random data in SE(2) show that this split performs best
+   * among the three geodesic splits listed here, and therefore Dyn/Sharon is
+   * the preferred scheme to use on homogeneous spaces.
+   * 
+   * Careful: do not use on {@link Clothoid}
+   * 
+   * Reference:
+   * "Manifold-valued subdivision schemes based on geodesic inductive averaging"
+   * by Dyn, Sharon, 2014
+   * 
+   * @param splitInterface
+   * @return */
+  public static CurveSubdivision split2lo(SplitInterface splitInterface) {
+    return Split2LoDual3PointCurveSubdivision.of(splitInterface, P2_3, P1_16);
+  }
+
+  /***************************************************/
   private static final Scalar P5 = RealScalar.of(5);
   private static final Scalar P16 = RealScalar.of(16);
 
   /** geodesic split suggested by Hakenberg 2018
+   * most suitable for {@link Clothoid}
    * 
-   * @param geodesicInterface
+   * @param splitInterface
    * @return */
   public static CurveSubdivision split3(SplitInterface splitInterface) {
     return split3(splitInterface, RationalScalar.HALF);
@@ -22,7 +52,7 @@ public enum BSpline4CurveSubdivision {
 
   /** function generalizes all variants above with {1/16, 1/2, 11/16}
    * 
-   * @param geodesicInterface
+   * @param splitInterface
    * @param value in the interval [1/16, 11/16] give the best results
    * @return */
   public static CurveSubdivision split3(SplitInterface splitInterface, Scalar value) {
@@ -32,23 +62,12 @@ public enum BSpline4CurveSubdivision {
   }
 
   /***************************************************/
-  private static final Scalar P2_3 = RationalScalar.of(2, 3);
-  private static final Scalar P1_16 = RationalScalar.of(1, 16);
-  private static final Scalar P1_11 = RationalScalar.of(1, 11);
   private static final Scalar P11_16 = RationalScalar.of(11, 16);
+  private static final Scalar P1_11 = RationalScalar.of(1, 11);
 
-  /** geodesic split suggested by Dyn/Sharon 2014 p.16 who also show
-   * that the scheme with this split has a contractivity factor of mu = 5/6
-   * 
-   * @param geodesicInterface
+  /** @param splitInterface
    * @return */
-  public static CurveSubdivision dynSharon(SplitInterface splitInterface) {
-    return Split2LoDual3PointCurveSubdivision.of(splitInterface, P2_3, P1_16);
-  }
-
-  /** @param geodesicInterface
-   * @return */
-  public static CurveSubdivision split2(SplitInterface splitInterface) {
+  public static CurveSubdivision split2hi(SplitInterface splitInterface) {
     return Split2HiDual3PointCurveSubdivision.of(splitInterface, P11_16, P1_11);
   }
 }

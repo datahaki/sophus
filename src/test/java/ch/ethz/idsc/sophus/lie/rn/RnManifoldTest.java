@@ -120,7 +120,7 @@ public class RnManifoldTest extends TestCase {
         Tensor mean = RandomVariate.of(distribution, dim);
         Tensor lhs = barycentricCoordinate.weights(sequence, mean);
         Tensor rhs = RnAffineCoordinate.INSTANCE.weights(sequence, mean);
-        Chop._08.requireClose(lhs, rhs);
+        Chop._06.requireClose(lhs, rhs);
       }
   }
 

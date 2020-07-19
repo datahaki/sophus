@@ -323,7 +323,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
           Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
           Chop._10.requireClose(xyargt, x_rgt);
-          Chop._10.requireClose(weights1, weightsR);
+          Chop._06.requireClose(weights1, weightsR);
         }
         { // invariant under inversion
           Tensor seqinv = LIE_GROUP_OPS.allInvert(points);

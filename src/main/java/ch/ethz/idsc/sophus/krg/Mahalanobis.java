@@ -32,6 +32,7 @@ public class Mahalanobis implements Serializable {
 
   public class Form implements Serializable {
     private final Tensor matrix;
+    private final Tensor sigma;
     private final Tensor sigma_inverse;
 
     /** @param sequence of n anchor points
@@ -39,7 +40,7 @@ public class Mahalanobis implements Serializable {
     public Form(Tensor sequence, Tensor point) {
       matrix = hsDesign.matrix(sequence, point);
       Scalar factor = RationalScalar.of(1, sequence.length());
-      Tensor sigma = Transpose.of(matrix).dot(matrix).multiply(factor);
+      sigma = Transpose.of(matrix).dot(matrix).multiply(factor);
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
       sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
     }
@@ -49,6 +50,11 @@ public class Mahalanobis implements Serializable {
      * @see HsDesign */
     public Tensor matrix() {
       return matrix;
+    }
+
+    /** @return */
+    public Tensor sigma_n() {
+      return sigma;
     }
 
     /** @return matrix that is symmetric positive definite if sequence contains sufficient points and
