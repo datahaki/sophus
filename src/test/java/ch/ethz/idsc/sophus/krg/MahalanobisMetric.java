@@ -7,7 +7,6 @@ import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Careful: This is not a metric! */
 public class MahalanobisMetric implements TensorMetric, Serializable {
@@ -23,8 +22,6 @@ public class MahalanobisMetric implements TensorMetric, Serializable {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    Tensor sigma_inverse = mahalanobis.new Form(sequence, p).sigma_inverse();
-    Tensor log = vectorLogManifold.logAt(p).vectorLog(q);
-    return Sqrt.FUNCTION.apply(sigma_inverse.dot(log).dot(log).Get());
+    return mahalanobis.new Form(sequence, p).distance(vectorLogManifold.logAt(p).vectorLog(q));
   }
 }

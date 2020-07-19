@@ -64,17 +64,20 @@ public class Mahalanobis implements Serializable {
      * @see PositiveDefiniteMatrixQ
      * @see PositiveSemidefiniteMatrixQ */
     public Tensor sigma_inverse() {
-      return sigma_inverse;
+      return sigma_inverse.unmodifiable();
+    }
+
+    /** @param vector
+     * @return sqrt of sigma_inverse . vector . vector */
+    public Scalar distance(Tensor vector) {
+      // theory guarantees that leverage is in interval [0, 1]
+      // so far the numerics did not result in values below 0 here
+      return Sqrt.FUNCTION.apply(sigma_inverse.dot(vector).dot(vector).Get());
     }
 
     /** @return diagonal of influence matrix */
     public Tensor leverages() {
-      return Tensor.of(matrix.stream() //
-          .map(v -> sigma_inverse.dot(v).dot(v)) //
-          .map(Scalar.class::cast) //
-          // theory guarantees that leverage is in interval [0, 1]
-          // so far the numerics did not result in values below 0 here
-          .map(Sqrt.FUNCTION));
+      return Tensor.of(matrix.stream().map(this::distance));
     }
   }
 }
