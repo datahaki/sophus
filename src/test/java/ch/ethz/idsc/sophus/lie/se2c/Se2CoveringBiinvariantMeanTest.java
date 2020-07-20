@@ -95,13 +95,14 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
 
   public void testRandom() {
     Distribution distribution = UniformDistribution.unit();
+    LieGroupOps lieGroupOps = new LieGroupOps(Se2CoveringGroup.INSTANCE);
     for (int n = 4; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor xya = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
-      Tensor seqinv = new LieGroupOps(Se2CoveringGroup.INSTANCE).allInvert(points);
-      Tensor xyainv = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weights);
-      Tensor combine = Se2CoveringGroup.INSTANCE.element(xya).combine(xyainv);
+      Tensor all = lieGroupOps.inversion().all(points);
+      Tensor one = Se2CoveringBiinvariantMean.INSTANCE.mean(all, weights);
+      Tensor combine = Se2CoveringGroup.INSTANCE.element(xya).combine(one);
       Chop._12.requireAllZero(combine);
     }
   }

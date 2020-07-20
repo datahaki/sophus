@@ -10,6 +10,7 @@ import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -58,11 +59,9 @@ public class Se2CoveringManifoldTest extends TestCase {
       Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(points);
       Tensor xya = RandomVariate.of(distribution, 3);
       for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES) {
-        Tensor w1 = barycentricCoordinate.weights(points, xya);
-        Tensor w2 = se2CoveringBarycenter.apply(xya);
-        Chop._06.requireClose(w1, w2);
-        Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(points, w1);
-        Chop._06.requireClose(xya, mean);
+        Tensor weights = barycentricCoordinate.weights(points, xya);
+        Chop._06.requireClose(weights, se2CoveringBarycenter.apply(xya));
+        Chop._06.requireClose(xya, Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights));
       }
     }
   }
@@ -87,40 +86,23 @@ public class Se2CoveringManifoldTest extends TestCase {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES)
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights1 = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights1);
-        Tensor check1 = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights1);
+        Tensor weights = barycentricCoordinate.weights(points, xya);
+        AffineQ.require(weights);
+        Tensor check1 = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._06.requireClose(check1, xya);
-        Chop._06.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights1);
+        Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
+        Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
-        { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-          Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
-          Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
-          Chop._06.requireClose(xyalft, x_lft);
-          Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
-          Chop._06.requireClose(weights1, weightsL);
-        }
-        { // result invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-          Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
-          Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
-          Chop._06.requireClose(xyargt, x_rgt);
-        }
-        { // result invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-          Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
-          Tensor check2 = Se2CoveringBiinvariantMean.INSTANCE.mean(seqinv, weightsI);
-          Chop._06.requireClose(check2, xyainv);
-          AffineQ.require(weightsI);
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = lieGroupOp.all(points);
+          Tensor one = lieGroupOp.one(xya);
+          Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
+          Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
         }
       }
   }
@@ -182,47 +164,23 @@ public class Se2CoveringManifoldTest extends TestCase {
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights1 = barycentricCoordinate.weights(points, xya);
+        Tensor weights = barycentricCoordinate.weights(points, xya);
         Tensor influence = new HsInfluence(vectorLogManifold.logAt(xya), points).matrix();
         SymmetricMatrixQ.require(influence, Chop._10);
         Chop._10.requireClose(Symmetrize.of(influence), influence);
-        AffineQ.require(weights1);
-        Tensor check1 = biinvariantMean.mean(points, weights1);
+        AffineQ.require(weights);
+        Tensor check1 = biinvariantMean.mean(points, weights);
         Chop._10.requireClose(check1, xya);
-        Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights1);
+        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+        Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
-        { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-          Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
-          Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
-          Chop._08.requireClose(xyalft, x_lft);
-          Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
-          Chop._06.requireClose(weights1, weightsL);
-          Tensor projL = new HsInfluence(vectorLogManifold.logAt(xyalft), seqlft).matrix();
-          Chop._06.requireClose(influence, projL);
-        }
-        { // invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-          Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
-          Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
-          Chop._08.requireClose(xyargt, x_rgt);
-          Chop._06.requireClose(weights1, weightsR);
-          Tensor projR = new HsInfluence(vectorLogManifold.logAt(xyargt), seqrgt).matrix();
-          Chop._10.requireClose(influence, projR);
-        }
-        { // invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-          Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
-          Tensor check2 = biinvariantMean.mean(seqinv, weightsI);
-          Chop._10.requireClose(check2, xyainv);
-          AffineQ.require(weightsI);
-          Chop._06.requireClose(weights1, weightsI);
-          Tensor projI = new HsInfluence(vectorLogManifold.logAt(xyainv), seqinv).matrix();
-          Chop._10.requireClose(influence, projI);
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = lieGroupOp.all(points);
+          Tensor one = lieGroupOp.one(xya);
+          Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
+          Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
+          Chop._06.requireClose(influence, new HsInfluence(vectorLogManifold.logAt(one), all).matrix());
         }
       }
   }
@@ -302,38 +260,19 @@ public class Se2CoveringManifoldTest extends TestCase {
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights1 = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights1);
-        Tensor check1 = biinvariantMean.mean(points, weights1);
+        Tensor weights = barycentricCoordinate.weights(points, xya);
+        AffineQ.require(weights);
+        Tensor check1 = biinvariantMean.mean(points, weights);
         Chop._10.requireClose(check1, xya);
-        Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights1);
+        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+        Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
-        { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-          Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
-          Tensor x_lft = biinvariantMean.mean(seqlft, weights1);
-          Chop._10.requireClose(xyalft, x_lft);
-          Tensor weightsL = barycentricCoordinate.weights(seqlft, xyalft);
-          Chop._06.requireClose(weights1, weightsL);
-        }
-        { // invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-          Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Tensor weightsR = barycentricCoordinate.weights(seqrgt, xyargt);
-          Tensor x_rgt = biinvariantMean.mean(seqrgt, weightsR);
-          Chop._10.requireClose(xyargt, x_rgt);
-          Chop._06.requireClose(weights1, weightsR);
-        }
-        { // invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-          Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Tensor weightsI = barycentricCoordinate.weights(seqinv, xyainv);
-          Tensor check2 = biinvariantMean.mean(seqinv, weightsI);
-          Chop._10.requireClose(check2, xyainv);
-          AffineQ.require(weightsI);
-          Chop._10.requireClose(weights1, weightsI);
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = lieGroupOp.all(points);
+          Tensor one = lieGroupOp.one(xya);
+          Chop._10.requireClose(one, biinvariantMean.mean(all, weights));
+          Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
         }
       }
   }

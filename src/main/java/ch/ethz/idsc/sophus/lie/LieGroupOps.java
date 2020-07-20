@@ -2,6 +2,8 @@
 package ch.ethz.idsc.sophus.lie;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,40 +17,54 @@ public class LieGroupOps implements Serializable {
     this.lieGroup = Objects.requireNonNull(lieGroup);
   }
 
-  public Tensor combine(Tensor g, Tensor h) {
-    return lieGroup.element(g).combine(h);
+  /***************************************************/
+  public LieGroupOp actionL(Tensor g) {
+    return new LieGroupOp(_actionL(g));
   }
 
-  public Tensor invert(Tensor g) {
-    return lieGroup.element(g).inverse().toCoordinate();
+  public LieGroupOp actionR(Tensor g) {
+    return new LieGroupOp(_actionR(g));
   }
 
-  public Tensor allInvert(Tensor sequence) {
-    return Tensor.of(sequence.stream().map(this::invert));
+  public LieGroupOp conjugation(Tensor g) {
+    return new LieGroupOp(_conjugation(g));
   }
 
-  public Tensor allRight(Tensor sequence, Tensor shift) {
-    return Tensor.of(sequence.stream() //
-        .map(lieGroup::element) //
-        .map(lieGroupElement -> lieGroupElement.combine(shift)));
+  public LieGroupOp inversion() {
+    return new LieGroupOp(_inversion());
   }
 
-  public Tensor allLeft(Tensor sequence, Tensor shift) {
-    LieGroupElement lieGroupElement = lieGroup.element(shift);
-    return Tensor.of(sequence.stream() //
-        .map(lieGroupElement::combine));
+  /** Hint: function is intended to use in tests to assert biinvariance
+   * 
+   * @param g
+   * @return */
+  public Collection<LieGroupOp> biinvariant(Tensor g) {
+    return Arrays.asList(actionL(g), actionR(g), conjugation(g), inversion());
+  }
+
+  /***************************************************/
+  /** @param g
+   * @return h -> g.h */
+  private TensorUnaryOperator _actionL(Tensor g) {
+    return lieGroup.element(g)::combine;
   }
 
   /** @param g
-   * @param h
-   * @return g.h.g^-1 */
-  public TensorUnaryOperator conjugate(Tensor g) {
-    LieGroupElement lieGroupElement = lieGroup.element(g);
-    Tensor inverse = lieGroupElement.inverse().toCoordinate();
-    return h -> lieGroup.element(lieGroupElement.combine(h)).combine(inverse);
+   * @return h -> h.g */
+  private TensorUnaryOperator _actionR(Tensor g) {
+    return tensor -> lieGroup.element(tensor).combine(g);
   }
 
-  public Tensor allConjugate(Tensor sequence, Tensor shift) {
-    return Tensor.of(sequence.stream().map(conjugate(shift)));
+  /** @param g
+   * @return h -> g.h.g^-1 */
+  private TensorUnaryOperator _conjugation(Tensor g) {
+    LieGroupElement lieGroupElement = lieGroup.element(g);
+    Tensor inverse = lieGroupElement.inverse().toCoordinate();
+    return tensor -> lieGroup.element(lieGroupElement.combine(tensor)).combine(inverse);
+  }
+
+  /** @return h -> h^-1 */
+  private TensorUnaryOperator _inversion() {
+    return tensor -> lieGroup.element(tensor).inverse().toCoordinate();
   }
 }

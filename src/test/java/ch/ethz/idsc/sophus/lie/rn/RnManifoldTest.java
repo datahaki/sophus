@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -48,26 +49,14 @@ public class RnManifoldTest extends TestCase {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor xya = RandomVariate.of(distribution, n);
         for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
-          Tensor weights1 = barycentricCoordinate.weights(points, xya);
-          Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-          Tensor x_recreated = biinvariantMean.mean(points, weights1);
+          Tensor weights = barycentricCoordinate.weights(points, xya);
+          Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+          Tensor x_recreated = biinvariantMean.mean(points, weights);
           Chop._06.requireClose(xya, x_recreated);
           Tensor shift = RandomVariate.of(distribution, n);
-          { // invariant under left action
-            Tensor weightsL = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allLeft(points, shift), LIE_GROUP_OPS.combine(shift, xya));
-            Chop._04.requireClose(weights1, weightsL);
-          }
-          { // invariant under left action
-            Tensor weightsR = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allRight(points, shift), LIE_GROUP_OPS.combine(xya, shift));
-            Chop._04.requireClose(weights1, weightsR);
-          }
-          { // invariant under inversion
-            Tensor weightsI = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allInvert(points), LIE_GROUP_OPS.invert(xya));
-            Chop._04.requireClose(weights1, weightsI);
-          }
+          for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+            Chop._04.requireClose(weights, //
+                barycentricCoordinate.weights(lieGroupOp.all(points), lieGroupOp.one(xya)));
         }
       }
   }

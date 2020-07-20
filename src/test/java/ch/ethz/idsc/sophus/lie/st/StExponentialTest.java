@@ -111,7 +111,7 @@ public class StExponentialTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor g = TestHelper.spawn_St(2);
       Tensor m = TestHelper.spawn_St(2);
-      Tensor lhs = StExponential.INSTANCE.log(LIE_GROUP_OPS.conjugate(g).apply(m));
+      Tensor lhs = StExponential.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).one(m));
       Tensor rhs = StGroup.INSTANCE.element(g).adjoint(StExponential.INSTANCE.log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }

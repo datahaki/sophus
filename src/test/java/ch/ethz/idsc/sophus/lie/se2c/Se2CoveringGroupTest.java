@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.se2c;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
@@ -27,24 +28,26 @@ public class Se2CoveringGroupTest extends TestCase {
       Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), 8);
       Tensor point = TestHelper.spawn_Se2C();
       Tensor shift = TestHelper.spawn_Se2C();
-      Tensor adSeq = LIE_GROUP_OPS.allConjugate(sequence, shift);
-      Tensor adPnt = LIE_GROUP_OPS.conjugate(shift).apply(point);
-      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
-        Tensor w1 = barycentricCoordinate.weights(sequence, point);
-        Tensor w2 = barycentricCoordinate.weights(adSeq, adPnt);
-        if (!Chop._03.close(w1, w2)) {
-          System.out.println("---");
-          System.out.println(w1);
-          System.out.println(w2);
-          fail();
+      for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+        Tensor all = lieGroupOp.all(sequence);
+        Tensor one = lieGroupOp.one(point);
+        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
+          Tensor w1 = barycentricCoordinate.weights(sequence, point);
+          Tensor w2 = barycentricCoordinate.weights(all, one);
+          if (!Chop._03.close(w1, w2)) {
+            System.out.println("---");
+            System.out.println(w1);
+            System.out.println(w2);
+            fail();
+          }
         }
-      }
-      for (int exp = 0; exp < 3; ++exp) {
-        TensorUnaryOperator gr1 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
-        TensorUnaryOperator gr2 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), adSeq);
-        Tensor w1 = gr1.apply(point);
-        Tensor w2 = gr2.apply(adPnt);
-        Chop._10.requireClose(w1, w2);
+        for (int exp = 0; exp < 3; ++exp) {
+          TensorUnaryOperator gr1 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
+          TensorUnaryOperator gr2 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), all);
+          Tensor w1 = gr1.apply(point);
+          Tensor w2 = gr2.apply(one);
+          Chop._10.requireClose(w1, w2);
+        }
       }
     }
   }

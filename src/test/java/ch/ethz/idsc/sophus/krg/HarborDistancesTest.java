@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
@@ -44,12 +45,12 @@ public class HarborDistancesTest extends TestCase {
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
       assertEquals(v1.distances().length(), v2.distances().length());
-      // Chop._10.requireClose(v1.coordinate(), v2.coordinate());
     }
   }
 
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
-  private static final Biinvariant[] BIINVARIANT = { Biinvariants.TARGET, Biinvariants.HARBOR, Biinvariants.GARDEN };
+  private static final Biinvariant[] BIINVARIANT = //
+      { Biinvariants.TARGET, Biinvariants.ANCHOR, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   public void testRandom() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
@@ -59,25 +60,11 @@ public class HarborDistancesTest extends TestCase {
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
+        Tensor distances = biinvariant.distances(vectorLogManifold, points).apply(xya);
         Tensor shift = RandomVariate.of(distribution, 3);
-        Tensor x_lft;
-        { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
-          Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
-          x_lft = biinvariant.distances(vectorLogManifold, seqlft).apply(xyalft);
-        }
-        { // result invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-          Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Tensor x_rgt = biinvariant.distances(vectorLogManifold, seqrgt).apply(xyargt);
-          Chop._05.requireClose(x_lft, x_rgt);
-        }
-        { // result invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-          Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Tensor x_rgt = biinvariant.distances(vectorLogManifold, seqinv).apply(xyainv);
-          Chop._05.requireClose(x_lft, x_rgt);
-        }
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+          Chop._05.requireClose(distances, //
+              biinvariant.distances(vectorLogManifold, lieGroupOp.all(points)).apply(lieGroupOp.one(xya)));
       }
   }
 }

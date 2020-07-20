@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
@@ -52,32 +53,14 @@ public class KrigingTest extends TestCase {
         Tensor est1 = kriging1.estimate(xya);
         Scalar var1 = kriging1.variance(xya);
         Tensor shift = RandomVariate.of(distribution, 3);
-        { // invariant under left action
-          Tensor seqlft = LIE_GROUP_OPS.allLeft(points, shift);
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = lieGroupOp.all(points);
           TensorUnaryOperator tensorUnaryOperatorL = //
-              biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, seqlft);
-          Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, seqlft, values, covariance);
-          Tensor xyalft = LIE_GROUP_OPS.combine(shift, xya);
-          Chop._10.requireClose(est1, krigingL.estimate(xyalft));
-          Chop._10.requireClose(var1, krigingL.variance(xyalft));
-        }
-        { // invariant under right action
-          Tensor seqrgt = LIE_GROUP_OPS.allRight(points, shift);
-          TensorUnaryOperator tensorUnaryOperatorR = //
-              biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, seqrgt);
-          Kriging krigingR = Kriging.regression(tensorUnaryOperatorR, seqrgt, values, covariance);
-          Tensor xyargt = LIE_GROUP_OPS.combine(xya, shift);
-          Chop._10.requireClose(est1, krigingR.estimate(xyargt));
-          Chop._10.requireClose(var1, krigingR.variance(xyargt));
-        }
-        { // invariant under inversion
-          Tensor seqinv = LIE_GROUP_OPS.allInvert(points);
-          TensorUnaryOperator tensorUnaryOperatorI = //
-              biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, seqinv);
-          Kriging krigingI = Kriging.regression(tensorUnaryOperatorI, seqinv, values, covariance);
-          Tensor xyainv = LIE_GROUP_OPS.invert(xya);
-          Chop._10.requireClose(est1, krigingI.estimate(xyainv));
-          Chop._10.requireClose(var1, krigingI.variance(xyainv));
+              biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, all);
+          Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, all, values, covariance);
+          Tensor one = lieGroupOp.one(xya);
+          Chop._10.requireClose(est1, krigingL.estimate(one));
+          Chop._10.requireClose(var1, krigingL.variance(one));
         }
       }
   }

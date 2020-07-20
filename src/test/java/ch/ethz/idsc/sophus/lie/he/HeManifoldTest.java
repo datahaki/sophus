@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.NormWeighting;
@@ -42,25 +43,14 @@ public class HeManifoldTest extends TestCase {
           int fn = n;
           Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
           Tensor mean1 = TestHelper.spawn_He(n);
-          Tensor weights1 = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights1);
+          Tensor weights = barycentricCoordinate.weights(sequence, mean1);
+          Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._05.requireClose(mean1, mean2);
           // ---
           Tensor shift = TestHelper.spawn_He(n);
-          { // invariant under left action
-            Tensor weightsL = barycentricCoordinate.weights(LIE_GROUP_OPS.allLeft(sequence, shift), LIE_GROUP_OPS.combine(shift, mean1));
-            Chop._05.requireClose(weights1, weightsL);
-          }
-          { // invariant under right action
-            Tensor weightsR = barycentricCoordinate.weights(LIE_GROUP_OPS.allRight(sequence, shift), LIE_GROUP_OPS.combine(mean1, shift));
-            Chop._05.requireClose(weights1, weightsR);
-          }
-          { // invariant under inversion
-            Tensor weightsI = barycentricCoordinate.weights( //
-                LIE_GROUP_OPS.allInvert(sequence), //
-                LIE_GROUP_OPS.invert(mean1));
-            Chop._05.requireClose(weights1, weightsI);
-          }
+          for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+            Chop._05.requireClose(weights, //
+                barycentricCoordinate.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean1)));
         }
   }
 
@@ -71,25 +61,14 @@ public class HeManifoldTest extends TestCase {
         int fn = n;
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
         Tensor mean1 = TestHelper.spawn_He(n);
-        Tensor weights1 = barycentricCoordinate.weights(sequence, mean1);
-        Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights1);
+        Tensor weights = barycentricCoordinate.weights(sequence, mean1);
+        Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
         Chop._08.requireClose(mean1, mean2);
         // ---
         Tensor shift = TestHelper.spawn_He(n);
-        { // invariant under left action
-          Tensor weightsL = barycentricCoordinate.weights(LIE_GROUP_OPS.allLeft(sequence, shift), LIE_GROUP_OPS.combine(shift, mean1));
-          Chop._08.requireClose(weights1, weightsL);
-        }
-        { // invariant under right action
-          Tensor weightsR = barycentricCoordinate.weights(LIE_GROUP_OPS.allRight(sequence, shift), LIE_GROUP_OPS.combine(mean1, shift));
-          Chop._08.requireClose(weights1, weightsR);
-        }
-        { // invariant under inversion
-          Tensor weightsI = barycentricCoordinate.weights( //
-              LIE_GROUP_OPS.allInvert(sequence), //
-              LIE_GROUP_OPS.invert(mean1));
-          Chop._08.requireClose(weights1, weightsI);
-        }
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+          Chop._08.requireClose(weights, //
+              barycentricCoordinate.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean1)));
       }
   }
 

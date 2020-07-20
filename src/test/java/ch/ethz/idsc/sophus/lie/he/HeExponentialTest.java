@@ -31,7 +31,7 @@ public class HeExponentialTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor g = TestHelper.spawn_He(2);
       Tensor m = TestHelper.spawn_He(2);
-      Tensor lhs = HeExponential.INSTANCE.log(LIE_GROUP_OPS.conjugate(g).apply(m));
+      Tensor lhs = HeExponential.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).one(m));
       Tensor rhs = HeGroup.INSTANCE.element(g).adjoint(HeExponential.INSTANCE.log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }

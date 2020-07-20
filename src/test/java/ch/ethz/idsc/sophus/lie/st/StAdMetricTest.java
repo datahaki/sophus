@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.st;
 
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -15,19 +16,10 @@ public class StAdMetricTest extends TestCase {
     Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St1(), 5);
     // Tensor d1 = stAdMetric.all(sequence, m);
     Tensor shift = TestHelper.spawn_St1();
-    Tensor seqL = LIE_GROUP_OPS.allLeft(sequence, shift);
-    Tensor mL = LIE_GROUP_OPS.combine(shift, m);
-    // Tensor dL =
-    stAdMetric.all(seqL, mL);
-    Tensor seqR = LIE_GROUP_OPS.allRight(sequence, shift);
-    Tensor mR = LIE_GROUP_OPS.combine(m, shift);
-    // Tensor dR =
-    stAdMetric.all(seqR, mR);
-    // Scalar dL = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(s).combine(m), StGroup.INSTANCE.element(s).combine(x));
-    // Scalar dR = StAdMetric.INSTANCE.distance(StGroup.INSTANCE.element(m).combine(s), StGroup.INSTANCE.element(x).combine(s));
-    // System.out.println(d1);
-    // System.out.println(dL.pmul(d1.map(Scalar::reciprocal)));
-    // System.out.println(dR.pmul(d1.map(Scalar::reciprocal)));
-    // System.out.println(dR);
+    for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+      Tensor seqL = lieGroupOp.all(sequence);
+      Tensor mL = lieGroupOp.one(m);
+      stAdMetric.all(seqL, mL);
+    }
   }
 }

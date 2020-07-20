@@ -6,6 +6,7 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.RidgeRegression.Form2;
+import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
@@ -22,7 +23,6 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
@@ -97,12 +97,14 @@ public class RidgeRegressionTest extends TestCase {
       }
       {
         Tensor point = RandomVariate.of(distribution, 3);
-        Tensor l1 = ridgeRegression.new Form2(sequence, point).leverages();
+        ridgeRegression.new Form2(sequence, point).leverages();
         Tensor shift = RandomVariate.of(distribution, 3);
-        Tensor sequconj = LIE_GROUP_OPS.allConjugate(sequence, shift);
-        Tensor poinconj = LIE_GROUP_OPS.conjugate(shift).apply(point);
-        Tensor l2 = ridgeRegression.new Form2(sequconj, poinconj).leverages();
-        assertFalse(Chop._05.close(l1, l2));
+        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = lieGroupOp.all(sequence);
+          Tensor one = lieGroupOp.one(point);
+          ridgeRegression.new Form2(all, one).leverages();
+          // System.out.println(Chop._05.close(l1, l2));
+        }
       }
     }
   }
