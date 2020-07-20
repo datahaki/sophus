@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
@@ -8,7 +8,10 @@ import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.krg.GardenDistances;
+import ch.ethz.idsc.sophus.krg.HarborDistances;
+import ch.ethz.idsc.sophus.krg.LeverageDistances;
+import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;

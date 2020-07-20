@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.sophus.hs.Biinvariant;
+import ch.ethz.idsc.sophus.hs.BiinvariantVector;
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;

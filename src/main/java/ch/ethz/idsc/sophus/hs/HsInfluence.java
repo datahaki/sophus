@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.ethz.idsc.sophus.krg.Mahalanobis;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;

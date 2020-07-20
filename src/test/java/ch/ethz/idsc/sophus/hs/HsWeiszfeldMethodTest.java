@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.krg.Biinvariants;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;

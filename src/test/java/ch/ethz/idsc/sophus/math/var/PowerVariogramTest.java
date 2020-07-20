@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.math.var;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.krg.Biinvariants;
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.krg.Kriging;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;

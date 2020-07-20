@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.krg.Biinvariants;
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;

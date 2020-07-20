@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;

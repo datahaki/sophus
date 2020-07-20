@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;

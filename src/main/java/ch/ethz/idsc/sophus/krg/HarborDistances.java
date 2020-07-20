@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.gr.GrMetric;

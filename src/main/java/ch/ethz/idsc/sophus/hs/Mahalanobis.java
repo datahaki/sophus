@@ -1,10 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

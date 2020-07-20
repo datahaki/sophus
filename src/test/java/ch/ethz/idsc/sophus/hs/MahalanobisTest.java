@@ -1,8 +1,6 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.hs.HsInfluence;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;

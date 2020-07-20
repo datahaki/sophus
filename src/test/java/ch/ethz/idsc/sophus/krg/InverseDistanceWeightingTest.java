@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;

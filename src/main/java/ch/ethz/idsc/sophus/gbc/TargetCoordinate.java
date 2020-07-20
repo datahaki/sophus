@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.Mahalanobis;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Mahalanobis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
@@ -16,7 +16,9 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * 
  * <p>Reference:
  * "Biinvariant Distance Vectors"
- * by Jan Hakenberg, 2020 */
+ * by Jan Hakenberg, 2020
+ * 
+ * @see LeverageCoordinate */
 /* package */ class TargetCoordinate implements BarycentricCoordinate, Serializable {
   private final VectorLogManifold vectorLogManifold;
   private final ScalarUnaryOperator variogram;

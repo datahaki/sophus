@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import java.io.IOException;
+
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
@@ -11,6 +14,7 @@ import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -36,12 +40,12 @@ public class GardenDistancesTest extends TestCase {
     }
   }
 
-  public void testRn1() {
+  public void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = GardenDistances.of(vectorLogManifold, sequence);
+      TensorUnaryOperator tensorUnaryOperator = Serialization.copy(GardenDistances.of(vectorLogManifold, sequence));
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }

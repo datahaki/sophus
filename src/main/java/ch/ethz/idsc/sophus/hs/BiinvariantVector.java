@@ -1,9 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsInfluence;
+import ch.ethz.idsc.sophus.krg.HarborDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;

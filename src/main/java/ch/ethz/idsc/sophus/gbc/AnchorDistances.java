@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.BiinvariantVector;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 

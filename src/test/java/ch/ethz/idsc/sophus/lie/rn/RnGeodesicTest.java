@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.krg.Biinvariant;
-import ch.ethz.idsc.sophus.krg.Biinvariants;
+import ch.ethz.idsc.sophus.hs.Biinvariant;
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;

@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.hs.Biinvariant;
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Biinvariant;
-import ch.ethz.idsc.sophus.krg.Biinvariants;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.sophus.math.var.PowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
