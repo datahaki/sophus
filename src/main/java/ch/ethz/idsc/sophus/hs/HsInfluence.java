@@ -39,7 +39,7 @@ public final class HsInfluence implements Serializable {
    * 
    * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
   public Tensor matrix() {
-    return matrix.unmodifiable();
+    return matrix;
   }
 
   /** @return diagonal entries of influence matrix guaranteed to be in the unit interval [0, 1] */

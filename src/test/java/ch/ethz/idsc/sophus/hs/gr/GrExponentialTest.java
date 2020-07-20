@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.gr;
 
 import ch.ethz.idsc.sophus.hs.HsInfluence;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -50,7 +51,8 @@ public class GrExponentialTest extends TestCase {
   public void testDesign() {
     Distribution distribution = UniformDistribution.unit();
     int n = 6;
-    HsInfluence hsInfluence = new HsInfluence(RnManifold.INSTANCE.logAt(RandomVariate.of(distribution, 2)), RandomVariate.of(distribution, n, 2));
+    TangentSpace tangentSpace = RnManifold.INSTANCE.logAt(RandomVariate.of(distribution, 2));
+    HsInfluence hsInfluence = new HsInfluence(tangentSpace, RandomVariate.of(distribution, n, 2));
     Tensor x = hsInfluence.matrix();
     GrassmannQ.require(x);
     GrExponential grExponential = new GrExponential(x);

@@ -38,6 +38,22 @@ public enum Biinvariants implements Biinvariant {
       return "Metric";
     }
   },
+  AETHER {
+    @Override // from Biinvariant
+    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+      return METRIC.distances(vectorLogManifold, sequence);
+    }
+
+    @Override // from Biinvariant
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return METRIC.coordinate(vectorLogManifold, variogram, sequence);
+    }
+
+    @Override
+    public String title() {
+      return "Aether";
+    }
+  },
   /** bi-invariant, identical to anchor */
   TARGET {
     @Override // from Biinvariant

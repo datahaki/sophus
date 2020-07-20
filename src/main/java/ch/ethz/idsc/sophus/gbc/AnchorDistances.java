@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.Tensor;
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
     HsInfluence hsInfluence = new HsInfluence(vectorLogManifold.logAt(point), sequence);
-    return new BiinvariantVector(hsInfluence.matrix(), hsInfluence.leverages_sqrt());
+    return new BiinvariantVector(hsInfluence, hsInfluence.leverages_sqrt());
   }
 
   @Override // from WeightingInterface
