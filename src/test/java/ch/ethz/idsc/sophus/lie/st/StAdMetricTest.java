@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.st;
 
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
@@ -16,9 +16,9 @@ public class StAdMetricTest extends TestCase {
     Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St1(), 5);
     // Tensor d1 = stAdMetric.all(sequence, m);
     Tensor shift = TestHelper.spawn_St1();
-    for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-      Tensor seqL = lieGroupOp.all(sequence);
-      Tensor mL = lieGroupOp.one(m);
+    for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+      Tensor seqL = tensorMapping.slash(sequence);
+      Tensor mL = tensorMapping.apply(m);
       stAdMetric.all(seqL, mL);
     }
   }

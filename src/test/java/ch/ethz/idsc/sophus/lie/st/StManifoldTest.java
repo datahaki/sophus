@@ -6,8 +6,8 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -38,9 +38,9 @@ public class StManifoldTest extends TestCase {
           Chop._06.requireClose(mean1, mean2);
           // ---
           Tensor shift = TestHelper.spawn_St(n);
-          for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
             Chop._06.requireClose(weights, //
-                barycentricCoordinate.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean1)));
+                barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
         }
   }
 
@@ -57,9 +57,9 @@ public class StManifoldTest extends TestCase {
           Chop._08.requireClose(mean1, mean2); // linear reproduction
           // ---
           Tensor shift = TestHelper.spawn_St(n);
-          for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
             Chop._08.requireClose(weights, barycentricCoordinate.weights( //
-                lieGroupOp.all(sequence), lieGroupOp.one(mean1)));
+                tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
         }
   }
 

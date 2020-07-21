@@ -6,10 +6,10 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.RidgeRegression.Form2;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -99,9 +99,9 @@ public class RidgeRegressionTest extends TestCase {
         Tensor point = RandomVariate.of(distribution, 3);
         ridgeRegression.new Form2(sequence, point).leverages();
         Tensor shift = RandomVariate.of(distribution, 3);
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = lieGroupOp.all(sequence);
-          Tensor one = lieGroupOp.one(point);
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = tensorMapping.slash(sequence);
+          Tensor one = tensorMapping.apply(point);
           ridgeRegression.new Form2(all, one).leverages();
           // System.out.println(Chop._05.close(l1, l2));
         }

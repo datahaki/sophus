@@ -10,12 +10,12 @@ import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -98,9 +98,9 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = lieGroupOp.all(points);
-          Tensor one = lieGroupOp.one(xya);
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = tensorMapping.slash(points);
+          Tensor one = tensorMapping.apply(xya);
           Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
         }
@@ -175,9 +175,9 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = lieGroupOp.all(points);
-          Tensor one = lieGroupOp.one(xya);
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = tensorMapping.slash(points);
+          Tensor one = tensorMapping.apply(xya);
           Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
           Chop._06.requireClose(influence, new HsInfluence(vectorLogManifold.logAt(one), all).matrix());
@@ -268,9 +268,9 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);
         Tensor shift = TestHelper.spawn_Se2C();
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = lieGroupOp.all(points);
-          Tensor one = lieGroupOp.one(xya);
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = tensorMapping.slash(points);
+          Tensor one = tensorMapping.apply(xya);
           Chop._10.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
         }

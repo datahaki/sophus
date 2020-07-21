@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.lie.se2c;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -28,9 +28,9 @@ public class Se2CoveringGroupTest extends TestCase {
       Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), 8);
       Tensor point = TestHelper.spawn_Se2C();
       Tensor shift = TestHelper.spawn_Se2C();
-      for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-        Tensor all = lieGroupOp.all(sequence);
-        Tensor one = lieGroupOp.one(point);
+      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+        Tensor all = tensorMapping.slash(sequence);
+        Tensor one = tensorMapping.apply(point);
         for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
           Tensor w1 = barycentricCoordinate.weights(sequence, point);
           Tensor w2 = barycentricCoordinate.weights(all, one);

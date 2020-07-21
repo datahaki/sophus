@@ -6,9 +6,9 @@ import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -54,9 +54,9 @@ public class RnManifoldTest extends TestCase {
           Tensor x_recreated = biinvariantMean.mean(points, weights);
           Chop._06.requireClose(xya, x_recreated);
           Tensor shift = RandomVariate.of(distribution, n);
-          for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
             Chop._04.requireClose(weights, //
-                barycentricCoordinate.weights(lieGroupOp.all(points), lieGroupOp.one(xya)));
+                barycentricCoordinate.weights(tensorMapping.slash(points), tensorMapping.apply(xya)));
         }
       }
   }

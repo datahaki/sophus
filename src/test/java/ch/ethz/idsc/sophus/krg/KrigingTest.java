@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.ExponentialVariogram;
 import ch.ethz.idsc.sophus.math.var.PowerVariogram;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -53,12 +53,12 @@ public class KrigingTest extends TestCase {
         Tensor est1 = kriging1.estimate(xya);
         Scalar var1 = kriging1.variance(xya);
         Tensor shift = RandomVariate.of(distribution, 3);
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = lieGroupOp.all(points);
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+          Tensor all = tensorMapping.slash(points);
           TensorUnaryOperator tensorUnaryOperatorL = //
               biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, all);
           Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, all, values, covariance);
-          Tensor one = lieGroupOp.one(xya);
+          Tensor one = tensorMapping.apply(xya);
           Chop._10.requireClose(est1, krigingL.estimate(one));
           Chop._10.requireClose(var1, krigingL.variance(one));
         }

@@ -3,11 +3,11 @@ package ch.ethz.idsc.sophus.hs;
 
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
@@ -93,9 +93,9 @@ public class MahalanobisTest extends TestCase {
       Tensor point = RandomVariate.of(distribution, 3);
       Tensor leverages_sqrt = new Mahalanobis(vectorLogManifold.logAt(point), sequence).leverages_sqrt();
       Tensor shift = RandomVariate.of(distribution, 3);
-      for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
         Chop._05.requireClose(leverages_sqrt, //
-            new Mahalanobis(vectorLogManifold.logAt(lieGroupOp.one(point)), lieGroupOp.all(sequence)).leverages_sqrt());
+            new Mahalanobis(vectorLogManifold.logAt(tensorMapping.apply(point)), tensorMapping.slash(sequence)).leverages_sqrt());
     }
   }
 

@@ -7,8 +7,8 @@ import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
@@ -56,9 +56,9 @@ public class So3ManifoldTest extends TestCase {
           Chop._06.requireClose(weights1, weights2);
           // ---
           {
-            LieGroupOp lieGroupOp = LIE_GROUP_OPS.inversion();
+            TensorMapping tensorMapping = LIE_GROUP_OPS.inversion();
             Chop._06.requireClose(weights1, //
-                barycentricCoordinate.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean)));
+                barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
           }
         } catch (Exception exception) {
           ++fails;
@@ -101,8 +101,8 @@ public class So3ManifoldTest extends TestCase {
         Tensor weights2 = AFFINE.weights(seqlft, lieGroupElement.combine(mean));
         Chop._10.requireClose(weights1, weights2);
         // ---
-        LieGroupOp lieGroupOp = LIE_GROUP_OPS.inversion();
-        Chop._10.requireClose(weights1, AFFINE.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean)));
+        TensorMapping tensorMapping = LIE_GROUP_OPS.inversion();
+        Chop._10.requireClose(weights1, AFFINE.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
       } catch (Exception exception) {
         ++fail;
       }

@@ -100,7 +100,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor xya = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
-      Tensor all = lieGroupOps.inversion().all(points);
+      Tensor all = lieGroupOps.inversion().slash(points);
       Tensor one = Se2CoveringBiinvariantMean.INSTANCE.mean(all, weights);
       Tensor combine = Se2CoveringGroup.INSTANCE.element(xya).combine(one);
       Chop._12.requireAllZero(combine);

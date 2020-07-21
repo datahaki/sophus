@@ -5,11 +5,11 @@ import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -62,9 +62,9 @@ public class HarborDistancesTest extends TestCase {
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor distances = biinvariant.distances(vectorLogManifold, points).apply(xya);
         Tensor shift = RandomVariate.of(distribution, 3);
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
           Chop._05.requireClose(distances, //
-              biinvariant.distances(vectorLogManifold, lieGroupOp.all(points)).apply(lieGroupOp.one(xya)));
+              biinvariant.distances(vectorLogManifold, tensorMapping.slash(points)).apply(tensorMapping.apply(xya)));
       }
   }
 }

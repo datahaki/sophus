@@ -7,10 +7,10 @@ import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.lie.LieGroupOp;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.NormWeighting;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -48,9 +48,9 @@ public class HeManifoldTest extends TestCase {
           Chop._05.requireClose(mean1, mean2);
           // ---
           Tensor shift = TestHelper.spawn_He(n);
-          for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
             Chop._05.requireClose(weights, //
-                barycentricCoordinate.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean1)));
+                barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
         }
   }
 
@@ -66,9 +66,9 @@ public class HeManifoldTest extends TestCase {
         Chop._08.requireClose(mean1, mean2);
         // ---
         Tensor shift = TestHelper.spawn_He(n);
-        for (LieGroupOp lieGroupOp : LIE_GROUP_OPS.biinvariant(shift))
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
           Chop._08.requireClose(weights, //
-              barycentricCoordinate.weights(lieGroupOp.all(sequence), lieGroupOp.one(mean1)));
+              barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
       }
   }
 
