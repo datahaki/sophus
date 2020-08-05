@@ -1,9 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.sn;
+package ch.ethz.idsc.sophus.hs.s2;
 
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.sn.SnExponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Join;

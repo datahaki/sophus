@@ -26,6 +26,9 @@ public enum HnWeierstrassCoordinate {
     return x.copy().append(Sqrt.FUNCTION.apply(RnNormSquared.INSTANCE.norm(x).add(RealScalar.ONE)));
   }
 
+  /** @param x
+   * @param v
+   * @return */
   public static Tensor toTangent(Tensor x, Tensor v) {
     Scalar xn = Sqrt.FUNCTION.apply(RnNormSquared.INSTANCE.norm(x).add(RealScalar.ONE));
     return v.copy().append(x.dot(v).divide(xn));

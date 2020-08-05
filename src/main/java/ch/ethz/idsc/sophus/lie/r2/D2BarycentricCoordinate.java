@@ -49,21 +49,14 @@ public class D2BarycentricCoordinate implements BarycentricCoordinate, Serializa
     this.biFunction = biFunction;
   }
 
-  /** function takes vector x of length 2 that is strictly inside polygon and
-   * returns vector that satisfies the equation: vector dot polygon == x
-   * 
-   * @param polygon non-empty matrix of dimensions n x 2
-   * @param x vector of length 2
-   * @return vector of length n
-   * @throws Exception if polygon is empty */
   @Override // from BarycentricCoordinate
-  public Tensor weights(Tensor polygon, Tensor x) {
-    int length = polygon.length();
+  public Tensor weights(Tensor sequence, Tensor point) {
+    int length = sequence.length();
     Tensor[] auxs = new Tensor[length];
     Scalar[] dens = new Scalar[length];
     int ind = 0;
-    TangentSpace tangentSpace = vectorLogManifold.logAt(x);
-    for (Tensor p : polygon) {
+    TangentSpace tangentSpace = vectorLogManifold.logAt(point);
+    for (Tensor p : sequence) {
       Tensor dif = tangentSpace.vectorLog(p); // dif is vector of length 2
       Scalar den = Hypot.ofVector(dif); // use of metric
       if (Scalars.isZero(den))
