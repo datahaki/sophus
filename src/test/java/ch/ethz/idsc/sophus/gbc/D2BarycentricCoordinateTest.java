@@ -1,10 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.r2;
+package ch.ethz.idsc.sophus.gbc;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.lie.r2.Polygons;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.BoxRandomSample;

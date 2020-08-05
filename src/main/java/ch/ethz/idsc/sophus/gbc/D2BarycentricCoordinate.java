@@ -1,11 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.r2;
+package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Det2D;
@@ -77,7 +76,7 @@ public class D2BarycentricCoordinate implements BarycentricCoordinate, Serializa
   }
 
   private static Scalar forward(Tensor ofs1, Tensor ofs2) {
-    Scalar den = Det2D.of(ofs1, ofs2); // computation in oriented plane
+    Scalar den = Det2D.of(ofs1, ofs2); // signed area computation in oriented plane
     return Scalars.isZero(den) //
         ? RealScalar.ZERO
         : ofs2.subtract(ofs1).dot(ofs2).Get().divide(den);
