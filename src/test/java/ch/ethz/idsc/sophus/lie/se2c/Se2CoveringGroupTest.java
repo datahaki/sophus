@@ -60,7 +60,7 @@ public class Se2CoveringGroupTest extends TestCase {
         Tensor point = TestHelper.spawn_Se2C();
         Tensor weights = grCoordinate.apply(point);
         Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-        Chop._07.requireClose(point, mean);
+        Chop._05.requireClose(point, mean);
       }
     }
   }

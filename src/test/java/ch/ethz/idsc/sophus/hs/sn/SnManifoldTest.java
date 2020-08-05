@@ -45,7 +45,7 @@ public class SnManifoldTest extends TestCase {
           } catch (Exception exception) {
             ++fails;
           }
-    assertTrue(fails < 3);
+    assertTrue(fails < 4);
   }
 
   public void testLagrangeProperty() {

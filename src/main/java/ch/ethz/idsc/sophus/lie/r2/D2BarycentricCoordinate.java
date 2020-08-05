@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -24,16 +26,26 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
  * 
  * @see Barycenter */
-public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializable {
-  /** @param biFunction for instance {@link Barycenter#MEAN_VALUE} */
-  public static BarycentricCoordinate of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new R2BarycentricCoordinate(Objects.requireNonNull(biFunction));
+public class D2BarycentricCoordinate implements BarycentricCoordinate, Serializable {
+  /** @param vectorLogManifold with 2-dimensional tangent space
+   * @param biFunction {@link Barycenter}
+   * @return */
+  public static BarycentricCoordinate of( //
+      VectorLogManifold vectorLogManifold, //
+      BiFunction<Tensor, Scalar, Tensor> biFunction) {
+    return new D2BarycentricCoordinate( //
+        Objects.requireNonNull(vectorLogManifold), //
+        Objects.requireNonNull(biFunction));
   }
 
   /***************************************************/
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
+  private final VectorLogManifold vectorLogManifold;
 
-  private R2BarycentricCoordinate(BiFunction<Tensor, Scalar, Tensor> biFunction) {
+  private D2BarycentricCoordinate( //
+      VectorLogManifold vectorLogManifold, //
+      BiFunction<Tensor, Scalar, Tensor> biFunction) {
+    this.vectorLogManifold = vectorLogManifold;
     this.biFunction = biFunction;
   }
 
@@ -50,9 +62,10 @@ public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializa
     Tensor[] auxs = new Tensor[length];
     Scalar[] dens = new Scalar[length];
     int ind = 0;
+    TangentSpace tangentSpace = vectorLogManifold.logAt(x);
     for (Tensor p : polygon) {
-      Tensor dif = p.subtract(x);
-      Scalar den = Hypot.ofVector(dif);
+      Tensor dif = tangentSpace.vectorLog(p); // dif is vector of length 2
+      Scalar den = Hypot.ofVector(dif); // use of metric
       if (Scalars.isZero(den))
         return UnitVector.of(length, ind);
       auxs[ind] = biFunction.apply(dif, den);
@@ -71,7 +84,7 @@ public class R2BarycentricCoordinate implements BarycentricCoordinate, Serializa
   }
 
   private static Scalar forward(Tensor ofs1, Tensor ofs2) {
-    Scalar den = Det2D.of(ofs1, ofs2);
+    Scalar den = Det2D.of(ofs1, ofs2); // computation in oriented plane
     return Scalars.isZero(den) //
         ? RealScalar.ZERO
         : ofs2.subtract(ofs1).dot(ofs2).Get().divide(den);
