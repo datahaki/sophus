@@ -11,8 +11,8 @@ import ch.ethz.idsc.tensor.red.Total;
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
 /* package */ enum HnBilinearForm {
   ;
-  /** @param p
-   * @param q
+  /** @param p point or tangent vector
+   * @param q point or tangent vector
    * @return */
   public static Scalar between(Tensor p, Tensor q) {
     Tensor pq = p.pmul(q);

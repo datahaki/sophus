@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
+/** for a point in H^n the HnNormSquared equals -1 */
 public enum HnNormSquared implements TensorNorm {
   INSTANCE;
 

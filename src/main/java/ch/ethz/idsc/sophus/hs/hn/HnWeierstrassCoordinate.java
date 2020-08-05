@@ -20,17 +20,21 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * by Xavier Pennec, 2016 */
 public enum HnWeierstrassCoordinate {
   ;
+  private static Scalar xn(Tensor x) {
+    return Sqrt.FUNCTION.apply(RnNormSquared.INSTANCE.norm(x).add(RealScalar.ONE));
+  }
+
   /** @param x vector
    * @return vector of length one greater than length of x */
   public static Tensor toPoint(Tensor x) {
-    return x.copy().append(Sqrt.FUNCTION.apply(RnNormSquared.INSTANCE.norm(x).add(RealScalar.ONE)));
+    return x.copy().append(xn(x));
   }
 
   /** @param x
    * @param v
    * @return */
   public static Tensor toTangent(Tensor x, Tensor v) {
-    Scalar xn = Sqrt.FUNCTION.apply(RnNormSquared.INSTANCE.norm(x).add(RealScalar.ONE));
-    return v.copy().append(x.dot(v).divide(xn));
+    Scalar last = x.dot(v).Get().divide(xn(x));
+    return v.copy().append(last);
   }
 }

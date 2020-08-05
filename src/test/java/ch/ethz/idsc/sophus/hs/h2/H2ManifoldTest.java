@@ -1,7 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.h2;
 
+import ch.ethz.idsc.sophus.hs.hn.HnManifold;
 import ch.ethz.idsc.sophus.hs.hn.HnMetric;
+import ch.ethz.idsc.sophus.hs.hn.HnNorm;
 import ch.ethz.idsc.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -21,9 +23,12 @@ public class H2ManifoldTest extends TestCase {
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 2));
       VectorQ.requireLength(p, 3);
       Scalar distance = HnMetric.INSTANCE.distance(p, q);
-      Tensor v = H2Manifold.INSTANCE.logAt(p).vectorLog(q);
-      VectorQ.requireLength(v, 2);
-      Chop._08.requireClose(Hypot.ofVector(v), distance);
+      Tensor log_h2 = H2Manifold.INSTANCE.logAt(p).vectorLog(q);
+      VectorQ.requireLength(log_h2, 2);
+      Chop._08.requireClose(Hypot.ofVector(log_h2), distance);
+      Tensor log_hn = HnManifold.INSTANCE.logAt(p).vectorLog(q);
+      Scalar norm = HnNorm.INSTANCE.norm(log_hn);
+      Chop._08.requireClose(distance, norm);
     }
   }
 }

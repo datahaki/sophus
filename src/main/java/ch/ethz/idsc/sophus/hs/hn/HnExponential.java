@@ -9,7 +9,6 @@ import ch.ethz.idsc.sophus.math.sca.Sinhc;
 import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Cosh;
 
 /** hyperboloid model
@@ -33,9 +32,8 @@ public class HnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    Scalar cosh_d = HnMetric.cosh_d(x, y);
-    Scalar theta = ArcCosh.FUNCTION.apply(cosh_d);
-    return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(theta));
+    HnAngle hnAngle = new HnAngle(x, y);
+    return y.subtract(x.multiply(hnAngle.cosh_d())).multiply(SinhcInverse.FUNCTION.apply(hnAngle.angle()));
   }
 
   @Override // from TangentSpace
