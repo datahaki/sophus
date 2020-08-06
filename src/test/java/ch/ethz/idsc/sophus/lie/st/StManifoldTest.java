@@ -39,7 +39,7 @@ public class StManifoldTest extends TestCase {
           // ---
           Tensor shift = TestHelper.spawn_St(n);
           for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
-            Chop._06.requireClose(weights, //
+            Chop._03.requireClose(weights, //
                 barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
         }
   }

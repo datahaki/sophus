@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Last;
+import ch.ethz.idsc.tensor.sca.Sign;
 
 public enum Polygons {
   ;
@@ -35,6 +36,31 @@ public enum Polygons {
         Scalar nx = next.Get(0);
         Scalar r1 = px.subtract(nx).multiply(ty.subtract(ny));
         c ^= Scalars.lessThan(tx, r1.divide(div).add(nx));
+      }
+      prev = next;
+    }
+    return c;
+  }
+
+  /** @param polygon
+   * @return true if origin (0, 0) is inside given polygon */
+  public static boolean isInside(Tensor polygon) {
+    if (Tensors.isEmpty(polygon))
+      return false;
+    boolean c = false;
+    Tensor prev = Last.of(polygon);
+    Iterator<Tensor> iterator = polygon.iterator();
+    while (iterator.hasNext()) {
+      Tensor next = iterator.next();
+      Scalar py = prev.Get(1);
+      Scalar ny = next.Get(1);
+      if (Sign.isPositive(ny) != Sign.isPositive(py)) {
+        Scalar div = py.subtract(ny);
+        // assume div == 0 => py == ny => IF-condition above is false; therefore here div != 0
+        Scalar px = prev.Get(0);
+        Scalar nx = next.Get(0);
+        Scalar r1 = px.subtract(nx).multiply(ny.negate());
+        c ^= Sign.isPositive(r1.divide(div).add(nx));
       }
       prev = next;
     }

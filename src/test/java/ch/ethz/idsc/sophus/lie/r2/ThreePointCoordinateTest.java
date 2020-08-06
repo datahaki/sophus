@@ -1,10 +1,12 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.lie.r2;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.lie.r2.Polygons;
+import ch.ethz.idsc.sophus.gbc.Barycenter;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.GlobalPolygonCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.BoxRandomSample;
@@ -26,9 +28,9 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sign;
 import junit.framework.TestCase;
 
-public class D2BarycentricCoordinateTest extends TestCase {
+public class ThreePointCoordinateTest extends TestCase {
   private static BarycentricCoordinate r2(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return D2BarycentricCoordinate.of(RnManifold.INSTANCE, biFunction);
+    return GlobalPolygonCoordinate.of(RnManifold.INSTANCE, biFunction);
   }
 
   public void testHDual() {
@@ -158,7 +160,7 @@ public class D2BarycentricCoordinateTest extends TestCase {
 
   public void testNullFail() {
     try {
-      D2BarycentricCoordinateTest.r2(null);
+      ThreePointCoordinateTest.r2(null);
       fail();
     } catch (Exception exception) {
       // ---

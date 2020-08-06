@@ -1,12 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.lie.r2;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.gbc.Barycenter;
 import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -15,9 +13,12 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Hypot;
 
-/** References:
+/** Three-point coordinates are also referred to as "Complete family of coordinates"
+ * 
+ * References:
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Kai Hormann, N. Sukumar, 2017
  * 
@@ -25,38 +26,25 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
  * 
  * @see Barycenter */
-public class D2BarycentricCoordinate implements BarycentricCoordinate, Serializable {
-  /** @param vectorLogManifold with 2-dimensional tangent space
-   * @param biFunction {@link Barycenter}
-   * @return */
-  public static BarycentricCoordinate of( //
-      VectorLogManifold vectorLogManifold, //
-      BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new D2BarycentricCoordinate( //
-        Objects.requireNonNull(vectorLogManifold), //
-        Objects.requireNonNull(biFunction));
+public class ThreePointCoordinate implements TensorUnaryOperator {
+  public static TensorUnaryOperator of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
+    return new ThreePointCoordinate(Objects.requireNonNull(biFunction));
   }
 
   /***************************************************/
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
-  private final VectorLogManifold vectorLogManifold;
 
-  private D2BarycentricCoordinate( //
-      VectorLogManifold vectorLogManifold, //
-      BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    this.vectorLogManifold = vectorLogManifold;
+  private ThreePointCoordinate(BiFunction<Tensor, Scalar, Tensor> biFunction) {
     this.biFunction = biFunction;
   }
 
-  @Override // from BarycentricCoordinate
-  public Tensor weights(Tensor sequence, Tensor point) {
-    int length = sequence.length();
+  @Override
+  public Tensor apply(Tensor levers) {
+    int length = levers.length();
     Tensor[] auxs = new Tensor[length];
     Scalar[] dens = new Scalar[length];
     int ind = 0;
-    TangentSpace tangentSpace = vectorLogManifold.logAt(point);
-    for (Tensor p : sequence) {
-      Tensor dif = tangentSpace.vectorLog(p); // dif is vector of length 2
+    for (Tensor dif : levers) { // dif is vector of length 2
       Scalar den = Hypot.ofVector(dif); // use of metric
       if (Scalars.isZero(den))
         return UnitVector.of(length, ind);
