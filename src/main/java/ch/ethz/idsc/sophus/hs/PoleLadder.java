@@ -1,10 +1,11 @@
+// code by jph
 package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.sophus.math.MidpointInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
@@ -17,16 +18,27 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020 p.14 */
 public class PoleLadder implements HsTransport, Serializable {
   /** @param hsExponential
+   * @param midpointInterface
+   * @return */
+  public static HsTransport of(HsExponential hsExponential, MidpointInterface midpointInterface) {
+    return new PoleLadder( //
+        Objects.requireNonNull(hsExponential), //
+        Objects.requireNonNull(midpointInterface));
+  }
+
+  /** @param hsExponential
    * @return */
   public static HsTransport of(HsExponential hsExponential) {
-    return new PoleLadder(Objects.requireNonNull(hsExponential));
+    return of(hsExponential, new HsMidpoint(hsExponential));
   }
 
   /***************************************************/
   private final HsExponential hsExponential;
+  private final MidpointInterface midpointInterface;
 
-  private PoleLadder(HsExponential hsExponential) {
+  private PoleLadder(HsExponential hsExponential, MidpointInterface midpointInterface) {
     this.hsExponential = hsExponential;
+    this.midpointInterface = midpointInterface;
   }
 
   @Override
@@ -42,16 +54,15 @@ public class PoleLadder implements HsTransport, Serializable {
     private PoleTransport(Tensor xo, Tensor xw) {
       exp_xo = hsExponential.exponential(xo);
       exp_xw = hsExponential.exponential(xw);
-      Tensor mi = exp_xo.exp(exp_xo.log(xw).multiply(RationalScalar.HALF));
-      exp_mi = hsExponential.exponential(mi);
+      exp_mi = hsExponential.exponential(midpointInterface.midpoint(xo, xw));
     }
 
     @Override
     public Tensor apply(Tensor vo) {
       Tensor xv = exp_xo.exp(vo);
-      Tensor a = exp_mi.log(xv);
-      Tensor z = exp_mi.exp(a.negate()); // x2a
-      return exp_xw.log(z).negate();
+      Tensor dx = exp_mi.log(xv);
+      Tensor dw = exp_mi.exp(dx.negate()); // x2a
+      return exp_xw.log(dw).negate();
     }
   }
 }

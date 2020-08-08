@@ -1,7 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import java.io.IOException;
+
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
+import ch.ethz.idsc.sophus.hs.sn.SnMidpoint;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -9,6 +12,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
@@ -24,10 +28,11 @@ public class PoleLadderTest extends TestCase {
     ExactTensorQ.require(u);
   }
 
-  public void testSn() {
+  public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
-    TensorUnaryOperator shift1 = PoleLadder.of(SnManifold.INSTANCE).shift(orig, dest);
+    TensorUnaryOperator shift1 = //
+        Serialization.copy(PoleLadder.of(SnManifold.INSTANCE, SnMidpoint.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);
@@ -47,6 +52,21 @@ public class PoleLadderTest extends TestCase {
       Tensor t1 = shift1.apply(v2);
       Tensor t3 = shift3.apply(v2);
       Chop._12.requireClose(t1, t3);
+    }
+  }
+
+  public void testNullFail() {
+    try {
+      PoleLadder.of(SnManifold.INSTANCE, null);
+      fail();
+    } catch (Exception e) {
+      // ---
+    }
+    try {
+      PoleLadder.of(null);
+      fail();
+    } catch (Exception e) {
+      // ---
     }
   }
 }

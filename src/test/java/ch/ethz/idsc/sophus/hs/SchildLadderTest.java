@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import java.io.IOException;
+
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
@@ -10,6 +12,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -26,12 +29,12 @@ public class SchildLadderTest extends TestCase {
     ExactTensorQ.require(u);
   }
 
-  public void testSn() {
+  public void testSn() throws ClassNotFoundException, IOException {
     // HsTransport hsTransport = ;
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = SchildLadderExt.of(SnManifold.INSTANCE).shift(orig, dest);
-    TensorUnaryOperator shift2 = SchildLadder.of(SnManifold.INSTANCE).shift(orig, dest);
+    TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);
@@ -58,6 +61,15 @@ public class SchildLadderTest extends TestCase {
       Scalar d13 = Norm._2.between(t1, t3);
       Scalar d23 = Norm._2.between(t2, t3);
       Chop._12.requireClose(d13, d23);
+    }
+  }
+
+  public void testNullFail() {
+    try {
+      SchildLadder.of(null);
+      fail();
+    } catch (Exception e) {
+      // ---
     }
   }
 }
