@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
+import ch.ethz.idsc.sophus.hs.sn.SnMidpoint;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -30,20 +31,22 @@ public class SchildLadderTest extends TestCase {
   }
 
   public void testSn() throws ClassNotFoundException, IOException {
-    // HsTransport hsTransport = ;
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = SchildLadderExt.of(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
-    TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
+    TensorUnaryOperator shift3 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE, SnMidpoint.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);
       Tensor t1 = shift1.apply(v1);
       Tensor t2 = shift2.apply(v1);
       Tensor t3 = shift3.apply(v1);
-      Chop._12.requireClose(t2, t3);
-      Chop._12.requireClose(t1, t3);
-      ExactTensorQ.require(t3);
+      Tensor t4 = shift4.apply(v1);
+      Chop._12.requireClose(t1, t4);
+      Chop._12.requireClose(t2, t4);
+      Chop._12.requireClose(t3, t4);
+      ExactTensorQ.require(t4);
     }
     {
       Tensor v2 = UnitVector.of(3, 2).multiply(RealScalar.of(0.001));

@@ -10,6 +10,14 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 
 public class HsMidpoint implements MidpointInterface, Serializable {
+  /** @param exponential
+   * @param q
+   * @return */
+  public static Tensor of(Exponential exponential, Tensor q) {
+    return exponential.exp(exponential.log(q).multiply(RationalScalar.HALF));
+  }
+
+  /***************************************************/
   private final HsExponential hsExponential;
 
   /** @param hsExponential */
@@ -19,7 +27,6 @@ public class HsMidpoint implements MidpointInterface, Serializable {
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
-    Exponential exponential = hsExponential.exponential(p);
-    return exponential.exp(exponential.log(q).multiply(RationalScalar.HALF));
+    return of(hsExponential.exponential(p), q);
   }
 }
