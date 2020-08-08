@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
-import ch.ethz.idsc.sophus.hs.sn.SnMidpoint;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -32,7 +32,7 @@ public class PoleLadderTest extends TestCase {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = //
-        Serialization.copy(PoleLadder.of(SnManifold.INSTANCE, SnMidpoint.INSTANCE)).shift(orig, dest);
+        Serialization.copy(PoleLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);

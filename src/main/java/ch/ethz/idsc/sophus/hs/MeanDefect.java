@@ -5,7 +5,9 @@ import ch.ethz.idsc.tensor.Tensor;
 
 @FunctionalInterface
 public interface MeanDefect {
-  /** @param sequence
+  /** output is subject to exponentiation
+   * 
+   * @param sequence
    * @param weights
    * @param mean for weighted mean of given sequence
    * @return vector in the direction of true mean */

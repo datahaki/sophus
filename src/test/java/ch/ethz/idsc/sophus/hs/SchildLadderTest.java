@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
-import ch.ethz.idsc.sophus.hs.sn.SnMidpoint;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -35,7 +35,7 @@ public class SchildLadderTest extends TestCase {
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = SchildLadderExt.of(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
-    TensorUnaryOperator shift3 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE, SnMidpoint.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift3 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);

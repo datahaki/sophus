@@ -2,7 +2,10 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
+import ch.ethz.idsc.sophus.hs.HsMidpoint;
 import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
+import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -119,6 +122,18 @@ public class SnGeodesicTest extends TestCase {
     // in sync with Mathematica
     Tensor expect = Tensors.vector(0.8090169943749473, 0.2628655560595668, 0.5257311121191336);
     Chop._12.requireClose(tensor, expect);
+  }
+
+  public void testMidpoint() {
+    HsMidpoint hsMidpoint = new HsMidpoint(SnManifold.INSTANCE);
+    for (int dimension = 2; dimension <= 5; ++dimension) {
+      RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
+      Tensor p = RandomSample.of(randomSampleInterface);
+      Tensor q = RandomSample.of(randomSampleInterface);
+      Tensor m1 = SnGeodesic.INSTANCE.midpoint(p, q);
+      Tensor m2 = hsMidpoint.midpoint(p, q);
+      Chop._08.requireClose(m1, m2);
+    }
   }
 
   public void testDimensionsFail() {
