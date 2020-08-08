@@ -110,7 +110,8 @@ by Jan Hakenberg,
 * *Biinvariant Distance Vectors*
 by Jan Hakenberg,
 [pdf](https://github.com/datahaki/sophus/files/4918840/biinvariant_distance_vectors.pdf),
-[viXra:2007.0043](https://vixra.org/abs/2007.0043)
+[viXra:2007.0043](https://vixra.org/abs/2007.0043),
+[video](https://www.youtube.com/watch?v=R5FlEgWy8Cc)
 
 ## Integration
 

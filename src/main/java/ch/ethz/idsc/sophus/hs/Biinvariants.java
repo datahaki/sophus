@@ -18,6 +18,9 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
+/** Reference:
+ * "Biinvariant Distance Vectors"
+ * by Jan Hakenberg, 2020 */
 public enum Biinvariants implements Biinvariant {
   /** left-invariant (biinvariant only if a biinvariant metric exists)
    * results in a symmetric distance matrix -> can use for kriging */
