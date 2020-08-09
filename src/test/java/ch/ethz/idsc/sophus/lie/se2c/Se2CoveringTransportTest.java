@@ -33,8 +33,9 @@ public class Se2CoveringTransportTest extends TestCase {
     Tensor q = TestHelper.spawn_Se2C();
     Tensor v = TestHelper.spawn_se2C();
     Tensor r1 = Se2CoveringTransport.INSTANCE.shift(p, q).apply(v);
-    HsTransport hsTransport = //
-        SubdivideTransport.of(PoleLadder.of(Se2CoveringManifold.HS_EXP), Se2CoveringManifold.HS_EXP, 100);
+    HsTransport hsTransport = SubdivideTransport.of( //
+        PoleLadder.of(Se2CoveringManifold.HS_EXP), //
+        Se2CoveringGeodesic.INSTANCE, 100);
     Tensor r2 = hsTransport.shift(p, q).apply(v);
     // System.out.println(r1);
     // System.out.println(r2);

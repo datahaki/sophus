@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,37 +20,39 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * @see SchildLadder */
 public class SubdivideTransport implements HsTransport, Serializable {
   /** @param hsTransport
-   * @param hsExponential
+   * @param geodesicInterface
    * @param n
    * @return */
-  public static HsTransport of(HsTransport hsTransport, HsExponential hsExponential, int n) {
+  public static HsTransport of(HsTransport hsTransport, GeodesicInterface geodesicInterface, int n) {
     return new SubdivideTransport( //
-        Objects.requireNonNull(hsTransport), hsExponential, n);
+        Objects.requireNonNull(hsTransport), //
+        Objects.requireNonNull(geodesicInterface), //
+        n);
   }
 
   /***************************************************/
   private final HsTransport hsTransport;
-  private final HsGeodesic hsGeodesic;
+  private final GeodesicInterface geodesicInterface;
   private final Tensor domain;
   private final Scalar factor;
 
-  public SubdivideTransport(HsTransport hsTransport, HsExponential hsExponential, int n) {
+  public SubdivideTransport(HsTransport hsTransport, GeodesicInterface geodesicInterface, int n) {
     this.hsTransport = hsTransport;
-    hsGeodesic = new HsGeodesic(hsExponential);
+    this.geodesicInterface = geodesicInterface;
     domain = Subdivide.of(0, 1, n);
     this.factor = RealScalar.of(n);
   }
 
   @Override
   public TensorUnaryOperator shift(Tensor xo, Tensor xw) {
-    return new Rung(xo, xw);
+    return new Rung(domain.map(geodesicInterface.curve(xo, xw)));
   }
 
   private class Rung implements TensorUnaryOperator {
     private final Tensor points;
 
-    private Rung(Tensor xo, Tensor xw) {
-      points = domain.map(hsGeodesic.curve(xo, xw));
+    private Rung(Tensor points) {
+      this.points = points;
     }
 
     @Override

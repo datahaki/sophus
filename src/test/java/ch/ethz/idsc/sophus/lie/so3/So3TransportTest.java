@@ -39,7 +39,7 @@ public class So3TransportTest extends TestCase {
     StaticHelper.requireTangent(q, vq1);
     HsTransport hsTransport = PoleLadder.of(So3Manifold.INSTANCE);
     Tensor vq2 = hsTransport.shift(p, q).apply(vp);
-    Tensor vq3 = SubdivideTransport.of(hsTransport, So3Manifold.INSTANCE, 100).shift(p, q).apply(vp);
+    Tensor vq3 = SubdivideTransport.of(hsTransport, So3Geodesic.INSTANCE, 100).shift(p, q).apply(vp);
     // TODO does not match
     // System.out.println(vq1);
     // System.out.println(vq2);

@@ -34,7 +34,7 @@ public class PoleLadderTest extends TestCase {
     HsTransport poleLadder = PoleLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE);
     TensorUnaryOperator shift1 = //
         Serialization.copy(poleLadder).shift(orig, dest);
-    TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnManifold.INSTANCE, 7).shift(orig, dest);
+    TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnGeodesic.INSTANCE, 7).shift(orig, dest);
     TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);

@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 public class SubdivideTransportTest extends TestCase {
   public void testSubdivideFail() {
     try {
-      SubdivideTransport.of(PoleLadder.of(So3Manifold.INSTANCE), So3Manifold.INSTANCE, 0);
+      SubdivideTransport.of(PoleLadder.of(So3Manifold.INSTANCE), new HsGeodesic(So3Manifold.INSTANCE), 0);
       fail();
     } catch (Exception exception) {
       // ---
@@ -16,7 +16,7 @@ public class SubdivideTransportTest extends TestCase {
 
   public void testNullFail() {
     try {
-      SubdivideTransport.of(null, So3Manifold.INSTANCE, 2);
+      SubdivideTransport.of(null, new HsGeodesic(So3Manifold.INSTANCE), 2);
       fail();
     } catch (Exception exception) {
       // ---
