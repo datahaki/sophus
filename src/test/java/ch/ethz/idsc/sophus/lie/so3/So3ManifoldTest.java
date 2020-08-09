@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.so3;
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -20,7 +19,7 @@ import junit.framework.TestCase;
 
 public class So3ManifoldTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
+  private static final MeanDefect MEAN_DEFECT = new MeanDefect(So3Manifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(So3Group.INSTANCE);
 
   public void testSimple() {

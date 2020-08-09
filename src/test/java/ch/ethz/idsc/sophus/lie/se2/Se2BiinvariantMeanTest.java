@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.se2;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -26,7 +25,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
 public class Se2BiinvariantMeanTest extends TestCase {
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se2Manifold.HS_EXP);
+  private static final MeanDefect MEAN_DEFECT = new MeanDefect(Se2Manifold.HS_EXP);
 
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38

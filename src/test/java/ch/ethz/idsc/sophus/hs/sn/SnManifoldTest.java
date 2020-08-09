@@ -5,7 +5,6 @@ import java.util.Random;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -25,7 +24,7 @@ import junit.framework.TestCase;
 public class SnManifoldTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(SnManifold.INSTANCE);
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(SnManifold.INSTANCE);
+  private static final MeanDefect MEAN_DEFECT = new MeanDefect(SnManifold.INSTANCE);
 
   public void testLinearReproduction() {
     Distribution distribution = NormalDistribution.of(0, 0.2);

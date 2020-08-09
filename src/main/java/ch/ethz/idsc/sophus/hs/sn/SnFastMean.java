@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -10,7 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum SnFastMean implements BiinvariantMean {
   INSTANCE;
 
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(SnManifold.INSTANCE);
+  private static final MeanDefect MEAN_DEFECT = new MeanDefect(SnManifold.INSTANCE);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {

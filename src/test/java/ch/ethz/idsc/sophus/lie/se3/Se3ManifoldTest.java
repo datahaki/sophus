@@ -6,7 +6,6 @@ import java.util.Arrays;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -27,7 +26,7 @@ import junit.framework.TestCase;
 public class Se3ManifoldTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(Se3Manifold.HS_EXP, Chop._12);
-  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se3Manifold.HS_EXP);
+  public static final MeanDefect MEAN_DEFECT = new MeanDefect(Se3Manifold.HS_EXP);
   private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Manifold.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //
       GbcHelper.biinvariant(Se3Manifold.INSTANCE);

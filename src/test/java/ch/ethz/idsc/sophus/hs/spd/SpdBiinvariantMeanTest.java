@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.hs.spd;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -31,7 +30,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, sequence.length()));
         Tensor mean = biinvariantMean.mean(sequence, weights);
-        MeanDefect meanDefect = BiinvariantMeanDefect.of(SpdManifold.INSTANCE);
+        MeanDefect meanDefect = new MeanDefect(SpdManifold.INSTANCE);
         Chop._06.requireAllZero(meanDefect.defect(sequence, weights, mean));
       }
   }

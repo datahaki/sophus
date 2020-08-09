@@ -1,7 +1,6 @@
 // code by ob, jph
 package ch.ethz.idsc.sophus.lie.st;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
@@ -14,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class StBiinvariantMeanTest extends TestCase {
-  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(StManifold.HS_EXP);
+  public static final MeanDefect MEAN_DEFECT = new MeanDefect(StManifold.HS_EXP);
 
   public void testTrivial() {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));

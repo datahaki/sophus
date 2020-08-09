@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.hs;
 
 import junit.framework.TestCase;
 
-public class BiinvariantMeanDefectTest extends TestCase {
+public class MeanDefectTest extends TestCase {
   public void testNullFail() {
     try {
-      BiinvariantMeanDefect.of(null);
+      new MeanDefect(null);
       fail();
     } catch (Exception exception) {
       // ---

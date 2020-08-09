@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.hs.rpn;
 import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so2.AngleVector;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
@@ -28,7 +27,7 @@ import junit.framework.TestCase;
 public class RpnBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final BarycentricCoordinate[] PROJECTED_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(RpnManifold.INSTANCE);
+  private static final MeanDefect MEAN_DEFECT = new MeanDefect(RpnManifold.INSTANCE);
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);

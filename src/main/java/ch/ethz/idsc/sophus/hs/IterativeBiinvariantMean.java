@@ -48,7 +48,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     this.hsExponential = hsExponential;
     this.chop = Objects.requireNonNull(chop);
     this.initialGuess = Objects.requireNonNull(initialGuess);
-    meanDefect = BiinvariantMeanDefect.of(hsExponential);
+    meanDefect = new MeanDefect(hsExponential);
   }
 
   @Override // from BiinvariantMean

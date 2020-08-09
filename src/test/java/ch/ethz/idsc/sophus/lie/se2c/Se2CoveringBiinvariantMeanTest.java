@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -27,7 +26,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantMeanTest extends TestCase {
-  private static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(Se2CoveringManifold.HS_EXP);
+  private static final MeanDefect MEAN_DEFECT = new MeanDefect(Se2CoveringManifold.HS_EXP);
 
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));

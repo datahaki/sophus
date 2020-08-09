@@ -1,7 +1,6 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -12,7 +11,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeBiinvariantMeanTest extends TestCase {
-  public static final MeanDefect MEAN_DEFECT = BiinvariantMeanDefect.of(HeManifold.HS_EXP);
+  public static final MeanDefect MEAN_DEFECT = new MeanDefect(HeManifold.HS_EXP);
 
   public void testTrivial() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");

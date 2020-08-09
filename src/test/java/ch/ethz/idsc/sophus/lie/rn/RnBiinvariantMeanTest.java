@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -59,7 +58,7 @@ public class RnBiinvariantMeanTest extends TestCase {
       IterativeBiinvariantMean.of(RnManifold.HS_EXP, Chop._12);
 
   public void testSimple2() {
-    MeanDefect meanDefect = BiinvariantMeanDefect.of(RnManifold.HS_EXP);
+    MeanDefect meanDefect = new MeanDefect(RnManifold.HS_EXP);
     Tensor sequence = Tensors.of( //
         RnExponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //

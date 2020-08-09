@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.lie.so3;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanDefect;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,7 +16,7 @@ import junit.framework.TestCase;
 
 public class So3BiinvariantMeanTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  public static final MeanDefect INSTANCE = BiinvariantMeanDefect.of(So3Manifold.INSTANCE);
+  public static final MeanDefect INSTANCE = new MeanDefect(So3Manifold.INSTANCE);
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //
