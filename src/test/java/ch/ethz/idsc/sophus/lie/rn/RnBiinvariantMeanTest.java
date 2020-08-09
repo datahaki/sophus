@@ -58,13 +58,13 @@ public class RnBiinvariantMeanTest extends TestCase {
       IterativeBiinvariantMean.of(RnManifold.HS_EXP, Chop._12);
 
   public void testSimple2() {
-    MeanDefect meanDefect = new MeanDefect(RnManifold.HS_EXP);
     Tensor sequence = Tensors.of( //
         RnExponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
         RnExponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = meanDefect.defect( //
-        sequence, Tensors.vector(0.25, 0.5, 0.25), RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)));
+    Tensor log = MeanDefect.tangent( //
+        sequence, Tensors.vector(0.25, 0.5, 0.25), //
+        RnManifold.HS_EXP.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0))));
     Chop._10.requireAllZero(log);
   }
 

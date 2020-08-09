@@ -25,8 +25,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 import junit.framework.TestCase;
 
 public class Se2BiinvariantMeanTest extends TestCase {
-  private static final MeanDefect MEAN_DEFECT = new MeanDefect(Se2Manifold.HS_EXP);
-
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
   public void testArsignyPennec() throws ClassNotFoundException, IOException {
@@ -49,7 +47,8 @@ public class Se2BiinvariantMeanTest extends TestCase {
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = Serialization.copy(se2BiinvariantMean).mean(sequence, weights);
-      MEAN_DEFECT.defect(sequenceUnordered, weights, actual);
+      // TODO this does not check anything... also below!
+      MeanDefect.tangent(sequenceUnordered, weights, Se2Manifold.HS_EXP.exponential(actual));
       Tensor actualUnordered = se2BiinvariantMean.mean(sequenceUnordered, weights);
       // ---
       Chop._14.requireClose(expected, actual);
@@ -62,7 +61,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     Tensor weights = Tensors.vector(1);
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(p, weights);
-      MEAN_DEFECT.defect(p, weights, actual);
+      MeanDefect.tangent(p, weights, Se2Manifold.HS_EXP.exponential(actual));
       Chop._14.requireClose(p.get(0), actual);
     }
   }
@@ -76,7 +75,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(3, 3, 0), actual);
-      MEAN_DEFECT.defect(sequence, weights, actual);
+      MeanDefect.tangent(sequence, weights, Se2Manifold.HS_EXP.exponential(actual));
     }
   }
 
@@ -89,7 +88,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor actual = se2BiinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(0, 0, 0.6), actual);
-      MEAN_DEFECT.defect(sequence, weights, actual);
+      MeanDefect.tangent(sequence, weights, Se2Manifold.HS_EXP.exponential(actual));
     }
   }
 
@@ -145,7 +144,7 @@ public class Se2BiinvariantMeanTest extends TestCase {
         Tensor result = se2BiinvariantMean.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
         Chop._12.requireClose(result, solution);
       }
-      MEAN_DEFECT.defect(sequence, weights, solution);
+      MeanDefect.tangent(sequence, weights, Se2Manifold.HS_EXP.exponential(solution));
     }
   }
 

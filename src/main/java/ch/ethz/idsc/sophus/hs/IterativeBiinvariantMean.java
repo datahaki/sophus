@@ -42,13 +42,11 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private final HsExponential hsExponential;
   private final Chop chop;
   private final BiinvariantMean initialGuess;
-  private final MeanDefect meanDefect;
 
   private IterativeBiinvariantMean(HsExponential hsExponential, Chop chop, BiinvariantMean initialGuess) {
     this.hsExponential = hsExponential;
     this.chop = Objects.requireNonNull(chop);
     this.initialGuess = Objects.requireNonNull(initialGuess);
-    meanDefect = new MeanDefect(hsExponential);
   }
 
   @Override // from BiinvariantMean
@@ -60,13 +58,13 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param weights
    * @return approximate biinvariant mean */
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
-    Tensor mean = initialGuess.mean(sequence, weights); // initial guess
+    Exponential exponential = hsExponential.exponential(initialGuess.mean(sequence, weights)); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      Tensor next = hsExponential.exponential(mean).exp(meanDefect.defect(sequence, weights, mean));
-      Exponential exponential = hsExponential.exponential(next);
-      if (chop.allZero(exponential.log(mean)))
-        return Optional.of(next);
-      mean = next;
+      Tensor tangent = MeanDefect.tangent(sequence, weights, exponential);
+      Tensor shifted = exponential.exp(tangent);
+      if (chop.allZero(tangent))
+        return Optional.of(shifted);
+      exponential = hsExponential.exponential(shifted);
     }
     return Optional.empty();
   }

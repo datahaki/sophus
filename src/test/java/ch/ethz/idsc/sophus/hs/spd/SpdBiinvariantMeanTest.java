@@ -30,8 +30,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, sequence.length()));
         Tensor mean = biinvariantMean.mean(sequence, weights);
-        MeanDefect meanDefect = new MeanDefect(SpdManifold.INSTANCE);
-        Chop._06.requireAllZero(meanDefect.defect(sequence, weights, mean));
+        Chop._06.requireAllZero(MeanDefect.tangent(sequence, weights, SpdManifold.INSTANCE.exponential(mean)));
       }
   }
 

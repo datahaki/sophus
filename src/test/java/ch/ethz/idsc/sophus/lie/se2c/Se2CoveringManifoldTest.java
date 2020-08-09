@@ -271,7 +271,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
           Tensor all = tensorMapping.slash(points);
           Tensor one = tensorMapping.apply(xya);
-          Chop._10.requireClose(one, biinvariantMean.mean(all, weights));
+          Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
         }
       }

@@ -19,7 +19,6 @@ import junit.framework.TestCase;
 
 public class So3ManifoldTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  private static final MeanDefect MEAN_DEFECT = new MeanDefect(So3Manifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(So3Group.INSTANCE);
 
   public void testSimple() {
@@ -31,7 +30,7 @@ public class So3ManifoldTest extends TestCase {
     Tensor mean = Rodrigues.vectorExp(Tensors.vector(0.4, 0.2, 0.3));
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor weights = barycentricCoordinate.weights(sequence, mean);
-      Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
+      Tensor defect = MeanDefect.tangent(sequence, weights, So3Manifold.INSTANCE.exponential(mean));
       Chop._10.requireAllZero(defect);
     }
   }

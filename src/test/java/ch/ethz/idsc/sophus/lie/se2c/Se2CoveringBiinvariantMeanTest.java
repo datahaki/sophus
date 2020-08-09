@@ -26,8 +26,6 @@ import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class Se2CoveringBiinvariantMeanTest extends TestCase {
-  private static final MeanDefect MEAN_DEFECT = new MeanDefect(Se2CoveringManifold.HS_EXP);
-
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
@@ -51,7 +49,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
+      Tensor defect = MeanDefect.tangent(sequence, weights, Se2CoveringManifold.HS_EXP.exponential(mean));
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }
@@ -68,7 +66,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       QuantityMagnitude.SI().in("m").apply(mean.Get(0));
       QuantityMagnitude.SI().in("m").apply(mean.Get(1));
-      Tensor defect = MEAN_DEFECT.defect(sequence, weights, mean);
+      Tensor defect = MeanDefect.tangent(sequence, weights, Se2CoveringManifold.HS_EXP.exponential(mean));
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }

@@ -16,15 +16,16 @@ import junit.framework.TestCase;
 
 public class So3BiinvariantMeanTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  public static final MeanDefect INSTANCE = new MeanDefect(So3Manifold.INSTANCE);
+  // public static final MeanDefect INSTANCE = new MeanDefect(So3Manifold.INSTANCE);
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //
         Rodrigues.vectorExp(Tensors.vector(+1 + 0.3, 0, 0)), //
         Rodrigues.vectorExp(Tensors.vector(+0 + 0.3, 0, 0)), //
         Rodrigues.vectorExp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = INSTANCE.defect( //
-        sequence, Tensors.vector(0.25, 0.5, 0.25), Rodrigues.vectorExp(Tensors.vector(+0.3, 0, 0)));
+    Tensor log = MeanDefect.tangent( //
+        sequence, Tensors.vector(0.25, 0.5, 0.25), //
+        So3Manifold.INSTANCE.exponential(Rodrigues.vectorExp(Tensors.vector(+0.3, 0, 0))));
     Chop._10.requireAllZero(log);
   }
 

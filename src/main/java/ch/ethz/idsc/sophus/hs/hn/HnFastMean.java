@@ -9,11 +9,8 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum HnFastMean implements BiinvariantMean {
   INSTANCE;
 
-  private static final MeanDefect MEAN_DEFECT = new MeanDefect(HnManifold.INSTANCE);
-
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    Tensor initial = HnPhongMean.INSTANCE.mean(sequence, weights);
-    return new HnExponential(initial).exp(MEAN_DEFECT.defect(sequence, weights, initial));
+    return MeanDefect.shifted(sequence, weights, new HnExponential(HnPhongMean.INSTANCE.mean(sequence, weights)));
   }
 }

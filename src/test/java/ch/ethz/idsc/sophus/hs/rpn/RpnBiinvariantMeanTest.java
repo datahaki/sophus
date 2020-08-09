@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 public class RpnBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final BarycentricCoordinate[] PROJECTED_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
-  private static final MeanDefect MEAN_DEFECT = new MeanDefect(RpnManifold.INSTANCE);
+  // private static final MeanDefect MEAN_DEFECT = new MeanDefect(RpnManifold.INSTANCE);
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
@@ -38,10 +38,10 @@ public class RpnBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = barycentricCoordinate.weights(sequence, mean);
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
-        Chop._12.requireAllZero(MEAN_DEFECT.defect(sequence, weights, mean));
+        Chop._12.requireAllZero(MeanDefect.tangent(sequence, weights, RpnManifold.INSTANCE.exponential(mean)));
         {
           Tensor point = RpnBiinvariantMean.of(Chop._06).mean(sequence, weights);
-          Chop._05.requireAllZero(MEAN_DEFECT.defect(sequence, weights, point));
+          Chop._05.requireAllZero(MeanDefect.tangent(sequence, weights, RpnManifold.INSTANCE.exponential(point)));
         }
       }
   }

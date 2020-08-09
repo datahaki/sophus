@@ -1,9 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
-import java.io.Serializable;
-import java.util.Objects;
-
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Any m from the group that satisfies the equation below is refers to as
@@ -22,21 +20,23 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
-public class MeanDefect implements Serializable {
-  private final HsExponential hsExponential;
-
-  /** @param hsExponential non-null */
-  public MeanDefect(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
-  }
-
+public enum MeanDefect {
+  ;
   /** output is subject to exponentiation
    * 
    * @param sequence
    * @param weights
-   * @param mean for weighted mean of given sequence
-   * @return vector in the direction of true mean */
-  public Tensor defect(Tensor sequence, Tensor weights, Tensor mean) {
-    return weights.dot(Tensor.of(sequence.stream().map(hsExponential.exponential(mean)::log)));
+   * @param exponential at estimated weighted average of given sequence
+   * @return vector in the direction of true weighted average */
+  public static Tensor tangent(Tensor sequence, Tensor weights, Exponential exponential) {
+    return weights.dot(Tensor.of(sequence.stream().map(exponential::log)));
+  }
+
+  /** @param sequence
+   * @param weights
+   * @param exponential at estimated weighted average of given sequence
+   * @return better guess of weighted average on manifold */
+  public static Tensor shifted(Tensor sequence, Tensor weights, Exponential exponential) {
+    return exponential.exp(tangent(sequence, weights, exponential));
   }
 }

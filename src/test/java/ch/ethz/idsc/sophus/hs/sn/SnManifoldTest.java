@@ -24,7 +24,6 @@ import junit.framework.TestCase;
 public class SnManifoldTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(SnManifold.INSTANCE);
-  private static final MeanDefect MEAN_DEFECT = new MeanDefect(SnManifold.INSTANCE);
 
   public void testLinearReproduction() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
@@ -38,7 +37,7 @@ public class SnManifoldTest extends TestCase {
             Tensor weights = barycentricCoordinate.weights(sequence, mean);
             VectorQ.requireLength(weights, n);
             AffineQ.require(weights);
-            Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
+            Tensor evaluate = MeanDefect.tangent(sequence, weights, SnManifold.INSTANCE.exponential(mean));
             Chop._06.requireAllZero(evaluate);
             Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
           } catch (Exception exception) {
@@ -62,7 +61,7 @@ public class SnManifoldTest extends TestCase {
               VectorQ.requireLength(weights, n);
               AffineQ.require(weights);
               Chop._06.requireClose(weights, UnitVector.of(n, count));
-              Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
+              Tensor evaluate = MeanDefect.tangent(sequence, weights, SnManifold.INSTANCE.exponential(mean));
               Chop._06.requireAllZero(evaluate);
               Chop._03.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
               ++count;
@@ -86,13 +85,14 @@ public class SnManifoldTest extends TestCase {
           VectorQ.requireLength(weights, n);
           AffineQ.require(weights);
           {
-            Tensor evaluate = MEAN_DEFECT.defect(sequence, weights, mean);
+            Tensor evaluate = MeanDefect.tangent(sequence, weights, SnManifold.INSTANCE.exponential(mean));
             Chop._12.requireAllZero(evaluate);
           }
           // ---
           {
             Tensor matrix = randomSampleInterface.randomSample(random);
-            Tensor evaluate = MEAN_DEFECT.defect(Tensor.of(sequence.stream().map(matrix::dot)), weights, matrix.dot(mean));
+            Tensor mean2 = matrix.dot(mean);
+            Tensor evaluate = MeanDefect.tangent(Tensor.of(sequence.stream().map(matrix::dot)), weights, SnManifold.INSTANCE.exponential(mean2));
             Chop._12.requireAllZero(evaluate);
           }
         }
