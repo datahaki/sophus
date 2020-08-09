@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;
 
@@ -58,13 +57,12 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param weights
    * @return approximate biinvariant mean */
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
-    Exponential exponential = hsExponential.exponential(initialGuess.mean(sequence, weights)); // initial guess
+    Tensor shifted = initialGuess.mean(sequence, weights); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      Tensor tangent = MeanDefect.tangent(sequence, weights, exponential);
-      Tensor shifted = exponential.exp(tangent);
-      if (chop.allZero(tangent))
+      MeanDefect meanDefect = new MeanDefect(sequence, weights, hsExponential.exponential(shifted));
+      shifted = meanDefect.shifted();
+      if (chop.allZero(meanDefect.tangent()))
         return Optional.of(shifted);
-      exponential = hsExponential.exponential(shifted);
     }
     return Optional.empty();
   }

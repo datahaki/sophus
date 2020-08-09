@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import java.io.Serializable;
+
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -19,24 +21,30 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Xavier Pennec, Vincent Arsigny, p.21, 2012
  * 
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
-public enum MeanDefect {
-  ;
+ * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017
+ * 
+ * @see BiinvariantMean */
+public class MeanDefect implements Serializable {
+  private final Exponential exponential;
+  private final Tensor tangent;
+
   /** output is subject to exponentiation
    * 
    * @param sequence
    * @param weights
-   * @param exponential at estimated weighted average of given sequence
-   * @return vector in the direction of true weighted average */
-  public static Tensor tangent(Tensor sequence, Tensor weights, Exponential exponential) {
-    return weights.dot(Tensor.of(sequence.stream().map(exponential::log)));
+   * @param exponential at estimated weighted average of given sequence */
+  public MeanDefect(Tensor sequence, Tensor weights, Exponential exponential) {
+    this.exponential = exponential;
+    tangent = weights.dot(Tensor.of(sequence.stream().map(exponential::log)));
   }
 
-  /** @param sequence
-   * @param weights
-   * @param exponential at estimated weighted average of given sequence
-   * @return better guess of weighted average on manifold */
-  public static Tensor shifted(Tensor sequence, Tensor weights, Exponential exponential) {
-    return exponential.exp(tangent(sequence, weights, exponential));
+  /** @return vector in the direction of true weighted average */
+  public Tensor tangent() {
+    return tangent;
+  }
+
+  /** @return better guess of weighted average on manifold */
+  public Tensor shifted() {
+    return exponential.exp(tangent);
   }
 }

@@ -37,7 +37,7 @@ public class SnBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = barycentricCoordinate.weights(sequence, mean);
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
-        Tensor evaluate = MeanDefect.tangent(sequence, weights, SnManifold.INSTANCE.exponential(mean));
+        Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
         Chop._12.requireAllZero(evaluate);
         Chop._05.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
       }

@@ -17,7 +17,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     assertEquals(sequence.get(0), actual);
-    Chop._10.requireAllZero(MeanDefect.tangent(sequence, weights, HeManifold.HS_EXP.exponential(actual)));
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.HS_EXP.exponential(actual)).tangent());
   }
 
   public void testTrivialHe3() {
@@ -26,7 +26,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     assertEquals(element, actual);
-    Chop._10.requireAllZero(MeanDefect.tangent(sequence, weights, HeManifold.HS_EXP.exponential(actual)));
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.HS_EXP.exponential(actual)).tangent());
   }
 
   public void testTrivialHe5() {
@@ -36,7 +36,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     assertEquals(element, actual);
-    Chop._10.requireAllZero(MeanDefect.tangent(sequence, weights, HeManifold.HS_EXP.exponential(actual)));
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.HS_EXP.exponential(actual)).tangent());
   }
 
   public void testSimpleHe3() {
@@ -46,7 +46,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tensor expected = Tensors.fromString("{{2}, {2}, 1.8}");
     Chop._12.requireClose(actual, expected);
-    Chop._10.requireAllZero(MeanDefect.tangent(sequence, weights, HeManifold.HS_EXP.exponential(actual)));
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.HS_EXP.exponential(actual)).tangent());
   }
 
   public void testSimplelHe5() {
@@ -58,7 +58,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     Tensor expected = Tensors.fromString("{{2.0, 4.0}, {2.0, 4.0}, 1.0}");
     assertEquals(actual.get(0), actual.get(1));
     Chop._12.requireClose(actual, expected);
-    Chop._10.requireAllZero(MeanDefect.tangent(sequence, weights, HeManifold.HS_EXP.exponential(actual)));
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.HS_EXP.exponential(actual)).tangent());
   }
 
   public void testInverse() {
@@ -70,7 +70,7 @@ public class HeBiinvariantMeanTest extends TestCase {
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tensor identity = Tensors.fromString("{{0, 0}, {0, 0}, 0}");
     assertEquals(identity, actual);
-    Chop._10.requireAllZero(MeanDefect.tangent(sequence, weights, HeManifold.HS_EXP.exponential(actual)));
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.HS_EXP.exponential(actual)).tangent());
   }
 
   public void testBiinvariantMean1() {
