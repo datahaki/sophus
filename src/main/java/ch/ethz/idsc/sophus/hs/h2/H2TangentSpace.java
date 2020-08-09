@@ -23,6 +23,7 @@ public class H2TangentSpace implements TangentSpace, Serializable {
   public Tensor vectorLog(Tensor y) {
     HnAngle hnAngle = new HnAngle(x, y);
     Scalar angle = hnAngle.angle();
+    // TODO not elegant
     Tensor ext = y.subtract(x.multiply(hnAngle.cosh_d())).multiply(SinhcInverse.FUNCTION.apply(angle));
     Tensor log = Extract2D.FUNCTION.apply(ext);
     Scalar factor = angle.divide(Hypot.ofVector(log));
