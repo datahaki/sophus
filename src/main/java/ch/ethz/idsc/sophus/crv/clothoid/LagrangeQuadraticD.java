@@ -1,13 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.clothoid;
 
-import ch.ethz.idsc.sophus.math.HeadTailInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.red.Max;
+import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-public class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterface {
+public class LagrangeQuadraticD implements ScalarUnaryOperator {
   private final Scalar c0;
   private final Scalar c1;
 
@@ -28,13 +29,21 @@ public class LagrangeQuadraticD implements ScalarUnaryOperator, HeadTailInterfac
     return c1.multiply(s).add(c0);
   }
 
-  @Override // from HeadTailInterface
   public Scalar head() {
     return c0;
   }
 
-  @Override // from HeadTailInterface
   public Scalar tail() {
     return c0.add(c1);
+  }
+
+  public boolean equals(LagrangeQuadraticD lagrangeQuadraticD) {
+    return false;
+  }
+
+  public Scalar absMax() {
+    return Max.of( //
+        Abs.FUNCTION.apply(head()), //
+        Abs.FUNCTION.apply(tail()));
   }
 }

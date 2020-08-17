@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.lie.r2;
 
 import java.io.IOException;
 

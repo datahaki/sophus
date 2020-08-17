@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.gbc.Barycenter;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GlobalPolygonCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;

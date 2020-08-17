@@ -12,7 +12,8 @@ public class KrigingCoordinate implements TensorUnaryOperator {
    * @param vectorLogManifold
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of(TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public static TensorUnaryOperator of( //
+      TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new KrigingCoordinate(tensorUnaryOperator, vectorLogManifold, sequence);
   }
 
@@ -21,7 +22,8 @@ public class KrigingCoordinate implements TensorUnaryOperator {
   private final Kriging kriging;
   private final Tensor sequence;
 
-  private KrigingCoordinate(TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
+  private KrigingCoordinate( //
+      TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.kriging = Kriging.barycentric(tensorUnaryOperator, sequence);
     this.sequence = sequence;

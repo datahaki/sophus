@@ -21,7 +21,8 @@ public class HarborCoordinate implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram for instance power to minus two
    * @param sequence */
-  public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public static TensorUnaryOperator of( //
+      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     return new HarborCoordinate(vectorLogManifold, variogram, sequence);
   }
 

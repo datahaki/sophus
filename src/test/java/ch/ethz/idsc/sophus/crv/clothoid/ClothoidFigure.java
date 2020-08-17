@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.crv.clothoid;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.math.HeadTailInterface;
 import ch.ethz.idsc.tensor.Parallelize;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -14,8 +13,6 @@ import ch.ethz.idsc.tensor.img.ArrayPlot;
 import ch.ethz.idsc.tensor.img.ColorDataGradients;
 import ch.ethz.idsc.tensor.io.Export;
 import ch.ethz.idsc.tensor.io.HomeDirectory;
-import ch.ethz.idsc.tensor.red.Max;
-import ch.ethz.idsc.tensor.sca.Abs;
 
 /* package */ class ClothoidFigure {
   private static final int RES = 192;
@@ -30,10 +27,8 @@ import ch.ethz.idsc.tensor.sca.Abs;
 
   private Scalar function(int y, int x) {
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
-    HeadTailInterface headTailInterface = Se2Clothoids.INSTANCE.curve(q.map(Scalar::zero), q).curvature();
-    return Max.of( //
-        Abs.FUNCTION.apply(headTailInterface.head()), //
-        Abs.FUNCTION.apply(headTailInterface.tail())).reciprocal();
+    LagrangeQuadraticD headTailInterface = Se2Clothoids.INSTANCE.curve(q.map(Scalar::zero), q).curvature();
+    return headTailInterface.absMax().reciprocal();
   }
 
   public static void main(String[] args) throws IOException {

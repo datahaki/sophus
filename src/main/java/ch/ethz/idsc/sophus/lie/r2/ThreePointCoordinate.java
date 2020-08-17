@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.gbc.Barycenter;
 import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -23,10 +22,10 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * by Kai Hormann, N. Sukumar, 2017
  * 
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
- * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
- * 
- * @see Barycenter */
+ * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
 public class ThreePointCoordinate implements TensorUnaryOperator {
+  /** @param biFunction
+   * @return */
   public static TensorUnaryOperator of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
     return new ThreePointCoordinate(Objects.requireNonNull(biFunction));
   }

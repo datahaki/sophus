@@ -24,6 +24,9 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
  * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 79
  * 
+ * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
+ * by Nicolas Guigui, Xavier Pennec, 2020 p.27
+ * 
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdMatrixExponential */
@@ -46,8 +49,7 @@ public class SpdExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor q) {
-    Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
-    return Symmetrize.of(pp.dot(SpdMatrixExponential.INSTANCE.log(pq)).dot(pp));
+    return Symmetrize.of(pp.dot(SpdMatrixExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp));
   }
 
   @Override // from TangentSpace

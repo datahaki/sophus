@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.lie.r2;
 
 import java.io.Serializable;
 import java.util.function.BiFunction;
@@ -24,6 +24,8 @@ public class PowerBarycenter implements BiFunction<Tensor, Scalar, Tensor>, Seri
     return new PowerBarycenter(CLIP.requireInside(exponent));
   }
 
+  /** @param exponent in the interval [0, 2]
+   * @return */
   public static BiFunction<Tensor, Scalar, Tensor> of(Number exponent) {
     return of(RealScalar.of(exponent));
   }
