@@ -17,8 +17,10 @@ import ch.ethz.idsc.tensor.sca.SignInterface;
 
 public class Se2AxisYProject implements TensorScalarFunction {
   private static class MapSingular implements TensorScalarFunction {
-    private static final Scalar[] SIGNUM = //
-        { DoubleScalar.NEGATIVE_INFINITY, RealScalar.ZERO, DoubleScalar.POSITIVE_INFINITY };
+    private static final Scalar[] SIGNUM = { //
+        DoubleScalar.NEGATIVE_INFINITY, //
+        RealScalar.ZERO, //
+        DoubleScalar.POSITIVE_INFINITY };
     // ---
     final Unit unit;
 
@@ -48,8 +50,8 @@ public class Se2AxisYProject implements TensorScalarFunction {
     }
     return new Se2AxisYProject(vx, be);
   }
-  // ---
 
+  /***************************************************/
   private final Scalar vx;
   private final Scalar be;
   private final Scalar se;

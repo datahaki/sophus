@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.dubins;
 
-import ch.ethz.idsc.tensor.DoubleScalar;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.opt.Pi;
@@ -16,8 +16,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
     return MOD_TWO_PI.apply(angle);
   }
 
-  // ---
-  private static final Scalar NUMERIC_ONE = DoubleScalar.of(1);
+  /***************************************************/
+  private static final Scalar NUMERIC_ONE = RealScalar.of(1.0);
 
   /** @param scalar
    * @return true if given scalar is greater than 1 */

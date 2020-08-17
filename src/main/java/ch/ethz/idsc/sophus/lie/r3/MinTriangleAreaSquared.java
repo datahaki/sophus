@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
-import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Integers;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.red.ScalarSummaryStatistics;
  * Remark: the matrix also appears in Kriging */
 public enum MinTriangleAreaSquared {
   ;
-  private static final Scalar HALF = DoubleScalar.of(0.5);
+  private static final Scalar HALF = RealScalar.of(0.5);
 
   /** @param polygon with dimensions n x 3
    * @return affine weight vector of length n

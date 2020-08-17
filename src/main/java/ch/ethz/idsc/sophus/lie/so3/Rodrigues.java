@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.lie.so3;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -35,7 +34,7 @@ public enum Rodrigues implements Exponential, TangentSpace {
   INSTANCE;
 
   private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
-  private static final Scalar HALF = DoubleScalar.of(0.5);
+  private static final Scalar HALF = RealScalar.of(0.5);
 
   @Override // from Exponential
   public Tensor exp(Tensor log) {
