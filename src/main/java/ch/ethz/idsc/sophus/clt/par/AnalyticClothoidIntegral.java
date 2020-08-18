@@ -13,13 +13,13 @@ public class AnalyticClothoidIntegral implements ClothoidIntegral, Serializable 
    * 
    * @param lagrangeQuadratic
    * @return */
-  public static ClothoidIntegral interp(LagrangeQuadratic lagrangeQuadratic) {
+  public static ClothoidIntegral of(LagrangeQuadratic lagrangeQuadratic) {
     return of(AnalyticClothoidPartial.of(lagrangeQuadratic));
   }
 
   /** @param clothoidPartial
    * @return */
-  public static ClothoidIntegral of(ClothoidPartial clothoidPartial) {
+  /* package */ static ClothoidIntegral of(ClothoidPartial clothoidPartial) {
     return new AnalyticClothoidIntegral(clothoidPartial);
   }
 

@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.io.HomeDirectory;
 
   private Scalar function(int y, int x) {
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
-    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2.curve(q.map(Scalar::zero), q).curvature();
+    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2_ANALYTIC.curve(q.map(Scalar::zero), q).curvature();
     return headTailInterface.absMax().reciprocal();
   }
 

@@ -74,7 +74,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
 
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(ClothoidBuilders.SE2);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(ClothoidBuilders.SE2_ANALYTIC);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
     assertEquals(curveSubdivision.string(singleton), singleton);
   }

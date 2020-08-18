@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.clt.mid.ClothoidQuadratic;
+import ch.ethz.idsc.sophus.clt.par.ClothoidIntegral;
+import ch.ethz.idsc.sophus.clt.par.ClothoidIntegration;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -16,9 +18,11 @@ import ch.ethz.idsc.tensor.Tensor;
  * @param q vector of the form {qx, qy, qa} */
 public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable {
   private final ClothoidQuadratic clothoidQuadratic;
+  private final ClothoidIntegration clothoidIntegration;
 
-  public ClothoidBuilderImpl(ClothoidQuadratic clothoidQuadratic) {
+  public ClothoidBuilderImpl(ClothoidQuadratic clothoidQuadratic, ClothoidIntegration clothoidIntegration) {
     this.clothoidQuadratic = Objects.requireNonNull(clothoidQuadratic);
+    this.clothoidIntegration = Objects.requireNonNull(clothoidIntegration);
   }
 
   @Override // from ClothoidBuilder
@@ -26,9 +30,11 @@ public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable 
     ClothoidContext clothoidContext = new ClothoidContext(p, q);
     LagrangeQuadratic lagrangeQuadratic = //
         clothoidQuadratic.lagrangeQuadratic(clothoidContext.b0(), clothoidContext.b1());
+    ClothoidIntegral clothoidIntegral = clothoidIntegration.clothoidIntegral(lagrangeQuadratic);
     return new ClothoidImpl( //
         clothoidContext.lieGroupElement(), //
         lagrangeQuadratic, //
+        clothoidIntegral, //
         clothoidContext.diff());
   }
 

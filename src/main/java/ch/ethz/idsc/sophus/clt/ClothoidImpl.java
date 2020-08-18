@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.clt;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.clt.par.AnalyticClothoidIntegral;
 import ch.ethz.idsc.sophus.clt.par.ClothoidIntegral;
 import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
@@ -34,12 +33,12 @@ import ch.ethz.idsc.tensor.sca.Real;
   /** @param lieGroupElement
    * @param lagrangeQuadratic
    * @param diff vector of length 2 */
-  public ClothoidImpl(LieGroupElement lieGroupElement, LagrangeQuadratic lagrangeQuadratic, Tensor diff) {
+  public ClothoidImpl(LieGroupElement lieGroupElement, LagrangeQuadratic lagrangeQuadratic, ClothoidIntegral clothoidIntegral, Tensor diff) {
     this.lieGroupElement = Objects.requireNonNull(lieGroupElement);
     this.lagrangeQuadratic = lagrangeQuadratic;
     this.diff = diff;
     // ---
-    clothoidIntegral = AnalyticClothoidIntegral.interp(lagrangeQuadratic);
+    this.clothoidIntegral = clothoidIntegral;
     Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
     Scalar plength = RealScalar.ZERO;
     try {

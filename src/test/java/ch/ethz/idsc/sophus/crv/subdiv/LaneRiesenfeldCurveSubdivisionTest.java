@@ -64,7 +64,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
 
   public void testEmpty() {
     for (int degree = 1; degree < 4; ++degree) {
-      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2, degree);
+      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC, degree);
       assertEquals(curveSubdivision.cyclic(Tensors.empty()), Tensors.empty());
       assertEquals(curveSubdivision.string(Tensors.empty()), Tensors.empty());
     }
@@ -73,7 +73,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     for (int degree = 1; degree < 4; ++degree) {
-      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2, degree);
+      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC, degree);
       assertEquals(curveSubdivision.cyclic(singleton), singleton);
       assertEquals(curveSubdivision.string(singleton), singleton);
     }
