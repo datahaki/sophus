@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.red.Times;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
-/* package */ class PartialDegree2 implements PartialInterface, Serializable {
+/* package */ class ClothoidPartialDegree2 implements ClothoidPartial, Serializable {
   private static final Scalar _N1_1_4 = ComplexScalar.of(+0.7071067811865476, 0.7071067811865475);
   private static final Scalar _N1_3_4 = ComplexScalar.of(-0.7071067811865475, 0.7071067811865476);
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   private final Scalar factor;
   private final Scalar ofs;
 
-  public PartialDegree2(Scalar c0, Scalar c1, Scalar c2) {
+  public ClothoidPartialDegree2(Scalar c0, Scalar c1, Scalar c2) {
     this.c1 = c1;
     this.c2 = c2;
     Scalar f1 = _N1_3_4;

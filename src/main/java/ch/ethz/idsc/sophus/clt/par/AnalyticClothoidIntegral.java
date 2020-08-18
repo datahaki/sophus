@@ -14,27 +14,27 @@ public class AnalyticClothoidIntegral implements ClothoidIntegral, Serializable 
    * @param lagrangeQuadratic
    * @return */
   public static ClothoidIntegral interp(LagrangeQuadratic lagrangeQuadratic) {
-    return of(AnalyticPartial.of(lagrangeQuadratic));
+    return of(AnalyticClothoidPartial.of(lagrangeQuadratic));
   }
 
-  /** @param partialInterface
+  /** @param clothoidPartial
    * @return */
-  public static ClothoidIntegral of(PartialInterface partialInterface) {
-    return new AnalyticClothoidIntegral(partialInterface);
+  public static ClothoidIntegral of(ClothoidPartial clothoidPartial) {
+    return new AnalyticClothoidIntegral(clothoidPartial);
   }
 
   /***************************************************/
-  private final PartialInterface partialInterface;
+  private final ClothoidPartial clothoidPartial;
   private final Scalar one;
 
-  private AnalyticClothoidIntegral(PartialInterface partialInterface) {
-    this.partialInterface = partialInterface;
-    one = partialInterface.il(RealScalar.ONE);
+  private AnalyticClothoidIntegral(ClothoidPartial clothoidPartial) {
+    this.clothoidPartial = clothoidPartial;
+    one = clothoidPartial.il(RealScalar.ONE);
   }
 
   @Override
   public Scalar normalized(Scalar t) {
-    return partialInterface.il(t).divide(one);
+    return clothoidPartial.il(t).divide(one);
   }
 
   @Override

@@ -7,13 +7,13 @@ import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.sca.Exp;
 
-/* package */ class PartialDegree1 implements PartialInterface, Serializable {
+/* package */ class ClothoidPartialDegree1 implements ClothoidPartial, Serializable {
   private final Scalar c0;
   private final Scalar c1;
   private final Scalar factor;
   private final Scalar ofs;
 
-  public PartialDegree1(Scalar c0, Scalar c1) {
+  public ClothoidPartialDegree1(Scalar c0, Scalar c1) {
     this.c0 = c0;
     this.c1 = c1;
     factor = ComplexScalar.I.divide(c1);
