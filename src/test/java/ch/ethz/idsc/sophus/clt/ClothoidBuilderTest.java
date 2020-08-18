@@ -20,10 +20,10 @@ public class ClothoidBuilderTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD lagrangeQuadraticD1 = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD1 = ClothoidBuilders.SE2.curve(p, q).curvature();
       p.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
       q.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
-      LagrangeQuadraticD lagrangeQuadraticD2 = Se2ClothoidBuilder.INSTANCE.curve(q, p).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2.curve(q, p).curvature();
       Scalar param = RandomVariate.of(distribution);
       Chop._06.requireClose( //
           lagrangeQuadraticD1.apply(param), //
@@ -36,10 +36,10 @@ public class ClothoidBuilderTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD lagrangeQuadraticD1 = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD1 = ClothoidBuilders.SE2.curve(p, q).curvature();
       Tensor g = RandomVariate.of(distribution, 3);
       Se2GroupElement se2GroupElement = new Se2GroupElement(g);
-      LagrangeQuadraticD lagrangeQuadraticD2 = Se2ClothoidBuilder.INSTANCE.curve( //
+      LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2.curve( //
           se2GroupElement.combine(p), //
           se2GroupElement.combine(q)).curvature();
       Scalar param = RandomVariate.of(distribution);
@@ -54,10 +54,10 @@ public class ClothoidBuilderTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD lagrangeQuadraticD1 = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD1 = ClothoidBuilders.SE2.curve(p, q).curvature();
       p.set(Pi.TWO::add, 2);
       q.set(Pi.TWO::add, 2);
-      LagrangeQuadraticD lagrangeQuadraticD2 = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2.curve(p, q).curvature();
       Scalar param = RandomVariate.of(distribution);
       Chop._10.requireClose( //
           lagrangeQuadraticD1.apply(param), //
@@ -68,7 +68,7 @@ public class ClothoidBuilderTest extends TestCase {
   public void testStraightSide() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(3, 0, 0);
-    LagrangeQuadraticD lagrangeQuadraticD = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+    LagrangeQuadraticD lagrangeQuadraticD = ClothoidBuilders.SE2.curve(p, q).curvature();
     Chop._03.requireClose(lagrangeQuadraticD.head(), RealScalar.ZERO);
     Chop._03.requireClose(lagrangeQuadraticD.tail(), RealScalar.ZERO);
     assertNotNull(lagrangeQuadraticD.toString());
@@ -77,7 +77,7 @@ public class ClothoidBuilderTest extends TestCase {
   public void testStraightUp() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(0, 3, +Math.PI / 2);
-    LagrangeQuadraticD headTailInterface = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2.curve(p, q).curvature();
     Chop._03.requireClose(headTailInterface.head(), RealScalar.ZERO);
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ZERO);
   }
@@ -85,7 +85,7 @@ public class ClothoidBuilderTest extends TestCase {
   public void testCircle() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(-2, 0, -Math.PI / 2);
-    LagrangeQuadraticD headTailInterface = Se2ClothoidBuilder.INSTANCE.curve(p, q).curvature();
+    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2.curve(p, q).curvature();
     Chop._03.requireClose(headTailInterface.head(), RealScalar.ONE);
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ONE);
   }

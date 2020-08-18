@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 public class Se2ClothoidsTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(-8, 8);
-    ClothoidBuilder clothoidInterface = Serialization.copy(Se2ClothoidBuilder.INSTANCE);
+    ClothoidBuilder clothoidInterface = Serialization.copy(ClothoidBuilders.SE2);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
@@ -30,7 +30,7 @@ public class Se2ClothoidsTest extends TestCase {
   }
 
   public void testErf() {
-    ScalarTensorFunction scalarTensorFunction = Se2ClothoidBuilder.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
+    ScalarTensorFunction scalarTensorFunction = ClothoidBuilders.SE2.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertTrue(scalarTensorFunction instanceof Clothoid);
   }
 }

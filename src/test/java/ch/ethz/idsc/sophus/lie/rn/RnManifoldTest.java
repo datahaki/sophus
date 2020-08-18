@@ -71,7 +71,7 @@ public class RnManifoldTest extends TestCase {
             Biinvariants.METRIC.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor weights = tensorUnaryOperator.apply(x);
         Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
-        Chop._10.requireClose(x, y);
+        Chop._06.requireClose(x, y);
       }
   }
 

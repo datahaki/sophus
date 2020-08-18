@@ -1,19 +1,13 @@
 // code by jph
 package ch.ethz.idsc.sophus.clt;
 
-import java.io.Serializable;
-
 import ch.ethz.idsc.sophus.clt.mid.MidpointTangentApproximation;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** reif's solution */
-public class Se2ClothoidBuilder extends AbstractClothoidBuilder implements Serializable {
-  public static final ClothoidBuilder INSTANCE = new Se2ClothoidBuilder();
-
-  private Se2ClothoidBuilder() {
-    // ---
-  }
+public enum Se2ClothoidQuadratic implements ClothoidQuadratic {
+  INSTANCE;
 
   @Override // from Clothoids
   public LagrangeQuadratic lagrangeQuadratic(Scalar b0, Scalar b1) {

@@ -8,12 +8,8 @@ import ch.ethz.idsc.tensor.Scalar;
 
 /** Extension of clothoids in SE(2) to clothoids in SE(2) Covering
  * that respects winding numbers */
-public class Se2CoveringClothoidBuilder extends AbstractClothoidBuilder implements Serializable {
-  public static final ClothoidBuilder INSTANCE = new Se2CoveringClothoidBuilder();
-
-  private Se2CoveringClothoidBuilder() {
-    // ---
-  }
+public enum Se2CoveringClothoidQuadratic implements ClothoidQuadratic, Serializable {
+  INSTANCE;
 
   @Override // from Clothoids
   public LagrangeQuadratic lagrangeQuadratic(Scalar b0, Scalar b1) {

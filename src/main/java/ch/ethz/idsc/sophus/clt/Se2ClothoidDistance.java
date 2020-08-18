@@ -14,7 +14,7 @@ public enum Se2ClothoidDistance implements TensorMetric, TensorNorm {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Se2ClothoidBuilder.INSTANCE.curve(p, q).length();
+    return ClothoidBuilders.SE2.curve(p, q).length();
   }
 
   @Override // from TensorNorm
