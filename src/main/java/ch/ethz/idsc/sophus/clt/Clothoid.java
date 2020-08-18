@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * 
  * Reference: U. Reif slides */
 public interface Clothoid extends ScalarTensorFunction {
-  /** @return non-negative approximate length */
+  /** @return non-negative approximate length of clothoid in Euclidean plane */
   Scalar length();
 
   /** @return */

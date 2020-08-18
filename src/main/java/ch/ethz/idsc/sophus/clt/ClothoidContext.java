@@ -8,14 +8,14 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
-// TODO EXPERIMENTAL
-public class ClothoidContext {
+/** Hint: class is designed to be generic for all clothoid variants */
+public final class ClothoidContext {
   private static final Scalar HALF = RealScalar.of(0.5);
   // ---
-  public final Tensor p;
-  public final Tensor q;
-  public final LieGroupElement lieGroupElement;
-  public final Tensor diff;
+  private final Tensor p;
+  private final Tensor q;
+  private final LieGroupElement lieGroupElement;
+  private final Tensor diff;
   private final Scalar b0;
   private final Scalar b1;
 
@@ -30,6 +30,10 @@ public class ClothoidContext {
     b1 = _q.Get(2).subtract(da);
   }
 
+  public LieGroupElement lieGroupElement() {
+    return lieGroupElement;
+  }
+
   public Scalar b0() {
     return b0;
   }
@@ -39,10 +43,29 @@ public class ClothoidContext {
   }
 
   public Scalar s1() {
-    return b0().add(b1()).multiply(HALF);
+    return b0.add(b1).multiply(HALF);
   }
 
   public Scalar s2() {
-    return b0().subtract(b1()).multiply(HALF);
+    return b0.subtract(b1).multiply(HALF);
+  }
+
+  public Tensor diff() {
+    return diff;
+  }
+
+  /***************************************************/
+  /** Hint: function only for the purpose of demonstration
+   * 
+   * @return */
+  public Tensor p() {
+    return p.unmodifiable();
+  }
+
+  /** Hint: function only for the purpose of demonstration
+   * 
+   * @return */
+  public Tensor q() {
+    return q.unmodifiable();
   }
 }

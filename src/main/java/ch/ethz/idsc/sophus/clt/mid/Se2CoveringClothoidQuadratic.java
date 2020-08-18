@@ -1,9 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.clt;
+package ch.ethz.idsc.sophus.clt.mid;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.clt.mid.MidpointTangentApproximation;
+import ch.ethz.idsc.sophus.clt.LagrangeQuadratic;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** Extension of clothoids in SE(2) to clothoids in SE(2) Covering

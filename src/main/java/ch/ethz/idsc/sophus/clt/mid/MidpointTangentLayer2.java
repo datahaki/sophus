@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Scalar;
  * 
  * function is odd in s1
  * function is even in s2 */
-public enum MidpointTangentLayer2 implements ScalarBinaryOperator {
+/* package */ enum MidpointTangentLayer2 implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar F00 = RealScalar.of(-8.718824550021568);

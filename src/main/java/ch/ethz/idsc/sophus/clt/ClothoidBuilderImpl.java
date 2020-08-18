@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.clt;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.clt.mid.ClothoidQuadratic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -20,15 +21,15 @@ public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable 
     this.clothoidQuadratic = Objects.requireNonNull(clothoidQuadratic);
   }
 
-  @Override // from ClothoidInterface
+  @Override // from ClothoidBuilder
   public Clothoid curve(Tensor p, Tensor q) {
     ClothoidContext clothoidContext = new ClothoidContext(p, q);
     LagrangeQuadratic lagrangeQuadratic = //
         clothoidQuadratic.lagrangeQuadratic(clothoidContext.b0(), clothoidContext.b1());
     return new ClothoidImpl( //
-        clothoidContext.lieGroupElement, //
+        clothoidContext.lieGroupElement(), //
         lagrangeQuadratic, //
-        clothoidContext.diff);
+        clothoidContext.diff());
   }
 
   @Override // from BinaryAverage

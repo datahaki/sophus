@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.clt;
 
+import ch.ethz.idsc.sophus.clt.mid.Se2ClothoidQuadratic;
+import ch.ethz.idsc.sophus.clt.mid.Se2CoveringClothoidQuadratic;
+
 /** Extension of clothoids in SE(2) to clothoids in SE(2) Covering
  * that respects winding numbers */
 public enum ClothoidBuilders {

@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.opt.Pi;
 
-public enum MidpointTangentLayers implements ScalarBinaryOperator {
+/* package */ enum MidpointTangentLayers implements ScalarBinaryOperator {
   INSTANCE;
 
   @Override

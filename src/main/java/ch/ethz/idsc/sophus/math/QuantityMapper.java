@@ -1,5 +1,5 @@
 //// code by jph
-// package ch.ethz.idsc.sophus.clt;
+// package ch.ethz.idsc.sophus.math;
 //
 // import java.util.function.UnaryOperator;
 //
@@ -8,7 +8,7 @@
 // import ch.ethz.idsc.tensor.qty.Unit;
 // import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 //
-/// * package */ class QuantityMapper implements ScalarUnaryOperator {
+// /* package */ class QuantityMapper implements ScalarUnaryOperator {
 // private final ScalarUnaryOperator valueMapper;
 // private final UnaryOperator<Unit> unitMapper;
 //

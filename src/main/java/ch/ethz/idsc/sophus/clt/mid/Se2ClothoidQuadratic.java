@@ -1,7 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.clt;
+package ch.ethz.idsc.sophus.clt.mid;
 
-import ch.ethz.idsc.sophus.clt.mid.MidpointTangentApproximation;
+import ch.ethz.idsc.sophus.clt.LagrangeQuadratic;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.tensor.Scalar;
 

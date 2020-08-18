@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Scalar;
 /** function is odd in s1
  * function is even in s2
  * function is odd in s2 */
-public enum MidpointTangentOrder0 implements ScalarBinaryOperator {
+/* package */ enum MidpointTangentOrder0 implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar F10 = RealScalar.of(-0.5);
