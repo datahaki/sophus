@@ -1,9 +1,10 @@
 // code by ureif
 // code by jph
-package ch.ethz.idsc.sophus.clt;
+package ch.ethz.idsc.sophus.clt.par;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.clt.LagrangeQuadratic;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -14,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** 3-point Gauss Legendre quadrature on interval [0, 1] */
-/* package */ class Legendre3ClothoidIntegral implements PartialInterface, Serializable {
+/* package */ class Legendre3ClothoidIntegral implements PartialInterface, ClothoidIntegral, Serializable {
   private static final Scalar _1 = RealScalar.of(1.0);
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //
@@ -29,11 +30,14 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   // ---
   private final ScalarUnaryOperator scalarUnaryOperator;
 
-  /** @param scalarUnaryOperator typically a quadratic polynomial */
+  /** @param scalarUnaryOperator typically a quadratic polynomial
+   * 
+   * @see LagrangeQuadratic */
   public Legendre3ClothoidIntegral(ScalarUnaryOperator scalarUnaryOperator) {
     this.scalarUnaryOperator = scalarUnaryOperator;
   }
 
+  @Override
   public Scalar normalized(Scalar t) {
     Scalar il = il(t);
     Scalar ir = ir(t);
@@ -59,6 +63,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     return v0.add(v2).multiply(W0).add(v1.multiply(W1)).multiply(_1_t);
   }
 
+  @Override
   public Scalar one() {
     Scalar v0 = exp_i(X0);
     Scalar v1 = exp_i(X1);

@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.clt;
+package ch.ethz.idsc.sophus.clt.par;
 
 import java.io.Serializable;
 

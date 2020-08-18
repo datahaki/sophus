@@ -46,9 +46,9 @@ public class LagrangeQuadratic implements ScalarUnaryOperator {
   }
 
   /***************************************************/
-  final Scalar c0;
-  final Scalar c1;
-  final Scalar c2;
+  private final Scalar c0;
+  private final Scalar c1;
+  private final Scalar c2;
 
   private LagrangeQuadratic(Scalar c0, Scalar c1, Scalar c2) {
     this.c0 = c0;
@@ -72,5 +72,17 @@ public class LagrangeQuadratic implements ScalarUnaryOperator {
         && DeterminateScalarQ.of(d_c1) //
             ? new LagrangeQuadraticD(d_c0, d_c1)
             : new LagrangeQuadraticD(c1.zero(), c2.zero());
+  }
+
+  public Scalar c0() {
+    return c0;
+  }
+
+  public Scalar c1() {
+    return c1;
+  }
+
+  public Scalar c2() {
+    return c2;
   }
 }
