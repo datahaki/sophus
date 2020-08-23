@@ -17,5 +17,6 @@ public enum DubinsPathComparator implements Comparator<DubinsPath> {
     public int compare(DubinsPath dubinsPath1, DubinsPath dubinsPath2) {
       return Scalars.compare(dubinsPath1.totalCurvature(), dubinsPath2.totalCurvature());
     }
-  };
+  }, //
+  ;
 }
