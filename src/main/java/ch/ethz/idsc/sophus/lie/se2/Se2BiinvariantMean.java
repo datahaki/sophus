@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.se2;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.se2c.Se2UniversalBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2FilterBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2LinearBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so2.So2PhongBiinvariantMean;
@@ -45,7 +45,7 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
 
   /** @param scalarBiinvariantMean */
   private Se2BiinvariantMean(ScalarBiinvariantMean scalarBiinvariantMean) {
-    biinvariantMean = Se2CoveringBiinvariantMean.se2(scalarBiinvariantMean);
+    biinvariantMean = Se2UniversalBiinvariantMean.se2(scalarBiinvariantMean);
   }
 
   @Override // from BiinvariantMean

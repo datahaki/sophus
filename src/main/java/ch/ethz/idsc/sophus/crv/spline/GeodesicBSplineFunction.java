@@ -12,11 +12,10 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.Last;
+import ch.ethz.idsc.tensor.alg.OrderedQ;
 import ch.ethz.idsc.tensor.alg.Range;
-import ch.ethz.idsc.tensor.alg.Sort;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.opt.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.DeBoor;
@@ -62,8 +61,7 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
    * @return
    * @throws Exception */
   public static GeodesicBSplineFunction of(BinaryAverage binaryAverage, int degree, Tensor knots, Tensor control) {
-    if (!Sort.of(knots).equals(knots))
-      throw TensorRuntimeException.of(knots);
+    OrderedQ.require(knots);
     return new GeodesicBSplineFunction( //
         Objects.requireNonNull(binaryAverage), //
         Integers.requirePositiveOrZero(degree), //

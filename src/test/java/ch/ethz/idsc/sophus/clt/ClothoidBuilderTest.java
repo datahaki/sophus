@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -20,7 +21,10 @@ public class ClothoidBuilderTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD lagrangeQuadraticD1 = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+      Clothoid clothoid = ClothoidBuilders.SE2_ANALYTIC.curve(p, q);
+      Tensor tensor = ClothoidBuilders.SE2_ANALYTIC.split(p, q, RealScalar.of(0.2));
+      VectorQ.requireLength(tensor, 3);
+      LagrangeQuadraticD lagrangeQuadraticD1 = clothoid.curvature();
       p.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
       q.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
       LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2_ANALYTIC.curve(q, p).curvature();

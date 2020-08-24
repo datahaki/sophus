@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class LagrangeQuadraticDTest extends TestCase {
@@ -34,5 +35,25 @@ public class LagrangeQuadraticDTest extends TestCase {
     LagrangeQuadraticD lqd2 = interp(b0.divide(length), bm.divide(length), b1.divide(length));
     Tensor domain = RandomVariate.of(UniformDistribution.unit(), 10);
     Tolerance.CHOP.requireClose(domain.map(lqd1), domain.map(lqd2));
+  }
+
+  public void testZero() {
+    LagrangeQuadraticD lagrangeQuadraticD = LagrangeQuadraticD.of(RealScalar.of(1e-9), RealScalar.of(1e-10));
+    assertTrue(lagrangeQuadraticD.isZero(Chop._08));
+  }
+
+  public void testNullFail() {
+    try {
+      LagrangeQuadraticD.of(null, RealScalar.ONE);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+    try {
+      LagrangeQuadraticD.of(RealScalar.ONE, null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

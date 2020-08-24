@@ -10,13 +10,15 @@ import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
 import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.red.Hypot;
 
 public class H2TangentSpace implements TangentSpace, Serializable {
   private final Tensor x;
 
+  /** @param x vector of length 3 */
   public H2TangentSpace(Tensor x) {
-    this.x = x;
+    this.x = VectorQ.requireLength(x, 3);
   }
 
   @Override // from TangentSpace

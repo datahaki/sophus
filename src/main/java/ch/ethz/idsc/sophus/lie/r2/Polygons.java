@@ -59,7 +59,7 @@ public enum Polygons {
         // assume div == 0 => py == ny => IF-condition above is false; therefore here div != 0
         Scalar px = prev.Get(0);
         Scalar nx = next.Get(0);
-        Scalar r1 = px.subtract(nx).multiply(ny.negate());
+        Scalar r1 = nx.subtract(px).multiply(ny);
         c ^= Sign.isPositive(r1.divide(div).add(nx));
       }
       prev = next;

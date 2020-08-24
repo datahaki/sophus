@@ -4,9 +4,11 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
@@ -24,6 +26,35 @@ public class PolygonsTest extends TestCase {
     assertTrue(Polygons.isInside(polygon, Tensors.vector(0.1, .1)));
     assertFalse(Polygons.isInside(polygon, Tensors.vector(0.1, -0.1)));
     assertFalse(Polygons.isInside(polygon, Tensors.vector(1, 1.1)));
+  }
+
+  public void testInsidePlain() {
+    Tensor polygon = Tensors.matrix(new Number[][] { //
+        { 0.1, 0.1 }, //
+        { 1, 0 }, //
+        { 1, 1 }, //
+        { 0, 1 } //
+    });
+    assertFalse(Polygons.isInside(polygon));
+    for (int n = 3; n < 10; ++n) {
+      assertTrue(Polygons.isInside(CirclePoints.of(n)));
+      assertTrue(Polygons.isInside(Reverse.of(CirclePoints.of(n))));
+    }
+  }
+
+  public void testInsidePlainQuantity() {
+    ScalarUnaryOperator suo = s -> Quantity.of(s, "km");
+    Tensor polygon = Tensors.matrix(new Number[][] { //
+        { 0.1, 0.1 }, //
+        { 1, 0 }, //
+        { 1, 1 }, //
+        { 0, 1 } //
+    });
+    assertFalse(Polygons.isInside(polygon.map(suo)));
+    for (int n = 3; n < 10; ++n) {
+      assertTrue(Polygons.isInside(CirclePoints.of(n).map(suo)));
+      assertTrue(Polygons.isInside(Reverse.of(CirclePoints.of(n)).map(suo)));
+    }
   }
 
   public void testInsideQuantity() {

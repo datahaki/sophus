@@ -34,6 +34,8 @@ public class GeodesicBSplineFunctionTest extends TestCase {
           GeodesicBSplineFunction.of(Se2CoveringGeodesic.INSTANCE, degree, Reverse.of(control));
       Tensor reverse = Reverse.of(domain.map(mapReverse));
       Chop._10.requireClose(forward, reverse);
+      assertEquals(mapReverse.domain().min(), RealScalar.ZERO);
+      assertEquals(mapReverse.domain().max(), RealScalar.of(19));
     }
   }
 
@@ -114,6 +116,20 @@ public class GeodesicBSplineFunctionTest extends TestCase {
             .map(GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, vector, control));
         Chop._11.requireClose(result, compar);
       }
+    }
+  }
+
+  public void testSasdlkjh() {
+    {
+      Tensor knots = Tensors.vector(1, 2, 3, 4, 5);
+      GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots);
+    }
+    try {
+      Tensor knots = Tensors.vector(1, 2, 3, 2, 5);
+      GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots);
+      fail();
+    } catch (Exception exception) {
+      // ---
     }
   }
 

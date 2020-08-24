@@ -36,6 +36,8 @@ public class GrExponentialTest extends TestCase {
     Tolerance.CHOP.requireClose(x, exp);
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireAllZero(log);
+    Tensor vectorLog = grExponential.vectorLog(exp);
+    Tolerance.CHOP.requireClose(vectorLog, Tensors.vector(0));
   }
 
   public void testShift() {
@@ -46,6 +48,8 @@ public class GrExponentialTest extends TestCase {
     assertTrue(GrassmannQ.of(exp));
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireClose(v, log);
+    Tensor vectorLog = grExponential.vectorLog(exp);
+    Tolerance.CHOP.requireClose(vectorLog, Tensors.vector(-0.2));
   }
 
   public void testDesign() {

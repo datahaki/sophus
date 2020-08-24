@@ -11,6 +11,7 @@ public class So2GroupElementTest extends TestCase {
     So2GroupElement so2GroupElement = new So2GroupElement(RealScalar.ONE);
     Scalar scalar = so2GroupElement.inverse().combine(RealScalar.ONE);
     assertEquals(scalar, RealScalar.ZERO);
+    assertEquals(so2GroupElement.toCoordinate(), RealScalar.ONE);
   }
 
   public void testAdjoint() {

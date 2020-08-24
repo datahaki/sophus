@@ -25,18 +25,18 @@ public enum GrassmannQ {
   }
 
   /** @param matrix
+   * @param chop
    * @return */
-  public static Tensor require(Tensor matrix) {
-    if (of(matrix))
+  public static Tensor require(Tensor matrix, Chop chop) {
+    if (of(matrix, chop))
       return matrix;
     throw TensorRuntimeException.of(matrix);
   }
 
   /** @param matrix
-   * @param chop
    * @return */
-  public static Tensor require(Tensor matrix, Chop chop) {
-    if (of(matrix, chop))
+  public static Tensor require(Tensor matrix) {
+    if (of(matrix))
       return matrix;
     throw TensorRuntimeException.of(matrix);
   }

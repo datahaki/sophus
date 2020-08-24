@@ -34,6 +34,7 @@ public class GeodesicCatmullRomTest extends TestCase {
     // ----
     Chop._10.requireClose(actual2, expected2);
     Chop._10.requireClose(actual1, expected1);
+    assertEquals(geodesicCatmullRom.control(), control);
   }
 
   public void testCentripetalInterpolatory() {
