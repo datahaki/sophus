@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -61,6 +62,7 @@ public class MahalanobisTest extends TestCase {
         Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold.logAt(point), sequence);
         Tensor sigma_inverse = mahalanobis.sigma_inverse();
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
+        SymmetricMatrixQ.require(mahalanobis.sigma_n(), Chop._08);
       }
     }
   }

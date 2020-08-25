@@ -74,6 +74,7 @@ public class PolygonsTest extends TestCase {
 
   public void testInsideEmpty() {
     Tensor polygon = Tensors.empty();
+    assertFalse(Polygons.isInside(polygon));
     assertFalse(Polygons.isInside(polygon, Tensors.vector(0.5, .5)));
     assertFalse(Polygons.isInside(polygon, Tensors.vector(0.9, .9)));
     assertFalse(Polygons.isInside(polygon, Tensors.vector(0.1, .1)));

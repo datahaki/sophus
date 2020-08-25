@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.sl2;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.lie.HodgeDual;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.mat.Det;
@@ -52,6 +53,8 @@ public class Sl2MatrixExponentialTest extends TestCase {
       Chop._10.requireClose(Det.of(e1), RealScalar.ONE);
       Tensor log = Sl2MatrixExponential.INSTANCE.log(e2);
       Chop._10.requireClose(log, x);
+      Tensor vlg = Sl2MatrixExponential.INSTANCE.vectorLog(e2);
+      VectorQ.requireLength(vlg, 3);
     }
   }
 }

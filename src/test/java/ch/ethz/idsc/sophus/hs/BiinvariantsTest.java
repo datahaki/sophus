@@ -7,6 +7,11 @@ import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
 
 public class BiinvariantsTest extends TestCase {
+  public void testToStringNotNull() {
+    for (Biinvariants biinvariants : Biinvariants.values())
+      assertNotNull(biinvariants.title());
+  }
+
   public void testDistanceSequenceNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {

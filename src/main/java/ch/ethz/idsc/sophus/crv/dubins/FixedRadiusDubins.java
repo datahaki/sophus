@@ -52,10 +52,10 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
         .map(Optional::get);
   }
 
-  private Optional<DubinsPath> create(Type dubinsPathType) {
+  private Optional<DubinsPath> create(Type type) {
     Tensor center1 = Tensors.of(zero, radius, xya.Get(2).zero());
-    Tensor h = Tensors.of(zero, dubinsPathType.isFirstEqualsLast() ? radius : radius.negate(), xya.Get(2).zero());
-    Tensor gnorm = dubinsPathType.isFirstTurnRight() ? Se2Flip.FUNCTION.apply(xya) : xya;
+    Tensor h = Tensors.of(zero, type.isFirstEqualsLast() ? radius : radius.negate(), xya.Get(2).zero());
+    Tensor gnorm = type.isFirstTurnRight() ? Se2Flip.FUNCTION.apply(xya) : xya;
     Tensor center3 = Se2CoveringGroup.INSTANCE.element(gnorm).combine(h);
     Tensor deltacenter = Se2CoveringGroup.INSTANCE.element(center1).inverse().combine(center3);
     Scalar dist_tr = Norm._2.ofVector(deltacenter.extract(0, 2));
@@ -63,7 +63,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     Scalar th_total = deltacenter.Get(2);
     th_tr = StaticHelper.principalValue(th_tr);
     th_total = StaticHelper.principalValue(th_total);
-    return dubinsPathType.dubinsSteer().steer(dist_tr, th_tr, th_total, radius) //
-        .map(segLength -> new DubinsPath(dubinsPathType, radius, segLength, Total.of(segLength).Get()));
+    return type.dubinsSteer().steer(dist_tr, th_tr, th_total, radius) //
+        .map(segLength -> new DubinsPath(type, radius, segLength, Total.of(segLength).Get()));
   }
 }

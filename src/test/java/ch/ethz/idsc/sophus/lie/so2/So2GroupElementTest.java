@@ -17,5 +17,6 @@ public class So2GroupElementTest extends TestCase {
   public void testAdjoint() {
     So2GroupElement so2GroupElement = new So2GroupElement(RealScalar.ONE);
     assertEquals(so2GroupElement.adjoint(Pi.VALUE), Pi.VALUE);
+    assertEquals(so2GroupElement.dL(RealScalar.of(3)), RealScalar.of(3));
   }
 }

@@ -9,7 +9,6 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
-import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.HodgeDual;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.Det;
@@ -65,6 +64,7 @@ public enum Sl2MatrixExponential implements Exponential, TangentSpace {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
-    return Flatten.of(log(q));
+    // specific to Sl2, skip 1, or limit 3
+    return Tensor.of(log(q).flatten(1).skip(1));
   }
 }

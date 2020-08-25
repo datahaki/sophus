@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
 public class BSpline4CurveSubdivisionTest extends TestCase {
-  public void testSimple() {
+  public void testSplit2Lo() {
     CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
