@@ -1,16 +1,20 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
+import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.TensorProduct;
+import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 
+/** Reference:
+ * geomstats - grassmannian.py */
 /* package */ enum StaticHelper {
   ;
   private static final int MAX_ITERATIONS = 500;
@@ -40,5 +44,29 @@ import ch.ethz.idsc.tensor.sca.Chop;
     }
     System.err.println("CONVERGENCE FAILURE");
     throw TensorRuntimeException.of(matrix); // insufficient convergence
+  }
+
+  /***************************************************/
+  /** @param x base point
+   * @param v vector
+   * @param chop
+   * @return */
+  /* package */ static boolean isTangent(Tensor x, Tensor v, Chop chop) {
+    return chop.isClose(x.dot(v).add(v.dot(x)), v);
+  }
+
+  /** @param x base point
+   * @param v vector
+   * @param chop */
+  /* package */ static void requireTangent(Tensor x, Tensor v, Chop chop) {
+    if (!isTangent(x, v, chop))
+      throw TensorRuntimeException.of(x, v);
+  }
+
+  /** @param x base point
+   * @param v vector
+   * @return */
+  /* package */ static Tensor projectTangent(Tensor x, Tensor v) {
+    return MatrixBracket.of(x, TensorWedge.of(v));
   }
 }

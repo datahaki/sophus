@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
@@ -11,7 +10,6 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
-import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.Serialization;
@@ -22,25 +20,9 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.Diagonal;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
-/** harbor == spring ! */
 public class GardenDistancesTest extends TestCase {
-  public void testSn() {
-    RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
-    ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    Tensor sequence = RandomSample.of(randomSampleInterface, 10);
-    VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariants.HARBOR.weighting(vectorLogManifold, variogram, sequence);
-    TensorUnaryOperator w2 = Biinvariants.GARDEN.weighting(vectorLogManifold, variogram, sequence);
-    for (int count = 0; count < 10; ++count) {
-      Tensor point = RandomSample.of(randomSampleInterface);
-      // TODO check
-      // Chop._08.requireClose(w1.apply(point), w2.apply(point));
-    }
-  }
-
   public void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
