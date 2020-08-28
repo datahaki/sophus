@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.crv.subdiv.CurveSubdivision;
-import ch.ethz.idsc.sophus.crv.subdiv.LaneRiesenfeldCurveSubdivision;
 import ch.ethz.idsc.sophus.math.sample.BallRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
+import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
+import ch.ethz.idsc.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;

@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so2;
 
-import ch.ethz.idsc.sophus.crv.subdiv.CurveSubdivision;
+import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

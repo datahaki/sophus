@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.crv.subdiv.BSpline2CurveSubdivision;
 import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.ethz.idsc.tensor.NumberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;

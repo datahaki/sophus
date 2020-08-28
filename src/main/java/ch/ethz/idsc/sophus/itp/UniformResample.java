@@ -3,11 +3,11 @@ package ch.ethz.idsc.sophus.itp;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.crv.subdiv.CurveSubdivision;
 import ch.ethz.idsc.sophus.hs.r2.Se2UniformResample;
 import ch.ethz.idsc.sophus.lie.rn.RnUniformResample;
 import ch.ethz.idsc.sophus.math.Distances;
 import ch.ethz.idsc.sophus.math.TensorMetric;
+import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
