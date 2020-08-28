@@ -3,12 +3,14 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Sinhc;
 import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Cosh;
 
 /** hyperboloid model
@@ -16,15 +18,17 @@ import ch.ethz.idsc.tensor.sca.Cosh;
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
 public class HnExponential implements Exponential, TangentSpace, Serializable {
+  private static final MemberQ MEMBER_Q = HnMemberQ.of(Chop._06);
+  // ---
   private final Tensor x;
 
   public HnExponential(Tensor x) {
-    this.x = StaticHelper.requirePoint(x);
+    this.x = MEMBER_Q.requirePoint(x);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    StaticHelper.requireTangent(x, v);
+    MEMBER_Q.requireTangent(x, v);
     Scalar vn = HnNorm.INSTANCE.norm(v);
     Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
     return HnProjection.INSTANCE.apply(exp);

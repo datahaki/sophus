@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
+import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -12,6 +13,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HnExponentialTest extends TestCase {
+  private static final MemberQ MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
+
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
@@ -20,7 +23,7 @@ public class HnExponentialTest extends TestCase {
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
       Tensor y = hnExponential.exp(v);
-      StaticHelper.requirePoint(y);
+      MEMBER_Q.requirePoint(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Tolerance.CHOP.requireClose(dxy, HnNorm.INSTANCE.norm(v));
     }
@@ -35,7 +38,7 @@ public class HnExponentialTest extends TestCase {
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, Array.zeros(d));
       assertEquals(v, Array.zeros(d + 1));
       Tensor y = hnExponential.exp(v);
-      StaticHelper.requirePoint(y);
+      MEMBER_Q.requirePoint(y);
       Tolerance.CHOP.requireClose(x, y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Chop._04.requireClose(dxy, HnNorm.INSTANCE.norm(v));
@@ -49,7 +52,7 @@ public class HnExponentialTest extends TestCase {
       Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = hnExponential.log(y);
-      StaticHelper.requireTangent(x, v);
+      HnMemberQ.of(Chop._10).requireTangent(x, v);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Scalar vn1 = HnNorm.INSTANCE.norm(v);
       Chop._08.requireClose(dxy, vn1);
@@ -62,7 +65,7 @@ public class HnExponentialTest extends TestCase {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = hnExponential.log(x);
-      StaticHelper.requireTangent(x, v);
+      MEMBER_Q.requireTangent(x, v);
       Scalar dxy = HnMetric.INSTANCE.distance(x, x);
       Scalar vn1 = HnNorm.INSTANCE.norm(v);
       Chop._06.requireClose(dxy, vn1);

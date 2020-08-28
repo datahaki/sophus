@@ -46,23 +46,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
     throw TensorRuntimeException.of(matrix); // insufficient convergence
   }
 
-  /***************************************************/
-  /** @param x base point
-   * @param v vector
-   * @param chop
-   * @return */
-  /* package */ static boolean isTangent(Tensor x, Tensor v, Chop chop) {
-    return chop.isClose(x.dot(v).add(v.dot(x)), v);
-  }
-
-  /** @param x base point
-   * @param v vector
-   * @param chop */
-  /* package */ static void requireTangent(Tensor x, Tensor v, Chop chop) {
-    if (!isTangent(x, v, chop))
-      throw TensorRuntimeException.of(x, v);
-  }
-
   /** @param x base point
    * @param v vector
    * @return */
