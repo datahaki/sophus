@@ -1,14 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.clt.mid;
 
-import java.io.Serializable;
-
 import ch.ethz.idsc.sophus.clt.LagrangeQuadratic;
 import ch.ethz.idsc.tensor.Scalar;
 
 /** Extension of clothoids in SE(2) to clothoids in SE(2) Covering
  * that respects winding numbers */
-public enum Se2CoveringClothoidQuadratic implements ClothoidQuadratic, Serializable {
+public enum Se2CoveringClothoidQuadratic implements ClothoidQuadratic {
   INSTANCE;
 
   @Override // from Clothoids

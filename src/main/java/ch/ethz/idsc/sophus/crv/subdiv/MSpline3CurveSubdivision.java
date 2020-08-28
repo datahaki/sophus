@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.subdiv;
 
+import java.io.Serializable;
+
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeans;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -12,7 +14,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** cubic B-spline
  * 
  * uses biinvariant mean */
-public final class MSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision {
+public final class MSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision implements Serializable {
   private static final Tensor MASK_MID = Tensors.vector(4, 4).divide(RealScalar.of(8));
   private static final Tensor MASK_CEN = Tensors.vector(1, 6, 1).divide(RealScalar.of(8));
   // ---

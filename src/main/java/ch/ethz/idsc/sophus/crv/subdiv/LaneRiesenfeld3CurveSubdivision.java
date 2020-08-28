@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.subdiv;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.MidpointInterface;
@@ -18,7 +19,7 @@ import ch.ethz.idsc.tensor.alg.Last;
  * Reference:
  * "A theoretical development for the computer generation of piecewise polynomial surfaces"
  * by J. M. Lane and R. F. Riesenfeld; IEEE Trans. Pattern Anal. Machine Intell. 2 (1980), 35-46 */
-public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3CurveSubdivision {
+public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3CurveSubdivision implements Serializable {
   public static CurveSubdivision of(MidpointInterface midpointInterface) {
     return new LaneRiesenfeld3CurveSubdivision(Objects.requireNonNull(midpointInterface));
   }

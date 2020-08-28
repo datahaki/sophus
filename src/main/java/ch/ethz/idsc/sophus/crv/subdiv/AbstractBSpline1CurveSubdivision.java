@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.subdiv;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 import ch.ethz.idsc.sophus.math.MidpointInterface;
@@ -15,7 +14,7 @@ import ch.ethz.idsc.tensor.alg.Last;
  * the scheme interpolates the control points
  * 
  * Dyn/Sharon 2014 p.14 show that the contractivity factor is mu = 1/2 */
-public abstract class AbstractBSpline1CurveSubdivision implements CurveSubdivision, MidpointInterface, Serializable {
+public abstract class AbstractBSpline1CurveSubdivision implements CurveSubdivision, MidpointInterface {
   @Override // from CurveSubdivision
   public Tensor cyclic(Tensor tensor) {
     int length = tensor.length();

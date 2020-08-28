@@ -27,7 +27,7 @@ public class HnMemberQ extends AbstractMemberQ implements Serializable {
     this.chop = chop;
   }
 
-  @Override
+  @Override // from MemberQ
   public boolean isPoint(Tensor x) {
     Scalar xn = Last.of(x);
     if (Scalars.lessEquals(RealScalar.ONE, xn))
@@ -35,7 +35,7 @@ public class HnMemberQ extends AbstractMemberQ implements Serializable {
     return false;
   }
 
-  @Override
+  @Override // from MemberQ
   public boolean isTangent(Tensor x, Tensor v) {
     return chop.isZero(HnBilinearForm.between(x, v));
   }
