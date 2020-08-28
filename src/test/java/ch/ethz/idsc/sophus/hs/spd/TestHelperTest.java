@@ -15,9 +15,9 @@ import junit.framework.TestCase;
 
 public class TestHelperTest extends TestCase {
   private static void _check(Tensor g, MatrixSqrt matrixSqrt) {
-    Chop._08.requireClose(Inverse.of(matrixSqrt.forward()), matrixSqrt.inverse());
-    Chop._08.requireClose(matrixSqrt.forward().dot(matrixSqrt.forward()), g);
-    Chop._08.requireClose(matrixSqrt.inverse().dot(matrixSqrt.inverse()), Inverse.of(g));
+    Chop._06.requireClose(Inverse.of(matrixSqrt.forward()), matrixSqrt.inverse());
+    Chop._06.requireClose(matrixSqrt.forward().dot(matrixSqrt.forward()), g);
+    Chop._06.requireClose(matrixSqrt.inverse().dot(matrixSqrt.inverse()), Inverse.of(g));
   }
 
   public void testSimple() throws ClassNotFoundException, IOException {

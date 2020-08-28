@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrExponentialTest extends TestCase {
-  private static final MemberQ MEMBER_Q_INTERFACE = GrMemberQ.of(Tolerance.CHOP);
+  private static final MemberQ MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
 
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
@@ -30,7 +30,7 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = StaticHelper.projectTangent(x, pre);
-    MEMBER_Q_INTERFACE.requireTangent(x, v);
+    MEMBER_Q.requireTangent(x, v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
@@ -47,7 +47,7 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = StaticHelper.projectTangent(x, pre);
-    MEMBER_Q_INTERFACE.requireTangent(x, v);
+    MEMBER_Q.requireTangent(x, v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
     Tensor log = grExponential.log(exp);

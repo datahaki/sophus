@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.so3;
 
 import ch.ethz.idsc.sophus.hs.HsTransport;
+import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.sophus.hs.PoleLadder;
 import ch.ethz.idsc.sophus.hs.SubdivideTransport;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
@@ -12,9 +13,12 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.red.Frobenius;
+import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class So3TransportTest extends TestCase {
+  private static final MemberQ MEMBER_Q = So3MemberQ.of(Chop._08);
+
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     Tensor m = RandomVariate.of(distribution, 3, 3);
@@ -22,9 +26,9 @@ public class So3TransportTest extends TestCase {
     Tensor p = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor q = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor vp = p.dot(ve);
-    StaticHelper.requireTangent(p, vp);
+    MEMBER_Q.requireTangent(p, vp);
     Tensor vq = So3Transport.INSTANCE.shift(p, q).apply(vp);
-    StaticHelper.requireTangent(q, vq);
+    MEMBER_Q.requireTangent(q, vq);
   }
 
   public void testPoleLadder() {
@@ -34,9 +38,9 @@ public class So3TransportTest extends TestCase {
     Tensor p = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor q = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor vp = p.dot(ve); // transport from e to p
-    StaticHelper.requireTangent(p, vp);
+    MEMBER_Q.requireTangent(p, vp);
     Tensor vq1 = So3Transport.INSTANCE.shift(p, q).apply(vp);
-    StaticHelper.requireTangent(q, vq1);
+    MEMBER_Q.requireTangent(q, vq1);
     HsTransport hsTransport = PoleLadder.of(So3Manifold.INSTANCE);
     Tensor vq2 = hsTransport.shift(p, q).apply(vp);
     Tensor vq3 = SubdivideTransport.of(hsTransport, So3Geodesic.INSTANCE, 100).shift(p, q).apply(vp);

@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.AbstractMemberQ;
 import ch.ethz.idsc.sophus.hs.MemberQ;
@@ -11,8 +12,10 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class SnMemberQ extends AbstractMemberQ implements Serializable {
+  /** @param chop
+   * @return */
   public static MemberQ of(Chop chop) {
-    return new SnMemberQ(chop);
+    return new SnMemberQ(Objects.requireNonNull(chop));
   }
 
   /***************************************************/
