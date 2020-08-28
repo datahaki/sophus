@@ -48,7 +48,7 @@ public class Se2ParametricTest extends TestCase {
     Tensor p = Tensors.fromString("{1[m], 2[m], 3}");
     Tensor q = Tensors.fromString("{4[m], 6[m], 3.3}");
     Scalar scalar = Se2ParametricDeprecate.INSTANCE.distance(p, q);
-    Chop._12.close(scalar, Quantity.of(5.018799335788676, "m"));
+    Chop._12.requireClose(scalar, Quantity.of(5.018799335788676, "m"));
     Chop._10.requireClose(scalar, //
         Se2Parametric.INSTANCE.distance(p, q));
   }

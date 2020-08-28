@@ -20,7 +20,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
         new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor quad = CirclePoints.of(4);
     Tensor center = catmullClarkSubdivision.quad(quad.get(0), quad.get(1), quad.get(3), quad.get(2));
-    assertTrue(Chop._10.allZero(center));
+    Chop._10.requireAllZero(center);
   }
 
   public void testEdgeCorner() {

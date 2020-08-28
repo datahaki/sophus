@@ -51,7 +51,7 @@ public class Se2CoveringParametricTest extends TestCase {
 
   public void testOtherUnits() {
     Scalar scalar = Se2CoveringParametricDeprecat.INSTANCE.distance(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{4[m], 6[m], 3.3}"));
-    Chop._12.close(scalar, Quantity.of(5.018799335788676, "m"));
+    Chop._12.requireClose(scalar, Quantity.of(5.018799335788676, "m"));
   }
 
   public void testUnitCircle54Pi() {

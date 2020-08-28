@@ -25,15 +25,15 @@ public class RotationMatrixTest extends TestCase {
 
   public void testComplex() {
     Tensor matrix = RotationMatrix.of(ComplexScalar.of(1, 2));
-    assertTrue(Chop._12.close(matrix.Get(0, 0), ComplexScalar.of(2.0327230070196655294, -3.0518977991518000575)));
-    assertTrue(Chop._12.close(matrix.Get(0, 1), ComplexScalar.of(-3.1657785132161681467, -1.9596010414216058971)));
+    Chop._12.requireClose(matrix.Get(0, 0), ComplexScalar.of(2.0327230070196655294, -3.0518977991518000575));
+    Chop._12.requireClose(matrix.Get(0, 1), ComplexScalar.of(-3.1657785132161681467, -1.9596010414216058971));
     assertTrue(OrthogonalMatrixQ.of(matrix));
   }
 
   public void testNumber() {
     Tensor matrix = RotationMatrix.of(0.2);
     assertFalse(Chop._12.close(matrix, IdentityMatrix.of(2)));
-    assertTrue(Chop._12.close(matrix.dot(RotationMatrix.of(-0.2)), IdentityMatrix.of(2)));
+    Chop._12.requireClose(matrix.dot(RotationMatrix.of(-0.2)), IdentityMatrix.of(2));
   }
 
   public void testRotationFail() {

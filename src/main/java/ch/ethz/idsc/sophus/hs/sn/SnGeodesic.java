@@ -34,7 +34,7 @@ public enum SnGeodesic implements GeodesicInterface {
     Scalar a = SnMetric.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();
-    if (Tolerance.CHOP.close(a, Pi.VALUE))
+    if (Tolerance.CHOP.isClose(a, Pi.VALUE))
       throw TensorRuntimeException.of(p, q); // when p == -q
     return scalar -> NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //

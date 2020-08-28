@@ -18,6 +18,6 @@ public class LoxodromeTest extends TestCase {
     Tensor tensor = Subdivide.of(-1, 100, 60).map(scalarTensorFunction);
     assertFalse(tensor.stream() //
         .map(Norm._2::ofVector) //
-        .anyMatch(scalar -> !Chop._12.close(RealScalar.ONE, scalar)));
+        .anyMatch(scalar -> !Chop._12.isClose(RealScalar.ONE, scalar)));
   }
 }

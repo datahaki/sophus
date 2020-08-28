@@ -16,6 +16,6 @@ public class So2UniformResampleTest extends TestCase {
     CurveSubdivision curveSubdivision = So2UniformResample.of(RealScalar.of(0.1));
     Tensor tensor = curveSubdivision.string(Subdivide.of(0, 10, 20));
     Scalar variance = Variance.ofVector(Differences.of(tensor));
-    assertTrue(Chop._20.allZero(variance));
+    Chop._20.requireZero(variance);
   }
 }

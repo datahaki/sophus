@@ -27,7 +27,7 @@ public class UnitQuaternionDistanceTest extends TestCase {
     Scalar dp = UnitQuaternionDistance.INSTANCE.distance(p.multiply(p), p.multiply(q));
     Chop._14.requireClose(d1, dp);
     Chop._14.requireClose(d1, dq);
-    assertTrue(Chop._14.allZero(UnitQuaternionDistance.INSTANCE.distance(p, p)));
+    Chop._14.requireAllZero(UnitQuaternionDistance.INSTANCE.distance(p, p));
     Scalar distance = LogUnitQuaternionDistance.INSTANCE.distance(p, q);
     Chop._14.requireClose(dp, distance);
     Chop._14.requireClose(dq, distance);

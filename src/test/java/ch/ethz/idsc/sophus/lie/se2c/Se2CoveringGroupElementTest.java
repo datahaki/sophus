@@ -55,7 +55,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
       Se2CoveringGroupElement se2GroupAction = new Se2CoveringGroupElement(xya);
       Tensor result = se2GroupAction.inverse().combine(Array.zeros(3));
       Tensor circ = se2GroupAction.combine(result);
-      assertTrue(Chop._14.allZero(circ));
+      Chop._14.requireAllZero(circ);
     }
   }
 

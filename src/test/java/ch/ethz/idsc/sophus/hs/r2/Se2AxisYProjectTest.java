@@ -119,7 +119,7 @@ public class Se2AxisYProjectTest extends TestCase {
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
       Tensor m = Se2Matrix.of(Se2CoveringExponential.INSTANCE.exp(u.multiply(t)));
       Tensor v = m.dot(p.copy().append(RealScalar.ONE));
-      assertTrue(Chop._12.allZero(v.Get(0)));
+      Chop._12.requireAllZero(v.Get(0));
     }
   }
 
@@ -131,7 +131,7 @@ public class Se2AxisYProjectTest extends TestCase {
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
       Tensor m = Se2Matrix.of(Se2CoveringExponential.INSTANCE.exp(u.multiply(t)));
       Tensor v = m.dot(p.copy().append(RealScalar.ONE));
-      assertTrue(Chop._12.allZero(v.Get(0)));
+      Chop._12.requireAllZero(v.Get(0));
     }
   }
 
@@ -143,7 +143,7 @@ public class Se2AxisYProjectTest extends TestCase {
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
       Tensor m = Se2Matrix.of(Se2CoveringExponential.INSTANCE.exp(u.multiply(t)));
       Tensor v = m.dot(p.copy().append(RealScalar.ONE));
-      assertTrue(Chop._12.allZero(v.Get(0)));
+      Chop._12.requireAllZero(v.Get(0));
     }
   }
 

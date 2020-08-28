@@ -26,7 +26,7 @@ public class SnPhongMeanTest extends TestCase {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(NORMALIZE));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
         Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights);
-        Tolerance.CHOP.close(mean, NORMALIZE.apply(mean));
+        Tolerance.CHOP.requireClose(mean, NORMALIZE.apply(mean));
       }
   }
 

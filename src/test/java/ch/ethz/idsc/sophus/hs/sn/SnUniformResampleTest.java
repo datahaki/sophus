@@ -20,6 +20,6 @@ public class SnUniformResampleTest extends TestCase {
     Tensor string = curveSubdivision.string(tensor);
     Tensor distances = Distances.of(SnMetric.INSTANCE, string);
     Scalar variance = Variance.ofVector(distances);
-    assertTrue(Chop._20.allZero(variance));
+    Chop._20.requireAllZero(variance);
   }
 }

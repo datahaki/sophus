@@ -25,7 +25,7 @@ public class SnFastMeanTest extends TestCase {
           Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
           Tensor mean1 = SnFastMean.INSTANCE.mean(sequence, weights);
           Tensor mean2 = SnBiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._04.close(mean1, mean2);
+          Chop._04.requireClose(mean1, mean2);
         } catch (Exception exception) {
           ++fails;
         }

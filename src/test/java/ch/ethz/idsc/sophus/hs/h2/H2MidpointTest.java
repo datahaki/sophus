@@ -48,6 +48,6 @@ public class H2MidpointTest extends TestCase {
         .map(sphereFit.center()::subtract) //
         .map(Norm._2::ofVector) //
         .map(sphereFit.radius()::subtract));
-    assertTrue(Chop._12.allZero(residual));
+    Chop._12.requireAllZero(residual);
   }
 }

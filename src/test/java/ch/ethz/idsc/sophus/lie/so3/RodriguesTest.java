@@ -99,7 +99,7 @@ public class RodriguesTest extends TestCase {
   public void testLogEye() {
     Tensor matrix = IdentityMatrix.of(3);
     Tensor log = Rodrigues.INSTANCE.log(matrix);
-    assertTrue(Chop.NONE.allZero(log));
+    Chop.NONE.requireAllZero(log);
   }
 
   public void testLog1() {
@@ -131,7 +131,7 @@ public class RodriguesTest extends TestCase {
     Tensor vec = Tensors.vector(eps, 0, 0);
     Tensor matrix = Rodrigues.vectorExp(vec);
     Tensor log = Rodrigues.INSTANCE.log(matrix);
-    assertTrue(Chop._50.allZero(log));
+    Chop._50.requireAllZero(log);
   }
 
   public void testRodriques() {
@@ -152,7 +152,7 @@ public class RodriguesTest extends TestCase {
     Scalar qrDet = Det.of(Q).multiply(Det.of(R));
     Chop._10.requireClose(qrDet, Det.of(A));
     Tensor lower = LowerTriangularize.of(R, -1);
-    assertTrue(Chop.NONE.allZero(lower));
+    Chop.NONE.requireAllZero(lower);
     Chop._10.requireClose(qrDet, qrDecomposition.det());
     return qrDecomposition;
   }
