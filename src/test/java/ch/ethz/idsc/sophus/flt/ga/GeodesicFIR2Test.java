@@ -54,9 +54,9 @@ public class GeodesicFIR2Test extends TestCase {
     assertEquals(Dimensions.of(result), Arrays.asList(100, 3));
     control.set(Scalar::zero, 0, Tensor.ALL);
     Tensor passtw = causalFilter.apply(control);
-    assertFalse(Chop._11.close(result.get(0), passtw.get(0)));
+    assertFalse(Chop._11.isClose(result.get(0), passtw.get(0)));
     assertEquals(result.get(1), passtw.get(1));
-    assertFalse(Chop._11.close(result.get(2), passtw.get(2)));
+    assertFalse(Chop._11.isClose(result.get(2), passtw.get(2)));
     assertEquals(result.get(3), passtw.get(3));
     assertEquals(result.get(4), passtw.get(4));
     Tensor lr = Last.of(result);

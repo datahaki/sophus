@@ -51,7 +51,7 @@ public enum Sl2MatrixExponential implements Exponential, TangentSpace {
   @Override // from Exponential
   public Tensor log(Tensor g) {
     Tolerance.CHOP.requireClose(Det.of(g), RealScalar.ONE);
-    if (Tolerance.CHOP.close(g, ID_NEGATE))
+    if (Tolerance.CHOP.isClose(g, ID_NEGATE))
       return LOG_ID_NEGATE;
     Tensor log = MatrixLog.of(g);
     Scalar a = g.Get(0, 0);

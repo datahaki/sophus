@@ -54,7 +54,7 @@ public class Se2CoveringIntegratorTest extends TestCase {
       Tensor v0 = Se2CoveringExponential.INSTANCE.exp(rnd);
       assertEquals(vec, v0);
       Tensor alt = Se2Matrix.of(vec);
-      boolean close = Chop._11.close(mat, alt);
+      boolean close = Chop._11.isClose(mat, alt);
       if (!close) {
         System.err.println(alt);
         System.err.println(mat);

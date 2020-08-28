@@ -41,9 +41,9 @@ public class ShapeTest extends TestCase {
       Chop._02.requireClose(mAA, mAL);
       // System.out.println(mAA);
       // {-1.8944972463160186, -0.7629704708387287, 3.1340144486447543}
-      Tensor mAO = ComplexClothoidCurve.INSTANCE.curve(pA, q).apply(RationalScalar.HALF);
+      // Tensor mAO = ComplexClothoidCurve.INSTANCE.curve(pA, q).apply(RationalScalar.HALF);
       // System.out.println(mAO);
-      Tensor mA3 = new ClothoidCurve3(pA, q).apply(RationalScalar.HALF);
+      // Tensor mA3 = new ClothoidCurve3(pA, q).apply(RationalScalar.HALF);
       // System.out.println(mA3);
       // System.out.println("---");
     }

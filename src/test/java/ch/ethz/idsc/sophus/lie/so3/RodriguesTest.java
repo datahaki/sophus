@@ -35,7 +35,7 @@ public class RodriguesTest extends TestCase {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor m1 = Rodrigues.vectorExp(vector);
     Tensor m2 = Rodrigues.vectorExp(vector.negate());
-    assertFalse(Chop._12.close(m1, IdentityMatrix.of(3)));
+    assertFalse(Chop._12.isClose(m1, IdentityMatrix.of(3)));
     Chop._12.requireClose(m1.dot(m2), IdentityMatrix.of(3));
   }
 

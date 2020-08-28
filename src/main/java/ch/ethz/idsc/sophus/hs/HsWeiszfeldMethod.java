@@ -63,7 +63,7 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
       Tensor prev = point;
       Tensor weights = weightingInterface.apply(point);
       point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(weights)));
-      if (chop.close(point, prev))
+      if (chop.isClose(point, prev))
         return Optional.of(point);
     }
     return Optional.empty();

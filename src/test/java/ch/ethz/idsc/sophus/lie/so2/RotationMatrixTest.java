@@ -32,7 +32,7 @@ public class RotationMatrixTest extends TestCase {
 
   public void testNumber() {
     Tensor matrix = RotationMatrix.of(0.2);
-    assertFalse(Chop._12.close(matrix, IdentityMatrix.of(2)));
+    assertFalse(Chop._12.isClose(matrix, IdentityMatrix.of(2)));
     Chop._12.requireClose(matrix.dot(RotationMatrix.of(-0.2)), IdentityMatrix.of(2));
   }
 

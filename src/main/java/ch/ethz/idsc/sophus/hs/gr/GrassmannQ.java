@@ -15,7 +15,7 @@ public enum GrassmannQ {
    * @return */
   public static boolean of(Tensor matrix, Chop chop) {
     return HermitianMatrixQ.of(matrix) //
-        && chop.close(matrix, matrix.dot(matrix)); // idempotent
+        && chop.isClose(matrix, matrix.dot(matrix)); // idempotent
   }
 
   /** @param matrix

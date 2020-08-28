@@ -136,8 +136,8 @@ public class Se2BiinvariantMeanTest extends TestCase {
     Tensor weights = Tensors.vector(3, 2, 1, 4).divide(RealScalar.of(10));
     for (Se2BiinvariantMean se2BiinvariantMean : Se2BiinvariantMean.values()) {
       Tensor solution = se2BiinvariantMean.mean(sequence, weights);
-      boolean close1 = Chop._12.close(solution, Tensors.fromString("{4.911144632104387[m], 5.064995814659804[m], 1.1}"));
-      boolean close2 = Chop._12.close(solution, Tensors.fromString("{4.911658712738642[m], 5.064497410160735[m], 1.0998987355880372}"));
+      boolean close1 = Chop._12.isClose(solution, Tensors.fromString("{4.911144632104387[m], 5.064995814659804[m], 1.1}"));
+      boolean close2 = Chop._12.isClose(solution, Tensors.fromString("{4.911658712738642[m], 5.064497410160735[m], 1.0998987355880372}"));
       assertTrue(close1 || close2);
       for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
         int[] index = Primitives.toIntArray(perm);

@@ -34,7 +34,7 @@ public class Se2CoveringGroupTest extends TestCase {
         for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
           Tensor w1 = barycentricCoordinate.weights(sequence, point);
           Tensor w2 = barycentricCoordinate.weights(all, one);
-          if (!Chop._03.close(w1, w2)) {
+          if (!Chop._03.isClose(w1, w2)) {
             System.out.println("---");
             System.out.println(w1);
             System.out.println(w2);

@@ -115,7 +115,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
         Tensor.of(vectors.stream().map(Se2CoveringExponential.INSTANCE::exp)));
     Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, //
         Join.of(Tensors.of(RealScalar.ONE.subtract(Total.ofVector(weights))), weights));
-    assertFalse(Chop._08.close(exp, mean));
+    assertFalse(Chop._08.isClose(exp, mean));
   }
 
   public void testEmpty() {

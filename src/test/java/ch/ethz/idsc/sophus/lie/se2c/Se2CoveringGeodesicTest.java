@@ -47,7 +47,7 @@ public class Se2CoveringGeodesicTest extends TestCase {
       Scalar w = RandomVariate.of(wd);
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
       Tensor splt = Se2CoveringGeodesic.INSTANCE.split(p, q, w);
-      if (Chop._12.close(mean, splt))
+      if (Chop._12.isClose(mean, splt))
         ++success;
     }
     assertTrue(90 < success);
