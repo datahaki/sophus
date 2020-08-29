@@ -18,7 +18,7 @@ public enum Se2ExpFixpoint {
 
   public static Optional<Tensor> of(Tensor velocity, Chop chop) {
     Scalar omega = velocity.Get(2);
-    return chop.allZero(omega) //
+    return chop.isZero(omega) //
         ? Optional.empty()
         : Optional.of(Cross.of(velocity.extract(0, 2)).divide(omega));
   }

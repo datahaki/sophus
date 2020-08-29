@@ -180,4 +180,14 @@ public class Se2GroupElementTest extends TestCase {
       // ---
     }
   }
+
+  public void testDlNullFail() {
+    Se2GroupElement se2GroupElement = new Se2GroupElement(Tensors.vector(0, 0, Math.PI / 2));
+    try {
+      se2GroupElement.dL(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

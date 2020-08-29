@@ -12,19 +12,19 @@ import ch.ethz.idsc.tensor.sca.Sign;
 public enum AffineQ {
   ;
   /** @param vector
-   * @return given vector
-   * @throws Exception if scalar entries of given mask do not add up to one */
-  public static Tensor require(Tensor vector) {
-    return require(vector, Tolerance.CHOP);
-  }
-
-  /** @param vector
    * @param chop
    * @return given vector
    * @throws Exception if scalar entries of given mask do not add up to one */
   public static Tensor require(Tensor vector, Chop chop) {
     chop.requireClose(Total.of(vector), RealScalar.ONE);
     return vector;
+  }
+
+  /** @param vector
+   * @return given vector
+   * @throws Exception if scalar entries of given mask do not add up to one */
+  public static Tensor require(Tensor vector) {
+    return require(vector, Tolerance.CHOP);
   }
 
   /** @param vector

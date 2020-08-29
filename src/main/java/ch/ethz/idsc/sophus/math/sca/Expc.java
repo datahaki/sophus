@@ -21,7 +21,7 @@ public enum Expc implements ScalarUnaryOperator {
 
   @Override
   public Scalar apply(Scalar mu) {
-    return Chop._10.allZero(mu) //
+    return Chop._10.isZero(mu) //
         ? SERIES.apply(mu)
         : evaluate(mu);
   }

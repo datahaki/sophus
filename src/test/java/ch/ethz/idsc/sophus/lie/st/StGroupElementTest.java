@@ -84,4 +84,14 @@ public class StGroupElementTest extends TestCase {
       // ---
     }
   }
+
+  public void testDlNullFail() {
+    StGroupElement pE = StGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
+    try {
+      pE.dL(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

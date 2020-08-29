@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
+import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -27,5 +28,15 @@ public class EightPointCurveSubdivisionTest extends TestCase {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGeodesic.INSTANCE);
     for (int n = 40; n < 60; n += 3)
       Chop._09.requireClose(curveSubdivision.cyclic(CirclePoints.of(n)), CirclePoints.of(n * 2));
+  }
+
+  public void testStringNullFail() {
+    CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(ClothoidBuilders.SE2_ANALYTIC);
+    try {
+      curveSubdivision.string(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

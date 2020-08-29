@@ -24,7 +24,7 @@ public enum Logc implements ScalarUnaryOperator {
   @Override
   public Scalar apply(Scalar lambda) {
     Scalar den = lambda.subtract(RealScalar.ONE);
-    return Chop._10.allZero(den) //
+    return Chop._10.isZero(den) //
         ? SERIES.apply(den)
         : Log.FUNCTION.apply(lambda).divide(den);
   }

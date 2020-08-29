@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   /** @param windowFunction for evaluation in the interval [-1/2, +1/2] */
   protected BaseWindowSampler(ScalarUnaryOperator windowFunction) {
     this.windowFunction = windowFunction;
-    isContinuous = Chop._03.allZero(windowFunction.apply(RationalScalar.HALF));
+    isContinuous = Chop._03.isZero(windowFunction.apply(RationalScalar.HALF));
   }
 
   @Override // from IntegerTensorFunction

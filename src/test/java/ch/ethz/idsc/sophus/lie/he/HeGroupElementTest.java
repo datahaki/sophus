@@ -108,4 +108,15 @@ public class HeGroupElementTest extends TestCase {
       // ---
     }
   }
+
+  public void testDlNullFail() {
+    Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
+    HeGroupElement a = new HeGroupElement(a_t);
+    try {
+      a.dL(null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }
