@@ -67,7 +67,7 @@ public class HeManifoldTest extends TestCase {
         // ---
         Tensor shift = TestHelper.spawn_He(n);
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
-          Chop._08.requireClose(weights, //
+          Chop._04.requireClose(weights, //
               barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
       }
   }

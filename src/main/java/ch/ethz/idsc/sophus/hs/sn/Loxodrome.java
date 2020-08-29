@@ -18,7 +18,7 @@ public class Loxodrome implements ScalarTensorFunction {
     return new Loxodrome(angle);
   }
 
-  // ---
+  /***************************************************/
   private final Scalar angle;
 
   private Loxodrome(Scalar angle) {

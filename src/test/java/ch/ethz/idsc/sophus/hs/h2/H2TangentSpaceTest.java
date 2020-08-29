@@ -4,10 +4,10 @@ package ch.ethz.idsc.sophus.hs.h2;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class H2TangentSpaceTest extends TestCase {
@@ -25,6 +25,6 @@ public class H2TangentSpaceTest extends TestCase {
     Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 2));
     TangentSpace tangentSpace = new H2TangentSpace(x);
     Tensor log = tangentSpace.vectorLog(x);
-    assertEquals(log, Array.zeros(2));
+    Chop._05.requireAllZero(log);
   }
 }

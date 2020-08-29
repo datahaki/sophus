@@ -1,11 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.hn.HnAngle;
 import ch.ethz.idsc.sophus.math.TensorMetric;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.VectorAngle;
 import ch.ethz.idsc.tensor.sca.ArcCos;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -20,14 +20,15 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * VectorAngle.of(p, q).get()
  * </pre>
  * 
- * @see VectorAngle */
+ * @see VectorAngle 
+ * @see HnAngle */
 public enum SnMetric implements TensorMetric {
   INSTANCE;
 
+  private static final MemberQ MEMBER_Q = SnMemberQ.of(Chop._10);
+
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    Chop._10.requireClose(Hypot.ofVector(p), RealScalar.ONE);
-    Chop._10.requireClose(Hypot.ofVector(q), RealScalar.ONE);
-    return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(p.dot(q).Get()));
+    return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(MEMBER_Q.requirePoint(p).dot(MEMBER_Q.requirePoint(q)).Get()));
   }
 }
