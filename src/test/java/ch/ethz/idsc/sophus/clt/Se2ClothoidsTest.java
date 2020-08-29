@@ -17,9 +17,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Se2ClothoidsTest extends TestCase {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
+
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(-8, 8);
-    ClothoidBuilder clothoidInterface = Serialization.copy(ClothoidBuilders.SE2_ANALYTIC);
+    ClothoidBuilder clothoidInterface = Serialization.copy(CLOTHOID_BUILDER);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
@@ -30,7 +32,7 @@ public class Se2ClothoidsTest extends TestCase {
   }
 
   public void testErf() {
-    ScalarTensorFunction scalarTensorFunction = ClothoidBuilders.SE2_ANALYTIC.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
+    ScalarTensorFunction scalarTensorFunction = CLOTHOID_BUILDER.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertTrue(scalarTensorFunction instanceof Clothoid);
   }
 }

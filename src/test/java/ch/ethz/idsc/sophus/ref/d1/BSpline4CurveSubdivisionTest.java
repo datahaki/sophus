@@ -89,7 +89,7 @@ public class BSpline4CurveSubdivisionTest extends TestCase {
 
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(ClothoidBuilders.SE2_ANALYTIC);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder());
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
     assertEquals(curveSubdivision.string(singleton), singleton);
   }

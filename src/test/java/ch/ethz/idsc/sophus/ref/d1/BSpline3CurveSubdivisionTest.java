@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1;
 import java.io.IOException;
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
@@ -31,6 +32,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import junit.framework.TestCase;
 
 public class BSpline3CurveSubdivisionTest extends TestCase {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
+
   public void testSimple() {
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
@@ -74,7 +77,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
 
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(ClothoidBuilders.SE2_ANALYTIC);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(CLOTHOID_BUILDER);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
     assertEquals(curveSubdivision.string(singleton), singleton);
   }

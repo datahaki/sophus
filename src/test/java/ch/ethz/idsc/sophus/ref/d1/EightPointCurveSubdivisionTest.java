@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
+import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
@@ -14,6 +15,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class EightPointCurveSubdivisionTest extends TestCase {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
+
   public void testSimple() {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGeodesic.INSTANCE);
     Tensor cyclic = curveSubdivision.cyclic(UnitVector.of(10, 5));
@@ -31,7 +34,7 @@ public class EightPointCurveSubdivisionTest extends TestCase {
   }
 
   public void testStringNullFail() {
-    CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(ClothoidBuilders.SE2_ANALYTIC);
+    CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(CLOTHOID_BUILDER);
     try {
       curveSubdivision.string(null);
       fail();

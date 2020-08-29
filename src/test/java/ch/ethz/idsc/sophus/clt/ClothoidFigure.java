@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.io.Export;
 import ch.ethz.idsc.tensor.io.HomeDirectory;
 
 /* package */ class ClothoidFigure {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final int RES = 192;
   private static final Tensor RE = Subdivide.of(-1, +1, RES - 1);
   private static final Tensor IM = Subdivide.of(+0.1, +2.1, RES - 1);
@@ -27,7 +28,7 @@ import ch.ethz.idsc.tensor.io.HomeDirectory;
 
   private Scalar function(int y, int x) {
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
-    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2_ANALYTIC.curve(q.map(Scalar::zero), q).curvature();
+    LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(q.map(Scalar::zero), q).curvature();
     return headTailInterface.absMax().reciprocal();
   }
 

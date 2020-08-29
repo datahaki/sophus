@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
+import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.hs.h2.H2Midpoint;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
@@ -11,6 +12,8 @@ import ch.ethz.idsc.tensor.alg.Range;
 import junit.framework.TestCase;
 
 public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
+
   public void testDeg1() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 1);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
@@ -65,7 +68,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
 
   public void testEmpty() {
     for (int degree = 1; degree < 4; ++degree) {
-      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC, degree);
+      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(CLOTHOID_BUILDER, degree);
       assertEquals(curveSubdivision.cyclic(Tensors.empty()), Tensors.empty());
       assertEquals(curveSubdivision.string(Tensors.empty()), Tensors.empty());
     }
@@ -74,7 +77,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     for (int degree = 1; degree < 4; ++degree) {
-      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC, degree);
+      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(CLOTHOID_BUILDER, degree);
       assertEquals(curveSubdivision.cyclic(singleton), singleton);
       assertEquals(curveSubdivision.string(singleton), singleton);
     }

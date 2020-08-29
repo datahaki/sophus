@@ -16,8 +16,8 @@ import junit.framework.TestCase;
 public class ShapeTest extends TestCase {
   public void testSimple() {
     Tensor q = Tensors.vector(-2.05, 0, 0);
-    CurveSubdivision lrL = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE, 1);
-    CurveSubdivision lrA = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC, 1);
+    CurveSubdivision lrL = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);
+    CurveSubdivision lrA = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), 1);
     {
       Tensor pL = lrL.string(Tensors.of(Array.zeros(3), q)).get(1);
       Chop._12.requireClose(pL, Tensors.vector(-1.025, 0, 4.245082897851892));

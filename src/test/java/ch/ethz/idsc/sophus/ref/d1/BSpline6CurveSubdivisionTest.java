@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
+import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -10,6 +11,8 @@ import ch.ethz.idsc.tensor.alg.UnitVector;
 import junit.framework.TestCase;
 
 public class BSpline6CurveSubdivisionTest extends TestCase {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
+
   public void testSimple() {
     CurveSubdivision curveSubdivision = //
         BSpline6CurveSubdivision.of(RnGeodesic.INSTANCE);
@@ -27,12 +30,12 @@ public class BSpline6CurveSubdivisionTest extends TestCase {
 
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
-    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC);
+    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(CLOTHOID_BUILDER);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
   }
 
   public void testStringNullFail() {
-    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC);
+    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(CLOTHOID_BUILDER);
     try {
       curveSubdivision.string(null);
       fail();

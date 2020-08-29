@@ -13,11 +13,11 @@ public class ClothoidBuildersTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor p = RandomVariate.of(distribution, 3);
     Tensor q = RandomVariate.of(distribution, 3);
-    Sign.requirePositive(ClothoidBuilders.SE2_ANALYTIC.curve(p, q).length());
-    Sign.requirePositive(ClothoidBuilders.SE2_LEGENDRE.curve(p, q).length());
+    Sign.requirePositive(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder().curve(p, q).length());
+    Sign.requirePositive(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder().curve(p, q).length());
   }
 
   public void testValuesSize() {
-    assertEquals(ClothoidBuilders.VALUES.size(), 3);
+    assertTrue(2 <= ClothoidBuilders.values().length);
   }
 }

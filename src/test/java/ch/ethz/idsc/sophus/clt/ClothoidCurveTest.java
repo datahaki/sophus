@@ -16,6 +16,7 @@ import junit.framework.TestCase;
 
 public class ClothoidCurveTest extends TestCase {
   private static final Unit METER = Unit.of("m");
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   public static Tensor metric(Tensor vector) {
     return Tensors.of( //
@@ -45,7 +46,7 @@ public class ClothoidCurveTest extends TestCase {
     Tensor q = Tensors.vector(-3.7, 0.3, 3.142);
     Tensor m1 = Clothoid1.INSTANCE.curve(p, q).apply(RationalScalar.HALF);
     Tensor m2 = Clothoid2.INSTANCE.curve(p, q).apply(RationalScalar.HALF);
-    Tensor m3 = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).apply(RationalScalar.HALF);
+    Tensor m3 = CLOTHOID_BUILDER.curve(p, q).apply(RationalScalar.HALF);
     assertFalse(Chop._01.isClose(m1, m2));
     assertFalse(Chop._01.isClose(m1, m3));
     assertFalse(Chop._01.isClose(m2, m3));

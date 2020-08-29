@@ -16,18 +16,20 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class ClothoidBuilderTest extends TestCase {
+  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
+
   public void testReverse() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      Clothoid clothoid = ClothoidBuilders.SE2_ANALYTIC.curve(p, q);
-      Tensor tensor = ClothoidBuilders.SE2_ANALYTIC.split(p, q, RealScalar.of(0.2));
+      Clothoid clothoid = CLOTHOID_BUILDER.curve(p, q);
+      Tensor tensor = CLOTHOID_BUILDER.split(p, q, RealScalar.of(0.2));
       VectorQ.requireLength(tensor, 3);
       LagrangeQuadraticD lagrangeQuadraticD1 = clothoid.curvature();
       p.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
       q.set(s -> So2.MOD.apply(Pi.VALUE.add(s)), 2);
-      LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2_ANALYTIC.curve(q, p).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD2 = CLOTHOID_BUILDER.curve(q, p).curvature();
       Scalar param = RandomVariate.of(distribution);
       Chop._06.requireClose( //
           lagrangeQuadraticD1.apply(param), //
@@ -40,10 +42,10 @@ public class ClothoidBuilderTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD lagrangeQuadraticD1 = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD1 = CLOTHOID_BUILDER.curve(p, q).curvature();
       Tensor g = RandomVariate.of(distribution, 3);
       Se2GroupElement se2GroupElement = new Se2GroupElement(g);
-      LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2_ANALYTIC.curve( //
+      LagrangeQuadraticD lagrangeQuadraticD2 = CLOTHOID_BUILDER.curve( //
           se2GroupElement.combine(p), //
           se2GroupElement.combine(q)).curvature();
       Scalar param = RandomVariate.of(distribution);
@@ -58,10 +60,10 @@ public class ClothoidBuilderTest extends TestCase {
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
-      LagrangeQuadraticD lagrangeQuadraticD1 = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD1 = CLOTHOID_BUILDER.curve(p, q).curvature();
       p.set(Pi.TWO::add, 2);
       q.set(Pi.TWO::add, 2);
-      LagrangeQuadraticD lagrangeQuadraticD2 = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+      LagrangeQuadraticD lagrangeQuadraticD2 = CLOTHOID_BUILDER.curve(p, q).curvature();
       Scalar param = RandomVariate.of(distribution);
       Chop._10.requireClose( //
           lagrangeQuadraticD1.apply(param), //
@@ -72,7 +74,7 @@ public class ClothoidBuilderTest extends TestCase {
   public void testStraightSide() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(3, 0, 0);
-    LagrangeQuadraticD lagrangeQuadraticD = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+    LagrangeQuadraticD lagrangeQuadraticD = CLOTHOID_BUILDER.curve(p, q).curvature();
     Chop._03.requireClose(lagrangeQuadraticD.head(), RealScalar.ZERO);
     Chop._03.requireClose(lagrangeQuadraticD.tail(), RealScalar.ZERO);
     assertNotNull(lagrangeQuadraticD.toString());
@@ -81,7 +83,7 @@ public class ClothoidBuilderTest extends TestCase {
   public void testStraightUp() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(0, 3, +Math.PI / 2);
-    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+    LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();
     Chop._03.requireClose(headTailInterface.head(), RealScalar.ZERO);
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ZERO);
   }
@@ -89,7 +91,7 @@ public class ClothoidBuilderTest extends TestCase {
   public void testCircle() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(-2, 0, -Math.PI / 2);
-    LagrangeQuadraticD headTailInterface = ClothoidBuilders.SE2_ANALYTIC.curve(p, q).curvature();
+    LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();
     Chop._03.requireClose(headTailInterface.head(), RealScalar.ONE);
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ONE);
   }

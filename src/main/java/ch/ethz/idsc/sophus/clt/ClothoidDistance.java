@@ -12,9 +12,9 @@ import ch.ethz.idsc.tensor.Tensor;
  * the clothoid from p to q is generally different from
  * the clothoid from q to p! */
 public enum ClothoidDistance implements TensorMetric, TensorNorm {
-  SE2_ANALYTIC(ClothoidBuilders.SE2_ANALYTIC), //
-  SE2_LEGENDRE(ClothoidBuilders.SE2_LEGENDRE), //
-  SE2_COVERING(ClothoidBuilders.SE2_COVERING), //
+  SE2_ANALYTIC(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder()), //
+  SE2_LEGENDRE(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder()), //
+  SE2_COVERING(ClothoidBuilders.SE2_COVERING.clothoidBuilder()), //
   ;
 
   private final ClothoidBuilder clothoidBuilder;
