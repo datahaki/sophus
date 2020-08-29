@@ -24,26 +24,25 @@ public class GrExponential implements Exponential, TangentSpace, Serializable {
   // ---
   private final Tensor x;
   private final Tensor id;
-  private final Tensor x2_i;
+  private final Tensor x2_id;
 
   /** @param x rank k projector of Gr(n, k) */
   public GrExponential(Tensor x) {
     this.x = x;
     id = IdentityMatrix.of(x.length());
-    x2_i = p2_i(x);
+    x2_id = p2_id(x);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    MEMBER_Q.requireTangent(x, v);
-    Tensor exp = MatrixExp.of(MatrixBracket.of(x, v));
+    Tensor exp = MatrixExp.of(MatrixBracket.of(x, MEMBER_Q.requireTangent(x, v)));
     return LinearSolve.of(exp, x).dot(exp);
   }
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
     return MatrixBracket.of( //
-        MatrixLog.of(p2_i(y).dot(x2_i)).multiply(RationalScalar.HALF), //
+        MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), //
         x);
   }
 
@@ -53,9 +52,9 @@ public class GrExponential implements Exponential, TangentSpace, Serializable {
   }
 
   /** @param p
-   * @return
+   * @return p * 2 - id
    * @throws Exception if p is not an element in the grassmannian manifold */
-  private Tensor p2_i(Tensor p) {
+  private Tensor p2_id(Tensor p) {
     return MEMBER_Q.requirePoint(p).add(p).subtract(id);
   }
 }

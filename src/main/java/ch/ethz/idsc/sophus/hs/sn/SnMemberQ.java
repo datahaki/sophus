@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.hs.AbstractMemberQ;
 import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class SnMemberQ extends AbstractMemberQ implements Serializable {
@@ -27,7 +27,7 @@ public class SnMemberQ extends AbstractMemberQ implements Serializable {
 
   @Override // from MemberQ
   public boolean isPoint(Tensor x) {
-    return chop.isClose(Norm._2.ofVector(x), RealScalar.ONE);
+    return chop.isClose(Hypot.ofVector(x), RealScalar.ONE);
   }
 
   @Override // from MemberQ

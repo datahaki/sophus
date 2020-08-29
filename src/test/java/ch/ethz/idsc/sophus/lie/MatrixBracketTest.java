@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
+import ch.ethz.idsc.tensor.lie.LeviCivitaTensor;
 import junit.framework.TestCase;
 
 public class MatrixBracketTest extends TestCase {
@@ -16,6 +17,11 @@ public class MatrixBracketTest extends TestCase {
     assertEquals(MatrixBracket.of(bx, by), Array.zeros(3, 3));
     assertEquals(MatrixBracket.of(bt, bx), by);
     assertEquals(MatrixBracket.of(by, bt), bx);
+  }
+
+  public void testSo3Bracket() {
+    Tensor so3 = LeviCivitaTensor.of(3).negate().unmodifiable();
+    assertEquals(MatrixBracket.of(so3.get(0), so3.get(1)), so3.get(2));
   }
 
   public void testBracketVectorFail() {
