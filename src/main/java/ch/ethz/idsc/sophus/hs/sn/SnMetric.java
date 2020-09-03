@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * VectorAngle.of(p, q).get()
  * </pre>
  * 
- * @see VectorAngle 
+ * @see VectorAngle
  * @see HnAngle */
 public enum SnMetric implements TensorMetric {
   INSTANCE;

@@ -18,6 +18,7 @@ public class So3Exponential implements Exponential, TangentSpace, Serializable {
     pinv = Transpose.of(p);
   }
 
+  /** @throws Exception if vp is not tangent to p */
   @Override // from Exponential
   public Tensor exp(Tensor vp) { // tangent vector at p
     return p.dot(Rodrigues.INSTANCE.exp(pinv.dot(vp)));

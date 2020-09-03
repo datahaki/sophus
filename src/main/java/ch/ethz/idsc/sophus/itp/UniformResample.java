@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.itp;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.r2.Se2UniformResample;
 import ch.ethz.idsc.sophus.lie.rn.RnUniformResample;
@@ -28,7 +29,10 @@ public class UniformResample implements CurveSubdivision, Serializable {
    * @see RnUniformResample
    * @see Se2UniformResample */
   public static CurveSubdivision of(TensorMetric tensorMetric, BinaryAverage binaryAverage, Scalar spacing) {
-    return new UniformResample(tensorMetric, binaryAverage, Sign.requirePositive(spacing));
+    return new UniformResample( //
+        Objects.requireNonNull(tensorMetric), //
+        Objects.requireNonNull(binaryAverage), //
+        Sign.requirePositive(spacing));
   }
 
   /***************************************************/
