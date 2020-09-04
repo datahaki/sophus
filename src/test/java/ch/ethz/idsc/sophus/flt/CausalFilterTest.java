@@ -2,6 +2,8 @@
 package ch.ethz.idsc.sophus.flt;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.function.Supplier;
 
 import ch.ethz.idsc.sophus.flt.ga.GeodesicExtrapolation;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicFIR2;
@@ -21,8 +23,10 @@ import junit.framework.TestCase;
 
 public class CausalFilterTest extends TestCase {
   public void testIIR1() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator causalFilter = //
-        Serialization.copy(CausalFilter.of(() -> new GeodesicIIR1(RnGeodesic.INSTANCE, RationalScalar.HALF)));
+    @SuppressWarnings("unchecked")
+    TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of( //
+        (Supplier<TensorUnaryOperator> & Serializable) //
+        () -> new GeodesicIIR1(RnGeodesic.INSTANCE, RationalScalar.HALF)));
     {
       Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
       assertEquals(tensor, Tensors.fromString("{1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, 1/256, 1/512}"));
@@ -36,8 +40,10 @@ public class CausalFilterTest extends TestCase {
   }
 
   public void testIIR2a() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator causalFilter = //
-        Serialization.copy(CausalFilter.of(() -> new GeodesicIIR2(RnGeodesic.INSTANCE, RationalScalar.HALF)));
+    @SuppressWarnings("unchecked")
+    TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of(//
+        (Supplier<TensorUnaryOperator> & Serializable) //
+        () -> new GeodesicIIR2(RnGeodesic.INSTANCE, RationalScalar.HALF)));
     Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
     ExactTensorQ.require(tensor);
   }

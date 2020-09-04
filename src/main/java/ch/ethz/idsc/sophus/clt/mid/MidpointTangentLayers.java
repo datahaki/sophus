@@ -1,13 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.clt.mid;
 
-import ch.ethz.idsc.sophus.math.ScalarBinaryOperator;
+import java.util.function.BinaryOperator;
+
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.opt.Pi;
 
-/* package */ enum MidpointTangentLayers implements ScalarBinaryOperator {
+/* package */ enum MidpointTangentLayers implements BinaryOperator<Scalar> {
   INSTANCE;
 
   @Override

@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.flt.bm;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import ch.ethz.idsc.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.ethz.idsc.sophus.flt.TestKernels;
@@ -33,8 +34,9 @@ public class BiinvariantMeanIIRnFilterTest extends TestCase {
   public void testKernel() throws ClassNotFoundException, IOException {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values())
       for (int radius = 0; radius < 6; ++radius) {
+        Function<Integer, Tensor> function = Serialization.copy(WindowSideExtrapolation.of(smoothingKernel));
         TensorUnaryOperator tensorUnaryOperator = Serialization.copy(BiinvariantMeanIIRnFilter.of( //
-            RnBiinvariantMean.INSTANCE, WindowSideExtrapolation.of(smoothingKernel), RnGeodesic.INSTANCE, radius, RationalScalar.HALF));
+            RnBiinvariantMean.INSTANCE, function, RnGeodesic.INSTANCE, radius, RationalScalar.HALF));
         Tensor signal = Range.of(0, 10);
         Tensor tensor = tensorUnaryOperator.apply(signal);
         Chop._10.requireClose(tensor, signal);

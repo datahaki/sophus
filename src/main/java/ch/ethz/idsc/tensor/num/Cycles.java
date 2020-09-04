@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ch.ethz.idsc.tensor.IntegerQ;
 import ch.ethz.idsc.tensor.Integers;
@@ -39,9 +40,9 @@ public class Cycles implements Serializable {
     return new Cycles(map(normal(tensor)));
   }
 
-  private static Map<Integer, Integer> map(Tensor cycles) {
+  private static Map<Integer, Integer> map(Tensor tensor) {
     Map<Integer, Integer> map = new HashMap<>();
-    for (Tensor cycle : cycles) {
+    for (Tensor cycle : tensor) {
       int prev = parse(Last.of(cycle).Get());
       Iterator<Tensor> iterator = cycle.iterator();
       while (iterator.hasNext())
@@ -74,12 +75,19 @@ public class Cycles implements Serializable {
     return RotateLeft.of(vector, ArgMin.of(vector));
   }
 
-  static Cycles of(Map<Integer, Integer> map) {
-    Map<Integer, Integer> m = new HashMap<>();
-    map.entrySet().stream() //
-        .filter(entry -> entry.getKey() != entry.getValue()) //
-        .forEach(entry -> m.put(entry.getKey(), entry.getValue()));
-    return new Cycles(m);
+  /***************************************************/
+  private static final Cycles IDENTITY = new Cycles(Collections.emptyMap());
+
+  /** @return */
+  public static Cycles identity() {
+    return IDENTITY;
+  }
+
+  /***************************************************/
+  /* package */ static Cycles from(Map<Integer, Integer> map) {
+    return new Cycles(map.entrySet().stream() //
+        .filter(entry -> !entry.getKey().equals(entry.getValue())) //
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue)));
   }
 
   /***************************************************/
@@ -96,48 +104,46 @@ public class Cycles implements Serializable {
 
   /** @return for instance {{1, 20}, {4, 10, 19, 6, 18}, {5, 9}, {7, 14, 13}} */
   public Tensor toTensor() {
-    Set<Integer> visited = new HashSet<>();
+    Set<Integer> set = new HashSet<>();
     Tensor cycles = Tensors.empty();
     for (Entry<Integer, Integer> entry : map.entrySet()) {
       int seed = entry.getKey();
       int next = entry.getValue();
-      if (!visited.contains(seed)) {
+      if (!set.contains(seed)) {
         List<Integer> list = new ArrayList<>();
-        while (visited.add(seed)) {
+        while (set.add(seed)) {
           list.add(seed);
-          visited.add(seed);
-          seed = next;
-          next = map.get(next);
+          next = map.get(seed = next);
         }
         cycles.append(Tensors.vector(list));
       }
     }
-    return Cycles.normal(cycles);
+    return normal(cycles);
   }
 
+  /** @param cycles
+   * @return */
   public Cycles product(Cycles cycles) {
-    Map<Integer, Integer> b = cycles.map();
-    Map<Integer, Integer> c = new HashMap<>();
-    for (Entry<Integer, Integer> e : map.entrySet()) {
-      int prev = e.getKey();
-      int next = e.getValue();
-      int foll = b.containsKey(next) ? b.get(next) : next;
-      c.put(prev, foll);
+    Map<Integer, Integer> b_map = cycles.map;
+    Map<Integer, Integer> result = new HashMap<>();
+    for (Entry<Integer, Integer> entry : map.entrySet()) {
+      int next = entry.getValue();
+      result.put(entry.getKey(), b_map.containsKey(next) ? b_map.get(next) : next);
     }
-    for (Entry<Integer, Integer> e : b.entrySet()) {
-      int prev = e.getKey();
-      int next = e.getValue();
-      if (!c.containsKey(prev))
-        c.put(prev, next);
+    for (Entry<Integer, Integer> entry : b_map.entrySet()) {
+      int prev = entry.getKey();
+      if (!result.containsKey(prev))
+        result.put(prev, entry.getValue());
     }
-    return of(c);
+    return from(result);
   }
 
+  /** @return */
   public Cycles inverse() {
-    Map<Integer, Integer> flip = new HashMap<>();
+    Map<Integer, Integer> result = new HashMap<>();
     for (Entry<Integer, Integer> entry : map.entrySet())
-      flip.put(entry.getValue(), entry.getKey());
-    return new Cycles(flip);
+      result.put(entry.getValue(), entry.getKey());
+    return new Cycles(result);
   }
 
   @Override // from Object

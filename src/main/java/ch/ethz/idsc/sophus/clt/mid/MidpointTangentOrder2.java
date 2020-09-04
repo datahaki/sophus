@@ -1,7 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.clt.mid;
 
-import ch.ethz.idsc.sophus.math.ScalarBinaryOperator;
+import java.util.function.BinaryOperator;
+
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
@@ -10,7 +11,7 @@ import ch.ethz.idsc.tensor.Scalar;
  * 
  * bm == lambda + s1
  * lambda == bm - s1 */
-public enum MidpointTangentOrder2 implements ScalarBinaryOperator {
+public enum MidpointTangentOrder2 implements BinaryOperator<Scalar> {
   INSTANCE;
 
   private static final Scalar F10 = RealScalar.of(-1.5);

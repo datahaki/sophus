@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.ref.d1h;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.function.Function;
 
-import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsExponential;
@@ -52,8 +52,9 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
   /** @return Hermite subdivision operator that uses the geodesic center
    * for computing weighted averages in the Lie group */
   public HermiteSubdivision create() {
-    IntegerFunction<Tensor> integerTensorFunction = i -> cgw;
-    return get(GeodesicCenter.of(new HsGeodesic(hsExponential), integerTensorFunction));
+    @SuppressWarnings("unchecked")
+    Function<Integer, Tensor> function = (Function<Integer, Tensor> & Serializable) i -> cgw;
+    return get(GeodesicCenter.of(new HsGeodesic(hsExponential), function));
   }
 
   private HermiteSubdivision get(TensorUnaryOperator tripleCenter) {

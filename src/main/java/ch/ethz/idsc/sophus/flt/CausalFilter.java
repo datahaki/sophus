@@ -2,22 +2,22 @@
 package ch.ethz.idsc.sophus.flt;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
-import ch.ethz.idsc.java.util.SerializableSupplier;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class CausalFilter implements TensorUnaryOperator {
   /** @param supplier
    * @return */
-  public static TensorUnaryOperator of(SerializableSupplier<TensorUnaryOperator> supplier) {
+  public static TensorUnaryOperator of(Supplier<TensorUnaryOperator> supplier) {
     return new CausalFilter(Objects.requireNonNull(supplier));
   }
 
   /***************************************************/
-  private final SerializableSupplier<TensorUnaryOperator> supplier;
+  private final Supplier<TensorUnaryOperator> supplier;
 
-  private CausalFilter(SerializableSupplier<TensorUnaryOperator> supplier) {
+  private CausalFilter(Supplier<TensorUnaryOperator> supplier) {
     this.supplier = supplier;
   }
 

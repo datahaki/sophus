@@ -2,10 +2,10 @@
 package ch.ethz.idsc.sophus.flt.ga;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import ch.ethz.idsc.java.util.IntegerFunction;
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter.Splits;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
@@ -29,8 +29,9 @@ import ch.ethz.idsc.tensor.sca.win.GaussianWindow;
 import junit.framework.TestCase;
 
 public class GeodesicCenterTest extends TestCase {
-  private static final IntegerFunction<Tensor> CONSTANT = //
-      i -> Array.of(k -> RationalScalar.of(1, i), i);
+  @SuppressWarnings("unchecked")
+  private static final Function<Integer, Tensor> CONSTANT = (Function<Integer, Tensor> & Serializable) //
+  i -> Array.of(k -> RationalScalar.of(1, i), i);
 
   public void testSimple() {
     // function generates window to compute mean: all points in window have same weight
