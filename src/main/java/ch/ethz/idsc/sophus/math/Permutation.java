@@ -6,8 +6,6 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.num.Cycles;
-import ch.ethz.idsc.tensor.num.InversePermutation;
-import ch.ethz.idsc.tensor.num.PermutationProduct;
 
 public class Permutation implements GroupElement, Serializable {
   private final Cycles cycles;
@@ -23,11 +21,11 @@ public class Permutation implements GroupElement, Serializable {
 
   @Override // from GroupElement
   public Permutation inverse() {
-    return new Permutation(InversePermutation.of(cycles));
+    return new Permutation(cycles.inverse());
   }
 
   @Override // from GroupElement
   public Tensor combine(Tensor tensor) {
-    return PermutationProduct.of(cycles, Cycles.of(tensor)).toTensor();
+    return cycles.combine(Cycles.of(tensor)).toTensor();
   }
 }

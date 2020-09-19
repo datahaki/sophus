@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.io.StringScalarQ;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.qty.Unit;
-import ch.ethz.idsc.tensor.qty.Units;
+import ch.ethz.idsc.tensor.qty.UnitQ;
 import junit.framework.TestCase;
 
 public class StaticHelperTest extends TestCase {
@@ -19,7 +19,7 @@ public class StaticHelperTest extends TestCase {
   public void testOne() {
     Tensor tensor = Tensors.vector(2, 3, 4);
     Unit unit = StaticHelper.uniqueUnit(tensor);
-    assertTrue(Units.isOne(unit));
+    assertTrue(UnitQ.isOne(unit));
   }
 
   public void testFail() {
