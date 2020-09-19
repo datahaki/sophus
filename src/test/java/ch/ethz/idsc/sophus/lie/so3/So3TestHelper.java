@@ -10,16 +10,16 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Clips;
 
-/* package */ enum TestHelper {
+public enum So3TestHelper {
   ;
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(10));
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = So3RandomSample.INSTANCE;
 
-  static Tensor spawn_So3() {
+  public static Tensor spawn_So3() {
     return RandomSample.of(RANDOM_SAMPLE_INTERFACE);
   }
 
-  static Tensor spawn_so3() {
+  public static Tensor spawn_so3() {
     Tensor m = RandomVariate.of(DISTRIBUTION, 3, 3);
     return Transpose.of(m).subtract(m);
   }

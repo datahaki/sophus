@@ -30,7 +30,7 @@ public class SonRandomSample implements RandomSampleInterface, Serializable {
   /***************************************************/
   private final int n;
 
-  public SonRandomSample(int n) {
+  private SonRandomSample(int n) {
     this.n = n;
   }
 

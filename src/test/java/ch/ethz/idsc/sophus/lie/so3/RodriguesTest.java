@@ -136,7 +136,7 @@ public class RodriguesTest extends TestCase {
 
   public void testRodriques() {
     for (int count = 0; count < 20; ++count) {
-      Tensor matrix = TestHelper.spawn_So3();
+      Tensor matrix = So3TestHelper.spawn_So3();
       assertTrue(OrthogonalMatrixQ.of(matrix));
       OrthogonalMatrixQ.require(matrix);
     }
@@ -159,7 +159,7 @@ public class RodriguesTest extends TestCase {
 
   public void testRandomOrthogonal() {
     for (int count = 0; count < 5; ++count) {
-      Tensor matrix = TestHelper.spawn_So3();
+      Tensor matrix = So3TestHelper.spawn_So3();
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
       Chop._10.requireClose(qr.getR(), IdentityMatrix.of(3));
@@ -170,7 +170,7 @@ public class RodriguesTest extends TestCase {
   public void testRandomOrthogonal2() {
     Distribution noise = UniformDistribution.of(-0.03, 0.03);
     for (int count = 0; count < 5; ++count) {
-      Tensor matrix = TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
+      Tensor matrix = So3TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
       Scalar infNorm = Norm.INFINITY.ofVector(Diagonal.of(qr.getR()).map(Decrement.ONE));
@@ -186,7 +186,7 @@ public class RodriguesTest extends TestCase {
 
   public void testRodriques2() {
     for (int c = 0; c < 20; ++c) {
-      Tensor matrix = TestHelper.spawn_So3();
+      Tensor matrix = So3TestHelper.spawn_So3();
       assertTrue(UnitaryMatrixQ.of(matrix));
     }
   }
@@ -216,7 +216,7 @@ public class RodriguesTest extends TestCase {
 
   public void testOrthogonalize() {
     for (int count = 0; count < 10; ++count) {
-      Tensor matrix = TestHelper.spawn_So3();
+      Tensor matrix = So3TestHelper.spawn_So3();
       Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
     }
   }

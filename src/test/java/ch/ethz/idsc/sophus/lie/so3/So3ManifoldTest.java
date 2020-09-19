@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
+import ch.ethz.idsc.sophus.lie.son.SonGroup;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -19,7 +20,7 @@ import junit.framework.TestCase;
 
 public class So3ManifoldTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(So3Group.INSTANCE);
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(SonGroup.INSTANCE);
 
   public void testSimple() {
     Tensor g1 = Rodrigues.vectorExp(Tensors.vector(0.2, 0.3, 0.4));
@@ -48,7 +49,7 @@ public class So3ManifoldTest extends TestCase {
           Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
           Chop._08.requireClose(mean, o2);
           // ---
-          LieGroupElement lieGroupElement = So3Group.INSTANCE.element(TestHelper.spawn_So3());
+          LieGroupElement lieGroupElement = SonGroup.INSTANCE.element(So3TestHelper.spawn_So3());
           Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
           Tensor weights2 = barycentricCoordinate.weights(seqlft, lieGroupElement.combine(mean));
           Chop._06.requireClose(weights1, weights2);
@@ -94,7 +95,7 @@ public class So3ManifoldTest extends TestCase {
         Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
         Chop._08.requireClose(mean, o2);
         // ---
-        LieGroupElement lieGroupElement = So3Group.INSTANCE.element(TestHelper.spawn_So3());
+        LieGroupElement lieGroupElement = SonGroup.INSTANCE.element(So3TestHelper.spawn_So3());
         Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
         Tensor weights2 = AFFINE.weights(seqlft, lieGroupElement.combine(mean));
         Chop._10.requireClose(weights1, weights2);

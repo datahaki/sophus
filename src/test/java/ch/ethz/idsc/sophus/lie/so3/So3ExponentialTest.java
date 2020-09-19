@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.gl.LinearGroup;
 import ch.ethz.idsc.sophus.lie.gl.LinearGroupElement;
+import ch.ethz.idsc.sophus.lie.son.SonGroup;
+import ch.ethz.idsc.sophus.lie.son.SonGroupElement;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.Serialization;
@@ -17,13 +19,13 @@ import junit.framework.TestCase;
 
 public class So3ExponentialTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    Serialization.copy(new So3Exponential(TestHelper.spawn_So3()));
+    Serialization.copy(new So3Exponential(So3TestHelper.spawn_So3()));
   }
 
   public void testAdjoint() {
     for (int count = 0; count < 10; ++count) {
-      Tensor g = TestHelper.spawn_So3();
-      Tensor v = TestHelper.spawn_so3();
+      Tensor g = So3TestHelper.spawn_So3();
+      Tensor v = So3TestHelper.spawn_so3();
       Tensor tensor = LinearSolve.of(g, v).dot(g);
       AntisymmetricMatrixQ.require(tensor);
     }
@@ -31,10 +33,10 @@ public class So3ExponentialTest extends TestCase {
 
   public void testLinearGroup() {
     for (int count = 0; count < 10; ++count) {
-      Tensor g = TestHelper.spawn_So3();
-      So3GroupElement so3GroupElement = So3Group.INSTANCE.element(g);
+      Tensor g = So3TestHelper.spawn_So3();
+      SonGroupElement so3GroupElement = SonGroup.INSTANCE.element(g);
       LinearGroupElement linearGroupElement = LinearGroup.INSTANCE.element(g);
-      Tensor v = TestHelper.spawn_so3();
+      Tensor v = So3TestHelper.spawn_so3();
       Tolerance.CHOP.requireClose( //
           so3GroupElement.adjoint(v), //
           linearGroupElement.adjoint(v));
@@ -46,7 +48,7 @@ public class So3ExponentialTest extends TestCase {
 
   public void testFailOrthogonal() {
     try {
-      new So3Exponential(TestHelper.spawn_so3());
+      new So3Exponential(So3TestHelper.spawn_so3());
       fail();
     } catch (Exception exception) {
       // ---
@@ -56,7 +58,7 @@ public class So3ExponentialTest extends TestCase {
   public void testFailTangent() {
     Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
     new So3Exponential(IdentityMatrix.of(3)).exp(wedge);
-    So3Exponential so3Exponential = new So3Exponential(TestHelper.spawn_So3());
+    So3Exponential so3Exponential = new So3Exponential(So3TestHelper.spawn_So3());
     try {
       so3Exponential.exp(wedge);
       fail();
