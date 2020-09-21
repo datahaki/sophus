@@ -43,8 +43,8 @@ public enum Hermite2Subdivisions {
    * @param mu
    * @return */
   public static HermiteSubdivision of(HsExponential hsExponential, HsTransport hsTransport, Scalar lambda, Scalar mu) {
-    Scalar an2_11 = RealScalar.of(2).add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
-    Scalar an2_12 = Times.of(RealScalar.of(2), lambda, RealScalar.of(2).add(mu));
+    Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
+    Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
     Scalar an2_21 = Series.of(Tensors.vector(4, -2, -2)).apply(mu);
     Scalar an2_22 = mu.multiply(mu).add(Times.of(RealScalar.of(8), lambda, RealScalar.ONE.subtract(mu)));
     Tensor ALQ = Tensors.of(Tensors.of(an2_11, an2_12), Tensors.of(an2_21, an2_22)).multiply(_1_8);

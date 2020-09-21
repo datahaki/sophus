@@ -60,6 +60,8 @@ public final class HsInfluence implements Serializable {
    * 
    * <p>In the literature the projection is referred to as residual maker matrix.
    * 
+   * <p>Hint: function is only used during testing
+   * 
    * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
   public Tensor residualMaker() {
     AtomicInteger atomicInteger = new AtomicInteger();

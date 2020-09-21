@@ -153,4 +153,22 @@ public class SnGeodesicTest extends TestCase {
       // ---
     }
   }
+
+  public void testMidpointFail() {
+    try {
+      SnGeodesic.INSTANCE.midpoint(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
+  public void testMidpointAntipodesFail() {
+    try {
+      SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate());
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
 }

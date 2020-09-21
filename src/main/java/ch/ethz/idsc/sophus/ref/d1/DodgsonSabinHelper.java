@@ -18,7 +18,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 /* package */ enum DodgsonSabinHelper {
   ;
   static final CurveSubdivision BSPLINE3_EUCLIDEAN = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
-  private static final Scalar TWO = RealScalar.of(2);
   private static final Scalar HALF = RealScalar.of(0.5);
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
 
@@ -60,7 +59,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
     Scalar mu1 = mu.add(RealScalar.ONE);
     Scalar mu1_2 = mu1.multiply(mu1);
     // (1 - h * 2 * mu / mu1_2)
-    Scalar den = Times.of(TWO, h, mu).divide(mu1_2);
+    Scalar den = Times.of(RealScalar.TWO, h, mu).divide(mu1_2);
     return mu.subtract(RealScalar.ONE).divide(mu.add(RealScalar.ONE)).divide(RealScalar.ONE.subtract(den));
   }
 

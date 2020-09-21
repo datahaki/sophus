@@ -31,6 +31,7 @@ public class So3Exponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
+    // p dot corresponds to a basis transform, which is obsolete
     return Rodrigues.INSTANCE.vectorLog(pinv.dot(q));
   }
 }

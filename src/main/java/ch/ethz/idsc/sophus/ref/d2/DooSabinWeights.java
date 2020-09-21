@@ -27,7 +27,7 @@ import ch.ethz.idsc.tensor.sca.Cos;
 
   /* package */ static Tensor numeric(int n) {
     Tensor w = Range.of(1, n).multiply(Pi.TWO).divide(RealScalar.of(n));
-    Tensor p = Cos.of(w).multiply(RealScalar.of(2)).map(s -> s.add(RealScalar.of(3)));
+    Tensor p = Cos.of(w).multiply(RealScalar.TWO).map(s -> s.add(RealScalar.of(3)));
     return Join.of(Tensors.vector(n + 5), p).divide(RealScalar.of(4 * n));
   }
 

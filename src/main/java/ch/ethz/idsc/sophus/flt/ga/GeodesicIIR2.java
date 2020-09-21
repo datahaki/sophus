@@ -11,8 +11,6 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** filter blends extrapolated value with measurement */
 public class GeodesicIIR2 implements TensorUnaryOperator {
-  private static final Scalar TWO = RealScalar.of(2);
-  // ---
   private final BinaryAverage binaryAverage;
   private final Scalar alpha;
   // ---
@@ -28,7 +26,7 @@ public class GeodesicIIR2 implements TensorUnaryOperator {
   private Tensor extrapolate() {
     if (Objects.isNull(p))
       return q;
-    return binaryAverage.split(p, q, TWO);
+    return binaryAverage.split(p, q, RealScalar.TWO);
   }
 
   @Override

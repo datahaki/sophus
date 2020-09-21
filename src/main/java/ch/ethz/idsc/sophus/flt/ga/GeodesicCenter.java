@@ -51,8 +51,6 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
-    private static final Scalar TWO = RealScalar.of(2);
-    // ---
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {
@@ -74,7 +72,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
       int radius = (mask.length() - 1) / 2;
       Tensor halfmask = Tensors.vector(i -> i == 0 //
           ? mask.Get(radius + i)
-          : mask.Get(radius + i).multiply(TWO), radius);
+          : mask.Get(radius + i).multiply(RealScalar.TWO), radius);
       Scalar factor = RealScalar.ONE;
       Tensor splits = Tensors.reserve(radius);
       for (int index = 0; index < radius; ++index) {
