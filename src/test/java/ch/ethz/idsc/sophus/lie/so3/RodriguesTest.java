@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.Orthogonalize;
 import ch.ethz.idsc.tensor.lie.QRDecomposition;
+import ch.ethz.idsc.tensor.lie.QRSignOperator;
+import ch.ethz.idsc.tensor.lie.QRSignOperators;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -143,17 +145,20 @@ public class RodriguesTest extends TestCase {
   }
 
   private static QRDecomposition specialOps(Tensor A) {
-    QRDecomposition qrDecomposition = QRDecomposition.of(A);
-    Tensor Q = qrDecomposition.getQ();
-    Tensor Qi = qrDecomposition.getInverseQ();
-    Tensor R = qrDecomposition.getR();
-    Chop._10.requireClose(Q.dot(R), A);
-    Chop._10.requireClose(Q.dot(Qi), IdentityMatrix.of(A.length()));
-    Scalar qrDet = Det.of(Q).multiply(Det.of(R));
-    Chop._10.requireClose(qrDet, Det.of(A));
-    Tensor lower = LowerTriangularize.of(R, -1);
-    Chop.NONE.requireAllZero(lower);
-    Chop._10.requireClose(qrDet, qrDecomposition.det());
+    QRDecomposition qrDecomposition = null;
+    for (QRSignOperator qrSignOperator : QRSignOperators.values()) {
+      qrDecomposition = QRDecomposition.of(A, qrSignOperator);
+      Tensor Q = qrDecomposition.getQ();
+      Tensor Qi = qrDecomposition.getInverseQ();
+      Tensor R = qrDecomposition.getR();
+      Chop._10.requireClose(Q.dot(R), A);
+      Chop._10.requireClose(Q.dot(Qi), IdentityMatrix.of(A.length()));
+      Scalar qrDet = Det.of(Q).multiply(Det.of(R));
+      Chop._10.requireClose(qrDet, Det.of(A));
+      Tensor lower = LowerTriangularize.of(R, -1);
+      Chop.NONE.requireAllZero(lower);
+      Chop._10.requireClose(qrDet, qrDecomposition.det());
+    }
     return qrDecomposition;
   }
 
@@ -161,7 +166,7 @@ public class RodriguesTest extends TestCase {
     for (int count = 0; count < 5; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3();
       specialOps(matrix);
-      QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
+      QRDecomposition qr = QRDecomposition.of(matrix, QRSignOperators.ORIENTATION);
       Chop._10.requireClose(qr.getR(), IdentityMatrix.of(3));
       Chop._12.requireClose(qr.getQ(), matrix);
     }
@@ -172,7 +177,7 @@ public class RodriguesTest extends TestCase {
     for (int count = 0; count < 5; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
       specialOps(matrix);
-      QRDecomposition qr = QRDecomposition.preserveOrientation(matrix);
+      QRDecomposition qr = QRDecomposition.of(matrix, QRSignOperators.ORIENTATION);
       Scalar infNorm = Norm.INFINITY.ofVector(Diagonal.of(qr.getR()).map(Decrement.ONE));
       assertTrue(Scalars.lessThan(infNorm, RealScalar.of(0.1)));
     }
