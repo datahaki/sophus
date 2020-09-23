@@ -12,6 +12,7 @@ import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Append;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.opt.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
@@ -48,7 +49,7 @@ public class UniformResample implements CurveSubdivision, Serializable {
 
   @Override // from CurveSubdivision
   public Tensor cyclic(Tensor tensor) {
-    return string(tensor.copy().append(tensor.get(0)));
+    return string(Append.of(tensor, tensor.get(0)));
   }
 
   @Override // from CurveSubdivision

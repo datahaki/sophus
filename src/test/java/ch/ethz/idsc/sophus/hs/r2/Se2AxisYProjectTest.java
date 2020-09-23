@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Append;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.qty.QuantityMagnitude;
 import ch.ethz.idsc.tensor.qty.QuantityUnit;
@@ -118,7 +119,7 @@ public class Se2AxisYProjectTest extends TestCase {
       Tensor p = RandomSample.of(rsi);
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
       Tensor m = Se2Matrix.of(Se2CoveringExponential.INSTANCE.exp(u.multiply(t)));
-      Tensor v = m.dot(p.copy().append(RealScalar.ONE));
+      Tensor v = m.dot(Append.of(p, RealScalar.ONE));
       Chop._12.requireAllZero(v.Get(0));
     }
   }

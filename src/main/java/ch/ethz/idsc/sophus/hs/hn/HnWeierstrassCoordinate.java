@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Append;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** R^n -> Hn
@@ -27,14 +28,13 @@ public enum HnWeierstrassCoordinate {
   /** @param x vector
    * @return vector of length one greater than length of x */
   public static Tensor toPoint(Tensor x) {
-    return x.copy().append(xn(x));
+    return Append.of(x, xn(x));
   }
 
   /** @param x
    * @param v
    * @return */
   public static Tensor toTangent(Tensor x, Tensor v) {
-    Scalar last = x.dot(v).Get().divide(xn(x));
-    return v.copy().append(last);
+    return Append.of(v, x.dot(v).Get().divide(xn(x)));
   }
 }

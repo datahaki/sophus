@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Append;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
@@ -85,7 +86,7 @@ public class Kriging implements Serializable {
     matrix.stream().forEach(row -> row.append(one));
     int n = sequence.length();
     Tensor inverse = PseudoInverse.of(matrix.append(Tensors.vector(i -> i < n ? one : one.zero(), n + 1)));
-    Tensor weights = inverse.dot(values.copy().append(values.get(0).map(Scalar::zero)));
+    Tensor weights = inverse.dot(Append.of(values, values.get(0).map(Scalar::zero)));
     return new Kriging(tensorUnaryOperator, one, weights, inverse);
   }
 
