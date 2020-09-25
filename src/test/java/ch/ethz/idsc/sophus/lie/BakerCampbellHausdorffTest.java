@@ -3,6 +3,8 @@ package ch.ethz.idsc.sophus.lie;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -11,7 +13,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.lie.JacobiIdentity;
 import ch.ethz.idsc.tensor.lie.LeviCivitaTensor;
 import ch.ethz.idsc.tensor.qty.Boole;
 import ch.ethz.idsc.tensor.red.Norm;
@@ -66,7 +67,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
       }
   }
 
-  public void testConv() {
+  public void testConvergenceSo3() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = Rodrigues.vectorExp(x);
@@ -83,31 +84,40 @@ public class BakerCampbellHausdorffTest extends TestCase {
     Chop._08.requireZero(cmp);
   }
 
+  public void testConvergenceSe2() {
+    Tensor x = Tensors.vector(0.1, 0.2, 0.05);
+    Tensor y = Tensors.vector(0.02, -0.1, -0.04);
+    Tensor mX = Se2CoveringExponential.INSTANCE.exp(x);
+    Tensor mY = Se2CoveringExponential.INSTANCE.exp(y);
+    Tensor res = Se2CoveringExponential.INSTANCE.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
+    Tensor ad = N.DOUBLE.of(LieAlgebras.se2());
+    Scalar cmp = RealScalar.ONE;
+    for (int degree = 0; degree < 6; ++degree) {
+      Tensor z = BakerCampbellHausdorff.of(ad, x, y, degree);
+      Scalar err = Norm._2.between(res, z);
+      assertTrue(Scalars.lessThan(err, cmp));
+      cmp = err;
+    }
+    Chop._08.requireZero(cmp);
+  }
+
   public void testHe1() {
-    _check(0, LieAlgebras.he1());
-    _check(1, LieAlgebras.he1());
-    _check(2, LieAlgebras.he1());
-    _check(3, LieAlgebras.he1());
+    for (int degree = 0; degree < 4; ++degree)
+      _check(degree, LieAlgebras.he1());
   }
 
   public void testSl2() {
-    _check(0, LieAlgebras.sl2());
-    _check(1, LieAlgebras.sl2());
-    _check(2, LieAlgebras.sl2());
-    _check(3, LieAlgebras.sl2());
+    for (int degree = 0; degree < 4; ++degree)
+      _check(degree, LieAlgebras.sl2());
   }
 
   public void testSe2() {
-    _check(0, LieAlgebras.se2());
-    _check(1, LieAlgebras.se2());
-    _check(2, LieAlgebras.se2());
-    _check(3, LieAlgebras.se2());
+    for (int degree = 0; degree < 4; ++degree)
+      _check(degree, LieAlgebras.se2());
   }
 
   public void testSo3() {
-    _check(0, LieAlgebras.so3());
-    _check(1, LieAlgebras.so3());
-    _check(2, LieAlgebras.so3());
-    _check(3, LieAlgebras.so3());
+    for (int degree = 0; degree < 4; ++degree)
+      _check(degree, LieAlgebras.so3());
   }
 }
