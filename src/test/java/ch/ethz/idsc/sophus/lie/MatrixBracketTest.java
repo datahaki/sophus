@@ -20,7 +20,7 @@ public class MatrixBracketTest extends TestCase {
   }
 
   public void testSo3Bracket() {
-    Tensor so3 = LeviCivitaTensor.of(3).negate().unmodifiable();
+    Tensor so3 = LeviCivitaTensor.of(3).negate();
     assertEquals(MatrixBracket.of(so3.get(0), so3.get(1)), so3.get(2));
   }
 
