@@ -2,10 +2,12 @@
 package ch.ethz.idsc.sophus.lie;
 
 import java.util.Arrays;
+import java.util.function.BinaryOperator;
 
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -55,15 +57,27 @@ public class BakerCampbellHausdorffTest extends TestCase {
     _check(LieAlgebras.se2(), basis);
   }
 
-  private static void _check(int degree, Tensor ad) {
+  private static void _check(Tensor ad) {
+    BakerCampbellHausdorff bakerCampbellHausdorff = //
+        (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, BchApprox.DEGREE);
+    BchApprox appx = (BchApprox) BchApprox.of(ad);
     int n = ad.length();
     for (int c0 = 0; c0 < n; ++c0)
       for (int c1 = 0; c1 < n; ++c1) {
         Tensor x = UnitVector.of(3, c0);
         Tensor y = UnitVector.of(3, c1);
-        Tensor res1 = BakerCampbellHausdorff.of(ad, x, y, degree);
-        Tensor res2 = BchApprox.of(degree, ad, x, y);
-        assertEquals(res1, res2);
+        {
+          Tensor res1 = bakerCampbellHausdorff.apply(x, y);
+          Tensor res2 = appx.apply(x, y);
+          assertEquals(res1, res2);
+          ExactTensorQ.require(res1);
+        }
+        {
+          Tensor res1 = bakerCampbellHausdorff.series(x, y);
+          Tensor res2 = appx.series(x, y);
+          assertEquals(res1, res2);
+          ExactTensorQ.require(res1);
+        }
       }
   }
 
@@ -75,8 +89,9 @@ public class BakerCampbellHausdorffTest extends TestCase {
     Tensor res = Rodrigues.INSTANCE.vectorLog(mX.dot(mY));
     Tensor ad = N.DOUBLE.of(LieAlgebras.so3());
     Scalar cmp = RealScalar.ONE;
-    for (int degree = 0; degree < 6; ++degree) {
-      Tensor z = BakerCampbellHausdorff.of(ad, x, y, degree);
+    for (int degree = 1; degree < 6; ++degree) {
+      BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
+      Tensor z = binaryOperator.apply(x, y);
       Scalar err = Norm._2.between(res, z);
       assertTrue(Scalars.lessThan(err, cmp));
       cmp = err;
@@ -92,8 +107,9 @@ public class BakerCampbellHausdorffTest extends TestCase {
     Tensor res = Se2CoveringExponential.INSTANCE.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
     Tensor ad = N.DOUBLE.of(LieAlgebras.se2());
     Scalar cmp = RealScalar.ONE;
-    for (int degree = 0; degree < 6; ++degree) {
-      Tensor z = BakerCampbellHausdorff.of(ad, x, y, degree);
+    for (int degree = 1; degree < 6; ++degree) {
+      BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
+      Tensor z = binaryOperator.apply(x, y);
       Scalar err = Norm._2.between(res, z);
       assertTrue(Scalars.lessThan(err, cmp));
       cmp = err;
@@ -102,22 +118,40 @@ public class BakerCampbellHausdorffTest extends TestCase {
   }
 
   public void testHe1() {
-    for (int degree = 0; degree < 4; ++degree)
-      _check(degree, LieAlgebras.he1());
+    _check(LieAlgebras.he1());
   }
 
   public void testSl2() {
-    for (int degree = 0; degree < 4; ++degree)
-      _check(degree, LieAlgebras.sl2());
+    _check(LieAlgebras.sl2());
   }
 
   public void testSe2() {
-    for (int degree = 0; degree < 4; ++degree)
-      _check(degree, LieAlgebras.se2());
+    _check(LieAlgebras.se2());
   }
 
   public void testSo3() {
-    for (int degree = 0; degree < 4; ++degree)
-      _check(degree, LieAlgebras.so3());
+    _check(LieAlgebras.so3());
+  }
+
+  public void testJacobiFail() {
+    Tensor ad = LieAlgebras.sl2();
+    ad.set(Scalar::zero, Tensor.ALL, 1, 2);
+    try {
+      BakerCampbellHausdorff.of(ad, 2);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
+  public void testDegreeFail() {
+    Tensor ad = Array.zeros(2, 2, 2);
+    BakerCampbellHausdorff.of(ad, 1);
+    try {
+      BakerCampbellHausdorff.of(ad, 0);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 }

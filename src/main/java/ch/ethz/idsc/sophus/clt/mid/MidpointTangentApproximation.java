@@ -23,17 +23,17 @@ public class MidpointTangentApproximation implements BinaryOperator<Scalar> {
   public static final BinaryOperator<Scalar> ORDER4 = new MidpointTangentApproximation(MidpointTangentOrder4.INSTANCE);
   public static final BinaryOperator<Scalar> LAYERS = new MidpointTangentApproximation(MidpointTangentLayers.INSTANCE);
 
-  /** @param scalarBinaryOperator
+  /** @param binaryOperator
    * @return */
-  public static BinaryOperator<Scalar> create(BinaryOperator<Scalar> scalarBinaryOperator) {
-    return new MidpointTangentApproximation(Objects.requireNonNull(scalarBinaryOperator));
+  public static BinaryOperator<Scalar> create(BinaryOperator<Scalar> binaryOperator) {
+    return new MidpointTangentApproximation(Objects.requireNonNull(binaryOperator));
   }
 
   /***************************************************/
-  private final BinaryOperator<Scalar> scalarBinaryOperator;
+  private final BinaryOperator<Scalar> binaryOperator;
 
-  private MidpointTangentApproximation(BinaryOperator<Scalar> scalarBinaryOperator) {
-    this.scalarBinaryOperator = scalarBinaryOperator;
+  private MidpointTangentApproximation(BinaryOperator<Scalar> binaryOperator) {
+    this.binaryOperator = binaryOperator;
   }
 
   @Override
@@ -51,6 +51,6 @@ public class MidpointTangentApproximation implements BinaryOperator<Scalar> {
       signum = signum.negate();
     }
     Scalar ns2 = Abs.FUNCTION.apply(s2);
-    return scalarBinaryOperator.apply(ns1, ns2).multiply(signum).add(s1);
+    return binaryOperator.apply(ns1, ns2).multiply(signum).add(s1);
   }
 }
