@@ -27,7 +27,10 @@ public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable 
 
   @Override // from ClothoidBuilder
   public Clothoid curve(Tensor p, Tensor q) {
-    ClothoidContext clothoidContext = new ClothoidContext(p, q);
+    return from(new ClothoidContext(p, q));
+  }
+
+  public Clothoid from(ClothoidContext clothoidContext) {
     LagrangeQuadratic lagrangeQuadratic = //
         clothoidQuadratic.lagrangeQuadratic(clothoidContext.b0(), clothoidContext.b1());
     ClothoidIntegral clothoidIntegral = clothoidIntegration.clothoidIntegral(lagrangeQuadratic);

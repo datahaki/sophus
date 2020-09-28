@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.clt.LagrangeQuadratic;
 
 public enum ClothoidIntegrations implements ClothoidIntegration {
   /** slower but more precise */
-  ANALYTIC(AnalyticClothoidIntegral::of), //
+  ANALYTIC(AnalyticClothoidIntegral::new), //
   LEGENDRE(Legendre3ClothoidIntegral::new), //
   ;
 

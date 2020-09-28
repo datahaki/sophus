@@ -55,7 +55,7 @@ public class PowerVariogram implements ScalarUnaryOperator {
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
         Scalar rb = power.apply(tensorMetric.distance(sequence.get(i), sequence.get(j)));
-        num = num.add(AbsSquared.FUNCTION.apply(y[i].subtract(y[j])).multiply(RationalScalar.HALF).subtract(nugsq).multiply(rb));
+        num = num.add(AbsSquared.between(y[i], y[j]).multiply(RationalScalar.HALF).subtract(nugsq).multiply(rb));
         den = den.add(rb.multiply(rb));
       }
     return new PowerVariogram(num.divide(den), power);
