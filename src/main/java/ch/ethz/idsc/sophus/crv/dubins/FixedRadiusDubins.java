@@ -14,9 +14,9 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Sign;
 
+/** stream produces at least 2 and at most 6 {@link DubinsPath} */
 public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
   /** @param xya vector of length 3
    * @param radius
@@ -45,7 +45,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
   }
 
   @Override // from DubinsPathGenerator
-  public Stream<DubinsPath> allValid() {
+  public Stream<DubinsPath> stream() {
     return Stream.of(Type.values()) //
         .map(this::create) //
         .filter(Optional::isPresent) //
@@ -64,6 +64,6 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     th_tr = StaticHelper.principalValue(th_tr);
     th_total = StaticHelper.principalValue(th_total);
     return type.dubinsSteer().steer(dist_tr, th_tr, th_total, radius) //
-        .map(segLength -> new DubinsPath(type, radius, segLength, Total.of(segLength).Get()));
+        .map(segLength -> DubinsPath.of(type, radius, segLength));
   }
 }

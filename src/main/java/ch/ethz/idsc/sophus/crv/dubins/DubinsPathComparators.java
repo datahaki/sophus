@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import ch.ethz.idsc.tensor.Scalars;
 
-public enum DubinsPathComparator implements Comparator<DubinsPath> {
+public enum DubinsPathComparators implements Comparator<DubinsPath> {
   LENGTH() {
     @Override
     public int compare(DubinsPath dubinsPath1, DubinsPath dubinsPath2) {

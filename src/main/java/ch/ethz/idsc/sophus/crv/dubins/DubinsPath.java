@@ -103,8 +103,8 @@ public class DubinsPath implements Serializable {
   /** @param type non-null
    * @param radius strictly positive
    * @param segLength {length1, length2, length3} each non-negative
-   * @param length == length1 + length2 + length3 */
-  /* package */ DubinsPath(Type type, Scalar radius, Tensor segLength, Scalar length) {
+   * @param length */
+  private DubinsPath(Type type, Scalar radius, Tensor segLength, Scalar length) {
     this.type = type;
     this.radius = radius;
     this.segLength = segLength;
