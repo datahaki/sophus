@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.Scalar;
   private final Scalar one;
 
   public AnalyticClothoidIntegral(LagrangeQuadratic lagrangeQuadratic) {
-    this.clothoidPartial = AnalyticClothoidPartial.of(lagrangeQuadratic);
+    clothoidPartial = AnalyticClothoidPartial.of(lagrangeQuadratic);
     one = clothoidPartial.il(RealScalar.ONE);
   }
 
