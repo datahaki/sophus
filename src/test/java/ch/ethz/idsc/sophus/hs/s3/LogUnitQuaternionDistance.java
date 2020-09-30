@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.hs.s3;
 
 import ch.ethz.idsc.sophus.math.Metric;
+import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.qty.Quaternion;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Log;
 

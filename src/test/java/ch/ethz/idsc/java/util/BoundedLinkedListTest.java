@@ -80,6 +80,26 @@ public class BoundedLinkedListTest extends TestCase {
     assertEquals(copy.get(1).intValue(), 4);
   }
 
+  public void testAddAllFail() {
+    BoundedLinkedList<Integer> boundedLinkedList = new BoundedLinkedList<>(7);
+    try {
+      boundedLinkedList.addAll(Arrays.asList(1, 2, 3, 4));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
+  public void testAddFirstFail() {
+    BoundedLinkedList<Integer> boundedLinkedList = new BoundedLinkedList<>(7);
+    try {
+      boundedLinkedList.addFirst(4);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
   public void testFailNegativeSize() {
     new BoundedLinkedList<>(0);
     try {

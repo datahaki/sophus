@@ -5,14 +5,14 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 
 public abstract class AbstractHsMemberQ implements HsMemberQ {
-  @Override // from MemberQ
+  @Override // from HsMemberQ
   public final Tensor requirePoint(Tensor x) {
     if (isPoint(x))
       return x;
     throw TensorRuntimeException.of(x);
   }
 
-  @Override // from MemberQ
+  @Override // from HsMemberQ
   public final Tensor requireTangent(Tensor x, Tensor v) {
     if (isTangent(x, v))
       return v;
