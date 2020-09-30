@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -39,9 +40,9 @@ public class CirclePointsTest extends TestCase {
     Chop._12.requireClose(CirclePoints.of(4), numeric(4));
     Chop._12.requireClose(CirclePoints.of(6), numeric(6));
     Chop._12.requireClose(CirclePoints.of(12), numeric(12));
-    assertEquals(CirclePoints.of(6).flatten(-1).filter(ExactScalarQ::of).count(), 8);
-    assertEquals(CirclePoints.of(9).flatten(-1).filter(ExactScalarQ::of).count(), 4);
-    assertEquals(CirclePoints.of(12).flatten(-1).filter(ExactScalarQ::of).count(), 16);
+    assertEquals(CirclePoints.of(6).flatten(-1).map(Scalar.class::cast).filter(ExactScalarQ::of).count(), 8);
+    assertEquals(CirclePoints.of(9).flatten(-1).map(Scalar.class::cast).filter(ExactScalarQ::of).count(), 4);
+    assertEquals(CirclePoints.of(12).flatten(-1).map(Scalar.class::cast).filter(ExactScalarQ::of).count(), 16);
   }
 
   public void testNumeric() {

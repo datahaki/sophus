@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.gr;
 import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.hs.HsInfluence;
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrExponentialTest extends TestCase {
-  private static final MemberQ MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
+  private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
 
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
@@ -30,7 +30,7 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = StaticHelper.projectTangent(x, pre);
-    MEMBER_Q.requireTangent(x, v);
+    HS_MEMBER_Q.requireTangent(x, v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
@@ -47,7 +47,7 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = StaticHelper.projectTangent(x, pre);
-    MEMBER_Q.requireTangent(x, v);
+    HS_MEMBER_Q.requireTangent(x, v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
     Tensor log = grExponential.log(exp);

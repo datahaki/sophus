@@ -4,15 +4,15 @@ package ch.ethz.idsc.sophus.hs.gr;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.AbstractMemberQ;
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.AbstractHsMemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class GrMemberQ extends AbstractMemberQ implements Serializable {
+public class GrMemberQ extends AbstractHsMemberQ implements Serializable {
   /** @param chop
    * @return */
-  public static MemberQ of(Chop chop) {
+  public static HsMemberQ of(Chop chop) {
     return new GrMemberQ(Objects.requireNonNull(chop));
   }
 

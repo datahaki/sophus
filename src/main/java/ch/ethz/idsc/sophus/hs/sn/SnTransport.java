@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.HsTransport;
-import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -11,11 +11,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public enum SnTransport implements HsTransport {
   INSTANCE;
 
-  private static final MemberQ MEMBER_Q = SnMemberQ.of(Chop._08);
+  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._08);
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
     Tensor matrix = SnRotationMatrix.of(orig, dest);
-    return vector -> matrix.dot(MEMBER_Q.requireTangent(orig, vector));
+    return vector -> matrix.dot(HS_MEMBER_Q.requireTangent(orig, vector));
   }
 }

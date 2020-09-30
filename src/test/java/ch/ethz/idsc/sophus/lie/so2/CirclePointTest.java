@@ -25,7 +25,7 @@ public class CirclePointTest extends TestCase {
       Optional<Tensor> optional = CirclePoint.INSTANCE.turns(scalar);
       assertTrue(optional.isPresent());
       Tensor vector = optional.get();
-      assertTrue(0 < vector.stream().filter(ExactScalarQ::of).count());
+      assertTrue(0 < vector.stream().map(Scalar.class::cast).filter(ExactScalarQ::of).count());
       Chop._14.requireClose(vector, AngleVector.of(scalar.multiply(Pi.TWO)));
     }
   }

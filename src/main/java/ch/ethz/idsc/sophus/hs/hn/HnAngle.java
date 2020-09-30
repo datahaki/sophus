@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -12,14 +12,14 @@ import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class HnAngle implements Serializable {
-  private static final MemberQ MEMBER_Q = HnMemberQ.of(Chop._06);
+  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Chop._06);
 
   /** @param x
    * @param y
    * @return result guaranteed to be greater equals 1 */
   private static Scalar cosh_d(Tensor x, Tensor y) {
-    MEMBER_Q.requirePoint(x);
-    MEMBER_Q.requirePoint(y);
+    HS_MEMBER_Q.requirePoint(x);
+    HS_MEMBER_Q.requirePoint(y);
     Scalar xy = HnBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, xy))
       return xy;

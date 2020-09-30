@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
@@ -34,7 +34,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * "Barycentric Subspace Analysis on Manifolds"
  * by Xavier Pennec, 2016, p. 8 */
 public class SnExponential implements Exponential, TangentSpace, Serializable {
-  private static final MemberQ MEMBER_Q = SnMemberQ.of(Chop._06);
+  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._06);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
@@ -44,7 +44,7 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
   /** @param x on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
   public SnExponential(Tensor x) {
-    this.x = MEMBER_Q.requirePoint(x);
+    this.x = HS_MEMBER_Q.requirePoint(x);
     projection = Projection.on(x);
     if (x.length() < 2)
       throw TensorRuntimeException.of(x);
@@ -52,7 +52,7 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    MEMBER_Q.requireTangent(x, v);
+    HS_MEMBER_Q.requireTangent(x, v);
     Scalar vn = Hypot.ofVector(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     return NORMALIZE.apply(y);
@@ -60,7 +60,7 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    MEMBER_Q.requirePoint(y);
+    HS_MEMBER_Q.requirePoint(y);
     Scalar d_xy = SnMetric.INSTANCE.distance(x, y);
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xy);
   }

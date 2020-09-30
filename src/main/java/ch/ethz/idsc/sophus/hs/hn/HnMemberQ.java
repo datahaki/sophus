@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.hs.hn;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.AbstractMemberQ;
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.AbstractHsMemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -13,10 +13,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Last;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class HnMemberQ extends AbstractMemberQ implements Serializable {
+public class HnMemberQ extends AbstractHsMemberQ implements Serializable {
   /** @param chop
    * @return */
-  public static MemberQ of(Chop chop) {
+  public static HsMemberQ of(Chop chop) {
     return new HnMemberQ(Objects.requireNonNull(chop));
   }
 

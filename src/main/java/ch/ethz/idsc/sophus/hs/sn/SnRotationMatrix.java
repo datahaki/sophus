@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * by Ethan Eade */
 public enum SnRotationMatrix {
   ;
-  private static final MemberQ MEMBER_Q = SnMemberQ.of(Chop._10);
+  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._10);
 
   /** function establishes orthogonal rotation matrix that rotates vector a onto b:
    * <pre>
@@ -30,8 +30,8 @@ public enum SnRotationMatrix {
     // Tensor w = TensorWedge.of(a, b).multiply(RealScalar.of(-2));
     // TODO Eade suggests to treat the case b ~= -a separately!
     Tensor ab = TensorProduct.of( //
-        MEMBER_Q.requirePoint(a), //
-        MEMBER_Q.requirePoint(b));
+        HS_MEMBER_Q.requirePoint(a), //
+        HS_MEMBER_Q.requirePoint(b));
     Tensor w = Transpose.of(ab).subtract(ab);
     Scalar c = RealScalar.ONE.add(a.dot(b)).reciprocal();
     return IdentityMatrix.of(a.length()).add(w).add(w.dot(w).multiply(c));

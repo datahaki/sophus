@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HnExponentialTest extends TestCase {
-  private static final MemberQ MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
+  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
 
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
@@ -23,7 +23,7 @@ public class HnExponentialTest extends TestCase {
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
       Tensor y = hnExponential.exp(v);
-      MEMBER_Q.requirePoint(y);
+      HS_MEMBER_Q.requirePoint(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Tolerance.CHOP.requireClose(dxy, HnNorm.INSTANCE.norm(v));
     }
@@ -38,7 +38,7 @@ public class HnExponentialTest extends TestCase {
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, Array.zeros(d));
       assertEquals(v, Array.zeros(d + 1));
       Tensor y = hnExponential.exp(v);
-      MEMBER_Q.requirePoint(y);
+      HS_MEMBER_Q.requirePoint(y);
       Tolerance.CHOP.requireClose(x, y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Chop._04.requireClose(dxy, HnNorm.INSTANCE.norm(v));
@@ -65,7 +65,7 @@ public class HnExponentialTest extends TestCase {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = hnExponential.log(x);
-      MEMBER_Q.requireTangent(x, v);
+      HS_MEMBER_Q.requireTangent(x, v);
       Scalar dxy = HnMetric.INSTANCE.distance(x, x);
       Scalar vn1 = HnNorm.INSTANCE.norm(v);
       Chop._06.requireClose(dxy, vn1);

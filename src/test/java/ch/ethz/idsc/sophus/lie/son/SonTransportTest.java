@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.son;
 
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.HsTransport;
-import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.sophus.hs.PoleLadder;
 import ch.ethz.idsc.sophus.hs.SubdivideTransport;
 import ch.ethz.idsc.sophus.lie.so3.So3Geodesic;
@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SonTransportTest extends TestCase {
-  private static final MemberQ MEMBER_Q = SonMemberQ.of(Chop._08);
+  private static final HsMemberQ HS_MEMBER_Q = SonMemberQ.of(Chop._08);
 
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
@@ -29,9 +29,9 @@ public class SonTransportTest extends TestCase {
     Tensor p = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor q = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor vp = p.dot(ve);
-    MEMBER_Q.requireTangent(p, vp);
+    HS_MEMBER_Q.requireTangent(p, vp);
     Tensor vq = SonTransport.INSTANCE.shift(p, q).apply(vp);
-    MEMBER_Q.requireTangent(q, vq);
+    HS_MEMBER_Q.requireTangent(q, vq);
   }
 
   public void testPoleLadder() {
@@ -41,9 +41,9 @@ public class SonTransportTest extends TestCase {
     Tensor p = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor q = RandomSample.of(So3RandomSample.INSTANCE);
     Tensor vp = p.dot(ve); // transport from e to p
-    MEMBER_Q.requireTangent(p, vp);
+    HS_MEMBER_Q.requireTangent(p, vp);
     Tensor vq1 = SonTransport.INSTANCE.shift(p, q).apply(vp);
-    MEMBER_Q.requireTangent(q, vq1);
+    HS_MEMBER_Q.requireTangent(q, vq1);
     HsTransport hsTransport = PoleLadder.of(So3Manifold.INSTANCE);
     Tensor vq2 = hsTransport.shift(p, q).apply(vp);
     Tensor vq3 = SubdivideTransport.of(hsTransport, So3Geodesic.INSTANCE, 100).shift(p, q).apply(vp);

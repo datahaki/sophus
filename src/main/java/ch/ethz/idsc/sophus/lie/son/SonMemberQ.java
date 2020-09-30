@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.lie.son;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.AbstractMemberQ;
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.AbstractHsMemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
@@ -14,10 +14,10 @@ import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class SonMemberQ extends AbstractMemberQ implements Serializable {
+public class SonMemberQ extends AbstractHsMemberQ implements Serializable {
   /** @param chop
    * @return */
-  public static MemberQ of(Chop chop) {
+  public static HsMemberQ of(Chop chop) {
     return new SonMemberQ(Objects.requireNonNull(chop));
   }
 

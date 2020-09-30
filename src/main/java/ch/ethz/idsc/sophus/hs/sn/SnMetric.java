@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.hn.HnAngle;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
@@ -25,10 +25,10 @@ import ch.ethz.idsc.tensor.sca.Clips;
 public enum SnMetric implements TensorMetric {
   INSTANCE;
 
-  private static final MemberQ MEMBER_Q = SnMemberQ.of(Chop._10);
+  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._10);
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(MEMBER_Q.requirePoint(p).dot(MEMBER_Q.requirePoint(q)).Get()));
+    return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(HS_MEMBER_Q.requirePoint(p).dot(HS_MEMBER_Q.requirePoint(q)).Get()));
   }
 }

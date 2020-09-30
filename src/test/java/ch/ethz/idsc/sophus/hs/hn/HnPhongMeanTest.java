@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HnPhongMeanTest extends TestCase {
-  private static final MemberQ MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
+  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
 
   public void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);
@@ -21,9 +21,9 @@ public class HnPhongMeanTest extends TestCase {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor m1 = HnGeodesic.INSTANCE.midpoint(x, y);
-      MEMBER_Q.requirePoint(m1);
+      HS_MEMBER_Q.requirePoint(m1);
       Tensor m2 = HnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
-      MEMBER_Q.requirePoint(m2);
+      HS_MEMBER_Q.requirePoint(m2);
       Chop._08.requireClose(m1, m2);
       Tensor mp = HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
       Chop._08.requireClose(m1, mp);

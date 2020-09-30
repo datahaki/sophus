@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.son;
 
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.HsTransport;
-import ch.ethz.idsc.sophus.hs.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -14,11 +14,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public enum SonTransport implements HsTransport {
   INSTANCE;
 
-  private static final MemberQ MEMBER_Q = SonMemberQ.of(Chop._08);
+  private static final HsMemberQ HS_MEMBER_Q = SonMemberQ.of(Chop._08);
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
     Tensor qpinv = q.dot(Inverse.of(p));
-    return vp -> qpinv.dot(MEMBER_Q.requireTangent(p, vp));
+    return vp -> qpinv.dot(HS_MEMBER_Q.requireTangent(p, vp));
   }
 }

@@ -5,7 +5,7 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/MemberQ.html">MemberQ</a> */
-public interface MemberQ {
+public interface HsMemberQ {
   /** @param x point
    * @return whether given point x is member of manifold */
   boolean isPoint(Tensor x);

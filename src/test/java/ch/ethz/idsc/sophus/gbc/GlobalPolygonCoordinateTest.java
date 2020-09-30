@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -24,7 +25,7 @@ public class GlobalPolygonCoordinateTest extends TestCase {
         AffineQ.require(w1);
         Tensor w2 = barycentricCoordinate.weights(CirclePoints.of(n), Tensors.vector(2, 2));
         assertEquals(w2.length(), n);
-        assertTrue(w2.stream().allMatch(DeterminateScalarQ::of));
+        assertTrue(w2.stream().map(Scalar.class::cast).allMatch(DeterminateScalarQ::of));
         AffineQ.require(w2);
       }
     }

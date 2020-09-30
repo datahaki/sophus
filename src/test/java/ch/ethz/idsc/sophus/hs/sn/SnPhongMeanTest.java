@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SnPhongMeanTest extends TestCase {
-  private static final MemberQ MEMBER_Q = SnMemberQ.of(Tolerance.CHOP);
+  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Tolerance.CHOP);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   public void testSnNormalized() {
@@ -39,9 +39,9 @@ public class SnPhongMeanTest extends TestCase {
         Tensor x = NORMALIZE.apply(RandomVariate.of(distribution, d));
         Tensor y = NORMALIZE.apply(RandomVariate.of(distribution, d));
         Tensor m1 = SnGeodesic.INSTANCE.midpoint(x, y);
-        MEMBER_Q.requirePoint(m1);
+        HS_MEMBER_Q.requirePoint(m1);
         Tensor m2 = SnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
-        MEMBER_Q.requirePoint(m2);
+        HS_MEMBER_Q.requirePoint(m2);
         Chop._08.requireClose(m1, m2);
         Tensor mp = SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
         Chop._08.requireClose(m1, mp);

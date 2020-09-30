@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class HnProjectionTest extends TestCase {
-  private static final MemberQ MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
+  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
 
   public void testSimple() {
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 2, 3));
@@ -23,10 +23,10 @@ public class HnProjectionTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
       Tensor xd = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      MEMBER_Q.requirePoint(xd);
+      HS_MEMBER_Q.requirePoint(xd);
       xd.set(RealScalar.ONE::add, d);
       Tensor x = HnProjection.INSTANCE.apply(xd);
-      MEMBER_Q.requirePoint(x);
+      HS_MEMBER_Q.requirePoint(x);
     }
   }
 }
