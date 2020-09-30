@@ -37,8 +37,7 @@ public class FindZero implements Serializable {
         // System.out.println(index);
         return xn;
       }
-      boolean isLo = predicate.test(yn);
-      if (isLo) {
+      if (predicate.test(yn)) {
         x0 = xn;
         y0 = yn;
       } else {

@@ -17,9 +17,12 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.red.Times;
 import ch.ethz.idsc.tensor.red.Total;
+import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Factorial;
 
-/** Reference: Neeb
+/** Log[Exp[-y] Exp[-x]] = -Log[Exp[x] Exp[y]]
+ * 
+ * Reference: Neeb
  * Hakenberg.de kernel.nb */
 public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializable {
   /** @param ad tensor of rank 3 that satisfies the Jacobi identity
@@ -28,7 +31,8 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
   public static BinaryOperator<Tensor> of(Tensor ad, int degree) {
     return new BakerCampbellHausdorff( //
         JacobiIdentity.require(ad), //
-        Integers.requirePositive(degree));
+        Integers.requirePositive(degree), //
+        Tolerance.CHOP);
   }
 
   /***************************************************/
@@ -38,10 +42,12 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
   // ---
   private final Tensor ad;
   private final int degree;
+  private final Chop chop;
 
-  private BakerCampbellHausdorff(Tensor ad, int degree) {
+  private BakerCampbellHausdorff(Tensor ad, int degree, Chop chop) {
     this.ad = ad;
     this.degree = degree;
+    this.chop = chop;
   }
 
   @Override
@@ -72,7 +78,7 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
 
     private void recur(Tensor v, int d, Tensor p, Tensor q, int total_q, boolean incrementQ) {
       final int k = p.length();
-      if (Tolerance.CHOP.allZero(v))
+      if (chop.allZero(v))
         return;
       // ---
       Scalar f = RealScalar.of(Math.multiplyExact(SIGN[k % 2] * (k + 1), total_q + 1)) //

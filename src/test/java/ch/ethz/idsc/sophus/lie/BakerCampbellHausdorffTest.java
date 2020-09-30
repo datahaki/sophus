@@ -16,6 +16,9 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.lie.LeviCivitaTensor;
+import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
+import ch.ethz.idsc.tensor.pdf.Distribution;
+import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.qty.Boole;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -79,6 +82,19 @@ public class BakerCampbellHausdorffTest extends TestCase {
           ExactTensorQ.require(res1);
         }
       }
+    Distribution distribution = DiscreteUniformDistribution.of(-10, 10);
+    for (int count = 0; count < 10; ++count) {
+      Tensor x = RandomVariate.of(distribution, 3);
+      Tensor y = RandomVariate.of(distribution, 3);
+      {
+        Tensor res1 = bakerCampbellHausdorff.apply(x, y);
+        Tensor res2 = appx.apply(x, y);
+        assertEquals(res1, res2);
+        ExactTensorQ.require(res1);
+        Tensor res3 = bakerCampbellHausdorff.apply(y.negate(), x.negate()).negate();
+        assertEquals(res1, res3);
+      }
+    }
   }
 
   public void testConvergenceSo3() {
