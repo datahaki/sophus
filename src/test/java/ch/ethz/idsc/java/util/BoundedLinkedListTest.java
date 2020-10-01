@@ -40,6 +40,12 @@ public class BoundedLinkedListTest extends TestCase {
     } catch (Exception exception) {
       // ---
     }
+    try {
+      boundedLinkedList.addAll(0, Arrays.asList(6, 7));
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
   }
 
   public void testEmpty() {

@@ -15,6 +15,15 @@ public class GeodesicIIRnTest extends TestCase {
     }
   }
 
+  public void testFailScalarNull() {
+    try {
+      GeodesicIIRn.of(x -> x.get(0), RnGeodesic.INSTANCE, 3, null);
+      fail();
+    } catch (Exception exception) {
+      // ---
+    }
+  }
+
   public void testFailGeodesicNull() {
     try {
       GeodesicIIRn.of(x -> x.get(0), null, 3, RealScalar.ONE);

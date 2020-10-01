@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -45,7 +46,7 @@ public class FindZero implements Serializable {
         y1 = yn;
       }
     }
-    throw new RuntimeException();
+    throw TensorRuntimeException.of(x0, x1, y0, y1);
   }
 
   /** @param x0

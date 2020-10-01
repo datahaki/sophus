@@ -18,9 +18,7 @@ import ch.ethz.idsc.tensor.red.ScalarSummaryStatistics;
     ScalarSummaryStatistics scalarSummaryStatistics = sequence.stream() //
         .map(Scalar.class::cast) //
         .collect(ScalarSummaryStatistics.collector());
-    Scalar width = ClipCover.of(scalarSummaryStatistics).width();
-    // scalarSummaryStatistics.getMax().subtract(scalarSummaryStatistics.getMin());
-    if (Scalars.lessEquals(Pi.VALUE, width))
+    if (Scalars.lessEquals(Pi.VALUE, ClipCover.of(scalarSummaryStatistics).width()))
       throw TensorRuntimeException.of(sequence);
     return sequence;
   }

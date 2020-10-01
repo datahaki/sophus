@@ -10,11 +10,21 @@ import ch.ethz.idsc.tensor.Scalar;
 import junit.framework.TestCase;
 
 public class Hermite3SubdivisionsTest extends TestCase {
-  public void testSimple() {
-    TestHelper.check(RnHermite3Subdivisions.a1(), Hermite3Subdivisions.a1(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
-    TestHelper.check(RnHermite3Subdivisions.a2(), Hermite3Subdivisions.a2(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+  public void testStandardCompare() {
     TestHelper.check(RnHermite3Subdivisions.standard(), //
         Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+    TestHelper.check(RnHermite3Subdivisions.standard(), //
+        Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE));
+  }
+
+  public void testA1Compare() {
+    TestHelper.check(RnHermite3Subdivisions.a1(), Hermite3Subdivisions.a1(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+    TestHelper.check(RnHermite3Subdivisions.a1(), Hermite3Subdivisions.a1(RnManifold.HS_EXP, RnTransport.INSTANCE));
+  }
+
+  public void testA2Compare() {
+    TestHelper.check(RnHermite3Subdivisions.a2(), Hermite3Subdivisions.a2(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+    TestHelper.check(RnHermite3Subdivisions.a2(), Hermite3Subdivisions.a2(RnManifold.HS_EXP, RnTransport.INSTANCE));
   }
 
   public void testTension() {

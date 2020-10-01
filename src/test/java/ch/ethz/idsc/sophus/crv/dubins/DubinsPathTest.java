@@ -35,6 +35,15 @@ public class DubinsPathTest extends TestCase {
     assertTrue(Type.RLR.isFirstEqualsLast());
   }
 
+  public void testContainsStraight() {
+    assertTrue(Type.LSR.containsStraight());
+    assertTrue(Type.RSL.containsStraight());
+    assertTrue(Type.LSL.containsStraight());
+    assertTrue(Type.RSR.containsStraight());
+    assertFalse(Type.LRL.containsStraight());
+    assertFalse(Type.RLR.containsStraight());
+  }
+
   public void testTangentUnit() {
     Tensor tensor = Type.LSR.tangent(2, Quantity.of(10, "m"));
     assertEquals(tensor.get(0), RealScalar.ONE);
