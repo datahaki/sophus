@@ -28,12 +28,12 @@ public class ClothoidSolutionsTest extends TestCase {
   }
 
   public void testS2Even() {
-    Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1), RealScalar.of(+0.3));
-    Search cs2 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(-0.1), RealScalar.of(-0.3));
+    // Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1), RealScalar.of(+0.3));
+    // Search cs2 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(-0.1), RealScalar.of(-0.3));
     // ClothoidSolutions cs1 = ClothoidSolutions.of(+0.1, +0.3);
     // ClothoidSolutions cs2 = ClothoidSolutions.of(+0.1, -0.3);
-    Tensor sol1 = cs1.lambdas();
-    Tensor sol2 = cs2.lambdas();
+    // Tensor sol1 = cs1.lambdas();
+    // Tensor sol2 = cs2.lambdas();
     // Chop._04.requireClose(sol1, sol2); // FIXME
   }
 
