@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so2;
 
+import ch.ethz.idsc.sophus.math.ClipCover;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,7 +18,8 @@ import ch.ethz.idsc.tensor.red.ScalarSummaryStatistics;
     ScalarSummaryStatistics scalarSummaryStatistics = sequence.stream() //
         .map(Scalar.class::cast) //
         .collect(ScalarSummaryStatistics.collector());
-    Scalar width = scalarSummaryStatistics.getMax().subtract(scalarSummaryStatistics.getMin());
+    Scalar width = ClipCover.of(scalarSummaryStatistics).width();
+    // scalarSummaryStatistics.getMax().subtract(scalarSummaryStatistics.getMin());
     if (Scalars.lessEquals(Pi.VALUE, width))
       throw TensorRuntimeException.of(sequence);
     return sequence;

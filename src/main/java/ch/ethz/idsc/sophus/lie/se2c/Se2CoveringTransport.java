@@ -11,6 +11,6 @@ public enum Se2CoveringTransport implements HsTransport {
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
-    return uvw -> uvw;
+    return Tensor::copy;
   }
 }

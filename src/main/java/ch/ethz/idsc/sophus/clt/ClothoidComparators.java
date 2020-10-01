@@ -8,14 +8,14 @@ import ch.ethz.idsc.tensor.sca.Abs;
 
 public enum ClothoidComparators implements Comparator<Clothoid> {
   /** sort according to length of clothoid */
-  LENGTH() {
+  LENGTH {
     @Override
     public int compare(Clothoid clothoid1, Clothoid clothoid2) {
       return Scalars.compare(clothoid1.length(), clothoid2.length());
     }
   },
   /** sort according to absolute curvature at head of clothoid */
-  CURVATURE_HEAD() {
+  CURVATURE_HEAD {
     @Override
     public int compare(Clothoid clothoid1, Clothoid clothoid2) {
       return Scalars.compare( //

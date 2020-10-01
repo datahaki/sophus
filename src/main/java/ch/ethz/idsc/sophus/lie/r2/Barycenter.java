@@ -32,7 +32,7 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
    * "Wachspress mappings between convex polygons are always injective."
    * Reference:
    * "On the injectivity of Wachspress and mean value mappings between convex polygons" */
-  WACHSPRESS() {
+  WACHSPRESS {
     @Override
     public Tensor apply(Tensor dif, Scalar nrm) {
       return dif.divide(nrm.multiply(nrm));
@@ -46,7 +46,7 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
    * "Mean value mappings between convex polygons are not always injective."
    * Reference:
    * "On the injectivity of Wachspress and mean value mappings between convex polygons" */
-  MEAN_VALUE() {
+  MEAN_VALUE {
     @Override
     public Tensor apply(Tensor dif, Scalar nrm) {
       return dif.divide(nrm);
@@ -63,7 +63,7 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
    * discrete harmonic homogeneous coordinates: instead, our power coordinates are linear precise, a
    * property that simply discarding negative homogeneous coordinates (i.e., thresholding them to zero)
    * would not enforce." */
-  DISCRETE_HARMONIC() {
+  DISCRETE_HARMONIC {
     @Override
     public Tensor apply(Tensor dif, Scalar nrm) {
       return dif;

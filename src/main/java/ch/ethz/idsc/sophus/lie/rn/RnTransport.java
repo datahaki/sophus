@@ -11,6 +11,6 @@ public enum RnTransport implements HsTransport {
 
   @Override
   public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
-    return t -> t;
+    return Tensor::copy;
   }
 }

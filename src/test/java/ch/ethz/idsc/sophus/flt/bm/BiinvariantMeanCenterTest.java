@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.flt.ga.BinomialWeights;
-import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMean;
+import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.io.Serialization;
@@ -21,7 +21,7 @@ public class BiinvariantMeanCenterTest extends TestCase {
   public void testSe2() throws ClassNotFoundException, IOException {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
       TensorUnaryOperator tensorUnaryOperator = //
-          Serialization.copy(BiinvariantMeanCenter.of(Se2BiinvariantMean.GLOBAL, smoothingKernel));
+          Serialization.copy(BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, smoothingKernel));
       Distribution distribution = UniformDistribution.unit();
       for (int count = 1; count < 10; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, 3);
@@ -32,13 +32,13 @@ public class BiinvariantMeanCenterTest extends TestCase {
   }
 
   public void testOfFunction() {
-    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(Se2BiinvariantMean.GLOBAL, BinomialWeights.INSTANCE);
+    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, BinomialWeights.INSTANCE);
     tensorUnaryOperator.apply(RandomVariate.of(UniformDistribution.unit(), 5, 3));
   }
 
   public void testFailNull() {
     try {
-      BiinvariantMeanCenter.of(Se2BiinvariantMean.GLOBAL, (ScalarUnaryOperator) null);
+      BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null);
       fail();
     } catch (Exception exception) {
       // ---

@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * @see AffineQ
  * @see BiinvariantMeans */
-public enum Se2BiinvariantMean implements BiinvariantMean {
+public enum Se2BiinvariantMeans implements BiinvariantMean {
   /** The Arsigny-formula which treats SO(2) locally as a vector space yields
    * better results in BiinvariantMeanCenter compared to the global formula.
    * However, the operation domain is reduced
@@ -44,7 +44,7 @@ public enum Se2BiinvariantMean implements BiinvariantMean {
   private final BiinvariantMean biinvariantMean;
 
   /** @param scalarBiinvariantMean */
-  private Se2BiinvariantMean(ScalarBiinvariantMean scalarBiinvariantMean) {
+  private Se2BiinvariantMeans(ScalarBiinvariantMean scalarBiinvariantMean) {
     biinvariantMean = Se2UniversalBiinvariantMean.se2(scalarBiinvariantMean);
   }
 

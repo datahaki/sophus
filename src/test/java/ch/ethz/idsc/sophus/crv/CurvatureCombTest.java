@@ -1,11 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv;
 
-import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
+import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;

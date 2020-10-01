@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.lie.r2.AngleVector;
 
 /** biinvariant mean defined globally on SO(2) for arbitrary weights
  * 

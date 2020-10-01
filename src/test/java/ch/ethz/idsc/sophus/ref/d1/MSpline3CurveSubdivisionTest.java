@@ -2,10 +2,10 @@
 package ch.ethz.idsc.sophus.ref.d1;
 
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
-import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.num.Rationalize;
 import ch.ethz.idsc.tensor.red.Nest;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;

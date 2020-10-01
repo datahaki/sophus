@@ -30,7 +30,7 @@ public class Se2GeodesicTest extends TestCase {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
       Scalar w = RandomVariate.of(wd);
-      Tensor mean = Se2BiinvariantMean.FILTER.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
+      Tensor mean = Se2BiinvariantMeans.FILTER.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
       Tensor splt = Se2Geodesic.INSTANCE.split(p, q, w);
       splt.set(So2.MOD, 2);
       Chop._12.requireClose(mean, splt);

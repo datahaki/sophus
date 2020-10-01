@@ -1,12 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
-import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
+import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;

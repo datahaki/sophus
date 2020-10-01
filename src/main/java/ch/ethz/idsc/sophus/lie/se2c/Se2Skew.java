@@ -1,12 +1,12 @@
 // code by ob, jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.lie.so2.RotationMatrix;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.lie.r2.RotationMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.sca.Tan;

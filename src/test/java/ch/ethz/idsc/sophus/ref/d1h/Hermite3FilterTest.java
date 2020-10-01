@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1h;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.sophus.lie.rn.RnGroup;
-import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMean;
+import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.se2.Se2Group;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.math.Do;
@@ -40,7 +40,7 @@ public class Hermite3FilterTest extends TestCase {
   public void testSe2ConstantReproduction() {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     HermiteFilter hermiteFilter = //
-        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMean.FILTER);
+        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMeans.FILTER);
     TensorIteration tensorIteration = hermiteFilter.string(RealScalar.ONE, control);
     Tensor iterate = Do.of(tensorIteration::iterate, 2);
     Chop._14.requireClose(control, iterate);
@@ -55,7 +55,7 @@ public class Hermite3FilterTest extends TestCase {
       pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringExponential.INSTANCE.exp(pv));
     }
     HermiteFilter hermiteFilter = //
-        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMean.FILTER);
+        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMeans.FILTER);
     TensorIteration tensorIteration = hermiteFilter.string(RealScalar.ONE, control);
     Tensor iterate = Do.of(tensorIteration::iterate, 2);
     Chop._14.requireClose(control, iterate);

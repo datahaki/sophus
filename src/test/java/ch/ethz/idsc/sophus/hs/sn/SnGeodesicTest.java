@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.hs.HsMidpoint;
-import ch.ethz.idsc.sophus.lie.so2.CirclePoints;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.ExactTensorQ;
@@ -18,6 +17,7 @@ import ch.ethz.idsc.tensor.alg.Join;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
