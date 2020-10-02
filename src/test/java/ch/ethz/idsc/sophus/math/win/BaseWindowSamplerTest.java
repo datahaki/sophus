@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.math.SymmetricVectorQ;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -98,12 +99,7 @@ public class BaseWindowSamplerTest extends TestCase {
   public void testAllFail() {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
       Function<Integer, Tensor> centerWindowSampler = UniformWindowSampler.of(smoothingKernel);
-      try {
-        centerWindowSampler.apply(-1);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> centerWindowSampler.apply(-1));
     }
   }
 

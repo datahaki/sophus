@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.math.var;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -26,11 +27,6 @@ public class MultiquadricVariogramTest extends TestCase {
   }
 
   public void testFailNonPositive() {
-    try {
-      MultiquadricVariogram.of(RealScalar.of(-1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MultiquadricVariogram.of(RealScalar.of(-1)));
   }
 }

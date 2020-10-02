@@ -1,15 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import junit.framework.TestCase;
 
 public class HeGroupTest extends TestCase {
   public void testSimple() {
-    try {
-      HeGroup.INSTANCE.element(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> HeGroup.INSTANCE.element(null));
   }
 }

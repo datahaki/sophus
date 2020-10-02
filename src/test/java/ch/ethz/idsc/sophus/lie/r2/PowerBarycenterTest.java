@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -22,17 +23,7 @@ public class PowerBarycenterTest extends TestCase {
   public void testExpFail() {
     PowerBarycenter.of(0.0);
     PowerBarycenter.of(2.0);
-    try {
-      PowerBarycenter.of(-0.1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      PowerBarycenter.of(2.1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> PowerBarycenter.of(-0.1));
+    AssertFail.of(() -> PowerBarycenter.of(2.1));
   }
 }

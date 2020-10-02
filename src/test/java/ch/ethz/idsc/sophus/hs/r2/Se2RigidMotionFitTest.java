@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r2;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -32,12 +33,7 @@ public class Se2RigidMotionFitTest extends TestCase {
       Tensor weights = RandomVariate.of(UniformDistribution.unit(), 10);
       Tensor points = RandomVariate.of(distribution, 10, 3);
       Tensor target = RandomVariate.of(distribution, 10, 3);
-      try {
-        Se2RigidMotionFit.of(target, points, weights);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> Se2RigidMotionFit.of(target, points, weights));
     }
   }
 }

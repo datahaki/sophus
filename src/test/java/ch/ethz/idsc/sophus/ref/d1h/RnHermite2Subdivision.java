@@ -10,8 +10,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dot;
 import ch.ethz.idsc.tensor.alg.Last;
+import ch.ethz.idsc.tensor.lie.MatrixPower;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
-import ch.ethz.idsc.tensor.mat.MatrixPower;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Merrien interpolatory Hermite subdivision scheme of order two

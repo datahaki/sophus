@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -28,23 +29,13 @@ public class SnExponentialTest extends TestCase {
   }
 
   public void test2DNormFail() {
-    try {
-      new SnExponential(Tensors.vector(2, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new SnExponential(Tensors.vector(2, 1)));
   }
 
   public void test2DExpFail() {
     SnExponential snExp = new SnExponential(UnitVector.of(2, 0));
     Scalar dist = RealScalar.of(0.2);
-    try {
-      snExp.exp(AngleVector.of(dist));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> snExp.exp(AngleVector.of(dist)));
   }
 
   public void test3D() {
@@ -76,29 +67,14 @@ public class SnExponentialTest extends TestCase {
   }
 
   public void test0Fail() {
-    try {
-      new SnExponential(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new SnExponential(Tensors.empty()));
   }
 
   public void test1Fail() {
-    try {
-      new SnExponential(UnitVector.of(1, 0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new SnExponential(UnitVector.of(1, 0)));
   }
 
   public void testMatrixFail() {
-    try {
-      new SnExponential(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new SnExponential(HilbertMatrix.of(3)));
   }
 }

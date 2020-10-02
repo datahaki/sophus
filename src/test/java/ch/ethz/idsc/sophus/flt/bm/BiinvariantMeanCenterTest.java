@@ -7,6 +7,7 @@ import java.util.Arrays;
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.flt.ga.BinomialWeights;
 import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMeans;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.io.Serialization;
@@ -37,11 +38,6 @@ public class BiinvariantMeanCenterTest extends TestCase {
   }
 
   public void testFailNull() {
-    try {
-      BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null));
   }
 }

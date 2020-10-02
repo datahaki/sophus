@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.se2;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -155,39 +156,14 @@ public class Se2GroupElementTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      Se2Adjoint.forward(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se2Adjoint.forward(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se2Adjoint.inverse(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se2Adjoint.inverse(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se2Adjoint.forward(RealScalar.ONE));
+    AssertFail.of(() -> Se2Adjoint.forward(HilbertMatrix.of(3)));
+    AssertFail.of(() -> Se2Adjoint.inverse(RealScalar.ONE));
+    AssertFail.of(() -> Se2Adjoint.inverse(HilbertMatrix.of(3)));
   }
 
   public void testDlNullFail() {
     Se2GroupElement se2GroupElement = new Se2GroupElement(Tensors.vector(0, 0, Math.PI / 2));
-    try {
-      se2GroupElement.dL(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> se2GroupElement.dL(null));
   }
 }

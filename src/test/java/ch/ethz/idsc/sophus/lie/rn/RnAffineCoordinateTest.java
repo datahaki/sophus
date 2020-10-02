@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -111,20 +112,10 @@ public class RnAffineCoordinateTest extends TestCase {
   }
 
   public void testVectorFail() {
-    try {
-      RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
   }
 
   public void testEmptyFail() {
-    try {
-      RnAffineCoordinate.of(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnAffineCoordinate.of(Tensors.empty()));
   }
 }

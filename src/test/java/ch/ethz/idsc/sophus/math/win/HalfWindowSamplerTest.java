@@ -6,6 +6,7 @@ import java.util.function.Function;
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -78,11 +79,6 @@ public class HalfWindowSamplerTest extends TestCase {
 
   public void testZeroFail() {
     Function<Integer, Tensor> function = HalfWindowSampler.of(HannWindow.FUNCTION);
-    try {
-      function.apply(0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> function.apply(0));
   }
 }

@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
 
@@ -21,11 +22,6 @@ public class SymmetricVectorQTest extends TestCase {
   }
 
   public void testThrow() {
-    try {
-      SymmetricVectorQ.require(Tensors.vector(1, 1, 3, 1, 1, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SymmetricVectorQ.require(Tensors.vector(1, 1, 3, 1, 1, 1)));
   }
 }

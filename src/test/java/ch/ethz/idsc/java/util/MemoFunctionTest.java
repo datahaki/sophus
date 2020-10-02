@@ -3,6 +3,7 @@ package ch.ethz.idsc.java.util;
 
 import java.util.function.Function;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import junit.framework.TestCase;
 
 public class MemoFunctionTest extends TestCase {
@@ -25,11 +26,6 @@ public class MemoFunctionTest extends TestCase {
   }
 
   public void testFailNull() {
-    try {
-      MemoFunction.wrap(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MemoFunction.wrap(null));
   }
 }

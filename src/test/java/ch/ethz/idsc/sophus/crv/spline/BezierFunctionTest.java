@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -62,20 +63,10 @@ public class BezierFunctionTest extends TestCase {
   }
 
   public void testFailEmpty() {
-    try {
-      BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty()));
   }
 
   public void testFailScalar() {
-    try {
-      BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO));
   }
 }

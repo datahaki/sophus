@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.hn;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -17,11 +18,6 @@ public class HnMemberQTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      HnMemberQ.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> HnMemberQ.of(null));
   }
 }

@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.dubins;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -39,11 +40,6 @@ public class FixedRadiusDubinsTest extends TestCase {
   }
 
   public void testNegativeFail() {
-    try {
-      FixedRadiusDubins.of(Tensors.vector(1, 2, 3), RealScalar.of(-0.1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> FixedRadiusDubins.of(Tensors.vector(1, 2, 3), RealScalar.of(-0.1)));
   }
 }

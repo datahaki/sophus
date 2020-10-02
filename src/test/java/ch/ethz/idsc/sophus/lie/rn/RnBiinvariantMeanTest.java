@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -46,12 +47,7 @@ public class RnBiinvariantMeanTest extends TestCase {
   }
 
   public void testEmpty() {
-    try {
-      RnBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //

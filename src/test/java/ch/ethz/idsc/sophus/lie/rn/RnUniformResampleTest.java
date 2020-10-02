@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.rn;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -25,26 +26,11 @@ public class RnUniformResampleTest extends TestCase {
   }
 
   public void testNegativeFail() {
-    try {
-      RnUniformResample.of(Quantity.of(0.0, "m"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      RnUniformResample.of(Quantity.of(-1, "m"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnUniformResample.of(Quantity.of(0.0, "m")));
+    AssertFail.of(() -> RnUniformResample.of(Quantity.of(-1, "m")));
   }
 
   public void testNullFail() {
-    try {
-      RnUniformResample.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnUniformResample.of(null));
   }
 }

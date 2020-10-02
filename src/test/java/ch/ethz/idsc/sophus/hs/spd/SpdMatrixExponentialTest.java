@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
@@ -38,21 +39,11 @@ public class SpdMatrixExponentialTest extends TestCase {
 
   public void testExpNonSymmetricFail() {
     Tensor x = LowerTriangularize.of(TestHelper.generateSim(4));
-    try {
-      SpdMatrixExponential.INSTANCE.exp(x);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SpdMatrixExponential.INSTANCE.exp(x));
   }
 
   public void testLogNonSymmetricFail() {
     Tensor g = LowerTriangularize.of(TestHelper.generateSpd(4));
-    try {
-      SpdMatrixExponential.INSTANCE.log(g);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SpdMatrixExponential.INSTANCE.log(g));
   }
 }

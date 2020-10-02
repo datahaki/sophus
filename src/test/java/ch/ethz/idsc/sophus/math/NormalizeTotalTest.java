@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -21,47 +22,22 @@ public class NormalizeTotalTest extends TestCase {
   }
 
   public void testEmpty() {
-    try {
-      NormalizeTotal.FUNCTION.apply(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NormalizeTotal.FUNCTION.apply(Tensors.empty()));
   }
 
   public void testZeroFail() {
-    try {
-      NormalizeTotal.FUNCTION.apply(Tensors.vector(2, -2, 1, -1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NormalizeTotal.FUNCTION.apply(Tensors.vector(2, -2, 1, -1)));
   }
 
   public void testZeroNumericFail() {
-    try {
-      NormalizeTotal.FUNCTION.apply(Tensors.vectorDouble(2, -2, 1, -1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NormalizeTotal.FUNCTION.apply(Tensors.vectorDouble(2, -2, 1, -1)));
   }
 
   public void testFailScalar() {
-    try {
-      NormalizeTotal.FUNCTION.apply(Pi.TWO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NormalizeTotal.FUNCTION.apply(Pi.TWO));
   }
 
   public void testFailMatrix() {
-    try {
-      NormalizeTotal.FUNCTION.apply(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NormalizeTotal.FUNCTION.apply(HilbertMatrix.of(3)));
   }
 }

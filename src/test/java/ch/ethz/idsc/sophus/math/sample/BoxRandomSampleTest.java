@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.math.sample;
 import java.io.IOException;
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -41,20 +42,10 @@ public class BoxRandomSampleTest extends TestCase {
   }
 
   public void testDimensionFail() {
-    try {
-      BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3)));
   }
 
   public void testSignFail() {
-    try {
-      BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1)));
   }
 }

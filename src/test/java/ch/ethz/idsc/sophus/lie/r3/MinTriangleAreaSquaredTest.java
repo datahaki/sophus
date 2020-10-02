@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -77,11 +78,6 @@ public class MinTriangleAreaSquaredTest extends TestCase {
   }
 
   public void testEmptyFail() {
-    try {
-      MinTriangleAreaSquared.weights(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MinTriangleAreaSquared.weights(Tensors.empty()));
   }
 }

@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs;
 
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -21,11 +22,6 @@ public class HsGeodesicTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      new HsGeodesic(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new HsGeodesic(null));
   }
 }

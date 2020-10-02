@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.son;
 
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.lie.so3.So3TestHelper;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -29,11 +30,6 @@ public class SonMemberQTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      SonMemberQ.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonMemberQ.of(null));
   }
 }

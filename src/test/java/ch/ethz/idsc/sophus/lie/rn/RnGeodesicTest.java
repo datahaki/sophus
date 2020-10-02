@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -37,12 +38,7 @@ public class RnGeodesicTest extends TestCase {
     Tensor knots = Tensors.vector(1, 2, 3, 4);
     Tensor control = Tensors.vector(9, 3, 4);
     DeBoor.of(RnGeodesic.INSTANCE, knots, control);
-    try {
-      DeBoor.of(null, knots, control);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> DeBoor.of(null, knots, control));
   }
 
   public void testSymmetric() {

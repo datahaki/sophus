@@ -4,13 +4,11 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
-import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
 
 /** SPD == Symmetric positive definite == Sym+
@@ -37,18 +35,12 @@ public enum SpdMatrixExponential implements Exponential {
 
   @Override // from Exponential
   public Tensor exp(Tensor x) {
-    Eigensystem eigensystem = Eigensystem.ofSymmetric(x);
-    Tensor avec = eigensystem.vectors();
-    Tensor ainv = Transpose.of(avec);
-    return Symmetrize.of(ainv.dot(eigensystem.values().map(Exp.FUNCTION).pmul(avec)));
+    return Symmetrize.of(MatrixExp.ofSymmetric(x));
   }
 
   @Override // from Exponential
   public Tensor log(Tensor g) {
-    Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
-    Tensor avec = eigensystem.vectors();
-    Tensor ainv = Transpose.of(avec);
-    return Symmetrize.of(ainv.dot(eigensystem.values().map(Log.FUNCTION).pmul(avec)));
+    return Symmetrize.of(MatrixLog.ofSymmetric(g));
   }
 
   /** n(g) == n(Inverse[g])

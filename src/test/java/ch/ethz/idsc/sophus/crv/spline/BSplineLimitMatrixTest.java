@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.math.StochasticMatrixQ;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Inverse;
@@ -21,17 +22,7 @@ public class BSplineLimitMatrixTest extends TestCase {
   }
 
   public void testNonPositiveFail() {
-    try {
-      BSplineLimitMatrix.string(0, 2);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      BSplineLimitMatrix.string(-1, 2);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BSplineLimitMatrix.string(0, 2));
+    AssertFail.of(() -> BSplineLimitMatrix.string(-1, 2));
   }
 }

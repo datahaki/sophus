@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.opt.Pi;
@@ -19,32 +20,12 @@ public class VectorizeTest extends TestCase {
   }
 
   public void testVectorFail() {
-    try {
-      Vectorize.lt(Tensors.vector(1, 2, 3), 0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Vectorize.lt(Tensors.vector(1, 2, 3), -1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Vectorize.lt(Tensors.vector(1, 2, 3), 0));
+    AssertFail.of(() -> Vectorize.lt(Tensors.vector(1, 2, 3), -1));
   }
 
   public void testScalarFail() {
-    try {
-      Vectorize.lt(Pi.VALUE, 0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Vectorize.lt(Pi.VALUE, -1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Vectorize.lt(Pi.VALUE, 0));
+    AssertFail.of(() -> Vectorize.lt(Pi.VALUE, -1));
   }
 }

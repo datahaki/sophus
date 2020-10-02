@@ -2,15 +2,11 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import junit.framework.TestCase;
 
 public class MetricCoordinateTest extends TestCase {
   public void testCustomNullFail() {
-    try {
-      MetricCoordinate.custom(RnManifold.INSTANCE, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MetricCoordinate.custom(RnManifold.INSTANCE, null));
   }
 }

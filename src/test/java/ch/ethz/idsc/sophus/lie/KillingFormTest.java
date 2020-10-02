@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -43,11 +44,6 @@ public class KillingFormTest extends TestCase {
   }
 
   public void testRank4Fail() {
-    try {
-      KillingForm.of(Array.zeros(3, 3, 3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> KillingForm.of(Array.zeros(3, 3, 3, 3)));
   }
 }

@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.itp;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -26,17 +27,7 @@ public class GeodesicInterpolationTest extends TestCase {
     Chop._12.requireClose( //
         interpolation.at(RealScalar.of(2)), //
         sequence.get(2));
-    try {
-      interpolation.at(RealScalar.of(-0.01));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      interpolation.at(RealScalar.of(2.01));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> interpolation.at(RealScalar.of(-0.01)));
+    AssertFail.of(() -> interpolation.at(RealScalar.of(2.01)));
   }
 }

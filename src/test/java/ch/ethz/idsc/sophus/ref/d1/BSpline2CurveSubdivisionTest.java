@@ -4,10 +4,8 @@ package ch.ethz.idsc.sophus.ref.d1;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
@@ -89,21 +87,5 @@ public class BSpline2CurveSubdivisionTest extends TestCase {
     TensorUnaryOperator fps = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
-  }
-
-  public void testScalarFail() {
-    CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(Se2Geodesic.INSTANCE);
-    try {
-      curveSubdivision.string(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      curveSubdivision.cyclic(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
   }
 }

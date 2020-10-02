@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -19,11 +20,6 @@ public class HsMidpointTest extends TestCase {
   }
 
   public void testFailNull1() {
-    try {
-      new HsMidpoint(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new HsMidpoint(null));
   }
 }

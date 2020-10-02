@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.TensorIteration;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Reverse;
@@ -43,32 +44,12 @@ public class Hermite2SubdivisionsTest extends TestCase {
   }
 
   public void testNullA1Fail() {
-    try {
-      Hermite2Subdivisions.standard(Se2CoveringManifold.HS_EXP, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Hermite2Subdivisions.standard(null, RnTransport.INSTANCE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Hermite2Subdivisions.standard(Se2CoveringManifold.HS_EXP, null));
+    AssertFail.of(() -> Hermite2Subdivisions.standard(null, RnTransport.INSTANCE));
   }
 
   public void testNullA2Fail() {
-    try {
-      Hermite2Subdivisions.manifold(Se2CoveringManifold.HS_EXP, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Hermite2Subdivisions.manifold(null, RnTransport.INSTANCE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Hermite2Subdivisions.manifold(Se2CoveringManifold.HS_EXP, null));
+    AssertFail.of(() -> Hermite2Subdivisions.manifold(null, RnTransport.INSTANCE));
   }
 }

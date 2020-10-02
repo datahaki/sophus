@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.so2c;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -60,11 +61,6 @@ public class So2CoveringBiinvariantMeanTest extends TestCase {
   }
 
   public void testFailTensor() {
-    try {
-      So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NORMALIZE.apply(Tensors.vector(1, 1, 1)));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NORMALIZE.apply(Tensors.vector(1, 1, 1))));
   }
 }

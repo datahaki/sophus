@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.flt.ga;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -74,11 +75,6 @@ public class Regularization2StepStringTest extends TestCase {
 
   public void testScalarFail() {
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.HALF);
-    try {
-      tensorUnaryOperator.apply(RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(RealScalar.ZERO));
   }
 }

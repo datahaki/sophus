@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.flt.ga;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.io.Serialization;
@@ -60,29 +61,14 @@ public class GeodesicIIR1Test extends TestCase {
 
   public void testNullFail() {
     GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0.2));
-    try {
-      geodesicIIR1.apply(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> geodesicIIR1.apply(null));
   }
 
   public void testZeroFail() {
-    try {
-      new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0)));
   }
 
   public void testLargeFail() {
-    try {
-      new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(1.01));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(1.01)));
   }
 }

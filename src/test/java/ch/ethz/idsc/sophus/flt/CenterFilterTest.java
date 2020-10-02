@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.lie.so3.So3Geodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -77,20 +78,10 @@ public class CenterFilterTest extends TestCase {
   public void testNegativeRadiusFail() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
     CenterFilter.of(geodesicCenter, 0);
-    try {
-      CenterFilter.of(geodesicCenter, -1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> CenterFilter.of(geodesicCenter, -1));
   }
 
   public void testFail() {
-    try {
-      CenterFilter.of(null, 1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> CenterFilter.of(null, 1));
   }
 }

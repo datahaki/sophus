@@ -6,6 +6,7 @@ import java.util.function.Function;
 import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.SymmetricVectorQ;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -58,20 +59,10 @@ public class UniformWindowSamplerTest extends TestCase {
 
   public void testZeroFail() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(HannWindow.FUNCTION);
-    try {
-      function.apply(0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> function.apply(0));
   }
 
   public void testFailNull() {
-    try {
-      UniformWindowSampler.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> UniformWindowSampler.of(null));
   }
 }

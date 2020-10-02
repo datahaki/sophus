@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.opt.Pi;
@@ -33,11 +34,6 @@ public class GardenCoordinateTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      GardenCoordinate.of(RnManifold.INSTANCE, null, HilbertMatrix.of(10, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GardenCoordinate.of(RnManifold.INSTANCE, null, HilbertMatrix.of(10, 3)));
   }
 }

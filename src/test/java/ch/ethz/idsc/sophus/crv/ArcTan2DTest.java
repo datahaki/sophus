@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv;
 
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -47,23 +48,8 @@ public class ArcTan2DTest extends TestCase {
   }
 
   public void testVectorXYFail() {
-    try {
-      ArcTan2D.of(RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      ArcTan2D.of(Tensors.vector(1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      ArcTan2D.of(Array.zeros(3, 3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> ArcTan2D.of(RealScalar.ZERO));
+    AssertFail.of(() -> ArcTan2D.of(Tensors.vector(1)));
+    AssertFail.of(() -> ArcTan2D.of(Array.zeros(3, 3, 3)));
   }
 }

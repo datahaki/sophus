@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.ref.d1;
 
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -54,11 +55,6 @@ public class MSpline3CurveSubdivisionTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      new MSpline3CurveSubdivision(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new MSpline3CurveSubdivision(null));
   }
 }

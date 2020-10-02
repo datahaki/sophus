@@ -8,7 +8,6 @@ import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -144,21 +143,5 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     }
     Chop._10.requireClose(bs, lr);
     // System.out.println(bs.subtract(lr).map(Scalar::abs).flatten(-1).reduce(Max::of).get());
-  }
-
-  public void testScalarFail() {
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(Se2Geodesic.INSTANCE);
-    try {
-      curveSubdivision.string(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      curveSubdivision.cyclic(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
   }
 }

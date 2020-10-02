@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
@@ -43,11 +44,6 @@ public class TestHelperTest extends TestCase {
   }
 
   public void testNonSymmetricFail() {
-    try {
-      MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4)));
   }
 }

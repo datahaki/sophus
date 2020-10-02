@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -110,11 +111,6 @@ public class PolygonsTest extends TestCase {
   }
 
   public void testScalarFail() {
-    try {
-      Polygons.isInside(RealScalar.of(2), Tensors.vector(0.5, .5));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Polygons.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
   }
 }

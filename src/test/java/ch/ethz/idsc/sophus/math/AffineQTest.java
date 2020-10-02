@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
@@ -23,50 +24,20 @@ public class AffineQTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      AffineQ.requirePositiveOrZero(Tensors.vector(2, -1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> AffineQ.requirePositiveOrZero(Tensors.vector(2, -1)));
   }
 
   public void testFail2() {
-    try {
-      AffineQ.requirePositiveOrZero(Tensors.vector(1, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> AffineQ.requirePositiveOrZero(Tensors.vector(1, 1)));
   }
 
   public void testFailScalar() {
-    try {
-      AffineQ.require(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      AffineQ.requirePositiveOrZero(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> AffineQ.require(RealScalar.ONE));
+    AssertFail.of(() -> AffineQ.requirePositiveOrZero(RealScalar.ONE));
   }
 
   public void testFailMatrix() {
-    try {
-      AffineQ.require(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      AffineQ.requirePositiveOrZero(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> AffineQ.require(HilbertMatrix.of(3)));
+    AssertFail.of(() -> AffineQ.requirePositiveOrZero(HilbertMatrix.of(3)));
   }
 }

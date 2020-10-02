@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,13 +20,10 @@ public class BSplineLimitMaskTest extends TestCase {
   }
 
   public void testEvenFail() {
-    for (int i = 0; i < 10; ++i)
-      try {
-        BSplineLimitMask.FUNCTION.apply(i * 2);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+    for (int i = 0; i < 10; ++i) {
+      int fi = i;
+      AssertFail.of(() -> BSplineLimitMask.FUNCTION.apply(fi * 2));
+    }
   }
 
   public void testNegativeFail() {
@@ -57,20 +55,10 @@ public class BSplineLimitMaskTest extends TestCase {
   }
 
   public void testEvenVectorFail() {
-    try {
-      TENSOR_UNARY_OPERATOR.apply(Tensors.vector(1, 2, 3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> TENSOR_UNARY_OPERATOR.apply(Tensors.vector(1, 2, 3, 4)));
   }
 
   public void testScalarFail() {
-    try {
-      TENSOR_UNARY_OPERATOR.apply(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> TENSOR_UNARY_OPERATOR.apply(RealScalar.ONE));
   }
 }

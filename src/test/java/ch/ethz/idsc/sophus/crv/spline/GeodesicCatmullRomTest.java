@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.sophus.math.win.KnotSpacing;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -54,23 +55,13 @@ public class GeodesicCatmullRomTest extends TestCase {
   public void testLengthFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 3, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
-    try {
-      GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control));
   }
 
   public void testKnotsInconsistentFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
     GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control);
-    try {
-      GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots.extract(0, knots.length() - 1), control);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots.extract(0, knots.length() - 1), control));
   }
 }

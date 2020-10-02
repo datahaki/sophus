@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -124,39 +125,19 @@ public class GeodesicBSplineFunctionTest extends TestCase {
       Tensor knots = Tensors.vector(1, 2, 3, 4, 5);
       GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots);
     }
-    try {
-      Tensor knots = Tensors.vector(1, 2, 3, 2, 5);
-      GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    Tensor knots = Tensors.vector(1, 2, 3, 2, 5);
+    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots));
   }
 
   public void testDegreeFail() {
-    try {
-      GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, -1, UnitVector.of(7, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, -1, UnitVector.of(7, 3)));
   }
 
   public void testKnotsFail() {
-    try {
-      GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Range.of(0, 10), Range.of(0, 11));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Range.of(0, 10), Range.of(0, 11)));
   }
 
   public void testKnotsUnsortedFail() {
-    try {
-      GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Tensors.vector(3, 2, 1), Tensors.vector(1, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Tensors.vector(3, 2, 1), Tensors.vector(1, 2, 3)));
   }
 }

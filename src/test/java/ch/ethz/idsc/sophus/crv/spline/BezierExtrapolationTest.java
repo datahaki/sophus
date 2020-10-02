@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -47,41 +48,21 @@ public class BezierExtrapolationTest extends TestCase {
 
   public void testFailScalar() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGeodesic.INSTANCE);
-    try {
-      tensorUnaryOperator.apply(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(RealScalar.ONE));
   }
 
   public void testFailEmpty() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
-    try {
-      tensorUnaryOperator.apply(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
   public void testFailSe2_1() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
-    try {
-      tensorUnaryOperator.apply(Tensors.vector(1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.vector(1)));
   }
 
   public void testFailSe2() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
-    try {
-      tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.vector(1, 2, 3)));
   }
 }

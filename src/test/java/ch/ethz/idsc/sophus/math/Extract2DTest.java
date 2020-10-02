@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensors;
 import junit.framework.TestCase;
@@ -11,29 +12,14 @@ public class Extract2DTest extends TestCase {
   }
 
   public void testFailScalar() {
-    try {
-      Extract2D.FUNCTION.apply(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Extract2D.FUNCTION.apply(RealScalar.ONE));
   }
 
   public void testFailEmpty() {
-    try {
-      Extract2D.FUNCTION.apply(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Extract2D.FUNCTION.apply(Tensors.empty()));
   }
 
   public void testFailOne() {
-    try {
-      Extract2D.FUNCTION.apply(Tensors.vector(1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Extract2D.FUNCTION.apply(Tensors.vector(1)));
   }
 }

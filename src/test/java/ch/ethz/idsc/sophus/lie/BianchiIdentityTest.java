@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
@@ -12,29 +13,14 @@ public class BianchiIdentityTest extends TestCase {
   }
 
   public void testRank1Fail() {
-    try {
-      BianchiIdentity.of(Tensors.vector(1, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BianchiIdentity.of(Tensors.vector(1, 2, 3)));
   }
 
   public void testRank2Fail() {
-    try {
-      BianchiIdentity.of(HilbertMatrix.of(3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BianchiIdentity.of(HilbertMatrix.of(3, 3)));
   }
 
   public void testRank3Fail() {
-    try {
-      BianchiIdentity.of(LieAlgebras.he1());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BianchiIdentity.of(LieAlgebras.he1()));
   }
 }

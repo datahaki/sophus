@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.lie.se2.Se2Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Matrix;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
@@ -60,11 +61,6 @@ public class HsDifferencesTest extends TestCase {
   }
 
   public void testLieGroupNullFail() {
-    try {
-      new HsDifferences(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new HsDifferences(null));
   }
 }

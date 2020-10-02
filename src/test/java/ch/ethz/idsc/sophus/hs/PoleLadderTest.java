@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -64,17 +65,7 @@ public class PoleLadderTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      PoleLadder.of(SnManifold.INSTANCE, null);
-      fail();
-    } catch (Exception e) {
-      // ---
-    }
-    try {
-      PoleLadder.of(null);
-      fail();
-    } catch (Exception e) {
-      // ---
-    }
+    AssertFail.of(() -> PoleLadder.of(SnManifold.INSTANCE, null));
+    AssertFail.of(() -> PoleLadder.of(null));
   }
 }

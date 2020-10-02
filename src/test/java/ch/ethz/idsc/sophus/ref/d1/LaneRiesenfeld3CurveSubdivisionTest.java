@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -82,28 +82,7 @@ public class LaneRiesenfeld3CurveSubdivisionTest extends TestCase {
     assertEquals(Dimensions.of(apply), Arrays.asList(13, 2, 3));
   }
 
-  public void testScalarFail() {
-    CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(Se2Geodesic.INSTANCE);
-    try {
-      curveSubdivision.string(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      curveSubdivision.cyclic(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-  }
-
   public void testNullFail() {
-    try {
-      LaneRiesenfeld3CurveSubdivision.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LaneRiesenfeld3CurveSubdivision.of(null));
   }
 }

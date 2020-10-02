@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -26,20 +27,10 @@ public class Det2DTest extends TestCase {
   }
 
   public void testFailP() {
-    try {
-      Det2D.of(Tensors.vector(1, 0), Tensors.vector(0, 1, 0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Det2D.of(Tensors.vector(1, 0), Tensors.vector(0, 1, 0)));
   }
 
   public void testFailQ() {
-    try {
-      Det2D.of(Tensors.vector(1, 0, 0), Tensors.vector(0, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Det2D.of(Tensors.vector(1, 0, 0), Tensors.vector(0, 1)));
   }
 }

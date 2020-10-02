@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.se3;
 import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -47,17 +48,7 @@ public class Se3AdjointTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      Se3Adjoint.forward(Tensors.vector(1, 2, 3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se3Adjoint.forward(HilbertMatrix.of(4, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se3Adjoint.forward(Tensors.vector(1, 2, 3, 4)));
+    AssertFail.of(() -> Se3Adjoint.forward(HilbertMatrix.of(4, 3)));
   }
 }

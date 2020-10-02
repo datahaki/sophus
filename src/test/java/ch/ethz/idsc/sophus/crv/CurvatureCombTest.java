@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -66,11 +67,6 @@ public class CurvatureCombTest extends TestCase {
 
   public void testFail() {
     Tensor points = Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 0, 0}}");
-    try {
-      CurvatureComb.of(points, RealScalar.ONE, false);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> CurvatureComb.of(points, RealScalar.ONE, false));
   }
 }

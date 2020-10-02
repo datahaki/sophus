@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.se3;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.qty.QuaternionToRotationMatrix;
+import ch.ethz.idsc.tensor.lie.QuaternionToRotationMatrix;
 
 public enum Se3Matrix {
   ;

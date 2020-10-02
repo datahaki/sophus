@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.lie.so3.So3TestHelper;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
@@ -21,12 +22,7 @@ public class SonGroupElementTest extends TestCase {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
     SonGroupElement.of(orth).combine(matr);
-    try {
-      SonGroupElement.of(orth).combine(matr.add(matr));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonGroupElement.of(orth).combine(matr.add(matr)));
   }
 
   public void testAdjoint() {
@@ -78,40 +74,20 @@ public class SonGroupElementTest extends TestCase {
   public void testSimple() {
     SonGroupElement so3GroupElement = SonGroupElement.of(IdentityMatrix.of(3));
     so3GroupElement.inverse();
-    try {
-      so3GroupElement.combine(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> so3GroupElement.combine(HilbertMatrix.of(3)));
   }
 
   public void testDetNegFail() {
-    try {
-      SonGroupElement.of(DiagonalMatrix.of(1, 1, -1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
   }
 
   public void testDetNegCombineFail() {
     SonGroupElement so3GroupElement = SonGroupElement.of(IdentityMatrix.of(3));
-    try {
-      so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1)));
   }
 
   public void testFail() {
-    try {
-      SonGroupElement.of(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonGroupElement.of(HilbertMatrix.of(3)));
   }
 
   public void testSize4Ok() {

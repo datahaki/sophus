@@ -1,6 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.st;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -55,43 +56,18 @@ public class StGroupElementTest extends TestCase {
 
   // checks that lambda is required to be positive
   public void testLambdaNonPositiveFail() {
-    try {
-      StGroup.INSTANCE.element(Tensors.vector(0, 5));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      StGroup.INSTANCE.element(Tensors.vector(-1, 5));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> StGroup.INSTANCE.element(Tensors.vector(0, 5)));
+    AssertFail.of(() -> StGroup.INSTANCE.element(Tensors.vector(-1, 5)));
   }
 
   public void testCombineFail() {
     StGroupElement pE = StGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
-    try {
-      pE.combine(Tensors.fromString("{0, {1, 2, 3}}"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      pE.combine(Tensors.fromString("{1, {1, 2, 3, 4}}"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> pE.combine(Tensors.fromString("{0, {1, 2, 3}}")));
+    AssertFail.of(() -> pE.combine(Tensors.fromString("{1, {1, 2, 3, 4}}")));
   }
 
   public void testDlNullFail() {
     StGroupElement pE = StGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
-    try {
-      pE.dL(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> pE.dL(null));
   }
 }

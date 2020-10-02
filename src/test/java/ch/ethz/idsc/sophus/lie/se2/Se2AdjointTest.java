@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.se2;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -118,29 +119,9 @@ public class Se2AdjointTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      Se2Adjoint.forward(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se2Adjoint.forward(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se2Adjoint.inverse(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Se2Adjoint.inverse(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se2Adjoint.forward(RealScalar.ONE));
+    AssertFail.of(() -> Se2Adjoint.forward(HilbertMatrix.of(3)));
+    AssertFail.of(() -> Se2Adjoint.inverse(RealScalar.ONE));
+    AssertFail.of(() -> Se2Adjoint.inverse(HilbertMatrix.of(3)));
   }
 }

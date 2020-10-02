@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.se2.Se2GroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2Matrix;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -67,45 +68,20 @@ public class LinearGroupElementTest extends TestCase {
 
   public void testAdjointFail() {
     LinearGroupElement linearGroupElement = LinearGroupElement.of(IdentityMatrix.of(5));
-    try {
-      linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5)));
   }
 
   public void testNonSquareFail() {
-    try {
-      LinearGroupElement.of(HilbertMatrix.of(2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LinearGroupElement.of(HilbertMatrix.of(2, 3)));
   }
 
   public void testCombineNonSquareFail() {
     LinearGroupElement linearGroupElement = LinearGroupElement.of(DiagonalMatrix.of(1, 2));
-    try {
-      linearGroupElement.combine(HilbertMatrix.of(2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      linearGroupElement.combine(Tensors.vector(1, 2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> linearGroupElement.combine(HilbertMatrix.of(2, 3)));
+    AssertFail.of(() -> linearGroupElement.combine(Tensors.vector(1, 2)));
   }
 
   public void testNonInvertibleFail() {
-    try {
-      LinearGroupElement.of(DiagonalMatrix.of(1, 0, 2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LinearGroupElement.of(DiagonalMatrix.of(1, 0, 2)));
   }
 }

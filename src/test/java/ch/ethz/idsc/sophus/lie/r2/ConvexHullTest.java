@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.r2;
 
 import java.util.stream.Stream;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -109,46 +110,16 @@ public class ConvexHullTest extends TestCase {
 
   public void testFail() {
     Distribution distribution = UniformDistribution.unit();
-    try {
-      ConvexHull.of(RandomVariate.of(distribution, 5, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      ConvexHull.of(Array.zeros(3, 3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      ConvexHull.of(Tensors.fromString("{{{1}, 2}}"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      ConvexHull.of(Tensors.fromString("{{2, 3}, {{1}, 2}}"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> ConvexHull.of(RandomVariate.of(distribution, 5, 2, 3)));
+    AssertFail.of(() -> ConvexHull.of(Array.zeros(3, 3, 3)));
+    AssertFail.of(() -> ConvexHull.of(Tensors.fromString("{{{1}, 2}}")));
+    AssertFail.of(() -> ConvexHull.of(Tensors.fromString("{{2, 3}, {{1}, 2}}")));
   }
 
   public void testFailMore() {
     Tensor bad1 = Tensors.fromString("{{1, 2}, {3, 4, 5}}");
-    try {
-      ConvexHull.of(bad1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> ConvexHull.of(bad1));
     Tensor bad2 = Tensors.fromString("{{1, 2, 3}, {3, 4}}");
-    try {
-      ConvexHull.of(bad2);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> ConvexHull.of(bad2));
   }
 }

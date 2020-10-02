@@ -12,6 +12,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -79,24 +80,9 @@ public class GeodesicCenterTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      GeodesicCenter.of(RnGeodesic.INSTANCE, (ScalarUnaryOperator) null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      GeodesicCenter.of(null, CONSTANT);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));
+    AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (ScalarUnaryOperator) null));
+    AssertFail.of(() -> GeodesicCenter.of(null, CONSTANT));
   }
 
   public void testSplitsMean() {
@@ -131,40 +117,20 @@ public class GeodesicCenterTest extends TestCase {
   }
 
   public void testFailEven() {
-    try {
-      GeodesicCenter.Splits.of(Tensors.vector(1, 2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicCenter.Splits.of(Tensors.vector(1, 2)));
   }
 
   public void testNonSymmetric() {
-    try {
-      GeodesicCenter.Splits.of(Tensors.vector(1, 2, 2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicCenter.Splits.of(Tensors.vector(1, 2, 2)));
   }
 
   public void testSplitsEvenFail() {
     Splits splits = new GeodesicCenter.Splits(UniformWindowSampler.of(GaussianWindow.FUNCTION));
     splits.apply(5);
-    try {
-      splits.apply(4);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> splits.apply(4));
   }
 
   public void testSplitsNullFail() {
-    try {
-      new GeodesicCenter.Splits(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new GeodesicCenter.Splits(null));
   }
 }

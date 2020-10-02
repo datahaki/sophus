@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -25,60 +26,25 @@ public class MatrixBracketTest extends TestCase {
   }
 
   public void testBracketVectorFail() {
-    try {
-      MatrixBracket.of(Tensors.empty(), Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      MatrixBracket.of(Tensors.vector(1, 2), Tensors.vector(3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixBracket.of(Tensors.empty(), Tensors.empty()));
+    AssertFail.of(() -> MatrixBracket.of(Tensors.vector(1, 2), Tensors.vector(3, 4)));
   }
 
   public void testBracketMatrixFail() {
     Tensor x = RotationMatrix.of(RealScalar.ONE);
     Tensor y = Tensors.vector(3, 4);
-    try {
-      MatrixBracket.of(x, y);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      MatrixBracket.of(y, x);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixBracket.of(x, y));
+    AssertFail.of(() -> MatrixBracket.of(y, x));
   }
 
   public void testBracketAdFail() {
-    try {
-      MatrixBracket.of(Array.zeros(2, 2, 2), Array.zeros(2, 2, 2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixBracket.of(Array.zeros(2, 2, 2), Array.zeros(2, 2, 2)));
   }
 
   public void testBracketAdVectorFail() {
     Tensor x = Array.zeros(3, 3, 3);
     Tensor y = Tensors.vector(1, 2, 3);
-    try {
-      MatrixBracket.of(x, y);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      MatrixBracket.of(y, x);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixBracket.of(x, y));
+    AssertFail.of(() -> MatrixBracket.of(y, x));
   }
 }

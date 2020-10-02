@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.sca.Clip;
 import ch.ethz.idsc.tensor.sca.Clips;
@@ -20,11 +21,6 @@ public class ClipIntersectTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      ClipIntersect.of(Clips.interval(2, 3), Clips.interval(5, 10));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> ClipIntersect.of(Clips.interval(2, 3), Clips.interval(5, 10)));
   }
 }

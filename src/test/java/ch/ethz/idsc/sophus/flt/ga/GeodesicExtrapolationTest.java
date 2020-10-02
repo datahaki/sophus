@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.math.win.HalfWindowSampler;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -28,12 +29,7 @@ import junit.framework.TestCase;
 public class GeodesicExtrapolationTest extends TestCase {
   public void testEmptyFail() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
-    try {
-      tensorUnaryOperator.apply(Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
   public void testDirichlet() throws ClassNotFoundException, IOException {
@@ -127,38 +123,18 @@ public class GeodesicExtrapolationTest extends TestCase {
 
   public void testAffinityFail() {
     Tensor mask = Tensors.vector(0.5, 0.8);
-    try {
-      GeodesicExtrapolation.Splits.of(mask);
-      fail();
-    } catch (Exception exception) {
-      // ----
-    }
+    AssertFail.of(() -> GeodesicExtrapolation.Splits.of(mask));
   }
 
   public void testNullFail1() {
-    try {
-      GeodesicExtrapolation.of(null, Sin.FUNCTION);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicExtrapolation.of(null, Sin.FUNCTION));
   }
 
   public void testNullFailITF() {
-    try {
-      GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (Function<Integer, Tensor>) null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (Function<Integer, Tensor>) null));
   }
 
   public void testNullFailSUO() {
-    try {
-      GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (ScalarUnaryOperator) null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (ScalarUnaryOperator) null));
   }
 }

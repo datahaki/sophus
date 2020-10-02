@@ -1,6 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.hs.h2;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -40,11 +41,6 @@ public class H2MetricTest extends TestCase {
   public void testNegativeY() {
     Tensor p = Tensors.vector(1, 3);
     Tensor q = Tensors.vector(2, -Math.random());
-    try {
-      H2Metric.INSTANCE.distance(p, q);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> H2Metric.INSTANCE.distance(p, q));
   }
 }

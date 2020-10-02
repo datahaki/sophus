@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.sl2;
 
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -50,11 +51,6 @@ public class Sl2GroupElementTest extends TestCase {
   }
 
   public void testFailZero() {
-    try {
-      Sl2Group.INSTANCE.element(Tensors.vector(1, 2, 0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Sl2Group.INSTANCE.element(Tensors.vector(1, 2, 0)));
   }
 }

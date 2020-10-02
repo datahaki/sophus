@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.TensorIteration;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -72,23 +73,8 @@ public class Hermite3SubdivisionTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      Hermite3Subdivisions.of(Se2CoveringManifold.HS_EXP, null, RnBiinvariantMean.INSTANCE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Hermite3Subdivisions.of(null, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Hermite3Subdivisions.of(Se2CoveringManifold.HS_EXP, RnTransport.INSTANCE, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.HS_EXP, null, RnBiinvariantMean.INSTANCE));
+    AssertFail.of(() -> Hermite3Subdivisions.of(null, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.HS_EXP, RnTransport.INSTANCE, null));
   }
 }

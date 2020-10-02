@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -33,20 +34,10 @@ public class MatrixSqrtTest extends TestCase {
   }
 
   public void testNonSymmetricFail() {
-    try {
-      MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4)));
   }
 
   public void testNullFail() {
-    try {
-      MatrixSqrt.ofSymmetric(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> MatrixSqrt.ofSymmetric(null));
   }
 }

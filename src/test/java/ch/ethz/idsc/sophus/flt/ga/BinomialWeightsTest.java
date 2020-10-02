@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt.ga;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -24,11 +25,6 @@ public class BinomialWeightsTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      BinomialWeights.INSTANCE.apply(-1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BinomialWeights.INSTANCE.apply(-1));
   }
 }

@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -45,29 +46,14 @@ public class NylanderPowerTest extends TestCase {
   }
 
   public void testMatrixFail() {
-    try {
-      NylanderPower.of(IdentityMatrix.of(3), 3);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NylanderPower.of(IdentityMatrix.of(3), 3));
   }
 
   public void testLengthFail() {
-    try {
-      NylanderPower.of(Tensors.vector(1, 2, 3, 4), 3);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NylanderPower.of(Tensors.vector(1, 2, 3, 4), 3));
   }
 
   public void testFailNull() {
-    try {
-      NylanderPower.of(Tensors.vector(1, 2, 3), (Scalar) null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NylanderPower.of(Tensors.vector(1, 2, 3), (Scalar) null));
   }
 }

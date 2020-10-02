@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -28,11 +29,6 @@ public class So3MetricTest extends TestCase {
     Tensor p = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     Tensor q = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     OrthogonalMatrixQ.require(p);
-    try {
-      So3Metric.INSTANCE.distance(p, q);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> So3Metric.INSTANCE.distance(p, q));
   }
 }

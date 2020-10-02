@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -29,12 +30,7 @@ public class JacobiIdentityTest extends TestCase {
     Tensor ad = LieAlgebras.sl2();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
-    try {
-      JacobiIdentity.require(ad);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> JacobiIdentity.require(ad));
   }
 
   public void testSe3() {

@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.var;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -16,11 +17,6 @@ public class InverseMultiquadricVariogramTest extends TestCase {
   }
 
   public void testNegativeFail() {
-    try {
-      InverseMultiquadricVariogram.of(-3);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> InverseMultiquadricVariogram.of(-3));
   }
 }

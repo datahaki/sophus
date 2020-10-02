@@ -1,6 +1,7 @@
 // code by jph / ob
 package ch.ethz.idsc.sophus.lie.so3;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -199,24 +200,14 @@ public class RodriguesTest extends TestCase {
   public void testOrthPassFormatFailEye() {
     Scalar one = RealScalar.ONE;
     Tensor eyestr = Tensors.matrix((i, j) -> i.equals(j) ? one : one.zero(), 3, 4);
-    try {
-      Rodrigues.INSTANCE.log(eyestr);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Rodrigues.INSTANCE.log(eyestr));
   }
 
   public void testOrthPassFormatFail2() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 5);
     Tensor orthog = Orthogonalize.of(matrix);
     assertTrue(OrthogonalMatrixQ.of(orthog));
-    try {
-      Rodrigues.INSTANCE.log(orthog);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Rodrigues.INSTANCE.log(orthog));
   }
 
   public void testOrthogonalize() {
@@ -227,54 +218,19 @@ public class RodriguesTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      Rodrigues.INSTANCE.exp(RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Rodrigues.INSTANCE.exp(Tensors.vector(0, 0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Rodrigues.INSTANCE.exp(RealScalar.ZERO));
+    AssertFail.of(() -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0)));
+    AssertFail.of(() -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0)));
   }
 
   public void testLogTrash() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 3);
-    try {
-      Rodrigues.INSTANCE.log(matrix);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Rodrigues.INSTANCE.log(matrix));
   }
 
   public void testLogFail() {
-    try {
-      Rodrigues.INSTANCE.log(Array.zeros(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Rodrigues.INSTANCE.log(Array.zeros(3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      Rodrigues.INSTANCE.log(Array.zeros(3, 3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3)));
+    AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3, 4)));
+    AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3, 3, 3)));
   }
 }

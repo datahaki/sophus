@@ -1,18 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.son;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import junit.framework.TestCase;
 
 public class SonGroupTest extends TestCase {
   public void testDetNegFail() {
-    try {
-      SonGroup.INSTANCE.element(DiagonalMatrix.of(1, 1, -1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonGroup.INSTANCE.element(DiagonalMatrix.of(1, 1, -1)));
   }
 
   public void testFormat4Ok() {
@@ -20,11 +16,6 @@ public class SonGroupTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      SonGroup.INSTANCE.element(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonGroup.INSTANCE.element(null));
   }
 }

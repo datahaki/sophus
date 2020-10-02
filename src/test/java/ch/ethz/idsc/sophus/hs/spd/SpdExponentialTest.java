@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
@@ -41,20 +42,10 @@ public class SpdExponentialTest extends TestCase {
   }
 
   public void testNonSymmetricFail() {
-    try {
-      new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
   public void testNullFail() {
-    try {
-      new SpdExponential(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new SpdExponential(null));
   }
 }

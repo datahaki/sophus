@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -68,11 +69,6 @@ public class SchildLadderTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      SchildLadder.of(null);
-      fail();
-    } catch (Exception e) {
-      // ---
-    }
+    AssertFail.of(() -> SchildLadder.of(null));
   }
 }

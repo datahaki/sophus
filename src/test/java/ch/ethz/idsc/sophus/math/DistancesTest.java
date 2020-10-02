@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.sophus.hs.r2.Se2Parametric;
 import ch.ethz.idsc.sophus.lie.rn.RnMetric;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -27,20 +28,10 @@ public class DistancesTest extends TestCase {
   }
 
   public void testR2SingleFail() {
-    try {
-      Distances.of(null, Tensors.fromString("{{1, 2}}"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Distances.of(null, Tensors.fromString("{{1, 2}}")));
   }
 
   public void testScalarFail() {
-    try {
-      Distances.of(RnMetric.INSTANCE, Pi.HALF);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Distances.of(RnMetric.INSTANCE, Pi.HALF));
   }
 }

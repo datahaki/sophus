@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -74,21 +75,11 @@ public class BarycentricRationalInterpolationTest extends TestCase {
   }
 
   public void testUnorderedFail() {
-    try {
-      BarycentricRationalInterpolation.of(Tensors.vector(2, 1, 3), 1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BarycentricRationalInterpolation.of(Tensors.vector(2, 1, 3), 1));
   }
 
   public void testNegativeFail() {
     BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), 10);
-    try {
-      BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), -2);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), -2));
   }
 }

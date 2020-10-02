@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.hs.HsMidpoint;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -80,12 +81,7 @@ public class SnGeodesicTest extends TestCase {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
     Scalar scalar = RandomVariate.of(NormalDistribution.standard());
-    try {
-      SnGeodesic.INSTANCE.split(p, q, scalar);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SnGeodesic.INSTANCE.split(p, q, scalar));
   }
 
   public void testComparison() {
@@ -137,38 +133,18 @@ public class SnGeodesicTest extends TestCase {
   }
 
   public void testDimensionsFail() {
-    try {
-      SnGeodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SnGeodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
   }
 
   public void testNormFail() {
-    try {
-      SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
   }
 
   public void testMidpointFail() {
-    try {
-      SnGeodesic.INSTANCE.midpoint(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SnGeodesic.INSTANCE.midpoint(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6)));
   }
 
   public void testMidpointAntipodesFail() {
-    try {
-      SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate()));
   }
 }

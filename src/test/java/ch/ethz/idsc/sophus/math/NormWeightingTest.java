@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -38,17 +39,7 @@ public class NormWeightingTest extends TestCase {
   }
 
   public void testFailNull() {
-    try {
-      NormWeighting.of(null, InversePowerVariogram.of(1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      NormWeighting.of(Norm._2::ofVector, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> NormWeighting.of(null, InversePowerVariogram.of(1)));
+    AssertFail.of(() -> NormWeighting.of(Norm._2::ofVector, null));
   }
 }

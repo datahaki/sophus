@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -94,12 +95,7 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
     NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
         NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(-1);
-    try {
-      nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key));
   }
 
   public void testAsymmetricFail() {
@@ -111,11 +107,6 @@ public class NonuniformFixedRadiusGeodesicCenterTest extends TestCase {
     NonuniformFixedRadiusGeodesicCenter nonuniformFixedRadiusGeodesicCenter = //
         NonuniformFixedRadiusGeodesicCenter.of(Se2Geodesic.INSTANCE);
     Scalar key = RealScalar.of(2);
-    try {
-      nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> nonuniformFixedRadiusGeodesicCenter.apply(navigableMap, key));
   }
 }

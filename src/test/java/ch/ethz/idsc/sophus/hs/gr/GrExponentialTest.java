@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -89,11 +90,6 @@ public class GrExponentialTest extends TestCase {
 
   public void testGrFail() {
     Tensor x = Tensors.fromString("{{1, 1}, {0, 1}}");
-    try {
-      new GrExponential(x);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new GrExponential(x));
   }
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.srf.SurfaceMesh;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.io.Serialization;
@@ -44,11 +45,6 @@ public class LinearMeshRefinementTest extends TestCase {
   }
 
   public void testFailNull() {
-    try {
-      LinearMeshRefinement.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LinearMeshRefinement.of(null));
   }
 }

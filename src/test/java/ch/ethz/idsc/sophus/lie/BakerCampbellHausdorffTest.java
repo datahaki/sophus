@@ -7,6 +7,7 @@ import java.util.function.BinaryOperator;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -152,22 +153,12 @@ public class BakerCampbellHausdorffTest extends TestCase {
   public void testJacobiFail() {
     Tensor ad = LieAlgebras.sl2();
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
-    try {
-      BakerCampbellHausdorff.of(ad, 2);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 2));
   }
 
   public void testDegreeFail() {
     Tensor ad = Array.zeros(2, 2, 2);
     BakerCampbellHausdorff.of(ad, 1);
-    try {
-      BakerCampbellHausdorff.of(ad, 0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 0));
   }
 }

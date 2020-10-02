@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.he;
 
 import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -96,11 +97,6 @@ public class HeBiinvariantMeanTest extends TestCase {
   }
 
   public void testEmpty() {
-    try {
-      HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 }

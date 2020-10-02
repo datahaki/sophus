@@ -32,14 +32,4 @@ public class EightPointCurveSubdivisionTest extends TestCase {
     for (int n = 40; n < 60; n += 3)
       Chop._09.requireClose(curveSubdivision.cyclic(CirclePoints.of(n)), CirclePoints.of(n * 2));
   }
-
-  public void testStringNullFail() {
-    CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(CLOTHOID_BUILDER);
-    try {
-      curveSubdivision.string(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-  }
 }

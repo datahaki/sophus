@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensors;
@@ -18,11 +19,6 @@ public class SplitParametricCurveTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      SplitParametricCurve.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SplitParametricCurve.of(null));
   }
 }

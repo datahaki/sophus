@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -28,20 +29,10 @@ public class Curvature2DTest extends TestCase {
 
   public void testFailHi() {
     Tensor points = Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 0, 0}}");
-    try {
-      Curvature2D.string(points);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Curvature2D.string(points));
   }
 
   public void testFailStringScalar() {
-    try {
-      Curvature2D.string(RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Curvature2D.string(RealScalar.ZERO));
   }
 }

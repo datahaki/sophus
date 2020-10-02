@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.MatrixQ;
@@ -30,11 +31,6 @@ public class SonRandomSampleTest extends TestCase {
   }
 
   public void testZeroFail() {
-    try {
-      SonRandomSample.of(0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> SonRandomSample.of(0));
   }
 }

@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.math.win;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.r2.Se2Parametric;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -51,20 +52,10 @@ public class KnotSpacingTest extends TestCase {
 
   public void testScalarFail() {
     TensorUnaryOperator centripetalKnotSpacing = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0.25);
-    try {
-      centripetalKnotSpacing.apply(RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> centripetalKnotSpacing.apply(RealScalar.ONE));
   }
 
   public void testChordalFail() {
-    try {
-      KnotSpacing.chordal(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> KnotSpacing.chordal(null));
   }
 }

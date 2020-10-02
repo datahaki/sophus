@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.crv.decim;
 
 import ch.ethz.idsc.sophus.lie.rn.RnCurveDecimation;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -79,32 +80,12 @@ public class RamerDouglasPeuckerTest extends TestCase {
   }
 
   public void testEpsilonFail() {
-    try {
-      RnCurveDecimation.of(RealScalar.of(-.1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(-.1)));
   }
 
   public void testFail() {
-    try {
-      RnCurveDecimation.of(RealScalar.of(0.1)).apply(Tensors.fromString("{{{1}, 2}, {{1}, 2}, {{1}, 2}}"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 3, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 2, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Tensors.fromString("{{{1}, 2}, {{1}, 2}, {{1}, 2}}")));
+    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 3, 3)));
+    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 2, 4)));
   }
 }

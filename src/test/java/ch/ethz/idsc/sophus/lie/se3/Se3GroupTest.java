@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -12,20 +13,10 @@ public class Se3GroupTest extends TestCase {
   }
 
   public void testVectorFail() {
-    try {
-      Se3Group.INSTANCE.element(UnitVector.of(4, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se3Group.INSTANCE.element(UnitVector.of(4, 1)));
   }
 
   public void testMatrixFail() {
-    try {
-      Se3Group.INSTANCE.element(HilbertMatrix.of(3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se3Group.INSTANCE.element(HilbertMatrix.of(3)));
   }
 }

@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.math.var;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -26,11 +27,6 @@ public class ThinPlateSplineVariogramTest extends TestCase {
   }
 
   public void testFailNonPositive() {
-    try {
-      ThinPlateSplineVariogram.of(RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> ThinPlateSplineVariogram.of(RealScalar.ZERO));
   }
 }

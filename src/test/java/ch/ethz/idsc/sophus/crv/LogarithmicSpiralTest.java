@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
@@ -25,17 +26,7 @@ public class LogarithmicSpiralTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      LogarithmicSpiral.of(RealScalar.of(2), null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      LogarithmicSpiral.of(null, RealScalar.of(2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LogarithmicSpiral.of(RealScalar.of(2), null));
+    AssertFail.of(() -> LogarithmicSpiral.of(null, RealScalar.of(2)));
   }
 }

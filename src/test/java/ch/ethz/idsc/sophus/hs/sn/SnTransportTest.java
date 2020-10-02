@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -15,11 +16,6 @@ public class SnTransportTest extends TestCase {
 
   public void testTangentFail() {
     TensorUnaryOperator tensorUnaryOperator = SnTransport.INSTANCE.shift(UnitVector.of(3, 0), UnitVector.of(3, 1));
-    try {
-      tensorUnaryOperator.apply(UnitVector.of(3, 0));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> tensorUnaryOperator.apply(UnitVector.of(3, 0)));
   }
 }

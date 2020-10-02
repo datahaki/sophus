@@ -5,6 +5,7 @@ import java.util.Random;
 
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
 import ch.ethz.idsc.sophus.hs.sn.SnRotationMatrix;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -116,47 +117,22 @@ public class BallRandomSampleTest extends TestCase {
   }
 
   public void testCenterEmptyFail() {
-    try {
-      BallRandomSample.of(Tensors.empty(), Quantity.of(2, "m"));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BallRandomSample.of(Tensors.empty(), Quantity.of(2, "m")));
   }
 
   public void testRadiusNegative2Fail() {
-    try {
-      BallRandomSample.of(Tensors.vector(1, 2), RealScalar.of(-1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BallRandomSample.of(Tensors.vector(1, 2), RealScalar.of(-1)));
   }
 
   public void testRadiusNegative3Fail() {
-    try {
-      BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.of(-1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.of(-1)));
   }
 
   public void testCenterScalarFail() {
-    try {
-      BallRandomSample.of(RealScalar.ONE, RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BallRandomSample.of(RealScalar.ONE, RealScalar.ONE));
   }
 
   public void testCenterScalarZeroFail() {
-    try {
-      BallRandomSample.of(RealScalar.ONE, RealScalar.ZERO);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> BallRandomSample.of(RealScalar.ONE, RealScalar.ZERO));
   }
 }

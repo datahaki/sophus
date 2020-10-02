@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.r2;
 
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -22,11 +23,6 @@ public class Se2UniformResampleTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      Se2UniformResample.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se2UniformResample.of(null));
   }
 }

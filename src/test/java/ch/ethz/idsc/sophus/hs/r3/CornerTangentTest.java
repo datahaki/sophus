@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r3;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
 import junit.framework.TestCase;
@@ -22,35 +23,20 @@ public class CornerTangentTest extends TestCase {
     Quaternion qi = Quaternion.of(1, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
-    try {
-      CornerTangent.of(qi, qj, qk);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
   }
 
   public void testImFail2() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(1, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
-    try {
-      CornerTangent.of(qi, qj, qk);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
   }
 
   public void testImFail3() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(1, 5, -2, 0);
-    try {
-      CornerTangent.of(qi, qj, qk);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
   }
 }

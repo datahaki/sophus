@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.hs.h2.H2Midpoint;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -95,20 +96,10 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      LaneRiesenfeldCurveSubdivision.of(null, 3);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LaneRiesenfeldCurveSubdivision.of(null, 3));
   }
 
   public void testDegreeFail() {
-    try {
-      LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0));
   }
 }

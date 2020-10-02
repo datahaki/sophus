@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.crv.dubins;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.crv.dubins.DubinsPath.Type;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactScalarQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -69,21 +70,11 @@ public class DubinsPathTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      Type.LSR.tangent(2, RealScalar.of(-10));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Type.LSR.tangent(2, RealScalar.of(-10)));
   }
 
   public void testAnticipateFail() {
-    try {
-      Type.LSR.tangent(-2, RealScalar.of(10));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Type.LSR.tangent(-2, RealScalar.of(10)));
   }
 
   public void testWithoutUnits() {
@@ -129,47 +120,22 @@ public class DubinsPathTest extends TestCase {
   }
 
   public void testSignFail() {
-    try {
-      DubinsPath.of(Type.LRL, RealScalar.ONE, Tensors.vector(1, -10, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> DubinsPath.of(Type.LRL, RealScalar.ONE, Tensors.vector(1, -10, 1)));
   }
 
   public void testOutsideFail() {
     DubinsPath dubinsPath = DubinsPath.of(Type.LRL, RealScalar.ONE, Tensors.vector(1, 10, 1));
     assertEquals(dubinsPath.length(), Quantity.of(12, ""));
     ScalarTensorFunction scalarTensorFunction = dubinsPath.sampler(Tensors.vector(1, 2, 3));
-    try {
-      scalarTensorFunction.apply(RealScalar.of(-.1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      scalarTensorFunction.apply(RealScalar.of(13));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> scalarTensorFunction.apply(RealScalar.of(-.1)));
+    AssertFail.of(() -> scalarTensorFunction.apply(RealScalar.of(13)));
   }
 
   public void testNullFail() {
-    try {
-      DubinsPath.of(null, RealScalar.ONE, Tensors.vector(1, 10, 1));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> DubinsPath.of(null, RealScalar.ONE, Tensors.vector(1, 10, 1)));
   }
 
   public void testVectorFail() {
-    try {
-      DubinsPath.of(Type.RLR, RealScalar.ONE, Tensors.vector(1, 10, 1, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> DubinsPath.of(Type.RLR, RealScalar.ONE, Tensors.vector(1, 10, 1, 3)));
   }
 }

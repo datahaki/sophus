@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -47,11 +48,6 @@ public class HnBilinearFormTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      HnBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> HnBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
   }
 }

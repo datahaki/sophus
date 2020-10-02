@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.clt;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -43,17 +44,7 @@ public class LagrangeQuadraticDTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      LagrangeQuadraticD.of(null, RealScalar.ONE);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      LagrangeQuadraticD.of(RealScalar.ONE, null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> LagrangeQuadraticD.of(null, RealScalar.ONE));
+    AssertFail.of(() -> LagrangeQuadraticD.of(RealScalar.ONE, null));
   }
 }

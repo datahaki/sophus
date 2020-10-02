@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.he;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -95,28 +96,13 @@ public class HeGroupElementTest extends TestCase {
   }
 
   public void testFail() {
-    try {
-      new HeGroupElement(Tensors.of(HilbertMatrix.of(3), Tensors.vector(1, 2, 3), RealScalar.ONE));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      new HeGroupElement(Tensors.of(Tensors.vector(1, 2, 3), HilbertMatrix.of(3), RealScalar.ONE));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new HeGroupElement(Tensors.of(HilbertMatrix.of(3), Tensors.vector(1, 2, 3), RealScalar.ONE)));
+    AssertFail.of(() -> new HeGroupElement(Tensors.of(Tensors.vector(1, 2, 3), HilbertMatrix.of(3), RealScalar.ONE)));
   }
 
   public void testDlNullFail() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
-    try {
-      a.dL(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> a.dL(null));
   }
 }

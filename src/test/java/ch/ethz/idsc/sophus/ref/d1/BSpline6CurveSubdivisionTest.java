@@ -33,14 +33,4 @@ public class BSpline6CurveSubdivisionTest extends TestCase {
     CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(CLOTHOID_BUILDER);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
   }
-
-  public void testStringNullFail() {
-    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(CLOTHOID_BUILDER);
-    try {
-      curveSubdivision.string(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-  }
 }

@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.srf;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.Serialization;
 import junit.framework.TestCase;
@@ -16,11 +17,6 @@ public class SurfaceMeshTest extends TestCase {
 
   public void testNullFail() {
     SurfaceMesh surfaceMesh = new SurfaceMesh();
-    try {
-      surfaceMesh.addVert(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> surfaceMesh.addVert(null));
   }
 }

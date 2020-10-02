@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.io.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import junit.framework.TestCase;
@@ -13,11 +14,6 @@ public class GrMemberQTest extends TestCase {
   }
 
   public void testNullFail() {
-    try {
-      GrMemberQ.of(null);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> GrMemberQ.of(null));
   }
 }

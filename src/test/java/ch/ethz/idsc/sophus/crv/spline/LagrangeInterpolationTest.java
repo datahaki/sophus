@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -25,11 +26,6 @@ public class LagrangeInterpolationTest extends TestCase {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(-3, 7), 4, 2).unmodifiable();
     Interpolation interpolation = LagrangeInterpolation.of(RnGeodesic.INSTANCE, control);
     interpolation.get(Tensors.vector(1));
-    try {
-      interpolation.get(Tensors.vector(1, 2));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> interpolation.get(Tensors.vector(1, 2)));
   }
 }

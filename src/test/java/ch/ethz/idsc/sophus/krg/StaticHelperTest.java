@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.StringScalarQ;
@@ -25,11 +26,6 @@ public class StaticHelperTest extends TestCase {
   public void testFail() {
     Tensor tensor = Tensors.fromString("{1[m], 2[s]}");
     assertFalse(StringScalarQ.any(tensor));
-    try {
-      StaticHelper.uniqueUnit(tensor);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> StaticHelper.uniqueUnit(tensor));
   }
 }

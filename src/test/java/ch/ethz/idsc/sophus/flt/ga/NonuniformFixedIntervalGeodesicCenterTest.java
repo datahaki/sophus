@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -84,12 +85,7 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
         NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(-1);
     Scalar key = RealScalar.of(1);
-    try {
-      nonuniformFixedIntervalGeodesicCenter.apply(navigableMap, key, interval);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> nonuniformFixedIntervalGeodesicCenter.apply(navigableMap, key, interval));
   }
 
   public void testFail() {
@@ -99,11 +95,6 @@ public class NonuniformFixedIntervalGeodesicCenterTest extends TestCase {
         NonuniformFixedIntervalGeodesicCenter.of(Se2Geodesic.INSTANCE, GaussianWindow.FUNCTION);
     Scalar interval = RealScalar.of(-1);
     Scalar key = RealScalar.of(1);
-    try {
-      nonuniformFixedIntervalGeodesicCenter.apply(navigableMap, key, interval);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> nonuniformFixedIntervalGeodesicCenter.apply(navigableMap, key, interval));
   }
 }

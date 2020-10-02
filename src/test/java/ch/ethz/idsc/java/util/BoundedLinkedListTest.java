@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.io.Serialization;
 import junit.framework.TestCase;
 
@@ -34,18 +35,8 @@ public class BoundedLinkedListTest extends TestCase {
     BoundedLinkedList<Integer> boundedLinkedList = new BoundedLinkedList<>(2);
     assertTrue(boundedLinkedList.add(0));
     assertTrue(boundedLinkedList.add(1));
-    try {
-      boundedLinkedList.addAll(Arrays.asList(6, 7));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
-    try {
-      boundedLinkedList.addAll(0, Arrays.asList(6, 7));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> boundedLinkedList.addAll(Arrays.asList(6, 7)));
+    AssertFail.of(() -> boundedLinkedList.addAll(0, Arrays.asList(6, 7)));
   }
 
   public void testEmpty() {
@@ -88,12 +79,7 @@ public class BoundedLinkedListTest extends TestCase {
 
   public void testAddAllFail() {
     BoundedLinkedList<Integer> boundedLinkedList = new BoundedLinkedList<>(7);
-    try {
-      boundedLinkedList.addAll(Arrays.asList(1, 2, 3, 4));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> boundedLinkedList.addAll(Arrays.asList(1, 2, 3, 4)));
   }
 
   public void testAddFirstFail() {
@@ -108,11 +94,6 @@ public class BoundedLinkedListTest extends TestCase {
 
   public void testFailNegativeSize() {
     new BoundedLinkedList<>(0);
-    try {
-      new BoundedLinkedList<>(-1);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new BoundedLinkedList<>(-1));
   }
 }
