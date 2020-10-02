@@ -15,6 +15,7 @@ public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
   // ---
   private final SplitInterface splitInterface;
 
+  /** @param splitInterface */
   public EightPointCurveSubdivision(SplitInterface splitInterface) {
     super(splitInterface);
     this.splitInterface = splitInterface;

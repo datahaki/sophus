@@ -50,7 +50,6 @@ public class ClothoidSolutions implements Serializable {
       Tensor defects = probes.map(clothoidTangentDefect);
       defects_real = defects.map(Real.FUNCTION);
       // Tensor defects_imag = defects.map(Imag.FUNCTION);
-      // ---
       boolean prev = Sign.isPositive(defects_real.Get(0));
       for (int index = 1; index < probes.length(); ++index) {
         boolean next = Sign.isPositive(defects_real.Get(index));

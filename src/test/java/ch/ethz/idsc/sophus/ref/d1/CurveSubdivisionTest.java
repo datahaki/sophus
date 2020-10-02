@@ -48,6 +48,7 @@ public class CurveSubdivisionTest extends TestCase {
       DodgsonSabinCurveSubdivision.INSTANCE, //
       DualC2FourPointCurveSubdivision.cubic(Se2Geodesic.INSTANCE), //
       DualC2FourPointCurveSubdivision.tightest(Se2Geodesic.INSTANCE), //
+      new SixPointCurveSubdivision(Se2Geodesic.INSTANCE), //
       new EightPointCurveSubdivision(Se2Geodesic.INSTANCE), //
       new MSpline3CurveSubdivision(Se2BiinvariantMeans.GLOBAL), //
       LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1), //

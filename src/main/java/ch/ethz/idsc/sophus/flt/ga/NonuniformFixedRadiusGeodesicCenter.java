@@ -52,9 +52,8 @@ public class NonuniformFixedRadiusGeodesicCenter implements Serializable {
     // ---
     Tensor remain = Tensors.empty();
     remain.append(startingWeight);
-    for (int index = 1; index <= (subMap.size() - 1) / 2; ++index) {
+    for (int index = 1; index <= (subMap.size() - 1) / 2; ++index)
       remain.append(Power.of(startingWeight, index + 1));
-    }
     remain = NormalizeTotal.FUNCTION.apply(remain);
     maskLeft.append(remain.Get(0).multiply(RationalScalar.HALF));
     maskRight.append(remain.Get(0).multiply(RationalScalar.HALF));

@@ -20,7 +20,7 @@ public class SixPointCurveSubdivision extends AbstractSixPointCurveSubdivision {
   private static final Scalar PQ = RationalScalar.of(25, 22);
   private static final Scalar _R = RationalScalar.of(75, 64);
 
-  // ---
+  /** @param splitInterface */
   public SixPointCurveSubdivision(SplitInterface splitInterface) {
     super(splitInterface);
   }

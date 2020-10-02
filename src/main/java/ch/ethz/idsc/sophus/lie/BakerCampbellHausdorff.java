@@ -25,6 +25,10 @@ import ch.ethz.idsc.tensor.sca.Factorial;
  * Reference: Neeb
  * Hakenberg.de kernel.nb */
 public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializable {
+  private static final Scalar _0 = RealScalar.ZERO;
+  private static final Scalar _1 = RealScalar.ONE;
+  private static final int[] SIGN = { 1, -1 };
+
   /** @param ad tensor of rank 3 that satisfies the Jacobi identity
    * @param degree positive
    * @return */
@@ -36,10 +40,6 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
   }
 
   /***************************************************/
-  private static final Scalar _0 = RealScalar.ZERO;
-  private static final Scalar _1 = RealScalar.ONE;
-  private static final int[] SIGN = { 1, -1 };
-  // ---
   private final Tensor ad;
   private final int degree;
   private final Chop chop;
@@ -80,7 +80,6 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
       final int k = p.length();
       if (chop.allZero(v))
         return;
-      // ---
       Scalar f = RealScalar.of(Math.multiplyExact(SIGN[k % 2] * (k + 1), total_q + 1)) //
           .multiply(Times.pmul(Join.of(p, q).map(Factorial.FUNCTION)).Get());
       sum.set(v.divide(f)::add, d - 1);

@@ -21,6 +21,7 @@ public final class MSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivi
   private final TensorUnaryOperator midpoint;
   private final TensorUnaryOperator center;
 
+  /** @param biinvariantMean */
   public MSpline3CurveSubdivision(BiinvariantMean biinvariantMean) {
     midpoint = BiinvariantMeans.of(biinvariantMean, MASK_MID);
     center = BiinvariantMeans.of(biinvariantMean, MASK_CEN);

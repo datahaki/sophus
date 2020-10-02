@@ -21,7 +21,7 @@ public class FarSixPointCurveSubdivision extends AbstractSixPointCurveSubdivisio
   private static final Scalar PR = RationalScalar.of(50, 51);
   private static final Scalar Q_ = RationalScalar.of(153, 128);
 
-  // ---
+  /** @param splitInterface */
   public FarSixPointCurveSubdivision(SplitInterface splitInterface) {
     super(splitInterface);
   }

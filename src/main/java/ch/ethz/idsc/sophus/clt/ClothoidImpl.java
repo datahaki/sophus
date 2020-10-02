@@ -37,7 +37,6 @@ import ch.ethz.idsc.tensor.sca.Real;
     this.lieGroupElement = Objects.requireNonNull(lieGroupElement);
     this.lagrangeQuadratic = lagrangeQuadratic;
     this.diff = diff;
-    // ---
     this.clothoidIntegral = clothoidIntegral;
     Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
     Scalar plength = RealScalar.ZERO;

@@ -15,7 +15,7 @@ public class MinMax implements Serializable {
     return new MinMax(tensor);
   }
 
-  // ---
+  /***************************************************/
   private final Tensor min;
   private final Tensor max;
 
