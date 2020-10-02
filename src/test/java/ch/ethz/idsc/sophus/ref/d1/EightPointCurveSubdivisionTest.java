@@ -1,9 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
-import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
-import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -15,8 +14,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class EightPointCurveSubdivisionTest extends TestCase {
-  private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
-
   public void testSimple() {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGeodesic.INSTANCE);
     Tensor cyclic = curveSubdivision.cyclic(UnitVector.of(10, 5));
@@ -31,5 +28,9 @@ public class EightPointCurveSubdivisionTest extends TestCase {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGeodesic.INSTANCE);
     for (int n = 40; n < 60; n += 3)
       Chop._09.requireClose(curveSubdivision.cyclic(CirclePoints.of(n)), CirclePoints.of(n * 2));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> new EightPointCurveSubdivision(null));
   }
 }

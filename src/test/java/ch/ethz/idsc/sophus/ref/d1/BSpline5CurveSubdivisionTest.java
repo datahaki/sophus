@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilder;
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -55,5 +56,9 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
       ExactTensorQ.require(tensor);
       clip.requireInside(Total.of(tensor).Get());
     }
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> new BSpline5CurveSubdivision(null));
   }
 }

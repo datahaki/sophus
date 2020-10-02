@@ -35,7 +35,8 @@ public class CurveSubdivisionTest extends TestCase {
     }
   }
 
-  public static final CurveSubdivision[] CURVE_SUBDIVISIONS = { new BSpline1CurveSubdivision(Se2Geodesic.INSTANCE), //
+  public static final CurveSubdivision[] CURVE_SUBDIVISIONS = { //
+      new BSpline1CurveSubdivision(Se2Geodesic.INSTANCE), //
       new BSpline2CurveSubdivision(Se2Geodesic.INSTANCE), //
       new BSpline3CurveSubdivision(Se2Geodesic.INSTANCE), //
       BSpline4CurveSubdivision.split2lo(Se2Geodesic.INSTANCE), //
@@ -49,8 +50,8 @@ public class CurveSubdivisionTest extends TestCase {
       DualC2FourPointCurveSubdivision.tightest(Se2Geodesic.INSTANCE), //
       new EightPointCurveSubdivision(Se2Geodesic.INSTANCE), //
       new MSpline3CurveSubdivision(Se2BiinvariantMeans.GLOBAL), //
-      LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0), //
       LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1), //
+      LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 2), //
       LaneRiesenfeld3CurveSubdivision.of(Se2Geodesic.INSTANCE), //
   };
 

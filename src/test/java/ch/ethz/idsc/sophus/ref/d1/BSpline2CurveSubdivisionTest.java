@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -87,5 +88,9 @@ public class BSpline2CurveSubdivisionTest extends TestCase {
     TensorUnaryOperator fps = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> new BSpline2CurveSubdivision(null));
   }
 }

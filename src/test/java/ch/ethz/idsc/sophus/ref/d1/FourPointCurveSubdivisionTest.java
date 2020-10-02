@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -79,5 +80,9 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     TensorUnaryOperator fps = new FourPointCurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> new FourPointCurveSubdivision(null));
   }
 }

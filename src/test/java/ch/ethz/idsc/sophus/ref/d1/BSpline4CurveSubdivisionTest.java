@@ -5,8 +5,10 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.clt.ClothoidBuilders;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
@@ -96,5 +98,12 @@ public class BSpline4CurveSubdivisionTest extends TestCase {
     TensorUnaryOperator fps = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> BSpline4CurveSubdivision.split2lo(null));
+    AssertFail.of(() -> BSpline4CurveSubdivision.split2hi(null));
+    AssertFail.of(() -> BSpline4CurveSubdivision.split3(null));
+    AssertFail.of(() -> BSpline4CurveSubdivision.split3(null, RealScalar.ONE));
   }
 }

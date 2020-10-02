@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.ref.d1;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -25,5 +26,10 @@ public class DualC2FourPointCurveSubdivisionTest extends TestCase {
   public void testTightest() {
     CurveSubdivision curveSubdivision = DualC2FourPointCurveSubdivision.tightest(RnGeodesic.INSTANCE);
     curveSubdivision.cyclic(UnitVector.of(4, 2));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> DualC2FourPointCurveSubdivision.cubic(null));
+    AssertFail.of(() -> DualC2FourPointCurveSubdivision.tightest(null));
   }
 }
