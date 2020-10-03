@@ -1,8 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.sample;
 
-import java.util.Random;
-
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
 import ch.ethz.idsc.sophus.hs.sn.SnRotationMatrix;
 import ch.ethz.idsc.sophus.usr.AssertFail;
@@ -27,13 +25,12 @@ import junit.framework.TestCase;
 
 public class BallRandomSampleTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-  private static final Random RANDOM = new Random();
 
   public void testSimple() {
     Tensor center = Tensors.vector(10, 20, 30, 40);
     Scalar radius = RealScalar.of(2);
     RandomSampleInterface rsi = BallRandomSample.of(center, radius);
-    Tensor vector = rsi.randomSample(RANDOM).subtract(center);
+    Tensor vector = RandomSample.of(rsi).subtract(center);
     assertTrue(Scalars.lessEquals(Norm._2.ofVector(vector), radius));
   }
 
@@ -42,7 +39,7 @@ public class BallRandomSampleTest extends TestCase {
     Scalar radius = RealScalar.of(3);
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(center, radius);
     for (int index = 0; index < 100; ++index) {
-      Tensor tensor = randomSampleInterface.randomSample(RANDOM);
+      Tensor tensor = RandomSample.of(randomSampleInterface);
       VectorQ.requireLength(tensor, 1);
       Clips.interval(12, 18).requireInside(tensor.Get(0));
     }
@@ -51,7 +48,7 @@ public class BallRandomSampleTest extends TestCase {
   public void testSimple2D() {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.ONE);
     for (int count = 0; count < 100; ++count) {
-      Tensor loc = diskRandomSample.randomSample(RANDOM);
+      Tensor loc = RandomSample.of(diskRandomSample);
       Scalar rad = Norm._2.ofVector(loc);
       assertTrue(Scalars.lessEquals(rad, RealScalar.ONE));
     }
@@ -59,7 +56,7 @@ public class BallRandomSampleTest extends TestCase {
 
   public void testQuantity2D() {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.fromString("{10[m], 20[m]}"), Quantity.of(2, "m"));
-    Tensor tensor = diskRandomSample.randomSample(RANDOM);
+    Tensor tensor = RandomSample.of(diskRandomSample);
     ScalarUnaryOperator scalarUnaryOperator = QuantityMagnitude.SI().in("m");
     tensor.map(scalarUnaryOperator);
   }
@@ -68,13 +65,13 @@ public class BallRandomSampleTest extends TestCase {
     Tensor center = Tensors.vector(10, 20, 3);
     Scalar radius = RealScalar.of(0.0);
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(center, radius);
-    assertEquals(randomSampleInterface.randomSample(RANDOM), center);
+    assertEquals(RandomSample.of(randomSampleInterface), center);
   }
 
   public void testQuantity() {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.fromString("{10[m], 20[m], -5[m]}"), Quantity.of(2, "m"));
-    Tensor tensor = randomSampleInterface.randomSample(RANDOM);
+    Tensor tensor = RandomSample.of(randomSampleInterface);
     ScalarUnaryOperator scalarUnaryOperator = QuantityMagnitude.SI().in("m");
     tensor.map(scalarUnaryOperator);
   }
@@ -84,8 +81,8 @@ public class BallRandomSampleTest extends TestCase {
         BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
     int fails = 0;
     for (int index = 0; index < 20; ++index) {
-      Tensor pn = NORMALIZE.apply(randomSampleInterface.randomSample(RANDOM));
-      Tensor qn = NORMALIZE.apply(randomSampleInterface.randomSample(RANDOM));
+      Tensor pn = NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor qn = NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor p = Tensors.of(pn, pn);
       Tensor q = Tensors.of(qn, qn);
       try {
@@ -102,8 +99,8 @@ public class BallRandomSampleTest extends TestCase {
     for (int index = 0; index < 50; ++index) {
       RandomSampleInterface randomSampleInterface = //
           BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
-      Tensor p = NORMALIZE.apply(randomSampleInterface.randomSample(RANDOM));
-      Tensor q = NORMALIZE.apply(randomSampleInterface.randomSample(RANDOM));
+      Tensor p = NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor q = NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor tensor = SnRotationMatrix.of(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
       assertTrue(OrthogonalMatrixQ.of(tensor, Chop._10));
@@ -113,7 +110,7 @@ public class BallRandomSampleTest extends TestCase {
   public void testLarge() {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Array.zeros(10), RealScalar.ONE);
-    randomSampleInterface.randomSample(RANDOM);
+    RandomSample.of(randomSampleInterface);
   }
 
   public void testCenterEmptyFail() {

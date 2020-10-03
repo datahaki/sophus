@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.hs.h2;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.Random;
 
 import ch.ethz.idsc.sophus.math.sample.BallRandomSample;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
@@ -22,10 +22,9 @@ import junit.framework.TestCase;
 
 public class H2MidpointTest extends TestCase {
   public void testSymmetric() {
-    Random random = new Random();
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(Array.zeros(2), RealScalar.ONE);
     for (int count = 0; count < 10; ++count) {
-      Tensor a = randomSampleInterface.randomSample(random);
+      Tensor a = RandomSample.of(randomSampleInterface);
       Tensor midpoint = H2Midpoint.INSTANCE.midpoint(a, a.negate());
       Chop._12.requireClose(midpoint, Array.zeros(2));
     }

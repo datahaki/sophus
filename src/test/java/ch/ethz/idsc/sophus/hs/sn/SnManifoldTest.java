@@ -1,13 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import java.util.Random;
-
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
@@ -74,7 +73,6 @@ public class SnManifoldTest extends TestCase {
 
   public void testBiinvariance() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    Random random = new Random();
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 3; d < 7; ++d) {
         RandomSampleInterface randomSampleInterface = SonRandomSample.of(d);
@@ -90,7 +88,7 @@ public class SnManifoldTest extends TestCase {
           }
           // ---
           {
-            Tensor matrix = randomSampleInterface.randomSample(random);
+            Tensor matrix = RandomSample.of(randomSampleInterface);
             Tensor mean2 = matrix.dot(mean);
             Tensor evaluate = new MeanDefect(Tensor.of(sequence.stream().map(matrix::dot)), weights, SnManifold.INSTANCE.exponential(mean2)).tangent();
             Chop._12.requireAllZero(evaluate);

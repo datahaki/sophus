@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.IOException;
-import java.util.Random;
 
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -16,7 +16,7 @@ public class SnRandomSampleTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int dimension = 0; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(SnRandomSample.of(dimension));
-      Tensor tensor = randomSampleInterface.randomSample(new Random());
+      Tensor tensor = RandomSample.of(randomSampleInterface);
       Chop._12.requireClose(Norm._2.ofVector(tensor), RealScalar.ONE);
       assertEquals(tensor.length(), dimension + 1);
     }
