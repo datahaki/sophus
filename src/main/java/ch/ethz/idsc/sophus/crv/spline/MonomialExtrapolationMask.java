@@ -22,6 +22,7 @@ import ch.ethz.idsc.tensor.alg.Binomial;
  * 
  * RHS=[1 1 1 1]' */
 public class MonomialExtrapolationMask implements Function<Integer, Tensor>, Serializable {
+  private static final long serialVersionUID = -8782430323231659891L;
   public static final Function<Integer, Tensor> INSTANCE = //
       MemoFunction.wrap(new MonomialExtrapolationMask());
 

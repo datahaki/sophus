@@ -32,6 +32,7 @@ import ch.ethz.idsc.tensor.alg.Last;
  * "The approximation order of four-point interpolatory curve subdivision"
  * by Michael S. Floater */
 public class FourPointCurveSubdivision extends BSpline1CurveSubdivision {
+  private static final long serialVersionUID = -275386035680487301L;
   private final static Scalar P1_16 = RationalScalar.of(1, 16);
   private final static Scalar N1_4 = RationalScalar.of(-1, 4);
   private final static Scalar P1_4 = RationalScalar.of(+1, 4);

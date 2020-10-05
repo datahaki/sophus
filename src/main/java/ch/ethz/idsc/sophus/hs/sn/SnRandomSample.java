@@ -22,6 +22,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/Sphere.html">Sphere</a> */
 public class SnRandomSample implements RandomSampleInterface, Serializable {
+  private static final long serialVersionUID = 7503818121782258222L;
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   /** Example:

@@ -12,6 +12,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  */
 public class LieExponential implements HsExponential, Serializable {
+  private static final long serialVersionUID = -1771924999128144298L;
+
   /** @param lieGroup
    * @param exponential
    * @return */
@@ -36,6 +38,7 @@ public class LieExponential implements HsExponential, Serializable {
   }
 
   private class ExponentialImpl implements Exponential, Serializable {
+    private static final long serialVersionUID = 1572938118717771657L;
     private final LieGroupElement element;
     private final LieGroupElement inverse;
 

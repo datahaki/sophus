@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * fast midpoint computation */
 public class HnGeodesic extends HsGeodesic {
+  private static final long serialVersionUID = 1632671383451535334L;
   public static final GeodesicInterface INSTANCE = new HnGeodesic();
 
   /***************************************************/

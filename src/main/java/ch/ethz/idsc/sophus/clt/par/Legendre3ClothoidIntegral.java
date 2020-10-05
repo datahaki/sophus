@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** 3-point Gauss Legendre quadrature on interval [0, 1] */
 /* package */ class Legendre3ClothoidIntegral implements ClothoidPartial, ClothoidIntegral, Serializable {
+  private static final long serialVersionUID = -666232806915123138L;
   private static final Scalar _1 = RealScalar.of(1.0);
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //

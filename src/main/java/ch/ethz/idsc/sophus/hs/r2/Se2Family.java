@@ -14,6 +14,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** the term "family" conveys the meaning that the rigid transformation
  * depends on a single parameter, for instance time */
 public final class Se2Family implements R2RigidFamily, Serializable {
+  private static final long serialVersionUID = -466377390369500071L;
+
   /** @param center
    * @param rotation
    * @return */

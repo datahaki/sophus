@@ -23,6 +23,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public class LeverageDistances implements WeightingInterface, Serializable {
+  private static final long serialVersionUID = 9213702555219716959L;
+
   /** @param vectorLogManifold
    * @return */
   public static WeightingInterface of(VectorLogManifold vectorLogManifold) {

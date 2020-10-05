@@ -10,6 +10,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class GrMemberQ extends AbstractHsMemberQ implements Serializable {
+  private static final long serialVersionUID = 8544347081121190371L;
+
   /** @param chop
    * @return */
   public static HsMemberQ of(Chop chop) {

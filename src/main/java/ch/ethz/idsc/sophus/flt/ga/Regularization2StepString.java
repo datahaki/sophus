@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.Unprotect;
 
 /** @see Regularization2Step */
 /* package */ class Regularization2StepString extends Regularization2Step {
+  private static final long serialVersionUID = 791393962130141423L;
+
   public Regularization2StepString(SplitInterface splitInterface, Scalar factor) {
     super(splitInterface, factor);
   }

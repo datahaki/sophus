@@ -7,6 +7,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 
 public abstract class AbstractSixPointCurveSubdivision extends FourPointCurveSubdivision {
+  private static final long serialVersionUID = 964799804447310299L;
+
   public AbstractSixPointCurveSubdivision(SplitInterface splitInterface) {
     super(splitInterface);
   }

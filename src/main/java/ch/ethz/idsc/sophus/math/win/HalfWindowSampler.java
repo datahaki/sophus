@@ -12,6 +12,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** samples a given window function uniformly in the interval [-1/2, 0] */
 public class HalfWindowSampler extends BaseWindowSampler {
+  private static final long serialVersionUID = 2960047241630766426L;
+
   /** @param windowFunction for evaluation in the interval [-1/2, +1/2] */
   public static Function<Integer, Tensor> of(ScalarUnaryOperator windowFunction) {
     return MemoFunction.wrap(new HalfWindowSampler(windowFunction));

@@ -9,6 +9,8 @@ import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class InverseCoordinate implements TensorUnaryOperator {
+  private static final long serialVersionUID = -4923137024335634245L;
+
   /** @param tensorUnaryOperator
    * @param vectorLogManifold
    * @param sequence

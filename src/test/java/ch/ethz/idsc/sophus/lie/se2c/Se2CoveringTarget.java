@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
 
 /** only for testing ad-invariance */
 public class Se2CoveringTarget implements TensorNorm, Serializable {
+  private static final long serialVersionUID = 3912992118196680651L;
   private final TensorNorm tensorNorm;
   private final Scalar offset;
 

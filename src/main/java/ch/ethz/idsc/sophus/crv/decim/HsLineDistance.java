@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.Norm;
 
 public class HsLineDistance implements LineDistance, Serializable {
+  private static final long serialVersionUID = -8582521014955024591L;
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final VectorLogManifold vectorLogManifold;
@@ -32,6 +33,7 @@ public class HsLineDistance implements LineDistance, Serializable {
   }
 
   public class NormImpl implements TensorNorm, Serializable {
+    private static final long serialVersionUID = -597664000698013429L;
     private final TangentSpace tangentSpace;
     private final Tensor normal;
 

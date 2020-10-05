@@ -24,6 +24,8 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
 public class ThreePointCoordinate implements TensorUnaryOperator {
+  private static final long serialVersionUID = -4726321956728082729L;
+
   /** @param biFunction
    * @return */
   public static TensorUnaryOperator of(BiFunction<Tensor, Scalar, Tensor> biFunction) {

@@ -19,6 +19,8 @@ import ch.ethz.idsc.tensor.Tensors;
  * 
  * weights are required to be affine */
 public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializable {
+  private static final long serialVersionUID = -3740692365906664693L;
+
   /** @param scalarBiinvariantMean
    * @return */
   public static BiinvariantMean covering(ScalarBiinvariantMean scalarBiinvariantMean) {

@@ -17,6 +17,8 @@ import ch.ethz.idsc.tensor.mat.SquareMatrixQ;
  * 
  * @see So3Geodesic */
 public class LinearGroupElement implements LieGroupElement, Serializable {
+  private static final long serialVersionUID = 6859946688709959077L;
+
   /** @param matrix square and invertible
    * @return
    * @throws Exception if given matrix is not invertible */

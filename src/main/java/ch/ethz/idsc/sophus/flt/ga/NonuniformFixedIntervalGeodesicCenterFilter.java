@@ -11,6 +11,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Min;
 
 public class NonuniformFixedIntervalGeodesicCenterFilter implements ScalarTensorMapUnaryOperator, Serializable {
+  private static final long serialVersionUID = 6306155419708412566L;
+
   /** @param nonuniformGeodesicCenter
    * @param (temporal) interval radius
    * @return

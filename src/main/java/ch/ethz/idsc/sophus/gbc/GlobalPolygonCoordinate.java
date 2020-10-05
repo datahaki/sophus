@@ -14,6 +14,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class GlobalPolygonCoordinate implements BarycentricCoordinate, Serializable {
+  private static final long serialVersionUID = 6478694206760646308L;
+
   /** @param vectorLogManifold with 2-dimensional tangent space
    * @param biFunction {@link Barycenter}
    * @return */

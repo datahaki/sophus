@@ -16,7 +16,10 @@ import ch.ethz.idsc.tensor.sca.Sign;
 import ch.ethz.idsc.tensor.sca.SignInterface;
 
 public class Se2AxisYProject implements TensorScalarFunction {
+  private static final long serialVersionUID = -2090599423068993025L;
+
   private static class MapSingular implements TensorScalarFunction {
+    private static final long serialVersionUID = -4472897251378604329L;
     private static final Scalar[] SIGNUM = { //
         DoubleScalar.NEGATIVE_INFINITY, //
         RealScalar.ZERO, //

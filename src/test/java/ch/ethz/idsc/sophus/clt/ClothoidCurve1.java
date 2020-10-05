@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** 1-point Gauss Legendre quadrature on interval [0, 1] */
 /* package */ class ClothoidCurve1 extends ClothoidCurve {
+  private static final long serialVersionUID = -4385381339989450364L;
   private static final Scalar HALF = RealScalar.of(0.5);
 
   // ---

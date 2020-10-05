@@ -19,6 +19,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** GeodesicExtrapolate projects a sequence of points to their next (expected) point
  * with each point weighted as provided by an external function. */
 public class GeodesicExtrapolation implements TensorUnaryOperator {
+  private static final long serialVersionUID = -8236139183742722464L;
+
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length "sequence.length - 2"
    * @return operator that maps a sequence of number of points to their next (expected) point
@@ -37,6 +39,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
 
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
+    private static final long serialVersionUID = 2346357295827295423L;
     private final Function<Integer, Tensor> function;
 
     private Splits(Function<Integer, Tensor> function) {

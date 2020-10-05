@@ -17,6 +17,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * @param p vector of the form {px, py, pa}
  * @param q vector of the form {qx, qy, qa} */
 public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable {
+  private static final long serialVersionUID = 1027220677147085210L;
   private final ClothoidQuadratic clothoidQuadratic;
   private final ClothoidIntegration clothoidIntegration;
 

@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 /** for matching end point tangents the real part of the defect should be 0
  * and the imaginary part should be positive */
 public class ClothoidTangentDefect implements ScalarUnaryOperator {
+  private static final long serialVersionUID = 6840462595212020986L;
   private static final Scalar DIAG = ComplexScalar.of(0.7071067811865476, 0.7071067811865475);
 
   public static ClothoidTangentDefect of(Number s1, Number s2) {

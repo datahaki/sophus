@@ -20,6 +20,8 @@ import ch.ethz.idsc.tensor.alg.Last;
  * "A theoretical development for the computer generation of piecewise polynomial surfaces"
  * by J. M. Lane and R. F. Riesenfeld; IEEE Trans. Pattern Anal. Machine Intell. 2 (1980), 35-46 */
 public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3CurveSubdivision implements Serializable {
+  private static final long serialVersionUID = -6803986010940874509L;
+
   /** @param midpointInterface
    * @return */
   public static CurveSubdivision of(MidpointInterface midpointInterface) {

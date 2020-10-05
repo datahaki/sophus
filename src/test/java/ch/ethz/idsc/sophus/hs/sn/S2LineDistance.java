@@ -25,6 +25,7 @@ public enum S2LineDistance implements LineDistance {
   }
 
   private class S2Line implements TensorNorm, Serializable {
+    private static final long serialVersionUID = -5686900639748557587L;
     private final Tensor cross;
 
     public S2Line(Tensor p, Tensor q) {

@@ -21,6 +21,7 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
  * "Eichfeldtheorie"
  * by Helga Baum, 2005 */
 public class StExponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = -2223040776214785230L;
   private static final HsMemberQ HS_MEMBER_Q = StMemberQ.of(Tolerance.CHOP);
   // ---
   @SuppressWarnings("unused")

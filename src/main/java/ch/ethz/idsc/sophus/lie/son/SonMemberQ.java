@@ -15,6 +15,8 @@ import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class SonMemberQ extends AbstractHsMemberQ implements Serializable {
+  private static final long serialVersionUID = 7549561191947505799L;
+
   /** @param chop
    * @return */
   public static HsMemberQ of(Chop chop) {

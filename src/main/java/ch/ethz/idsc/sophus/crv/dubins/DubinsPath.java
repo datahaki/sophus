@@ -23,6 +23,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * immutable */
 public class DubinsPath implements Serializable {
+  private static final long serialVersionUID = -6447018151704657785L;
+
   public static enum Type {
     LSR(+1, +0, -1, Steer2TurnsDiffSide.INSTANCE), //
     RSL(-1, +0, +1, Steer2TurnsDiffSide.INSTANCE), //

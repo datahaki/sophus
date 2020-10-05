@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.ScalarQ;
 import ch.ethz.idsc.tensor.Tensor;
 
 public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
+  private static final long serialVersionUID = 6952851262178862984L;
   private static final Scalar PQ = RationalScalar.of(49, 44);
   private static final Scalar _R = RationalScalar.of(245, 201);
   private static final Scalar _S = RationalScalar.of(1225, 1024);

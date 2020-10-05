@@ -10,6 +10,8 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 
 public class HsMidpoint implements MidpointInterface, Serializable {
+  private static final long serialVersionUID = -7787681650782693896L;
+
   /** @param exponential
    * @param q
    * @return */

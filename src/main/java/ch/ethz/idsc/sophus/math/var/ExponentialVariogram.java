@@ -12,6 +12,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
 /** <p>The input of the variogram has unit of a.
  * The output of the variogram has unit of b. */
 public class ExponentialVariogram implements ScalarUnaryOperator {
+  private static final long serialVersionUID = -2064981912205853592L;
+
   /** @param a positive
    * @param b
    * @return */

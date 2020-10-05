@@ -16,6 +16,8 @@ import ch.ethz.idsc.tensor.io.Primitives;
  * "Behaviour of recursive division surfaces near extraordinary points"
  * by D. Doo, M. Sabin, Computer-Aided Design 10(6), 1978 */
 public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
+  private static final long serialVersionUID = 5861236933429477955L;
+
   /** @param biinvariantMean non-null
    * @return */
   public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {

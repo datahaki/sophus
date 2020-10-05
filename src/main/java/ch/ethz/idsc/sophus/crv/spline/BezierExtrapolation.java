@@ -15,6 +15,8 @@ import ch.ethz.idsc.tensor.sca.Power;
 /** extrapolation by evaluating the Bezier curve defined by n number of
  * control points at parameter value n / (n - 1) */
 public class BezierExtrapolation implements TensorUnaryOperator {
+  private static final long serialVersionUID = 4075953813157045900L;
+
   /** @param binaryAverage
    * @return */
   public static TensorUnaryOperator of(BinaryAverage binaryAverage) {

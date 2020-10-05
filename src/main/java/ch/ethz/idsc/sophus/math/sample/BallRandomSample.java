@@ -26,6 +26,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/Ball.html">Ball</a> */
 public class BallRandomSample implements RandomSampleInterface, Serializable {
+  private static final long serialVersionUID = -1164346871380552006L;
   private static final Distribution UNIFORM = UniformDistribution.unit();
 
   /** @param center non-empty vector of length less equals to 10

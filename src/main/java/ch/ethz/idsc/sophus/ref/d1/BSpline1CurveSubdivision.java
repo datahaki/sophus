@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * Dyn/Sharon 2014 p.14 show that the contractivity factor is mu = 1/2 */
 public class BSpline1CurveSubdivision extends AbstractBSpline1CurveSubdivision implements Serializable {
+  private static final long serialVersionUID = 3256024775390985898L;
   private final MidpointInterface midpointInterface;
 
   /** @param midpointInterface non-null

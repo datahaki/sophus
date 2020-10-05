@@ -15,6 +15,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public class NonuniformFixedIntervalGeodesicCenter implements Serializable {
+  private static final long serialVersionUID = 3160584957458882501L;
+
   /** @param splitInterface
    * @param function that maps the (temporally) neighborhood of a control point to a weight mask
    * @return operator that maps a sequence of points to their geodesic center

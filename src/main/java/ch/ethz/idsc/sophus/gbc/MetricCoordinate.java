@@ -52,6 +52,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * 
  * @see MetricDistances */
 public class MetricCoordinate implements BarycentricCoordinate, Serializable {
+  private static final long serialVersionUID = -8043520781023560311L;
+
   /** @param vectorLogManifold
    * @param variogram
    * @return */

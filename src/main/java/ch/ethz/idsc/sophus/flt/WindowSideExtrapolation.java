@@ -16,6 +16,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
  * with each point weighted as provided by an external function. */
 public class WindowSideExtrapolation implements Function<Integer, Tensor>, Serializable {
+  private static final long serialVersionUID = -424216660777194612L;
+
   /** @param windowFunction non-null
    * @return
    * @throws Exception if either input parameter is null */

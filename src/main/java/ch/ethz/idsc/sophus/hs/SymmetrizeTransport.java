@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * @see SchildLadder */
 public class SymmetrizeTransport implements HsTransport, Serializable {
+  private static final long serialVersionUID = -8046333873164056799L;
+
   /** @param hsTransport typically instance of SchildLadder
    * @return */
   public static HsTransport of(HsTransport hsTransport) {
@@ -32,6 +34,7 @@ public class SymmetrizeTransport implements HsTransport, Serializable {
   }
 
   private static class Rung implements TensorUnaryOperator {
+    private static final long serialVersionUID = -298916128451070821L;
     private final TensorUnaryOperator tensorUnaryOperator;
 
     public Rung(TensorUnaryOperator tensorUnaryOperator) {

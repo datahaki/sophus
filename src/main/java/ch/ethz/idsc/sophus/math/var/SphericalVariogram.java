@@ -18,6 +18,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * <p>The input of the variogram has unit of a.
  * The output of the variogram has unit of b. */
 public class SphericalVariogram implements ScalarUnaryOperator {
+  private static final long serialVersionUID = -356955967203509809L;
+
   /** @param a positive
    * @param b
    * @return */

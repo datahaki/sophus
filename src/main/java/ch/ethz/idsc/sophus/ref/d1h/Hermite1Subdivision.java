@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
+  private static final long serialVersionUID = -4693436885847276178L;
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;

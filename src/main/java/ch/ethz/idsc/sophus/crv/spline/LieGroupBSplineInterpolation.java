@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.opt.BSplineInterpolation;
  * 
  * @see BSplineInterpolation */
 public final class LieGroupBSplineInterpolation extends AbstractBSplineInterpolation {
+  private static final long serialVersionUID = -4862791559157935092L;
   private final LieGroup lieGroup;
 
   /** @param lieGroup

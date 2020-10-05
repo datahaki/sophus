@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.sca.Cosh;
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
 public class HnExponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = -6560335617147241734L;
   private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Chop._06);
   // ---
   private final Tensor x;

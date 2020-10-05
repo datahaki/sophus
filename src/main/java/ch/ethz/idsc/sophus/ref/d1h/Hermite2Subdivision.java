@@ -22,6 +22,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
+  private static final long serialVersionUID = 2669412117143216050L;
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;

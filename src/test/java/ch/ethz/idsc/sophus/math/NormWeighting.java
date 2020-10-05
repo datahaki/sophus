@@ -8,6 +8,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public class NormWeighting implements TensorUnaryOperator {
+  private static final long serialVersionUID = 4140058721979310542L;
+
   /** @param tensorNorm non-null
    * @param */
   public static TensorUnaryOperator of(TensorNorm tensorNorm, ScalarUnaryOperator variogram) {

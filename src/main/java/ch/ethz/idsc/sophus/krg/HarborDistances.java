@@ -21,11 +21,15 @@ import ch.ethz.idsc.tensor.red.Norm;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public abstract class HarborDistances implements Serializable {
+  private static final long serialVersionUID = 7613766574684059655L;
+
   /** @param vectorLogManifold
    * @param sequence
    * @return */
   public static HarborDistances frobenius(VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new HarborDistances(vectorLogManifold, sequence) {
+      private static final long serialVersionUID = 3224364263932389466L;
+
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Frobenius.between(x, projection);
@@ -35,6 +39,8 @@ public abstract class HarborDistances implements Serializable {
 
   public static HarborDistances diagonal(VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new HarborDistances(vectorLogManifold, sequence) {
+      private static final long serialVersionUID = -5120046492198795006L;
+
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Norm._2.between(Diagonal.of(x), Diagonal.of(projection));
@@ -47,6 +53,8 @@ public abstract class HarborDistances implements Serializable {
    * @return */
   public static HarborDistances norm2(VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new HarborDistances(vectorLogManifold, sequence) {
+      private static final long serialVersionUID = 4219012689582124465L;
+
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return Norm._2.ofMatrix(x.subtract(projection));
@@ -59,6 +67,8 @@ public abstract class HarborDistances implements Serializable {
    * @return */
   public static HarborDistances geodesic(VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new HarborDistances(vectorLogManifold, sequence) {
+      private static final long serialVersionUID = -2438143026398610720L;
+
       @Override
       protected Scalar distance(Tensor x, Tensor projection) {
         return GrMetric.INSTANCE.distance(x, projection);

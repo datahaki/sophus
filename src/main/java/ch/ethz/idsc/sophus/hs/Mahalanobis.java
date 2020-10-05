@@ -21,6 +21,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class Mahalanobis implements Serializable {
+  private static final long serialVersionUID = 5649310631031494508L;
   private final TangentSpace tangentSpace;
   private final Tensor matrix;
   private final Tensor sigma;

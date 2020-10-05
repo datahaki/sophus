@@ -14,6 +14,8 @@ import java.util.function.Function;
  * 
  * Wrapping a memo function around a memo function returns the given function. */
 public class MemoFunction<K, V> implements Function<K, V>, Serializable {
+  private static final long serialVersionUID = 5998155072982152631L;
+
   /** @param function non-null
    * @return given function if given function is instance of MemoFunction */
   public static <K, V> Function<K, V> wrap(Function<K, V> function) {

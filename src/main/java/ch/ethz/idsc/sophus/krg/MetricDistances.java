@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007
  * 3.7.3 Shepard Interpolation */
 public class MetricDistances implements WeightingInterface, Serializable {
+  private static final long serialVersionUID = 912368673419897598L;
   private final HsDesign hsDesign;
 
   /** @param vectorLogManifold */

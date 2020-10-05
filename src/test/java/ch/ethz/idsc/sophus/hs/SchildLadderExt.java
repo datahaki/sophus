@@ -11,6 +11,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Guigui Pennec, p. 6 */
 /* package */ class SchildLadderExt implements HsTransport, Serializable {
+  private static final long serialVersionUID = 362281198195193720L;
+
   /** @param hsExponential
    * @return */
   public static HsTransport of(HsExponential hsExponential) {
@@ -30,6 +32,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
   }
 
   private class SchildTransport implements TensorUnaryOperator {
+    private static final long serialVersionUID = -5256089646414724072L;
     private final Exponential exp_xo;
     private final Tensor xw;
     private final Exponential exp_xw;

@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 
 public class So3Exponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = -9188800711798972128L;
   private final Tensor p;
   private final Tensor pinv;
 

@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** linear polynomial
  * s -> c1 * s + c0 */
 public class LagrangeQuadraticD implements ScalarUnaryOperator {
+  private static final long serialVersionUID = -4224741445846053217L;
+
   public static LagrangeQuadraticD of(Scalar c0, Scalar c1) {
     return new LagrangeQuadraticD( //
         Objects.requireNonNull(c0), //

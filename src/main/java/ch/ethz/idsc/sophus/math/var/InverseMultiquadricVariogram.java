@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * @see BinningMethod */
 public class InverseMultiquadricVariogram extends MultiquadricVariogram {
+  private static final long serialVersionUID = 2932263743728525502L;
+
   /** @param r0 non-negative */
   public static ScalarUnaryOperator of(Scalar r0) {
     return new InverseMultiquadricVariogram(Sign.requirePositiveOrZero(r0));

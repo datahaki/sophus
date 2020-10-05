@@ -11,6 +11,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
  * with each point weighted as provided by an external function. */
 public class BiinvariantMeanExtrapolation implements TensorUnaryOperator {
+  private static final long serialVersionUID = 2384078728952623507L;
+
   /** @param biinvariantMean non-null
    * @param function non-null
    * @return

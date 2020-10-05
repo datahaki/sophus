@@ -18,6 +18,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 public class PowerVariogram implements ScalarUnaryOperator {
+  private static final long serialVersionUID = -1932477734015956002L;
+
   /** Quote:
    * "A good general choice is exponent=3/2, but for functions with a strong linear trend,
    * you may want to experiment with values as large as 1.99."

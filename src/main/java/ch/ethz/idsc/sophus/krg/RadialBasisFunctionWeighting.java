@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * 
  * @see Kriging */
 public class RadialBasisFunctionWeighting implements WeightingInterface, Serializable {
+  private static final long serialVersionUID = -6042568336423025614L;
+
   /** @param weightingInterface
    * @return */
   public static WeightingInterface of(TensorUnaryOperator weightingInterface) {

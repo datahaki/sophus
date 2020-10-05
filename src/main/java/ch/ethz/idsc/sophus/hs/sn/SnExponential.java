@@ -34,6 +34,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * "Barycentric Subspace Analysis on Manifolds"
  * by Xavier Pennec, 2016, p. 8 */
 public class SnExponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = -3715922243477203953L;
   private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._06);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);

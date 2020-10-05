@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Projection matrix"
  * on Wikipedia, 2020 */
 public final class HsDesign implements Serializable {
+  private static final long serialVersionUID = -6051895491677912068L;
   private final VectorLogManifold vectorLogManifold;
 
   /** @param vectorLogManifold non-null */

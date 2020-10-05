@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
 
 /** filter blends extrapolated value with measurement */
 public class GeodesicIIR1 implements TensorUnaryOperator {
+  private static final long serialVersionUID = 7028207690183347969L;
   private final BinaryAverage binaryAverage;
   private final Scalar alpha;
   // ---

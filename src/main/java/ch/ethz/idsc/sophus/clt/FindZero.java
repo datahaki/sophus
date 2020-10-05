@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public class FindZero implements Serializable {
+  private static final long serialVersionUID = -4085485838154451150L;
   private static final int MAX_ITERATIONS = 128;
   // ---
   private final ScalarUnaryOperator function;

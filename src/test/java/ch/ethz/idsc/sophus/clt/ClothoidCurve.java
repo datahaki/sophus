@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** Reference:
  * Ulrich Reif slides */
 /* package */ abstract class ClothoidCurve implements ScalarTensorFunction {
+  private static final long serialVersionUID = -5470923394934029193L;
   protected static final Scalar _1 = RealScalar.of(1.0);
   // ---
   private final Tensor pxy;

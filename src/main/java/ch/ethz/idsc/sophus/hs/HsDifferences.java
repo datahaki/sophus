@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * HsDifferences[{a, b, c, d, e}] == {log a^-1.b, log b^-1.c, log c^-1.d, log d^-1.e}
  * </pre> */
 public final class HsDifferences implements TensorUnaryOperator {
+  private static final long serialVersionUID = -2623684602810832239L;
   private final HsExponential hsExponential;
 
   /** @param hsExponential

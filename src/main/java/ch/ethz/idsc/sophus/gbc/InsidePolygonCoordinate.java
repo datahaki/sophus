@@ -17,6 +17,8 @@ import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class InsidePolygonCoordinate implements BarycentricCoordinate, Serializable {
+  private static final long serialVersionUID = -4446036907285089568L;
+
   /** @param vectorLogManifold with 2-dimensional tangent space
    * @param biFunction {@link Barycenter}
    * @return */

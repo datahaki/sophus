@@ -14,6 +14,8 @@ import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 public class HsMidpointLineDistance implements LineDistance, Serializable {
+  private static final long serialVersionUID = 2063016060536628923L;
+
   /** @param lieGroup
    * @param exponential
    * @return */

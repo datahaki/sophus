@@ -20,6 +20,7 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
  * Geomstats: A Python Package for Riemannian Geometry in Machine Learning
  * by Nina Miolane, Alice Le Brigant, Johan Mathe, Benjamin Hou et al., 2020 */
 public class GrExponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = 890237176692323021L;
   private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
   // ---
   private final Tensor x;

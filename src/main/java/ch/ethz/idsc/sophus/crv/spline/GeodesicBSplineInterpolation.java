@@ -6,6 +6,8 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 
 public class GeodesicBSplineInterpolation extends AbstractBSplineInterpolation {
+  private static final long serialVersionUID = 9049210786655894429L;
+
   /** @param binaryAverage
    * @param degree
    * @param target */

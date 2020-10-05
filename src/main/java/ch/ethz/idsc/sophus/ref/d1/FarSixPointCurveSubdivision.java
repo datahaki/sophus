@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * {b (1 - a), 1 - b, a b, a b, 1 - b, b (1 - a)}/2
  * Solve[Thread[% == weights]] */
 public class FarSixPointCurveSubdivision extends AbstractSixPointCurveSubdivision {
+  private static final long serialVersionUID = 5157337598920986448L;
   private static final Scalar PR = RationalScalar.of(50, 51);
   private static final Scalar Q_ = RationalScalar.of(153, 128);
 

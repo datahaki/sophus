@@ -19,6 +19,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * @see PoleLadder
  * @see SchildLadder */
 public class SubdivideTransport implements HsTransport, Serializable {
+  private static final long serialVersionUID = -2577380661194204229L;
+
   /** @param hsTransport
    * @param geodesicInterface
    * @param n
@@ -49,6 +51,7 @@ public class SubdivideTransport implements HsTransport, Serializable {
   }
 
   private class Rung implements TensorUnaryOperator {
+    private static final long serialVersionUID = 4553566926090806166L;
     private final Tensor points;
 
     private Rung(Tensor points) {

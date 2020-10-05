@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.sca.Cos;
 
 /* package */ class DooSabinWeights implements Function<Integer, Tensor>, Serializable {
+  private static final long serialVersionUID = 985511208901110244L;
   private static final Function<Integer, Tensor> INSTANCE = MemoFunction.wrap(new DooSabinWeights());
 
   public static Function<Integer, Tensor> instance() {

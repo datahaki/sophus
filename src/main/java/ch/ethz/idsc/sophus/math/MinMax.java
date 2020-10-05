@@ -9,6 +9,8 @@ import ch.ethz.idsc.tensor.red.Entrywise;
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/MinMax.html">MinMax</a> */
 public class MinMax implements Serializable {
+  private static final long serialVersionUID = 2903305942153417109L;
+
   /** @param tensor not a scalar
    * @return */
   public static MinMax of(Tensor tensor) {

@@ -8,6 +8,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class KrigingCoordinate implements TensorUnaryOperator {
+  private static final long serialVersionUID = 1978234055331468414L;
+
   /** @param tensorUnaryOperator
    * @param vectorLogManifold
    * @param sequence

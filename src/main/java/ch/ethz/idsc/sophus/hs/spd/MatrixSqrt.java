@@ -18,6 +18,8 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * 
  * @see MatrixPower */
 /* package */ class MatrixSqrt implements Serializable {
+  private static final long serialVersionUID = 4097476161276142504L;
+
   /** @param matrix symmetric
    * @return
    * @throws Exception if matrix is not symmetric */

@@ -20,6 +20,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * Hongxin Zhang and Jieqing Feng
  * http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf */
 public class KnotSpacing implements TensorUnaryOperator {
+  private static final long serialVersionUID = -1704210258168359995L;
+
   /** @param tensorMetric for instance Se2ParametricDistance.INSTANCE
    * @param exponent typically in the interval [0, 1] */
   public static TensorUnaryOperator centripetal(TensorMetric tensorMetric, Scalar exponent) {

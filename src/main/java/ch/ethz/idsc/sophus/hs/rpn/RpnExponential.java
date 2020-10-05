@@ -24,6 +24,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** real projective plane */
 public class RpnExponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = 2137065421793368455L;
   private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._06);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);

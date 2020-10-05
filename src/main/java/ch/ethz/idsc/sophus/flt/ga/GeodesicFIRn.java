@@ -11,6 +11,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** input to the operator are the individual elements of the sequence */
 public class GeodesicFIRn implements TensorUnaryOperator {
+  private static final long serialVersionUID = -1606221281379461057L;
+
   /** @param geodesicExtrapolation
    * @param binaryAverage
    * @param radius

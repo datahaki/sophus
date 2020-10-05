@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 /** 2-dimensional tangent space at given point of 2-dimensional sphere
  * i.e. tangent space not embedded in R^3 */
 public class S2Exponential implements Exponential, TangentSpace, Serializable {
+  private static final long serialVersionUID = -305759923743177212L;
   private static final Tensor ID3 = IdentityMatrix.of(3);
   // ---
   private final Exponential exponential;

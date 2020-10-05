@@ -23,6 +23,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/Resampling.html">Resampling</a> */
 public class UniformResample implements CurveSubdivision, Serializable {
+  private static final long serialVersionUID = 2546948348065655171L;
+
   /** @param tensorMetric
    * @param binaryAverage
    * @param spacing positive

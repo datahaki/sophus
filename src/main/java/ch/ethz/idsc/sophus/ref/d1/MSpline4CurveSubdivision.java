@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.opt.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class MSpline4CurveSubdivision extends Dual3PointCurveSubdivision {
+  private static final long serialVersionUID = 3348666795272550116L;
   private static final Tensor MASK_LO = Tensors.vector(5, 10, 1).divide(RealScalar.of(16));
   private static final Tensor MASK_HI = Tensors.vector(1, 10, 5).divide(RealScalar.of(16));
 

@@ -8,6 +8,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class CausalFilter implements TensorUnaryOperator {
+  private static final long serialVersionUID = -5214885971431533037L;
+
   /** @param supplier
    * @return */
   public static TensorUnaryOperator of(Supplier<TensorUnaryOperator> supplier) {

@@ -23,6 +23,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * for sequences of length != 4 the nullspace of the matrix covers
  * possible weights (still subject to normalization) */
 /* package */ class Se2CoveringBarycenter implements TensorUnaryOperator {
+  private static final long serialVersionUID = -5445945642641419280L;
   private static final Tensor RHS = UnitVector.of(4, 3);
   // ---
   private final Tensor sequence;

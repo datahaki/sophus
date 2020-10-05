@@ -14,6 +14,7 @@ import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.red.Hypot;
 
 public class H2TangentSpace implements TangentSpace, Serializable {
+  private static final long serialVersionUID = 5971892826206288161L;
   private final Tensor x;
 
   /** @param x vector of length 3 */

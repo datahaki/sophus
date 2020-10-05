@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.N;
 
 public abstract class AbstractBSplineInterpolation implements Serializable {
+  private static final long serialVersionUID = 4055801157670867238L;
   private static final Chop CHOP_DEFAULT = Chop._12;
   private static final int MAXITER = 500;
   // ---

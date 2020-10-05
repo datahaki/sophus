@@ -21,6 +21,7 @@ import ch.ethz.idsc.tensor.io.Primitives;
 import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
 
 public class LinearMeshRefinement implements SurfaceMeshRefinement, Serializable {
+  private static final long serialVersionUID = 3361368865893637932L;
   private static final Tensor MIDPOINT = Tensors.of(RationalScalar.HALF, RationalScalar.HALF);
   private static final Function<Integer, Tensor> WEIGHTS = UniformWindowSampler.of(DirichletWindow.FUNCTION);
 

@@ -19,6 +19,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * "Proofs involving the Moore-Penrose inverse"
  * on Wikipedia, 2020 */
 public final class HsInfluence implements Serializable {
+  private static final long serialVersionUID = 7830730151907788542L;
   private final Tensor matrix;
 
   /** @param tangentSpace

@@ -12,6 +12,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Abs;
 
 public class RpnRandomSample implements RandomSampleInterface, Serializable {
+  private static final long serialVersionUID = 3982233339122358560L;
+
   /** Example:
    * dimension == 1 corresponds to the half circle in the plane
    * 

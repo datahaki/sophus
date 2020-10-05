@@ -20,6 +20,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
 public class InverseDistanceWeighting implements WeightingInterface, Serializable {
+  private static final long serialVersionUID = 5656481791829924991L;
+
   /** @param vectorLogManifold
    * @param variogram
    * @return */

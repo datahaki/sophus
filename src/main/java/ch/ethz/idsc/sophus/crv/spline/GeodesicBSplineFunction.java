@@ -36,6 +36,8 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * Mathematica::BSplineFunction throws an exception if number
  * of control points is insufficient for the specified degree. */
 public class GeodesicBSplineFunction implements ScalarTensorFunction {
+  private static final long serialVersionUID = 4983517325026965617L;
+
   /** the control point are stored by reference, i.e. modifications to
    * given tensor alter the behavior of this BSplineFunction instance.
    * 

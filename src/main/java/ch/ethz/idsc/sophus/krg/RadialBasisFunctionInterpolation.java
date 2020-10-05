@@ -15,6 +15,8 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * @see Biinvariant
  * @see Kriging */
 public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
+  private static final long serialVersionUID = -7968266062710654377L;
+
   /** @param tensorUnaryOperator to measure the length of the difference between two points
    * @param sequence of points
    * @param values

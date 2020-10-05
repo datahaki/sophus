@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * 
  * @see Se2Parametric */
 public class Se2CoveringParametric implements TensorMetric, Serializable {
+  private static final long serialVersionUID = -1760676807199780363L;
   public static final TensorMetric INSTANCE = new Se2CoveringParametric(Se2CoveringGroup.INSTANCE);
   /***************************************************/
   private final LieGroup lieGroup;

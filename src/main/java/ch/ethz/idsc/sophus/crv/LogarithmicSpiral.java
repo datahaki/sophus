@@ -13,6 +13,8 @@ import ch.ethz.idsc.tensor.sca.Exp;
 
 /** https://en.wikipedia.org/wiki/Logarithmic_spiral */
 public class LogarithmicSpiral implements ScalarTensorFunction {
+  private static final long serialVersionUID = 7548215456350751320L;
+
   /** @param a
    * @param b for instance 0.1759 */
   public static ScalarTensorFunction of(Scalar a, Scalar b) {
