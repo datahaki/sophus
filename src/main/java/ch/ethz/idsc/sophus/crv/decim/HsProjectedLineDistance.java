@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 
 public class HsProjectedLineDistance implements LineDistance, Serializable {
   private static final long serialVersionUID = -4712139577268445508L;
+  // ---
   private final HsExponential hsExponential;
   private final HsLineProjection hsLineProjection;
 
@@ -27,6 +28,7 @@ public class HsProjectedLineDistance implements LineDistance, Serializable {
 
   private class NormImpl implements TensorNorm, Serializable {
     private static final long serialVersionUID = -3751049179523368173L;
+    // ---
     private final Tensor beg;
     private final Tensor end;
 

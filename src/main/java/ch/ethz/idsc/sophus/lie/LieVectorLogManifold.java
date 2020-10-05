@@ -38,6 +38,7 @@ public class LieVectorLogManifold implements VectorLogManifold, Serializable {
   /***************************************************/
   private class TangentSpaceImpl implements TangentSpace, Serializable {
     private static final long serialVersionUID = -6641200367946521584L;
+    // ---
     private final LieGroupElement lieGroupElement;
 
     public TangentSpaceImpl(Tensor point) {

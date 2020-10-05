@@ -35,6 +35,7 @@ public class SymmetrizeTransport implements HsTransport, Serializable {
 
   private static class Rung implements TensorUnaryOperator {
     private static final long serialVersionUID = -298916128451070821L;
+    // ---
     private final TensorUnaryOperator tensorUnaryOperator;
 
     public Rung(TensorUnaryOperator tensorUnaryOperator) {

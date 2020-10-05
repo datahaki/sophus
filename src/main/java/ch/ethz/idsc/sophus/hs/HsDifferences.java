@@ -17,6 +17,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * </pre> */
 public final class HsDifferences implements TensorUnaryOperator {
   private static final long serialVersionUID = -2623684602810832239L;
+  // ---
   private final HsExponential hsExponential;
 
   /** @param hsExponential

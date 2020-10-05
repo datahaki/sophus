@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 /** dual scheme */
 public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializable {
   private static final long serialVersionUID = -837520585040665030L;
+  // ---
   private final GeodesicInterface geodesicInterface;
   private final Scalar lo_pq;
   private final Scalar lo_rs;

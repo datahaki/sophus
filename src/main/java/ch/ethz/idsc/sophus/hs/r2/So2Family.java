@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * depends on a single parameter, for instance time */
 public class So2Family implements R2RigidFamily, Serializable {
   private static final long serialVersionUID = 7972932189437272171L;
+  // ---
   private final ScalarUnaryOperator function;
 
   /** @param function that maps to angle */

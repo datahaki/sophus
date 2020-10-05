@@ -52,6 +52,7 @@ public class SubdivideTransport implements HsTransport, Serializable {
 
   private class Rung implements TensorUnaryOperator {
     private static final long serialVersionUID = 4553566926090806166L;
+    // ---
     private final Tensor points;
 
     private Rung(Tensor points) {

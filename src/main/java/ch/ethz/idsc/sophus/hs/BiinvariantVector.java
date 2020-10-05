@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * @see HarborDistances */
 public class BiinvariantVector implements Serializable {
   private static final long serialVersionUID = -1348113806577012382L;
+  // ---
   private final Tensor matrix;
   private final Tensor vector;
 

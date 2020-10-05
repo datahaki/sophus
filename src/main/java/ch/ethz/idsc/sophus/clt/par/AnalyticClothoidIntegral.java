@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.Scalar;
  * property, that the values of the polynomial correspond to the tangent angle. */
 /* package */ class AnalyticClothoidIntegral implements ClothoidIntegral, Serializable {
   private static final long serialVersionUID = -7505477012191094492L;
+  // ---
   private final ClothoidPartial clothoidPartial;
   private final Scalar one;
 

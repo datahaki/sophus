@@ -39,6 +39,7 @@ public class LieExponential implements HsExponential, Serializable {
 
   private class ExponentialImpl implements Exponential, Serializable {
     private static final long serialVersionUID = 1572938118717771657L;
+    // ---
     private final LieGroupElement element;
     private final LieGroupElement inverse;
 

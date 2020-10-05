@@ -16,6 +16,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * @see Se2InverseAction */
 public class Se2Bijection implements R2RigidBijection, Serializable {
   private static final long serialVersionUID = -4122102373004052296L;
+  // ---
   private final Tensor xya;
 
   /** @param xya == {px, py, angle} as member of Lie group SE2 */

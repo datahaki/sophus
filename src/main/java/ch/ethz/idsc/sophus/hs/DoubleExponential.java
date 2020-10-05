@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020, p. 4 */
 public class DoubleExponential implements Serializable {
   private static final long serialVersionUID = 1998495011256776356L;
+  // ---
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
 
@@ -27,6 +28,7 @@ public class DoubleExponential implements Serializable {
 
   public class DoubleExponentialPoint implements Serializable {
     private static final long serialVersionUID = -6371548454280492599L;
+    // ---
     private final Tensor x;
     private final Exponential exponential;
 

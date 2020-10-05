@@ -34,6 +34,7 @@ public class HsLineDistance implements LineDistance, Serializable {
 
   public class NormImpl implements TensorNorm, Serializable {
     private static final long serialVersionUID = -597664000698013429L;
+    // ---
     private final TangentSpace tangentSpace;
     private final Tensor normal;
 

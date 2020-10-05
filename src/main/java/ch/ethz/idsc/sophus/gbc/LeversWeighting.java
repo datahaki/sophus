@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /* package */ class LeversWeighting implements TensorUnaryOperator {
   private static final long serialVersionUID = -7751578310616522123L;
+  // ---
   private final ScalarUnaryOperator variogram;
 
   public LeversWeighting(ScalarUnaryOperator variogram) {

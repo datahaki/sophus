@@ -46,6 +46,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
     private static final long serialVersionUID = -805020197154997981L;
+    // ---
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {

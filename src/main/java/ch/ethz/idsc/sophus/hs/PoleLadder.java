@@ -54,6 +54,7 @@ public class PoleLadder implements HsTransport, Serializable {
 
   private class Rung implements TensorUnaryOperator {
     private static final long serialVersionUID = -2072546621888144264L;
+    // ---
     private final Exponential exp_xo;
     private final Exponential exp_xw;
     private final Exponential exp_mi;

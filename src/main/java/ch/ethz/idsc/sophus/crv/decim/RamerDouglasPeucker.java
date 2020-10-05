@@ -24,6 +24,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm */
 /* package */ class RamerDouglasPeucker implements CurveDecimation {
   private static final long serialVersionUID = 9095679512842765489L;
+  // ---
   private final LineDistance lineDistance;
   private final Scalar epsilon;
 
@@ -48,6 +49,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
 
   private class SpaceResult implements Result, Serializable {
     private static final long serialVersionUID = 4725188680904243266L;
+    // ---
     private final Tensor[] tensors;
     private final Scalar[] scalars;
     private final List<Integer> list = new LinkedList<>();

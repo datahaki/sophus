@@ -33,6 +33,7 @@ public class LieProjectedLineDistance implements LineDistance, Serializable {
 
   private class NormImpl implements TensorNorm, Serializable {
     private static final long serialVersionUID = -6474012700471497923L;
+    // ---
     private final LieGroupElement lieBeg;
     private final LieGroupElement lieInv;
     private final Tensor normal;

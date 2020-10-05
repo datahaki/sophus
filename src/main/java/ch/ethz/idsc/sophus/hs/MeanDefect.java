@@ -26,6 +26,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * @see BiinvariantMean */
 public class MeanDefect implements Serializable {
   private static final long serialVersionUID = -2385835825007313300L;
+  // ---
   private final Exponential exponential;
   private final Tensor tangent;
 

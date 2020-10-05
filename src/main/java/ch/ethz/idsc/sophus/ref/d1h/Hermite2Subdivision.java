@@ -23,6 +23,7 @@ import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
   private static final long serialVersionUID = 2669412117143216050L;
+  // ---
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;

@@ -40,6 +40,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
     private static final long serialVersionUID = 2346357295827295423L;
+    // ---
     private final Function<Integer, Tensor> function;
 
     private Splits(Function<Integer, Tensor> function) {

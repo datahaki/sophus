@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.Tensor;
 /** utility class to perform simultaneous transformations */
 public class LieGroupOps implements Serializable {
   private static final long serialVersionUID = -3618403064701374588L;
+  // ---
   private final LieGroup lieGroup;
 
   public LieGroupOps(LieGroup lieGroup) {

@@ -22,6 +22,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class Mahalanobis implements Serializable {
   private static final long serialVersionUID = 5649310631031494508L;
+  // ---
   private final TangentSpace tangentSpace;
   private final Tensor matrix;
   private final Tensor sigma;

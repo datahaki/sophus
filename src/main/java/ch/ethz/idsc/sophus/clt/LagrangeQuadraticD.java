@@ -15,6 +15,9 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 public class LagrangeQuadraticD implements ScalarUnaryOperator {
   private static final long serialVersionUID = -4224741445846053217L;
 
+  /** @param c0
+   * @param c1
+   * @return */
   public static LagrangeQuadraticD of(Scalar c0, Scalar c1) {
     return new LagrangeQuadraticD( //
         Objects.requireNonNull(c0), //

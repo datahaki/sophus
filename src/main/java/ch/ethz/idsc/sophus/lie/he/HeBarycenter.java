@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class HeBarycenter implements TensorUnaryOperator {
   private static final long serialVersionUID = -5402524333288619672L;
+  // ---
   private final Tensor lhs;
 
   public HeBarycenter(Tensor sequence) {

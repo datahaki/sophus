@@ -41,10 +41,8 @@ public class ClothoidSolutions implements Serializable {
   /** function is s1 odd
    * function is s2 even */
   public class Search implements Serializable {
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1628253885417424275L;
+    // ---
     private final Tensor lambdas = Tensors.empty();
     public final Tensor defects_real;
 

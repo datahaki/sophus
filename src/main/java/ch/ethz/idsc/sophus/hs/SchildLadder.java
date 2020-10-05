@@ -46,6 +46,7 @@ public class SchildLadder implements HsTransport, Serializable {
 
   private class Rung implements TensorUnaryOperator {
     private static final long serialVersionUID = 1412319319187704194L;
+    // ---
     private final Tensor xw;
     private final Exponential exp_xo;
     private final Exponential exp_xw;

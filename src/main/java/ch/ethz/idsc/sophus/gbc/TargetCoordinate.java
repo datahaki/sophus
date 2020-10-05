@@ -21,6 +21,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * @see LeverageCoordinate */
 /* package */ class TargetCoordinate implements BarycentricCoordinate, Serializable {
   private static final long serialVersionUID = -8582272887789104693L;
+  // ---
   private final VectorLogManifold vectorLogManifold;
   private final ScalarUnaryOperator variogram;
 

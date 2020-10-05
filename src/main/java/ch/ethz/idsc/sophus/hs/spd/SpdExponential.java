@@ -32,6 +32,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see SpdMatrixExponential */
 public class SpdExponential implements Exponential, TangentSpace, Serializable {
   private static final long serialVersionUID = 4119839542554633292L;
+  // ---
   private final Tensor pp;
   private final Tensor pn;
 

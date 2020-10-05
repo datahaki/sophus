@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.Tensor;
 /** Hint: DO NOT USE AnchorDistances EXCEPT IN AnchorCoordinate !!! */
 /* package */ class AnchorDistances implements WeightingInterface, Serializable {
   private static final long serialVersionUID = -76360466781074513L;
+  // ---
   private final VectorLogManifold vectorLogManifold;
 
   /** @param vectorLogManifold */
