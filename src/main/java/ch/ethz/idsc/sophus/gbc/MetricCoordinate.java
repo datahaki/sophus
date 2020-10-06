@@ -5,10 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.krg.MetricDistances;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** partition of unity
@@ -53,41 +50,39 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * @see MetricDistances */
 public class MetricCoordinate implements Genesis, Serializable {
   private static final long serialVersionUID = -8043520781023560311L;
-  private static final TensorUnaryOperator AFFINE = matrix -> ConstantArray.of(RealScalar.ONE, matrix.length());
-
-  /** @param vectorLogManifold
-   * @param variogram
-   * @return */
-  public static Genesis of(ScalarUnaryOperator variogram) {
-    return custom(new LeversWeighting(variogram));
-  }
 
   /** Careful:
    * Distance may depend on sequence! In that case only the correct sequence
    * should be passed to the function {@link #weights(Tensor, Tensor)}!
    * 
-   * @param vectorLogManifold
-   * @param target operator with design matrix as input
+   * @param genesis operator with design matrix as input
    * @return */
-  public static Genesis custom(TensorUnaryOperator target) {
-    return new MetricCoordinate(Objects.requireNonNull(target));
+  public static Genesis of(Genesis genesis) {
+    return new MetricCoordinate(Objects.requireNonNull(genesis));
   }
 
+  /** @param variogram
+   * @return */
+  public static Genesis of(ScalarUnaryOperator variogram) {
+    return of(new MetricWeighting(variogram));
+  }
+
+  /** @return */
   public static Genesis affine() {
-    return custom(AFFINE);
+    return of(AffineGenesis.INSTANCE);
   }
 
   /***************************************************/
-  private final TensorUnaryOperator target;
+  private final Genesis genesis;
 
-  private MetricCoordinate(TensorUnaryOperator target) {
-    this.target = target;
+  private MetricCoordinate(Genesis genesis) {
+    this.genesis = genesis;
   }
 
   @Override // from BarycentricCoordinate
   public Tensor origin(Tensor levers) {
     return StaticHelper.barycentric( //
-        target.apply(levers), // design matrix as input to target
+        genesis.origin(levers), //
         levers);
   }
 }

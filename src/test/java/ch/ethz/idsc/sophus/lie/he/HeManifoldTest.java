@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 
 public class HeManifoldTest extends TestCase {
   private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(HeManifold.INSTANCE);
-  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.custom( //
+  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.of( //
       NormWeighting.of( //
           new HeTarget(RnNorm.INSTANCE, RealScalar.ONE), //
           InversePowerVariogram.of(1))));

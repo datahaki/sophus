@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 public enum MetricDistances implements Genesis {
   INSTANCE;
 
-  @Override // from WeightingInterface
+  @Override // from Genesis
   public Tensor origin(Tensor levers) {
     return Tensor.of(levers.stream().map(Norm._2::ofVector));
   }

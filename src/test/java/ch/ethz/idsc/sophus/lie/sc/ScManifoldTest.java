@@ -17,8 +17,7 @@ import junit.framework.TestCase;
 public class ScManifoldTest extends TestCase {
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap( //
       ScManifold.INSTANCE, //
-      MetricCoordinate.custom( //
-          NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));
+      MetricCoordinate.of(NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));
 
   public void testSimple() {
     Tensor sequence = Tensors.vector(2, 4).map(Tensors::of);

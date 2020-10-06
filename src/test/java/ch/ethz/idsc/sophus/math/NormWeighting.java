@@ -3,16 +3,16 @@ package ch.ethz.idsc.sophus.math;
 
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
-public class NormWeighting implements TensorUnaryOperator {
+public class NormWeighting implements Genesis {
   private static final long serialVersionUID = 4140058721979310542L;
 
   /** @param tensorNorm non-null
    * @param */
-  public static TensorUnaryOperator of(TensorNorm tensorNorm, ScalarUnaryOperator variogram) {
+  public static Genesis of(TensorNorm tensorNorm, ScalarUnaryOperator variogram) {
     return new NormWeighting(Objects.requireNonNull(tensorNorm), Objects.requireNonNull(variogram));
   }
 
@@ -26,7 +26,7 @@ public class NormWeighting implements TensorUnaryOperator {
   }
 
   @Override
-  public Tensor apply(Tensor tensor) {
+  public Tensor origin(Tensor tensor) {
     return NormalizeTotal.FUNCTION.apply(Tensor.of(tensor.stream() //
         .map(tensorNorm::norm) //
         .map(variogram)));

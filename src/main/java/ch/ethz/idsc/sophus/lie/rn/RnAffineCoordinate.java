@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -29,9 +28,7 @@ import ch.ethz.idsc.tensor.red.Mean;
  * in Kai Hormann, N. Sukumar, 2017
  * 
  * <p>The concept of a one-time computation of a pseudoinverse at a central
- * location does not generalize to non-linear spaces.
- * 
- * @see AffineCoordinate */
+ * location does not generalize to non-linear spaces. */
 public enum RnAffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 

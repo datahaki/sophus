@@ -6,6 +6,6 @@ import junit.framework.TestCase;
 
 public class LeversWeightingTest extends TestCase {
   public void testSimple() {
-    AssertFail.of(() -> new LeversWeighting(null));
+    AssertFail.of(() -> new MetricWeighting(null));
   }
 }
