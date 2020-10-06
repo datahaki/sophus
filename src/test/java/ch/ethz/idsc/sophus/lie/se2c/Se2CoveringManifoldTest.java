@@ -8,6 +8,7 @@ import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -165,7 +166,8 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights = barycentricCoordinate.weights(points, xya);
-        Tensor influence = new HsInfluence(vectorLogManifold.logAt(xya), points).matrix();
+        Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
+        Tensor influence = new HsInfluence(matrix).matrix();
         SymmetricMatrixQ.require(influence, Chop._10);
         Chop._10.requireClose(Symmetrize.of(influence), influence);
         AffineQ.require(weights);
@@ -180,7 +182,8 @@ public class Se2CoveringManifoldTest extends TestCase {
           Tensor one = tensorMapping.apply(xya);
           Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
-          Chop._06.requireClose(influence, new HsInfluence(vectorLogManifold.logAt(one), all).matrix());
+          Tensor matrix2 = new HsDesign(vectorLogManifold).matrix(all, one);
+          Chop._06.requireClose(influence, new HsInfluence(matrix2).matrix());
         }
       }
   }
@@ -197,7 +200,8 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
         AffineQ.require(weights1);
         Chop._08.requireClose(weights, weights);
-        Tensor residualMaker = new HsInfluence(vectorLogManifold.logAt(xya), sequence).residualMaker();
+        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
+        Tensor residualMaker = new HsInfluence(matrix).residualMaker();
         Chop._08.requireClose(residualMaker.dot(weights), weights);
         assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
         Chop._08.requireClose(Symmetrize.of(residualMaker), residualMaker);

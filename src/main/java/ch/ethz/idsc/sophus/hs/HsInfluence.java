@@ -23,11 +23,10 @@ public final class HsInfluence implements Serializable {
   // ---
   private final Tensor matrix;
 
-  /** @param tangentSpace
-   * @param sequence */
-  public HsInfluence(TangentSpace tangentSpace, Tensor sequence) {
-    Tensor design = Tensor.of(sequence.stream().map(tangentSpace::vectorLog)); // HsDesign matrix
-    matrix = design.dot(PseudoInverse.of(design)); // textbook formula
+  /** @param matrix design
+   * @see HsDesign */
+  public HsInfluence(Tensor matrix) {
+    this.matrix = matrix.dot(PseudoInverse.of(matrix)); // textbook formula
   }
 
   /** projection matrix defines a projection of a tangent vector at given point to a vector in

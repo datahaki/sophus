@@ -54,7 +54,8 @@ public class HsInfluenceTest extends TestCase {
     Scalar scalar = Trace.of(H);
     Chop._07.requireClose(scalar, Round.of(scalar));
     // ---
-    HsInfluence hsInfluence = new HsInfluence(vectorLogManifold.logAt(point), sequence);
+    Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+    HsInfluence hsInfluence = new HsInfluence(matrix);
     Chop._08.requireClose(H, hsInfluence.matrix());
     Tensor n = LeftNullSpace.usingQR(V);
     Tensor M = hsInfluence.residualMaker();

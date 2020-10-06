@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 public class InversePowerVariogram implements ScalarUnaryOperator {
   private static final long serialVersionUID = -2883681777358160119L;
 
-  /** @param exponent
+  /** @param exponent for instance 2
    * @return */
   public static ScalarUnaryOperator of(Scalar exponent) {
     if (exponent.equals(RealScalar.ZERO))
@@ -25,7 +25,7 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
         : Power.function(exponent.negate()));
   }
 
-  /** @param exponent
+  /** @param exponent for instance 2
    * @return */
   public static ScalarUnaryOperator of(Number exponent) {
     return of(RealScalar.of(exponent));

@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -72,8 +72,10 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     int rank = 3;
     for (int n = 4; n < 7; ++n) {
-      TangentSpace tangentSpace = RnManifold.INSTANCE.logAt(RandomVariate.of(distribution, rank));
-      HsInfluence hsInfluence = new HsInfluence(tangentSpace, RandomVariate.of(distribution, n, rank));
+      Tensor sequence = RandomVariate.of(distribution, n, rank);
+      Tensor point = RandomVariate.of(distribution, rank);
+      Tensor matrix = new HsDesign(RnManifold.INSTANCE).matrix(sequence, point);
+      HsInfluence hsInfluence = new HsInfluence(matrix);
       Tensor x = hsInfluence.matrix();
       assertEquals(Dimensions.of(x), Arrays.asList(n, n));
       assertEquals(MatrixRank.of(x), rank);

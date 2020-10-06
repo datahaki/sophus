@@ -1,9 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -22,10 +24,13 @@ public enum GardenDistances {
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    Mahalanobis[] array = sequence.stream() //
+    TangentSpace[] tangentSpaces = sequence.stream() //
         .map(vectorLogManifold::logAt) //
-        .map(tangentSpace -> new Mahalanobis(tangentSpace, sequence)) //
+        .toArray(TangentSpace[]::new);
+    Mahalanobis[] array = sequence.stream() // TODO not efficient since computes tangent space twice!
+        .map(point -> new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point))) //
         .toArray(Mahalanobis[]::new);
-    return point -> Tensor.of(Stream.of(array).map(mahalanobis -> mahalanobis.distance(point)));
+    return point -> Tensor.of(IntStream.range(0, sequence.length()) //
+        .mapToObj(index -> array[index].distance(tangentSpaces[index].vectorLog(point))));
   }
 }

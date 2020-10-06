@@ -21,19 +21,15 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, 2012, p. 39 */
 public class Mahalanobis implements Serializable {
-  private static final long serialVersionUID = 5649310631031494508L;
-  // ---
-  private final TangentSpace tangentSpace;
   private final Tensor matrix;
   private final Tensor sigma;
   private final Tensor sigma_inverse;
 
-  /** @param tangentSpace
-   * @param sequence of n anchor points */
-  public Mahalanobis(TangentSpace tangentSpace, Tensor sequence) {
-    this.tangentSpace = tangentSpace;
-    matrix = Tensor.of(sequence.stream().map(tangentSpace::vectorLog)); // HsDesign matrix
-    Scalar factor = RationalScalar.of(1, sequence.length());
+  /** @param matrix design
+   * @see HsDesign */
+  public Mahalanobis(Tensor matrix) {
+    this.matrix = matrix;
+    Scalar factor = RationalScalar.of(1, matrix.length());
     sigma = Transpose.of(matrix).dot(matrix).multiply(factor);
     // computation of pseudo inverse only may result in numerical deviation from true symmetric result
     sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
@@ -69,10 +65,10 @@ public class Mahalanobis implements Serializable {
     return Sqrt.FUNCTION.apply(sigma_inverse.dot(vector).dot(vector).Get());
   }
 
-  /** @param point
+  /** @param vector
    * @return */
-  public Scalar distance(Tensor point) {
-    return norm(tangentSpace.vectorLog(point));
+  public Scalar distance(Tensor vector) {
+    return norm(vector);
   }
 
   /** @return sqrt of diagonal of influence matrix */

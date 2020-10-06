@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -32,7 +33,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Mahalanobis mahalanobis = new Mahalanobis(vectorLogManifold.logAt(point), sequence);
+    Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+    Mahalanobis mahalanobis = new Mahalanobis(matrix);
     return StaticHelper.barycentric( //
         NormalizeTotal.FUNCTION.apply(mahalanobis.leverages_sqrt().map(variogram)), //
         mahalanobis.matrix());

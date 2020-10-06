@@ -43,9 +43,9 @@ public class InsidePolygonCoordinate implements BarycentricCoordinate, Serializa
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor design = hsDesign.matrix(sequence, point);
-    return Polygons.isInside(design) //
-        ? tensorUnaryOperator.apply(design)
-        : ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
+    Tensor levers = hsDesign.matrix(sequence, point);
+    return Polygons.isInside(levers) //
+        ? tensorUnaryOperator.apply(levers)
+        : ConstantArray.of(DoubleScalar.INDETERMINATE, levers.length());
   }
 }

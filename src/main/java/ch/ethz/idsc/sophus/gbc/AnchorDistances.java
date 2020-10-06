@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -21,7 +22,8 @@ import ch.ethz.idsc.tensor.Tensor;
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    HsInfluence hsInfluence = new HsInfluence(vectorLogManifold.logAt(point), sequence);
+    Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+    HsInfluence hsInfluence = new HsInfluence(matrix);
     return new BiinvariantVector(hsInfluence, hsInfluence.leverages_sqrt());
   }
 

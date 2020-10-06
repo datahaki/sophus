@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.krg;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -40,6 +41,7 @@ public class LeverageDistances implements WeightingInterface, Serializable {
 
   @Override // from WeightingInterface
   public Tensor weights(Tensor sequence, Tensor point) {
-    return new Mahalanobis(vectorLogManifold.logAt(point), sequence).leverages_sqrt();
+    Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+    return new Mahalanobis(matrix).leverages_sqrt();
   }
 }
