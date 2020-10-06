@@ -3,6 +3,9 @@ package ch.ethz.idsc.sophus.lie.r2;
 
 import java.util.function.BiFunction;
 
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -23,5 +26,13 @@ public enum ThreePointCoordinate {
   public static TensorUnaryOperator of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
     TensorUnaryOperator tensorUnaryOperator = ThreePointHomogeneous.of(biFunction);
     return levers -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(levers));
+  }
+
+  /** @param vectorLogManifold with 2-dimensional tangent space
+   * @param biFunction {@link Barycenter}
+   * @return */
+  public static BarycentricCoordinate of( //
+      VectorLogManifold vectorLogManifold, BiFunction<Tensor, Scalar, Tensor> biFunction) {
+    return HsCoordinates.wrap(vectorLogManifold, of(biFunction));
   }
 }

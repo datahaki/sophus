@@ -1,7 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
@@ -18,19 +20,34 @@ import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * @see HarborDistances */
-public enum GardenDistances {
-  ;
+public class GardenDistances implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    TangentSpace[] tangentSpaces = sequence.stream() //
-        .map(vectorLogManifold::logAt) //
-        .toArray(TangentSpace[]::new);
-    Mahalanobis[] array = sequence.stream() // TODO not efficient since computes tangent space twice!
-        .map(point -> new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point))) //
-        .toArray(Mahalanobis[]::new);
-    return point -> Tensor.of(IntStream.range(0, sequence.length()) //
-        .mapToObj(index -> array[index].distance(tangentSpaces[index].vectorLog(point))));
+    return new GardenDistances(vectorLogManifold, sequence);
+  }
+
+  /***************************************************/
+  private final List<TangentSpace> tangentSpaces;
+  private final List<Mahalanobis> array;
+
+  public GardenDistances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+    tangentSpaces = new ArrayList<>(sequence.length());
+    array = new ArrayList<>(sequence.length());
+    for (Tensor point : sequence) {
+      TangentSpace tangentSpace = vectorLogManifold.logAt(point);
+      tangentSpaces.add(tangentSpace);
+      // ---
+      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+      array.add(new Mahalanobis(matrix));
+    }
+  }
+
+  @Override
+  public Tensor apply(Tensor point) {
+    AtomicInteger atomicInteger = new AtomicInteger();
+    return Tensor.of(array.stream() //
+        .map(mahalanobis -> mahalanobis.distance(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
   }
 }

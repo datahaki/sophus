@@ -96,9 +96,9 @@ public class HsInfluenceTest extends TestCase {
 
   public void testSnCAnchorIsTarget() {
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    for (int dimension = 2; dimension < 5; ++dimension) {
+    for (int dimension = 2; dimension < 4; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
-      for (int count = dimension + 1; count < 10; ++count) {
+      for (int count = dimension + 1; count < 7; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
         Tensor point = RandomSample.of(randomSampleInterface);
         Tensor sigma_inverse = _check(vectorLogManifold, sequence, point);

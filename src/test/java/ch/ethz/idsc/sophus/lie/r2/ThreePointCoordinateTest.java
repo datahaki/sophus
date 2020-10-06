@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.function.BiFunction;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.GlobalPolygonCoordinate;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.BoxRandomSample;
@@ -30,7 +30,7 @@ import junit.framework.TestCase;
 
 public class ThreePointCoordinateTest extends TestCase {
   private static BarycentricCoordinate r2(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return GlobalPolygonCoordinate.of(RnManifold.INSTANCE, biFunction);
+    return HsCoordinates.wrap(RnManifold.INSTANCE, ThreePointCoordinate.of(biFunction));
   }
 
   public void testHDual() {
