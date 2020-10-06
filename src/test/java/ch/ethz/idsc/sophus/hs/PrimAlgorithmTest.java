@@ -16,7 +16,6 @@ public class PrimAlgorithmTest extends TestCase {
 
   public void testHilbert() {
     List<Edge> list = PrimAlgorithm.of(HilbertMatrix.of(10));
-    System.out.println(list);
     assertEquals(list.size(), 9);
   }
 }

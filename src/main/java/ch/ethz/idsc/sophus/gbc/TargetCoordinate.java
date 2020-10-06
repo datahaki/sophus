@@ -27,8 +27,8 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
   }
 
   @Override
-  public Tensor apply(Tensor matrix) {
-    Mahalanobis mahalanobis = new Mahalanobis(matrix);
+  public Tensor apply(Tensor design) {
+    Mahalanobis mahalanobis = new Mahalanobis(design);
     return StaticHelper.barycentric( //
         NormalizeTotal.FUNCTION.apply(mahalanobis.leverages_sqrt().map(variogram)), //
         mahalanobis.matrix());

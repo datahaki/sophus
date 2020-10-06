@@ -4,7 +4,9 @@ package ch.ethz.idsc.sophus.gbc;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.krg.MetricDistances;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -50,6 +52,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * @see MetricDistances */
 public class MetricCoordinate implements TensorUnaryOperator {
   private static final long serialVersionUID = -8043520781023560311L;
+  private static final TensorUnaryOperator AFFINE = matrix -> ConstantArray.of(RealScalar.ONE, matrix.length());
 
   /** @param vectorLogManifold
    * @param variogram
@@ -69,6 +72,10 @@ public class MetricCoordinate implements TensorUnaryOperator {
     return new MetricCoordinate(Objects.requireNonNull(target));
   }
 
+  public static TensorUnaryOperator affine() {
+    return custom(AFFINE);
+  }
+
   /***************************************************/
   private final TensorUnaryOperator target;
 
@@ -78,7 +85,6 @@ public class MetricCoordinate implements TensorUnaryOperator {
 
   @Override // from BarycentricCoordinate
   public Tensor apply(Tensor matrix) {
-    // Tensor matrix = hsDesign.matrix(sequence, point);
     return StaticHelper.barycentric( //
         target.apply(matrix), // design matrix as input to target
         matrix);

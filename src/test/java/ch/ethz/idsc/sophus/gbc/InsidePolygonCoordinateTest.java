@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.lie.r2.Barycenter;
+import ch.ethz.idsc.sophus.lie.r2.ThreePointCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.DoubleScalar;
@@ -17,7 +18,8 @@ import junit.framework.TestCase;
 public class InsidePolygonCoordinateTest extends TestCase {
   public void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {
-      BarycentricCoordinate barycentricCoordinate = InsidePolygonCoordinate.of(RnManifold.INSTANCE, barycenter);
+      BarycentricCoordinate barycentricCoordinate = //
+          HsCoordinates.wrap(RnManifold.INSTANCE, InsidePolygonCoordinate.of(ThreePointCoordinate.of(barycenter)));
       for (int n = 3; n < 10; ++n) {
         Tensor w1 = barycentricCoordinate.weights(CirclePoints.of(n), Array.zeros(2));
         Chop._08.requireClose(w1, ConstantArray.of(RationalScalar.of(1, n), n));

@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
-import ch.ethz.idsc.sophus.gbc.LeversCoordinate;
+import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -58,7 +58,7 @@ public class IterativeCoordinateTest extends TestCase {
 
   public void testBiinv() {
     Distribution distribution = UniformDistribution.of(-10, 10);
-    TensorUnaryOperator ops = LeversCoordinate.of(InversePowerVariogram.of(2));
+    TensorUnaryOperator ops = MetricCoordinate.of(InversePowerVariogram.of(2));
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 2);
       for (int k = 0; k < 3; ++k) {

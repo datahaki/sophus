@@ -49,7 +49,7 @@ public class IterativeCoordinate implements TensorUnaryOperator {
     this.k = Integers.requirePositiveOrZero(k);
   }
 
-  @Override
+  @Override // from TensorUnaryOperator
   public Tensor apply(Tensor levers) {
     Tensor scaling = inverseNorms(levers);
     return NormalizeTotal.FUNCTION.apply(scaling.pmul(recur(0, scaling.pmul(levers))));
