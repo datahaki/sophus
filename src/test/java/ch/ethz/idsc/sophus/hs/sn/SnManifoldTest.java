@@ -91,7 +91,7 @@ public class SnManifoldTest extends TestCase {
             Tensor matrix = RandomSample.of(randomSampleInterface);
             Tensor mean2 = matrix.dot(mean);
             Tensor evaluate = new MeanDefect(Tensor.of(sequence.stream().map(matrix::dot)), weights, SnManifold.INSTANCE.exponential(mean2)).tangent();
-            Chop._12.requireAllZero(evaluate);
+            Chop._10.requireAllZero(evaluate);
           }
         }
       }

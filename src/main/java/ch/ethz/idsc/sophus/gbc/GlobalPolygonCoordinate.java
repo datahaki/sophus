@@ -21,17 +21,19 @@ public class GlobalPolygonCoordinate implements BarycentricCoordinate, Serializa
    * @return */
   public static BarycentricCoordinate of( //
       VectorLogManifold vectorLogManifold, BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new GlobalPolygonCoordinate(Objects.requireNonNull(vectorLogManifold), biFunction);
+    return new GlobalPolygonCoordinate( //
+        vectorLogManifold, //
+        ThreePointCoordinate.of(biFunction));
   }
 
   /***************************************************/
   private final HsDesign hsDesign;
   private final TensorUnaryOperator tensorUnaryOperator;
 
-  private GlobalPolygonCoordinate( //
-      VectorLogManifold vectorLogManifold, BiFunction<Tensor, Scalar, Tensor> biFunction) {
+  public GlobalPolygonCoordinate( //
+      VectorLogManifold vectorLogManifold, TensorUnaryOperator tensorUnaryOperator) {
     hsDesign = new HsDesign(vectorLogManifold);
-    tensorUnaryOperator = ThreePointCoordinate.of(biFunction);
+    this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
   }
 
   @Override // from BarycentricCoordinate

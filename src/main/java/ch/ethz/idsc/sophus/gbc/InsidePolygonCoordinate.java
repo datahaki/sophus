@@ -17,24 +17,28 @@ import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class InsidePolygonCoordinate implements BarycentricCoordinate, Serializable {
-  private static final long serialVersionUID = -4446036907285089568L;
+  private static final long serialVersionUID = -723004141774093449L;
 
   /** @param vectorLogManifold with 2-dimensional tangent space
    * @param biFunction {@link Barycenter}
    * @return */
   public static BarycentricCoordinate of( //
       VectorLogManifold vectorLogManifold, BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new InsidePolygonCoordinate(Objects.requireNonNull(vectorLogManifold), biFunction);
+    return new InsidePolygonCoordinate( //
+        vectorLogManifold, //
+        ThreePointCoordinate.of(biFunction));
   }
 
   /***************************************************/
   private final HsDesign hsDesign;
   private final TensorUnaryOperator tensorUnaryOperator;
 
-  private InsidePolygonCoordinate( //
-      VectorLogManifold vectorLogManifold, BiFunction<Tensor, Scalar, Tensor> biFunction) {
+  /** @param vectorLogManifold
+   * @param tensorUnaryOperator that evaluates polygon coordinates at zero (0, 0) */
+  public InsidePolygonCoordinate( //
+      VectorLogManifold vectorLogManifold, TensorUnaryOperator tensorUnaryOperator) {
     hsDesign = new HsDesign(vectorLogManifold);
-    tensorUnaryOperator = ThreePointCoordinate.of(biFunction);
+    this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
   }
 
   @Override // from BarycentricCoordinate
