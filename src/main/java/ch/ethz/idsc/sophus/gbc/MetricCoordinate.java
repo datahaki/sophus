@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.krg.MetricDistances;
@@ -50,14 +51,14 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * @see MetricDistances */
-public class MetricCoordinate implements TensorUnaryOperator {
+public class MetricCoordinate implements ZeroCoordinate, Serializable {
   private static final long serialVersionUID = -8043520781023560311L;
   private static final TensorUnaryOperator AFFINE = matrix -> ConstantArray.of(RealScalar.ONE, matrix.length());
 
   /** @param vectorLogManifold
    * @param variogram
    * @return */
-  public static TensorUnaryOperator of(ScalarUnaryOperator variogram) {
+  public static ZeroCoordinate of(ScalarUnaryOperator variogram) {
     return custom(new LeversWeighting(variogram));
   }
 
@@ -68,11 +69,11 @@ public class MetricCoordinate implements TensorUnaryOperator {
    * @param vectorLogManifold
    * @param target operator with design matrix as input
    * @return */
-  public static TensorUnaryOperator custom(TensorUnaryOperator target) {
+  public static ZeroCoordinate custom(TensorUnaryOperator target) {
     return new MetricCoordinate(Objects.requireNonNull(target));
   }
 
-  public static TensorUnaryOperator affine() {
+  public static ZeroCoordinate affine() {
     return custom(AFFINE);
   }
 
@@ -84,9 +85,9 @@ public class MetricCoordinate implements TensorUnaryOperator {
   }
 
   @Override // from BarycentricCoordinate
-  public Tensor apply(Tensor matrix) {
+  public Tensor fromLevers(Tensor levers) {
     return StaticHelper.barycentric( //
-        target.apply(matrix), // design matrix as input to target
-        matrix);
+        target.apply(levers), // design matrix as input to target
+        levers);
   }
 }

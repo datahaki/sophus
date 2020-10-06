@@ -1,15 +1,16 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
+import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.RotateLeft;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.InvertUnlessZero;
 
@@ -20,37 +21,36 @@ import ch.ethz.idsc.tensor.sca.InvertUnlessZero;
  * Reference:
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
-public class IterativeCoordinate implements TensorUnaryOperator {
-  private static final long serialVersionUID = 2763677963395774512L;
+public class IterativeCoordinate implements ZeroCoordinate, Serializable {
   private static final CurveSubdivision MIDPOINTS = ControlMidpoints.of(RnGeodesic.INSTANCE);
 
   /** @param tensorUnaryOperator
    * @param k
    * @return */
-  public static TensorUnaryOperator of(TensorUnaryOperator tensorUnaryOperator, int k) {
+  public static ZeroCoordinate of(ZeroCoordinate tensorUnaryOperator, int k) {
     return new IterativeCoordinate(tensorUnaryOperator, k);
   }
 
   /** @param k non-negative
    * @return */
-  public static TensorUnaryOperator usingMeanValue(int k) {
+  public static ZeroCoordinate usingMeanValue(int k) {
     return k == 0 //
         ? ThreePointCoordinate.of(Barycenter.MEAN_VALUE)
-        : new IterativeCoordinate(ThreePointHomogeneous.of(Barycenter.MEAN_VALUE), k);
+        : new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), k);
   }
 
   /***************************************************/
-  private final TensorUnaryOperator tensorUnaryOperator;
+  private final ZeroCoordinate tensorUnaryOperator;
   private final int k;
 
   /** @param k non-negative */
-  /* package */ IterativeCoordinate(TensorUnaryOperator tensorUnaryOperator, int k) {
+  /* package */ IterativeCoordinate(ZeroCoordinate tensorUnaryOperator, int k) {
     this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
     this.k = Integers.requirePositiveOrZero(k);
   }
 
   @Override // from TensorUnaryOperator
-  public Tensor apply(Tensor levers) {
+  public Tensor fromLevers(Tensor levers) {
     Tensor scaling = inverseNorms(levers);
     return NormalizeTotal.FUNCTION.apply(scaling.pmul(recur(0, scaling.pmul(levers))));
   }
@@ -64,7 +64,7 @@ public class IterativeCoordinate implements TensorUnaryOperator {
       Tensor scaling = inverseNorms(midpoints);
       return RotateLeft.of(MIDPOINTS.cyclic(scaling.pmul(recur(depth + 1, scaling.pmul(midpoints)))), -1);
     }
-    return tensorUnaryOperator.apply(normalized);
+    return tensorUnaryOperator.fromLevers(normalized);
   }
 
   /** @param levers

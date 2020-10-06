@@ -6,6 +6,6 @@ import junit.framework.TestCase;
 
 public class ThreePointHomogeneousTest extends TestCase {
   public void testSimple() {
-    AssertFail.of(() -> ThreePointHomogeneous.of(null));
+    AssertFail.of(() -> ThreePointWeighting.of(null));
   }
 }

@@ -1,9 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
+import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
 import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -11,7 +13,6 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Hypot;
 
 /** Three-point coordinates are also referred to as "Complete family of coordinates"
@@ -22,24 +23,22 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * 
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
-/* package */ class ThreePointHomogeneous implements TensorUnaryOperator {
-  private static final long serialVersionUID = -614402496057566332L;
-
+/* package */ class ThreePointWeighting implements ZeroCoordinate, Serializable {
   /** @param biFunction
    * @return */
-  public static TensorUnaryOperator of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new ThreePointHomogeneous(Objects.requireNonNull(biFunction));
+  public static ZeroCoordinate of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
+    return new ThreePointWeighting(Objects.requireNonNull(biFunction));
   }
 
   /***************************************************/
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
 
-  private ThreePointHomogeneous(BiFunction<Tensor, Scalar, Tensor> biFunction) {
+  private ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction) {
     this.biFunction = biFunction;
   }
 
   @Override
-  public Tensor apply(Tensor levers) {
+  public Tensor fromLevers(Tensor levers) {
     int length = levers.length();
     Tensor[] auxs = new Tensor[length];
     Scalar[] dens = new Scalar[length];

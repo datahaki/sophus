@@ -3,13 +3,13 @@ package ch.ethz.idsc.sophus.lie.r2;
 
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorScalarFunction;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.InvertUnlessZero;
 import ch.ethz.idsc.tensor.sca.Sign;
@@ -28,20 +28,20 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
 
   /** @param tensorUnaryOperator
    * @return */
-  public static TensorScalarFunction of(TensorUnaryOperator tensorUnaryOperator) {
+  public static TensorScalarFunction of(ZeroCoordinate tensorUnaryOperator) {
     return new IterativeCoordinateLevel(tensorUnaryOperator);
   }
 
   /** @return */
   public static TensorScalarFunction usingMeanValue() {
-    return new IterativeCoordinateLevel(ThreePointHomogeneous.of(Barycenter.MEAN_VALUE));
+    return new IterativeCoordinateLevel(ThreePointWeighting.of(Barycenter.MEAN_VALUE));
   }
 
   /***************************************************/
-  private final TensorUnaryOperator tensorUnaryOperator;
+  private final ZeroCoordinate tensorUnaryOperator;
 
   /** @param k non-negative */
-  /* package */ IterativeCoordinateLevel(TensorUnaryOperator tensorUnaryOperator) {
+  /* package */ IterativeCoordinateLevel(ZeroCoordinate tensorUnaryOperator) {
     this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
   }
 
@@ -55,7 +55,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
    * @param normalized points on circle
    * @return */
   private int recur(int depth, Tensor normalized) {
-    Tensor weights = tensorUnaryOperator.apply(normalized);
+    Tensor weights = tensorUnaryOperator.fromLevers(normalized);
     if (weights.stream().map(Scalar.class::cast).allMatch(Sign::isPositiveOrZero))
       return depth;
     if (depth < MAX_ITERATIONS) {

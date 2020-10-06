@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.gbc;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** leverage coordinates are biinvariant
@@ -21,7 +20,7 @@ public enum LeverageCoordinate {
    * @param variogram
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    TensorUnaryOperator tensorUnaryOperator = new TargetCoordinate(Objects.requireNonNull(variogram));
+    ZeroCoordinate tensorUnaryOperator = new TargetCoordinate(Objects.requireNonNull(variogram));
     return HsCoordinates.wrap(vectorLogManifold, tensorUnaryOperator);
   }
 
