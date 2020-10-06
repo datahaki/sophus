@@ -53,8 +53,8 @@ public enum GbcHelper {
 
   public static BarycentricCoordinate[] barycentrics(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        MetricCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        MetricCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(1))), //
+        HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         LeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //

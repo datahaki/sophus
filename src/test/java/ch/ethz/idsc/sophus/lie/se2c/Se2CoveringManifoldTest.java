@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
@@ -48,9 +49,10 @@ public class Se2CoveringManifoldTest extends TestCase {
       GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE);
   private static final BarycentricCoordinate[] QUANTITY_COORDINATES = //
       GbcHelper.biinvariant_quantity(Se2CoveringManifold.INSTANCE);
-  private static final BarycentricCoordinate AD_INVAR = MetricCoordinate.custom( //
+  private static final BarycentricCoordinate AD_INVAR = HsCoordinates.wrap( //
       Se2CoveringManifold.INSTANCE, //
-      NormWeighting.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE), InversePowerVariogram.of(1)));
+      MetricCoordinate.custom( //
+          NormWeighting.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE), InversePowerVariogram.of(1))));
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();

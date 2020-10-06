@@ -6,6 +6,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.krg.GardenDistances;
@@ -34,7 +35,8 @@ public enum Biinvariants implements Biinvariant {
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = MetricCoordinate.of(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = //
+          HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(variogram));
       Objects.requireNonNull(sequence);
       return point -> barycentricCoordinate.weights(sequence, point);
     }

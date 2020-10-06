@@ -1,11 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
@@ -51,14 +48,14 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * @see MetricDistances */
-public class MetricCoordinate implements BarycentricCoordinate, Serializable {
+public class MetricCoordinate implements TensorUnaryOperator {
   private static final long serialVersionUID = -8043520781023560311L;
 
   /** @param vectorLogManifold
    * @param variogram
    * @return */
-  public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return custom(vectorLogManifold, new LeversWeighting(variogram));
+  public static TensorUnaryOperator of(ScalarUnaryOperator variogram) {
+    return custom(new LeversWeighting(variogram));
   }
 
   /** Careful:
@@ -68,22 +65,20 @@ public class MetricCoordinate implements BarycentricCoordinate, Serializable {
    * @param vectorLogManifold
    * @param target operator with design matrix as input
    * @return */
-  public static BarycentricCoordinate custom(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    return new MetricCoordinate(vectorLogManifold, Objects.requireNonNull(target));
+  public static TensorUnaryOperator custom(TensorUnaryOperator target) {
+    return new MetricCoordinate(Objects.requireNonNull(target));
   }
 
   /***************************************************/
-  private final HsDesign hsDesign;
   private final TensorUnaryOperator target;
 
-  private MetricCoordinate(VectorLogManifold vectorLogManifold, TensorUnaryOperator target) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  private MetricCoordinate(TensorUnaryOperator target) {
     this.target = target;
   }
 
   @Override // from BarycentricCoordinate
-  public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor matrix = hsDesign.matrix(sequence, point);
+  public Tensor apply(Tensor matrix) {
+    // Tensor matrix = hsDesign.matrix(sequence, point);
     return StaticHelper.barycentric( //
         target.apply(matrix), // design matrix as input to target
         matrix);

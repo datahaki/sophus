@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -16,8 +17,8 @@ public class SpdManifoldTest extends TestCase {
   public static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES(Tensor sequence) {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
-        MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        MetricCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(1))), //
+        HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(2))), //
         LeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         LeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
