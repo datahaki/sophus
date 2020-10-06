@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.Det2D;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -23,10 +23,10 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * 
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
-/* package */ class ThreePointWeighting implements ZeroCoordinate, Serializable {
+/* package */ class ThreePointWeighting implements Genesis, Serializable {
   /** @param biFunction
    * @return */
-  public static ZeroCoordinate of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
+  public static Genesis of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
     return new ThreePointWeighting(Objects.requireNonNull(biFunction));
   }
 
@@ -38,7 +38,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
   }
 
   @Override
-  public Tensor fromLevers(Tensor levers) {
+  public Tensor origin(Tensor levers) {
     int length = levers.length();
     Tensor[] auxs = new Tensor[length];
     Scalar[] dens = new Scalar[length];

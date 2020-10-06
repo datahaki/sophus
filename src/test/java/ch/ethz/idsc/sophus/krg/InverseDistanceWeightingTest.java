@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.krg;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
@@ -26,14 +27,14 @@ import junit.framework.TestCase;
 public class InverseDistanceWeightingTest extends TestCase {
   public void testSimple() {
     WeightingInterface weightingInterface = //
-        InverseDistanceWeighting.of(RnManifold.INSTANCE, InversePowerVariogram.of(2));
+        HsCoordinates.wrap(RnManifold.INSTANCE, InverseDistanceWeighting.of(InversePowerVariogram.of(2)));
     Tensor weights = weightingInterface.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
 
   public void testExact() {
     WeightingInterface weightingInterface = //
-        InverseDistanceWeighting.of(RnManifold.INSTANCE, InversePowerVariogram.of(2));
+        HsCoordinates.wrap(RnManifold.INSTANCE, InverseDistanceWeighting.of(InversePowerVariogram.of(2)));
     Tensor weights = weightingInterface.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
     ExactTensorQ.require(weights);
     assertEquals(weights, UnitVector.of(2, 1));
@@ -42,7 +43,7 @@ public class InverseDistanceWeightingTest extends TestCase {
   public void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     WeightingInterface weightingInterface = //
-        InverseDistanceWeighting.of(RnManifold.INSTANCE, InversePowerVariogram.of(2));
+        HsCoordinates.wrap(RnManifold.INSTANCE, InverseDistanceWeighting.of(InversePowerVariogram.of(2)));
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
       for (int index = 0; index < p1.length(); ++index) {
@@ -55,7 +56,7 @@ public class InverseDistanceWeightingTest extends TestCase {
   public void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     WeightingInterface weightingInterface = //
-        Serialization.copy(InverseDistanceWeighting.of(RnManifold.INSTANCE, InversePowerVariogram.of(1)));
+        Serialization.copy(HsCoordinates.wrap(RnManifold.INSTANCE, InverseDistanceWeighting.of(InversePowerVariogram.of(1))));
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);

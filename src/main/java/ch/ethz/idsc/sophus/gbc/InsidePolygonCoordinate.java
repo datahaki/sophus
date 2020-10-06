@@ -9,26 +9,26 @@ import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 
-public class InsidePolygonCoordinate implements ZeroCoordinate, Serializable {
-  /** @param tensorUnaryOperator
+public class InsidePolygonCoordinate implements Genesis, Serializable {
+  /** @param genesis
    * @return */
-  public static ZeroCoordinate of(ZeroCoordinate tensorUnaryOperator) {
-    return new InsidePolygonCoordinate(tensorUnaryOperator);
+  public static Genesis of(Genesis genesis) {
+    return new InsidePolygonCoordinate(Objects.requireNonNull(genesis));
   }
 
   /***************************************************/
-  private final ZeroCoordinate tensorUnaryOperator;
+  private final Genesis genesis;
 
   /** @param vectorLogManifold
-   * @param tensorUnaryOperator that evaluates polygon coordinates at zero (0, 0) */
-  private InsidePolygonCoordinate(ZeroCoordinate tensorUnaryOperator) {
-    this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
+   * @param genesis that evaluates polygon coordinates at zero (0, 0) */
+  private InsidePolygonCoordinate(Genesis genesis) {
+    this.genesis = genesis;
   }
 
   @Override // from BarycentricCoordinate
-  public Tensor fromLevers(Tensor levers) {
+  public Tensor origin(Tensor levers) {
     return Polygons.isInside(levers) //
-        ? tensorUnaryOperator.fromLevers(levers)
+        ? genesis.origin(levers)
         : ConstantArray.of(DoubleScalar.INDETERMINATE, levers.length());
   }
 }

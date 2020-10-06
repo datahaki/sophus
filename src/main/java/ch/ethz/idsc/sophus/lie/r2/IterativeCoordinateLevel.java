@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.r2;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -28,7 +28,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
 
   /** @param tensorUnaryOperator
    * @return */
-  public static TensorScalarFunction of(ZeroCoordinate tensorUnaryOperator) {
+  public static TensorScalarFunction of(Genesis tensorUnaryOperator) {
     return new IterativeCoordinateLevel(tensorUnaryOperator);
   }
 
@@ -38,11 +38,11 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
   }
 
   /***************************************************/
-  private final ZeroCoordinate tensorUnaryOperator;
+  private final Genesis genesis;
 
   /** @param k non-negative */
-  /* package */ IterativeCoordinateLevel(ZeroCoordinate tensorUnaryOperator) {
-    this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
+  /* package */ IterativeCoordinateLevel(Genesis genesis) {
+    this.genesis = Objects.requireNonNull(genesis);
   }
 
   @Override
@@ -55,7 +55,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
    * @param normalized points on circle
    * @return */
   private int recur(int depth, Tensor normalized) {
-    Tensor weights = tensorUnaryOperator.fromLevers(normalized);
+    Tensor weights = genesis.origin(normalized);
     if (weights.stream().map(Scalar.class::cast).allMatch(Sign::isPositiveOrZero))
       return depth;
     if (depth < MAX_ITERATIONS) {

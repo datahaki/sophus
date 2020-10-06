@@ -51,14 +51,14 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * @see MetricDistances */
-public class MetricCoordinate implements ZeroCoordinate, Serializable {
+public class MetricCoordinate implements Genesis, Serializable {
   private static final long serialVersionUID = -8043520781023560311L;
   private static final TensorUnaryOperator AFFINE = matrix -> ConstantArray.of(RealScalar.ONE, matrix.length());
 
   /** @param vectorLogManifold
    * @param variogram
    * @return */
-  public static ZeroCoordinate of(ScalarUnaryOperator variogram) {
+  public static Genesis of(ScalarUnaryOperator variogram) {
     return custom(new LeversWeighting(variogram));
   }
 
@@ -69,11 +69,11 @@ public class MetricCoordinate implements ZeroCoordinate, Serializable {
    * @param vectorLogManifold
    * @param target operator with design matrix as input
    * @return */
-  public static ZeroCoordinate custom(TensorUnaryOperator target) {
+  public static Genesis custom(TensorUnaryOperator target) {
     return new MetricCoordinate(Objects.requireNonNull(target));
   }
 
-  public static ZeroCoordinate affine() {
+  public static Genesis affine() {
     return custom(AFFINE);
   }
 
@@ -85,7 +85,7 @@ public class MetricCoordinate implements ZeroCoordinate, Serializable {
   }
 
   @Override // from BarycentricCoordinate
-  public Tensor fromLevers(Tensor levers) {
+  public Tensor origin(Tensor levers) {
     return StaticHelper.barycentric( //
         target.apply(levers), // design matrix as input to target
         levers);

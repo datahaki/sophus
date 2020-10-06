@@ -28,7 +28,7 @@ public enum Biinvariants implements Biinvariant {
   METRIC {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      WeightingInterface weightingInterface = new MetricDistances(vectorLogManifold);
+      WeightingInterface weightingInterface = HsCoordinates.wrap(vectorLogManifold, MetricDistances.INSTANCE);
       Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
@@ -66,7 +66,7 @@ public enum Biinvariants implements Biinvariant {
   TARGET {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
+      WeightingInterface weightingInterface = HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE);
       Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }
@@ -92,7 +92,7 @@ public enum Biinvariants implements Biinvariant {
   ANCHOR {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
+      WeightingInterface weightingInterface = HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE);
       Objects.requireNonNull(sequence);
       return point -> weightingInterface.weights(sequence, point);
     }

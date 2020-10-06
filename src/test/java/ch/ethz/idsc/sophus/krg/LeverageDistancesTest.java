@@ -9,7 +9,6 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
-import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -53,9 +52,5 @@ public class LeverageDistancesTest extends TestCase {
       Tensor point = RandomVariate.of(distribution, 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
     }
-  }
-
-  public void testNullFail() {
-    AssertFail.of(() -> LeverageDistances.of(null));
   }
 }

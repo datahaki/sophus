@@ -1,11 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
-
-import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.math.WeightingInterface;
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Norm;
 
@@ -17,19 +13,11 @@ import ch.ethz.idsc.tensor.red.Norm;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007
  * 3.7.3 Shepard Interpolation */
-public class MetricDistances implements WeightingInterface, Serializable {
-  private static final long serialVersionUID = 912368673419897598L;
-  // ---
-  private final HsDesign hsDesign;
-
-  /** @param vectorLogManifold */
-  public MetricDistances(VectorLogManifold vectorLogManifold) {
-    hsDesign = new HsDesign(vectorLogManifold);
-  }
+public enum MetricDistances implements Genesis {
+  INSTANCE;
 
   @Override // from WeightingInterface
-  public Tensor weights(Tensor sequence, Tensor point) {
-    return Tensor.of(hsDesign.stream(sequence, point) //
-        .map(Norm._2::ofVector));
+  public Tensor origin(Tensor levers) {
+    return Tensor.of(levers.stream().map(Norm._2::ofVector));
   }
 }

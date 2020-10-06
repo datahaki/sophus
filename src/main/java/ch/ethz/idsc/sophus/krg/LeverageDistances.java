@@ -1,13 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.krg;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import ch.ethz.idsc.sophus.hs.HsDesign;
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** leverage distances are biinvariant
@@ -23,25 +18,11 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public class LeverageDistances implements WeightingInterface, Serializable {
-  private static final long serialVersionUID = 9213702555219716959L;
-
-  /** @param vectorLogManifold
-   * @return */
-  public static WeightingInterface of(VectorLogManifold vectorLogManifold) {
-    return new LeverageDistances(Objects.requireNonNull(vectorLogManifold));
-  }
-
-  /***************************************************/
-  private final VectorLogManifold vectorLogManifold;
-
-  private LeverageDistances(VectorLogManifold vectorLogManifold) {
-    this.vectorLogManifold = vectorLogManifold;
-  }
+public enum LeverageDistances implements Genesis {
+  INSTANCE;
 
   @Override // from WeightingInterface
-  public Tensor weights(Tensor sequence, Tensor point) {
-    Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
-    return new Mahalanobis(matrix).leverages_sqrt();
+  public Tensor origin(Tensor levers) {
+    return new Mahalanobis(levers).leverages_sqrt();
   }
 }

@@ -15,24 +15,23 @@ import ch.ethz.idsc.tensor.Tensor;
  * </pre> */
 public class HsCoordinates implements BarycentricCoordinate, Serializable {
   /** @param vectorLogManifold
-   * @param tensorUnaryOperator
+   * @param genesis
    * @return */
-  public static BarycentricCoordinate wrap( //
-      VectorLogManifold vectorLogManifold, ZeroCoordinate tensorUnaryOperator) {
-    return new HsCoordinates(vectorLogManifold, tensorUnaryOperator);
+  public static BarycentricCoordinate wrap(VectorLogManifold vectorLogManifold, Genesis genesis) {
+    return new HsCoordinates(vectorLogManifold, genesis);
   }
 
   /***************************************************/
   private final HsDesign hsDesign;
-  private final ZeroCoordinate tensorUnaryOperator;
+  private final Genesis genesis;
 
-  private HsCoordinates(VectorLogManifold vectorLogManifold, ZeroCoordinate tensorUnaryOperator) {
+  private HsCoordinates(VectorLogManifold vectorLogManifold, Genesis genesis) {
     hsDesign = new HsDesign(vectorLogManifold);
-    this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
+    this.genesis = Objects.requireNonNull(genesis);
   }
 
   @Override // from BarycentricCoordinate
   public Tensor weights(Tensor sequence, Tensor point) {
-    return tensorUnaryOperator.fromLevers(hsDesign.matrix(sequence, point));
+    return genesis.origin(hsDesign.matrix(sequence, point));
   }
 }

@@ -41,6 +41,6 @@ public class TargetCoordinateTest extends TestCase {
   }
 
   public void testPackage() {
-    assertFalse(Modifier.isPublic(TargetCoordinate.class.getModifiers()));
+    assertTrue(Modifier.isPublic(TargetCoordinate.class.getModifiers()));
   }
 }

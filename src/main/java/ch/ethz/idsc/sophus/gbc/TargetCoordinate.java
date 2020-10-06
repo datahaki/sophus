@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -18,16 +19,22 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * @see LeverageCoordinate */
-/* package */ class TargetCoordinate implements ZeroCoordinate, Serializable {
-  // ---
+public class TargetCoordinate implements Genesis, Serializable {
+  /** @param variogram
+   * @return */
+  public static Genesis of(ScalarUnaryOperator variogram) {
+    return new TargetCoordinate(Objects.requireNonNull(variogram));
+  }
+
+  /***************************************************/
   private final ScalarUnaryOperator variogram;
 
-  public TargetCoordinate(ScalarUnaryOperator variogram) {
+  private TargetCoordinate(ScalarUnaryOperator variogram) {
     this.variogram = variogram;
   }
 
   @Override
-  public Tensor fromLevers(Tensor levers) {
+  public Tensor origin(Tensor levers) {
     Mahalanobis mahalanobis = new Mahalanobis(levers);
     return StaticHelper.barycentric( //
         NormalizeTotal.FUNCTION.apply(mahalanobis.leverages_sqrt().map(variogram)), //

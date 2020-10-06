@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -21,15 +21,15 @@ public class IterativeCoordinateTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 2);
       {
-        ZeroCoordinate tensorUnaryOperator = ThreePointWeighting.of(Barycenter.MEAN_VALUE);
-        Tensor weights = tensorUnaryOperator.fromLevers(sequence);
+        Genesis tensorUnaryOperator = ThreePointWeighting.of(Barycenter.MEAN_VALUE);
+        Tensor weights = tensorUnaryOperator.origin(sequence);
         MeanDefect meanDefect = new MeanDefect(sequence, weights, RnExponential.INSTANCE);
         Tensor tangent = meanDefect.tangent();
         Chop._07.requireAllZero(tangent);
       }
       for (int k = 0; k < 3; ++k) {
-        ZeroCoordinate tensorUnaryOperator = IterativeCoordinate.usingMeanValue(k);
-        Tensor weights = tensorUnaryOperator.fromLevers(sequence);
+        Genesis tensorUnaryOperator = IterativeCoordinate.usingMeanValue(k);
+        Tensor weights = tensorUnaryOperator.origin(sequence);
         MeanDefect meanDefect = new MeanDefect(sequence, weights, RnExponential.INSTANCE);
         Tensor tangent = meanDefect.tangent();
         Chop._07.requireAllZero(tangent);
@@ -42,14 +42,14 @@ public class IterativeCoordinateTest extends TestCase {
     // for (int count = 0; count < 10; ++count)
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 2);
-      Tensor weights = ThreePointCoordinate.of(Barycenter.MEAN_VALUE).fromLevers(sequence);
+      Tensor weights = ThreePointCoordinate.of(Barycenter.MEAN_VALUE).origin(sequence);
       Chop._07.requireClose( //
           weights, //
-          new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 0).fromLevers(sequence));
+          new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 0).origin(sequence));
       if (weights.stream().map(Scalar.class::cast).anyMatch(Sign::isNegative)) {
         boolean result = Chop._10.isClose( //
             weights, //
-            new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 2).fromLevers(sequence));
+            new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 2).origin(sequence));
         if (4 < n)
           assertFalse(result);
       }
@@ -58,14 +58,14 @@ public class IterativeCoordinateTest extends TestCase {
 
   public void testBiinv() {
     Distribution distribution = UniformDistribution.of(-10, 10);
-    ZeroCoordinate ops = MetricCoordinate.of(InversePowerVariogram.of(2));
+    Genesis ops = MetricCoordinate.of(InversePowerVariogram.of(2));
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 2);
       for (int k = 0; k < 3; ++k) {
-        ZeroCoordinate tensorUnaryOperator = IterativeCoordinate.of(ops, k);
+        Genesis tensorUnaryOperator = IterativeCoordinate.of(ops, k);
         // TensorUnaryOperator ivd = points->
         // Biinvariants.METRIC.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(-2), points);
-        Tensor weights = tensorUnaryOperator.fromLevers(sequence);
+        Tensor weights = tensorUnaryOperator.origin(sequence);
         MeanDefect meanDefect = new MeanDefect(sequence, weights, RnExponential.INSTANCE);
         Tensor tangent = meanDefect.tangent();
         if (!Chop._07.allZero(tangent)) {

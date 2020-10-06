@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
   ;
   public static void main(String[] args) {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold);
+    WeightingInterface w1 = HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE);
     WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();

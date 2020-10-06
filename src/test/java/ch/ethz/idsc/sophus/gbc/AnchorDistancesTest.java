@@ -20,7 +20,7 @@ public class AnchorDistancesTest extends TestCase {
   public void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    WeightingInterface w1 = LeverageDistances.of(vectorLogManifold);
+    WeightingInterface w1 = HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE);
     WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -40,7 +40,7 @@ public class AnchorDistancesTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
-      WeightingInterface weightingInterface = LeverageDistances.of(vectorLogManifold);
+      WeightingInterface weightingInterface = HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE);
       Tensor dmah = weightingInterface.weights(sequence, point);
       Chop._10.requireClose(biinvariantVector.distances(), dmah);
       Chop._10.requireClose(biinvariantVector.weighting(variogram), NormalizeTotal.FUNCTION.apply(dmah));

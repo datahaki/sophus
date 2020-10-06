@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.gbc.ZeroCoordinate;
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
@@ -21,36 +21,36 @@ import ch.ethz.idsc.tensor.sca.InvertUnlessZero;
  * Reference:
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
-public class IterativeCoordinate implements ZeroCoordinate, Serializable {
+public class IterativeCoordinate implements Genesis, Serializable {
   private static final CurveSubdivision MIDPOINTS = ControlMidpoints.of(RnGeodesic.INSTANCE);
 
-  /** @param tensorUnaryOperator
+  /** @param genesis
    * @param k
    * @return */
-  public static ZeroCoordinate of(ZeroCoordinate tensorUnaryOperator, int k) {
-    return new IterativeCoordinate(tensorUnaryOperator, k);
+  public static Genesis of(Genesis genesis, int k) {
+    return new IterativeCoordinate(Objects.requireNonNull(genesis), k);
   }
 
   /** @param k non-negative
    * @return */
-  public static ZeroCoordinate usingMeanValue(int k) {
+  public static Genesis usingMeanValue(int k) {
     return k == 0 //
         ? ThreePointCoordinate.of(Barycenter.MEAN_VALUE)
         : new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), k);
   }
 
   /***************************************************/
-  private final ZeroCoordinate tensorUnaryOperator;
+  private final Genesis genesis;
   private final int k;
 
   /** @param k non-negative */
-  /* package */ IterativeCoordinate(ZeroCoordinate tensorUnaryOperator, int k) {
-    this.tensorUnaryOperator = Objects.requireNonNull(tensorUnaryOperator);
+  /* package */ IterativeCoordinate(Genesis genesis, int k) {
+    this.genesis = genesis;
     this.k = Integers.requirePositiveOrZero(k);
   }
 
   @Override // from TensorUnaryOperator
-  public Tensor fromLevers(Tensor levers) {
+  public Tensor origin(Tensor levers) {
     Tensor scaling = inverseNorms(levers);
     return NormalizeTotal.FUNCTION.apply(scaling.pmul(recur(0, scaling.pmul(levers))));
   }
@@ -64,7 +64,7 @@ public class IterativeCoordinate implements ZeroCoordinate, Serializable {
       Tensor scaling = inverseNorms(midpoints);
       return RotateLeft.of(MIDPOINTS.cyclic(scaling.pmul(recur(depth + 1, scaling.pmul(midpoints)))), -1);
     }
-    return tensorUnaryOperator.fromLevers(normalized);
+    return genesis.origin(normalized);
   }
 
   /** @param levers
