@@ -1,13 +1,22 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.Genesis;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
+import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.hs.s2.S2Exponential;
+import ch.ethz.idsc.sophus.hs.s2.S2Manifold;
+import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
+import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -28,7 +37,7 @@ public class IterativeCoordinateTest extends TestCase {
         Chop._07.requireAllZero(tangent);
       }
       for (int k = 0; k < 3; ++k) {
-        Genesis tensorUnaryOperator = IterativeCoordinate.usingMeanValue(k);
+        Genesis tensorUnaryOperator = IterativeCoordinate.meanValue(k);
         Tensor weights = tensorUnaryOperator.origin(sequence);
         MeanDefect meanDefect = new MeanDefect(sequence, weights, RnExponential.INSTANCE);
         Tensor tangent = meanDefect.tangent();
@@ -73,5 +82,35 @@ public class IterativeCoordinateTest extends TestCase {
         }
       }
     }
+  }
+
+  private static final Genesis[] GENESIS = { //
+      ThreePointCoordinate.of(Barycenter.MEAN_VALUE), //
+      MetricCoordinate.affine(), //
+      TargetCoordinate.of(InversePowerVariogram.of(2)), //
+  };
+
+  public void testS2() {
+    RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
+    Tensor point = UnitVector.of(3, 0);
+    int fails = 0;
+    for (Genesis genesis : GENESIS)
+      for (int n = 3; n < 10; ++n)
+        for (int k = 0; k < 3; ++k)
+          try {
+            Tensor sequence = RandomSample.of(randomSampleInterface, n);
+            BarycentricCoordinate barycentricCoordinate = //
+                HsCoordinates.wrap(S2Manifold.INSTANCE, IterativeCoordinate.of(genesis, k));
+            Tensor weights = barycentricCoordinate.weights(sequence, point);
+            MeanDefect meanDefect = new MeanDefect(sequence, weights, new S2Exponential(point));
+            Tensor tangent = meanDefect.tangent();
+            if (!Chop._07.allZero(tangent)) {
+              System.out.println("S2TEST n=" + n + " k=" + k);
+              ++fails;
+            }
+          } catch (Exception e) {
+            ++fails;
+          }
+    assertTrue(fails < 4);
   }
 }

@@ -2,6 +2,8 @@
 package ch.ethz.idsc.sophus.lie.r2;
 
 import java.io.Serializable;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
@@ -11,8 +13,6 @@ import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.RotateLeft;
-import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.InvertUnlessZero;
 
 /** for k == 0 the coordinates are identical to three-point coordinates with mean value as barycenter
  * 
@@ -33,7 +33,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
 
   /** @param k non-negative
    * @return */
-  public static Genesis usingMeanValue(int k) {
+  public static Genesis meanValue(int k) {
     return k == 0 //
         ? ThreePointCoordinate.of(Barycenter.MEAN_VALUE)
         : new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), k);
@@ -49,27 +49,25 @@ public class IterativeCoordinate implements Genesis, Serializable {
     this.k = Integers.requirePositiveOrZero(k);
   }
 
-  @Override // from TensorUnaryOperator
+  @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    Tensor scaling = inverseNorms(levers);
-    return NormalizeTotal.FUNCTION.apply(scaling.pmul(recur(0, scaling.pmul(levers))));
+    Tensor scaling = InverseNorm.INSTANCE.origin(levers);
+    return NormalizeTotal.FUNCTION.apply(scaling.pmul(recur(scaling.pmul(levers))));
   }
 
-  /** @param depth
-   * @param normalized points on circle
-   * @return */
-  private Tensor recur(int depth, Tensor normalized) {
-    if (depth < k) {
+  /** @param normalized points on circle
+   * @return homogeneous coordinates */
+  private Tensor recur(Tensor normalized) {
+    Deque<Tensor> deque = new ArrayDeque<>(k);
+    for (int depth = 0; depth < k; ++depth) {
       Tensor midpoints = MIDPOINTS.cyclic(normalized);
-      Tensor scaling = inverseNorms(midpoints);
-      return RotateLeft.of(MIDPOINTS.cyclic(scaling.pmul(recur(depth + 1, scaling.pmul(midpoints)))), -1);
+      Tensor scaling = InverseNorm.INSTANCE.origin(midpoints);
+      normalized = scaling.pmul(midpoints);
+      deque.push(scaling);
     }
-    return genesis.origin(normalized);
-  }
-
-  /** @param levers
-   * @return */
-  private static Tensor inverseNorms(Tensor levers) {
-    return Tensor.of(levers.stream().map(Norm._2::ofVector).map(InvertUnlessZero.FUNCTION));
+    Tensor weights = genesis.origin(normalized);
+    while (!deque.isEmpty())
+      weights = RotateLeft.of(MIDPOINTS.cyclic(deque.pop().pmul(weights)), -1);
+    return weights;
   }
 }
