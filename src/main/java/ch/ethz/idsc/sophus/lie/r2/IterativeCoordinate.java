@@ -25,7 +25,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
   private static final CurveSubdivision MIDPOINTS = ControlMidpoints.of(RnGeodesic.INSTANCE);
 
   /** @param genesis
-   * @param k
+   * @param k non-negative
    * @return */
   public static Genesis of(Genesis genesis, int k) {
     return new IterativeCoordinate(Objects.requireNonNull(genesis), k);
@@ -43,7 +43,8 @@ public class IterativeCoordinate implements Genesis, Serializable {
   private final Genesis genesis;
   private final int k;
 
-  /** @param k non-negative */
+  /** @param genesis
+   * @param k non-negative */
   /* package */ IterativeCoordinate(Genesis genesis, int k) {
     this.genesis = genesis;
     this.k = Integers.requirePositiveOrZero(k);
