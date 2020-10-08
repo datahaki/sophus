@@ -33,7 +33,7 @@ public class TargetCoordinate implements Genesis, Serializable {
     this.variogram = variogram;
   }
 
-  @Override
+  @Override // from Genesis
   public Tensor origin(Tensor levers) {
     Mahalanobis mahalanobis = new Mahalanobis(levers);
     return StaticHelper.barycentric( //

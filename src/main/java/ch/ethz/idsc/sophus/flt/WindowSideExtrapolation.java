@@ -4,13 +4,13 @@ package ch.ethz.idsc.sophus.flt;
 import java.io.Serializable;
 import java.util.function.Function;
 
-import ch.ethz.idsc.java.util.MemoFunction;
 import ch.ethz.idsc.sophus.math.win.HalfWindowSampler;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Last;
 import ch.ethz.idsc.tensor.alg.Range;
+import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
@@ -22,7 +22,7 @@ public class WindowSideExtrapolation implements Function<Integer, Tensor>, Seria
    * @return
    * @throws Exception if either input parameter is null */
   public static Function<Integer, Tensor> of(ScalarUnaryOperator windowFunction) {
-    return MemoFunction.wrap(new WindowSideExtrapolation(windowFunction));
+    return Cache.of(new WindowSideExtrapolation(windowFunction), 32);
   }
 
   /***************************************************/

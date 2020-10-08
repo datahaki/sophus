@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Function;
 
-import ch.ethz.idsc.java.util.MemoFunction;
 import ch.ethz.idsc.sophus.math.SplitInterface;
 import ch.ethz.idsc.sophus.math.SymmetricVectorQ;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
@@ -15,6 +14,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
@@ -86,7 +86,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
 
   private GeodesicCenterMidSeeded(SplitInterface splitInterface, Function<Integer, Tensor> function) {
     this.splitInterface = Objects.requireNonNull(splitInterface);
-    this.function = MemoFunction.wrap(new Splits(function));
+    this.function = Cache.of(new Splits(function), 32);
   }
 
   @Override // from TensorUnaryOperator

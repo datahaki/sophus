@@ -7,23 +7,29 @@ import java.util.Deque;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.Join;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 
+/** class does not have a public constructor
+ * 
+ * Reference:
+ * "Hilbert curve - Representation as Lindenmayer system"
+ * on Wikipedia, 2020 */
 public class HilbertCurve {
-  private static final Tensor[] DIR = CirclePoints.of(4).stream().toArray(Tensor[]::new);
+  private static final Tensor[] MOVES = CirclePoints.of(4).stream().toArray(Tensor[]::new);
 
-  /** @param n
+  /** @param n non-negative
    * @return */
   public static Tensor of(int n) {
     return Tensor.of(new HilbertCurve(n).deque.stream());
   }
 
+  /** @param n positive
+   * @return */
   public static Tensor closed(int n) {
     Integers.requirePositive(n);
-    Tensor ante = Tensors.vector((1 << n) - 1, -1);
-    Tensor post = Tensors.vector(0, -1);
+    Tensor ante = Tensors.vector((1 << n), 0);
+    Tensor post = Tensors.vector(1, 0);
     Tensor tensor = of(n);
     if (n % 2 == 0)
       return Join.of(Tensors.of(ante), tensor, Tensors.of(post));
@@ -36,16 +42,14 @@ public class HilbertCurve {
   private final Deque<Tensor> deque = new ArrayDeque<>();
   private int curr = 0;
   private int last = Integer.MAX_VALUE;
-  private Tensor point = Array.zeros(2);
 
   private HilbertCurve(int n) {
-    deque.push(point);
+    deque.push(Tensors.vector(1, 1));
     a(n);
   }
 
-  public void a(int n) {
-    --n;
-    if (n < 0)
+  void a(int n) {
+    if (--n < 0)
       return;
     r(+1); // -
     b(n); // b
@@ -60,9 +64,8 @@ public class HilbertCurve {
     r(+1); // -
   }
 
-  public void b(int n) {
-    --n;
-    if (n < 0)
+  void b(int n) {
+    if (--n < 0)
       return;
     r(-1); // +
     a(n); // a
@@ -77,15 +80,15 @@ public class HilbertCurve {
     r(-1); // +
   }
 
-  public void r(int dir) {
+  void r(int dir) {
     curr += dir;
   }
 
-  public void f() {
-    point = point.add(DIR[Math.floorMod(curr, 4)]);
+  void f() {
+    Tensor point = deque.peek();
     if (last == curr)
       deque.pop();
     last = curr;
-    deque.push(point);
+    deque.push(point.add(MOVES[Math.floorMod(curr, 4)]));
   }
 }

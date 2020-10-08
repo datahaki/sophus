@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.srf.SurfaceMesh;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.alg.Array;
-import ch.ethz.idsc.tensor.io.Serialization;
+import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.red.FirstPosition;
 import junit.framework.TestCase;
 

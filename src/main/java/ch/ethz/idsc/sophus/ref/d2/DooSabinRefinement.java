@@ -37,7 +37,7 @@ public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
     for (Tensor face : surfaceMesh.ind) {
       Tensor sequence = Tensor.of(IntStream.of(Primitives.toIntArray(face)).mapToObj(surfaceMesh.vrt::get));
       int n = sequence.length();
-      Tensor weights = DooSabinWeights.instance().apply(n);
+      Tensor weights = DooSabinWeights.CACHE.apply(n);
       int ofs = out.vrt.length();
       for (int offset = 0; offset < n; ++offset)
         out.addVert(biinvariantMean.mean(sequence, RotateLeft.of(weights, offset)));

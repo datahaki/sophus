@@ -16,7 +16,7 @@ public class HilbertCurveTest extends TestCase {
   }
 
   public void testSmall() {
-    assertEquals(HilbertCurve.of(0), Tensors.fromString("{{0, 0}}"));
+    assertEquals(HilbertCurve.of(0), Tensors.fromString("{{1, 1}}"));
   }
 
   public void testZeroClosedFail() {

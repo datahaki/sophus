@@ -61,7 +61,7 @@ public class MetricCoordinate implements Genesis, Serializable {
     return new MetricCoordinate(Objects.requireNonNull(genesis));
   }
 
-  /** @param variogram
+  /** @param variogram for example InversePowerVariogram.of(2)
    * @return */
   public static Genesis of(ScalarUnaryOperator variogram) {
     return of(new MetricWeighting(variogram));

@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 public class DooSabinWeightsTest extends TestCase {
   public void testSimple() {
     for (int n = 3; n <= 12; ++n) {
-      Tensor w = DooSabinWeights.instance().apply(n);
+      Tensor w = DooSabinWeights.INSTANCE.apply(n);
       AffineQ.require(w);
       Chop._12.requireClose(w, DooSabinWeights.numeric(n));
     }

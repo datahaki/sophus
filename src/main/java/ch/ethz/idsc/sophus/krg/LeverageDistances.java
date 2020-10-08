@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum LeverageDistances implements Genesis {
   INSTANCE;
 
-  @Override // from WeightingInterface
+  @Override // from Genesis
   public Tensor origin(Tensor levers) {
     return new Mahalanobis(levers).leverages_sqrt();
   }

@@ -1,30 +1,21 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d2;
 
-import java.io.Serializable;
 import java.util.function.Function;
 
-import ch.ethz.idsc.java.util.MemoFunction;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Join;
 import ch.ethz.idsc.tensor.alg.Range;
+import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.opt.Pi;
 import ch.ethz.idsc.tensor.sca.Cos;
 
-/* package */ class DooSabinWeights implements Function<Integer, Tensor>, Serializable {
-  private static final long serialVersionUID = 985511208901110244L;
-  private static final Function<Integer, Tensor> INSTANCE = MemoFunction.wrap(new DooSabinWeights());
+/* package */ enum DooSabinWeights implements Function<Integer, Tensor> {
+  INSTANCE;
 
-  public static Function<Integer, Tensor> instance() {
-    return INSTANCE;
-  }
-
-  /***************************************************/
-  private DooSabinWeights() {
-    // ---
-  }
+  public static final Function<Integer, Tensor> CACHE = Cache.of(INSTANCE, 3 * 16);
 
   /* package */ static Tensor numeric(int n) {
     Tensor w = Range.of(1, n).multiply(Pi.TWO).divide(RealScalar.of(n));

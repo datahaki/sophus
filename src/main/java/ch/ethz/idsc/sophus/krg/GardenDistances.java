@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.Mahalanobis;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
@@ -38,9 +37,7 @@ public class GardenDistances implements TensorUnaryOperator {
     for (Tensor point : sequence) {
       TangentSpace tangentSpace = vectorLogManifold.logAt(point);
       tangentSpaces.add(tangentSpace);
-      // ---
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
-      array.add(new Mahalanobis(matrix));
+      array.add(new Mahalanobis(Tensor.of(sequence.stream().map(tangentSpace::vectorLog))));
     }
   }
 
