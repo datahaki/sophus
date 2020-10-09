@@ -8,8 +8,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public class NormWeighting implements Genesis {
-  private static final long serialVersionUID = 4140058721979310542L;
-
   /** @param tensorNorm non-null
    * @param */
   public static Genesis of(TensorNorm tensorNorm, ScalarUnaryOperator variogram) {
