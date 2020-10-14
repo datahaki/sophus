@@ -11,7 +11,7 @@ public class HilbertCurveTest extends TestCase {
     ExactTensorQ.require(HilbertCurve.of(0));
     for (int n = 1; n < 4; ++n) {
       ExactTensorQ.require(HilbertCurve.of(n));
-      ExactTensorQ.require(HilbertCurve.closed(n));
+      ExactTensorQ.require(HilbertPolygon.of(n));
     }
   }
 
@@ -19,7 +19,7 @@ public class HilbertCurveTest extends TestCase {
     assertEquals(HilbertCurve.of(0), Tensors.fromString("{{1, 1}}"));
   }
 
-  public void testZeroClosedFail() {
-    AssertFail.of(() -> HilbertCurve.closed(0));
+  public void testNegativeFail() {
+    AssertFail.of(() -> HilbertPolygon.of(-1));
   }
 }

@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** Examples:
  * <pre>
@@ -19,6 +20,16 @@ public class HsCoordinates implements BarycentricCoordinate, Serializable {
    * @return */
   public static BarycentricCoordinate wrap(VectorLogManifold vectorLogManifold, Genesis genesis) {
     return new HsCoordinates(vectorLogManifold, genesis);
+  }
+
+  /** @param vectorLogManifold
+   * @param genesis
+   * @param sequence
+   * @return */
+  public static TensorUnaryOperator wrap(VectorLogManifold vectorLogManifold, Genesis genesis, Tensor sequence) {
+    BarycentricCoordinate barycentricCoordinate = wrap(vectorLogManifold, genesis);
+    Objects.requireNonNull(sequence);
+    return point -> barycentricCoordinate.weights(sequence, point);
   }
 
   /***************************************************/
