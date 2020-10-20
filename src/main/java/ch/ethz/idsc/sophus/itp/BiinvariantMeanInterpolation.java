@@ -12,9 +12,9 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.Unprotect;
-import ch.ethz.idsc.tensor.opt.AbstractInterpolation;
-import ch.ethz.idsc.tensor.opt.Interpolation;
-import ch.ethz.idsc.tensor.opt.LinearInterpolation;
+import ch.ethz.idsc.tensor.itp.AbstractInterpolation;
+import ch.ethz.idsc.tensor.itp.Interpolation;
+import ch.ethz.idsc.tensor.itp.LinearInterpolation;
 import ch.ethz.idsc.tensor.sca.Floor;
 
 /** Hint:

@@ -7,9 +7,9 @@ import java.util.Objects;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.AbstractInterpolation;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.Interpolation;
+import ch.ethz.idsc.tensor.itp.AbstractInterpolation;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.Interpolation;
 import ch.ethz.idsc.tensor.sca.Floor;
 
 /** univariate geodesic interpolation */

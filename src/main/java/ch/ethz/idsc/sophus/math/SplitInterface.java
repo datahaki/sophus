@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 @FunctionalInterface
 public interface SplitInterface extends MidpointInterface, BinaryAverage {

@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
+import java.util.Random;
+
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
@@ -10,14 +12,18 @@ import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.s2.S2Exponential;
 import ch.ethz.idsc.sophus.hs.s2.S2Manifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
+import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.itp.Interpolation;
+import ch.ethz.idsc.tensor.itp.LinearInterpolation;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -27,7 +33,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class IterativeCoordinateTest extends TestCase {
-  private static void _checkSimple(Genesis genesis) {
+  private static void _checkIterative(Genesis genesis) {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
@@ -47,12 +53,51 @@ public class IterativeCoordinateTest extends TestCase {
     }
   }
 
+  private static void _checkCornering(Genesis genesis) {
+    for (int n = 3; n < 10; ++n) {
+      Tensor polygon = CirclePoints.of(n);
+      int index = 0;
+      for (Tensor x : polygon) {
+        Tensor weights = genesis.origin(Tensor.of(polygon.stream().map(x::subtract)));
+        Chop._12.requireClose(weights, UnitVector.of(n, index));
+        ++index;
+      }
+    }
+  }
+
+  private static void _checkAlongedge(Genesis genesis, boolean strict) {
+    Random random = new Random();
+    for (int n = 3; n < 10; ++n) {
+      Tensor polygon = CirclePoints.of(n);
+      int index = random.nextInt(polygon.length() - 1);
+      Interpolation interpolation = LinearInterpolation.of(polygon.extract(index, index + 2));
+      Tensor x = interpolation.at(RealScalar.of(random.nextDouble()));
+      Tensor levers = Tensor.of(polygon.stream().map(x::subtract));
+      if (Polygons.isInside(levers) && strict) {
+        Tensor weights = genesis.origin(levers);
+        Chop._10.requireClose(RnBiinvariantMean.INSTANCE.mean(polygon, weights), x);
+      }
+    }
+  }
+
   public void testMV() {
-    _checkSimple(ThreePointCoordinate.of(Barycenter.MEAN_VALUE));
+    Genesis genesis = ThreePointCoordinate.of(Barycenter.MEAN_VALUE);
+    _checkIterative(genesis);
+    _checkCornering(genesis);
+    _checkAlongedge(genesis, false);
   }
 
   public void testID() {
-    _checkSimple(MetricCoordinate.of(InversePowerVariogram.of(2)));
+    Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
+    _checkIterative(genesis);
+    _checkCornering(genesis);
+    _checkAlongedge(genesis, true);
+  }
+
+  public void testIC() {
+    Genesis genesis = IterativeCoordinate.of(MetricCoordinate.affine(), 3);
+    _checkCornering(genesis);
+    _checkAlongedge(genesis, false);
   }
 
   public void testKis0() {

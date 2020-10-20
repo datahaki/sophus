@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 /** dual scheme */
 public class Split2LoDual3PointCurveSubdivision extends Dual3PointCurveSubdivision {

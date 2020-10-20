@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.math.SplitInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.BSplineInterpolation;
+import ch.ethz.idsc.tensor.itp.BSplineInterpolation;
 
 /** computation of control points that result in a limit curve
  * that interpolates given target points.

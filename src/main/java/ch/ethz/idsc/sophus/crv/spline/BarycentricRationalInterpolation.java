@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.OrderedQ;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.io.ScalarArray;
-import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
+import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** References:

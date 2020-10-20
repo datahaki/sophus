@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Subdivide;
-import ch.ethz.idsc.tensor.opt.LanczosInterpolation;
+import ch.ethz.idsc.tensor.itp.LanczosInterpolation;
 
 /** implementation is specific to R^n */
 public enum LanczosCurve {

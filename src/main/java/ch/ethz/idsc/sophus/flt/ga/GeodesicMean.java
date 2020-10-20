@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt.ga;
 
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
 

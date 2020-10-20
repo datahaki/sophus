@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
-import ch.ethz.idsc.tensor.opt.Interpolation;
+import ch.ethz.idsc.tensor.itp.Interpolation;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;

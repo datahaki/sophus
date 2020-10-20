@@ -6,7 +6,7 @@ import java.util.Arrays;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
-import ch.ethz.idsc.tensor.mat.FourierMatrix;
+import ch.ethz.idsc.tensor.fft.FourierMatrix;
 import junit.framework.TestCase;
 
 public class LanczosCurveTest extends TestCase {

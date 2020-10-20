@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs;
 
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 /** Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"

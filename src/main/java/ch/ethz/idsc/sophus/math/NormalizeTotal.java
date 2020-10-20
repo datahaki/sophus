@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
+
 import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
@@ -21,10 +24,17 @@ public enum NormalizeTotal implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor vector) {
-    int length = vector.length();
-    for (int index = 0; index < length; ++index)
-      if (!DeterminateScalarQ.of(vector.Get(index)))
-        return UnitVector.of(length, index);
-    return NORMALIZE.apply(vector);
+    OptionalInt optionalInt = indeterminate(vector);
+    return optionalInt.isPresent() //
+        ? UnitVector.of(vector.length(), optionalInt.getAsInt())
+        : NORMALIZE.apply(vector);
+  }
+
+  /** @param vector
+   * @return */
+  public static OptionalInt indeterminate(Tensor vector) {
+    return IntStream.range(0, vector.length()) //
+        .filter(index -> !DeterminateScalarQ.of(vector.Get(index))) //
+        .findFirst();
   }
 }

@@ -5,7 +5,7 @@ import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
-import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
+import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
 import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference: U. Reif slide 8/32

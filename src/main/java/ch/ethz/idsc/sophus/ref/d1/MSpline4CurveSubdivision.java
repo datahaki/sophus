@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.Unprotect;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class MSpline4CurveSubdivision extends Dual3PointCurveSubdivision {

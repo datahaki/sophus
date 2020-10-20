@@ -6,7 +6,7 @@ import java.util.Objects;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** <a href="https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm">

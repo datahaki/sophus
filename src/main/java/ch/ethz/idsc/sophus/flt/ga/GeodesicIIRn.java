@@ -6,7 +6,7 @@ import java.util.Objects;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.BoundedLinkedList;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** input to the operator are the individual elements of the sequence */

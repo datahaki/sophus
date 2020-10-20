@@ -5,14 +5,18 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
+import java.util.OptionalInt;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
+import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.RotateLeft;
+import ch.ethz.idsc.tensor.alg.UnitVector;
 
 /** for k == 0 the coordinates are identical to three-point coordinates with mean value as barycenter
  * 
@@ -53,7 +57,10 @@ public class IterativeCoordinate implements Genesis, Serializable {
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
     Tensor scaling = InverseNorm.INSTANCE.origin(levers);
-    return NormalizeTotal.FUNCTION.apply(scaling.pmul(iterate(scaling.pmul(levers))));
+    OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
+    return optionalInt.isPresent() //
+        ? UnitVector.of(levers.length(), optionalInt.getAsInt())
+        : NormalizeTotal.FUNCTION.apply(scaling.pmul(iterate(scaling.pmul(levers))));
   }
 
   /** @param normalized points on circle
@@ -63,6 +70,9 @@ public class IterativeCoordinate implements Genesis, Serializable {
     for (int depth = 0; depth < k; ++depth) {
       Tensor midpoints = MIDPOINTS.cyclic(normalized);
       Tensor scaling = InverseNorm.INSTANCE.origin(midpoints);
+      OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
+      if (optionalInt.isPresent())
+        return Array.fill(() -> DoubleScalar.INDETERMINATE, normalized.length());
       normalized = scaling.pmul(midpoints);
       deque.push(scaling);
     }

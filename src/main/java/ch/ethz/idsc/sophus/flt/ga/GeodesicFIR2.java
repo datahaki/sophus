@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.flt.ga;
 
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** filter blends extrapolated value with measurement

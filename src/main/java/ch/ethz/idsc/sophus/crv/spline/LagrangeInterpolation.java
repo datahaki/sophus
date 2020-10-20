@@ -5,10 +5,10 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.opt.AbstractInterpolation;
-import ch.ethz.idsc.tensor.opt.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.InterpolatingPolynomial;
-import ch.ethz.idsc.tensor.opt.Interpolation;
+import ch.ethz.idsc.tensor.itp.AbstractInterpolation;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
+import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
+import ch.ethz.idsc.tensor.itp.Interpolation;
 import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** implementation uses knots 0, 1, 2, ...
