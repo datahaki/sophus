@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 /** Reference:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public class GardenCoordinate implements TensorUnaryOperator {
+public class GardenCoordinate implements TensorUnaryOperator, VectorField {
   private static final long serialVersionUID = 3828124845607313545L;
 
   /** @param vectorLogManifold

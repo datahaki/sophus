@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.krg.Kriging;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
-public class KrigingCoordinate implements TensorUnaryOperator {
+public class KrigingCoordinate implements TensorUnaryOperator, VectorField {
   private static final long serialVersionUID = 1978234055331468414L;
 
   /** @param tensorUnaryOperator

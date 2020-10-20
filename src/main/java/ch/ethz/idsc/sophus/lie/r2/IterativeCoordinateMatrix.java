@@ -28,18 +28,12 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
     return new IterativeCoordinateMatrix(k);
   }
 
-  /** @param k non-negative
-   * @return */
-  public static Genesis meanValue(int k) {
-    return new IterativeCoordinateMatrix(k);
-  }
-
   /***************************************************/
   private final int k;
 
   /** @param genesis
    * @param k non-negative */
-  /* package */ IterativeCoordinateMatrix(int k) {
+  private IterativeCoordinateMatrix(int k) {
     this.k = Integers.requirePositiveOrZero(k);
   }
 

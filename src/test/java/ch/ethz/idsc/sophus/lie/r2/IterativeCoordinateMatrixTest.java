@@ -17,7 +17,7 @@ public class IterativeCoordinateMatrixTest extends TestCase {
     Distribution distribution = UniformDistribution.of(-10, 10);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(distribution, n, 2);
-      for (int k = 0; k < 5; ++k) {
+      for (int k = 1; k < 5; ++k) {
         Genesis genesis = IterativeCoordinate.of(MetricCoordinate.affine(), k);
         Tensor weights = genesis.origin(levers);
         MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);

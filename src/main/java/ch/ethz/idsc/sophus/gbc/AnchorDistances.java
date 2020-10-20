@@ -12,18 +12,15 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** Hint: DO NOT USE AnchorDistances EXCEPT IN AnchorCoordinate !!! */
 /* package */ class AnchorDistances implements WeightingInterface, Serializable {
-  private static final long serialVersionUID = -76360466781074513L;
-  // ---
-  private final VectorLogManifold vectorLogManifold;
+  private final HsDesign hsDesign;
 
   /** @param vectorLogManifold */
   public AnchorDistances(VectorLogManifold vectorLogManifold) {
-    this.vectorLogManifold = vectorLogManifold;
+    hsDesign = new HsDesign(vectorLogManifold);
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
-    HsInfluence hsInfluence = new HsInfluence(matrix);
+    HsInfluence hsInfluence = new HsInfluence(hsDesign.matrix(sequence, point));
     return new BiinvariantVector(hsInfluence, hsInfluence.leverages_sqrt());
   }
 
