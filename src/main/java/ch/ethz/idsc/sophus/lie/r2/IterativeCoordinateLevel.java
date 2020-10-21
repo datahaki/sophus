@@ -4,8 +4,6 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
-import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -23,7 +21,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
 public class IterativeCoordinateLevel implements TensorScalarFunction {
   private static final long serialVersionUID = 2763677963395774512L;
-  private static final CurveSubdivision MIDPOINTS = ControlMidpoints.of(RnGeodesic.INSTANCE);
 
   /** @param genesis
    * @return */
@@ -58,7 +55,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
         Tensor weights = genesis.origin(normalized);
         if (weights.stream().map(Scalar.class::cast).map(chop).allMatch(Sign::isPositiveOrZero))
           return RealScalar.of(depth);
-        Tensor midpoints = MIDPOINTS.cyclic(normalized);
+        Tensor midpoints = Adds.of(normalized);
         normalized = InverseNorm.INSTANCE.origin(midpoints).pmul(midpoints);
         ++depth;
       }

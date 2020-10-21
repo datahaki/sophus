@@ -4,8 +4,6 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
-import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
-import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
@@ -19,8 +17,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
 public class IterativeCoordinateMatrix implements Genesis, Serializable {
-  private static final CurveSubdivision MIDPOINTS = ControlMidpoints.of(RnGeodesic.INSTANCE);
-
   /** @param genesis
    * @param k non-negative
    * @return */
@@ -42,9 +38,9 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
     Tensor scaling = InverseNorm.INSTANCE.origin(levers);
     Tensor matrix = DiagonalMatrix.with(scaling);
     Tensor normalized = scaling.pmul(levers);
-    Tensor midmat = MidpointMatrix.of(levers.length());
+    Tensor midmat = Adds.matrix(levers.length());
     for (int depth = 0; depth < k; ++depth) {
-      Tensor midpoints = MIDPOINTS.cyclic(normalized);
+      Tensor midpoints = Adds.of(normalized);
       scaling = InverseNorm.INSTANCE.origin(midpoints);
       matrix = scaling.pmul(midmat).dot(matrix); // DiagonalMatrix.with(scaling).dot(midmat).dot(matrix)
       normalized = scaling.pmul(midpoints);

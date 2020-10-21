@@ -8,12 +8,8 @@ import java.util.Objects;
 import java.util.OptionalInt;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
-import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
-import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.RotateLeft;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Integers;
@@ -26,8 +22,6 @@ import ch.ethz.idsc.tensor.ext.Integers;
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
 public class IterativeCoordinate implements Genesis, Serializable {
-  private static final CurveSubdivision MIDPOINTS = ControlMidpoints.of(RnGeodesic.INSTANCE);
-
   /** @param genesis
    * @param k non-negative
    * @return */
@@ -68,17 +62,17 @@ public class IterativeCoordinate implements Genesis, Serializable {
   private Tensor iterate(Tensor normalized) {
     Deque<Tensor> deque = new ArrayDeque<>(k);
     for (int depth = 0; depth < k; ++depth) {
-      Tensor midpoints = MIDPOINTS.cyclic(normalized);
+      Tensor midpoints = Adds.of(normalized);
       Tensor scaling = InverseNorm.INSTANCE.origin(midpoints);
-      OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
-      if (optionalInt.isPresent())
-        return Array.fill(() -> DoubleScalar.INDETERMINATE, normalized.length());
+      // OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
+      // if (optionalInt.isPresent())
+      // return Array.fill(() -> DoubleScalar.INDETERMINATE, normalized.length());
       normalized = scaling.pmul(midpoints);
       deque.push(scaling);
     }
     Tensor weights = genesis.origin(normalized);
     while (!deque.isEmpty())
-      weights = RotateLeft.of(MIDPOINTS.cyclic(deque.pop().pmul(weights)), -1);
+      weights = RotateLeft.of(Adds.of(deque.pop().pmul(weights)), -1);
     return weights;
   }
 }
