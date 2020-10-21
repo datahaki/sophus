@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 /** leverage coordinates are biinvariant
  * 

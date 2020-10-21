@@ -10,8 +10,8 @@ import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.opt.SpatialMedian;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.opt.rn.SpatialMedian;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** iterative method to find solution to Fermat-Weber Problem

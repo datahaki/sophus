@@ -3,11 +3,11 @@ package ch.ethz.idsc.sophus.crv.spline;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** <a href="https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm">
  * De Casteljau's algorithm</a> for the evaluation of Bezier curves.

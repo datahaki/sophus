@@ -6,7 +6,7 @@ import java.util.function.BinaryOperator;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
-import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.num.Pi;
 
 /* package */ enum MidpointTangentLayers implements BinaryOperator<Scalar> {
   INSTANCE;

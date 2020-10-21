@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.gbc;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class InverseCoordinate implements TensorUnaryOperator, VectorField {
   private static final long serialVersionUID = -4923137024335634245L;

@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.clt;
 
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** maps to SE(2) or SE(2) Covering
  * 

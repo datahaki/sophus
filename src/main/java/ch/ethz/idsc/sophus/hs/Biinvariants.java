@@ -16,8 +16,8 @@ import ch.ethz.idsc.sophus.krg.LeverageDistances;
 import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** Reference:
  * "Biinvariant Distance Vectors"

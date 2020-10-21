@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 public class So2Lift implements ScalarUnaryOperator {
   private static final long serialVersionUID = -7866664207418210075L;

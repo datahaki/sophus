@@ -6,8 +6,8 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 public class SplitParametricCurve implements GeodesicInterface, Serializable {
   private static final long serialVersionUID = 8944346948649160098L;

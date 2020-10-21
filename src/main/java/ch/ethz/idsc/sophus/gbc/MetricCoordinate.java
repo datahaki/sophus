@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 /** partition of unity
  * linear reproduction

@@ -7,7 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 public class LieVectorLogManifold implements VectorLogManifold, Serializable {
   private static final long serialVersionUID = -1161521232590417428L;

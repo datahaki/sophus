@@ -7,10 +7,10 @@ import java.util.function.BiFunction;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Clip;
 import ch.ethz.idsc.tensor.sca.Clips;
 import ch.ethz.idsc.tensor.sca.Power;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Reference:
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"

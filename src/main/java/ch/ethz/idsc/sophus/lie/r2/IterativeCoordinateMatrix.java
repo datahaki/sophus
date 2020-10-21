@@ -6,8 +6,8 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.sca.Chop;
 

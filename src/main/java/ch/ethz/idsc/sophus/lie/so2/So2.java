@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so2;
 
-import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.sca.Mod;
 
 public enum So2 {

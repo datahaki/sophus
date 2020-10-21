@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** the term "family" conveys the meaning that the bijection
  * depends on a single parameter, for instance time */

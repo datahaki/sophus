@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.lie.r2;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /* package */ enum InverseNorm implements Genesis {
   INSTANCE;

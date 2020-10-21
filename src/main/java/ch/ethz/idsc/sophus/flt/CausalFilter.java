@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 public class CausalFilter implements TensorUnaryOperator {
   private static final long serialVersionUID = -5214885971431533037L;

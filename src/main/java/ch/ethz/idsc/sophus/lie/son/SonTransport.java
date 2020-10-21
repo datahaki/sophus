@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.lie.son;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Inverse;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Reference:

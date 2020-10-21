@@ -12,7 +12,7 @@ import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
   private static final long serialVersionUID = -5010189604975075412L;

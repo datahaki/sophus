@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.clt;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 /* package */ class ClothoidQuadraticEx implements ScalarUnaryOperator {
   private static final long serialVersionUID = -3274719133556718916L;

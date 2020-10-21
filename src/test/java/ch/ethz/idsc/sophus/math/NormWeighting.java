@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 public class NormWeighting implements Genesis {
   /** @param tensorNorm non-null

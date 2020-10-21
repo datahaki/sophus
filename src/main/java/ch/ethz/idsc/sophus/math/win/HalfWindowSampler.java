@@ -7,8 +7,8 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Subdivide;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** samples a given window function uniformly in the interval [-1/2, 0] */
 public class HalfWindowSampler extends BaseWindowSampler {

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.flt.ga;
 import ch.ethz.idsc.sophus.math.SplitInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** geodesic average between 3 points for symmetric weight mask
  * {factor/2, 1-factor, factor/2}

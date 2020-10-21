@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.so2;
 import java.io.IOException;
 
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.num.Pi;
 import junit.framework.TestCase;
 
 public class So2Test extends TestCase {

@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 
 import ch.ethz.idsc.sophus.flt.CausalFilter;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public enum GeodesicFIRnFilter {
   ;

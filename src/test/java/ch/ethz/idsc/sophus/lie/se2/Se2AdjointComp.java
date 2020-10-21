@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.se2;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /* package */ class Se2AdjointComp implements TensorUnaryOperator {
   private static final long serialVersionUID = 2943351612823021589L;

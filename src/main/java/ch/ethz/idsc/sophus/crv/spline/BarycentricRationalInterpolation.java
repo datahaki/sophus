@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.crv.spline;
 import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -12,9 +11,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.OrderedQ;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.io.ScalarArray;
 import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** References:
  * "Barycentric Rational Interpolation"

@@ -6,10 +6,10 @@ import java.util.Iterator;
 
 import ch.ethz.idsc.sophus.math.MidpointInterface;
 import ch.ethz.idsc.sophus.math.Nocopy;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.ScalarQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Last;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** Reference:
  * "A theoretical development for the computer generation of piecewise polynomial surfaces"

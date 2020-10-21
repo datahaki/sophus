@@ -5,10 +5,10 @@ import java.io.Serializable;
 import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.math.SplitInterface;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Range;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.N;
 

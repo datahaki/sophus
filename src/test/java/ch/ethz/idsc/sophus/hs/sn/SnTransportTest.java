@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 import junit.framework.TestCase;
 
 public class SnTransportTest extends TestCase {

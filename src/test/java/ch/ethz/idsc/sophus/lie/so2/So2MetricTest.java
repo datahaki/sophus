@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.so2;
 
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.num.Pi;
 import junit.framework.TestCase;
 
 public class So2MetricTest extends TestCase {

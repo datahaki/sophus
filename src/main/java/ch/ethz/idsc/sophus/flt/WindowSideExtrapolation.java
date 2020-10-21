@@ -10,8 +10,8 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Last;
 import ch.ethz.idsc.tensor.alg.Range;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
  * with each point weighted as provided by an external function. */

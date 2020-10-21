@@ -8,8 +8,8 @@ import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 import junit.framework.TestCase;
 
 public class Se3CurveDecimationTest extends TestCase {

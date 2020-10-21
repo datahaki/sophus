@@ -8,8 +8,8 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.Unprotect;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public class MSpline4CurveSubdivision extends Dual3PointCurveSubdivision {
   private static final long serialVersionUID = 3348666795272550116L;

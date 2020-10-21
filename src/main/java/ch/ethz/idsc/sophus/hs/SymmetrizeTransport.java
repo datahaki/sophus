@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020 p.13

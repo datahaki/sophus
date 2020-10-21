@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 /** anchor coordinates are one implementation of leverage coordinates
  * 

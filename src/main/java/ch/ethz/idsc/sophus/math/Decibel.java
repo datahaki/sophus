@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.math;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Log;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public enum Decibel implements ScalarUnaryOperator {
   FUNCTION;

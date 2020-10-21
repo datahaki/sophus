@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.r2;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.opt.RigidMotionFit;
+import ch.ethz.idsc.tensor.opt.rn.RigidMotionFit;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 
 public enum Se2RigidMotionFit {

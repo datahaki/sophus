@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.clt.par.ClothoidIntegral;
 import ch.ethz.idsc.sophus.clt.par.ClothoidIntegration;
 import ch.ethz.idsc.sophus.clt.par.ClothoidIntegrations;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.num.Pi;
 import junit.framework.TestCase;
 
 public class ClothoidImplTest extends TestCase {

@@ -7,8 +7,8 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** @see MetricDistances */
 /* package */ class MetricWeighting implements Genesis, Serializable {

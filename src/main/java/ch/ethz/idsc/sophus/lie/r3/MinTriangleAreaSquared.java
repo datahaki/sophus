@@ -1,12 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.red.Mean;

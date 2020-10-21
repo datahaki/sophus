@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** @see HnGeodesic */

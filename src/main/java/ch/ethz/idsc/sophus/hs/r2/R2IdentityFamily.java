@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.hs.r2;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public enum R2IdentityFamily implements R2RigidFamily {
   INSTANCE;

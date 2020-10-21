@@ -9,8 +9,8 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** for k == 0 the coordinates are identical to three-point coordinates with mean value as barycenter
  * 

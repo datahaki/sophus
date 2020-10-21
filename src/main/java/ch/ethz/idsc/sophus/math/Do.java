@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.math;
 
 import java.util.function.Supplier;
 
-import ch.ethz.idsc.tensor.Integers;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/Do.html">Do</a> */

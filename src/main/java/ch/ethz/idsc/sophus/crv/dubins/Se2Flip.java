@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.dubins;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /* package */ enum Se2Flip implements TensorUnaryOperator {
   FUNCTION;

@@ -6,8 +6,8 @@ import java.util.function.Predicate;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 public class FindZero implements Serializable {
   private static final long serialVersionUID = -4085485838154451150L;

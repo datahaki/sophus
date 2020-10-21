@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
  * with each point weighted as provided by an external function. */

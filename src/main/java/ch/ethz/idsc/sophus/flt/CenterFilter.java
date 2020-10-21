@@ -5,11 +5,11 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.flt.bm.BiinvariantMeanCenter;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.img.ImageFilter;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** CenterFilter uses <em>odd</em> number of elements from the signal always.
  * 

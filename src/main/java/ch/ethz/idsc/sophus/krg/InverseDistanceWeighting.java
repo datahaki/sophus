@@ -7,8 +7,8 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.ScalarUnaryOperator;
 
 /** Inverse Distance Weighting does not reproduce linear functions in general. Therefore,
  * Inverse distance weights <b>do not</b> fall in the category of generalized barycentric

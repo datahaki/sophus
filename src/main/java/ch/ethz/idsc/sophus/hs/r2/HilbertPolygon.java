@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r2;
 
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Join;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** closed non-intersecting curve
  * 

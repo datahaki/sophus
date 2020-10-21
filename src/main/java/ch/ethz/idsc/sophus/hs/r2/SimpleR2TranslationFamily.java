@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.r2;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** the term "family" conveys the meaning that the translation
  * depends on a single parameter, for instance time */

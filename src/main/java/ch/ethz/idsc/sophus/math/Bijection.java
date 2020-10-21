@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** injective and surjective mapping.
  * 

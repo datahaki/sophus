@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.flt.ga;
 
 import java.util.function.Function;
 
-import ch.ethz.idsc.tensor.Integers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Binomial;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.sca.Power;
 
 public enum BinomialWeights implements Function<Integer, Tensor> {

@@ -7,7 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** Guigui Pennec, p. 6 */
 /* package */ class SchildLadderExt implements HsTransport, Serializable {

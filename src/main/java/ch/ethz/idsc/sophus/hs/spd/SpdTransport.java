@@ -5,8 +5,8 @@ import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 /** References:
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"

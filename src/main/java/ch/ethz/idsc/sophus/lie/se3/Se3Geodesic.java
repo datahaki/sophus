@@ -6,8 +6,8 @@ import ch.ethz.idsc.sophus.lie.gl.LinearGroup;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
 
 /** geodesic in special Euclidean group SE(3) of affine transformations
  * 

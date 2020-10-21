@@ -7,8 +7,8 @@ import ch.ethz.idsc.sophus.flt.ga.GeodesicFIRnFilter;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.opt.TensorUnaryOperator;
 
 public enum BiinvariantMeanFIRnFilter {
   ;

@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** parameterized curve/geodesic in a space of tensors */
 @FunctionalInterface

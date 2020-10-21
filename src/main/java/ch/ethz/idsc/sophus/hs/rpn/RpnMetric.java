@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.rpn;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.opt.Pi;
+import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.red.Min;
 import ch.ethz.idsc.tensor.red.VectorAngle;
 
