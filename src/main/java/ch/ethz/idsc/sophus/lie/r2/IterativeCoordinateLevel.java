@@ -55,7 +55,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
         Tensor weights = genesis.origin(normalized);
         if (weights.stream().map(Scalar.class::cast).map(chop).allMatch(Sign::isPositiveOrZero))
           return RealScalar.of(depth);
-        Tensor midpoints = Adds.of(normalized);
+        Tensor midpoints = Adds.forward(normalized);
         normalized = InverseNorm.INSTANCE.origin(midpoints).pmul(midpoints);
         ++depth;
       }

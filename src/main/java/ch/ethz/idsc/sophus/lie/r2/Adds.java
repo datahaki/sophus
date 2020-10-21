@@ -8,13 +8,14 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
+import ch.ethz.idsc.tensor.alg.Last;
 import ch.ethz.idsc.tensor.ext.Cache;
 
 /* package */ enum Adds {
   ;
   /** @param tensor non-empty
    * @return */
-  public static Tensor of(Tensor tensor) {
+  public static Tensor forward(Tensor tensor) {
     Tensor result = Tensors.reserve(tensor.length());
     Iterator<Tensor> iterator = tensor.iterator();
     Tensor prev = iterator.next();
@@ -22,6 +23,17 @@ import ch.ethz.idsc.tensor.ext.Cache;
     while (iterator.hasNext())
       result.append(prev.add(prev = iterator.next()));
     return result.append(prev.add(_1st));
+  }
+
+  /** @param tensor non-empty
+   * @return */
+  public static Tensor reverse(Tensor tensor) {
+    Tensor result = Tensors.reserve(tensor.length());
+    Iterator<Tensor> iterator = tensor.iterator();
+    Tensor prev = Last.of(tensor);
+    while (iterator.hasNext())
+      result.append(prev.add(prev = iterator.next()));
+    return result;
   }
 
   /***************************************************/

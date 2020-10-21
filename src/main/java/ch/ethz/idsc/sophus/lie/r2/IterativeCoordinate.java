@@ -10,31 +10,23 @@ import java.util.OptionalInt;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.RotateLeft;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Integers;
 
-/** for k == 0 the coordinates are identical to three-point coordinates with mean value as barycenter
- * 
- * mean value coordinates are C^\infty and work for non-convex polygons
- * 
- * Reference:
+/** References:
  * "Iterative coordinates"
- * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
+ * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020
+ * 
+ * "Inverse Distance Coordinates for Scattered Sets of Points"
+ * by Jan Hakenberg, 2020
+ * 
+ * @see InsidePolygonCoordinate */
 public class IterativeCoordinate implements Genesis, Serializable {
   /** @param genesis
    * @param k non-negative
    * @return */
   public static Genesis of(Genesis genesis, int k) {
     return new IterativeCoordinate(Objects.requireNonNull(genesis), k);
-  }
-
-  /** @param k non-negative
-   * @return */
-  public static Genesis meanValue(int k) {
-    return k == 0 //
-        ? ThreePointCoordinate.of(Barycenter.MEAN_VALUE)
-        : new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), k);
   }
 
   /***************************************************/
@@ -62,7 +54,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
   private Tensor iterate(Tensor normalized) {
     Deque<Tensor> deque = new ArrayDeque<>(k);
     for (int depth = 0; depth < k; ++depth) {
-      Tensor midpoints = Adds.of(normalized);
+      Tensor midpoints = Adds.forward(normalized);
       Tensor scaling = InverseNorm.INSTANCE.origin(midpoints);
       // OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
       // if (optionalInt.isPresent())
@@ -72,7 +64,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
     }
     Tensor weights = genesis.origin(normalized);
     while (!deque.isEmpty())
-      weights = RotateLeft.of(Adds.of(deque.pop().pmul(weights)), -1);
+      weights = Adds.reverse(deque.pop().pmul(weights));
     return weights;
   }
 }

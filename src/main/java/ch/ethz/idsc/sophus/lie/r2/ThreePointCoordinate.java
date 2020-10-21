@@ -19,7 +19,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016
  * 
- * @see HsCoordinates */
+ * @see HsCoordinates
+ * @see InsidePolygonCoordinate */
 public enum ThreePointCoordinate {
   ;
   /** @param biFunction

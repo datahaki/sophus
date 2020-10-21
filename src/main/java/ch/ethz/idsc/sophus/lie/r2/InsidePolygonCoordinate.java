@@ -1,14 +1,15 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.lie.r2;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.lie.r2.Polygons;
+import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 
+/** @see Polygons */
 public class InsidePolygonCoordinate implements Genesis, Serializable {
   /** @param genesis
    * @return */
@@ -19,8 +20,7 @@ public class InsidePolygonCoordinate implements Genesis, Serializable {
   /***************************************************/
   private final Genesis genesis;
 
-  /** @param vectorLogManifold
-   * @param genesis that evaluates polygon coordinates at zero (0, 0) */
+  /** @param genesis that evaluates polygon coordinates at zero (0, 0) */
   private InsidePolygonCoordinate(Genesis genesis) {
     this.genesis = genesis;
   }

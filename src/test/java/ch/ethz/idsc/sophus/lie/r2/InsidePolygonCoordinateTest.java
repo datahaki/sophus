@@ -1,8 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.lie.r2;
 
-import ch.ethz.idsc.sophus.lie.r2.Barycenter;
-import ch.ethz.idsc.sophus.lie.r2.ThreePointCoordinate;
+import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.DoubleScalar;

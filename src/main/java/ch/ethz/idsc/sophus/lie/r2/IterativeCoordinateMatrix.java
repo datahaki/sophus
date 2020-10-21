@@ -40,7 +40,7 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
     Tensor normalized = scaling.pmul(levers);
     Tensor midmat = Adds.matrix(levers.length());
     for (int depth = 0; depth < k; ++depth) {
-      Tensor midpoints = Adds.of(normalized);
+      Tensor midpoints = Adds.forward(normalized);
       scaling = InverseNorm.INSTANCE.origin(midpoints);
       matrix = scaling.pmul(midmat).dot(matrix); // DiagonalMatrix.with(scaling).dot(midmat).dot(matrix)
       normalized = scaling.pmul(midpoints);
