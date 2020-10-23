@@ -5,7 +5,9 @@ import ch.ethz.idsc.sophus.gbc.Genesis;
 
 /** References:
  * "Iterative coordinates"
- * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
+ * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020
+ * 
+ * @see InsidePolygonCoordinate */
 public enum IterativeMeanValueCoordinate {
   ;
   /** for k == 0 the coordinates are identical to three-point coordinates with mean value as barycenter

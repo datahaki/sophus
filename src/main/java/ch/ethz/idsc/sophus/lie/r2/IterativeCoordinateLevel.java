@@ -2,8 +2,10 @@
 package ch.ethz.idsc.sophus.lie.r2;
 
 import java.util.Objects;
+import java.util.OptionalInt;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -20,17 +22,15 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
 public class IterativeCoordinateLevel implements TensorScalarFunction {
-  private static final long serialVersionUID = 2763677963395774512L;
-
   /** @param genesis
+   * @param chop
+   * @param max
    * @return */
   public static TensorScalarFunction of(Genesis genesis, Chop chop, int max) {
-    return new IterativeCoordinateLevel(genesis, chop, max);
-  }
-
-  /** @return */
-  public static TensorScalarFunction usingMeanValue(Chop chop, int max) {
-    return new IterativeCoordinateLevel(ThreePointCoordinate.of(Barycenter.MEAN_VALUE), chop, max);
+    return new IterativeCoordinateLevel( //
+        Objects.requireNonNull(genesis), //
+        Objects.requireNonNull(chop), //
+        max);
   }
 
   /***************************************************/
@@ -38,9 +38,8 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
   private final Chop chop;
   private final int max;
 
-  /** @param k non-negative */
-  /* package */ IterativeCoordinateLevel(Genesis genesis, Chop chop, int max) {
-    this.genesis = Objects.requireNonNull(genesis);
+  private IterativeCoordinateLevel(Genesis genesis, Chop chop, int max) {
+    this.genesis = genesis;
     this.chop = chop;
     this.max = max;
   }
@@ -49,17 +48,20 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
   public Scalar apply(Tensor levers) {
     if (Polygons.isInside(levers)) {
       Tensor scaling = InverseNorm.INSTANCE.origin(levers);
-      Tensor normalized = scaling.pmul(levers);
-      int depth = 0;
-      while (depth < max) {
-        Tensor weights = genesis.origin(normalized);
-        if (weights.stream().map(Scalar.class::cast).map(chop).allMatch(Sign::isPositiveOrZero))
-          return RealScalar.of(depth);
-        Tensor midpoints = Adds.forward(normalized);
-        normalized = InverseNorm.INSTANCE.origin(midpoints).pmul(midpoints);
-        ++depth;
+      OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
+      if (!optionalInt.isPresent()) {
+        Tensor normalized = scaling.pmul(levers);
+        int depth = 0;
+        while (depth < max) {
+          Tensor weights = genesis.origin(normalized);
+          if (weights.stream().map(Scalar.class::cast).map(chop).allMatch(Sign::isPositiveOrZero))
+            return RealScalar.of(depth);
+          Tensor midpoints = Adds.forward(normalized);
+          normalized = InverseNorm.INSTANCE.origin(midpoints).pmul(midpoints);
+          ++depth;
+        }
+        return RealScalar.of(depth);
       }
-      return RealScalar.of(depth);
     }
     return DoubleScalar.INDETERMINATE;
   }

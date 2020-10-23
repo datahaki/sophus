@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.ext.Integers;
 public enum HilbertPolygon {
   ;
   /** @param n positive
-   * @return */
+   * @return hilbert polygon with integer coordinates */
   public static Tensor of(int n) {
     Integers.requirePositive(n);
     Tensor ante = Tensors.vector((1 << n), 0);

@@ -17,9 +17,6 @@ import ch.ethz.idsc.tensor.ext.Integers;
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020
  * 
- * "Inverse Distance Coordinates for Scattered Sets of Points"
- * by Jan Hakenberg, 2020
- * 
  * @see InsidePolygonCoordinate */
 public class IterativeCoordinate implements Genesis, Serializable {
   /** @param genesis

@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt.bm;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.flt.TestKernels;
@@ -12,17 +11,16 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import junit.framework.TestCase;
 
 public class BiinvariantMeanCenterTest extends TestCase {
-  public void testSe2() throws ClassNotFoundException, IOException {
+  public void testSe2() {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
       TensorUnaryOperator tensorUnaryOperator = //
-          Serialization.copy(BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, smoothingKernel));
+          BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, smoothingKernel);
       Distribution distribution = UniformDistribution.unit();
       for (int count = 1; count < 10; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, 3);

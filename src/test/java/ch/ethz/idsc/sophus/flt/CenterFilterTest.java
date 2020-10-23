@@ -1,8 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt;
 
-import java.io.IOException;
-
 import ch.ethz.idsc.sophus.flt.ga.BinomialWeights;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
 import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
@@ -18,7 +16,6 @@ import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -29,9 +26,9 @@ import ch.ethz.idsc.tensor.sca.win.HannWindow;
 import junit.framework.TestCase;
 
 public class CenterFilterTest extends TestCase {
-  public void testSimple() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator geodesicCenter = Serialization.copy(GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE));
-    TensorUnaryOperator centerFilter = Serialization.copy(CenterFilter.of(geodesicCenter, 3));
+  public void testSimple() {
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
+    TensorUnaryOperator centerFilter = CenterFilter.of(geodesicCenter, 3);
     Tensor linear = Range.of(0, 10);
     Tensor result = centerFilter.apply(linear);
     assertEquals(result, linear);

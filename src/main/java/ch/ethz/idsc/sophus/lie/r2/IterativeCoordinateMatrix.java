@@ -21,7 +21,7 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
    * @param k non-negative
    * @return */
   public static Genesis of(int k) {
-    return new IterativeCoordinateMatrix(k);
+    return new IterativeCoordinateMatrix(Integers.requirePositiveOrZero(k));
   }
 
   /***************************************************/
@@ -30,7 +30,7 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
   /** @param genesis
    * @param k non-negative */
   private IterativeCoordinateMatrix(int k) {
-    this.k = Integers.requirePositiveOrZero(k);
+    this.k = k;
   }
 
   @Override // from Genesis
@@ -42,7 +42,7 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
     for (int depth = 0; depth < k; ++depth) {
       Tensor midpoints = Adds.forward(normalized);
       scaling = InverseNorm.INSTANCE.origin(midpoints);
-      matrix = scaling.pmul(midmat).dot(matrix); // DiagonalMatrix.with(scaling).dot(midmat).dot(matrix)
+      matrix = scaling.pmul(midmat).dot(matrix);
       normalized = scaling.pmul(midpoints);
     }
     Chop._10.requireClose(matrix.dot(levers), normalized);

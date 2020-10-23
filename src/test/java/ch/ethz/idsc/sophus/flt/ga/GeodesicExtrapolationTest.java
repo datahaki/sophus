@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt.ga;
 
-import java.io.IOException;
 import java.util.function.Function;
 
 import ch.ethz.idsc.sophus.crv.spline.MonomialExtrapolationMask;
@@ -19,7 +18,6 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sin;
 import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
@@ -32,8 +30,8 @@ public class GeodesicExtrapolationTest extends TestCase {
     AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
-  public void testDirichlet() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator tensorUnaryOperator = Serialization.copy(GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION));
+  public void testDirichlet() {
+    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(12));
       assertEquals(tensor, RealScalar.of(12));

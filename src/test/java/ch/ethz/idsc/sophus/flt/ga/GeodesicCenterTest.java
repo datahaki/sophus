@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt.ga;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.function.Function;
@@ -10,7 +9,6 @@ import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter.Splits;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
-import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -21,7 +19,6 @@ import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -52,10 +49,9 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
-  public void testSe2() throws ClassNotFoundException, IOException {
+  public void testSe2() {
     for (TestKernels smoothingKernel : TestKernels.values()) {
-      TensorUnaryOperator tensorUnaryOperator = //
-          Serialization.copy(GeodesicCenter.of(Se2Geodesic.INSTANCE, smoothingKernel));
+      TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2Geodesic.INSTANCE, smoothingKernel);
       Distribution distribution = UniformDistribution.unit();
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       Tensor tensor = tensorUnaryOperator.apply(sequence);
@@ -73,11 +69,10 @@ public class GeodesicCenterTest extends TestCase {
         // ---
       }
   }
-
-  public void testSerializable() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2CoveringGeodesic.INSTANCE, CONSTANT);
-    Serialization.copy(tensorUnaryOperator);
-  }
+  // public void testSerializable() throws ClassNotFoundException, IOException {
+  // TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2CoveringGeodesic.INSTANCE, CONSTANT);
+  // Serialization.copy(tensorUnaryOperator);
+  // }
 
   public void testFail() {
     AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));

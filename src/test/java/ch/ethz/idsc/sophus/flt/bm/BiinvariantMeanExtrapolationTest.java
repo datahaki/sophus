@@ -1,8 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.flt.bm;
 
-import java.io.IOException;
-
 import ch.ethz.idsc.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.tensor.ExactScalarQ;
@@ -13,7 +11,6 @@ import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.Series;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -27,9 +24,9 @@ public class BiinvariantMeanExtrapolationTest extends TestCase {
     assertEquals(tensor, RealScalar.of(3));
   }
 
-  public void testSeries() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator tensorUnaryOperator = Serialization.copy(BiinvariantMeanExtrapolation.of( //
-        RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE));
+  public void testSeries() {
+    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanExtrapolation.of( //
+        RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     Distribution distribution = DiscreteUniformDistribution.of(3, 12);
     for (int deg = 1; deg < 6; ++deg) {
       ScalarUnaryOperator scalarUnaryOperator = Series.of(RandomVariate.of(distribution, deg + 1));

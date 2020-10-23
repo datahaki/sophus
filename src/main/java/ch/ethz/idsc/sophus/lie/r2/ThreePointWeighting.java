@@ -15,15 +15,9 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.red.Hypot;
 
-/** Three-point coordinates are also referred to as "Complete family of coordinates"
- * 
- * References:
- * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Kai Hormann, N. Sukumar, 2017
- * 
- * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
- * by Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
-/* package */ class ThreePointWeighting implements Genesis, Serializable {
+/** Three-point homogeneous weights:
+ * weighting satisfies barycentric equation but do not necessarily sum up to one. */
+public class ThreePointWeighting implements Genesis, Serializable {
   /** @param biFunction
    * @return */
   public static Genesis of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
