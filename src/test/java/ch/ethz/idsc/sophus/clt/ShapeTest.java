@@ -7,13 +7,12 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
-import ch.ethz.idsc.tensor.io.Pretty;
 import ch.ethz.idsc.tensor.red.Nest;
 import ch.ethz.idsc.tensor.sca.Chop;
-import ch.ethz.idsc.tensor.sca.Round;
 import junit.framework.TestCase;
 
 public class ShapeTest extends TestCase {
+  @SuppressWarnings("unused")
   public void testSimple() {
     Tensor q = Tensors.vector(-2.05, 0, 0);
     CurveSubdivision lrL = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);
@@ -24,13 +23,13 @@ public class ShapeTest extends TestCase {
       Tensor mLA = lrA.string(Tensors.of(pL, q)).get(1);
       Tensor mLL = lrL.string(Tensors.of(pL, q)).get(1);
       Chop._02.requireClose(mLA, mLL);
-      System.out.println(mLL);
+      // System.out.println(mLL);
       // {-1.7030138036773317, 0.2166473557662918, 2.430899623066361}
       Tensor mLO = ComplexClothoidCurve.INSTANCE.curve(pL, q).apply(RationalScalar.HALF);
-      System.out.println(mLO);
+      // System.out.println(mLO);
       Tensor mL3 = new ClothoidCurve3(pL, q).apply(RationalScalar.HALF);
-      System.out.println(mL3);
-      System.out.println("---");
+      // System.out.println(mL3);
+      // System.out.println("---");
     }
     {
       Tensor pA = lrA.string(Tensors.of(Array.zeros(3), q)).get(1);
@@ -49,11 +48,11 @@ public class ShapeTest extends TestCase {
     }
     {
       Tensor subL = Nest.of(lrL::string, Tensors.of(Array.zeros(3), q), 2);
-      System.out.println(Pretty.of(subL.map(Round._4)));
+      // System.out.println(Pretty.of(subL.map(Round._4)));
     }
     {
       Tensor subA = Nest.of(lrA::string, Tensors.of(Array.zeros(3), q), 2);
-      System.out.println(Pretty.of(subA.map(Round._4)));
+      // System.out.println(Pretty.of(subA.map(Round._4)));
     }
   }
 }

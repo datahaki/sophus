@@ -13,6 +13,7 @@ public enum AffineCoordinate {
   /** @param vectorLogManifold
    * @return biinvariant generalized barycentric coordinates */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold) {
-    return HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.affine());
+    // return HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.affine());
+    return HsCoordinates.wrap(vectorLogManifold, AffineGenesis.INSTANCE);
   }
 }
