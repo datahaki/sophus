@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.he;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
+import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
@@ -24,7 +24,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeManifoldTest extends TestCase {
-  private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(HeManifold.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.of( //
       NormWeighting.of( //
           new HeTarget(RnNorm.INSTANCE, RealScalar.ONE), //

@@ -109,11 +109,11 @@ public class IterativeCoordinateTest extends TestCase {
         Tensor weights = ThreePointCoordinate.of(Barycenter.MEAN_VALUE).origin(levers);
         Chop._07.requireClose( //
             weights, //
-            new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 0).origin(levers));
+            IterativeCoordinate.of(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 0).origin(levers));
         if (weights.stream().map(Scalar.class::cast).anyMatch(Sign::isNegative)) {
           boolean result = Chop._10.isClose( //
               weights, //
-              new IterativeCoordinate(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 2).origin(levers));
+              IterativeCoordinate.of(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 2).origin(levers));
           if (4 < n)
             assertFalse(result);
         }

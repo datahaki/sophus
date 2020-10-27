@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.Genesis;
-import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 
 /** iterative affine coordinates generally produce non-negative weights after fewer
  * iterations than when using iterative mean value coordinates.
@@ -20,6 +20,6 @@ public enum IterativeAffineCoordinate {
   /** @param k non-negative
    * @return iterative coordinates based on affine coordinates */
   public static Genesis of(int k) {
-    return new IterativeCoordinate(MetricCoordinate.affine(), k);
+    return IterativeCoordinate.of(AffineCoordinate.INSTANCE, k);
   }
 }

@@ -1,19 +1,23 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.Append;
+import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.mat.LinearSolve;
 
-/** biinvariant generalized barycentric coordinates that do not satisfy the lagrange property
- * 
- * Reference:
+/** Reference:
  * "Affine generalised barycentric coordinates"
  * by S. Waldron, Jaen Journal on Approximation, 3(2):209-226, 2011 */
-public enum AffineCoordinate {
-  ;
-  /** @param vectorLogManifold
-   * @return biinvariant generalized barycentric coordinates */
-  public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold) {
-    // return HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.affine());
-    return HsCoordinates.wrap(vectorLogManifold, AffineGenesis.INSTANCE);
+public enum AffineCoordinate implements Genesis {
+  INSTANCE;
+
+  @Override // from Genesis
+  public Tensor origin(Tensor levers) {
+    Tensor x = Tensor.of(levers.stream().map(lever -> Append.of(lever, RealScalar.ONE)));
+    int d = levers.get(0).length();
+    return x.dot(LinearSolve.of(Transpose.of(x).dot(x), UnitVector.of(d + 1, d)));
   }
 }

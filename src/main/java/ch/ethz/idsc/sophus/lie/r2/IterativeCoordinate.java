@@ -7,6 +7,7 @@ import java.util.Deque;
 import java.util.Objects;
 import java.util.OptionalInt;
 
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,7 +20,9 @@ import ch.ethz.idsc.tensor.ext.Integers;
  * 
  * @see InsidePolygonCoordinate */
 public class IterativeCoordinate implements Genesis, Serializable {
-  /** @param genesis
+  /** genesis can be for instance {@link ThreePointCoordinate}, or {@link AffineCoordinate}
+   * 
+   * @param genesis
    * @param k non-negative
    * @return */
   public static Genesis of(Genesis genesis, int k) {
@@ -32,7 +35,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
 
   /** @param genesis
    * @param k non-negative */
-  /* package */ IterativeCoordinate(Genesis genesis, int k) {
+  private IterativeCoordinate(Genesis genesis, int k) {
     this.genesis = genesis;
     this.k = Integers.requirePositiveOrZero(k);
   }

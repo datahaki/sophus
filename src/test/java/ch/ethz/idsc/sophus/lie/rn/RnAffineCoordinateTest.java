@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
+import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -67,7 +67,7 @@ public class RnAffineCoordinateTest extends TestCase {
 
   public void testWeights() {
     Distribution distribution = UniformDistribution.unit();
-    BarycentricCoordinate barycentricCoordinate = AffineCoordinate.of(RnManifold.INSTANCE);
+    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, d);

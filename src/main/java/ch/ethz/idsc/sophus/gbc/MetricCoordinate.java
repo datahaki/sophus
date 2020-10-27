@@ -91,7 +91,7 @@ public class MetricCoordinate implements Genesis, Serializable {
    * by S. Waldron, Jaen Journal on Approximation, 3(2):209-226, 2011
    * 
    * @return
-   * @see AffineGenesis */
+   * @see AffineCoordinate */
   public static Genesis affine() {
     return AFFINE;
   }

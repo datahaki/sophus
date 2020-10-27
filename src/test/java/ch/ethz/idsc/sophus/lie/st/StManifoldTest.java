@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.st;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
+import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class StManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = AffineCoordinate.of(StManifold.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(StManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       LeverageCoordinate.slow(StManifold.INSTANCE, InversePowerVariogram.of(1)), //
       LeverageCoordinate.slow(StManifold.INSTANCE, InversePowerVariogram.of(2)), //

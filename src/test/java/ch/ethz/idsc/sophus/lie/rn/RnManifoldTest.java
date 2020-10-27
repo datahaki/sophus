@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
+import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
@@ -101,7 +101,7 @@ public class RnManifoldTest extends TestCase {
   }
 
   public void testAffineSimple() {
-    BarycentricCoordinate barycentricCoordinate = AffineCoordinate.of(RnManifold.INSTANCE);
+    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 10; ++length) {
         Distribution distribution = NormalDistribution.standard();
