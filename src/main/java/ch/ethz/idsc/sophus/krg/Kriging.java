@@ -56,7 +56,7 @@ public class Kriging implements Serializable {
    * @return */
   public static Kriging interpolation(TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values) {
     int n = values.length();
-    // TODO Array.zeros(n, n) is not generic!
+    // LONGTERM Array.zeros(n, n) is not generic!
     return regression(tensorUnaryOperator, sequence, values, Array.zeros(n, n));
   }
 

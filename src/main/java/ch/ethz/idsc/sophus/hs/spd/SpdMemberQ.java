@@ -35,6 +35,7 @@ public class SpdMemberQ extends AbstractHsMemberQ implements Serializable {
 
   @Override // from MemberQ
   public boolean isTangent(Tensor x, Tensor v) {
-    throw new UnsupportedOperationException(); // TODO;
+    // TODO tangent check should be simple in SPD
+    throw new UnsupportedOperationException();
   }
 }

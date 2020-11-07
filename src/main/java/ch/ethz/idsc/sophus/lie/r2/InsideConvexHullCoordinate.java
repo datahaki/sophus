@@ -27,7 +27,7 @@ public class InsideConvexHullCoordinate implements Genesis, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor origin(Tensor levers) {
-    return Polygons.isInside(ConvexHull.of(levers)) //
+    return ConvexHull.isInside(levers) //
         ? genesis.origin(levers)
         : ConstantArray.of(DoubleScalar.INDETERMINATE, levers.length());
   }

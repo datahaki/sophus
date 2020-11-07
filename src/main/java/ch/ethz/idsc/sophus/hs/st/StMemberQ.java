@@ -31,7 +31,7 @@ public class StMemberQ extends AbstractHsMemberQ {
 
   @Override
   public boolean isTangent(Tensor x, Tensor v) {
-    // TODO Auto-generated method stub
+    // TODO tangent in stiefel manifold
     throw TensorRuntimeException.of(x, v);
   }
 }

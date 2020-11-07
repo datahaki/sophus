@@ -4,10 +4,11 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.ext.Integers;
@@ -25,23 +26,28 @@ public class ExponentialCoordinate implements Genesis, Serializable {
   /***************************************************/
   private final Genesis genesis;
   private final int k;
+  private final Scalar scalar;
 
   /** @param genesis
    * @param k non-negative */
   private ExponentialCoordinate(Genesis genesis, int k) {
     this.genesis = genesis;
     this.k = Integers.requirePositiveOrZero(k);
+    scalar = RealScalar.of(3);
   }
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    Tensor factor = ConstantArray.of(RealScalar.ONE, levers.length());
+    int n = levers.length();
+    Tensor average = ConstantArray.of(RationalScalar.of(1, n), n);
+    Tensor factors = ConstantArray.of(RealScalar.ONE, n);
+    Tensor current = levers;
     for (int depth = 0; depth < k; ++depth) {
-//      Tensor scaling = NormalizeTotal.FUNCTION.apply(AffineCoordinate.INSTANCE.origin(levers).map(Exp.FUNCTION));
-      Tensor scaling = NormalizeTotal.FUNCTION.apply(genesis.origin(levers).map(Exp.FUNCTION));
-      levers = scaling.pmul(levers);
-      factor = factor.pmul(scaling);
+      Tensor scaling = genesis.origin(current).subtract(average).multiply(scalar).map(Exp.FUNCTION);
+      factors = factors.pmul(scaling);
+      current = factors.pmul(levers);
     }
-    return NormalizeTotal.FUNCTION.apply(factor.pmul(genesis.origin(levers)));
+    // normalize total is not necessary algebraically
+    return NormalizeTotal.FUNCTION.apply(factors.pmul(genesis.origin(current)));
   }
 }

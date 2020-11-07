@@ -56,9 +56,6 @@ public class IterativeCoordinate implements Genesis, Serializable {
     for (int depth = 0; depth < k; ++depth) {
       Tensor midpoints = Adds.forward(normalized);
       Tensor scaling = InverseNorm.INSTANCE.origin(midpoints);
-      // OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
-      // if (optionalInt.isPresent())
-      // return Array.fill(() -> DoubleScalar.INDETERMINATE, normalized.length());
       normalized = scaling.pmul(midpoints);
       deque.push(scaling);
     }

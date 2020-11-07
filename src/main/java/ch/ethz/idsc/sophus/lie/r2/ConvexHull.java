@@ -42,4 +42,10 @@ public enum ConvexHull {
   public static Tensor of(Stream<Tensor> stream, Chop chop) {
     return GrahamScan.of(stream, chop);
   }
+
+  /** @param levers
+   * @return whether origin is inside convex span of given levers */
+  public static boolean isInside(Tensor levers) {
+    return Polygons.isInside(of(levers));
+  }
 }

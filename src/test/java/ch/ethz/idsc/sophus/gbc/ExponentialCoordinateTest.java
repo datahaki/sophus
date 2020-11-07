@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 
 public class ExponentialCoordinateTest extends TestCase {
   private static void _check(Genesis inner) {
-    for (int k = 0; k < 5; ++k) {
+    for (int k = 0; k < 10; ++k) {
       Genesis genesis = ExponentialCoordinate.of(inner, k);
       Distribution distribution = UniformDistribution.of(-1, 5);
       Tensor levers = RandomVariate.of(distribution, 10, 2);

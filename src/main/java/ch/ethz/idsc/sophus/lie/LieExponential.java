@@ -49,7 +49,8 @@ public class LieExponential implements HsExponential, Serializable {
     }
 
     @Override // from Exponential
-    public Tensor exp(Tensor vector) { // TODO x is tangent vector at point (not at neutral elem.)
+    public Tensor exp(Tensor vector) {
+      // TODO x is tangent vector at point (not at neutral elem.)
       return element.combine(exponential.exp(vector));
     }
 

@@ -20,6 +20,7 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
  * 
  * "Eichfeldtheorie"
  * by Helga Baum, 2005 */
+// TODO class contains unimplemented methods
 public class StExponential implements Exponential, TangentSpace, Serializable {
   private static final long serialVersionUID = -2223040776214785230L;
   private static final HsMemberQ HS_MEMBER_Q = StMemberQ.of(Tolerance.CHOP);
@@ -34,19 +35,16 @@ public class StExponential implements Exponential, TangentSpace, Serializable {
 
   @Override
   public Tensor exp(Tensor v) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public Tensor log(Tensor y) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public Tensor vectorLog(Tensor y) {
-    // TODO Auto-generated method stub
     return null;
   }
 }
