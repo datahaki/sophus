@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Last;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public enum Polygons {
@@ -42,16 +43,16 @@ public enum Polygons {
     return c;
   }
 
-  /** @param polygon
-   * @return true if origin (0, 0) is inside given polygon */
-  public static boolean isInside(Tensor polygon) {
-    if (Tensors.isEmpty(polygon))
+  /** @param levers matrix of dimension n x 2
+   * @return true if origin (0, 0) is inside polygon spanned by levers */
+  public static boolean isInside(Tensor levers) {
+    if (Tensors.isEmpty(levers))
       return false;
     boolean c = false;
-    Tensor prev = Last.of(polygon);
-    Iterator<Tensor> iterator = polygon.iterator();
+    Tensor prev = Last.of(levers);
+    Iterator<Tensor> iterator = levers.iterator();
     while (iterator.hasNext()) {
-      Tensor next = iterator.next();
+      Tensor next = VectorQ.requireLength(iterator.next(), 2);
       Scalar py = prev.Get(1);
       Scalar ny = next.Get(1);
       if (Sign.isPositive(ny) != Sign.isPositive(py)) {

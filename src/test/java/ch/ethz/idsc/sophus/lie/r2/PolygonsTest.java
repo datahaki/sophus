@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import junit.framework.TestCase;
 
@@ -93,6 +94,10 @@ public class PolygonsTest extends TestCase {
     list.add(3);
     list.add(9);
     list.get(1).longValue();
+  }
+
+  public void testFail() {
+    AssertFail.of(() -> Polygons.isInside(IdentityMatrix.of(4)));
   }
 
   public void testCPointers() {

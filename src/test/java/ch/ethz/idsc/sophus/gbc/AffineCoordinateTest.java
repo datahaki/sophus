@@ -21,7 +21,7 @@ public class AffineCoordinateTest extends TestCase {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(1);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomSample.of(randomSampleInterface, n);
-      Tensor w1 = genesis.origin(levers);
+      Tensor w1 = genesis.origin(levers.unmodifiable());
       Tensor w2 = AffineCoordinate.INSTANCE.origin(levers);
       Chop._10.requireClose(w1, w2);
     }

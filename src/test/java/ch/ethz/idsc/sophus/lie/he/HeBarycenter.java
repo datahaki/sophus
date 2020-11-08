@@ -10,7 +10,8 @@ import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 
-public class HeBarycenter implements TensorUnaryOperator {
+/** HeBarycenter remains only for testing purpose. */
+/* package */ class HeBarycenter implements TensorUnaryOperator {
   private static final long serialVersionUID = -5402524333288619672L;
   // ---
   private final Tensor lhs;

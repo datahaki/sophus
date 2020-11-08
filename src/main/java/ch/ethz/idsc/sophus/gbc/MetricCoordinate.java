@@ -5,9 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.krg.MetricDistances;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 /** partition of unity
@@ -69,17 +67,7 @@ public class MetricCoordinate implements Genesis, Serializable {
     return of(new MetricWeighting(variogram));
   }
 
-  /***************************************************/
-  private static enum OneVector implements Genesis {
-    INSTANCE;
-
-    @Override // from Genesis
-    public Tensor origin(Tensor levers) {
-      return ConstantArray.of(RealScalar.ONE, levers.length());
-    }
-  }
-
-  private static final Genesis AFFINE = new MetricCoordinate(OneVector.INSTANCE);
+  private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);
 
   /** Affine coordinates are a special case of inverse distance coordinates
    * namely with exponent beta == 0.

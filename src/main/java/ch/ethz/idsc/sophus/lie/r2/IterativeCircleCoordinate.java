@@ -15,7 +15,7 @@ import ch.ethz.idsc.sophus.gbc.Genesis;
  * by Kai Hormann, N. Sukumar, 2017
  * 
  * @see InsidePolygonCoordinate */
-public enum IterativeAffineCoordinate {
+public enum IterativeCircleCoordinate {
   ;
   /** @param k non-negative
    * @return iterative coordinates based on affine coordinates */
