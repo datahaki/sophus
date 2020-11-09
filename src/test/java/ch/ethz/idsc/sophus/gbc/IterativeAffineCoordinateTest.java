@@ -11,17 +11,29 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class IterativeAffineCoordinateTest extends TestCase {
-  public void testSimple() {
+  private static void _check(Tensor levers, Tensor weights) {
+    Chop._10.requireAllZero(weights.dot(levers));
+    Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+  }
+
+  public void testExp() {
+    Genesis genesis = new IterativeAffineCoordinate(Amplifiers.exp(5), 10);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
-      Genesis genesis = new IterativeAffineCoordinate(10, RealScalar.of(5));
       if (ConvexHull.isInside(levers)) {
-        Tensor w1 = AffineCoordinate.INSTANCE.origin(levers);
-        Chop._10.requireAllZero(w1.dot(levers));
-        Chop._10.requireClose(Total.ofVector(w1), RealScalar.ONE);
-        Tensor w2 = genesis.origin(levers);
-        Chop._10.requireAllZero(w2.dot(levers));
-        Chop._10.requireClose(Total.ofVector(w2), RealScalar.ONE);
+        _check(levers, AffineCoordinate.INSTANCE.origin(levers));
+        _check(levers, genesis.origin(levers));
+      }
+    }
+  }
+
+  public void testRamp() {
+    Genesis genesis = new IterativeAffineCoordinate(Amplifiers.ramp(5), 10);
+    for (int n = 3; n < 10; ++n) {
+      Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
+      if (ConvexHull.isInside(levers)) {
+        _check(levers, AffineCoordinate.INSTANCE.origin(levers));
+        _check(levers, genesis.origin(levers));
       }
     }
   }
