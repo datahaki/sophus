@@ -1,6 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -16,25 +19,23 @@ public class IterativeAffineCoordinateTest extends TestCase {
     Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
   }
 
-  public void testExp() {
-    Genesis genesis = new IterativeAffineCoordinate(Amplifiers.exp(5), 10);
-    for (int n = 3; n < 10; ++n) {
-      Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
-      if (ConvexHull.isInside(levers)) {
-        _check(levers, AffineCoordinate.INSTANCE.origin(levers));
-        _check(levers, genesis.origin(levers));
+  public void testAmplifiers() {
+    for (Amplifiers amplifiers : Amplifiers.values()) {
+      for (int k : new int[] { 0, 1, 5, 10 }) {
+        Genesis genesis = new IterativeAffineCoordinate(amplifiers.supply(5), k);
+        for (int n = 3; n < 10; ++n) {
+          Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
+          if (ConvexHull.isInside(levers)) {
+            _check(levers, AffineCoordinate.INSTANCE.origin(levers));
+            _check(levers, genesis.origin(levers));
+          }
+        }
       }
     }
   }
 
-  public void testRamp() {
-    Genesis genesis = new IterativeAffineCoordinate(Amplifiers.ramp(5), 10);
-    for (int n = 3; n < 10; ++n) {
-      Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
-      if (ConvexHull.isInside(levers)) {
-        _check(levers, AffineCoordinate.INSTANCE.origin(levers));
-        _check(levers, genesis.origin(levers));
-      }
-    }
+  public void testArraysList() {
+    List<Object> list = Arrays.asList();
+    assertEquals(list.size(), 0);
   }
 }

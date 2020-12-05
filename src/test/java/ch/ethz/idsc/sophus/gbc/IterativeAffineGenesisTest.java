@@ -7,7 +7,7 @@ import java.util.List;
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.red.Total;
@@ -21,14 +21,16 @@ public class IterativeAffineGenesisTest extends TestCase {
   }
 
   public void testSimple() {
-    List<ScalarUnaryOperator> list = Arrays.asList( //
-        Amplifiers.exp(3), Amplifiers.exp(5), //
-        Amplifiers.ramp(3), Amplifiers.ramp(5), //
-        Amplifiers.arctan(3), Amplifiers.arctan(5));
+    List<TensorUnaryOperator> list = Arrays.asList( //
+        Amplifiers.EXP.supply(3), Amplifiers.EXP.supply(5), //
+        Amplifiers.RAMP.supply(3), Amplifiers.RAMP.supply(5), //
+        Amplifiers.ARCTAN.supply(3), Amplifiers.ARCTAN.supply(5));
+    for (TensorUnaryOperator suo : list)
+      Chop._12.requireClose(suo.apply(RealScalar.ZERO), RealScalar.ONE);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
       if (ConvexHull.isInside(levers))
-        for (ScalarUnaryOperator amp : list)
+        for (TensorUnaryOperator amp : list)
           _check(levers, new IterativeAffineGenesis(amp, Chop._08).origin(levers));
     }
   }

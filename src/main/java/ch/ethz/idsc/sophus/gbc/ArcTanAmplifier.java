@@ -8,6 +8,9 @@ import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 import ch.ethz.idsc.tensor.sca.Sign;
 
+/**
+ * 
+ */
 public class ArcTanAmplifier implements ScalarUnaryOperator {
   private final Scalar sigma;
 

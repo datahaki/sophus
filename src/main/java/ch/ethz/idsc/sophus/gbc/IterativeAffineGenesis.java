@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
@@ -17,10 +17,10 @@ public class IterativeAffineGenesis implements Genesis, Serializable {
   private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
   private static final int MAX_ITERATIONS = 128;
   // ---
-  private final ScalarUnaryOperator scalarUnaryOperator;
+  private final TensorUnaryOperator scalarUnaryOperator;
   private final Chop chop;
 
-  public IterativeAffineGenesis(ScalarUnaryOperator scalarUnaryOperator, Chop chop) {
+  public IterativeAffineGenesis(TensorUnaryOperator scalarUnaryOperator, Chop chop) {
     this.scalarUnaryOperator = Objects.requireNonNull(scalarUnaryOperator);
     this.chop = Objects.requireNonNull(chop);
   }
@@ -30,7 +30,7 @@ public class IterativeAffineGenesis implements Genesis, Serializable {
     Tensor average = AveragingWeights.INSTANCE.origin(levers);
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
       Tensor error = GENESIS.origin(factor.pmul(levers)).subtract(average);
-      factor = factor.pmul(error.map(scalarUnaryOperator));
+      factor = factor.pmul(scalarUnaryOperator.apply(error));
       if (chop.allZero(error))
         return factor;
     }

@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -28,7 +29,9 @@ import ch.ethz.idsc.tensor.red.Mean;
  * in Kai Hormann, N. Sukumar, 2017
  * 
  * <p>The concept of a one-time computation of a pseudoinverse at a central
- * location does not generalize to non-linear spaces. */
+ * location does not generalize to non-linear spaces.
+ * 
+ * @see AffineCoordinate */
 public enum RnAffineCoordinate implements BarycentricCoordinate {
   INSTANCE;
 
@@ -48,18 +51,19 @@ public enum RnAffineCoordinate implements BarycentricCoordinate {
     private static final long serialVersionUID = 2479098402937803459L;
     // ---
     private final Scalar _1_n;
-    private final Tensor mean;
+    /** negative mean */
+    private final Tensor negm;
     private final Tensor pinv;
 
     private Operator(Tensor sequence) {
       _1_n = RationalScalar.of(1, sequence.length());
-      mean = Mean.of(sequence);
-      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(mean.negate()::add)));
+      negm = Mean.of(sequence).negate();
+      pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(negm::add)));
     }
 
     @Override
     public Tensor apply(Tensor x) {
-      return x.subtract(mean).dot(pinv).map(_1_n::add);
+      return x.add(negm).dot(pinv).map(_1_n::add);
     }
   }
 }
