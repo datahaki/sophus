@@ -41,7 +41,7 @@ public enum Biinvariants implements Biinvariant {
       return "Metric";
     }
   },
-  AETHER {
+  AETHER { // same as metric, only for different plot option
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       return METRIC.distances(vectorLogManifold, sequence);

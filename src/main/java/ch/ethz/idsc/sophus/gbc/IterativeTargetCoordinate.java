@@ -2,65 +2,40 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Integers;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.LeastSquares;
+import ch.ethz.idsc.tensor.mat.PseudoInverse;
+import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
+import ch.ethz.idsc.tensor.sca.Ramp;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
 public class IterativeTargetCoordinate implements Genesis, Serializable {
-  private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
-  // ---
-  // private final TensorUnaryOperator amplifier;
+  private final Genesis genesis;
   private final int k;
 
-  public IterativeTargetCoordinate(TensorUnaryOperator amplifier, int k) {
-    // this.amplifier = Objects.requireNonNull(amplifier);
+  public IterativeTargetCoordinate(Genesis genesis, int k) {
+    this.genesis = Objects.requireNonNull(genesis);
     this.k = Integers.requirePositiveOrZero(k);
-  }
-
-  public Deque<Evaluation> factors(Tensor levers) {
-    ShepardTarget shepardTarget = new ShepardTarget(levers);
-    Deque<Evaluation> deque = new ArrayDeque<>(k + 1);
-    Tensor factors = ConstantArray.of(RealScalar.ONE, levers.length());
-    for (int depth = 0; depth <= k; ++depth) {
-      Tensor weights = GENESIS.origin(factors.pmul(levers));
-      deque.add(new Evaluation(weights, factors));
-      factors = factors.pmul(shepardTarget.apply(weights));
-    }
-    return deque;
-  }
-
-  public Tensor origin(Deque<Evaluation> deque, Tensor levers) {
-    Tensor factor = deque.peekLast().factors();
-    return NormalizeTotal.FUNCTION.apply(factor.pmul(GENESIS.origin(factor.pmul(levers))));
   }
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return origin(factors(levers), levers);
-  }
-
-  public static class Evaluation {
-    private final Tensor weights;
-    private final Tensor factors;
-
-    public Evaluation(Tensor weights, Tensor factors) {
-      this.weights = weights;
-      this.factors = factors;
+    Tensor w = genesis.origin(levers);
+    Tensor m = IdentityMatrix.of(levers.length()).subtract(levers.dot(PseudoInverse.of(levers)));
+    SingularValueDecomposition svd = SingularValueDecomposition.of(m);
+    Tensor n = NormalizeTotal.FUNCTION.apply(m.dot(w));
+    for (int count = 0; count < k; ++count) {
+      Tensor b = n.negate().map(Ramp.FUNCTION);
+      Tensor sol = LeastSquares.of(svd, b);
+      w = w.add(sol);
+      n = NormalizeTotal.FUNCTION.apply(m.dot(w));
     }
-
-    public Tensor factors() {
-      return factors;
-    }
-
-    public Tensor weights() {
-      return weights;
-    }
+    // System.out.println(n.map(Round._3));
+    return n;
   }
 }

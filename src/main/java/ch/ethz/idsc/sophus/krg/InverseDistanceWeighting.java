@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
@@ -18,9 +19,9 @@ import ch.ethz.idsc.tensor.red.Norm;
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
 public class InverseDistanceWeighting implements Genesis, Serializable {
-  /** @param vectorLogManifold
-   * @param variogram
-   * @return */
+  /** @param variogram
+   * @return
+   * @see InversePowerVariogram */
   public static Genesis of(ScalarUnaryOperator variogram) {
     return new InverseDistanceWeighting(Objects.requireNonNull(variogram));
   }
@@ -32,7 +33,7 @@ public class InverseDistanceWeighting implements Genesis, Serializable {
     this.variogram = variogram;
   }
 
-  @Override
+  @Override // from Genesis
   public Tensor origin(Tensor levers) {
     return NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
         .map(Norm._2::ofVector) //

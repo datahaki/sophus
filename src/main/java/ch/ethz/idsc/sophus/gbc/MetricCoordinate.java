@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.krg.MetricDistances;
+import ch.ethz.idsc.sophus.krg.InverseDistanceWeighting;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
@@ -45,9 +45,7 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020
  * 
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
- * by Jan Hakenberg, 2020
- * 
- * @see MetricDistances */
+ * by Jan Hakenberg, 2020 */
 public class MetricCoordinate implements Genesis, Serializable {
   private static final long serialVersionUID = -8043520781023560311L;
 
@@ -64,7 +62,7 @@ public class MetricCoordinate implements Genesis, Serializable {
   /** @param variogram for example InversePowerVariogram.of(2)
    * @return */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return of(new MetricWeighting(variogram));
+    return of(InverseDistanceWeighting.of(variogram));
   }
 
   private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);
