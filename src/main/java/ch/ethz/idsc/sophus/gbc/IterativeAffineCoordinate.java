@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Integers;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
-public class IterativeAffineCoordinate implements Genesis, Serializable {
+public class IterativeAffineCoordinate implements DequeGenesis, Serializable {
   private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
   // ---
   private final TensorUnaryOperator amplifier;
@@ -25,6 +25,7 @@ public class IterativeAffineCoordinate implements Genesis, Serializable {
     this.k = Integers.requirePositiveOrZero(k);
   }
 
+  @Override
   public Deque<Evaluation> factors(Tensor levers) {
     Deque<Evaluation> deque = new ArrayDeque<>(k + 1);
     Tensor factors = ConstantArray.of(RealScalar.ONE, levers.length());
@@ -46,6 +47,7 @@ public class IterativeAffineCoordinate implements Genesis, Serializable {
     return origin(factors(levers), levers);
   }
 
+  // TODO needs to be standardized! weights/factors do not always mean the same thing!
   public static class Evaluation {
     private final Tensor weights;
     private final Tensor factors;
