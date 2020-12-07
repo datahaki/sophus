@@ -52,7 +52,7 @@ public class AffineCoordinateTest extends TestCase {
             Tensor weights = AffineCoordinate.INSTANCE.origin(levers);
             weights = NormalizeTotal.FUNCTION.apply(weights.map(Exp.FUNCTION));
             levers = weights.pmul(levers);
-            System.out.println(weights.dot(origin));
+            // System.out.println(weights.dot(origin));
           }
         }
       }

@@ -15,11 +15,12 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
 public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
-  public static final Chop CHOP = Chop._10;
+  public static final Chop CHOP = Tolerance.CHOP;
   // ---
   private final Genesis genesis;
   // private final Scalar beta;
@@ -35,7 +36,7 @@ public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
 
   @Override
   public Deque<Evaluation> deque(Tensor levers) {
-    Deque<Evaluation> deque = new ArrayDeque<>(k + 1);
+    Deque<Evaluation> deque = new ArrayDeque<>();
     Tensor w = genesis.origin(levers); // weighting
     Tensor m = IdentityMatrix.of(levers.length()).subtract(levers.dot(PseudoInverse.of(levers)));
     Tensor n = NormalizeTotal.FUNCTION.apply(m.dot(w)); // coordinates
