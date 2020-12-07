@@ -4,36 +4,36 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.math.AppendOne;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Array;
-import ch.ethz.idsc.tensor.alg.Join;
-import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.mat.LinearSolve;
+import ch.ethz.idsc.tensor.itp.Fit;
 
-/** attempts to produce positive weights for levers with zero in convex hull */
+/** attempts to produce positive weights for levers with zero in convex hull
+ * 
+ * Technique of using Lagrange multipliers inspired by the following reference:
+ * "Polygon Laplacian Made Simple"
+ * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020 */
 public class LagrangeCoordinate implements Genesis, Serializable {
+  /** @param genesis for instance InverseDistanceWeighting.of(InversePowerVariogram.of(2))
+   * @return */
+  public static Genesis of(Genesis genesis) {
+    return new LagrangeCoordinate(Objects.requireNonNull(genesis));
+  }
+
+  /***************************************************/
   private final Genesis genesis;
 
-  /** @param genesis
-   * @param k */
-  public LagrangeCoordinate(Genesis genesis) {
-    this.genesis = Objects.requireNonNull(genesis);
+  private LagrangeCoordinate(Genesis genesis) {
+    this.genesis = genesis;
   }
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    Tensor wbar = genesis.origin(levers);
-    int n = levers.length();
-    Tensor x = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
+    return fit(genesis.origin(levers), levers);
+  }
+
+  public static Tensor fit(Tensor target, Tensor levers) {
     int d = levers.get(0).length();
-    Tensor u = UnitVector.of(d + 1, d);
-    Tensor rhs = Join.of(wbar, u);
-    Tensor top = Join.of(1, IdentityMatrix.of(n), x);
-    Tensor bot = Join.of(1, Transpose.of(x), Array.zeros(d + 1, d + 1));
-    Tensor sol = LinearSolve.of(Join.of(top, bot), rhs);
-    return sol.extract(0, n);
+    return Fit.lagrange(target, AffineCoordinate.x(levers), UnitVector.of(d + 1, d));
   }
 }

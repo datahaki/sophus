@@ -31,4 +31,10 @@ public interface Biinvariant {
    * @param sequence
    * @return operator that provides barycentric coordinates */
   TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
+
+  /** @param vectorLogManifold
+   * @param variogram
+   * @param sequence
+   * @return operator that provides barycentric coordinates */
+  TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 }

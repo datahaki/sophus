@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.krg.InverseDistanceWeighting;
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -15,7 +16,7 @@ public class LagrangeCoordinateTest extends TestCase {
   public void testSimple() {
     int count = 0;
     Genesis idw = InverseDistanceWeighting.of(InversePowerVariogram.of(2));
-    LagrangeCoordinate genesis = new LagrangeCoordinate(idw);
+    Genesis genesis = LagrangeCoordinate.of(idw);
     Genesis idc = MetricCoordinate.of(idw);
     for (int n = 5; n < 20; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
@@ -28,5 +29,9 @@ public class LagrangeCoordinateTest extends TestCase {
       }
     }
     assertTrue(2 < count);
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> LagrangeCoordinate.of(null));
   }
 }

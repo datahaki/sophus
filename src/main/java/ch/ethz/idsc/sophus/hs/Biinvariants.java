@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
+import ch.ethz.idsc.sophus.gbc.LagrangeCoordinate;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
@@ -149,6 +150,17 @@ public enum Biinvariants implements Biinvariant {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
     Objects.requireNonNull(variogram);
     return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point).map(variogram));
+  }
+
+  @Override // from Biinvariant
+  public final TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    TensorUnaryOperator weighting = weighting(vectorLogManifold, variogram, sequence);
+    return point -> {
+      Tensor target = weighting.apply(point);
+      TangentSpace tangentSpace = vectorLogManifold.logAt(point);
+      Tensor levers = Tensor.of(sequence.stream().map(tangentSpace::vectorLog));
+      return LagrangeCoordinate.fit(target, levers);
+    };
   }
 
   /** @return */

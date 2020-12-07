@@ -20,10 +20,14 @@ public enum AffineCoordinate implements Genesis {
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    Tensor x = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
+    Tensor x = x(levers);
     int d = levers.get(0).length();
     Tensor u = UnitVector.of(d + 1, d);
     Tensor z = LinearSolve.of(Transpose.of(x).dot(x), u);
     return x.dot(z);
+  }
+
+  public static Tensor x(Tensor levers) {
+    return Tensor.of(levers.stream().map(AppendOne.FUNCTION));
   }
 }
