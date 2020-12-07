@@ -50,7 +50,7 @@ public enum MinTriangleAreaSquared {
   }
 
   /** @param polygon
-   * @return */
+   * @return normalized polygon with mean zero and unit average lever length */
   /* package */ static Tensor normalize(Tensor polygon) {
     polygon = Tensor.of(polygon.stream().map(Mean.of(polygon)::subtract));
     ScalarSummaryStatistics scalarSummaryStatistics = //

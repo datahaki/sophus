@@ -16,7 +16,6 @@ import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
 import ch.ethz.idsc.tensor.sca.Chop;
-import ch.ethz.idsc.tensor.sca.Ramp;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
 public class IterativeTargetCoordinate implements DequeGenesis, Serializable {
@@ -41,7 +40,8 @@ public class IterativeTargetCoordinate implements DequeGenesis, Serializable {
     Tensor m = IdentityMatrix.of(levers.length()).subtract(levers.dot(PseudoInverse.of(levers)));
     Tensor n = NormalizeTotal.FUNCTION.apply(m.dot(w)); // coordinates
     deque.add(new Evaluation(n, n.map(Scalar::zero)));
-    Tensor b = n.negate().map(Ramp.FUNCTION);
+    // TODO also target values above 1
+    Tensor b = n.map(IdentRamp.FUNCTION);
     // Tensor b = n.map(Abs.FUNCTION);
     if (!CHOP.allZero(b))
     // if (!n.stream().map(Scalar.class::cast).allMatch(Sign::isPositiveOrZero))
@@ -52,7 +52,7 @@ public class IterativeTargetCoordinate implements DequeGenesis, Serializable {
         w = w.add(sol);
         n = NormalizeTotal.FUNCTION.apply(m.dot(w));
         deque.add(new Evaluation(n, n.map(Scalar::zero)));
-        b = n.negate().map(Ramp.FUNCTION);
+        b = n.map(IdentRamp.FUNCTION);
         // b = n.map(Abs.FUNCTION);
         if (CHOP.allZero(b))
           // if (n.stream().map(Scalar.class::cast).allMatch(Sign::isPositiveOrZero))

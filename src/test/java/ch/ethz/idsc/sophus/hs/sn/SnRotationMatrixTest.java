@@ -2,6 +2,8 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
+import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -52,7 +54,7 @@ public class SnRotationMatrixTest extends TestCase {
 
   public void testTargetNDim() {
     for (int d = 2; d < 6; ++d)
-      for (int count = 0; count < 20; ++count) {
+      for (int count = 0; count < 10; ++count) {
         Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor rotation1 = SnRotationMatrix.of(a, b);
@@ -62,5 +64,21 @@ public class SnRotationMatrixTest extends TestCase {
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
         Chop._10.requireClose(rotation1, Inverse.of(rotation2));
       }
+  }
+
+  public void testTargetSn() {
+    for (int d = 1; d < 6; ++d) {
+      RandomSampleInterface randomSampleInterface = SnRandomSample.of(d);
+      for (int count = 0; count < 10; ++count) {
+        Tensor a = RandomSample.of(randomSampleInterface);
+        Tensor b = RandomSample.of(randomSampleInterface);
+        Tensor rotation1 = SnRotationMatrix.of(a, b);
+        Tensor rotation2 = SnRotationMatrix.of(b, a);
+        assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
+        Chop._08.requireClose(rotation1.dot(a), b);
+        Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
+        Chop._10.requireClose(rotation1, Inverse.of(rotation2));
+      }
+    }
   }
 }
