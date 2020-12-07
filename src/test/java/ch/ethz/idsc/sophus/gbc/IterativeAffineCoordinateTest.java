@@ -2,8 +2,10 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 
+import ch.ethz.idsc.sophus.gbc.IterativeAffineCoordinate.Evaluation;
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -22,12 +24,15 @@ public class IterativeAffineCoordinateTest extends TestCase {
   public void testAmplifiers() {
     for (Amplifiers amplifiers : Amplifiers.values()) {
       for (int k : new int[] { 0, 1, 5, 10 }) {
-        Genesis genesis = new IterativeAffineCoordinate(amplifiers.supply(5), k);
+        GenesisDeque genesis = new IterativeAffineCoordinate(amplifiers.supply(3), k);
         for (int n = 3; n < 10; ++n) {
           Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
           if (ConvexHull.isInside(levers)) {
             _check(levers, AffineCoordinate.INSTANCE.origin(levers));
             _check(levers, genesis.origin(levers));
+            Deque<Evaluation> deque = genesis.deque(levers);
+            for (Evaluation evaluation : deque)
+              _check(levers, evaluation.weights());
           }
         }
       }

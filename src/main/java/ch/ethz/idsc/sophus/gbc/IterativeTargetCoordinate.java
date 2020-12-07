@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
-public class IterativeTargetCoordinate implements DequeGenesis, Serializable {
+public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
   public static final Chop CHOP = Chop._10;
   // ---
   private final Genesis genesis;
@@ -34,7 +34,7 @@ public class IterativeTargetCoordinate implements DequeGenesis, Serializable {
   }
 
   @Override
-  public Deque<Evaluation> factors(Tensor levers) {
+  public Deque<Evaluation> deque(Tensor levers) {
     Deque<Evaluation> deque = new ArrayDeque<>(k + 1);
     Tensor w = genesis.origin(levers); // weighting
     Tensor m = IdentityMatrix.of(levers.length()).subtract(levers.dot(PseudoInverse.of(levers)));
@@ -64,6 +64,6 @@ public class IterativeTargetCoordinate implements DequeGenesis, Serializable {
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return factors(levers).peekLast().weights();
+    return deque(levers).peekLast().weights();
   }
 }

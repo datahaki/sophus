@@ -12,9 +12,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Integers;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
-public class IterativeAffineCoordinate implements DequeGenesis, Serializable {
+public class IterativeAffineCoordinate implements GenesisDeque, Serializable {
   private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
   // ---
   private final TensorUnaryOperator amplifier;
@@ -26,28 +27,28 @@ public class IterativeAffineCoordinate implements DequeGenesis, Serializable {
   }
 
   @Override
-  public Deque<Evaluation> factors(Tensor levers) {
-    Deque<Evaluation> deque = new ArrayDeque<>(k + 1);
+  public Deque<Evaluation> deque(Tensor levers) {
+    Deque<Evaluation> deque = new ArrayDeque<>();
     Tensor factors = ConstantArray.of(RealScalar.ONE, levers.length());
     for (int depth = 0; depth <= k; ++depth) {
-      Tensor weights = GENESIS.origin(factors.pmul(levers));
+      // should converge to uniform vector
+      Tensor uniform = GENESIS.origin(factors.pmul(levers));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(factors.pmul(uniform));
+      if (!deque.isEmpty() && Tolerance.CHOP.isClose(weights, deque.peekLast().weights())) {
+        deque.add(new Evaluation(weights, factors));
+        break;
+      }
       deque.add(new Evaluation(weights, factors));
-      factors = factors.pmul(amplifier.apply(weights));
+      factors = factors.pmul(amplifier.apply(uniform));
     }
     return deque;
   }
 
-  public Tensor origin(Deque<Evaluation> deque, Tensor levers) {
-    Tensor factor = deque.peekLast().factors();
-    return NormalizeTotal.FUNCTION.apply(factor.pmul(GENESIS.origin(factor.pmul(levers))));
-  }
-
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return origin(factors(levers), levers);
+    return deque(levers).peekLast().weights();
   }
 
-  // TODO needs to be standardized! weights/factors do not always mean the same thing!
   public static class Evaluation {
     private final Tensor weights;
     private final Tensor factors;
