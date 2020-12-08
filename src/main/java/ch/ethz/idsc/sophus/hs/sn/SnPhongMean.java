@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Phong projection is faster than {@link SnBiinvariantMean}.
  * However, Phong projection is not the inverse to inverse distance coordinates.
@@ -26,6 +27,6 @@ public enum SnPhongMean implements BiinvariantMean {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return NORMALIZE.apply(AffineQ.require(weights).dot(sequence));
+    return NORMALIZE.apply(AffineQ.require(weights, Chop._08).dot(sequence));
   }
 }

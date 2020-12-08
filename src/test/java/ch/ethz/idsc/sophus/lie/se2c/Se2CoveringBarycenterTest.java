@@ -18,7 +18,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     TensorUnaryOperator se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
     Tensor mean = Array.zeros(3);
     Tensor weights = se2CoveringBarycenter.apply(mean);
-    AffineQ.require(weights);
+    AffineQ.require(weights, Chop._08);
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._12.requireClose(result, mean);
   }
@@ -28,7 +28,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     TensorUnaryOperator se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
     Tensor mean = Tensors.vector(0.3, 0.6, 0);
     Tensor weights = se2CoveringBarycenter.apply(mean);
-    AffineQ.require(weights);
+    AffineQ.require(weights, Chop._08);
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._12.requireClose(result, mean);
   }
@@ -38,7 +38,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     TensorUnaryOperator se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
     Tensor mean = Tensors.vector(0.3, 0.6, 0.9);
     Tensor weights = se2CoveringBarycenter.apply(mean);
-    AffineQ.require(weights);
+    AffineQ.require(weights, Chop._08);
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._12.requireClose(result, mean);
   }
@@ -48,7 +48,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
     Tensor mean = Tensors.vector(0.75, 1, 0);
     Tensor weights = se2CoveringBarycenter.apply(mean);
-    AffineQ.require(weights);
+    AffineQ.require(weights, Chop._08);
     Chop._10.requireClose(weights, Tensors.vector(-0.75, 0.75, 1, 0));
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._12.requireClose(result, mean);

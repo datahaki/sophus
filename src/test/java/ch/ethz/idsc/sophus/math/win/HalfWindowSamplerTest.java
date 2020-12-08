@@ -24,7 +24,7 @@ public class HalfWindowSamplerTest extends TestCase {
       for (int count = 1; count <= 10; ++count) {
         Tensor tensor = function.apply(count);
         assertEquals(tensor.length(), count);
-        AffineQ.require(tensor);
+        AffineQ.require(tensor, Chop._08);
       }
     }
   }

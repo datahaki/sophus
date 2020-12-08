@@ -36,7 +36,7 @@ public class SnManifoldTest extends TestCase {
             Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
             Tensor weights = barycentricCoordinate.weights(sequence, mean);
             VectorQ.requireLength(weights, n);
-            AffineQ.require(weights);
+            AffineQ.require(weights, Chop._08);
             Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
             Chop._06.requireAllZero(evaluate);
             Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
@@ -59,7 +59,7 @@ public class SnManifoldTest extends TestCase {
             for (Tensor mean : sequence) {
               Tensor weights = barycentricCoordinate.weights(sequence, mean);
               VectorQ.requireLength(weights, n);
-              AffineQ.require(weights);
+              AffineQ.require(weights, Chop._08);
               Chop._06.requireClose(weights, UnitVector.of(n, count));
               Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
               Chop._06.requireAllZero(evaluate);
@@ -82,7 +82,7 @@ public class SnManifoldTest extends TestCase {
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
           Tensor weights = barycentricCoordinate.weights(sequence, mean);
           VectorQ.requireLength(weights, n);
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           {
             Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
             Chop._12.requireAllZero(evaluate);

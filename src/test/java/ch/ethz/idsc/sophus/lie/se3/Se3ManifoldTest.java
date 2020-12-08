@@ -39,7 +39,7 @@ public class Se3ManifoldTest extends TestCase {
         Tensor point = TestHelper.spawn_Se3();
         try {
           Tensor weights = barycentricCoordinate.weights(sequence, point);
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
           assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
           Tensor defect = new MeanDefect(sequence, weights, Se3Manifold.HS_EXP.exponential(mean)).tangent();
@@ -74,7 +74,7 @@ public class Se3ManifoldTest extends TestCase {
           Tensor points = Tensors.vector(i -> TestHelper.spawn_Se3(), n);
           Tensor xya = TestHelper.spawn_Se3();
           Tensor weights = barycentricCoordinate.weights(points, xya);
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           Tensor check1 = biinvariantMean.mean(points, weights);
           Chop._10.requireClose(check1, xya);
           Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);

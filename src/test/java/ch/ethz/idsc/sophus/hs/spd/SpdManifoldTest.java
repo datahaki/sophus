@@ -35,7 +35,7 @@ public class SpdManifoldTest extends TestCase {
         for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES(sequence)) {
           Tensor point = TestHelper.generateSpd(d);
           Tensor weights = barycentricCoordinate.weights(sequence, point);
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           Tensor spd = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._08.requireClose(spd, point);
         }
@@ -72,7 +72,7 @@ public class SpdManifoldTest extends TestCase {
         int index = 0;
         for (Tensor point : sequence) {
           Tensor weights = barycentricCoordinate.weights(sequence, point);
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           Chop._06.requireClose(weights, UnitVector.of(len, index));
           Tensor spd = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._08.requireClose(spd, point);

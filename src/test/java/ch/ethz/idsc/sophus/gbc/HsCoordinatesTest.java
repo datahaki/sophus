@@ -23,11 +23,11 @@ public class HsCoordinatesTest extends TestCase {
       for (int n = 3; n < 10; ++n) {
         Tensor w1 = barycentricCoordinate.weights(CirclePoints.of(n), Array.zeros(2));
         Chop._08.requireClose(w1, ConstantArray.of(RationalScalar.of(1, n), n));
-        AffineQ.require(w1);
+        AffineQ.require(w1, Chop._08);
         Tensor w2 = barycentricCoordinate.weights(CirclePoints.of(n), Tensors.vector(2, 2));
         assertEquals(w2.length(), n);
         assertTrue(w2.stream().map(Scalar.class::cast).allMatch(DeterminateScalarQ::of));
-        AffineQ.require(w2);
+        AffineQ.require(w2, Chop._08);
       }
     }
   }

@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class BSplineLimitMatrixTest extends TestCase {
@@ -14,8 +15,8 @@ public class BSplineLimitMatrixTest extends TestCase {
       for (int n = 1; n < 10; ++n) {
         Tensor tensor = BSplineLimitMatrix.string(n, degree);
         ExactTensorQ.require(tensor);
-        StochasticMatrixQ.requireRows(tensor);
-        StochasticMatrixQ.requireRows(Inverse.of(tensor));
+        StochasticMatrixQ.requireRows(tensor, Chop._08);
+        StochasticMatrixQ.requireRows(Inverse.of(tensor), Chop._08);
         // System.out.println("n=" + n + " degree=" + degree);
         // System.out.println(Pretty.of(tensor));
       }

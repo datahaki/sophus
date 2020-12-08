@@ -124,7 +124,6 @@ public class IterativeCoordinateTest extends TestCase {
   public void testBiinv() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
-    int count = 0;
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(distribution, n, 2);
       if (Polygons.isInside(levers)) {
@@ -135,10 +134,23 @@ public class IterativeCoordinateTest extends TestCase {
           Tensor tangent = meanDefect.tangent();
           Chop._07.requireAllZero(tangent);
         }
-        ++count;
       }
     }
-    assertTrue(0 < count);
+  }
+
+  public void testSimple123() {
+    Genesis genesis = MetricCoordinate.affine();
+    Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    for (int n = 3; n < 10; ++n) {
+      Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
+      for (int k = 0; k < 5; ++k) {
+        Tensor weights = IterativeCoordinate.of(genesis, k).origin(levers);
+        Chop._10.requireAllZero(weights.dot(levers));
+        MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
+        Tensor tangent = meanDefect.tangent();
+        Chop._07.requireAllZero(tangent);
+      }
+    }
   }
 
   private static final Genesis[] GENESIS = { //

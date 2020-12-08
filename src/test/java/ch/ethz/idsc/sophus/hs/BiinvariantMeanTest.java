@@ -23,7 +23,7 @@ public class BiinvariantMeanTest extends TestCase {
    * @return */
   private static Tensor affine(int n) {
     Tensor matrix = RandomVariate.of(DISTRIBUTION, n, n);
-    matrix = StochasticMatrixQ.requireRows(Tensor.of(matrix.stream().map(NORMALIZE)));
+    matrix = StochasticMatrixQ.requireRows(Tensor.of(matrix.stream().map(NORMALIZE)), Chop._08);
     StochasticMatrixQ.requireRows(Inverse.of(matrix), Chop._10);
     return matrix;
   }

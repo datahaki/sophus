@@ -94,7 +94,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights);
+        AffineQ.require(weights, Chop._08);
         Tensor check1 = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._06.requireClose(check1, xya);
         Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
@@ -127,7 +127,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           Chop._06.requireClose(weights, UnitVector.of(n, index));
         }
       }
@@ -149,11 +149,11 @@ public class Se2CoveringManifoldTest extends TestCase {
       for (BarycentricCoordinate barycentricCoordinate : QUANTITY_COORDINATES) {
         for (int index = 0; index < n; ++index) {
           Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
-          AffineQ.require(weights);
+          AffineQ.require(weights, Chop._08);
           Chop._06.requireClose(weights, UnitVector.of(n, index));
         }
         Tensor weights = barycentricCoordinate.weights(sequence, withUnits(RandomVariate.of(distribution, 3)));
-        AffineQ.require(weights);
+        AffineQ.require(weights, Chop._08);
       }
     }
   }
@@ -172,7 +172,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor influence = new HsInfluence(matrix).matrix();
         SymmetricMatrixQ.require(influence, Chop._10);
         Chop._10.requireClose(Symmetrize.of(influence), influence);
-        AffineQ.require(weights);
+        AffineQ.require(weights, Chop._08);
         Tensor check1 = biinvariantMean.mean(points, weights);
         Chop._10.requireClose(check1, xya);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
@@ -200,7 +200,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
         Tensor xya = biinvariantMean.mean(sequence, weights);
         Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
-        AffineQ.require(weights1);
+        AffineQ.require(weights1, Chop._08);
         Chop._08.requireClose(weights, weights);
         Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
         Tensor residualMaker = new HsInfluence(matrix).residualMaker();
@@ -267,7 +267,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights);
+        AffineQ.require(weights, Chop._08);
         Tensor check1 = biinvariantMean.mean(points, weights);
         Chop._10.requireClose(check1, xya);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);

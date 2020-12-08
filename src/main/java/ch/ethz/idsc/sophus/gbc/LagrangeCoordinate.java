@@ -11,8 +11,8 @@ import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Cache;
-import ch.ethz.idsc.tensor.itp.LagrangeMultiplier;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.opt.rn.LagrangeMultiplier;
 
 /** attempts to produce positive weights for levers with zero in convex hull
  * 

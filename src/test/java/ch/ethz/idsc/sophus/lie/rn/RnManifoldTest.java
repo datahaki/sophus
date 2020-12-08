@@ -131,7 +131,7 @@ public class RnManifoldTest extends TestCase {
       sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
       Tensor weights = barycentricCoordinate.weights(sequence, Array.zeros(d));
       assertEquals(sequence.length(), n + 1);
-      AffineQ.require(weights);
+      AffineQ.require(weights, Chop._08);
     }
   }
 }
