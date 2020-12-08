@@ -25,7 +25,6 @@ public class IterativeTargetCoordinateTest extends TestCase {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
       if (ConvexHull.isInside(levers)) {
         Deque<Evaluation> deque = genesis.deque(levers);
-        System.out.println(deque.size());
         Tensor vector = genesis.origin(levers);
         AffineQ.require(vector, Chop._10);
         Chop._08.requireAllZero(vector.dot(levers));

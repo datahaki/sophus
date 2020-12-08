@@ -33,7 +33,7 @@ public class RnManifoldTest extends TestCase {
       for (int length = n + 1; length < 10; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor mean = RandomVariate.of(distribution, n);
-        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentricsfull(RnManifold.INSTANCE)) {
           Tensor weights = barycentricCoordinate.weights(points, mean);
           Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
           Chop._08.requireClose(mean, result);
@@ -48,7 +48,7 @@ public class RnManifoldTest extends TestCase {
       for (int length = n + 1; length < 10; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor xya = RandomVariate.of(distribution, n);
-        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentricsfull(RnManifold.INSTANCE)) {
           Tensor weights = barycentricCoordinate.weights(points, xya);
           Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
           Tensor x_recreated = biinvariantMean.mean(points, weights);
@@ -114,7 +114,7 @@ public class RnManifoldTest extends TestCase {
   }
 
   public void testNullFail() {
-    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentricsfull(RnManifold.INSTANCE))
       try {
         barycentricCoordinate.weights(null, null);
         fail();
@@ -126,7 +126,7 @@ public class RnManifoldTest extends TestCase {
   public void testColinear() {
     int d = 2;
     int n = 5;
-    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentricsfull(RnManifold.INSTANCE)) {
       Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
       sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
       Tensor weights = barycentricCoordinate.weights(sequence, Array.zeros(d));

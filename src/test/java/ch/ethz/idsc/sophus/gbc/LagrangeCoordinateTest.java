@@ -13,6 +13,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class LagrangeCoordinateTest extends TestCase {
+  private static void _check(Tensor levers, Tensor weights) {
+    AffineQ.require(weights, Chop._10);
+    Chop._08.requireAllZero(weights.dot(levers));
+  }
+
   public void testSimple() {
     int count = 0;
     Genesis idw = InverseDistanceWeighting.of(InversePowerVariogram.of(2));
@@ -21,11 +26,9 @@ public class LagrangeCoordinateTest extends TestCase {
     for (int n = 5; n < 20; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
       if (ConvexHull.isInside(levers)) {
-        Tensor v1 = genesis.origin(levers);
-        AffineQ.require(v1, Chop._10);
-        Chop._08.requireAllZero(v1.dot(levers));
+        _check(levers, genesis.origin(levers));
+        _check(levers, idc.origin(levers));
         ++count;
-        idc.origin(levers);
       }
     }
     assertTrue(2 < count);

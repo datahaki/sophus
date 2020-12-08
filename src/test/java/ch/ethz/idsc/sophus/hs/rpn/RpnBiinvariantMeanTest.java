@@ -26,12 +26,11 @@ import junit.framework.TestCase;
 
 public class RpnBiinvariantMeanTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-  private static final BarycentricCoordinate[] PROJECTED_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
-  // private static final MeanDefect MEAN_DEFECT = new MeanDefect(RpnManifold.INSTANCE);
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    for (BarycentricCoordinate barycentricCoordinate : PROJECTED_COORDINATES)
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int count = 0; count < 10; ++count) {
         Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
         Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));

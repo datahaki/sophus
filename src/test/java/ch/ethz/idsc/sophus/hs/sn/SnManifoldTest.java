@@ -22,7 +22,8 @@ import junit.framework.TestCase;
 
 public class SnManifoldTest extends TestCase {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(SnManifold.INSTANCE);
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
+      GbcHelper.barycentrics(SnManifold.INSTANCE);
 
   public void testLinearReproduction() {
     Distribution distribution = NormalDistribution.of(0, 0.2);

@@ -65,7 +65,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
         // ---
         Tensor point = RandomVariate.of(distribution, 3);
         Tensor weights = tensorUnaryOperator.apply(point);
-        AffineQ.require(weights, Chop._10);
+        AffineQ.require(weights, Chop._08);
       }
     }
   }

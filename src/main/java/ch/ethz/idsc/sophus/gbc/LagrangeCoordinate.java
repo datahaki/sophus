@@ -3,10 +3,17 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.stream.Stream;
 
+import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
+import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.itp.Fit;
+import ch.ethz.idsc.tensor.mat.RowReduce;
+import ch.ethz.idsc.tensor.sca.Chop;
 
 /** attempts to produce positive weights for levers with zero in convex hull
  * 
@@ -29,11 +36,31 @@ public class LagrangeCoordinate implements Genesis, Serializable {
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return fit(genesis.origin(levers), levers);
+    /* normalize total for improved numerics */
+    return NormalizeTotal.FUNCTION.apply(fit(genesis.origin(levers), levers));
   }
 
+  /** @param target
+   * @param levers
+   * @return */
+  public static Tensor fit2(Tensor target, Tensor levers) {
+    Tensor rows = Transpose.of(levers).append(ConstantArray.of(RealScalar.ONE, levers.length()));
+    int rank = rows.length();
+    return Fit.lagrange(target, rows, UnitVector.of(rank, rank - 1));
+  }
+
+  /** Hint: implementation is cautious and removes redundant columns from levers
+   * 
+   * @param target
+   * @param levers
+   * @return */
   public static Tensor fit(Tensor target, Tensor levers) {
-    int d = levers.get(0).length();
-    return Fit.lagrange(target, AffineCoordinate.x(levers), UnitVector.of(d + 1, d));
+    Tensor reduce = RowReduce.of(Transpose.of(levers));
+    Tensor rows = Tensor.of(Stream.concat( //
+        reduce.stream().filter(vector -> !Chop._08.allZero(vector)), //
+        Stream.of(ConstantArray.of(RealScalar.ONE, levers.length()))));
+    // System.out.println(Dimensions.of(levers) + " " + Dimensions.of(reduce));
+    int rank = rows.length();
+    return Fit.lagrange(target, rows, UnitVector.of(rank, rank - 1));
   }
 }

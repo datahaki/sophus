@@ -15,8 +15,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class So3BiinvariantMeanTest extends TestCase {
-  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  // public static final MeanDefect INSTANCE = new MeanDefect(So3Manifold.INSTANCE);
+  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
+      GbcHelper.barycentricsfull(So3Manifold.INSTANCE);
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //
@@ -32,7 +32,7 @@ public class So3BiinvariantMeanTest extends TestCase {
   public void testConvergence() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 3; n < 10; ++n) {
+      for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
         Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
