@@ -21,7 +21,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
-      Tensor weights = MinTriangleAreaSquared.weights(polygon);
+      Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
     }
   }
@@ -31,7 +31,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
       Tensor polygon = CirclePoints.of(n);
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
       polygon = polygon.map(s -> Quantity.of(s, "s"));
-      Tensor weights = MinTriangleAreaSquared.weights(polygon);
+      Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
     }
   }
@@ -45,8 +45,8 @@ public class MinTriangleAreaSquaredTest extends TestCase {
           MinTriangleAreaSquared.normalize(polygon1), //
           MinTriangleAreaSquared.normalize(polygon2));
       Tolerance.CHOP.requireClose( //
-          MinTriangleAreaSquared.weights(polygon1), //
-          MinTriangleAreaSquared.weights(polygon2));
+          MinTriangleAreaSquared.INSTANCE.origin(polygon1), //
+          MinTriangleAreaSquared.INSTANCE.origin(polygon2));
     }
   }
 
@@ -54,7 +54,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 3, 3);
-      Tensor weights = MinTriangleAreaSquared.weights(polygon);
+      Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, 3), 3));
     }
   }
@@ -63,7 +63,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 2, 3);
-      Tensor weights = MinTriangleAreaSquared.weights(polygon);
+      Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, 2), 2));
     }
   }
@@ -72,12 +72,12 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 1, 3);
-      Tensor weights = MinTriangleAreaSquared.weights(polygon);
+      Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, 1), 1));
     }
   }
 
   public void testEmptyFail() {
-    AssertFail.of(() -> MinTriangleAreaSquared.weights(Tensors.empty()));
+    AssertFail.of(() -> MinTriangleAreaSquared.INSTANCE.origin(Tensors.empty()));
   }
 }

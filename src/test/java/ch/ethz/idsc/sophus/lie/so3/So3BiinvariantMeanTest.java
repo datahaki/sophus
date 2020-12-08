@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 
 public class So3BiinvariantMeanTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
-      GbcHelper.barycentricsfull(So3Manifold.INSTANCE);
+      GbcHelper.barycentrics(So3Manifold.INSTANCE);
 
   public void testSimple() {
     Tensor sequence = Tensors.of( //

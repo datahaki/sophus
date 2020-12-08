@@ -43,7 +43,7 @@ import junit.framework.TestCase;
 
 public class Se2CoveringManifoldTest extends TestCase {
   private static final BarycentricCoordinate[] ALL_COORDINATES = //
-      GbcHelper.barycentricsfull(Se2CoveringManifold.INSTANCE);
+      GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //
       GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE);
