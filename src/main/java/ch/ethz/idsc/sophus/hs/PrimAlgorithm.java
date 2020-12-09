@@ -1,22 +1,25 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 
 /** MinimumSpanningTree */
-public class PrimAlgorithm {
-  public static class Edge {
+public enum PrimAlgorithm {
+  ;
+  public static class Edge implements Serializable {
     public final int i;
     public final int j;
 
@@ -25,14 +28,32 @@ public class PrimAlgorithm {
       this.j = j;
     }
 
+    public Scalar Get(Tensor tensor) {
+      return tensor.Get(i, j);
+    }
+
     @Override
     public String toString() {
       return String.format("(%d, %d)", i, j);
     }
   }
 
-  /** @param matrix
-   * @return */
+  public static class EdgeComparator implements Comparator<Edge> {
+    private final Tensor matrix;
+
+    public EdgeComparator(Tensor matrix) {
+      this.matrix = matrix;
+    }
+
+    @Override
+    public int compare(Edge edge1, Edge edge2) {
+      return Scalars.compare(edge1.Get(matrix), edge2.Get(matrix));
+    }
+  }
+
+  /** @param matrix symmetric
+   * @return
+   * @throws Exception if given matrix is not symmetric */
   public static List<Edge> of(Tensor matrix) {
     SymmetricMatrixQ.require(matrix);
     int n = matrix.length();
@@ -43,17 +64,16 @@ public class PrimAlgorithm {
     visited.add(0);
     Set<Integer> unknown = IntStream.range(1, n).boxed().collect(Collectors.toSet());
     while (!unknown.isEmpty()) {
-      Scalar min = DoubleScalar.POSITIVE_INFINITY;
+      Scalar min = null;
       Edge edge = null;
-      for (int i : visited) {
+      for (int i : visited)
         for (int j : unknown) {
           Scalar cmp = matrix.Get(i, j);
-          if (Scalars.lessThan(cmp, min)) {
+          if (Objects.isNull(min) || Scalars.lessThan(cmp, min)) {
             min = cmp;
             edge = new Edge(i, j);
           }
         }
-      }
       int index = edge.j;
       visited.add(index);
       unknown.remove(index);

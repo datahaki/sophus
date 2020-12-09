@@ -118,7 +118,7 @@ public enum Biinvariants implements Biinvariant {
     }
   }, //
   /** bi-invariant
-   * results in a symmetric distance matrix -> can use for kriging */
+   * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
   HARBOR {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
