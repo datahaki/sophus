@@ -159,7 +159,7 @@ public enum Biinvariants implements Biinvariant {
       Tensor target = weighting.apply(point);
       TangentSpace tangentSpace = vectorLogManifold.logAt(point);
       Tensor levers = Tensor.of(sequence.stream().map(tangentSpace::vectorLog));
-      return LagrangeCoordinate.fit(target, levers);
+      return LagrangeCoordinate.usingSvd(target, levers);
     };
   }
 

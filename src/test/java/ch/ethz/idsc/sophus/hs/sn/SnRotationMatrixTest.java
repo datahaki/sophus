@@ -42,7 +42,7 @@ public class SnRotationMatrixTest extends TestCase {
       Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
       Tensor w = Cross.of(a, b);
       Tensor wx = Cross.skew3(w);
-      Tensor wd = TensorWedge.of(a, b).multiply(RealScalar.of(-2));
+      Tensor wd = TensorWedge.of(a, b).negate();
       Tolerance.CHOP.requireClose(wx, wd);
       Tensor rotation1 = SnRotationMatrix.of(a, b);
       assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._10));

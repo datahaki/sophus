@@ -10,12 +10,13 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Append;
 import ch.ethz.idsc.tensor.alg.Array;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
+import ch.ethz.idsc.tensor.opt.rn.LagrangeMultiplier;
 import ch.ethz.idsc.tensor.qty.Quantity;
 
 /** implementation of kriging for homogeneous spaces
@@ -85,10 +86,12 @@ public class Kriging implements Serializable {
     SymmetricMatrixQ.require(vardst);
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
     Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.uniqueUnit(matrix));
-    matrix.stream().forEach(row -> row.append(one));
-    int n = sequence.length();
-    Tensor inverse = PseudoInverse.of(matrix.append(Tensors.vector(i -> i < n ? one : one.zero(), n + 1)));
-    Tensor weights = inverse.dot(Append.of(values, values.get(0).map(Scalar::zero)));
+    int n = matrix.length();
+    Tensor rhs = Tensors.of(values.get(0).map(Scalar::zero));
+    LagrangeMultiplier lagrangeMultiplier = //
+        new LagrangeMultiplier(matrix, values, ConstantArray.of(one, 1, n), rhs);
+    Tensor inverse = PseudoInverse.of(lagrangeMultiplier.matrix());
+    Tensor weights = inverse.dot(lagrangeMultiplier.b());
     return new Kriging(tensorUnaryOperator, one, weights, inverse);
   }
 
@@ -105,16 +108,20 @@ public class Kriging implements Serializable {
     this.inverse = inverse;
   }
 
+  private Tensor vs(Tensor point) {
+    return tensorUnaryOperator.apply(point).append(one);
+  }
+
   /** @param point
    * @return estimate at given point */
   public Tensor estimate(Tensor point) {
-    return tensorUnaryOperator.apply(point).append(one).dot(weights);
+    return vs(point).dot(weights);
   }
 
   /** @param point
    * @return variance of estimate at given point */
   public Scalar variance(Tensor point) {
-    Tensor y = tensorUnaryOperator.apply(point).append(one);
-    return inverse.dot(y).dot(y).Get();
+    Tensor vs = vs(point);
+    return inverse.dot(vs).dot(vs).Get();
   }
 }
