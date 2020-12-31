@@ -6,6 +6,7 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
@@ -16,9 +17,9 @@ import junit.framework.TestCase;
 
 public class TestHelperTest extends TestCase {
   private static void _check(Tensor g, MatrixSqrt matrixSqrt) {
-    Chop._06.requireClose(Inverse.of(matrixSqrt.forward()), matrixSqrt.inverse());
-    Chop._06.requireClose(matrixSqrt.forward().dot(matrixSqrt.forward()), g);
-    Chop._06.requireClose(matrixSqrt.inverse().dot(matrixSqrt.inverse()), Inverse.of(g));
+    Chop._06.requireClose(Inverse.of(matrixSqrt.sqrt()), matrixSqrt.sqrt_inverse());
+    Chop._06.requireClose(matrixSqrt.sqrt().dot(matrixSqrt.sqrt()), g);
+    Chop._06.requireClose(matrixSqrt.sqrt_inverse().dot(matrixSqrt.sqrt_inverse()), Inverse.of(g));
   }
 
   public void testSimple() throws ClassNotFoundException, IOException {

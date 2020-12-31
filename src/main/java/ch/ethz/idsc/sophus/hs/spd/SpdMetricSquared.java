@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 
 /** Reference:
@@ -14,7 +15,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    Tensor pn = MatrixSqrt.ofSymmetric(p).inverse();
+    Tensor pn = MatrixSqrt.ofSymmetric(p).sqrt_inverse();
     Tensor pq = Symmetrize.of(pn.dot(q).dot(pn));
     return SpdMatrixExponential.nSquared(pq);
   }

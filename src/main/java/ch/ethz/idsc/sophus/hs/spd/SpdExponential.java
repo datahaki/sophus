@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 
 /** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
@@ -40,8 +41,8 @@ public class SpdExponential implements Exponential, TangentSpace, Serializable {
    * @throws Exception if p is not symmetric */
   public SpdExponential(Tensor p) {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
-    pp = matrixSqrt.forward();
-    pn = matrixSqrt.inverse();
+    pp = matrixSqrt.sqrt();
+    pn = matrixSqrt.sqrt_inverse();
   }
 
   @Override // from Exponential

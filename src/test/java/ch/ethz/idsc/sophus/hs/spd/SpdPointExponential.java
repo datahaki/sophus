@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 
 /** SPD == Symmetric positive definite == Sym+
@@ -26,8 +27,8 @@ public enum SpdPointExponential {
    * @return */
   public static Tensor exp(Tensor p, Tensor w) {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
-    Tensor pp = matrixSqrt.forward();
-    Tensor pn = matrixSqrt.inverse();
+    Tensor pp = matrixSqrt.sqrt();
+    Tensor pn = matrixSqrt.sqrt_inverse();
     return pp.dot(SpdMatrixExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
   }
 
@@ -36,8 +37,8 @@ public enum SpdPointExponential {
    * @return */
   public static Tensor log(Tensor p, Tensor q) {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
-    Tensor pp = matrixSqrt.forward();
-    Tensor pn = matrixSqrt.inverse();
+    Tensor pp = matrixSqrt.sqrt();
+    Tensor pn = matrixSqrt.sqrt_inverse();
     return pp.dot(SpdMatrixExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp);
   }
 }
