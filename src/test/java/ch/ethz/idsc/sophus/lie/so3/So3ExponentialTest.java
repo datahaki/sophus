@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.lie.so3;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.lie.gl.LinearGroup;
-import ch.ethz.idsc.sophus.lie.gl.LinearGroupElement;
+import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
+import ch.ethz.idsc.sophus.lie.gln.GlnGroupElement;
 import ch.ethz.idsc.sophus.lie.son.SonGroup;
 import ch.ethz.idsc.sophus.lie.son.SonGroupElement;
 import ch.ethz.idsc.tensor.Tensor;
@@ -35,7 +35,7 @@ public class So3ExponentialTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
       SonGroupElement so3GroupElement = SonGroup.INSTANCE.element(g);
-      LinearGroupElement linearGroupElement = LinearGroup.INSTANCE.element(g);
+      GlnGroupElement linearGroupElement = GlnGroup.INSTANCE.element(g);
       Tensor v = So3TestHelper.spawn_so3();
       Tolerance.CHOP.requireClose( //
           so3GroupElement.adjoint(v), //

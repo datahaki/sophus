@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.gl;
+package ch.ethz.idsc.sophus.lie.gln;
 
 import java.io.IOException;
 
@@ -20,19 +20,19 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class LinearGroupElementTest extends TestCase {
+public class GlnGroupElementTest extends TestCase {
   public void testSimple() {
     int n = 5;
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), n, n);
-    LinearGroupElement linearGroupElement = LinearGroupElement.of(matrix);
+    GlnGroupElement linearGroupElement = GlnGroupElement.of(matrix);
     Tensor result = linearGroupElement.inverse().combine(matrix);
     Chop._10.requireClose(result, IdentityMatrix.of(n));
   }
 
   public void testSerializable() throws ClassNotFoundException, IOException {
     Tensor tensor = DiagonalMatrix.of(1, 2, 3);
-    LinearGroupElement linearGroupElement = LinearGroupElement.of(tensor);
-    LinearGroupElement copy = Serialization.copy(linearGroupElement);
+    GlnGroupElement linearGroupElement = GlnGroupElement.of(tensor);
+    GlnGroupElement copy = Serialization.copy(linearGroupElement);
     Tensor result = copy.inverse().combine(tensor);
     assertEquals(result, IdentityMatrix.of(3));
   }
@@ -43,7 +43,7 @@ public class LinearGroupElementTest extends TestCase {
       Tensor g = RandomVariate.of(distribution, 3);
       Tensor uvw = RandomVariate.of(distribution, 3);
       Tensor adjoint = new Se2GroupElement(g).adjoint(uvw);
-      LinearGroupElement linearGroupElement = LinearGroupElement.of(Se2Matrix.of(g));
+      GlnGroupElement linearGroupElement = GlnGroupElement.of(Se2Matrix.of(g));
       assertEquals(linearGroupElement.toCoordinate(), Se2Matrix.of(g));
       Tensor X = Tensors.matrix(new Scalar[][] { //
           { RealScalar.ZERO, uvw.Get(2).negate(), uvw.Get(0) }, //
@@ -59,7 +59,7 @@ public class LinearGroupElementTest extends TestCase {
     Tensor xya = Tensors.vector(1, 2, 3);
     Se2GroupElement se2GroupElement = new Se2GroupElement(xya);
     Tensor matrix = Se2Matrix.of(xya);
-    Tensor adjointGl = LinearGroupElement.of(matrix).adjoint(Tensors.fromString("{{0, 1, 0}, {-1, 0, 0}, {0, 0, 0}}")).map(Chop._10);
+    Tensor adjointGl = GlnGroupElement.of(matrix).adjoint(Tensors.fromString("{{0, 1, 0}, {-1, 0, 0}, {0, 0, 0}}")).map(Chop._10);
     Tensor adjointSe = se2GroupElement.adjoint(Tensors.vector(0, 0, -1));
     Chop._12.requireClose(adjointGl.get(0, 2), adjointSe.get(0));
     Chop._12.requireClose(adjointGl.get(1, 2), adjointSe.get(1));
@@ -67,21 +67,21 @@ public class LinearGroupElementTest extends TestCase {
   }
 
   public void testAdjointFail() {
-    LinearGroupElement linearGroupElement = LinearGroupElement.of(IdentityMatrix.of(5));
+    GlnGroupElement linearGroupElement = GlnGroupElement.of(IdentityMatrix.of(5));
     AssertFail.of(() -> linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5)));
   }
 
   public void testNonSquareFail() {
-    AssertFail.of(() -> LinearGroupElement.of(HilbertMatrix.of(2, 3)));
+    AssertFail.of(() -> GlnGroupElement.of(HilbertMatrix.of(2, 3)));
   }
 
   public void testCombineNonSquareFail() {
-    LinearGroupElement linearGroupElement = LinearGroupElement.of(DiagonalMatrix.of(1, 2));
+    GlnGroupElement linearGroupElement = GlnGroupElement.of(DiagonalMatrix.of(1, 2));
     AssertFail.of(() -> linearGroupElement.combine(HilbertMatrix.of(2, 3)));
     AssertFail.of(() -> linearGroupElement.combine(Tensors.vector(1, 2)));
   }
 
   public void testNonInvertibleFail() {
-    AssertFail.of(() -> LinearGroupElement.of(DiagonalMatrix.of(1, 0, 2)));
+    AssertFail.of(() -> GlnGroupElement.of(DiagonalMatrix.of(1, 0, 2)));
   }
 }

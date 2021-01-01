@@ -77,7 +77,7 @@ public class SnRotationMatrixTest extends TestCase {
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
         Chop._08.requireClose(rotation1.dot(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
-        Chop._10.requireClose(rotation1, Inverse.of(rotation2));
+        Chop._06.requireClose(rotation1, Inverse.of(rotation2));
       }
     }
   }

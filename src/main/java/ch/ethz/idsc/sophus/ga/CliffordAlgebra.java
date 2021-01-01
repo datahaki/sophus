@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -30,33 +29,64 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-/** geometric algebra */
+/** geometric algebra
+ * 
+ * Reference:
+ * https://en.wikipedia.org/wiki/Clifford_algebra */
 public class CliffordAlgebra {
   private static final Scalar[] SIGN = { RealScalar.ONE, RealScalar.ONE.negate() };
   private static final int MAX_SIZE = 6;
-  private static final Function<Integer, CliffordAlgebra> CACHE = Cache.of(CliffordAlgebra::new, MAX_SIZE);
+  private static final Function<Integer, CliffordAlgebra> POSITIVE = Cache.of(p -> new CliffordAlgebra(p, 0), MAX_SIZE);
+  private static final Function<Integer, CliffordAlgebra> NEGATIVE = Cache.of(q -> new CliffordAlgebra(0, q), MAX_SIZE);
 
-  /** @param n
-   * @return */
-  public static CliffordAlgebra of(int n) {
-    return CACHE.apply(Integers.requirePositiveOrZero(n));
+  /** @param p
+   * @param q
+   * @return Cl(p, q) */
+  public static CliffordAlgebra of(int p, int q) {
+    return new CliffordAlgebra( //
+        Integers.requirePositiveOrZero(p), //
+        Integers.requirePositiveOrZero(q));
+  }
+
+  /** @param p non-negative
+   * @return Cl(p, 0) */
+  public static CliffordAlgebra positive(int p) {
+    return POSITIVE.apply(Integers.requirePositiveOrZero(p));
+  }
+
+  /** Remark:
+   * Cl(0, 1) is algebra-isomorphic to the complex scalars
+   * Cl(0, 2) is algebra-isomorphic to the quaternions
+   * 
+   * @param q non-negative
+   * @return Cl(0, q) */
+  public static CliffordAlgebra negative(int q) {
+    return NEGATIVE.apply(Integers.requirePositiveOrZero(q));
   }
 
   /***************************************************/
+  private final int signature_p;
   private final Tensor gp;
   private final Tensor cp;
   private final Tensor reverse;
+  private final int[] offset;
 
-  private CliffordAlgebra(int n) {
+  private CliffordAlgebra(int p, int q) {
+    this.signature_p = p;
+    int n = p + q;
     Tensor range = Range.of(0, n);
     int m = 1 << n;
+    offset = new int[n + 2];
     List<Tensor> list = new ArrayList<>(m);
     Map<Tensor, Integer> map = new HashMap<>();
-    for (int k = 0; k <= n; ++k)
-      for (Tensor perm : Subsets.of(range, k)) {
+    for (int k = 0; k <= n; ++k) {
+      Tensor subsets = Subsets.of(range, k);
+      offset[k + 1] = offset[k] + subsets.length();
+      for (Tensor perm : subsets) {
         list.add(perm);
         map.put(perm, map.size());
       }
+    }
     gp = Array.zeros(m, m, m);
     for (int i = 0; i < m; ++i)
       for (int j = 0; j < m; ++j) {
@@ -64,12 +94,10 @@ public class CliffordAlgebra {
         gp.set(signedSubset.sign, map.get(signedSubset.normal), j, i);
       }
     cp = gp.subtract(Transpose.of(gp, 0, 2, 1)).multiply(RationalScalar.HALF);
-    reverse = Tensor.of(IntStream.range(0, m).mapToObj(k -> gp.Get(0, k, k)));
-    Tensor _reverse = Tensor.of(list.stream() // only for validation
+    reverse = Tensor.of(list.stream() //
         .map(Reverse::of) //
         .map(SignedSubset::new) //
         .map(SignedSubset::sign));
-    Chop.NONE.requireClose(reverse, _reverse);
   }
 
   /** @return geometric product tensor of rank 3 */
@@ -90,6 +118,13 @@ public class CliffordAlgebra {
    * @return */
   public Tensor reverse(Tensor x) {
     return x.pmul(reverse);
+  }
+
+  public Tensor grade(Tensor x, int grade) {
+    Tensor y = x.copy();
+    IntStream.range(0, offset[grade]).forEach(index -> y.set(Scalar::zero, index));
+    IntStream.range(offset[grade + 1], gp.length()).forEach(index -> y.set(Scalar::zero, index));
+    return y;
   }
 
   /** @param x multivector
@@ -119,10 +154,11 @@ public class CliffordAlgebra {
   }
 
   // TODO implementation not as efficient as could be
-  private static class SignedSubset {
+  private class SignedSubset {
     private final Scalar sign;
     private final Tensor normal;
 
+    /** @param a for instance {5, 2, 3, 0, 3, 5} */
     public SignedSubset(Tensor a) {
       Scalar[] scalars = ScalarArray.ofVector(a);
       boolean flag = true;
@@ -142,12 +178,14 @@ public class CliffordAlgebra {
         --m;
       }
       Deque<Scalar> deque = new ArrayDeque<>();
-      Stream.of(scalars).forEach(scalar -> {
-        if (!deque.isEmpty() && deque.peekLast().equals(scalar))
-          deque.pollLast();
-        else
+      for (Scalar scalar : scalars) {
+        if (!deque.isEmpty() && deque.peekLast().equals(scalar)) {
+          Scalar duplicate = deque.pollLast(); // check for sign in scalar product 0, ..., n-1
+          if (signature_p <= duplicate.number().intValue())
+            ++swaps;
+        } else
           deque.add(scalar);
-      });
+      }
       sign = SIGN[swaps % 2];
       normal = Tensor.of(deque.stream());
     }

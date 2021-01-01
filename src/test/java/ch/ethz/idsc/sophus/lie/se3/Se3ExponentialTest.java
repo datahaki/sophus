@@ -6,6 +6,8 @@ import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.lie.MatrixExp;
+import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -18,12 +20,17 @@ public class Se3ExponentialTest extends TestCase {
   private static final LieGroup LIE_GROUP = Se3Group.INSTANCE;
 
   public void testSimple() {
+    Tensor translation = Tensors.vector(1, 2, 3);
     Tensor input = Tensors.of( //
-        Tensors.vector(1, 2, 3), //
+        translation, //
         Tensors.vector(0.2, 0.3, -0.1));
     Tensor g = Se3Exponential.INSTANCE.exp(input);
     Tensor u_w = Se3Exponential.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
+    Tensor log = MatrixLog.of(g);
+    Chop._12.requireClose(Se3Matrix.translation(log), translation);
+    Tensor exp = MatrixExp.of(log);
+    Chop._12.requireClose(g, exp);
   }
 
   public void testUnits() {
@@ -34,6 +41,14 @@ public class Se3ExponentialTest extends TestCase {
     Tensor u_w = Se3Exponential.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
   }
+  // public void testUnits2() {
+  // Tensor input = Tensors.of( //
+  // Tensors.fromString("{1[m*s^-1], 2[m*s^-1], 3[m*s^-1]}"), //
+  // Tensors.fromString("{0.2[s^-1], 0.3[s^-1], -0.1[s^-1]}"));
+  // Tensor g = Se3Exponential.INSTANCE.exp(input);
+  // Tensor u_w = Se3Exponential.INSTANCE.log(g);
+  // Chop._12.requireClose(input, u_w);
+  // }
 
   public void testRandom() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
