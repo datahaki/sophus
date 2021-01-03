@@ -39,8 +39,6 @@ public enum GrassmannQ {
   /** @param matrix
    * @return */
   public static Tensor require(Tensor matrix) {
-    if (of(matrix))
-      return matrix;
-    throw TensorRuntimeException.of(matrix);
+    return require(matrix, Tolerance.CHOP);
   }
 }

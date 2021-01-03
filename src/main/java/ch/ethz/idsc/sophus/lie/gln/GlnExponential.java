@@ -15,8 +15,18 @@ public class GlnExponential extends MatrixGroupExponential {
   }
 
   @Override // from MatrixExponential
-  protected Tensor pinv() {
+  protected Tensor p_inv() {
     return pinv;
+  }
+
+  @Override
+  protected Tensor requirePoint(Tensor p) {
+    return p;
+  }
+
+  @Override
+  protected Tensor requireTangent(Tensor vp) {
+    return vp;
   }
 
   @Override // from TangentSpace

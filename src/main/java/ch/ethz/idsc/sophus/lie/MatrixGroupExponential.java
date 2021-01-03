@@ -16,17 +16,23 @@ public abstract class MatrixGroupExponential implements Exponential, TangentSpac
     this.p = p;
   }
 
-  /** TODO @throws Exception if vp is not tangent to p */
+  protected final Tensor p() {
+    return p;
+  }
+
+  protected abstract Tensor p_inv();
+
+  protected abstract Tensor requirePoint(Tensor p);
+
+  protected abstract Tensor requireTangent(Tensor vp);
+
   @Override // from Exponential
   public final Tensor exp(Tensor vp) { // tangent vector at p
-    return p.dot(MatrixExp.of(pinv().dot(vp)));
+    return p.dot(MatrixExp.of(p_inv().dot(requireTangent(vp))));
   }
 
-  /** TODO @throws Exception if q is in manifold */
   @Override // from Exponential
   public final Tensor log(Tensor q) {
-    return p.dot(MatrixLog.of(pinv().dot(q)));
+    return p.dot(MatrixLog.of(p_inv().dot(requirePoint(q))));
   }
-
-  protected abstract Tensor pinv();
 }
