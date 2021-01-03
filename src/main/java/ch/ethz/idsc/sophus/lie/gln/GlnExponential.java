@@ -1,24 +1,26 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.gln;
 
-import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.lie.MatrixGroupExponential;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.lie.MatrixExp;
-import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.alg.Flatten;
+import ch.ethz.idsc.tensor.mat.Inverse;
 
-/**
- * 
- */
-public enum GlnExponential implements Exponential {
-  INSTANCE;
+public class GlnExponential extends MatrixGroupExponential {
+  private final Tensor pinv;
 
-  @Override // from Exponential
-  public Tensor exp(Tensor matrix) {
-    return MatrixExp.of(matrix);
+  public GlnExponential(Tensor p) {
+    super(p);
+    pinv = Inverse.of(p);
   }
 
-  @Override // from Exponential
-  public Tensor log(Tensor matrix) {
-    return MatrixLog.of(matrix);
+  @Override // from MatrixExponential
+  protected Tensor pinv() {
+    return pinv;
+  }
+
+  @Override // from TangentSpace
+  public Tensor vectorLog(Tensor q) {
+    return Flatten.of(log(q));
   }
 }

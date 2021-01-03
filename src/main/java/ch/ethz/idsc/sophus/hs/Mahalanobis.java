@@ -6,8 +6,8 @@ import java.io.Serializable;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
+import ch.ethz.idsc.tensor.mat.ConjugateTranspose;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
@@ -30,7 +30,8 @@ public class Mahalanobis implements Serializable {
   public Mahalanobis(Tensor matrix) {
     this.matrix = matrix;
     Scalar factor = RationalScalar.of(1, matrix.length());
-    sigma = Transpose.of(matrix).dot(matrix).multiply(factor);
+    sigma = ConjugateTranspose.of(matrix).dot(matrix).multiply(factor);
+    // if matrix has full rank, CholeskyDecomposition would be more efficient
     // computation of pseudo inverse only may result in numerical deviation from true symmetric result
     sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
   }

@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.AppendOne;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.mat.LinearSolve;
+import ch.ethz.idsc.tensor.mat.CholeskyDecomposition;
 
 /** Reference:
  * "Affine generalised barycentric coordinates"
@@ -23,7 +23,8 @@ public enum AffineCoordinate implements Genesis {
     Tensor x = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
     int d = levers.get(0).length();
     Tensor u = UnitVector.of(d + 1, d);
-    Tensor z = LinearSolve.of(Transpose.of(x).dot(x), u);
+    Tensor matrix = Transpose.of(x).dot(x);
+    Tensor z = CholeskyDecomposition.of(matrix).solve(u);
     return x.dot(z);
   }
 }

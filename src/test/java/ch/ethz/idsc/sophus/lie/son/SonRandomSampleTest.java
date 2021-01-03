@@ -10,6 +10,8 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.MatrixQ;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -24,6 +26,8 @@ public class SonRandomSampleTest extends TestCase {
         Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
         OrthogonalMatrixQ.require(tensor);
         MatrixQ.requireSize(tensor, n, n);
+        Tensor log = MatrixLog.of(tensor);
+        AntisymmetricMatrixQ.require(log);
       }
     }
   }
