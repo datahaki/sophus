@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.AbstractHsMemberQ;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class GrMemberQ extends AbstractHsMemberQ implements Serializable {
@@ -32,6 +33,7 @@ public class GrMemberQ extends AbstractHsMemberQ implements Serializable {
 
   @Override // from MemberQ
   public boolean isTangent(Tensor x, Tensor v) {
-    return chop.isClose(x.dot(v).add(v.dot(x)), v);
+    return SymmetricMatrixQ.of(v, chop) //
+        && chop.isClose(x.dot(v).add(v.dot(x)), v);
   }
 }

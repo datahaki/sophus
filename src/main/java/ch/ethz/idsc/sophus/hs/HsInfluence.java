@@ -37,7 +37,8 @@ public final class HsInfluence implements Serializable {
    * <p>In the literature the projection is referred to as influence matrix, hat matrix. or
    * predicted value maker matrix.
    * 
-   * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0 */
+   * @return symmetric projection matrix of size n x n with eigenvalues either 1 or 0.
+   * The matrix is a point in the grassmannian manifold Gr(n, k) where k denotes the matrix rank. */
   public Tensor matrix() {
     return matrix;
   }

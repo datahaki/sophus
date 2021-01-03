@@ -24,8 +24,8 @@ public class GrMetricTest extends TestCase {
   }
 
   public void testDistance2d() {
-    Tensor p = StaticHelper.projection(Tensors.vector(0.2, 0.5));
-    Tensor q = StaticHelper.projection(Tensors.vector(0.3, -0.1));
+    Tensor p = StaticHelper.projection1(Tensors.vector(0.2, 0.5));
+    Tensor q = StaticHelper.projection1(Tensors.vector(0.3, -0.1));
     Scalar distance = GrMetric.INSTANCE.distance(p, q);
     Chop._10.requireClose(distance, RealScalar.of(2.138348187726219));
   }
@@ -33,8 +33,8 @@ public class GrMetricTest extends TestCase {
   public void testDistance3d() {
     Tensor x = Tensors.vector(0.2, 0.5, 0.1);
     Tensor y = Tensors.vector(0.3, -0.1, 1.4);
-    Tensor p = StaticHelper.projection(x);
-    Tensor q = StaticHelper.projection(y);
+    Tensor p = StaticHelper.projection1(x);
+    Tensor q = StaticHelper.projection1(y);
     Scalar distance = GrMetric.INSTANCE.distance(p, q);
     Chop._10.requireClose(distance, RealScalar.of(1.9499331103710236));
   }

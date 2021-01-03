@@ -1,31 +1,32 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
+import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.lie.TensorProduct;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.lie.TensorWedge;
-import ch.ethz.idsc.tensor.red.Norm;
 
 /** Reference:
  * geomstats - grassmannian.py */
 /* package */ enum StaticHelper {
   ;
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-
-  /** @param x
-   * @return matrix that projects points to line spanned by x */
-  public static Tensor projection(Tensor x) {
-    x = NORMALIZE.apply(x);
-    return TensorProduct.of(x, x);
+  /** @param vector
+   * @return matrix that projects points to line spanned by vector */
+  public static Tensor projection1(Tensor vector) {
+    return projection(Tensor.of(vector.stream().map(Tensors::of)));
   }
 
-  /** @param x base point
-   * @param v vector
+  /** @param matrix design
    * @return */
-  /* package */ static Tensor projectTangent(Tensor x, Tensor v) {
+  public static Tensor projection(Tensor matrix) {
+    return new HsInfluence(matrix).matrix();
+  }
+
+  /** @param x in Gr(n, k)
+   * @param v square matrix
+   * @return v projected to tangent space at x */
+  public static Tensor projectTangent(Tensor x, Tensor v) {
     return MatrixBracket.of(x, TensorWedge.of(v));
   }
 }

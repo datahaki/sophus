@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.gr;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.mat.HermitianMatrixQ;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 
@@ -16,8 +17,8 @@ public enum GrassmannQ {
    * @param chop
    * @return */
   public static boolean of(Tensor matrix, Chop chop) {
-    return HermitianMatrixQ.of(matrix, chop) //
-        && IdempotentQ.of(matrix, chop); // idempotent
+    return SymmetricMatrixQ.of(matrix, chop) // P = P'
+        && IdempotentQ.of(matrix, chop); // P . P == P
   }
 
   /** @param matrix

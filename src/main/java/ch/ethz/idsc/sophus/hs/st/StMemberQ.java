@@ -26,6 +26,7 @@ public class StMemberQ extends AbstractHsMemberQ {
 
   @Override
   public boolean isPoint(Tensor x) {
+    // FIXME
     return OrthogonalMatrixQ.of(x, chop);
   }
 

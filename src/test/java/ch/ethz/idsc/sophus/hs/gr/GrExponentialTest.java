@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.hs.gr;
 import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.usr.AssertFail;
@@ -16,6 +15,7 @@ import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.mat.MatrixRank;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
+import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.Frobenius;
@@ -56,7 +56,7 @@ public class GrExponentialTest extends TestCase {
   }
 
   public void testShift() {
-    Tensor x = StaticHelper.projection(Tensors.vector(0.2, 0.5));
+    Tensor x = StaticHelper.projection1(Tensors.vector(0.2, 0.5));
     GrExponential grExponential = new GrExponential(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
@@ -75,18 +75,20 @@ public class GrExponentialTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, n, rank);
       Tensor point = RandomVariate.of(distribution, rank);
       Tensor matrix = new HsDesign(RnManifold.INSTANCE).matrix(sequence, point);
-      HsInfluence hsInfluence = new HsInfluence(matrix);
-      Tensor x = hsInfluence.matrix();
+      Tensor x = StaticHelper.projection(matrix);
       assertEquals(Dimensions.of(x), Arrays.asList(n, n));
       assertEquals(MatrixRank.of(x), rank);
       GrassmannQ.require(x);
       GrExponential grExponential = new GrExponential(x);
-      Tensor pre = RandomVariate.of(distribution, n, n);
+      Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
       Tensor v = StaticHelper.projectTangent(x, pre);
+      GrMemberQ.of(Chop._06).requireTangent(x, v);
       assertFalse(Chop._05.allZero(v));
       Tensor exp = grExponential.exp(v);
       GrassmannQ.require(exp);
       assertTrue(Scalars.lessThan(RealScalar.of(0.001), Frobenius.between(x, exp)));
+      Tensor w = grExponential.log(exp);
+      Chop._05.requireClose(v, w);
     }
   }
 
