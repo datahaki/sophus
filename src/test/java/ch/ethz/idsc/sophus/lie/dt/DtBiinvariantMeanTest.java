@@ -1,5 +1,5 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.lie.st;
+package ch.ethz.idsc.sophus.lie.dt;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
@@ -12,12 +12,12 @@ import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class StBiinvariantMeanTest extends TestCase {
+public class DtBiinvariantMeanTest extends TestCase {
   public void testTrivial() {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));
     Tensor weights = Tensors.vector(1);
-    Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, StManifold.HS_EXP.exponential(actual)).tangent());
+    Tensor actual = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(new MeanDefect(sequence, weights, DtManifold.HS_EXP.exponential(actual)).tangent());
     assertEquals(Tensors.vector(2, 2), actual);
   }
 
@@ -26,8 +26,8 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor q = Tensors.vector(2, 3);
     Tensor sequence = Tensors.of(p, q);
     Tensor weights = Tensors.vector(0.5, 0.5);
-    Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, StManifold.HS_EXP.exponential(actual)).tangent());
+    Tensor actual = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(new MeanDefect(sequence, weights, DtManifold.HS_EXP.exponential(actual)).tangent());
     Tensor expected = Tensors.fromString("{1.414213562373095, 2.414213562373095}");
     Chop._12.requireClose(expected, actual);
   }
@@ -39,13 +39,13 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensors.of(p, q, r);
     Tensor mask = Tensors.vector(1, 2, 3);
     Tensor weights = mask.divide(Total.ofVector(mask));
-    Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, StManifold.HS_EXP.exponential(actual)).tangent());
+    Tensor actual = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(new MeanDefect(sequence, weights, DtManifold.HS_EXP.exponential(actual)).tangent());
     Tensor expected = Tensors.vector(2.1822472719434427, 1.9243978173573888);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
       int[] index = Primitives.toIntArray(perm);
-      Tensor result = StBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
+      Tensor result = DtBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
       Chop._12.requireClose(result, actual);
     }
   }
@@ -58,13 +58,13 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensors.of(p, q, r, s);
     Tensor mask = Tensors.vector(1, 2, 3, -1);
     Tensor weights = mask.divide(Total.ofVector(mask));
-    Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, StManifold.HS_EXP.exponential(actual)).tangent());
+    Tensor actual = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(new MeanDefect(sequence, weights, DtManifold.HS_EXP.exponential(actual)).tangent());
     Tensor expected = Tensors.vector(2.9301560515835217, 3.1983964535982485);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
       int[] index = Primitives.toIntArray(perm);
-      Tensor result = StBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
+      Tensor result = DtBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
       Chop._12.requireClose(result, actual);
     }
   }
@@ -77,13 +77,13 @@ public class StBiinvariantMeanTest extends TestCase {
     Tensor sequence = Tensors.of(p, q, r, s);
     Tensor mask = Tensors.vector(1, 2, 3, -1);
     Tensor weights = mask.divide(Total.ofVector(mask));
-    Tensor actual = StBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, StManifold.HS_EXP.exponential(actual)).tangent());
+    Tensor actual = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._12.requireAllZero(new MeanDefect(sequence, weights, DtManifold.HS_EXP.exponential(actual)).tangent());
     Tensor expected = Tensors.fromString("{2.9301560515835217, {1.0099219737525793, -2.5153382244082483}}");
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
       int[] index = Primitives.toIntArray(perm);
-      Tensor result = StBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
+      Tensor result = DtBiinvariantMean.INSTANCE.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
       Chop._12.requireClose(result, actual);
     }
   }

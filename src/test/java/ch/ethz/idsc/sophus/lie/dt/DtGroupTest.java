@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.st;
+package ch.ethz.idsc.sophus.lie.dt;
 
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
@@ -9,22 +9,22 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class StGroupTest extends TestCase {
-  private static final Exponential LIE_EXPONENTIAL = StExponential.INSTANCE;
-  private static final LieGroup LIE_GROUP = StGroup.INSTANCE;
+public class DtGroupTest extends TestCase {
+  private static final Exponential LIE_EXPONENTIAL = DtExponential.INSTANCE;
+  private static final LieGroup LIE_GROUP = DtGroup.INSTANCE;
 
   public void testSt1Inverse() {
     Tensor p = Tensors.fromString("{3, {6, 3}}");
     Tensor id = Tensors.fromString("{1, {0, 0}}");
-    StGroupElement pE = StGroup.INSTANCE.element(p);
-    StGroupElement inv = pE.inverse();
+    DtGroupElement pE = DtGroup.INSTANCE.element(p);
+    DtGroupElement inv = pE.inverse();
     assertEquals(inv.toCoordinate(), Tensors.fromString("{1/3, {-2, -1}}"));
     assertEquals(inv.combine(p), id);
   }
 
   public void testSt1Combine() {
     Tensor p = Tensors.fromString("{3, {6, 1}}");
-    StGroupElement pE = StGroup.INSTANCE.element(p);
+    DtGroupElement pE = DtGroup.INSTANCE.element(p);
     Tensor q = Tensors.fromString("{2, {8, 5}}");
     assertEquals(pE.combine(q), Tensors.fromString("{6, {30, 16}}"));
   }

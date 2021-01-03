@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.st;
+package ch.ethz.idsc.sophus.lie.dt;
 
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -8,12 +8,12 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 
-public class StAdMetric implements TensorMetric {
-  private final StGroupElement stGroupElement;
+public class DtAdMetric implements TensorMetric {
+  private final DtGroupElement stGroupElement;
   private final Tensor B;
 
-  public StAdMetric(Tensor m) {
-    stGroupElement = StGroup.INSTANCE.element(m).inverse();
+  public DtAdMetric(Tensor m) {
+    stGroupElement = DtGroup.INSTANCE.element(m).inverse();
     Scalar l = stGroupElement.lambda();
     Scalar t = (Scalar) stGroupElement.t();
     B = Reverse.of(IdentityMatrix.of(2)); // B has to be Ad(m^-1) invariant
@@ -24,7 +24,7 @@ public class StAdMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor m, Tensor x) {
-    Tensor v = StExponential.INSTANCE.log(stGroupElement.combine(x));
+    Tensor v = DtExponential.INSTANCE.log(stGroupElement.combine(x));
     return B.dot(v).dot(v).Get();
   }
 

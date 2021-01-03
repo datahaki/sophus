@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.sc;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.lie.st.StBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.dt.DtBiinvariantMean;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.GeometricMean;
@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 /** 1-parameter Scaling Group (R+, *)
  * 
  * @see GeometricMean
- * @see StBiinvariantMean */
+ * @see DtBiinvariantMean */
 public enum ScBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 

@@ -1,5 +1,5 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.lie.st;
+package ch.ethz.idsc.sophus.lie.dt;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.Tensors;
  * Reference 2:
  * "Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations."
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, p.29, 2006 */
-public enum StBiinvariantMean implements BiinvariantMean {
+public enum DtBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
   @Override // from BiinvariantMean

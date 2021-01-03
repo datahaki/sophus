@@ -1,5 +1,5 @@
 // code by ob
-package ch.ethz.idsc.sophus.lie.st;
+package ch.ethz.idsc.sophus.lie.dt;
 
 import java.io.Serializable;
 
@@ -20,8 +20,8 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.27, Section 4.1, 2012:
  * 
- * @see StGroup */
-public class StGroupElement implements LieGroupElement, Serializable {
+ * @see DtGroup */
+public class DtGroupElement implements LieGroupElement, Serializable {
   private static final long serialVersionUID = 6208657139932851834L;
   // ---
   private final Scalar lambda;
@@ -29,11 +29,11 @@ public class StGroupElement implements LieGroupElement, Serializable {
 
   /** @param lambda_t of the form {lambda, t}
    * @throws Exception if lambda is not strictly positive */
-  public StGroupElement(Tensor lambda_t) {
+  public DtGroupElement(Tensor lambda_t) {
     this(Sign.requirePositive(lambda_t.Get(0)), lambda_t.get(1));
   }
 
-  private StGroupElement(Scalar lambda, Tensor t) {
+  private DtGroupElement(Scalar lambda, Tensor t) {
     this.lambda = lambda;
     this.t = t;
   }
@@ -52,15 +52,15 @@ public class StGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
-  public StGroupElement inverse() {
-    return new StGroupElement( //
+  public DtGroupElement inverse() {
+    return new DtGroupElement( //
         lambda.reciprocal(), //
         t.divide(lambda.negate()));
   }
 
   @Override // from LieGroupElement
   public Tensor combine(Tensor lambda_t) {
-    StGroupElement stGroupElement = new StGroupElement(lambda_t);
+    DtGroupElement stGroupElement = new DtGroupElement(lambda_t);
     return Tensors.of( //
         stGroupElement.lambda.multiply(lambda), //
         stGroupElement.t.multiply(lambda).add(t));

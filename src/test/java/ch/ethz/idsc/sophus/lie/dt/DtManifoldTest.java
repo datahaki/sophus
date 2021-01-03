@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.st;
+package ch.ethz.idsc.sophus.lie.dt;
 
 import java.io.IOException;
 
@@ -18,12 +18,12 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class StManifoldTest extends TestCase {
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(StGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(StManifold.INSTANCE);
+public class DtManifoldTest extends TestCase {
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      LeverageCoordinate.slow(StManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      LeverageCoordinate.slow(StManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      LeverageCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      LeverageCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE };
 
   public void testSimple() {
@@ -34,7 +34,7 @@ public class StManifoldTest extends TestCase {
           Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
           Tensor mean1 = TestHelper.spawn_St(n);
           Tensor weights = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+          Tensor mean2 = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._06.requireClose(mean1, mean2);
           // ---
           Tensor shift = TestHelper.spawn_St(n);
@@ -53,7 +53,7 @@ public class StManifoldTest extends TestCase {
           Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
           Tensor mean1 = TestHelper.spawn_St(n);
           Tensor weights = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = StBiinvariantMean.INSTANCE.mean(sequence, weights);
+          Tensor mean2 = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._08.requireClose(mean1, mean2); // linear reproduction
           // ---
           Tensor shift = TestHelper.spawn_St(n);
@@ -70,7 +70,7 @@ public class StManifoldTest extends TestCase {
         int fn = n;
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
         Tensor constant = ConstantArray.of(RationalScalar.of(1, length), length);
-        Tensor center = StBiinvariantMean.INSTANCE.mean(sequence, constant);
+        Tensor center = DtBiinvariantMean.INSTANCE.mean(sequence, constant);
         Tensor weights = barycentricCoordinate.weights(sequence, center);
         Tolerance.CHOP.requireClose(weights, constant);
       }
