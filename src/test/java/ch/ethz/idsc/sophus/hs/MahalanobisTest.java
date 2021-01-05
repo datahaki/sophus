@@ -84,7 +84,7 @@ public class MahalanobisTest extends TestCase {
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
-      HsInfluence hsInfluence = new HsInfluence(matrix);
+      HsInfluence hsInfluence = HsInfluence.of(matrix);
       Chop._08.requireClose(dot, hsInfluence.residualMaker());
     }
   }

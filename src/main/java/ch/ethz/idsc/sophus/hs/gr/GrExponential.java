@@ -9,11 +9,11 @@ import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** Reference:
@@ -36,15 +36,12 @@ public class GrExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    Tensor exp = MatrixExp.of(MatrixBracket.of(x, HS_MEMBER_Q.requireTangent(x, v)));
-    return LinearSolve.of(exp, x).dot(exp);
+    return BasisTransform.ofMatrix(x, MatrixExp.of(MatrixBracket.of(x, HS_MEMBER_Q.requireTangent(x, v))));
   }
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    return MatrixBracket.of( //
-        MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), //
-        x);
+    return MatrixBracket.of(MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), x);
   }
 
   @Override // from TangentSpace

@@ -3,9 +3,8 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
-import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -56,7 +55,7 @@ public class GrExponentialTest extends TestCase {
   }
 
   public void testShift() {
-    Tensor x = StaticHelper.projection1(Tensors.vector(0.2, 0.5));
+    Tensor x = RandomSample.of(GrRandomSample.of(2, 1));
     GrExponential grExponential = new GrExponential(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
@@ -69,15 +68,11 @@ public class GrExponentialTest extends TestCase {
   }
 
   public void testDesign() {
-    Distribution distribution = UniformDistribution.unit();
-    int rank = 3;
+    int k = 3;
     for (int n = 4; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, rank);
-      Tensor point = RandomVariate.of(distribution, rank);
-      Tensor matrix = new HsDesign(RnManifold.INSTANCE).matrix(sequence, point);
-      Tensor x = StaticHelper.projection(matrix);
+      Tensor x = RandomSample.of(GrRandomSample.of(n, k));
       assertEquals(Dimensions.of(x), Arrays.asList(n, n));
-      assertEquals(MatrixRank.of(x), rank);
+      assertEquals(MatrixRank.of(x), k);
       GrassmannQ.require(x);
       GrExponential grExponential = new GrExponential(x);
       Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);

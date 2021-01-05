@@ -29,6 +29,7 @@ import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
+import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -169,7 +170,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights = barycentricCoordinate.weights(points, xya);
         Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
-        Tensor influence = new HsInfluence(matrix).matrix();
+        Tensor influence = matrix.dot(PseudoInverse.usingQR(matrix));
         SymmetricMatrixQ.require(influence, Chop._10);
         Chop._10.requireClose(Symmetrize.of(influence), influence);
         AffineQ.require(weights, Chop._08);
@@ -185,7 +186,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
           Tensor matrix2 = new HsDesign(vectorLogManifold).matrix(all, one);
-          Chop._06.requireClose(influence, new HsInfluence(matrix2).matrix());
+          Chop._06.requireClose(influence, HsInfluence.usingQR(matrix2).matrix());
         }
       }
   }
@@ -203,7 +204,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         AffineQ.require(weights1, Chop._08);
         Chop._08.requireClose(weights, weights);
         Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
-        Tensor residualMaker = new HsInfluence(matrix).residualMaker();
+        Tensor residualMaker = HsInfluence.usingQR(matrix).residualMaker();
         Chop._08.requireClose(residualMaker.dot(weights), weights);
         assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
         Chop._08.requireClose(Symmetrize.of(residualMaker), residualMaker);
@@ -236,9 +237,9 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor w1 = barycentricCoordinate.weights(points, xya);
         Tensor w2 = se2CoveringBarycenter.apply(xya);
-        Chop._06.requireClose(w1, w2);
+        Chop._04.requireClose(w1, w2);
         Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(points, w1);
-        Chop._06.requireClose(xya, mean);
+        Chop._04.requireClose(xya, mean);
       }
     }
   }

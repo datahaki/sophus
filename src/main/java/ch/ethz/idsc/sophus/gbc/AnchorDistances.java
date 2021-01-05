@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.Tensor;
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    HsInfluence hsInfluence = new HsInfluence(hsDesign.matrix(sequence, point));
+    HsInfluence hsInfluence = HsInfluence.of(hsDesign.matrix(sequence, point));
     return new BiinvariantVector(hsInfluence, hsInfluence.leverages_sqrt());
   }
 

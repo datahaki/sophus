@@ -20,13 +20,26 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * on Wikipedia, 2020 */
 public final class HsInfluence implements Serializable {
   private static final long serialVersionUID = 7830730151907788542L;
-  // ---
+
+  /** @param matrix design
+   * @return */
+  public static HsInfluence of(Tensor matrix) {
+    return new HsInfluence(matrix.dot(PseudoInverse.of(matrix))); // textbook formula
+  }
+
+  /** @param matrix
+   * @return */
+  public static HsInfluence usingQR(Tensor matrix) {
+    return new HsInfluence(matrix.dot(PseudoInverse.usingQR(matrix)));
+  }
+
+  /***************************************************/
   private final Tensor matrix;
 
   /** @param matrix design
    * @see HsDesign */
-  public HsInfluence(Tensor matrix) {
-    this.matrix = matrix.dot(PseudoInverse.of(matrix)); // textbook formula
+  private HsInfluence(Tensor matrix) {
+    this.matrix = matrix;
   }
 
   /** projection matrix defines a projection of a tangent vector at given point to a vector in

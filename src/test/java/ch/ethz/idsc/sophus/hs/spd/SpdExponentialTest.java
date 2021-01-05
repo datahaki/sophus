@@ -8,6 +8,8 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -22,6 +24,13 @@ public class SpdExponentialTest extends TestCase {
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);
       Chop._08.requireClose(q, exp);
+    }
+  }
+
+  public void testSpdToSym() {
+    for (int n = 1; n < 5; ++n) {
+      Tensor p = TestHelper.generateSpd(n);
+      SymmetricMatrixQ.require(MatrixLog.of(p), Chop._07);
     }
   }
 
