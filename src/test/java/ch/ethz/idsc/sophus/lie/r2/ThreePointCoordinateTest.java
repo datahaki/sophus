@@ -137,24 +137,14 @@ public class ThreePointCoordinateTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
-      try {
-        barycentricCoordinate.weights(RandomVariate.of(distribution, 10, 3), Tensors.vector(1, 1, 1));
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> barycentricCoordinate.weights(RandomVariate.of(distribution, 10, 3), Tensors.vector(1, 1, 1)));
     }
   }
 
   public void testFailEmpty() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
-      try {
-        barycentricCoordinate.weights(Tensors.empty(), Tensors.empty());
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> barycentricCoordinate.weights(Tensors.empty(), Tensors.empty()));
     }
   }
 

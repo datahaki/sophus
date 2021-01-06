@@ -86,13 +86,8 @@ public class BaseWindowSamplerTest extends TestCase {
 
   public void testZeroFail() {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      try {
-        Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel);
-        uniformWindowSampler.apply(0);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel);
+      AssertFail.of(() -> uniformWindowSampler.apply(0));
     }
   }
 
@@ -105,11 +100,6 @@ public class BaseWindowSamplerTest extends TestCase {
 
   public void testAllFailQuantity() {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values())
-      try {
-        smoothingKernel.apply(Quantity.of(1, "s"));
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> smoothingKernel.apply(Quantity.of(1, "s")));
   }
 }

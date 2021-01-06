@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
 import ch.ethz.idsc.sophus.lie.gln.GlnGroupElement;
 import ch.ethz.idsc.sophus.lie.son.SonGroup;
 import ch.ethz.idsc.sophus.lie.son.SonGroupElement;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.ext.Serialization;
@@ -47,23 +48,13 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testFailOrthogonal() {
-    try {
-      new So3Exponential(So3TestHelper.spawn_so3());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new So3Exponential(So3TestHelper.spawn_so3()));
   }
 
   public void testFailTangent() {
     Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
     new So3Exponential(IdentityMatrix.of(3)).exp(wedge);
     So3Exponential so3Exponential = new So3Exponential(So3TestHelper.spawn_So3());
-    try {
-      so3Exponential.exp(wedge);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> so3Exponential.exp(wedge));
   }
 }

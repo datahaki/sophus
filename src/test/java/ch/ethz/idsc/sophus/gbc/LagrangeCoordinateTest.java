@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.red.Entrywise;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Imag;
 import junit.framework.TestCase;
@@ -39,9 +40,9 @@ public class LagrangeCoordinateTest extends TestCase {
     Genesis genesis = Serialization.copy(LagrangeCoordinate.of(idw));
     for (int d = 1; d < 4; ++d)
       for (int n = 5; n < 10; ++n) {
-        Tensor leversR = RandomVariate.of(NormalDistribution.standard(), n, d);
-        Tensor leversI = RandomVariate.of(NormalDistribution.standard(), n, d);
-        Tensor levers = leversR.add(leversI.multiply(ComplexScalar.I));
+        Tensor levers = Entrywise.with(ComplexScalar::of).apply( //
+            RandomVariate.of(NormalDistribution.standard(), n, d), //
+            RandomVariate.of(NormalDistribution.standard(), n, d));
         {
           Tensor weights = idw.origin(levers);
           Chop._12.allZero(Imag.of(weights));

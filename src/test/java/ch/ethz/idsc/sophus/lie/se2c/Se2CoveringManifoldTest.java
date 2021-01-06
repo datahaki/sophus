@@ -19,6 +19,7 @@ import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -113,12 +114,7 @@ public class Se2CoveringManifoldTest extends TestCase {
 
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
-      try {
-        barycentricCoordinate.weights(null, null);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
   }
 
   public void testLagrange() {
@@ -302,11 +298,6 @@ public class Se2CoveringManifoldTest extends TestCase {
 
   public void testANullFail() {
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
-      try {
-        barycentricCoordinate.weights(null, null);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
   }
 }

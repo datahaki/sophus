@@ -47,12 +47,7 @@ public class UniformWindowSamplerTest extends TestCase {
         Tensor val1 = function.apply(count);
         Tensor val2 = function.apply(count);
         assertTrue(val1 == val2); // equal by reference
-        try {
-          val1.set(RealScalar.ZERO, 0);
-          fail();
-        } catch (Exception exception) {
-          // ---
-        }
+        AssertFail.of(() -> val1.set(RealScalar.ZERO, 0));
       }
     }
   }

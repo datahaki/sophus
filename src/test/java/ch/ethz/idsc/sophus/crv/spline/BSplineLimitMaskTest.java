@@ -27,13 +27,10 @@ public class BSplineLimitMaskTest extends TestCase {
   }
 
   public void testNegativeFail() {
-    for (int i = 1; i < 10; ++i)
-      try {
-        BSplineLimitMask.FUNCTION.apply(-i);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+    for (int i = 1; i < 4; ++i) {
+      int fi = i;
+      AssertFail.of(() -> BSplineLimitMask.FUNCTION.apply(-fi));
+    }
   }
 
   private static final TensorUnaryOperator TENSOR_UNARY_OPERATOR = //

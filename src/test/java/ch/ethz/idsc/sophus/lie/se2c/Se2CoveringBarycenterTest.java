@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se2c;
 
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -9,6 +10,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -20,7 +22,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tensor weights = se2CoveringBarycenter.apply(mean);
     AffineQ.require(weights, Chop._08);
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireClose(result, mean);
+    Tolerance.CHOP.requireClose(result, mean);
   }
 
   public void testXY() {
@@ -30,7 +32,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tensor weights = se2CoveringBarycenter.apply(mean);
     AffineQ.require(weights, Chop._08);
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireClose(result, mean);
+    Tolerance.CHOP.requireClose(result, mean);
   }
 
   public void testXYA() {
@@ -40,7 +42,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tensor weights = se2CoveringBarycenter.apply(mean);
     AffineQ.require(weights, Chop._08);
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireClose(result, mean);
+    Tolerance.CHOP.requireClose(result, mean);
   }
 
   public void testRank() {
@@ -51,17 +53,12 @@ public class Se2CoveringBarycenterTest extends TestCase {
     AffineQ.require(weights, Chop._08);
     Chop._10.requireClose(weights, Tensors.vector(-0.75, 0.75, 1, 0));
     Tensor result = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Chop._12.requireClose(result, mean);
+    Tolerance.CHOP.requireClose(result, mean);
     Scalar w = weights.Get(1);
     Se2CoveringBiinvariantMean.INSTANCE.mean(sequence.extract(0, 2), Tensors.of(RealScalar.ONE.subtract(w), w));
   }
 
   public void testLengthFail() {
-    try {
-      new Se2CoveringBarycenter(HilbertMatrix.of(5, 3)).apply(Tensors.vector(1, 2, 3));
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> new Se2CoveringBarycenter(HilbertMatrix.of(5, 3)).apply(Tensors.vector(1, 2, 3)));
   }
 }

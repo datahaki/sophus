@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Serialization;
@@ -27,12 +28,6 @@ public class SnRandomSampleTest extends TestCase {
   }
 
   public void testSNegFail() {
-    for (int dimension = -5; dimension < 0; ++dimension)
-      try {
-        SnRandomSample.of(dimension);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+    AssertFail.of(() -> SnRandomSample.of(-1));
   }
 }

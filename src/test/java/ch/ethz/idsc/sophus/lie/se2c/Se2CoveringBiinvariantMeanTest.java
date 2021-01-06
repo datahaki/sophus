@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -119,23 +120,13 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
   }
 
   public void testEmpty() {
-    try {
-      Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty());
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
   public void testNonAffineFail() {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor weights = RandomVariate.of(distribution, 3);
-    try {
-      Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights));
   }
 }

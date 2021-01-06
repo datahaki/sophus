@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.hs.h2.H2Midpoint;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.num.Pi;
@@ -58,35 +59,15 @@ public class CurveSubdivisionTest extends TestCase {
 
   public void testNullFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
-      try {
-        curveSubdivision.string(null);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
-      try {
-        curveSubdivision.cyclic(null);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> curveSubdivision.string(null));
+      AssertFail.of(() -> curveSubdivision.cyclic(null));
     }
   }
 
   public void testScalarFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
-      try {
-        curveSubdivision.string(Pi.HALF);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
-      try {
-        curveSubdivision.cyclic(Pi.VALUE);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> curveSubdivision.string(Pi.HALF));
+      AssertFail.of(() -> curveSubdivision.cyclic(Pi.VALUE));
     }
   }
 }

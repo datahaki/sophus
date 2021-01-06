@@ -61,13 +61,10 @@ public class GeodesicCenterTest extends TestCase {
 
   public void testEvenFail() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, CONSTANT);
-    for (int index = 0; index < 9; ++index)
-      try {
-        tensorUnaryOperator.apply(Array.zeros(2 * index));
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+    for (int index = 0; index < 9; ++index) {
+      int fi = index;
+      AssertFail.of(() -> tensorUnaryOperator.apply(Array.zeros(2 * fi)));
+    }
   }
   // public void testSerializable() throws ClassNotFoundException, IOException {
   // TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2CoveringGeodesic.INSTANCE, CONSTANT);

@@ -25,7 +25,7 @@ public class ExpcTest extends TestCase {
     Distribution distribution = UniformDistribution.of(0, 2e-12);
     for (int count = 0; count < 100; ++count) {
       Scalar mu = RandomVariate.of(distribution);
-      Tolerance.CHOP.requireClose( //
+      Chop._10.requireClose( //
           Expc.FUNCTION.apply(mu), //
           RealScalar.ONE);
     }

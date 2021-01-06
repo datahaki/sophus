@@ -10,6 +10,7 @@ import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -115,12 +116,7 @@ public class RnManifoldTest extends TestCase {
 
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
-      try {
-        barycentricCoordinate.weights(null, null);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
   }
 
   public void testColinear() {

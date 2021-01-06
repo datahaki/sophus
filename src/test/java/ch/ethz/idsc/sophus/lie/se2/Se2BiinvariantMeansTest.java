@@ -6,6 +6,7 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -227,11 +228,6 @@ public class Se2BiinvariantMeansTest extends TestCase {
 
   public void testEmpty() {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
-      try {
-        biinvariantMean.mean(Tensors.empty(), Tensors.empty());
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));
   }
 }
