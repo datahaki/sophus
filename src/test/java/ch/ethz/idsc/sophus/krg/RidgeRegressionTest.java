@@ -51,7 +51,7 @@ import junit.framework.TestCase;
       Tensor sigma = Transpose.of(matrix).dot(matrix).multiply(factor);
       // computation of pseudo inverse only may result in numerical deviation from true symmetric result
       sigma = sigma.add(DiagonalMatrix.of(sigma.length(), RealScalar.of(10)));
-      sigma_inverse = Symmetrize.of(PseudoInverse.of(sigma).multiply(factor));
+      sigma_inverse = Symmetrize.of(PseudoInverse.usingSvd(sigma).multiply(factor));
     }
 
     /** @return design matrix with n rows as log_x(p_i)

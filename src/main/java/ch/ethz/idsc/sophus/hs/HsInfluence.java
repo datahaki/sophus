@@ -24,13 +24,7 @@ public final class HsInfluence implements Serializable {
   /** @param matrix design
    * @return */
   public static HsInfluence of(Tensor matrix) {
-    return new HsInfluence(matrix.dot(PseudoInverse.of(matrix))); // textbook formula
-  }
-
-  /** @param matrix
-   * @return */
-  public static HsInfluence usingQR(Tensor matrix) {
-    return new HsInfluence(matrix.dot(PseudoInverse.usingQR(matrix)));
+    return new HsInfluence(matrix.dot(PseudoInverse.of(matrix)));
   }
 
   /***************************************************/

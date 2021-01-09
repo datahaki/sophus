@@ -9,8 +9,8 @@ import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Join;
-import ch.ethz.idsc.tensor.lie.Orthogonalize;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.Orthogonalize;
 
 /** 2-dimensional tangent space at given point of 2-dimensional sphere
  * i.e. tangent space not embedded in R^3 */

@@ -45,10 +45,14 @@ public class LeftSpanTest extends TestCase {
     Chop._10.requireClose( //
         vector.dot(matrix), //
         vimage.dot(matrix));
+    Tensor vimaqr = LeftSpan.imageQR(vector, matrix);
+    Chop._10.requireClose( //
+        vimage, //
+        vimaqr);
   }
 
   private static Tensor deprec(Tensor vector, Tensor nullsp) {
-    return vector.dot(PseudoInverse.of(nullsp)).dot(nullsp);
+    return vector.dot(PseudoInverse.usingSvd(nullsp)).dot(nullsp);
   }
 
   public void testSimple() {

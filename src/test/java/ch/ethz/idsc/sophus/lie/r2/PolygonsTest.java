@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Reverse;
@@ -13,6 +14,7 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.qty.Quantity;
+import ch.ethz.idsc.tensor.qty.Unit;
 import junit.framework.TestCase;
 
 public class PolygonsTest extends TestCase {
@@ -45,7 +47,7 @@ public class PolygonsTest extends TestCase {
   }
 
   public void testInsidePlainQuantity() {
-    ScalarUnaryOperator suo = s -> Quantity.of(s, "km");
+    ScalarUnaryOperator suo = Scalars.attach(Unit.of("km"));
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
         { 1, 0 }, //

@@ -182,7 +182,7 @@ public class Se2CoveringManifoldTest extends TestCase {
           Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
           Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
           Tensor matrix2 = new HsDesign(vectorLogManifold).matrix(all, one);
-          Chop._06.requireClose(influence, HsInfluence.usingQR(matrix2).matrix());
+          Chop._06.requireClose(influence, HsInfluence.of(matrix2).matrix());
         }
       }
   }
@@ -200,7 +200,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         AffineQ.require(weights1, Chop._08);
         Chop._08.requireClose(weights, weights);
         Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
-        Tensor residualMaker = HsInfluence.usingQR(matrix).residualMaker();
+        Tensor residualMaker = HsInfluence.of(matrix).residualMaker();
         Chop._08.requireClose(residualMaker.dot(weights), weights);
         assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
         Chop._08.requireClose(Symmetrize.of(residualMaker), residualMaker);

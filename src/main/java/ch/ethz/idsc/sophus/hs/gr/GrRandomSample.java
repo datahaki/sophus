@@ -39,6 +39,6 @@ public class GrRandomSample implements RandomSampleInterface, Serializable {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    return HsInfluence.usingQR(RandomVariate.of(NormalDistribution.standard(), random, n, k)).matrix();
+    return HsInfluence.of(RandomVariate.of(NormalDistribution.standard(), random, n, k)).matrix();
   }
 }

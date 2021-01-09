@@ -22,7 +22,7 @@ public class AnchorCoordinateTest extends TestCase {
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      Chop._08.requireClose( //
+      Chop._05.requireClose( //
           anchorCoordinate.weights(sequence, point), //
           targetCoordinate.weights(sequence, point));
     }

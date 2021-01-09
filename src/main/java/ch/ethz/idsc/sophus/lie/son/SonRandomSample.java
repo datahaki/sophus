@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.lie.so3.So3RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Integers;
-import ch.ethz.idsc.tensor.lie.QRDecomposition;
+import ch.ethz.idsc.tensor.mat.QRDecomposition;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 
