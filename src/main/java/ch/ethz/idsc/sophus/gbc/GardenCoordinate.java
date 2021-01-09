@@ -41,7 +41,7 @@ public class GardenCoordinate implements TensorUnaryOperator, VectorField {
   @Override
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
-        NormalizeTotal.FUNCTION.apply(distances.apply(point).map(variogram)), // point as input to target
-        hsDesign.matrix(sequence, point));
+        hsDesign.matrix(sequence, point), //
+        NormalizeTotal.FUNCTION.apply(distances.apply(point).map(variogram))); // point as input to target
   }
 }

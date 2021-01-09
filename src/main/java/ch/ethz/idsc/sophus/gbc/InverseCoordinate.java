@@ -36,7 +36,7 @@ public class InverseCoordinate implements TensorUnaryOperator, VectorField {
   @Override
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
-        tensorUnaryOperator.apply(point).dot(weights), //
-        hsDesign.matrix(sequence, point));
+        hsDesign.matrix(sequence, point), //
+        tensorUnaryOperator.apply(point).dot(weights));
   }
 }

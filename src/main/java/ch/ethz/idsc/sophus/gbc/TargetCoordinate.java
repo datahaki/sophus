@@ -37,7 +37,7 @@ public class TargetCoordinate implements Genesis, Serializable {
   public Tensor origin(Tensor levers) {
     Mahalanobis mahalanobis = new Mahalanobis(levers);
     return StaticHelper.barycentric( //
-        NormalizeTotal.FUNCTION.apply(mahalanobis.leverages_sqrt().map(variogram)), //
-        mahalanobis.matrix());
+        mahalanobis.design(), //
+        NormalizeTotal.FUNCTION.apply(mahalanobis.leverages_sqrt().map(variogram)));
   }
 }

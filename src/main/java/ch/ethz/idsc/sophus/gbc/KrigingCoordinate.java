@@ -34,7 +34,7 @@ public class KrigingCoordinate implements TensorUnaryOperator, VectorField {
   @Override
   public Tensor apply(Tensor point) {
     return StaticHelper.barycentric( //
-        kriging.estimate(point), //
-        hsDesign.matrix(sequence, point));
+        hsDesign.matrix(sequence, point), //
+        kriging.estimate(point));
   }
 }

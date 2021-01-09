@@ -11,6 +11,7 @@ import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.usr.AssertFail;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -22,6 +23,7 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
+import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class MahalanobisTest extends TestCase {
@@ -81,7 +83,7 @@ public class MahalanobisTest extends TestCase {
       Tensor sigma_inverse = mahalanobis.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
       // ---
-      Tensor vt = mahalanobis.matrix();
+      Tensor vt = mahalanobis.design();
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
@@ -99,6 +101,7 @@ public class MahalanobisTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       Tensor leverages_sqrt = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).leverages_sqrt();
+      leverages_sqrt.stream().map(Scalar.class::cast).forEach(Clips.unit()::requireInside);
       Tensor shift = RandomVariate.of(distribution, 3);
       for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
         Tensor matrix = new HsDesign(vectorLogManifold).matrix(tensorMapping.slash(sequence), tensorMapping.apply(point));
