@@ -14,6 +14,7 @@ import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
@@ -84,7 +85,7 @@ public class MahalanobisTest extends TestCase {
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
-      HsInfluence hsInfluence = HsInfluence.of(matrix);
+      InfluenceMatrix hsInfluence = InfluenceMatrix.of(matrix);
       Chop._08.requireClose(dot, hsInfluence.residualMaker());
     }
   }

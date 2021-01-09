@@ -5,11 +5,11 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.gr.GrMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.red.Diagonal;
 import ch.ethz.idsc.tensor.red.Frobenius;
 import ch.ethz.idsc.tensor.red.Norm;
@@ -88,18 +88,19 @@ public abstract class HarborDistances implements Serializable {
     hsDesign = new HsDesign(vectorLogManifold);
     this.sequence = sequence;
     influence = Tensor.of(sequence.stream() //
-        .map(point -> HsInfluence.of(hsDesign.matrix(sequence, point))) //
-        .map(HsInfluence::matrix));
+        .map(point -> hsDesign.matrix(sequence, point)) //
+        .map(InfluenceMatrix::of) //
+        .map(InfluenceMatrix::matrix));
   }
 
   /** @param point
    * @return */
   public BiinvariantVector biinvariantVector(Tensor point) {
     Tensor matrix = hsDesign.matrix(sequence, point);
-    HsInfluence hsInfluence = HsInfluence.of(matrix);
+    Tensor influenceMatrix = InfluenceMatrix.of(matrix).matrix();
     return new BiinvariantVector( //
-        hsInfluence, //
-        Tensor.of(influence.stream().map(x -> distance(x, hsInfluence.matrix()))));
+        influenceMatrix, //
+        Tensor.of(influence.stream().map(x -> distance(x, influenceMatrix))));
   }
 
   /** @param x

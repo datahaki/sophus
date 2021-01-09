@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
-import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -9,6 +8,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -19,10 +19,10 @@ public class GrMetricTest extends TestCase {
     return projection(Tensor.of(vector.stream().map(Tensors::of)));
   }
 
-  /** @param matrix design
+  /** @param design matrix
    * @return */
-  private static Tensor projection(Tensor matrix) {
-    return HsInfluence.of(matrix).matrix();
+  private static Tensor projection(Tensor design) {
+    return InfluenceMatrix.of(design).matrix();
   }
 
   public void testSimple() {

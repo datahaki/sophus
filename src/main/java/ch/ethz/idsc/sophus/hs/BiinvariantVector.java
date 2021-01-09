@@ -17,8 +17,10 @@ public class BiinvariantVector implements Serializable {
   private final Tensor matrix;
   private final Tensor vector;
 
-  public BiinvariantVector(HsInfluence hsInfluence, Tensor vector) {
-    this.matrix = hsInfluence.matrix();
+  /** @param influenceMatrix square and symmetric
+   * @param vector */
+  public BiinvariantVector(Tensor influenceMatrix, Tensor vector) {
+    this.matrix = influenceMatrix;
     this.vector = vector;
   }
 

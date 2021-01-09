@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 
 /** Hint: DO NOT USE AnchorDistances EXCEPT IN AnchorCoordinate !!! */
 /* package */ class AnchorDistances implements WeightingInterface, Serializable {
@@ -20,8 +20,8 @@ import ch.ethz.idsc.tensor.Tensor;
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    HsInfluence hsInfluence = HsInfluence.of(hsDesign.matrix(sequence, point));
-    return new BiinvariantVector(hsInfluence, hsInfluence.leverages_sqrt());
+    InfluenceMatrix hsInfluence = InfluenceMatrix.of(hsDesign.matrix(sequence, point));
+    return new BiinvariantVector(hsInfluence.matrix(), hsInfluence.leverages_sqrt());
   }
 
   @Override // from WeightingInterface

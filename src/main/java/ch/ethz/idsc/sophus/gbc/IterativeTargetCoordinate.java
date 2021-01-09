@@ -7,11 +7,11 @@ import java.util.Deque;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.IterativeAffineCoordinate.Evaluation;
-import ch.ethz.idsc.sophus.hs.HsInfluence;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Integers;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -37,7 +37,7 @@ public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
   public Deque<Evaluation> deque(Tensor levers) {
     Deque<Evaluation> deque = new ArrayDeque<>();
     Tensor w = genesis.origin(levers); // weighting
-    Tensor m = HsInfluence.of(levers).residualMaker();
+    Tensor m = InfluenceMatrix.of(levers).residualMaker();
     Tensor n = NormalizeTotal.FUNCTION.apply(m.dot(w)); // coordinates
     deque.add(new Evaluation(n, n.map(Scalar::zero)));
     // TODO also target values above 1
