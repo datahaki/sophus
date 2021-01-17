@@ -55,7 +55,7 @@ class Plot3DDesign {
     for (Tensor x : Subdivide.of(0, 4, 12)) {
       Tensor row = Tensors.empty();
       for (Tensor y : Subdivide.of(0, 2, 8)) {
-        row.append(plot3dDesign.at(x.Get(), y.Get()));
+        row.append(plot3dDesign.at((Scalar) x, (Scalar) y));
       }
       matrix.append(row);
     }

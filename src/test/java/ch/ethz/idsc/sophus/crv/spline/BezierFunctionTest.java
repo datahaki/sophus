@@ -56,7 +56,7 @@ public class BezierFunctionTest extends TestCase {
   public void testSingleton() {
     ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Array.zeros(1, 3));
     for (Tensor _x : Subdivide.of(-1, 2, 3 * 3)) {
-      Tensor tensor = scalarTensorFunction.apply(_x.Get());
+      Tensor tensor = scalarTensorFunction.apply((Scalar) _x);
       assertEquals(tensor, Array.zeros(3));
       ExactTensorQ.require(tensor);
     }

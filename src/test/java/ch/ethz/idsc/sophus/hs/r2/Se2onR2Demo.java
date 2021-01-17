@@ -35,7 +35,7 @@ import ch.ethz.idsc.tensor.red.Norm;
     for (int count = 0; count < 4; ++count)
       seed = Flatten.of(Outer.of(Se2onR2Demo::action, actions, seed), 1);
     Tensor tensor = Tensor.of(seed.stream().map(Norm._2::ofVector));
-    Scalar dist = tensor.stream().reduce(Min::of).get().Get();
+    Scalar dist = (Scalar) tensor.stream().reduce(Min::of).get();
     return RealScalar.of(ArgMin.of(tensor) * 0.01).add(dist);
   }
 

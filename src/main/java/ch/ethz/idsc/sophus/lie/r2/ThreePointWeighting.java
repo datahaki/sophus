@@ -60,6 +60,6 @@ public class ThreePointWeighting implements Genesis, Serializable {
     Scalar den = Det2D.of(ofs1, ofs2); // signed area computation in oriented plane
     return Scalars.isZero(den) //
         ? RealScalar.ZERO
-        : ofs2.subtract(ofs1).dot(ofs2).Get().divide(den);
+        : (Scalar) ofs2.subtract(ofs1).dot(ofs2).divide(den);
   }
 }

@@ -31,7 +31,7 @@ import ch.ethz.idsc.tensor.io.GifAnimationWriter;
         new GifAnimationWriter(HomeDirectory.Pictures("rodriquez.gif"), 100, TimeUnit.MILLISECONDS)) {
       for (Tensor _z : Subdivide.of(-4 * Math.PI, 4 * Math.PI, 40)) {
         System.out.println(_z);
-        Z = _z.Get();
+        Z = (Scalar) _z;
         Tensor matrix = Parallelize.matrix(So3ExponentialDemo::function, RES, RES);
         animationWriter.write(ArrayPlot.of(matrix, ColorDataGradients.CLASSIC));
       }

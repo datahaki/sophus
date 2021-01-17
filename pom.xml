@@ -21,6 +21,7 @@
 			<artifactId>tensor</artifactId>
 			<version>0.8.9</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

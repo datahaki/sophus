@@ -29,6 +29,7 @@ public enum SnMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(HS_MEMBER_Q.requirePoint(p).dot(HS_MEMBER_Q.requirePoint(q)).Get()));
+    return ArcCos.FUNCTION.apply( //
+        Clips.absoluteOne().apply((Scalar) HS_MEMBER_Q.requirePoint(p).dot(HS_MEMBER_Q.requirePoint(q))));
   }
 }

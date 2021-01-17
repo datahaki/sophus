@@ -122,6 +122,6 @@ public class Kriging implements Serializable {
    * @return variance of estimate at given point */
   public Scalar variance(Tensor point) {
     Tensor vs = vs(point);
-    return inverse.dot(vs).dot(vs).Get();
+    return (Scalar) inverse.dot(vs).dot(vs);
   }
 }

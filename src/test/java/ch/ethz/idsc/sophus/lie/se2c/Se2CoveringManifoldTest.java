@@ -166,7 +166,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor xya = RandomVariate.of(distribution, 3);
         Tensor weights = barycentricCoordinate.weights(points, xya);
         Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
-        Tensor influence = matrix.dot(PseudoInverse.usingQR(matrix));
+        Tensor influence = matrix.dot(PseudoInverse.of(matrix));
         SymmetricMatrixQ.require(influence, Chop._10);
         Chop._10.requireClose(Symmetrize.of(influence), influence);
         AffineQ.require(weights, Chop._08);
@@ -282,8 +282,8 @@ public class Se2CoveringManifoldTest extends TestCase {
 
   public void testDiagonalNorm() {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
-    for (Tensor beta_ : betas) {
-      Scalar beta = beta_.Get();
+    for (Tensor _beta : betas) {
+      Scalar beta = (Scalar) _beta;
       BarycentricCoordinate bc0 = LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       BarycentricCoordinate bc1 = LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {

@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.lie.dt;
 
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Subdivide;
@@ -33,7 +34,7 @@ public class DtGeodesicTest extends TestCase {
     Clip clip_l = Clips.interval(3, 4);
     Clip clip_t = Clips.interval(6, 10);
     for (Tensor x : Subdivide.of(0, 1, 20)) {
-      Tensor split = DtGeodesic.INSTANCE.split(p, q, x.Get());
+      Tensor split = DtGeodesic.INSTANCE.split(p, q, (Scalar) x);
       clip_l.requireInside(split.Get(0));
       clip_t.requireInside(split.Get(1));
     }
@@ -67,7 +68,7 @@ public class DtGeodesicTest extends TestCase {
     Clip clip_t1 = Clips.interval(6, 10);
     Clip clip_t2 = Clips.interval(-2, 3);
     for (Tensor x : Subdivide.of(0, 1, 20)) {
-      Tensor split = DtGeodesic.INSTANCE.split(p, q, x.Get());
+      Tensor split = DtGeodesic.INSTANCE.split(p, q, (Scalar) x);
       clip_l.requireInside(split.Get(0));
       clip_t1.requireInside((split.get(1)).Get(0));
       clip_t2.requireInside(split.Get(1, 1));

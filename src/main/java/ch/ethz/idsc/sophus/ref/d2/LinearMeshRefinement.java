@@ -3,12 +3,12 @@ package ch.ethz.idsc.sophus.ref.d2;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.win.UniformWindowSampler;
@@ -44,7 +44,7 @@ public class LinearMeshRefinement implements SurfaceMeshRefinement, Serializable
     out.vrt = surfaceMesh.vrt.copy(); // interpolation
     int nV = surfaceMesh.vrt.length();
     for (Tensor face : surfaceMesh.ind) { // midpoint
-      Tensor sequence = Tensor.of(IntStream.of(Primitives.toIntArray(face)).mapToObj(surfaceMesh.vrt::get));
+      Tensor sequence = Tensor.of(Arrays.stream(Primitives.toIntArray(face)).mapToObj(surfaceMesh.vrt::get));
       out.addVert(biinvariantMean.mean(sequence, WEIGHTS.apply(sequence.length())));
     }
     Map<Tensor, Integer> edges = new HashMap<>();

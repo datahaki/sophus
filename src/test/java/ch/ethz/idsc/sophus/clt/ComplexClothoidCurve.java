@@ -52,8 +52,8 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
       Tensor wr = W.multiply(_1_t);
       Tensor xl = X.multiply(t);
       Tensor xr = X.multiply(_1_t).map(t::add);
-      Scalar il = wl.dot(xl.map(clothoidQuadraticEx)).Get();
-      Scalar ir = wr.dot(xr.map(clothoidQuadraticEx)).Get();
+      Scalar il = (Scalar) wl.dot(xl.map(clothoidQuadraticEx));
+      Scalar ir = (Scalar) wr.dot(xr.map(clothoidQuadraticEx));
       Scalar ret_p = p0.add(il.multiply(d).divide(il.add(ir)));
       Scalar ret_a = clothoidQuadraticEx.angle(t).add(da);
       return Tensors.of( //

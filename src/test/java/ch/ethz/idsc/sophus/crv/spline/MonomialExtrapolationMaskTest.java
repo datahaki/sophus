@@ -24,7 +24,7 @@ public class MonomialExtrapolationMaskTest extends TestCase {
     ScalarUnaryOperator scalarUnaryOperator = interpolatingPolynomial.scalarUnaryOperator(values);
     Scalar scalar = scalarUnaryOperator.apply(RealScalar.of(7));
     Tensor mask = MonomialExtrapolationMask.INSTANCE.apply(4);
-    Scalar altcom = values.dot(mask).Get();
+    Scalar altcom = (Scalar) values.dot(mask);
     ExactScalarQ.require(altcom);
     ExactScalarQ.require(scalar);
     assertEquals(scalar, altcom);

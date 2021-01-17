@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.AbstractHsMemberQ;
 import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -35,6 +36,6 @@ public class SnMemberQ extends AbstractHsMemberQ implements Serializable {
   @Override // from MemberQ
   public boolean isTangent(Tensor x, Tensor v) {
     // verifies that v is orthogonal to base point x
-    return chop.isZero(x.dot(v).Get()); // errors of up to 1E-9 are expected
+    return chop.isZero((Scalar) x.dot(v)); // errors of up to 1E-9 are expected
   }
 }

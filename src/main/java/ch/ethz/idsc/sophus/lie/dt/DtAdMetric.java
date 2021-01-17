@@ -25,7 +25,7 @@ public class DtAdMetric implements TensorMetric {
   @Override // from TensorMetric
   public Scalar distance(Tensor m, Tensor x) {
     Tensor v = DtExponential.INSTANCE.log(stGroupElement.combine(x));
-    return B.dot(v).dot(v).Get();
+    return (Scalar) B.dot(v).dot(v);
   }
 
   public Tensor all(Tensor sequence, Tensor m) {

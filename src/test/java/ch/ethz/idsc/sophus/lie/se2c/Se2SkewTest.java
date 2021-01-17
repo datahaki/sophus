@@ -21,7 +21,7 @@ public class Se2SkewTest extends TestCase {
 
   public void testFunctionM() {
     for (Tensor _angle : Subdivide.of(-4, 4, 20)) {
-      Scalar angle = _angle.Get();
+      Scalar angle = (Scalar) _angle;
       Tensor m1 = Se2Skew.logflow(angle);
       Tensor m2 = Se2Skew.logflow(angle.negate());
       Chop._10.requireClose(m1, Transpose.of(m2));

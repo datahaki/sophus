@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.srf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,7 +31,7 @@ public class SurfaceMesh implements Serializable {
   /** @return tensor of coordinates */
   public Tensor polygons() {
     return Tensor.of(ind.stream() //
-        .map(face -> Tensor.of(IntStream.of(Primitives.toIntArray(face)).mapToObj(vrt::get))));
+        .map(face -> Tensor.of(Arrays.stream(Primitives.toIntArray(face)).mapToObj(vrt::get))));
   }
 
   /** @return vert to face index */

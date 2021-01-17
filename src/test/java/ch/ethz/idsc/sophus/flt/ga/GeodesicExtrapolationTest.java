@@ -9,10 +9,9 @@ import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.math.win.HalfWindowSampler;
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.ExactScalarQ;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
@@ -35,22 +34,22 @@ public class GeodesicExtrapolationTest extends TestCase {
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(12));
       assertEquals(tensor, RealScalar.of(12));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2));
       assertEquals(tensor, RealScalar.of(3));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
       assertEquals(tensor, RealScalar.of(4));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 1));
       assertEquals(tensor, RationalScalar.of(2, 3));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
   }
 
@@ -59,22 +58,22 @@ public class GeodesicExtrapolationTest extends TestCase {
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(12));
       assertEquals(tensor, RealScalar.of(12));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2));
       assertEquals(tensor, RealScalar.of(3));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
       assertEquals(tensor, RealScalar.of(4));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 1));
       assertEquals(tensor, RationalScalar.of(-2, 1));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
     }
   }
 
@@ -82,8 +81,7 @@ public class GeodesicExtrapolationTest extends TestCase {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, smoothingKernel);
       for (int index = 2; index < 10; ++index) {
-        Scalar result = tensorUnaryOperator.apply(Range.of(0, index)).Get();
-        Chop._12.requireClose(result, RealScalar.of(index));
+        Chop._12.requireClose(tensorUnaryOperator.apply(Range.of(0, index)), RealScalar.of(index));
       }
     }
   }
@@ -91,8 +89,7 @@ public class GeodesicExtrapolationTest extends TestCase {
   public void testSingle() {
     for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, smoothingKernel);
-      Scalar result = tensorUnaryOperator.apply(Tensors.vector(10)).Get();
-      Chop._12.requireClose(result, RealScalar.of(10));
+      Chop._12.requireClose(tensorUnaryOperator.apply(Tensors.vector(10)), RealScalar.of(10));
     }
   }
 

@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
+import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -18,7 +19,7 @@ public class Se2CoveringIntegratorTest extends TestCase {
   public void testFullRotation() {
     Tensor g = Tensors.vector(10, 0, 0).unmodifiable();
     for (Tensor _x : Subdivide.of(-2, 10, 72)) {
-      Tensor x = Tensors.vector(_x.Get().number().doubleValue(), 0, 2 * Math.PI);
+      Tensor x = Tensors.of(_x, RealScalar.ZERO, Pi.TWO);
       Tensor r = Se2CoveringIntegrator.INSTANCE.spin(g, x);
       Chop._12.requireClose(r, Tensors.vector(10.0, 0.0, 6.283185307179586));
     }

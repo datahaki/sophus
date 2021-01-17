@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
-import ch.ethz.idsc.tensor.ExactScalarQ;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -43,7 +43,7 @@ public class GeodesicIIR2Test extends TestCase {
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(20)), RealScalar.of(15));
     {
       Tensor tensor = tensorUnaryOperator.apply(RealScalar.of(20));
-      ExactScalarQ.require(tensor.Get());
+      ExactTensorQ.require(tensor);
       assertEquals(tensor, RealScalar.of(20));
     }
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(20.)), RealScalar.of(22.5));

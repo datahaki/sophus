@@ -35,6 +35,6 @@ public enum HnWeierstrassCoordinate {
    * @param v
    * @return */
   public static Tensor toTangent(Tensor x, Tensor v) {
-    return Append.of(v, x.dot(v).Get().divide(xn(x)));
+    return Append.of(v, x.dot(v).divide(xn(x)));
   }
 }

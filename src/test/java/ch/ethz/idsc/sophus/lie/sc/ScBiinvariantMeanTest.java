@@ -23,7 +23,7 @@ public class ScBiinvariantMeanTest extends TestCase {
     Distribution distribution = ExponentialDistribution.of(1);
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n);
-      Scalar geomet = GeometricMean.of(sequence).Get();
+      Scalar geomet = (Scalar) GeometricMean.of(sequence);
       Tensor weights = ConstantArray.of(RationalScalar.of(1, sequence.length()), sequence.length());
       Tensor scmean = ScBiinvariantMean.INSTANCE.mean(sequence.map(Tensors::of), weights);
       Chop._10.requireClose(Tensors.of(geomet), scmean);

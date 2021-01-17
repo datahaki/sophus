@@ -21,7 +21,7 @@ public enum S2Geodesic implements GeodesicInterface {
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Scalar a = ArcCos.FUNCTION.apply(p.dot(q).Get()); // complex number if |p.q| > 1
+    Scalar a = ArcCos.FUNCTION.apply((Scalar) p.dot(q)); // complex number if |p.q| > 1
     Scalar sina = Sin.FUNCTION.apply(a);
     if (Scalars.isZero(sina)) // when p == q or p == -q
       return scalar -> p.copy();

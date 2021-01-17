@@ -64,7 +64,7 @@ public class Mahalanobis implements Serializable {
   private Scalar norm(Tensor vector) {
     // theory guarantees that leverage is in interval [0, 1]
     // so far the numerics did not result in values below 0 here
-    return Sqrt.FUNCTION.apply(sigma_inverse().dot(vector).dot(vector).Get());
+    return Sqrt.FUNCTION.apply((Scalar) sigma_inverse().dot(vector).dot(vector));
   }
 
   /** @param vector

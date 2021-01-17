@@ -54,14 +54,14 @@ public class GrassmannQTest extends TestCase {
     Tensor matrix = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
     Tensor nullsp = LeftNullSpace.of(matrix);
     OrthogonalMatrixQ.require(nullsp);
-    Chop._08.requireClose(PseudoInverse.usingSvd(nullsp), Transpose.of(nullsp));
+    Chop._08.requireClose(PseudoInverse.of(nullsp), Transpose.of(nullsp));
   }
 
   private static Tensor _check(VectorLogManifold vectorLogManifold, Tensor sequence, Tensor point) {
     HsDesign hsDesign = new HsDesign(vectorLogManifold);
     Tensor V = hsDesign.matrix(sequence, point);
     Tensor VT = Transpose.of(V);
-    Tensor pinv = PseudoInverse.usingSvd(VT.dot(V));
+    Tensor pinv = PseudoInverse.of(VT.dot(V));
     SymmetricMatrixQ.require(pinv, Chop._04);
     Tensor sigma_inverse = Symmetrize.of(pinv);
     // ---
@@ -80,7 +80,7 @@ public class GrassmannQTest extends TestCase {
     GrassmannQ.require(M, Chop._09);
     Chop._08.requireClose(M, Transpose.of(n).dot(n));
     // ---
-    Tensor Xinv = PseudoInverse.usingSvd(V);
+    Tensor Xinv = PseudoInverse.of(V);
     Tensor p = V.dot(Xinv);
     Chop._08.requireClose(H, p);
     // ---

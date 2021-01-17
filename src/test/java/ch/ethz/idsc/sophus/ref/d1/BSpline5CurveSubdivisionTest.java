@@ -54,7 +54,7 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
     for (int length = 2; length < 7; ++length) {
       Tensor tensor = curveSubdivision.string(UnitVector.of(length, 0));
       ExactTensorQ.require(tensor);
-      clip.requireInside(Total.of(tensor).Get());
+      clip.requireInside(Total.ofVector(tensor));
     }
   }
 

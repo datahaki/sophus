@@ -50,9 +50,8 @@ public enum Polygons {
       return false;
     boolean c = false;
     Tensor prev = Last.of(levers);
-    Iterator<Tensor> iterator = levers.iterator();
-    while (iterator.hasNext()) {
-      Tensor next = VectorQ.requireLength(iterator.next(), 2);
+    for (Tensor _n : levers) {
+      Tensor next = VectorQ.requireLength(_n, 2);
       Scalar py = prev.Get(1);
       Scalar ny = next.Get(1);
       if (Sign.isPositive(ny) != Sign.isPositive(py)) {

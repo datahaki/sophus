@@ -62,8 +62,9 @@ public enum MinTriangleAreaSquared implements Genesis {
    * @return normalized polygon with mean zero and unit average lever length */
   /* package */ static Tensor normalize(Tensor polygon) {
     polygon = Tensor.of(polygon.stream().map(Mean.of(polygon)::subtract));
-    ScalarSummaryStatistics scalarSummaryStatistics = //
-        polygon.stream().map(Norm._2::ofVector).collect(ScalarSummaryStatistics.collector());
+    ScalarSummaryStatistics scalarSummaryStatistics = polygon.stream() //
+        .map(Norm._2::ofVector) //
+        .collect(ScalarSummaryStatistics.collector());
     Scalar scalar = scalarSummaryStatistics.getAverage();
     return Scalars.isZero(scalar) //
         ? polygon

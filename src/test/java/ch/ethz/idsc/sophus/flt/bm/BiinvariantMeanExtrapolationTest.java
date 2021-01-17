@@ -3,8 +3,9 @@ package ch.ethz.idsc.sophus.flt.bm;
 
 import ch.ethz.idsc.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
-import ch.ethz.idsc.tensor.ExactScalarQ;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
@@ -32,9 +33,9 @@ public class BiinvariantMeanExtrapolationTest extends TestCase {
       ScalarUnaryOperator scalarUnaryOperator = Series.of(RandomVariate.of(distribution, deg + 1));
       Tensor sequence = Range.of(0, deg + 1).map(scalarUnaryOperator);
       Tensor predict = tensorUnaryOperator.apply(sequence);
-      Tensor actual = RealScalar.of(deg + 1).map(scalarUnaryOperator);
+      Scalar actual = scalarUnaryOperator.apply(RealScalar.of(deg + 1));
       assertEquals(predict, actual);
-      ExactScalarQ.require(predict.Get());
+      ExactTensorQ.require(predict);
     }
   }
 }
