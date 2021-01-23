@@ -36,7 +36,6 @@ public class SurfaceMesh implements Serializable {
 
   /** @return vert to face index */
   public List<List<Integer>> vertToFace() {
-    @SuppressWarnings("unused")
     List<List<Integer>> list = IntStream.range(0, vrt.length()) //
         .mapToObj(i -> new ArrayList<Integer>()) //
         .collect(Collectors.toList());

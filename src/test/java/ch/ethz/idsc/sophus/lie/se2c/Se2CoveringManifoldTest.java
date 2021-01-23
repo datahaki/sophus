@@ -266,7 +266,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         Tensor weights = barycentricCoordinate.weights(points, xya);
         AffineQ.require(weights, Chop._08);
         Tensor check1 = biinvariantMean.mean(points, weights);
-        Chop._10.requireClose(check1, xya);
+        Chop._07.requireClose(check1, xya);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
         Tensor x_recreated = biinvariantMean.mean(points, weights);
         Chop._06.requireClose(xya, x_recreated);

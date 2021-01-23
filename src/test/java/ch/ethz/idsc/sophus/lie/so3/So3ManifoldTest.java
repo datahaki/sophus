@@ -108,23 +108,22 @@ public class So3ManifoldTest extends TestCase {
       }
     assertTrue(fail < 3);
   }
-
-  public void testSpanFail() { // FIXME why does this not always fail
-    Distribution distribution = NormalDistribution.of(0.0, 0.3);
-    Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    for (BarycentricCoordinate projectedCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 1; n < 5; ++n) {
-        System.out.println("n=" + n);
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream() //
-            .map(Rodrigues::vectorExp));
-        Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
-        try {
-          Tensor weights = projectedCoordinate.weights(sequence, mean);
-          System.out.println(weights);
-          // fail();
-        } catch (Exception exception) {
-          System.err.println("fail");
-        }
-      }
-  }
+  // public void testSpanFail() { // FIXME why does this not always fail
+  // Distribution distribution = NormalDistribution.of(0.0, 0.3);
+  // Distribution d2 = NormalDistribution.of(0.0, 0.1);
+  // for (BarycentricCoordinate projectedCoordinate : BARYCENTRIC_COORDINATES)
+  // for (int n = 1; n < 5; ++n) {
+  // System.out.println("n=" + n);
+  // Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream() //
+  // .map(Rodrigues::vectorExp));
+  // Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
+  // try {
+  // Tensor weights = projectedCoordinate.weights(sequence, mean);
+  // System.out.println(weights);
+  // // fail();
+  // } catch (Exception exception) {
+  // System.err.println("fail");
+  // }
+  // }
+  // }
 }
