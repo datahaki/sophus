@@ -16,23 +16,23 @@ public class VectorizeTest extends TestCase {
   }
 
   public void testEmpty() {
-    assertEquals(Vectorize.lt(Tensors.vector(), +0), Tensors.empty());
-    assertEquals(Vectorize.lt(Tensors.vector(), -1), Tensors.empty());
+    assertEquals(Vectorize.of(Tensors.vector(), +0), Tensors.empty());
+    assertEquals(Vectorize.of(Tensors.vector(), -1), Tensors.empty());
   }
 
   public void testMatrixN1() {
     Tensor matrix = Tensors.fromString("{{1,2,3}, {4,5,6}, {7,8,9}}");
-    assertEquals(Vectorize.lt(matrix, 0), Tensors.fromString("{1,4,5,7,8,9}"));
-    assertEquals(Vectorize.lt(matrix, -1), Tensors.fromString("{4,7,8}"));
+    assertEquals(Vectorize.of(matrix, 0), Tensors.fromString("{1,4,5,7,8,9}"));
+    assertEquals(Vectorize.of(matrix, -1), Tensors.fromString("{4,7,8}"));
   }
 
   public void testVectorFail() {
-    AssertFail.of(() -> Vectorize.lt(Tensors.vector(1, 2, 3), 0));
-    AssertFail.of(() -> Vectorize.lt(Tensors.vector(1, 2, 3), -1));
+    AssertFail.of(() -> Vectorize.of(Tensors.vector(1, 2, 3), 0));
+    AssertFail.of(() -> Vectorize.of(Tensors.vector(1, 2, 3), -1));
   }
 
   public void testScalarFail() {
-    AssertFail.of(() -> Vectorize.lt(Pi.VALUE, 0));
-    AssertFail.of(() -> Vectorize.lt(Pi.VALUE, -1));
+    AssertFail.of(() -> Vectorize.of(Pi.VALUE, 0));
+    AssertFail.of(() -> Vectorize.of(Pi.VALUE, -1));
   }
 }

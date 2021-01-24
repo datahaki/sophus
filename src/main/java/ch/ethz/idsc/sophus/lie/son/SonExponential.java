@@ -37,6 +37,6 @@ public class SonExponential extends MatrixGroupExponential {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
-    return Vectorize.lt(log(q), -1);
+    return Vectorize.of(log(q), -1);
   }
 }

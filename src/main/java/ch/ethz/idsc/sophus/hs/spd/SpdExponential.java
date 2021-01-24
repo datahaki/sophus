@@ -57,6 +57,6 @@ public class SpdExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
-    return Vectorize.lt(log(q), 0);
+    return Vectorize.of(log(q), 0);
   }
 }

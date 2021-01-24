@@ -5,7 +5,7 @@ package ch.ethz.idsc.sophus.crv;
 
 import java.util.Optional;
 
-import ch.ethz.idsc.sophus.math.Det2D;
+import ch.ethz.idsc.sophus.lie.r2.Det2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
