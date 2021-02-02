@@ -39,7 +39,7 @@ public enum Sl2MatrixExponential implements Exponential, TangentSpace {
   public Tensor exp(Tensor x) {
     // x = {{a, b}, {c, -a}}
     Scalar a = x.Get(0, 0);
-    Tolerance.CHOP.requireClose(a, x.get(1, 1).negate());
+    Tolerance.CHOP.requireClose(a, x.Get(1, 1).negate());
     Scalar b = x.Get(0, 1);
     Scalar c = x.Get(1, 0);
     Scalar omega = Sqrt.FUNCTION.apply(a.multiply(a).add(b.multiply(c)));

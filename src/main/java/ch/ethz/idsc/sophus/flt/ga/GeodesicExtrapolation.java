@@ -66,7 +66,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
       Scalar factor = mask.Get(0);
       // Calculate interpolation splits
       for (int index = 1; index < mask.length() - 1; ++index) {
-        factor = factor.add(mask.get(index));
+        factor = factor.add(mask.Get(index));
         Scalar lambda = mask.Get(index).divide(factor);
         splits.append(lambda);
       }

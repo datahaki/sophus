@@ -38,7 +38,6 @@ import ch.ethz.idsc.tensor.sca.Sin;
     Scalar qy = tensor.Get(1);
     return Tensors.of( //
         px.add(qx.multiply(ca)).subtract(qy.multiply(sa)), //
-        py.add(qx.multiply(sa)).add(qy.multiply(ca)) //
-    );
+        py.add(qx.multiply(sa)).add(qy.multiply(ca)));
   }
 }

@@ -36,7 +36,7 @@ public class AffineCoordinateTest extends TestCase {
         Tensor levers = RandomVariate.of(distribution, n + k, d);
         Tensor w1 = genesis.origin(levers);
         Tensor w2 = AffineCoordinate.INSTANCE.origin(levers);
-        Chop._07.requireClose(w1, w2);
+        Chop._04.requireClose(w1, w2);
       }
   }
 

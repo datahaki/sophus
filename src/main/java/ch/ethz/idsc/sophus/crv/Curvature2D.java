@@ -36,8 +36,8 @@ public enum Curvature2D {
         vector.set(INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(vector.extract(1, 4)).apply(RealScalar.ZERO), 0);
         vector.set(INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(vector.extract(length - 4, last)).apply(LAST), last);
       } else {
-        vector.set(vector.get(1), 0);
-        vector.set(vector.get(length - 2), last);
+        vector.set(vector.Get(1), 0);
+        vector.set(vector.Get(length - 2), last);
       }
     }
     return vector;

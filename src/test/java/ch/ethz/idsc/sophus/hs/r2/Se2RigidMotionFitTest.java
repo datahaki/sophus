@@ -21,9 +21,21 @@ public class Se2RigidMotionFitTest extends TestCase {
     for (int n = 5; n < 11; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
       Tensor transl = RandomVariate.of(distribution, 2);
-      Tensor target = Tensor.of(points.stream().map(p -> rotation.dot(p).add(transl)));
+      Tensor target = Tensor.of(points.stream().map(rotation::dot).map(transl::add));
       Tensor rigidMotionFit = Se2RigidMotionFit.of(points, target);
       Chop._10.requireClose(rigidMotionFit.Get(2), angle);
+    }
+  }
+
+  public void testExact2() {
+    Distribution distribution = NormalDistribution.standard();
+    for (int n = 5; n < 11; ++n) {
+      Tensor points = RandomVariate.of(distribution, n, 2);
+      Tensor xya = RandomVariate.of(distribution, 3);
+      Se2ForwardAction se2ForwardAction = new Se2ForwardAction(xya);
+      Tensor target = Tensor.of(points.stream().map(se2ForwardAction::apply));
+      Tensor rigidMotionFit = Se2RigidMotionFit.of(points, target);
+      Chop._10.requireClose(xya, rigidMotionFit);
     }
   }
 

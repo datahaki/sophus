@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.math.AppendOne;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.CholeskyDecomposition;
@@ -21,7 +22,7 @@ public enum AffineCoordinate implements Genesis {
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
     Tensor x = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
-    int d = levers.get(0).length();
+    int d = Unprotect.dimension1Hint(levers);
     Tensor u = UnitVector.of(d + 1, d);
     Tensor matrix = Transpose.of(x).dot(x);
     Tensor z = CholeskyDecomposition.of(matrix).solve(u);
