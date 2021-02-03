@@ -96,11 +96,12 @@ public abstract class HarborDistances implements Serializable {
   /** @param point
    * @return */
   public BiinvariantVector biinvariantVector(Tensor point) {
-    Tensor matrix = hsDesign.matrix(sequence, point);
-    Tensor influenceMatrix = InfluenceMatrix.of(matrix).matrix();
+    Tensor design = hsDesign.matrix(sequence, point);
+    InfluenceMatrix influenceMatrix = InfluenceMatrix.of(design);
+    Tensor matrix = influenceMatrix.matrix();
     return new BiinvariantVector( //
         influenceMatrix, //
-        Tensor.of(influence.stream().map(x -> distance(x, influenceMatrix))));
+        Tensor.of(influence.stream().map(x -> distance(x, matrix))));
   }
 
   /** @param x

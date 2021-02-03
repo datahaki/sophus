@@ -20,8 +20,8 @@ import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
   }
 
   public BiinvariantVector biinvariantVector(Tensor sequence, Tensor point) {
-    InfluenceMatrix hsInfluence = InfluenceMatrix.of(hsDesign.matrix(sequence, point));
-    return new BiinvariantVector(hsInfluence.matrix(), hsInfluence.leverages_sqrt());
+    InfluenceMatrix influenceMatrix = InfluenceMatrix.of(hsDesign.matrix(sequence, point));
+    return new BiinvariantVector(influenceMatrix, influenceMatrix.leverages_sqrt());
   }
 
   @Override // from WeightingInterface
