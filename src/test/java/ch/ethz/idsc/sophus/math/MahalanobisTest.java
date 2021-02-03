@@ -1,24 +1,28 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.math;
 
+import ch.ethz.idsc.sophus.hs.HsDesign;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
-import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.usr.AssertFail;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
+import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -31,7 +35,7 @@ public class MahalanobisTest extends TestCase {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       Distribution distribution = UniformDistribution.unit();
-      for (int count = dimension + 1; count < 10; ++count) {
+      for (int count = dimension + 1; count < 8; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, dimension);
         Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).sigma_inverse()));
         for (Tensor form : forms)
@@ -42,11 +46,21 @@ public class MahalanobisTest extends TestCase {
     }
   }
 
+  public void testRnExact() {
+    Distribution distribution = DiscreteUniformDistribution.of(-1000, 1000);
+    Tensor design = RandomVariate.of(distribution, 6, 3);
+    Mahalanobis mahalanobis = new Mahalanobis(design);
+    InfluenceMatrix influenceMatrix = InfluenceMatrix.of(design);
+    ExactTensorQ.require(mahalanobis.sigma_inverse());
+    assertTrue(mahalanobis.toString().startsWith("Mahalanobis"));
+    assertEquals(mahalanobis.leverages(), influenceMatrix.leverages());
+  }
+
   public void testSn() {
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
-      for (int count = dimension + 2; count < 10; ++count) {
+      for (int count = dimension + 2; count < 8; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
         Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).sigma_inverse()));
         for (Tensor form : forms)
@@ -64,8 +78,11 @@ public class MahalanobisTest extends TestCase {
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       for (Tensor point : sequence) {
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
-        Mahalanobis mahalanobis = new Mahalanobis(matrix);
+        Tensor design = new HsDesign(vectorLogManifold).matrix(sequence, point);
+        Mahalanobis mahalanobis = new Mahalanobis(design);
+        InfluenceMatrix influenceMatrix = InfluenceMatrix.of(design);
+        Chop._08.requireClose(mahalanobis.leverages(), influenceMatrix.leverages());
+        Chop._08.requireClose(mahalanobis.leverages_sqrt(), influenceMatrix.leverages_sqrt());
         Tensor sigma_inverse = mahalanobis.sigma_inverse();
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
         SymmetricMatrixQ.require(mahalanobis.sigma_n(), Chop._08);
@@ -76,7 +93,7 @@ public class MahalanobisTest extends TestCase {
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    for (int count = 4; count < 10; ++count) {
+    for (int count = 4; count < 8; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point));
@@ -109,6 +126,10 @@ public class MahalanobisTest extends TestCase {
             new Mahalanobis(matrix).leverages_sqrt());
       }
     }
+  }
+
+  public void testEmptyFail() {
+    AssertFail.of(() -> new Mahalanobis(Tensors.empty()));
   }
 
   public void testNullFail() {

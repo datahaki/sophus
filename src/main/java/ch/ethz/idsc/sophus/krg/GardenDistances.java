@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.ethz.idsc.sophus.hs.Mahalanobis;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.math.Mahalanobis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** The evaluation of garden distances for a fixed set of landmarks is very efficient,
- * since the mahalanobis form at the landmarks can be precomputed.
+ * since the {@link Mahalanobis} form at the landmarks can be precomputed.
  * 
  * <p>Reference:
  * "Biinvariant Distance Vectors"
@@ -45,6 +45,6 @@ public class GardenDistances implements TensorUnaryOperator {
   public Tensor apply(Tensor point) {
     AtomicInteger atomicInteger = new AtomicInteger();
     return Tensor.of(array.stream() //
-        .map(mahalanobis -> mahalanobis.distance(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
+        .map(mahalanobis -> mahalanobis.norm(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
   }
 }

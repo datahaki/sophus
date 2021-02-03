@@ -31,7 +31,7 @@ public class RnManifoldTest extends TestCase {
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int n = 2; n < 5; ++n)
-      for (int length = n + 1; length < 10; ++length) {
+      for (int length = n + 1; length < 8; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor mean = RandomVariate.of(distribution, n);
         for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
@@ -46,7 +46,7 @@ public class RnManifoldTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
     for (int n = 2; n < 5; ++n)
-      for (int length = n + 1; length < 10; ++length) {
+      for (int length = n + 1; length < 8; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor xya = RandomVariate.of(distribution, n);
         for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
@@ -65,7 +65,7 @@ public class RnManifoldTest extends TestCase {
   public void testLinearReproduction() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 6; ++n)
-      for (int length = n + 1; length < 10; ++length) {
+      for (int length = n + 1; length < 8; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor x = RandomVariate.of(distribution, n);
         TensorUnaryOperator tensorUnaryOperator = //
@@ -79,7 +79,7 @@ public class RnManifoldTest extends TestCase {
   public void testLagrangeProperty() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 6; ++n)
-      for (int length = n + 1; length < 10; ++length) {
+      for (int length = n + 1; length < 8; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         TensorUnaryOperator tensorUnaryOperator = //
             Biinvariants.METRIC.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
@@ -90,7 +90,7 @@ public class RnManifoldTest extends TestCase {
   public void testQuantity() {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     for (int n = 2; n < 6; ++n)
-      for (int length = n + 1; length < 10; ++length) {
+      for (int length = n + 1; length < 8; ++length) {
         Tensor points = RandomVariate.of(distribution, length, n);
         Tensor x = RandomVariate.of(distribution, n);
         TensorUnaryOperator tensorUnaryOperator = //
@@ -104,7 +104,7 @@ public class RnManifoldTest extends TestCase {
   public void testAffineSimple() {
     BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
-      for (int length = dim + 1; length < 10; ++length) {
+      for (int length = dim + 1; length < 8; ++length) {
         Distribution distribution = NormalDistribution.standard();
         Tensor sequence = RandomVariate.of(distribution, length, dim);
         Tensor mean = RandomVariate.of(distribution, dim);

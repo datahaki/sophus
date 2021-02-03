@@ -36,7 +36,7 @@ public class ClothoidSolutionsTest extends TestCase {
     // ClothoidSolutions cs2 = ClothoidSolutions.of(+0.1, -0.3);
     // Tensor sol1 = cs1.lambdas();
     // Tensor sol2 = cs2.lambdas();
-    // Chop._04.requireClose(sol1, sol2); // LONGTERM
+    // Chop._04.requireClose(sol1, sol2);
   }
 
   public void testRandomS1Odd() {

@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.krg;
 
 import ch.ethz.idsc.sophus.gbc.Genesis;
-import ch.ethz.idsc.sophus.hs.Mahalanobis;
+import ch.ethz.idsc.sophus.math.Mahalanobis;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** leverage distances are biinvariant
