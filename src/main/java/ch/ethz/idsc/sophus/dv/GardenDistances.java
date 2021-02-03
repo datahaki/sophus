@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.dv;
 
 import java.util.ArrayList;
 import java.util.List;

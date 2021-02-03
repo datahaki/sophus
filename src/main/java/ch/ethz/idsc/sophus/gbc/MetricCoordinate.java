@@ -4,7 +4,8 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.krg.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 

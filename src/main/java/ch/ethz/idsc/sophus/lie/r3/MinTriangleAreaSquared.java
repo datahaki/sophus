@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
-import ch.ethz.idsc.sophus.gbc.Genesis;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;

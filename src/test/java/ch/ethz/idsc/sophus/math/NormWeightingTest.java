@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
-import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;

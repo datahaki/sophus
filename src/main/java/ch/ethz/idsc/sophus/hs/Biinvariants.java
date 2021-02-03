@@ -3,18 +3,18 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.dv.GardenDistances;
+import ch.ethz.idsc.sophus.dv.HarborDistances;
+import ch.ethz.idsc.sophus.dv.LeverageDistances;
+import ch.ethz.idsc.sophus.dv.MetricDistances;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
-import ch.ethz.idsc.sophus.gbc.LagrangeCoordinate;
+import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
-import ch.ethz.idsc.sophus.krg.GardenDistances;
-import ch.ethz.idsc.sophus.krg.HarborDistances;
-import ch.ethz.idsc.sophus.krg.LeverageDistances;
-import ch.ethz.idsc.sophus.krg.MetricDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
@@ -155,12 +155,9 @@ public enum Biinvariants implements Biinvariant {
   @Override // from Biinvariant
   public final TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator weighting = weighting(vectorLogManifold, variogram, sequence);
-    return point -> {
-      Tensor target = weighting.apply(point);
-      TangentSpace tangentSpace = vectorLogManifold.logAt(point);
-      Tensor levers = Tensor.of(sequence.stream().map(tangentSpace::vectorLog));
-      return LagrangeCoordinate.usingSvd(target, levers);
-    };
+    return point -> LagrangeCoordinates.of( //
+        weighting.apply(point), // target
+        Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog))); // levers
   }
 
   /** @return */

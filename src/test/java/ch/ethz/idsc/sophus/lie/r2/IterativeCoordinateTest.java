@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.util.Random;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
@@ -15,6 +14,7 @@ import ch.ethz.idsc.sophus.hs.s2.S2Manifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;

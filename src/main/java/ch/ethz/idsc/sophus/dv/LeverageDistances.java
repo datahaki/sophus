@@ -1,7 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.dv;
 
-import ch.ethz.idsc.sophus.gbc.Genesis;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.Mahalanobis;
 import ch.ethz.idsc.tensor.Tensor;
 

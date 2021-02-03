@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.krg;
+package ch.ethz.idsc.sophus.itp;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.tensor.Tensor;

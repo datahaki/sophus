@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.r2;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.gbc.Genesis;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;

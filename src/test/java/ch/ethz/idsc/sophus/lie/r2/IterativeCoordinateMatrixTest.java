@@ -1,10 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2;
 
-import ch.ethz.idsc.sophus.gbc.Genesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.pdf.Distribution;

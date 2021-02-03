@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.dv.LeverageDistances;
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.LeverageDistances;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.WeightingInterface;

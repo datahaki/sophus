@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.util.Deque;
 
 import ch.ethz.idsc.sophus.gbc.IterativeAffineCoordinate.Evaluation;
-import ch.ethz.idsc.sophus.krg.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;

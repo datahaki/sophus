@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.krg.HarborDistances;
+import ch.ethz.idsc.sophus.dv.HarborDistances;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
