@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.img.ImageResize;
 import ch.ethz.idsc.tensor.img.Spectrogram;
 import ch.ethz.idsc.tensor.io.Export;
 import ch.ethz.idsc.tensor.sca.Cos;
+import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
 
 /** Example from Mathematica::Spectrogram:
  * Table[Cos[ i/4 + (i/20)^2], {i, 2000}] */
@@ -22,7 +23,7 @@ import ch.ethz.idsc.tensor.sca.Cos;
   ;
   public static void main(String[] args) throws IOException {
     Tensor tensor = Subdivide.of(0, 100, 2000).map(Series.of(Tensors.vector(0, 5, 1))).map(Cos.FUNCTION);
-    Tensor spectrogram = Spectrogram.array(tensor);
+    Tensor spectrogram = Spectrogram.array(tensor, DirichletWindow.FUNCTION);
     File folder = HomeDirectory.Pictures(SpectrogramDemo.class.getSimpleName());
     folder.mkdir();
     for (ColorDataGradients colorDataGradients : ColorDataGradients.values()) {

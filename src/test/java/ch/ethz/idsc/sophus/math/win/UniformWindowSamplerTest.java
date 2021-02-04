@@ -3,23 +3,22 @@ package ch.ethz.idsc.sophus.math.win;
 
 import java.util.function.Function;
 
-import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.SymmetricVectorQ;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.win.GaussianWindow;
 import ch.ethz.idsc.tensor.sca.win.HannWindow;
+import ch.ethz.idsc.tensor.sca.win.WindowFunctions;
 import junit.framework.TestCase;
 
 public class UniformWindowSamplerTest extends TestCase {
   public void testSimple() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count <= 10; ++count) {
         Tensor tensor = function.apply(count);
         assertEquals(tensor.length(), count);
@@ -41,8 +40,8 @@ public class UniformWindowSamplerTest extends TestCase {
   }
 
   public void testMemoUnmodifiable() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count < 5; ++count) {
         Tensor val1 = function.apply(count);
         Tensor val2 = function.apply(count);

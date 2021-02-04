@@ -3,24 +3,22 @@ package ch.ethz.idsc.sophus.math.win;
 
 import java.util.function.Function;
 
-import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.win.BartlettWindow;
 import ch.ethz.idsc.tensor.sca.win.HannWindow;
+import ch.ethz.idsc.tensor.sca.win.WindowFunctions;
 import junit.framework.TestCase;
 
 public class HalfWindowSamplerTest extends TestCase {
   public void testSimple() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count <= 10; ++count) {
         Tensor tensor = function.apply(count);
         assertEquals(tensor.length(), count);
@@ -43,15 +41,13 @@ public class HalfWindowSamplerTest extends TestCase {
       Tensor tensor = halfWindowSampler.apply(length);
       Tensor expect = NormalizeTotal.FUNCTION.apply(uniformWindowSampler.apply(length * 2 - 1).extract(0, length));
       assertEquals(tensor, expect);
-      ExactTensorQ.require(tensor);
-      ExactTensorQ.require(expect);
     }
   }
 
   public void testNumeric() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(smoothingKernel);
-      Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(smoothingKernel.get());
+      Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
       for (int length = 1; length < 8; ++length) {
         Tensor tensor = halfWindowSampler.apply(length);
         Tensor expect = NormalizeTotal.FUNCTION.apply(uniformWindowSampler.apply(length * 2 - 1).extract(0, length));
@@ -61,8 +57,8 @@ public class HalfWindowSamplerTest extends TestCase {
   }
 
   public void testMemo() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count <= 5; ++count) {
         Tensor val1 = function.apply(count);
         Tensor val2 = function.apply(count);

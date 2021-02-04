@@ -85,7 +85,7 @@ public class SnManifoldTest extends TestCase {
           AffineQ.require(weights, Chop._08);
           {
             Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
-            Chop._12.requireAllZero(evaluate);
+            Chop._08.requireAllZero(evaluate);
           }
           // ---
           {
