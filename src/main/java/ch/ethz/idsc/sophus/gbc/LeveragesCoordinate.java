@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public enum LeverageCoordinate {
+public enum LeveragesCoordinate {
   ;
   /** computes leverage coordinates via Mahalanobis distance which requires the computation of
    * two pseudo inverses but smaller matrix dot products then when building the influence matrix.

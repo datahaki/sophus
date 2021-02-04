@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.dv.GardenDistances;
+import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -34,7 +34,7 @@ public class GardenCoordinate implements TensorUnaryOperator, VectorField {
   private GardenCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.variogram = variogram;
-    distances = GardenDistances.of(vectorLogManifold, sequence);
+    distances = GardenDistanceVector.of(vectorLogManifold, sequence);
     this.sequence = sequence;
   }
 

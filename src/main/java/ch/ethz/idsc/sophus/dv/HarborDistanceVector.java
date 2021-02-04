@@ -21,14 +21,14 @@ import ch.ethz.idsc.tensor.red.Norm;
  * Reference:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public abstract class HarborDistances implements Serializable {
+public abstract class HarborDistanceVector implements Serializable {
   private static final long serialVersionUID = 7613766574684059655L;
 
   /** @param vectorLogManifold
    * @param sequence
    * @return */
-  public static HarborDistances frobenius(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new HarborDistances(vectorLogManifold, sequence) {
+  public static HarborDistanceVector frobenius(VectorLogManifold vectorLogManifold, Tensor sequence) {
+    return new HarborDistanceVector(vectorLogManifold, sequence) {
       private static final long serialVersionUID = 3224364263932389466L;
 
       @Override
@@ -38,8 +38,8 @@ public abstract class HarborDistances implements Serializable {
     };
   }
 
-  public static HarborDistances diagonal(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new HarborDistances(vectorLogManifold, sequence) {
+  public static HarborDistanceVector diagonal(VectorLogManifold vectorLogManifold, Tensor sequence) {
+    return new HarborDistanceVector(vectorLogManifold, sequence) {
       private static final long serialVersionUID = -5120046492198795006L;
 
       @Override
@@ -52,8 +52,8 @@ public abstract class HarborDistances implements Serializable {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
-  public static HarborDistances norm2(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new HarborDistances(vectorLogManifold, sequence) {
+  public static HarborDistanceVector norm2(VectorLogManifold vectorLogManifold, Tensor sequence) {
+    return new HarborDistanceVector(vectorLogManifold, sequence) {
       private static final long serialVersionUID = 4219012689582124465L;
 
       @Override
@@ -66,8 +66,8 @@ public abstract class HarborDistances implements Serializable {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
-  public static HarborDistances geodesic(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new HarborDistances(vectorLogManifold, sequence) {
+  public static HarborDistanceVector geodesic(VectorLogManifold vectorLogManifold, Tensor sequence) {
+    return new HarborDistanceVector(vectorLogManifold, sequence) {
       private static final long serialVersionUID = -2438143026398610720L;
 
       @Override
@@ -84,7 +84,7 @@ public abstract class HarborDistances implements Serializable {
 
   /** @param vectorLogManifold
    * @param sequence */
-  private HarborDistances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  private HarborDistanceVector(VectorLogManifold vectorLogManifold, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.sequence = sequence;
     influence = Tensor.of(sequence.stream() //

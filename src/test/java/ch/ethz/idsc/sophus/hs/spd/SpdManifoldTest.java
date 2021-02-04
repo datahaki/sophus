@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeveragesCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -19,10 +19,10 @@ public class SpdManifoldTest extends TestCase {
     return new BarycentricCoordinate[] { //
         HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(1))), //
         HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(2))), //
-        LeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };
   }
 

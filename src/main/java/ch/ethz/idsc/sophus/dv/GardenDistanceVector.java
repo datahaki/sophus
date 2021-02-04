@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.math.Mahalanobis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.mat.Mahalanobis;
 
 /** The evaluation of garden distances for a fixed set of landmarks is very efficient,
  * since the {@link Mahalanobis} form at the landmarks can be precomputed.
@@ -18,20 +18,20 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
- * @see HarborDistances */
-public class GardenDistances implements TensorUnaryOperator {
+ * @see HarborDistanceVector */
+public class GardenDistanceVector implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new GardenDistances(vectorLogManifold, sequence);
+    return new GardenDistanceVector(vectorLogManifold, sequence);
   }
 
   /***************************************************/
   private final List<TangentSpace> tangentSpaces;
   private final List<Mahalanobis> array;
 
-  public GardenDistances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public GardenDistanceVector(VectorLogManifold vectorLogManifold, Tensor sequence) {
     tangentSpaces = new ArrayList<>(sequence.length());
     array = new ArrayList<>(sequence.length());
     for (Tensor point : sequence) {
@@ -45,6 +45,6 @@ public class GardenDistances implements TensorUnaryOperator {
   public Tensor apply(Tensor point) {
     AtomicInteger atomicInteger = new AtomicInteger();
     return Tensor.of(array.stream() //
-        .map(mahalanobis -> mahalanobis.norm(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
+        .map(mahalanobis -> mahalanobis.ofVector(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
   }
 }

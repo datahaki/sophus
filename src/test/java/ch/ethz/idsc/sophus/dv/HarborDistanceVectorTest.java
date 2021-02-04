@@ -19,15 +19,15 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
-public class HarborDistancesTest extends TestCase {
+public class HarborDistanceVectorTest extends TestCase {
   public void testRn() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      HarborDistances d1 = HarborDistances.frobenius(vectorLogManifold, sequence);
-      HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, sequence);
+      HarborDistanceVector d1 = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
+      HarborDistanceVector d2 = HarborDistanceVector.norm2(vectorLogManifold, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
       Chop._10.requireClose(v1.weighting(s -> s), v2.weighting(s -> s));
@@ -40,8 +40,8 @@ public class HarborDistancesTest extends TestCase {
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      HarborDistances d1 = HarborDistances.frobenius(vectorLogManifold, sequence);
-      HarborDistances d2 = HarborDistances.norm2(vectorLogManifold, sequence);
+      HarborDistanceVector d1 = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
+      HarborDistanceVector d2 = HarborDistanceVector.norm2(vectorLogManifold, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
       assertEquals(v1.distances().length(), v2.distances().length());

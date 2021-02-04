@@ -6,7 +6,7 @@ import java.util.Arrays;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeveragesCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsDesign;
@@ -218,9 +218,9 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
-      LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
-      LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(0)), //
+      LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
   public void testA4Exact() {
@@ -284,8 +284,8 @@ public class Se2CoveringManifoldTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor _beta : betas) {
       Scalar beta = (Scalar) _beta;
-      BarycentricCoordinate bc0 = LeverageCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = LeverageCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc0 = LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeveragesCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
         Tensor mean = TestHelper.spawn_Se2C();

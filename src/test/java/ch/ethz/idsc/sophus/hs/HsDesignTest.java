@@ -1,24 +1,22 @@
 // code by jph
-package ch.ethz.idsc.sophus.math;
+package ch.ethz.idsc.sophus.hs;
 
-import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
-import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.Mahalanobis;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
@@ -30,7 +28,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
-public class MahalanobisTest extends TestCase {
+public class HsDesignTest extends TestCase {
   public void testRn() {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
@@ -126,13 +124,5 @@ public class MahalanobisTest extends TestCase {
             new Mahalanobis(matrix).leverages_sqrt());
       }
     }
-  }
-
-  public void testEmptyFail() {
-    AssertFail.of(() -> new Mahalanobis(Tensors.empty()));
-  }
-
-  public void testNullFail() {
-    AssertFail.of(() -> new Mahalanobis(null));
   }
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeveragesCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -22,8 +22,8 @@ public class DtManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      LeverageCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      LeverageCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE };
 
   public void testSimple() {

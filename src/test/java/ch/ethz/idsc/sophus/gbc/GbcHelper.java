@@ -69,12 +69,12 @@ public enum GbcHelper {
         HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         inversCoordinate_of(Biinvariants.METRIC, vectorLogManifold, PowerVariogram.of(1, 1)), //
         inversCoordinate_of(Biinvariants.METRIC, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
         inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
@@ -92,12 +92,12 @@ public enum GbcHelper {
         lagrainate_of(Biinvariants.GARDEN, vectorLogManifold, InversePowerVariogram.of(2)), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeverageCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
         kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
         kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
     };

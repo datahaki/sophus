@@ -4,12 +4,12 @@ package ch.ethz.idsc.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.dv.LeverageDistances;
+import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
 import ch.ethz.idsc.sophus.math.Genesis;
-import ch.ethz.idsc.sophus.math.Mahalanobis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.mat.Mahalanobis;
 
 /** target coordinate is the preferred way to evaluate
  * inverse leverage coordinates.
@@ -20,8 +20,8 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
- * @see LeverageCoordinate
- * @see LeverageDistances */
+ * @see LeveragesCoordinate
+ * @see LeveragesDistanceVector */
 public class TargetCoordinate implements Genesis, Serializable {
   /** @param variogram
    * @return */

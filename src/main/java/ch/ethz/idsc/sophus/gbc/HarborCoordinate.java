@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.dv.HarborDistances;
+import ch.ethz.idsc.sophus.dv.HarborDistanceVector;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
@@ -29,11 +29,11 @@ public class HarborCoordinate implements TensorUnaryOperator {
   }
 
   /***************************************************/
-  private final HarborDistances harborDistances;
+  private final HarborDistanceVector harborDistances;
   private final ScalarUnaryOperator variogram;
 
   private HarborCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    harborDistances = HarborDistances.frobenius(vectorLogManifold, sequence);
+    harborDistances = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
     this.variogram = Objects.requireNonNull(variogram);
   }
 

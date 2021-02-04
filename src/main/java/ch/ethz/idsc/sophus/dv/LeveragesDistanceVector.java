@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.dv;
 
 import ch.ethz.idsc.sophus.math.Genesis;
-import ch.ethz.idsc.sophus.math.Mahalanobis;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.Mahalanobis;
 
 /** leverage distances are biinvariant
  * 
@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public enum LeverageDistances implements Genesis {
+public enum LeveragesDistanceVector implements Genesis {
   INSTANCE;
 
   @Override // from Genesis

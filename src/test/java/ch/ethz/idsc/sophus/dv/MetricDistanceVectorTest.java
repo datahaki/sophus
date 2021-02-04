@@ -5,9 +5,9 @@ import java.lang.reflect.Modifier;
 
 import junit.framework.TestCase;
 
-public class MetricDistancesTest extends TestCase {
+public class MetricDistanceVectorTest extends TestCase {
   public void testVisibility() {
-    int modifiers = MetricDistances.class.getModifiers();
+    int modifiers = MetricDistanceVector.class.getModifiers();
     assertTrue(Modifier.isPublic(modifiers));
   }
 }

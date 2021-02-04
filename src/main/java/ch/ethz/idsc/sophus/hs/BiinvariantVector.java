@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.dv.HarborDistances;
+import ch.ethz.idsc.sophus.dv.HarborDistanceVector;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 
 /** immutable
  * 
- * @see HarborDistances */
+ * @see HarborDistanceVector */
 public class BiinvariantVector implements Serializable {
   private final InfluenceMatrix influenceMatrix;
   private final Tensor vector;

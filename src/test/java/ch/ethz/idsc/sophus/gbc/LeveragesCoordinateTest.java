@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
-public class LeverageCoordinateTest extends TestCase {
+public class LeveragesCoordinateTest extends TestCase {
   public void testR1equiv() {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.

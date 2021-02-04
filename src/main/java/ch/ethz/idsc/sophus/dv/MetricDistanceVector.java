@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007
  * 3.7.3 Shepard Interpolation */
-public enum MetricDistances implements Genesis {
+public enum MetricDistanceVector implements Genesis {
   INSTANCE;
 
   @Override // from Genesis

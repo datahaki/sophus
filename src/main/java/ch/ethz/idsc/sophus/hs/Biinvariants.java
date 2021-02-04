@@ -3,16 +3,16 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.dv.GardenDistances;
-import ch.ethz.idsc.sophus.dv.HarborDistances;
-import ch.ethz.idsc.sophus.dv.LeverageDistances;
-import ch.ethz.idsc.sophus.dv.MetricDistances;
+import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
+import ch.ethz.idsc.sophus.dv.HarborDistanceVector;
+import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
+import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeveragesCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
@@ -29,7 +29,7 @@ public enum Biinvariants implements Biinvariant {
   METRIC {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, MetricDistances.INSTANCE, sequence);
+      return HsCoordinates.wrap(vectorLogManifold, MetricDistanceVector.INSTANCE, sequence);
     }
 
     @Override // from Biinvariant
@@ -62,7 +62,7 @@ public enum Biinvariants implements Biinvariant {
   TARGET {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE, sequence);
+      return HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
     }
 
     @Override // from Biinvariant
@@ -84,12 +84,12 @@ public enum Biinvariants implements Biinvariant {
   ANCHOR {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, LeverageDistances.INSTANCE, sequence);
+      return HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
     }
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = LeverageCoordinate.slow(vectorLogManifold, variogram);
+      BarycentricCoordinate barycentricCoordinate = LeveragesCoordinate.slow(vectorLogManifold, variogram);
       Objects.requireNonNull(sequence);
       return point -> barycentricCoordinate.weights(sequence, point);
     }
@@ -104,7 +104,7 @@ public enum Biinvariants implements Biinvariant {
   GARDEN {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return GardenDistances.of(vectorLogManifold, sequence);
+      return GardenDistanceVector.of(vectorLogManifold, sequence);
     }
 
     @Override // from Biinvariant
@@ -122,7 +122,7 @@ public enum Biinvariants implements Biinvariant {
   HARBOR {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      HarborDistances harborDistances = HarborDistances.frobenius(vectorLogManifold, sequence);
+      HarborDistanceVector harborDistances = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
       return point -> harborDistances.biinvariantVector(point).distances();
     }
 
