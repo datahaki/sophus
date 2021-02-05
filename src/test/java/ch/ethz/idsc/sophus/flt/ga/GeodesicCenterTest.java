@@ -66,10 +66,6 @@ public class GeodesicCenterTest extends TestCase {
       AssertFail.of(() -> tensorUnaryOperator.apply(Array.zeros(2 * fi)));
     }
   }
-  // public void testSerializable() throws ClassNotFoundException, IOException {
-  // TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2CoveringGeodesic.INSTANCE, CONSTANT);
-  // Serialization.copy(tensorUnaryOperator);
-  // }
 
   public void testFail() {
     AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));

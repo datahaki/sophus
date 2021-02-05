@@ -15,15 +15,11 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
   public static void main(String[] args) {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     WeightingInterface w1 = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
-    // WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {
       Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 100, 3);
       Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
-      // t2.start();
-      // w2.weights(sequence, point);
-      // t2.stop();
       t1.start();
       w1.weights(sequence, point);
       t1.stop();

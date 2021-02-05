@@ -46,15 +46,12 @@ public class LeveragesCoordinateTest extends TestCase {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = (Scalar) beta_;
-      // BarycentricCoordinate bc0 = LeveragesCoordinate.slow(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       BarycentricCoordinate bc1 = LeveragesCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int d = 3; d < 7; ++d) {
         Tensor mean = UnitVector.of(d, 0);
         for (int n = d + 1; n < d + 3; ++n) {
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
-          // Tensor w0 = bc0.weights(sequence, mean);
           bc1.weights(sequence, mean);
-          // Chop._10.requireClose(w0, w1);
         }
       }
     }
@@ -63,13 +60,10 @@ public class LeveragesCoordinateTest extends TestCase {
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
-    // BarycentricCoordinate anchorCoordinate = LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, variogram);
     BarycentricCoordinate targetCoordinate = LeveragesCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      // Chop._05.requireClose( //
-      // anchorCoordinate.weights(sequence, point), //
       targetCoordinate.weights(sequence, point);
     }
   }

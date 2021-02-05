@@ -7,12 +7,10 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.MeanDeviation;
 import ch.ethz.idsc.tensor.red.Min;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Sign;
 
@@ -65,12 +63,12 @@ public enum Amplifiers {
         return weights.subtract(average).map(suo);
       };
     }
-  }, //
+  },
   EXP_ADAPT {
     @Override
     public TensorUnaryOperator supply(Scalar sigma) {
-      ScalarUnaryOperator suo = new ArcTanAmplifier(sigma);
-      TensorUnaryOperator tuo = Normalize.with(Norm._2);
+      // ScalarUnaryOperator suo = new ArcTanAmplifier(sigma);
+      // TensorUnaryOperator tuo = Normalize.with(Norm._2);
       return errors -> {
         Scalar var = MeanDeviation.ofVector(errors);
         Tensor temp = errors.divide(var);

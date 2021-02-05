@@ -40,9 +40,7 @@ public class BiinvariantTest extends TestCase {
 
   public void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    Biinvariant[] pda = { //
-        Biinvariants.HARBOR };
-    for (Biinvariant biinvariant : pda) {
+    for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
       TensorUnaryOperator weightingInterface = //
           biinvariant.distances(RnManifold.INSTANCE, sequence);
@@ -75,7 +73,7 @@ public class BiinvariantTest extends TestCase {
   public void testSimplePD() throws ClassNotFoundException, IOException {
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Distribution distribution = NormalDistribution.standard();
-      for (int n = 10; n < 20; ++n) {
+      for (int n = 8; n < 12; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, 3);
         TensorUnaryOperator shepardInterpolation = Serialization.copy( //
             biinvariant.weighting(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));

@@ -47,13 +47,11 @@ public class AffineCoordinateTest extends TestCase {
     for (int n = 4; n < 10; ++n)
       for (int count = 0; count < 10; ++count) {
         Tensor levers = RandomVariate.of(distribution, n, d);
-        Tensor origin = levers.copy();
         if (Polygons.isInside(levers)) {
           for (int i = 0; i < 3; ++i) {
             Tensor weights = AffineCoordinate.INSTANCE.origin(levers);
             weights = NormalizeTotal.FUNCTION.apply(weights.map(Exp.FUNCTION));
             levers = weights.pmul(levers);
-            // System.out.println(weights.dot(origin));
           }
         }
       }

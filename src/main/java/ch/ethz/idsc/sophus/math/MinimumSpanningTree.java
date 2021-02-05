@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.math;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,8 +16,9 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 
-/** MinimumSpanningTree */
-public enum PrimAlgorithm {
+/** <p>inspired by
+ * <a href="https://reference.wolfram.com/language/ref/MinimumSpanningTree.html">MinimumSpanningTree</a> */
+public enum MinimumSpanningTree {
   ;
   public static class Edge implements Serializable {
     public final int i;
@@ -34,7 +35,7 @@ public enum PrimAlgorithm {
 
     @Override
     public String toString() {
-      return String.format("(%d, %d)", i, j);
+      return String.format("Edge[%d, %d]", i, j);
     }
   }
 
@@ -51,8 +52,10 @@ public enum PrimAlgorithm {
     }
   }
 
-  /** @param matrix symmetric
-   * @return
+  /** uses Prim's algorithm to find minimum spanning tree
+   * 
+   * @param matrix symmetric
+   * @return list of edges unordered
    * @throws Exception if given matrix is not symmetric */
   public static List<Edge> of(Tensor matrix) {
     SymmetricMatrixQ.require(matrix);

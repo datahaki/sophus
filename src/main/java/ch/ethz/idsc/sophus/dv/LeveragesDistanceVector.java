@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.dv;
 
 import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.Mahalanobis;
 
 /** leverages distances are biinvariant
@@ -26,6 +27,7 @@ public enum LeveragesDistanceVector implements Genesis {
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return new Mahalanobis(levers).leverages_sqrt();
+    InfluenceMatrix influenceMatrix = new Mahalanobis(levers);
+    return influenceMatrix.leverages_sqrt();
   }
 }

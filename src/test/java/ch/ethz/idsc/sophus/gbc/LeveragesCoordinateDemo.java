@@ -16,15 +16,11 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     BarycentricCoordinate c1 = LeveragesCoordinate.of(vectorLogManifold, variogram);
-    // BarycentricCoordinate c2 = LeveragesCoordinate.slow(vectorLogManifold, variogram);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {
       Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 100, 3);
       Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
-      // t2.start();
-      // c2.weights(sequence, point);
-      // t2.stop();
       t1.start();
       c1.weights(sequence, point);
       t1.stop();

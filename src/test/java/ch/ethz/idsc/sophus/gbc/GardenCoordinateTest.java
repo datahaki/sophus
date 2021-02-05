@@ -30,9 +30,6 @@ public class GardenCoordinateTest extends TestCase {
         Chop._08.requireClose( //
             Biinvariants.GARDEN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
             Biinvariants.HARBOR.weighting(vectorLogManifold, variogram, sequence).apply(origin));
-        // Chop._05.requireClose( //
-        // Biinvariants.GARDEN.coordinate(vectorLogManifold, variogram, sequence).apply(origin), //
-        // Biinvariants.HARBOR.coordinate(vectorLogManifold, variogram, sequence).apply(origin));
       }
   }
 
