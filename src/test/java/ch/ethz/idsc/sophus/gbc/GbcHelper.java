@@ -63,7 +63,7 @@ public enum GbcHelper {
   public static BarycentricCoordinate[] barycentrics(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
         lagrainate_of(Biinvariants.METRIC, vectorLogManifold, InversePowerVariogram.of(2)), //
-        lagrainate_of(Biinvariants.TARGET, vectorLogManifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(Biinvariants.LEVERAGES, vectorLogManifold, InversePowerVariogram.of(2)), //
         lagrainate_of(Biinvariants.GARDEN, vectorLogManifold, InversePowerVariogram.of(2)), //
         HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(1))), //
         HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
@@ -88,7 +88,7 @@ public enum GbcHelper {
 
   public static BarycentricCoordinate[] biinvariant(VectorLogManifold vectorLogManifold) { //
     return new BarycentricCoordinate[] { //
-        lagrainate_of(Biinvariants.TARGET, vectorLogManifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(Biinvariants.LEVERAGES, vectorLogManifold, InversePowerVariogram.of(2)), //
         lagrainate_of(Biinvariants.GARDEN, vectorLogManifold, InversePowerVariogram.of(2)), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
         gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //

@@ -65,7 +65,7 @@ public class HarborDistanceVectorTest extends TestCase {
 
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final Biinvariant[] BIINVARIANT = //
-      { Biinvariants.TARGET, Biinvariants.ANCHOR, Biinvariants.GARDEN, Biinvariants.HARBOR };
+      { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   public void testRandom() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;

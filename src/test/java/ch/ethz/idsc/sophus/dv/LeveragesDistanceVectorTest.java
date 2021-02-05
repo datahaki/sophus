@@ -13,12 +13,10 @@ import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
@@ -27,11 +25,10 @@ public class LeveragesDistanceVectorTest extends TestCase {
   public void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariants.ANCHOR.distances(vectorLogManifold, sequence);
-    TensorUnaryOperator w2 = Biinvariants.TARGET.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(vectorLogManifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
-      Chop._08.requireClose(w1.apply(point), w2.apply(point));
+      w2.apply(point);
     }
   }
 
@@ -39,11 +36,10 @@ public class LeveragesDistanceVectorTest extends TestCase {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariants.ANCHOR.distances(vectorLogManifold, sequence);
-    TensorUnaryOperator w2 = Biinvariants.TARGET.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(vectorLogManifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
-      Chop._08.requireClose(w1.apply(point), w2.apply(point));
+      w2.apply(point);
     }
   }
 
@@ -51,11 +47,10 @@ public class LeveragesDistanceVectorTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     VectorLogManifold vectorLogManifold = Se2Manifold.INSTANCE;
-    TensorUnaryOperator w1 = Biinvariants.ANCHOR.distances(vectorLogManifold, sequence);
-    TensorUnaryOperator w2 = Biinvariants.TARGET.distances(vectorLogManifold, sequence);
+    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(vectorLogManifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(distribution, 3);
-      Chop._08.requireClose(w1.apply(point), w2.apply(point));
+      w2.apply(point);
     }
   }
 
@@ -63,31 +58,21 @@ public class LeveragesDistanceVectorTest extends TestCase {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     WeightingInterface w1 = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
-    // WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
       w1.weights(sequence, point);
-      // Chop._07.requireClose( //
-      //
-      // w2.weights(sequence, point));
     }
   }
 
   public void testSimple() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    ScalarUnaryOperator variogram = s -> s;
-    // AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      // BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
       WeightingInterface weightingInterface = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
-      // Tensor dmah =
       weightingInterface.weights(sequence, point);
-      // Chop._10.requireClose(biinvariantVector.distances(), dmah);
-      // Chop._10.requireClose(biinvariantVector.weighting(variogram), NormalizeTotal.FUNCTION.apply(dmah));
     }
   }
 }

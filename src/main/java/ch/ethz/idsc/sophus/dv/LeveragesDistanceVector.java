@@ -10,8 +10,6 @@ import ch.ethz.idsc.tensor.mat.Mahalanobis;
  * <p>computes form at given point based on points in sequence and returns
  * vector of evaluations dMah_x(p_i) of points in sequence.
  * 
- * <p>leverages distances are identical to anchor distances
- * 
  * <p>one evaluation of the leverages involves the computation of
  * <pre>
  * PseudoInverse[levers^T . levers]

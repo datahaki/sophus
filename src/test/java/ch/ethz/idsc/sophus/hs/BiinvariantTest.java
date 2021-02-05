@@ -41,7 +41,6 @@ public class BiinvariantTest extends TestCase {
   public void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant[] pda = { //
-        Biinvariants.ANCHOR, //
         Biinvariants.HARBOR };
     for (Biinvariant biinvariant : pda) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);

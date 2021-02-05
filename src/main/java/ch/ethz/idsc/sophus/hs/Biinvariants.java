@@ -3,10 +3,12 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.dv.CupolaBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
 import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
 import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
+import ch.ethz.idsc.sophus.gbc.CupolaCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
@@ -40,47 +42,13 @@ public enum Biinvariants implements Biinvariant {
       return "Metric";
     }
   },
-  AETHER { // same as metric, only for different plot option
-    @Override // from Biinvariant
-    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return METRIC.distances(vectorLogManifold, sequence);
-    }
-
-    @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return METRIC.coordinate(vectorLogManifold, variogram, sequence);
-    }
-
-    @Override
-    public String title() {
-      return "Aether";
-    }
-  },
-  /** bi-invariant, identical to anchor */
-  // TODO remove ANCHOR, rename TARGET
-  TARGET {
-    @Override // from Biinvariant
-    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
-    }
-
-    @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
-    }
-
-    @Override
-    public String title() {
-      return "Leverage";
-    }
-  },
   /** bi-invariant
    * does not result in a symmetric distance matrix -> should not use for kriging
    * 
    * Reference:
    * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
    * by Jan Hakenberg, 2020 */
-  ANCHOR {
+  LEVERAGES {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       return HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
@@ -89,9 +57,6 @@ public enum Biinvariants implements Biinvariant {
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return HsCoordinates.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
-      // BarycentricCoordinate barycentricCoordinate = LeveragesCoordinate.slow(vectorLogManifold, variogram);
-      // Objects.requireNonNull(sequence);
-      // return point -> barycentricCoordinate.weights(sequence, point);
     }
 
     @Override
@@ -116,14 +81,15 @@ public enum Biinvariants implements Biinvariant {
     public String title() {
       return "Garden";
     }
-  }, //
+  },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
   HARBOR {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      BiinvariantVectorFunction harborDistances = HarborBiinvariantVector.of(vectorLogManifold, sequence);
-      return point -> harborDistances.biinvariantVector(point).distances();
+      BiinvariantVectorFunction biinvariantVectorFunction = //
+          HarborBiinvariantVector.of(vectorLogManifold, sequence);
+      return point -> biinvariantVectorFunction.biinvariantVector(point).distances();
     }
 
     @Override // from Biinvariant
@@ -134,6 +100,26 @@ public enum Biinvariants implements Biinvariant {
     @Override
     public String title() {
       return "Harbor";
+    }
+  },
+  /** bi-invariant
+   * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
+  CUPOLA {
+    @Override // from Biinvariant
+    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+      BiinvariantVectorFunction biinvariantVectorFunction = //
+          CupolaBiinvariantVector.of(vectorLogManifold, sequence);
+      return point -> biinvariantVectorFunction.biinvariantVector(point).distances();
+    }
+
+    @Override // from Biinvariant
+    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return CupolaCoordinate.of(vectorLogManifold, variogram, sequence);
+    }
+
+    @Override
+    public String title() {
+      return "Cupola";
     }
   }, //
   ;

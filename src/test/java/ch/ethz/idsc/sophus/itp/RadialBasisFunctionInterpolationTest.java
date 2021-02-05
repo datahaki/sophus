@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class RadialBasisFunctionInterpolationTest extends TestCase {
-  public static final Biinvariant[] PDA = { Biinvariants.TARGET, Biinvariants.ANCHOR, Biinvariants.GARDEN, Biinvariants.HARBOR };
+  public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();

@@ -23,8 +23,8 @@ import ch.ethz.idsc.tensor.mat.Mahalanobis;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
- * @see LeveragesCoordinate
- * @see LeveragesDistanceVector */
+ * @see LeveragesDistanceVector
+ * @see LeveragesCoordinate */
 public class LeveragesGenesis implements Genesis, Serializable {
   /** @param variogram
    * @return */
