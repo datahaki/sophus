@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.dv;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
+import ch.ethz.idsc.sophus.hs.BiinvariantVectorFunction;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
@@ -15,22 +16,33 @@ import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class HarborDistanceVectorTest extends TestCase {
+  /** @param vectorLogManifold
+   * @param sequence
+   * @return */
+  public static BiinvariantVectorFunction norm2(VectorLogManifold vectorLogManifold, Tensor sequence) {
+    return new InfluenceBiinvariantVector(vectorLogManifold, sequence, (x, y) -> Norm._2.ofMatrix(x.subtract(y)));
+  }
+
   public void testRn() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      HarborDistanceVector d1 = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
-      HarborDistanceVector d2 = HarborDistanceVector.norm2(vectorLogManifold, sequence);
+      BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
+      BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
+      BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
+      BiinvariantVector v3 = d3.biinvariantVector(point);
       Chop._10.requireClose(v1.weighting(s -> s), v2.weighting(s -> s));
+      assertEquals(v1.distances().length(), v3.distances().length());
     }
   }
 
@@ -40,11 +52,14 @@ public class HarborDistanceVectorTest extends TestCase {
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      HarborDistanceVector d1 = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
-      HarborDistanceVector d2 = HarborDistanceVector.norm2(vectorLogManifold, sequence);
+      BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
+      BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
+      BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
       BiinvariantVector v1 = d1.biinvariantVector(point);
       BiinvariantVector v2 = d2.biinvariantVector(point);
+      BiinvariantVector v3 = d3.biinvariantVector(point);
       assertEquals(v1.distances().length(), v2.distances().length());
+      assertEquals(v1.distances().length(), v3.distances().length());
     }
   }
 

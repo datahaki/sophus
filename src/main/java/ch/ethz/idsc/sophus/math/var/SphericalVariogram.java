@@ -55,4 +55,9 @@ public class SphericalVariogram implements ScalarUnaryOperator {
         ? series.apply(r.divide(a))
         : b;
   }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s, %s]", getClass().getSimpleName(), a, b);
+  }
 }

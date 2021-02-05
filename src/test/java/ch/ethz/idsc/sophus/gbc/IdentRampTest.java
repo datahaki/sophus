@@ -1,5 +1,7 @@
+// code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.gbc.amp.IdentRamp;
 import ch.ethz.idsc.tensor.RealScalar;
 import junit.framework.TestCase;
 

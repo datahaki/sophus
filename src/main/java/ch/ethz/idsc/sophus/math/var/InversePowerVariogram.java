@@ -42,4 +42,9 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
         ? DoubleScalar.POSITIVE_INFINITY
         : power.apply(r);
   }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s]", getClass().getSimpleName(), power);
+  }
 }

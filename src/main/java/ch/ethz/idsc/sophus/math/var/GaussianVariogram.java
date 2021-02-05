@@ -16,9 +16,9 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * @see BinningMethod */
 public class GaussianVariogram implements ScalarUnaryOperator {
-  /** @param r0 non-negative */
+  /** @param r0 positive */
   public static ScalarUnaryOperator of(Scalar r0) {
-    return new GaussianVariogram(Sign.requirePositiveOrZero(r0));
+    return new GaussianVariogram(Sign.requirePositive(r0));
   }
 
   /***************************************************/
@@ -32,5 +32,10 @@ public class GaussianVariogram implements ScalarUnaryOperator {
   public Scalar apply(Scalar r) {
     Scalar factor = r.divide(r0);
     return Exp.FUNCTION.apply(factor.multiply(factor).negate());
+  }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s]", getClass().getSimpleName(), r0);
   }
 }

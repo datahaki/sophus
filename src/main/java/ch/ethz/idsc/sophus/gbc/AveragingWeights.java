@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.ext.Cache;
 
-/* package */ enum AveragingWeights implements Genesis {
+public enum AveragingWeights implements Genesis {
   INSTANCE;
 
   private static final int MAX_SIZE = 16;

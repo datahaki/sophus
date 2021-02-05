@@ -4,7 +4,8 @@ package ch.ethz.idsc.sophus.hs;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
-import ch.ethz.idsc.sophus.dv.HarborDistanceVector;
+import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
+import ch.ethz.idsc.sophus.dv.InfluenceBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
 import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
@@ -122,7 +123,7 @@ public enum Biinvariants implements Biinvariant {
   HARBOR {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      HarborDistanceVector harborDistances = HarborDistanceVector.frobenius(vectorLogManifold, sequence);
+      BiinvariantVectorFunction harborDistances = HarborBiinvariantVector.of(vectorLogManifold, sequence);
       return point -> harborDistances.biinvariantVector(point).distances();
     }
 
@@ -139,24 +140,27 @@ public enum Biinvariants implements Biinvariant {
   ;
 
   @Override // from Biinvariant
-  public final TensorUnaryOperator var_dist(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public final TensorUnaryOperator var_dist( //
+      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
     Objects.requireNonNull(variogram);
     return point -> tensorUnaryOperator.apply(point).map(variogram);
   }
 
   @Override // from Biinvariant
-  public final TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
-    Objects.requireNonNull(variogram);
-    return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point).map(variogram));
+  public final TensorUnaryOperator weighting( //
+      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    TensorUnaryOperator tensorUnaryOperator = var_dist(vectorLogManifold, variogram, sequence);
+    return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
   }
 
   @Override // from Biinvariant
-  public final TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    TensorUnaryOperator weighting = weighting(vectorLogManifold, variogram, sequence);
+  public final TensorUnaryOperator lagrainate( //
+      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    TensorUnaryOperator tensorUnaryOperator = weighting(vectorLogManifold, variogram, sequence);
+    // TODO this is inefficient, since levers are probably computed twice
     return point -> LagrangeCoordinates.of( //
-        weighting.apply(point), // target
+        tensorUnaryOperator.apply(point), // target
         Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog))); // levers
   }
 

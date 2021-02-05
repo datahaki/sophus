@@ -1,4 +1,5 @@
-package ch.ethz.idsc.sophus.gbc;
+// code by jph
+package ch.ethz.idsc.sophus.gbc.amp;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;

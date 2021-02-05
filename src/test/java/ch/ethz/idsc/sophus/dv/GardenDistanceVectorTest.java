@@ -10,6 +10,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
@@ -68,5 +69,9 @@ public class GardenDistanceVectorTest extends TestCase {
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.fromString("{{2,3,4}}"));
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.vector(0));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> GardenDistanceVector.of(null, Tensors.empty()));
   }
 }

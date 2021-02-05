@@ -1,6 +1,7 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.gbc.amp;
 
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;

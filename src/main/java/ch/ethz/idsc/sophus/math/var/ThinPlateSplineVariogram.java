@@ -42,4 +42,9 @@ public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
         ? r.multiply(r) // units consistent with case 0 < r
         : r.multiply(r).multiply(Log.FUNCTION.apply(r.divide(r0)));
   }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s]", getClass().getSimpleName(), r0);
+  }
 }

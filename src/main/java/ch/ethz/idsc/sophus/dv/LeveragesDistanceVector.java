@@ -5,12 +5,17 @@ import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Mahalanobis;
 
-/** leverage distances are biinvariant
+/** leverages distances are biinvariant
  * 
- * computes form at given point based on points in sequence and returns
+ * <p>computes form at given point based on points in sequence and returns
  * vector of evaluations dMah_x(p_i) of points in sequence.
  * 
- * target distances are identical to anchor distances
+ * <p>leverages distances are identical to anchor distances
+ * 
+ * <p>one evaluation of the leverages involves the computation of
+ * <pre>
+ * PseudoInverse[levers^T . levers]
+ * </pre>
  * 
  * <p>References:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"

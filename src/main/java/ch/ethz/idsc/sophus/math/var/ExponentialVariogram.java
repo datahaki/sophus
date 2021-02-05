@@ -41,4 +41,9 @@ public class ExponentialVariogram implements ScalarUnaryOperator {
   public Scalar apply(Scalar r) {
     return RealScalar.ONE.subtract(Exp.FUNCTION.apply(r.divide(a).negate())).multiply(b);
   }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s, %s]", getClass().getSimpleName(), a, b);
+  }
 }

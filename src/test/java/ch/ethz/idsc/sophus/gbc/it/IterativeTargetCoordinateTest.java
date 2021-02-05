@@ -1,9 +1,10 @@
 // code by jph
-package ch.ethz.idsc.sophus.gbc;
+package ch.ethz.idsc.sophus.gbc.it;
 
 import java.util.Deque;
 
-import ch.ethz.idsc.sophus.gbc.IterativeAffineCoordinate.Evaluation;
+import ch.ethz.idsc.sophus.gbc.it.IterativeTargetCoordinate;
+import ch.ethz.idsc.sophus.gbc.it.IterativeAffineCoordinate.Evaluation;
 import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.sophus.math.AffineQ;

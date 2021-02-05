@@ -18,36 +18,6 @@ public enum Variograms {
       return InversePowerVariogram.of(param);
     }
   },
-  POWER {
-    @Override
-    public ScalarUnaryOperator of(Scalar param) {
-      return PowerVariogram.of(RealScalar.ONE, param);
-    }
-  },
-  THIN_PLATE_SPLINE {
-    @Override
-    public ScalarUnaryOperator of(Scalar param) {
-      return ThinPlateSplineVariogram.of(param);
-    }
-  },
-  EXPONENTIAL {
-    @Override
-    public ScalarUnaryOperator of(Scalar param) {
-      return ExponentialVariogram.of(param, RealScalar.ONE);
-    }
-  },
-  GAUSSIAN {
-    @Override
-    public ScalarUnaryOperator of(Scalar param) {
-      return GaussianVariogram.of(param);
-    }
-  },
-  SPHERICAL {
-    @Override
-    public ScalarUnaryOperator of(Scalar param) {
-      return SphericalVariogram.of(param, RealScalar.ONE);
-    }
-  },
   MULTIQUADRIC {
     @Override
     public ScalarUnaryOperator of(Scalar param) {
@@ -59,7 +29,46 @@ public enum Variograms {
     public ScalarUnaryOperator of(Scalar param) {
       return InverseMultiquadricVariogram.of(param);
     }
-  }, //
+  },
+  /***************************************************/
+  /** 0 -> 1, Infinity -> 0 */
+  GAUSSIAN {
+    @Override
+    public ScalarUnaryOperator of(Scalar param) {
+      return GaussianVariogram.of(param);
+    }
+  },
+  /***************************************************/
+  /** 0 -> 0, Infinity -> 1 */
+  EXPONENTIAL {
+    @Override
+    public ScalarUnaryOperator of(Scalar param) {
+      return ExponentialVariogram.of(param, RealScalar.ONE);
+    }
+  },
+  /** 0 -> 0, Infinity -> 1 */
+  SPHERICAL {
+    @Override
+    public ScalarUnaryOperator of(Scalar param) {
+      return SphericalVariogram.of(param, RealScalar.ONE);
+    }
+  },
+  /***************************************************/
+  /** 0 -> 0, Infinity -> Infinity */
+  POWER {
+    @Override
+    public ScalarUnaryOperator of(Scalar param) {
+      return PowerVariogram.of(RealScalar.ONE, param);
+    }
+  },
+  /** 0 -> 0, Infinity -> Infinity */
+  THIN_PLATE_SPLINE {
+    @Override
+    public ScalarUnaryOperator of(Scalar param) {
+      return ThinPlateSplineVariogram.of(param);
+    }
+  },
+  /***************************************************/
   ;
 
   /** @param param

@@ -17,13 +17,13 @@ public interface Biinvariant {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
-   * @return */
+   * @return distance vector with entries subject to given variogram */
   TensorUnaryOperator var_dist(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
-   * @return operator that provides affine weights */
+   * @return distance vector with entries subject to given variogram normalized to sum up to 1 */
   TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param vectorLogManifold

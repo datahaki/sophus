@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.dv;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
@@ -18,13 +19,13 @@ import ch.ethz.idsc.tensor.mat.Mahalanobis;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
- * @see HarborDistanceVector */
+ * @see HarborBiinvariantVector */
 public class GardenDistanceVector implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
   public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new GardenDistanceVector(vectorLogManifold, sequence);
+    return new GardenDistanceVector(Objects.requireNonNull(vectorLogManifold), sequence);
   }
 
   /***************************************************/

@@ -7,6 +7,9 @@ import ch.ethz.idsc.tensor.red.Norm;
 
 /** uses left-invariant metric on tangent space
  * 
+ * the basis of the tangent space is chosen so that the metric restricted to the
+ * tangent space is the bilinear form equals to the identity matrix.
+ * 
  * Careful: Shepard interpolation does not reproduce linear functions.
  * (Because the inverse norms are not projected to the proper subspace.)
  * 

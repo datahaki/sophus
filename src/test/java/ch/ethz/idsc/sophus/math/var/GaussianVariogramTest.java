@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.math.var;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
@@ -15,5 +16,9 @@ public class GaussianVariogramTest extends TestCase {
     Chop._05.requireClose(lo, RealScalar.of(0.7788007830714049));
     Scalar hi = variogram.apply(Quantity.of(5, "m"));
     Chop._05.requireClose(hi, RealScalar.of(0.0019304541362277093));
+  }
+
+  public void testZeroFail() {
+    AssertFail.of(() -> GaussianVariogram.of(RealScalar.ZERO));
   }
 }
