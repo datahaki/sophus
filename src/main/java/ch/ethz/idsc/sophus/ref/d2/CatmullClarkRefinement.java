@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.red.FirstPosition;
  * "Recursively generated B-spline surfaces on arbitrary topological meshes"
  * by Catmull, Clark; Computer-Aided Design 16(6), 1978 */
 public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializable {
-  private static final long serialVersionUID = 8029255158598623913L;
-
   /** @param biinvariantMean non-null
    * @return */
   public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {

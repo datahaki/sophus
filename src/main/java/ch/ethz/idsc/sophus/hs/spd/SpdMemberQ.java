@@ -12,8 +12,6 @@ import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class SpdMemberQ extends AbstractHsMemberQ implements Serializable {
-  private static final long serialVersionUID = 2028951497922725761L;
-
   /** @param chop
    * @return */
   public static HsMemberQ of(Chop chop) {

@@ -23,8 +23,6 @@ import ch.ethz.idsc.tensor.sca.Real;
  * 
  * Reference: U. Reif slides */
 /* package */ final class ClothoidImpl implements Clothoid {
-  private static final long serialVersionUID = -3063589096504266270L;
-  // ---
   private final LieGroupElement lieGroupElement;
   private final LagrangeQuadratic lagrangeQuadratic;
   private final Tensor diff;

@@ -11,8 +11,6 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 /** filter blends extrapolated value with measurement */
 public class GeodesicIIR2 implements TensorUnaryOperator {
-  private static final long serialVersionUID = -4786120735810664790L;
-  // ---
   private final BinaryAverage binaryAverage;
   private final Scalar alpha;
   // ---

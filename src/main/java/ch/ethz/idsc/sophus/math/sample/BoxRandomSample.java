@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 
 public class BoxRandomSample implements RandomSampleInterface, Serializable {
-  private static final long serialVersionUID = -17702840340254218L;
-
   /** the parameters define the coordinate bounds of the axis-aligned box
    * from which the samples are drawn
    * 

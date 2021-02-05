@@ -14,8 +14,6 @@ import ch.ethz.idsc.tensor.sca.Floor;
 
 /** univariate geodesic interpolation */
 public class GeodesicInterpolation extends AbstractInterpolation implements Serializable {
-  private static final long serialVersionUID = 5175350804155042580L;
-
   /** @param binaryAverage
    * @param tensor
    * @return interpolation function for scalars from the interval [0, tensor.length() - 1] */

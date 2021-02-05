@@ -20,8 +20,6 @@ import ch.ethz.idsc.tensor.sca.Floor;
 /** Hint:
  * for {@link RnBiinvariantMean} the interpolation is identical to {@link LinearInterpolation} */
 /* package */ class BiinvariantMeanInterpolation extends AbstractInterpolation implements Serializable {
-  private static final long serialVersionUID = 2086494631433803121L;
-
   /** @param biinvariantMean
    * @param tensor
    * @return */

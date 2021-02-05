@@ -21,8 +21,6 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
  * @see So2RandomSample
  * @see So3RandomSample */
 public class SonRandomSample implements RandomSampleInterface, Serializable {
-  private static final long serialVersionUID = -3314890224103096873L;
-
   /** @param n positive
    * @return random sampler in SO(n) */
   public static RandomSampleInterface of(int n) {

@@ -14,8 +14,6 @@ import ch.ethz.idsc.tensor.ext.Cache;
 /** BiinvariantMeanCenter projects a sequence of points to their barycenter
  * with each point weighted as provided by an external function. */
 public class BiinvariantMeanCenter implements TensorUnaryOperator {
-  private static final long serialVersionUID = -1790057422131905373L;
-
   /** @param biinvariantMean non-null
    * @param function non-null
    * @return operator that maps a sequence of odd number of points to their barycenter

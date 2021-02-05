@@ -37,8 +37,6 @@ import ch.ethz.idsc.tensor.qty.Quantity;
  * @see ExponentialVariogram
  * @see SphericalVariogram */
 public class Kriging implements Serializable {
-  private static final long serialVersionUID = 1115137330199935692L;
-
   /** Gaussian process regression
    * 
    * @param tensorUnaryOperator

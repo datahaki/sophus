@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /* package */ abstract class BaseWindowSampler implements Function<Integer, Tensor>, Serializable {
-  private static final long serialVersionUID = 2934450253135655926L;
   private static final Tensor SINGLETON = Tensors.vector(1).unmodifiable();
   // ---
   protected final ScalarUnaryOperator windowFunction;

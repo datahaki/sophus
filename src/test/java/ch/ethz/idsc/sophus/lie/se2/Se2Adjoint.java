@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * code based on derivation by Ethan Eade
  * "Lie Groups for 2D and 3D Transformations", p. 16 */
 /* package */ class Se2Adjoint implements TensorUnaryOperator {
-  private static final long serialVersionUID = -809970095058968986L;
-
   /** @param xya element from Lie Group SE2 as coordinates {x, y, alpha}
    * @return */
   public static TensorUnaryOperator forward(Tensor xya) {

@@ -8,8 +8,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.num.Cycles;
 
 public class Permutation implements GroupElement, Serializable {
-  private static final long serialVersionUID = 2955360490615863529L;
-  // ---
   private final Cycles cycles;
 
   public Permutation(Cycles cycles) {

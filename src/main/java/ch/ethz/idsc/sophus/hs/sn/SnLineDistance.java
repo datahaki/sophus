@@ -28,7 +28,6 @@ public enum SnLineDistance implements LineDistance {
   }
 
   private class SnLine implements TensorNorm, Serializable {
-    private static final long serialVersionUID = 5186443472462114943L;
     private final Tensor m;
 
     public SnLine(Tensor p, Tensor q) {

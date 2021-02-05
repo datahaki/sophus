@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.red.Max;
 import ch.ethz.idsc.tensor.red.Min;
 
 public class NonuniformFixedRadiusGeodesicCenterFilter implements ScalarTensorMapUnaryOperator, Serializable {
-  private static final long serialVersionUID = 4032221748981310000L;
-
   /** @param nonuniformFixedRadiusGeodesicCenter
    * @param radius non-negative
    * @return

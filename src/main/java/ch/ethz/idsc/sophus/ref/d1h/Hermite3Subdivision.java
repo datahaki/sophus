@@ -20,7 +20,6 @@ import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
-  private static final long serialVersionUID = 488803241195875256L;
   /** midpoint group element contribution from group elements
    * factor in position (1, 1) of matrices A(-1) A(1)
    * with same sign and equal to 1/2 */

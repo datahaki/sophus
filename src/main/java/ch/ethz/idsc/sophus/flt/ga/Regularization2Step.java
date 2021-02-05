@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * a factor of 0 results in the identity operator
  * typically the factor is in the interval [0, 1] */
 public abstract class Regularization2Step implements TensorUnaryOperator {
-  private static final long serialVersionUID = -4781042679804622660L;
-
   /** @param splitInterface
    * @param factor for instance 2/3 */
   public static TensorUnaryOperator cyclic(SplitInterface splitInterface, Scalar factor) {

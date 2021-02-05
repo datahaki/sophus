@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * 
  * https://de.wikipedia.org/wiki/Loxodrome */
 public class Loxodrome implements ScalarTensorFunction {
-  private static final long serialVersionUID = 2637633539764232120L;
-
   /** @param angle */
   public static ScalarTensorFunction of(Scalar angle) {
     return new Loxodrome(angle);

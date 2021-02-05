@@ -8,8 +8,6 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 /** the term "family" conveys the meaning that the translation
  * depends on a single parameter, for instance time */
 public final class SimpleR2TranslationFamily extends R2TranslationFamily {
-  private static final long serialVersionUID = 6420387587118273762L;
-  // ---
   private final ScalarTensorFunction function;
 
   /** @param function maps a scalar to a vector in R^n */

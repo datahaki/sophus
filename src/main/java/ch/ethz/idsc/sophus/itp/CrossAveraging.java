@@ -8,8 +8,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 public class CrossAveraging implements TensorUnaryOperator {
-  private static final long serialVersionUID = -1518532976872471411L;
-
   /** @param tensorUnaryOperator
    * @param biinvariantMean
    * @param values

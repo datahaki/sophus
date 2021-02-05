@@ -30,7 +30,6 @@ import junit.framework.TestCase;
  * "Machine Learning - A Probabilistic Perspective"
  * by Kevin P. Murphy, p. 226 */
 /* package */ class RidgeRegression implements Serializable {
-  private static final long serialVersionUID = 765924157058612098L;
   private final HsDesign hsDesign;
 
   /** @param vectorLogManifold non-null */
@@ -39,7 +38,6 @@ import junit.framework.TestCase;
   }
 
   /* package */ class Form2 implements Serializable {
-    private static final long serialVersionUID = 345105735140258023L;
     private final Tensor matrix;
     private final Tensor sigma_inverse;
 

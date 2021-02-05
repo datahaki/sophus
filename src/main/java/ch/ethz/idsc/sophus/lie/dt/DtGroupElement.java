@@ -22,8 +22,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * @see DtGroup */
 public class DtGroupElement implements LieGroupElement, Serializable {
-  private static final long serialVersionUID = 6208657139932851834L;
-  // ---
   private final Scalar lambda;
   private final Tensor t;
 

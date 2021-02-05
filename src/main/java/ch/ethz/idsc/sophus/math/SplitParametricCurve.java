@@ -10,8 +10,6 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 public class SplitParametricCurve implements GeodesicInterface, Serializable {
-  private static final long serialVersionUID = 8944346948649160098L;
-
   /** @param binaryAverage
    * @return */
   public static GeodesicInterface of(BinaryAverage binaryAverage) {

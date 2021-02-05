@@ -5,18 +5,20 @@ import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.mat.LinearSolve;
+import ch.ethz.idsc.tensor.mat.LeastSquares;
 
 /** implementation of radial basis function for homogeneous spaces
  * 
+ * Quote: "The weights are determined by requiring that the interpolation be exact at all
+ * the known data points. That is equivalent to solving a set of N linear equations in N
+ * unknowns for the w’s."
+ * 
  * <p>Reference:
- * "Radial Basis Function Interpolation" in NR, 2007
+ * "Radial Basis Function Interpolation", Section 3.7.1 in NR, 2007
  * 
  * @see Biinvariant
  * @see Kriging */
 public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
-  private static final long serialVersionUID = -7968266062710654377L;
-
   /** @param tensorUnaryOperator to measure the length of the difference between two points
    * @param sequence of points
    * @param values
@@ -41,7 +43,7 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
   private RadialBasisFunctionInterpolation( //
       TensorUnaryOperator weightingInterface, Tensor sequence, Tensor values) {
     this.tensorUnaryOperator = weightingInterface;
-    weights = LinearSolve.of( //
+    weights = LeastSquares.of( //
         Tensor.of(sequence.stream().map(weightingInterface)), // distance matrix as in Kriging
         values);
   }

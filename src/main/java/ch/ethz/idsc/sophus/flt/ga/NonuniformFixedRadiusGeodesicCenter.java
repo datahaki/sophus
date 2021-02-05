@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.sca.Power;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public class NonuniformFixedRadiusGeodesicCenter implements Serializable {
-  private static final long serialVersionUID = 7561114301850732562L;
-
   /** @param splitInterface
    * @return operator that maps a chronological, symmetric sequence of points to their geodesic center
    * @throws Exception if given splitInterface is null */

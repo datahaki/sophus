@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
-  private static final long serialVersionUID = -5010189604975075412L;
-  // ---
   private final HsExponential hsExponential;
   private final HsTransport hsTransport;
   private final Tensor cgw;

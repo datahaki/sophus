@@ -12,8 +12,6 @@ import ch.ethz.idsc.tensor.ext.Cache;
 
 /** samples a given window function uniformly in the interval [-1/2, 0] */
 public class HalfWindowSampler extends BaseWindowSampler {
-  private static final long serialVersionUID = 2960047241630766426L;
-
   /** @param windowFunction for evaluation in the interval [-1/2, +1/2] */
   public static Function<Integer, Tensor> of(ScalarUnaryOperator windowFunction) {
     return Cache.of(new HalfWindowSampler(windowFunction), 32);

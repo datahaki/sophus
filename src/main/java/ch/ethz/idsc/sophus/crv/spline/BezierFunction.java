@@ -21,8 +21,6 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/BezierFunction.html">BezierFunction</a> */
 public class BezierFunction implements ScalarTensorFunction {
-  private static final long serialVersionUID = -3528861478921479095L;
-
   /** @param binaryAverage
    * @param control non-empty tensor
    * @return function parameterized by the interval [0, 1]

@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
 
 /** stream produces at least 2 and at most 6 {@link DubinsPath} */
 public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
-  private static final long serialVersionUID = -371504692477362756L;
-
   /** @param xya vector of length 3
    * @param radius
    * @return */

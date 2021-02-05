@@ -9,8 +9,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Max;
 
 public class SymmetricLineDistance implements LineDistance, Serializable {
-  private static final long serialVersionUID = -7109938893026876629L;
-  // ---
   private final LineDistance lineDistance;
 
   public SymmetricLineDistance(LineDistance lineDistance) {
@@ -25,8 +23,6 @@ public class SymmetricLineDistance implements LineDistance, Serializable {
   }
 
   private class NormImpl implements TensorNorm, Serializable {
-    private static final long serialVersionUID = 1160079582366117493L;
-    // ---
     private final TensorNorm tensorNorm1;
     private final TensorNorm tensorNorm2;
 

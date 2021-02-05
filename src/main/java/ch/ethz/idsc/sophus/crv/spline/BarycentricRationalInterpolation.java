@@ -34,7 +34,6 @@ import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
  * 
  * @see InterpolatingPolynomial */
 public class BarycentricRationalInterpolation implements ScalarTensorFunction {
-  private static final long serialVersionUID = 7036294946000800948L;
   /** sign toggle is cancelled in normalization */
   private static final Scalar[] SIGNUM = { RealScalar.ONE, RealScalar.ONE.negate() };
 

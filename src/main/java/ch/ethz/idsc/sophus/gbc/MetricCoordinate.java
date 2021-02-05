@@ -48,8 +48,6 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 public class MetricCoordinate implements Genesis, Serializable {
-  private static final long serialVersionUID = -8043520781023560311L;
-
   /** Careful:
    * Distance may depend on sequence! In that case only the correct sequence
    * should be passed to the function {@link #weights(Tensor, Tensor)}!

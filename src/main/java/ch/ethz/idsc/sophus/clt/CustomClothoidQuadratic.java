@@ -9,7 +9,6 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 
 /* package */ class CustomClothoidQuadratic implements ClothoidQuadratic, Serializable {
-  private static final long serialVersionUID = -2665420301871524049L;
   private static final Scalar HALF = RealScalar.of(0.5);
 
   @SuppressWarnings("unchecked")

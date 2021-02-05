@@ -28,8 +28,6 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
  * 
  * @see CenterFilter */
 public class GeodesicCenter implements TensorUnaryOperator {
-  private static final long serialVersionUID = 4589805294648304429L;
-
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
    * @return operator that maps a sequence of odd number of points to their geodesic center
@@ -53,8 +51,6 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
-    private static final long serialVersionUID = 5863453422611618530L;
-    // ---
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {

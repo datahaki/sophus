@@ -12,8 +12,6 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** general implementation of geodesic using exp/log */
 public class HsGeodesic implements GeodesicInterface, Serializable {
-  private static final long serialVersionUID = -5509228388279045851L;
-  // ---
   private final HsExponential hsExponential;
 
   /** @param hsExponential */

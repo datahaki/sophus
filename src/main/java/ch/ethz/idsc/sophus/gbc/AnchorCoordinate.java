@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
 /* package */ class AnchorCoordinate implements BarycentricCoordinate, Serializable {
-  private static final long serialVersionUID = 7028102766391486456L;
-  // ---
   private final AnchorDistances anchorDistances;
   private final ScalarUnaryOperator variogram;
 

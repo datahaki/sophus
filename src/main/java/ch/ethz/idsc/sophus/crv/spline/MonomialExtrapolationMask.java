@@ -22,7 +22,6 @@ import ch.ethz.idsc.tensor.ext.Cache;
  * 
  * RHS=[1 1 1 1]' */
 public class MonomialExtrapolationMask implements Function<Integer, Tensor>, Serializable {
-  private static final long serialVersionUID = -8782430323231659891L;
   public static final Function<Integer, Tensor> INSTANCE = //
       Cache.of(new MonomialExtrapolationMask(), 32);
 

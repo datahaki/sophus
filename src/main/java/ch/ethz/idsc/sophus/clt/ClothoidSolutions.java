@@ -14,7 +14,6 @@ import ch.ethz.idsc.tensor.sca.Real;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 public class ClothoidSolutions implements Serializable {
-  private static final long serialVersionUID = 295931294286826079L;
   private static final Chop CHOP = Chop._08;
 
   /** @param clip
@@ -41,8 +40,6 @@ public class ClothoidSolutions implements Serializable {
   /** function is s1 odd
    * function is s2 even */
   public class Search implements Serializable {
-    private static final long serialVersionUID = -1628253885417424275L;
-    // ---
     private final Tensor lambdas = Tensors.empty();
     public final Tensor defects_real;
 

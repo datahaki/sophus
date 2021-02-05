@@ -21,7 +21,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * "Weiszfeld’s Method: Old and New Results"
  * by Amir Beck, Shoham Sabach */
 public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
-  private static final long serialVersionUID = 7914096367652977016L;
   private static final int MAX_ITERATIONS = 512;
 
   /** @param biinvariantMean

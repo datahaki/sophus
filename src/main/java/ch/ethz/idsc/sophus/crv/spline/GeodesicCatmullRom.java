@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
  * by Scott Schaefer and Ron Goldman, Proceedings of Pacific Graphics 2005, pages 160-162
  * http://faculty.cs.tamu.edu/schaefer/research/sphereCurves.pdf */
 public class GeodesicCatmullRom implements ScalarTensorFunction {
-  private static final long serialVersionUID = -9058022950767892727L;
-
   /** @param binaryAverage non null
    * @param knots
    * @param control points of length >= 4 */

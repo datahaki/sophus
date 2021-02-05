@@ -48,8 +48,6 @@ public enum RnAffineCoordinate implements BarycentricCoordinate {
   }
 
   private static class Operator implements TensorUnaryOperator {
-    private static final long serialVersionUID = 2479098402937803459L;
-    // ---
     private final Scalar _1_n;
     /** negative mean */
     private final Tensor negm;

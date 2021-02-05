@@ -26,8 +26,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * <p>The unit of r0 is also the unit of the returned values.
  * For example, if r0 has unit "m" then a returned value has unit "m". */
 public class MultiquadricVariogram implements ScalarUnaryOperator {
-  private static final long serialVersionUID = -6708056879998038151L;
-
   /** @param r0 non-negative */
   public static ScalarUnaryOperator of(Scalar r0) {
     return Scalars.isZero(r0) //

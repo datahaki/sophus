@@ -8,8 +8,6 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 /** dual scheme */
 public class Split3Dual3PointCurveSubdivision extends Dual3PointCurveSubdivision {
-  private static final long serialVersionUID = -4425900076366246217L;
-
   /** @param geodesicInterface
    * @param pq_f
    * @param qr_f

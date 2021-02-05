@@ -34,8 +34,6 @@ import ch.ethz.idsc.tensor.img.ImageFilter;
  * ...
  * </pre> */
 public class CenterFilter implements TensorUnaryOperator {
-  private static final long serialVersionUID = -2772001108380269395L;
-
   /** Hint: the following tensorUnaryOperator are typically used
    * {@link GeodesicCenter}, and {@link BiinvariantMeanCenter}
    * 

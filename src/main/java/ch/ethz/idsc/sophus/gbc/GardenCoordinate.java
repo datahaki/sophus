@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public class GardenCoordinate implements TensorUnaryOperator, VectorField {
-  private static final long serialVersionUID = 3828124845607313545L;
-
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence

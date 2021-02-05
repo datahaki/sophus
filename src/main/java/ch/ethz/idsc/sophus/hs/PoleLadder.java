@@ -21,8 +21,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * 
  * @see SchildLadder */
 public class PoleLadder implements HsTransport, Serializable {
-  private static final long serialVersionUID = 4757879299647479170L;
-
   /** @param hsExponential
    * @param midpointInterface
    * @return */
@@ -53,8 +51,6 @@ public class PoleLadder implements HsTransport, Serializable {
   }
 
   private class Rung implements TensorUnaryOperator {
-    private static final long serialVersionUID = -2072546621888144264L;
-    // ---
     private final Exponential exp_xo;
     private final Exponential exp_xw;
     private final Exponential exp_mi;

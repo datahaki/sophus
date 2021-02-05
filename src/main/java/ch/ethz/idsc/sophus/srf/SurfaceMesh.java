@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.io.Primitives;
 
 public class SurfaceMesh implements Serializable {
-  private static final long serialVersionUID = -1178533125544417721L;
-  // ---
   public final Tensor ind = Tensors.empty();
   public Tensor vrt = Tensors.empty();
 

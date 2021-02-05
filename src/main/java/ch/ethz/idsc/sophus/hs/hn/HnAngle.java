@@ -12,7 +12,6 @@ import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class HnAngle implements Serializable {
-  private static final long serialVersionUID = 5277447052111795047L;
   private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Chop._06);
 
   /** @param x

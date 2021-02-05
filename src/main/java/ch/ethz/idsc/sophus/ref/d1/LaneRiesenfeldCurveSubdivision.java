@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.ext.Integers;
  * "A theoretical development for the computer generation of piecewise polynomial surfaces"
  * by J. M. Lane and R. F. Riesenfeld; IEEE Trans. Pattern Anal. Machine Intell. 2 (1980), 35-46 */
 public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Serializable {
-  private static final long serialVersionUID = 3838781006267892483L;
-
   /** @param midpointInterface
    * @param degree strictly positive
    * @return

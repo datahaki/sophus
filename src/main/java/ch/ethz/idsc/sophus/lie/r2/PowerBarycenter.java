@@ -16,7 +16,6 @@ import ch.ethz.idsc.tensor.sca.Power;
  * "Power Coordinates: A Geometric Construction of Barycentric Coordinates on Convex Polytopes"
  * Max Budninskiy, Beibei Liu, Yiying Tong, Mathieu Desbrun, 2016 */
 public class PowerBarycenter implements BiFunction<Tensor, Scalar, Tensor>, Serializable {
-  private static final long serialVersionUID = 4896170318818822809L;
   private static final Clip CLIP = Clips.interval(0, 2);
 
   /** @param exponent in the interval [0, 2]

@@ -14,8 +14,6 @@ import ch.ethz.idsc.tensor.lie.r2.RotationMatrix;
 /** the term "family" conveys the meaning that the rotation
  * depends on a single parameter, for instance time */
 public class So2Family implements R2RigidFamily, Serializable {
-  private static final long serialVersionUID = 7972932189437272171L;
-  // ---
   private final ScalarUnaryOperator function;
 
   /** @param function that maps to angle */

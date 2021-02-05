@@ -25,7 +25,6 @@ import ch.ethz.idsc.tensor.sca.Factorial;
  * Reference: Neeb
  * Hakenberg.de kernel.nb */
 public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializable {
-  private static final long serialVersionUID = -5427741907026433689L;
   private static final Scalar _0 = RealScalar.ZERO;
   private static final Scalar _1 = RealScalar.ONE;
   private static final int[] SIGN = { 1, -1 };

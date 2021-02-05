@@ -10,7 +10,6 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** 2-point Gauss Legendre quadrature on interval [0, 1] */
 /* package */ class ClothoidCurve2 extends ClothoidCurve {
-  private static final long serialVersionUID = 373620236408313208L;
   private static final Scalar HALF = RealScalar.of(0.5);
   private static final Tensor X = Tensors.vector(-1, 1) //
       .multiply(Sqrt.FUNCTION.apply(RationalScalar.of(1, 3))) //

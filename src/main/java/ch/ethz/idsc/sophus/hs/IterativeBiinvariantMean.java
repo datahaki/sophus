@@ -20,7 +20,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.19-21, 2012 */
 public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
-  private static final long serialVersionUID = -4187301671817042655L;
   private static final int MAX_ITERATIONS = 100;
 
   /** @param hsExponential

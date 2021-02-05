@@ -11,7 +11,6 @@ import ch.ethz.idsc.sophus.math.TensorMetric;
  * 
  * @see Se2CoveringParametric */
 public class Se2Parametric extends Se2CoveringParametric {
-  private static final long serialVersionUID = 5314189280284521768L;
   public static final TensorMetric INSTANCE = new Se2Parametric();
 
   /***************************************************/

@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
 /** Careful: this is not a norm but an ad-invariant, degenerate scalar product + offset
  * that results in biinvariant barycentric coordinates */
 public class HeTarget implements TensorNorm, Serializable {
-  private static final long serialVersionUID = 5493038101860965918L;
-  // ---
   private final TensorNorm tensorNorm;
   private final Scalar offset;
 

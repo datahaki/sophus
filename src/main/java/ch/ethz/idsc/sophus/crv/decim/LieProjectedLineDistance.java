@@ -15,7 +15,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Norm;
 
 public class LieProjectedLineDistance implements LineDistance, Serializable {
-  private static final long serialVersionUID = -6807976429373353347L;
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final LieGroup lieGroup;
@@ -32,8 +31,6 @@ public class LieProjectedLineDistance implements LineDistance, Serializable {
   }
 
   private class NormImpl implements TensorNorm, Serializable {
-    private static final long serialVersionUID = -6474012700471497923L;
-    // ---
     private final LieGroupElement lieBeg;
     private final LieGroupElement lieInv;
     private final Tensor normal;

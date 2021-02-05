@@ -14,8 +14,6 @@ import ch.ethz.idsc.tensor.alg.Last;
 
 /** @see Regularization2Step */
 /* package */ class Regularization2StepCyclic extends Regularization2Step {
-  private static final long serialVersionUID = -7360420847733747046L;
-
   public Regularization2StepCyclic(SplitInterface splitInterface, Scalar factor) {
     super(splitInterface, factor);
   }

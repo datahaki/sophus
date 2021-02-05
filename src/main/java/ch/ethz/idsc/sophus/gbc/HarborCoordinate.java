@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * 
  * @see InversePowerVariogram */
 public class HarborCoordinate implements TensorUnaryOperator {
-  private static final long serialVersionUID = 1837765663914890392L;
-
   /** @param vectorLogManifold
    * @param variogram for instance power to minus two
    * @param sequence */
