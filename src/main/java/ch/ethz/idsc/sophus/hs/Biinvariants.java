@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
 import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
-import ch.ethz.idsc.sophus.dv.InfluenceBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
 import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;

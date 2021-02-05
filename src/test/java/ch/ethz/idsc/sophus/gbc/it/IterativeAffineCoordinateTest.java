@@ -7,8 +7,6 @@ import java.util.List;
 
 import ch.ethz.idsc.sophus.gbc.AffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.amp.Amplifiers;
-import ch.ethz.idsc.sophus.gbc.it.GenesisDeque;
-import ch.ethz.idsc.sophus.gbc.it.IterativeAffineCoordinate;
 import ch.ethz.idsc.sophus.gbc.it.IterativeAffineCoordinate.Evaluation;
 import ch.ethz.idsc.sophus.lie.r2.ConvexHull;
 import ch.ethz.idsc.tensor.RealScalar;

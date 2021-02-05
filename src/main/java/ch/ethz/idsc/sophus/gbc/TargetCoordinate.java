@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.Mahalanobis;
 
 /** target coordinate is the preferred way to evaluate
@@ -38,8 +39,9 @@ public class TargetCoordinate implements Genesis, Serializable {
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return StaticHelper.barycentric( //
-        levers, //
-        NormalizeTotal.FUNCTION.apply(new Mahalanobis(levers).leverages_sqrt().map(variogram)));
+    // Mahalanobis is faster than InfluenceMatrix[...] for this computation
+    InfluenceMatrix influenceMatrix = new Mahalanobis(levers);
+    Tensor vector = NormalizeTotal.FUNCTION.apply(influenceMatrix.leverages_sqrt().map(variogram));
+    return NormalizeTotal.FUNCTION.apply(influenceMatrix.kernel(vector));
   }
 }

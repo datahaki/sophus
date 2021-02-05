@@ -90,8 +90,6 @@ public class MetricCoordinate implements Genesis, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor origin(Tensor levers) {
-    return StaticHelper.barycentric( //
-        levers, //
-        genesis.origin(levers));
+    return StaticHelper.barycentric(levers, genesis.origin(levers));
   }
 }

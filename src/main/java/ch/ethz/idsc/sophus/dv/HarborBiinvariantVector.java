@@ -1,8 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.dv;
 
+import java.io.Serializable;
+
 import ch.ethz.idsc.sophus.hs.BiinvariantVectorFunction;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
+import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Frobenius;
 
@@ -19,6 +22,7 @@ public enum HarborBiinvariantVector {
    * @param sequence
    * @return */
   public static BiinvariantVectorFunction of(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new InfluenceBiinvariantVector(vectorLogManifold, sequence, Frobenius::between);
+    return new InfluenceBiinvariantVector( //
+        vectorLogManifold, sequence, (TensorMetric & Serializable) (x, y) -> Frobenius.between(x, y));
   }
 }

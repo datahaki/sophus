@@ -94,11 +94,12 @@ public class HsDesignTest extends TestCase {
     for (int count = 4; count < 8; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point));
+      Tensor design = new HsDesign(vectorLogManifold).matrix(sequence, point);
+      Mahalanobis mahalanobis = new Mahalanobis(design);
       Tensor sigma_inverse = mahalanobis.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
       // ---
-      Tensor vt = mahalanobis.design();
+      Tensor vt = design;
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
       Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);

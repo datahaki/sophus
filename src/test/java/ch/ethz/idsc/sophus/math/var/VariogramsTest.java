@@ -9,7 +9,7 @@ public class VariogramsTest extends TestCase {
   public void testSimple() {
     for (Variograms variograms : Variograms.values()) {
       ScalarUnaryOperator suo = variograms.of(RealScalar.ONE);
-      System.out.println(suo.toString());
+      suo.toString();
     }
   }
 }

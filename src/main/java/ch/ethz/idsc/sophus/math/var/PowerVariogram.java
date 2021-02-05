@@ -74,7 +74,6 @@ public class PowerVariogram implements ScalarUnaryOperator {
   public Scalar apply(Scalar r) {
     return power.apply(r).multiply(alpha);
   }
-  
 
   @Override // from Object
   public final String toString() {

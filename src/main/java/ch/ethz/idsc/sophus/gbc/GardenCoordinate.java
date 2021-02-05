@@ -38,6 +38,8 @@ public class GardenCoordinate implements TensorUnaryOperator, VectorField {
 
   @Override
   public Tensor apply(Tensor point) {
+    // building influence matrix at point is warranted since the mahalanobis forms
+    // exist only at sequence points
     return StaticHelper.barycentric( //
         hsDesign.matrix(sequence, point), //
         NormalizeTotal.FUNCTION.apply(distances.apply(point).map(variogram))); // point as input to target
