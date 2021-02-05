@@ -35,7 +35,7 @@ public class Se2RigidMotionFitTest extends TestCase {
       Se2ForwardAction se2ForwardAction = new Se2ForwardAction(xya);
       Tensor target = Tensor.of(points.stream().map(se2ForwardAction::apply));
       Tensor rigidMotionFit = Se2RigidMotionFit.of(points, target);
-      Chop._10.requireClose(xya, rigidMotionFit);
+      Chop._08.requireClose(xya, rigidMotionFit);
     }
   }
 

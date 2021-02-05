@@ -15,7 +15,7 @@ public class SonExponentialTest extends TestCase {
       Tensor q = SonRandomSample.of(n).randomSample(random);
       SonExponential sonExponential = new SonExponential(p);
       Tensor vp = sonExponential.log(q);
-      SonMemberQ.of(Chop._08).requireTangent(p, vp);
+      new TSonMemberQ(p).require(vp);
       Tensor qr = sonExponential.exp(vp);
       Chop._06.requireClose(q, qr);
       Tensor log = sonExponential.vectorLog(q);
