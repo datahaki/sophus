@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -22,8 +21,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrExponentialTest extends TestCase {
-//  private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
-
+  // private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
     GrExponential grExponential = new GrExponential(x);

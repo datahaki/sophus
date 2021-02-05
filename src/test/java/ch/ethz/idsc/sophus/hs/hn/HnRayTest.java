@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -13,8 +12,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class HnRayTest extends TestCase {
-  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
-
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -26,7 +23,7 @@ public class HnRayTest extends TestCase {
       Tolerance.CHOP.requireClose(HnNorm.INSTANCE.norm(v), RealScalar.ONE);
       Tolerance.CHOP.requireZero(HnBilinearForm.between(x, v));
       Tensor y = hnRay.shoot(v, RandomVariate.of(distribution));
-      HS_MEMBER_Q.requirePoint(y);
+      HnMemberQ.INSTANCE.require(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
       Sign.requirePositiveOrZero(dxy);
     }

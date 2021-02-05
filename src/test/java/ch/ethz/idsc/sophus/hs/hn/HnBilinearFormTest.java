@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -17,15 +16,13 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class HnBilinearFormTest extends TestCase {
-  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
-
   public void testNegative() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      HS_MEMBER_Q.requirePoint(p);
-      HS_MEMBER_Q.requirePoint(q);
+      HnMemberQ.INSTANCE.require(p);
+      HnMemberQ.INSTANCE.require(q);
       Scalar pq = HnBilinearForm.between(p, q);
       assertTrue(Scalars.lessEquals(pq, RealScalar.ONE.negate()));
     }
