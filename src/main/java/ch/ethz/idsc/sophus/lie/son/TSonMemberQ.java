@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.son;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.LinearSolve;

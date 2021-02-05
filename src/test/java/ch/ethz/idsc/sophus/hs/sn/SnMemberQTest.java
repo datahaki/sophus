@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;

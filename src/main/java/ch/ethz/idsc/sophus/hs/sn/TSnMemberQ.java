@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;

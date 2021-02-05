@@ -1,22 +1,22 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.hn;
+package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Chop;
 
-public class THnMemberQ implements MemberQ, Serializable {
+public class TSpdMemberQ implements MemberQ, Serializable {
   private final Tensor x;
 
-  public THnMemberQ(Tensor x) {
+  public TSpdMemberQ(Tensor x) {
     this.x = Objects.requireNonNull(x);
   }
 
   @Override // from MemberQ
   public boolean isMember(Tensor v) {
-    return Chop._06.isZero(HnBilinearForm.between(x, v));
+    // TODO tangent check should be simple in SPD
+    throw new UnsupportedOperationException();
   }
 }

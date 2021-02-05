@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.hs.MemberQ;
+import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;

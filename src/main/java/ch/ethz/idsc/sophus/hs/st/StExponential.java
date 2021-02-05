@@ -3,11 +3,9 @@ package ch.ethz.idsc.sophus.hs.st;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** In the literature, the Stiefel manifold is denoted either as
  * St(n,p), or V_k(R^n)
@@ -22,14 +20,12 @@ import ch.ethz.idsc.tensor.mat.Tolerance;
  * by Helga Baum, 2005 */
 // TODO class contains unimplemented methods
 public class StExponential implements Exponential, TangentSpace, Serializable {
-  private static final HsMemberQ HS_MEMBER_Q = StMemberQ.of(Tolerance.CHOP);
-  // ---
   @SuppressWarnings("unused")
   private final Tensor x;
 
   /** @param x column-orthogonal rectangular matrix with dimensions n x p */
   public StExponential(Tensor x) {
-    this.x = HS_MEMBER_Q.requirePoint(x);
+    this.x = StMemberQ.INSTANCE.require(x);
   }
 
   @Override
