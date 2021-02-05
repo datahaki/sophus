@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -15,7 +14,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 /** geodesic on n-dimensional sphere embedded in R^(n+1)
@@ -30,7 +28,6 @@ public enum SnGeodesic implements GeodesicInterface {
   INSTANCE;
 
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._10);
 
   @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
@@ -54,6 +51,6 @@ public enum SnGeodesic implements GeodesicInterface {
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
-    return NORMALIZE.apply(HS_MEMBER_Q.requirePoint(p).add(HS_MEMBER_Q.requirePoint(q)));
+    return NORMALIZE.apply(SnMemberQ.INSTANCE.require(p).add(SnMemberQ.INSTANCE.require(q)));
   }
 }

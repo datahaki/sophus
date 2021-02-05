@@ -1,14 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.hn.HnAngle;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.VectorAngle;
 import ch.ethz.idsc.tensor.sca.ArcCos;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 
 /** The distance between two point on the d-dimensional sphere
@@ -25,11 +23,9 @@ import ch.ethz.idsc.tensor.sca.Clips;
 public enum SnMetric implements TensorMetric {
   INSTANCE;
 
-  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._10);
-
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return ArcCos.FUNCTION.apply( //
-        Clips.absoluteOne().apply((Scalar) HS_MEMBER_Q.requirePoint(p).dot(HS_MEMBER_Q.requirePoint(q))));
+        Clips.absoluteOne().apply((Scalar) SnMemberQ.INSTANCE.require(p).dot(SnMemberQ.INSTANCE.require(q))));
   }
 }

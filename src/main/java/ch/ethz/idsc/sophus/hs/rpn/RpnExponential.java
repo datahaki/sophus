@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.hs.rpn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.sn.SnMemberQ;
 import ch.ethz.idsc.sophus.hs.sn.SnMetric;
+import ch.ethz.idsc.sophus.hs.sn.TSnMemberQ;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -18,13 +18,11 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.red.Projection;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** real projective plane */
 public class RpnExponential implements Exponential, TangentSpace, Serializable {
-  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._06);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
@@ -34,7 +32,7 @@ public class RpnExponential implements Exponential, TangentSpace, Serializable {
   /** @param x on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
   public RpnExponential(Tensor x) {
-    this.x = HS_MEMBER_Q.requirePoint(x);
+    this.x = SnMemberQ.INSTANCE.require(x);
     projection = Projection.on(x);
     if (x.length() < 2)
       throw TensorRuntimeException.of(x);
@@ -42,7 +40,7 @@ public class RpnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    HS_MEMBER_Q.requireTangent(x, v);
+    new TSnMemberQ(x).require(v);
     Scalar vn = Hypot.ofVector(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     y = NORMALIZE.apply(y);
@@ -55,7 +53,7 @@ public class RpnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    HS_MEMBER_Q.requirePoint(y);
+    SnMemberQ.INSTANCE.require(y);
     Scalar d_xyp = SnMetric.INSTANCE.distance(x, y);
     Scalar d_xyn = SnMetric.INSTANCE.distance(x, y.negate());
     if (Scalars.lessEquals(d_xyp, d_xyn))

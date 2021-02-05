@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrExponentialTest extends TestCase {
-  private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
+//  private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
 
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
@@ -30,7 +30,7 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = StaticHelper.projectTangent(x, pre);
-    HS_MEMBER_Q.requireTangent(x, v);
+    new TGrMemberQ(x).require(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
@@ -47,7 +47,7 @@ public class GrExponentialTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = StaticHelper.projectTangent(x, pre);
-    HS_MEMBER_Q.requireTangent(x, v);
+    new TGrMemberQ(x).require(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
     Tensor log = grExponential.log(exp);
@@ -77,7 +77,7 @@ public class GrExponentialTest extends TestCase {
       GrExponential grExponential = new GrExponential(x);
       Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
       Tensor v = StaticHelper.projectTangent(x, pre);
-      GrMemberQ.of(Chop._06).requireTangent(x, v);
+      new TGrMemberQ(x).require(v);
       assertFalse(Chop._05.allZero(v));
       Tensor exp = grExponential.exp(v);
       GrassmannQ.require(exp);

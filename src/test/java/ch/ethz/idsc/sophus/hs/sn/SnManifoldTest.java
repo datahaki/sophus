@@ -52,24 +52,26 @@ public class SnManifoldTest extends TestCase {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 3; d < 7; ++d)
         for (int n = d + 1; n < d + 3; ++n)
-          try {
-            Tensor center = UnitVector.of(d, 0);
-            Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
-            int count = 0;
-            for (Tensor mean : sequence) {
-              Tensor weights = barycentricCoordinate.weights(sequence, mean);
-              VectorQ.requireLength(weights, n);
-              AffineQ.require(weights, Chop._08);
-              Chop._06.requireClose(weights, UnitVector.of(n, count));
-              Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
-              Chop._06.requireAllZero(evaluate);
-              Chop._03.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
-              ++count;
-            }
-          } catch (Exception exception) {
-            ++fails;
+        // try
+        {
+          Tensor center = UnitVector.of(d, 0);
+          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
+          int count = 0;
+          for (Tensor mean : sequence) {
+            Tensor weights = barycentricCoordinate.weights(sequence, mean);
+            VectorQ.requireLength(weights, n);
+            AffineQ.require(weights, Chop._08);
+            Chop._06.requireClose(weights, UnitVector.of(n, count));
+            Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
+            Chop._06.requireAllZero(evaluate);
+            Chop._03.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
+            ++count;
           }
-    assertTrue(fails < 3);
+        }
+    // catch (Exception exception) {
+    // ++fails;
+    // }
+    // assertTrue(fails < 3);
   }
 
   public void testBiinvariance() {

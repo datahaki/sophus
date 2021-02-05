@@ -17,7 +17,7 @@ public class GrRandomSampleTest extends TestCase {
     for (int k = 1; k < 5; ++k) {
       RandomSampleInterface grRandomSample = Serialization.copy(GrRandomSample.of(k + 3, k));
       Tensor x = RandomSample.of(grRandomSample);
-      GrMemberQ.of(Chop._07).requirePoint(x);
+      GrMemberQ.INSTANCE.require(x);
     }
   }
 
@@ -25,7 +25,7 @@ public class GrRandomSampleTest extends TestCase {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface grRandomSample = Serialization.copy(GrRandomSample.of(n, n));
       Tensor x = RandomSample.of(grRandomSample);
-      GrMemberQ.of(Chop._07).requirePoint(x);
+      GrMemberQ.INSTANCE.require(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));
     }
   }
