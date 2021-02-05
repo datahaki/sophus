@@ -7,14 +7,12 @@ import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
 import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
 import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
-import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
-import ch.ethz.idsc.sophus.gbc.LeveragesCoordinate;
+import ch.ethz.idsc.sophus.gbc.LeveragesGenesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
@@ -59,6 +57,7 @@ public enum Biinvariants implements Biinvariant {
     }
   },
   /** bi-invariant, identical to anchor */
+  // TODO remove ANCHOR, rename TARGET
   TARGET {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
@@ -67,7 +66,7 @@ public enum Biinvariants implements Biinvariant {
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, TargetCoordinate.of(variogram), sequence);
+      return HsCoordinates.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
     }
 
     @Override
@@ -89,9 +88,10 @@ public enum Biinvariants implements Biinvariant {
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      BarycentricCoordinate barycentricCoordinate = LeveragesCoordinate.slow(vectorLogManifold, variogram);
-      Objects.requireNonNull(sequence);
-      return point -> barycentricCoordinate.weights(sequence, point);
+      return HsCoordinates.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
+      // BarycentricCoordinate barycentricCoordinate = LeveragesCoordinate.slow(vectorLogManifold, variogram);
+      // Objects.requireNonNull(sequence);
+      // return point -> barycentricCoordinate.weights(sequence, point);
     }
 
     @Override

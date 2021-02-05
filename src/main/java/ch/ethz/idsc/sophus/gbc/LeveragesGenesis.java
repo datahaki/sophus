@@ -15,25 +15,27 @@ import ch.ethz.idsc.tensor.mat.Mahalanobis;
 /** target coordinate is the preferred way to evaluate
  * inverse leverage coordinates.
  * 
- * the slower alternative is {@link AnchorCoordinate}.
+ * <p>References:
+ * Reference:
+ * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
+ * by Jan Hakenberg, 2020
  * 
- * <p>Reference:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
  * @see LeveragesCoordinate
  * @see LeveragesDistanceVector */
-public class TargetCoordinate implements Genesis, Serializable {
+public class LeveragesGenesis implements Genesis, Serializable {
   /** @param variogram
    * @return */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return new TargetCoordinate(Objects.requireNonNull(variogram));
+    return new LeveragesGenesis(Objects.requireNonNull(variogram));
   }
 
   /***************************************************/
   private final ScalarUnaryOperator variogram;
 
-  private TargetCoordinate(ScalarUnaryOperator variogram) {
+  private LeveragesGenesis(ScalarUnaryOperator variogram) {
     this.variogram = variogram;
   }
 

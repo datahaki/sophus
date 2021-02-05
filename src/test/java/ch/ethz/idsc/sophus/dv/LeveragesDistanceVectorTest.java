@@ -1,20 +1,25 @@
 // code by jph
 package ch.ethz.idsc.sophus.dv;
 
+import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
+import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
+import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
+import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 /** anchor == target */
@@ -51,6 +56,38 @@ public class LeveragesDistanceVectorTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(distribution, 3);
       Chop._08.requireClose(w1.apply(point), w2.apply(point));
+    }
+  }
+
+  public void testDistances() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    WeightingInterface w1 = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
+    // WeightingInterface w2 = new AnchorDistances(vectorLogManifold);
+    for (int length = 4; length < 10; ++length) {
+      Tensor sequence = RandomVariate.of(distribution, length, 3);
+      Tensor point = RandomVariate.of(distribution, 3);
+      w1.weights(sequence, point);
+      // Chop._07.requireClose( //
+      //
+      // w2.weights(sequence, point));
+    }
+  }
+
+  public void testSimple() {
+    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    ScalarUnaryOperator variogram = s -> s;
+    // AnchorDistances anchorDistances = new AnchorDistances(vectorLogManifold);
+    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
+    for (int length = 4; length < 10; ++length) {
+      Tensor sequence = RandomVariate.of(distribution, length, 3);
+      Tensor point = RandomVariate.of(distribution, 3);
+      // BiinvariantVector biinvariantVector = anchorDistances.biinvariantVector(sequence, point);
+      WeightingInterface weightingInterface = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
+      // Tensor dmah =
+      weightingInterface.weights(sequence, point);
+      // Chop._10.requireClose(biinvariantVector.distances(), dmah);
+      // Chop._10.requireClose(biinvariantVector.weighting(variogram), NormalizeTotal.FUNCTION.apply(dmah));
     }
   }
 }

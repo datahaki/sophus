@@ -5,8 +5,8 @@ import java.util.Random;
 
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
+import ch.ethz.idsc.sophus.gbc.LeveragesGenesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.gbc.TargetCoordinate;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.s2.S2Exponential;
@@ -156,7 +156,7 @@ public class IterativeCoordinateTest extends TestCase {
   private static final Genesis[] GENESIS = { //
       ThreePointCoordinate.of(Barycenter.MEAN_VALUE), //
       MetricCoordinate.affine(), //
-      TargetCoordinate.of(InversePowerVariogram.of(2)), //
+      LeveragesGenesis.of(InversePowerVariogram.of(2)), //
   };
 
   public void testS2() {

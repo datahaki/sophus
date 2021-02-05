@@ -19,8 +19,8 @@ public class SpdManifoldTest extends TestCase {
     return new BarycentricCoordinate[] { //
         HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(1))), //
         HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(2))), //
-        LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        // LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
+        // LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
         LeveragesCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         LeveragesCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
     };
