@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.bezier;
 
+import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.ethz.idsc.sophus.usr.AssertFail;
@@ -14,6 +16,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
+import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -64,9 +67,15 @@ public class BezierFunctionTest extends TestCase {
 
   public void testFailEmpty() {
     AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty()));
+    AssertFail.of(() -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
   }
 
   public void testFailScalar() {
     AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO));
+  }
+
+  public void testFailNull() {
+    AssertFail.of(() -> BezierFunction.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
+    AssertFail.of(() -> BezierFunction.of((BinaryAverage) null, Tensors.vector(1, 2, 3)));
   }
 }
