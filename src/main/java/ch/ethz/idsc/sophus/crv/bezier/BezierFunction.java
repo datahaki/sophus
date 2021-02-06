@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv.spline;
+package ch.ethz.idsc.sophus.crv.bezier;
 
 import java.util.Objects;
 
@@ -9,14 +9,18 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
-/** <a href="https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm">
- * De Casteljau's algorithm</a> for the evaluation of Bezier curves.
+/** De Casteljau's algorithm for the evaluation of Bezier curves, i.e. the splitting operation
+ * is between two elements (not a weighted average between many). The binary split is provided
+ * via the interface {@link BinaryAverage}.
  *
- * <p>For parameters in the unit interval [0, 1] the function gives
- * values "in between" the control points.
+ * <p>For parameters in the unit interval [0, 1] the function gives values "in between" the
+ * control points.
  * 
- * <p>BezierFunction can be used for extrapolation when using
- * parameters outside the interval.
+ * <p>BezierFunction can be used for extrapolation when using parameters outside the unit
+ * interval.
+ * 
+ * <p>Reference:
+ * <a href="https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm">De Casteljau's algorithm</a>
  * 
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/BezierFunction.html">BezierFunction</a> */

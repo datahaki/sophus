@@ -1,16 +1,14 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv.spline;
+package ch.ethz.idsc.sophus.crv.bezier;
 
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -35,17 +33,6 @@ public class BezierExtrapolationTest extends TestCase {
     Chop._14.requireClose(tensor, result);
   }
 
-  public void testMask() {
-    assertEquals(BezierExtrapolation.mask(2), Tensors.fromString("{-1, 2}"));
-    assertEquals(BezierExtrapolation.mask(3), Tensors.fromString("{1/4, -3/2, 9/4}"));
-    assertEquals(BezierExtrapolation.mask(4), Tensors.fromString("{-1/27, 4/9, -16/9, 64/27}"));
-    for (int n = 2; n < 10; ++n) {
-      Tensor mask = BezierExtrapolation.mask(n);
-      assertEquals(Total.of(mask), RealScalar.ONE);
-      ExactTensorQ.require(mask);
-    }
-  }
-
   public void testFailScalar() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGeodesic.INSTANCE);
     AssertFail.of(() -> tensorUnaryOperator.apply(RealScalar.ONE));
@@ -64,5 +51,9 @@ public class BezierExtrapolationTest extends TestCase {
   public void testFailSe2() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
     AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.vector(1, 2, 3)));
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> BezierExtrapolation.of(null));
   }
 }
