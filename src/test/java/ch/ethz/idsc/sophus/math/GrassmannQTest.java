@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.gr;
+package ch.ethz.idsc.sophus.math;
 
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;

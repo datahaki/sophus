@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Scalar;
@@ -12,11 +13,11 @@ public class TSnMemberQ implements MemberQ, Serializable {
   private final Tensor x;
 
   public TSnMemberQ(Tensor x) {
-    this.x = x;
+    this.x = Objects.requireNonNull(x);
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor v) {
+  public boolean test(Tensor v) {
     // verifies that v is orthogonal to base point x
     return Chop._06.isZero((Scalar) x.dot(v)); // errors of up to 1E-9 are expected
   }

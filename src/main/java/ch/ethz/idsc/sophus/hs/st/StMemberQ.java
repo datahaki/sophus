@@ -9,7 +9,7 @@ public enum StMemberQ implements MemberQ {
   INSTANCE;
 
   @Override
-  public boolean isMember(Tensor x) {
+  public boolean test(Tensor x) {
     // FIXME
     return OrthogonalMatrixQ.of(x);
   }

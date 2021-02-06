@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.math.GrassmannQ;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;

@@ -13,7 +13,7 @@ public enum HnMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean isMember(Tensor x) {
+  public boolean test(Tensor x) {
     Scalar xn = Last.of(x);
     if (Scalars.lessEquals(RealScalar.ONE, xn))
       return Chop._08.isClose(HnNormSquared.INSTANCE.norm(x), RealScalar.ONE.negate());

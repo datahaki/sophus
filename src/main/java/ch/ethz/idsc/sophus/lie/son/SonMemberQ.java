@@ -12,7 +12,7 @@ public enum SonMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean isMember(Tensor x) {
+  public boolean test(Tensor x) {
     return Tolerance.CHOP.isClose(Det.of(x), RealScalar.ONE) //
         && OrthogonalMatrixQ.of(x);
   }

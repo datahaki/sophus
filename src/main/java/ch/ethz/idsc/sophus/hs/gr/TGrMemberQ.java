@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 
+/** tangent space at given point x */
 public class TGrMemberQ implements MemberQ, Serializable {
   private final Tensor x;
 
@@ -17,7 +18,7 @@ public class TGrMemberQ implements MemberQ, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor v) {
+  public boolean test(Tensor v) {
     return SymmetricMatrixQ.of(v, Tolerance.CHOP) //
         && Tolerance.CHOP.isClose(x.dot(v).add(v.dot(x)), v);
   }

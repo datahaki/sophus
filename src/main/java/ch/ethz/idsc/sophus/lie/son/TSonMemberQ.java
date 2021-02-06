@@ -18,7 +18,7 @@ public class TSonMemberQ implements MemberQ, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor v) {
+  public boolean test(Tensor v) {
     return AntisymmetricMatrixQ.of(LinearSolve.of(x, v), Chop._08);
   }
 }

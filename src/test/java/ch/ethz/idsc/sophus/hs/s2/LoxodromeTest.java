@@ -15,6 +15,6 @@ public class LoxodromeTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(Loxodrome.of(RealScalar.of(0.1)));
     Tensor tensor = Subdivide.of(-1, 100, 60).map(scalarTensorFunction);
-    assertTrue(tensor.stream().allMatch(SnMemberQ.INSTANCE::isMember));
+    assertTrue(tensor.stream().allMatch(SnMemberQ.INSTANCE::test));
   }
 }

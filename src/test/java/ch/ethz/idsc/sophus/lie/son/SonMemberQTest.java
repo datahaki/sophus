@@ -16,13 +16,13 @@ public class SonMemberQTest extends TestCase {
   public void testSimple() {
     Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
     new TSonMemberQ(IdentityMatrix.of(3)).require(wedge);
-    assertFalse(new TSonMemberQ(So3TestHelper.spawn_So3()).isMember(wedge));
+    assertFalse(new TSonMemberQ(So3TestHelper.spawn_So3()).test(wedge));
   }
 
   public void testDet1() {
     Tensor nondet = DiagonalMatrix.of(1, 1, -1);
     assertEquals(Det.of(nondet), RealScalar.ONE.negate());
-    assertFalse(SonMemberQ.INSTANCE.isMember(nondet));
+    assertFalse(SonMemberQ.INSTANCE.test(nondet));
   }
 
   public void testNullFail() {

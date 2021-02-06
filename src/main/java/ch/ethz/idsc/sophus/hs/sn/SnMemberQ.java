@@ -11,7 +11,7 @@ public enum SnMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean isMember(Tensor x) {
+  public boolean test(Tensor x) {
     return Tolerance.CHOP.isClose(Hypot.ofVector(x), RealScalar.ONE);
   }
 }

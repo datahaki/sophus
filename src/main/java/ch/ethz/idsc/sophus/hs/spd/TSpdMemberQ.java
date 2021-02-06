@@ -15,7 +15,7 @@ public class TSpdMemberQ implements MemberQ, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor v) {
+  public boolean test(Tensor v) {
     // TODO tangent check should be simple in SPD
     throw new UnsupportedOperationException();
   }
