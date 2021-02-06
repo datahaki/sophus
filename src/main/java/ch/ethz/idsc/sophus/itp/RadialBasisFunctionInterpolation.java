@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.itp;
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
 
 /** implementation of radial basis function for homogeneous spaces
@@ -19,7 +18,7 @@ import ch.ethz.idsc.tensor.mat.LeastSquares;
  * @see Biinvariant
  * @see Kriging */
 public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
-  /** @param tensorUnaryOperator to measure the length of the difference between two points
+  /** @param tensorUnaryOperator to compute distance vector of a given point to the points in sequence
    * @param sequence of points
    * @param values
    * @return */
@@ -27,24 +26,15 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
     return new RadialBasisFunctionInterpolation(tensorUnaryOperator, sequence, values);
   }
 
-  /** Careful: {@link #apply(Tensor)} returns weights that sum up to one but do not reproduce the identity!
-   * 
-   * @param tensorUnaryOperator
-   * @param sequence of points
-   * @return */
-  public static TensorUnaryOperator partitions(TensorUnaryOperator tensorUnaryOperator, Tensor sequence) {
-    return of(tensorUnaryOperator, sequence, IdentityMatrix.of(sequence.length()));
-  }
-
   /***************************************************/
   private final TensorUnaryOperator tensorUnaryOperator;
   private final Tensor weights;
 
   private RadialBasisFunctionInterpolation( //
-      TensorUnaryOperator weightingInterface, Tensor sequence, Tensor values) {
-    this.tensorUnaryOperator = weightingInterface;
+      TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values) {
+    this.tensorUnaryOperator = tensorUnaryOperator;
     weights = LeastSquares.of( //
-        Tensor.of(sequence.stream().map(weightingInterface)), // distance matrix as in Kriging
+        Tensor.of(sequence.stream().map(tensorUnaryOperator)), // distance matrix as in Kriging
         values);
   }
 

@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv.spline;
+package ch.ethz.idsc.sophus.crv.bri;
 
 import java.util.stream.IntStream;
 

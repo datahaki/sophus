@@ -9,8 +9,10 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.var.PowerVariogram;
 import ch.ethz.idsc.sophus.math.var.Variograms;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
@@ -63,7 +65,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     for (Biinvariant biinvariant : PDA) {
       TensorUnaryOperator weightingInterface = biinvariant.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 2), sequence);
-      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.partitions(weightingInterface, sequence);
+      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionWeighting.of(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._08.requireClose(tensor, UnitVector.of(n, index));
@@ -73,5 +75,9 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
         AffineQ.require(weights, Chop._08);
       }
     }
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> RadialBasisFunctionInterpolation.of(null, Tensors.empty(), Tensors.empty()));
   }
 }
