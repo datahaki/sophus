@@ -3,12 +3,14 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -47,6 +49,16 @@ public class SpdExponentialTest extends TestCase {
       Chop._08.requireClose(ph, qh);
       Tensor vector = spdExpP.vectorLog(q);
       VectorQ.requireLength(vector, n * (n + 1) / 2);
+    }
+  }
+
+  public void testIdentity() {
+    for (int n = 1; n < 4; ++n) {
+      Exponential exponential = new SpdExponential(IdentityMatrix.of(n));
+      Tensor x = TestHelper.generateSim(n);
+      Chop._08.requireClose(exponential.exp(x), Spd0Exponential.INSTANCE.exp(x));
+      Tensor p = TestHelper.generateSpd(n);
+      Chop._08.requireClose(exponential.log(p), Spd0Exponential.INSTANCE.log(p));
     }
   }
 

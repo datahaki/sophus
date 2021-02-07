@@ -9,12 +9,12 @@ import ch.ethz.idsc.tensor.mat.LowerTriangularize;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SpdMatrixExponentialTest extends TestCase {
+public class Spd0ExponentialTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
       Tensor x = TestHelper.generateSim(n);
-      Tensor g = SpdMatrixExponential.INSTANCE.exp(x);
-      Tensor r = SpdMatrixExponential.INSTANCE.log(g);
+      Tensor g = Spd0Exponential.INSTANCE.exp(x);
+      Tensor r = Spd0Exponential.INSTANCE.log(g);
       Chop._07.requireClose(x, r);
     }
   }
@@ -22,7 +22,7 @@ public class SpdMatrixExponentialTest extends TestCase {
   public void testMatrixExp() {
     for (int n = 1; n < 5; ++n) {
       Tensor x = TestHelper.generateSim(n);
-      Tensor exp1 = SpdMatrixExponential.INSTANCE.exp(x);
+      Tensor exp1 = Spd0Exponential.INSTANCE.exp(x);
       Tensor exp2 = MatrixExp.of(x);
       Chop._07.requireClose(exp1, exp2);
     }
@@ -31,7 +31,7 @@ public class SpdMatrixExponentialTest extends TestCase {
   public void testMatrixLog() {
     for (int count = 0; count < 10; ++count) {
       Tensor x = TestHelper.generateSpd(2);
-      Tensor exp1 = SpdMatrixExponential.INSTANCE.log(x);
+      Tensor exp1 = Spd0Exponential.INSTANCE.log(x);
       Tensor exp2 = MatrixLog.of(x);
       Chop._08.requireClose(exp1, exp2);
     }
@@ -39,11 +39,11 @@ public class SpdMatrixExponentialTest extends TestCase {
 
   public void testExpNonSymmetricFail() {
     Tensor x = LowerTriangularize.of(TestHelper.generateSim(4));
-    AssertFail.of(() -> SpdMatrixExponential.INSTANCE.exp(x));
+    AssertFail.of(() -> Spd0Exponential.INSTANCE.exp(x));
   }
 
   public void testLogNonSymmetricFail() {
     Tensor g = LowerTriangularize.of(TestHelper.generateSpd(4));
-    AssertFail.of(() -> SpdMatrixExponential.INSTANCE.log(g));
+    AssertFail.of(() -> Spd0Exponential.INSTANCE.log(g));
   }
 }

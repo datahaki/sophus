@@ -29,7 +29,7 @@ public enum SpdPointExponential {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
     Tensor pp = matrixSqrt.sqrt();
     Tensor pn = matrixSqrt.sqrt_inverse();
-    return pp.dot(SpdMatrixExponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
+    return pp.dot(Spd0Exponential.INSTANCE.exp(Symmetrize.of(pn.dot(w).dot(pn)))).dot(pp);
   }
 
   /** @param p
@@ -39,6 +39,6 @@ public enum SpdPointExponential {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
     Tensor pp = matrixSqrt.sqrt();
     Tensor pn = matrixSqrt.sqrt_inverse();
-    return pp.dot(SpdMatrixExponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp);
+    return pp.dot(Spd0Exponential.INSTANCE.log(Symmetrize.of(pn.dot(q).dot(pn)))).dot(pp);
   }
 }

@@ -8,7 +8,9 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 
-/** SPD == Symmetric positive definite == Sym+
+/** Exponential map at IdentityMatrix in SPD
+ * 
+ * SPD == Symmetric positive definite == Sym+
  * 
  * <pre>
  * Exp: sim (n) -> Sym+(n)
@@ -27,7 +29,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdExponential */
-public enum SpdMatrixExponential implements Exponential {
+public enum Spd0Exponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential

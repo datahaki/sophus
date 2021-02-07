@@ -12,9 +12,9 @@ public class SpdMetricTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {
       Tensor g = TestHelper.generateSpd(n);
-      Scalar dP = StaticHelper.nSquared(g);
+      Scalar dP = StaticHelper.norm(g);
       Tensor ginv = Symmetrize.of(Inverse.of(g));
-      Scalar dN = StaticHelper.nSquared(ginv);
+      Scalar dN = StaticHelper.norm(ginv);
       Chop._06.requireClose(dP, dN);
     }
   }

@@ -12,7 +12,6 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
-import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
  * 
@@ -32,7 +31,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * 
  * @see MatrixExp
  * @see MatrixLog
- * @see SpdMatrixExponential */
+ * @see Spd0Exponential */
 public class SpdExponential implements Exponential, Serializable {
   private final Tensor pp;
   private final Tensor pn;
@@ -45,22 +44,14 @@ public class SpdExponential implements Exponential, Serializable {
     pn = matrixSqrt.sqrt_inverse();
   }
 
-  /** @param matrix
-   * @param pn
-   * @return
-   * @see BasisTransform#ofForm(Tensor, Tensor) */
-  private static Tensor basis(Tensor matrix, Tensor pn) {
-    return Symmetrize.of(pn.dot(matrix).dot(pn));
-  }
-
   @Override // from Exponential
   public Tensor exp(Tensor w) {
-    return basis(SpdMatrixExponential.INSTANCE.exp(basis(w, pn)), pp);
+    return basis(Spd0Exponential.INSTANCE.exp(basis(w, pn)), pp);
   }
 
   @Override // from Exponential
   public Tensor log(Tensor q) {
-    return basis(SpdMatrixExponential.INSTANCE.log(basis(q, pn)), pp);
+    return basis(Spd0Exponential.INSTANCE.log(basis(q, pn)), pp);
   }
 
   @Override // from TangentSpace
@@ -76,6 +67,14 @@ public class SpdExponential implements Exponential, Serializable {
    * @return
    * @see SpdMetric */
   /* package */ Scalar distance(Tensor q) {
-    return Sqrt.FUNCTION.apply(StaticHelper.nSquared(basis(q, pn)));
+    return StaticHelper.norm(basis(q, pn));
+  }
+
+  /** @param matrix
+   * @param v
+   * @return
+   * @see BasisTransform#ofForm(Tensor, Tensor) */
+  private static Tensor basis(Tensor matrix, Tensor v) {
+    return Symmetrize.of(v.dot(matrix).dot(v));
   }
 }

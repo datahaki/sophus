@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -12,6 +13,7 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
   /** @param n
    * @return symmetric matrix */
   static Tensor generateSim(int n) {
+    Integers.requirePositive(n);
     Distribution distribution = UniformDistribution.of(-1, 1);
     Tensor matrix = RandomVariate.of(distribution, n, n);
     return Symmetrize.of(matrix);
@@ -20,6 +22,6 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
   /** @param n
    * @return symmetric positive definite */
   static Tensor generateSpd(int n) {
-    return SpdMatrixExponential.INSTANCE.exp(generateSim(n));
+    return Spd0Exponential.INSTANCE.exp(generateSim(n));
   }
 }
