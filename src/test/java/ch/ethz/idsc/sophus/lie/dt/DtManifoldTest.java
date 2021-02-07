@@ -18,7 +18,7 @@ import junit.framework.TestCase;
 
 public class DtManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtManifold.HS_EXP);
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //

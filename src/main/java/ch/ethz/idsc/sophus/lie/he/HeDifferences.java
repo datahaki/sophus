@@ -5,5 +5,5 @@ import ch.ethz.idsc.sophus.lie.LieDifferences;
 
 public enum HeDifferences {
   ;
-  public static final LieDifferences INSTANCE = new LieDifferences(HeManifold.HS_EXP);
+  public static final LieDifferences INSTANCE = new LieDifferences(HeManifold.INSTANCE);
 }

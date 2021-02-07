@@ -13,8 +13,8 @@ import ch.ethz.idsc.tensor.Tensor;
 /** all tangent vectors are assumed to be in the tangent space at the neutral element,
  * i.e. given in the basis of TeG */
 public class LieExponential implements HsExponential, VectorLogManifold, Serializable {
-  /** @param lieGroup
-   * @param exponential
+  /** @param lieGroup G
+   * @param exponential at TeG
    * @return */
   public static LieExponential of(LieGroup lieGroup, Exponential exponential) {
     return new LieExponential( //

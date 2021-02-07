@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.LieExponential;
 
 public enum Se3Manifold {
   ;
-  public static final LieExponential INSTANCE = //
-      LieExponential.of(Se3Group.INSTANCE, Se3Exponential.INSTANCE);
+  public static final LieExponential INSTANCE = LieExponential.of( //
+      Se3Group.INSTANCE, //
+      Se3Exponential.INSTANCE);
 }

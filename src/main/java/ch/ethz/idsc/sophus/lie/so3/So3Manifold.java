@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.lie.son.SonGroup;
 
 public enum So3Manifold {
   ;
-  public static final LieExponential INSTANCE = //
-      LieExponential.of(SonGroup.INSTANCE, So3Exponential.INSTANCE);
+  public static final LieExponential INSTANCE = LieExponential.of( //
+      SonGroup.INSTANCE, //
+      So3Exponential.INSTANCE);
 }

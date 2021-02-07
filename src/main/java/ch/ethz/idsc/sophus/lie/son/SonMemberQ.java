@@ -16,9 +16,4 @@ public enum SonMemberQ implements MemberQ {
     return Tolerance.CHOP.isClose(Det.of(x), RealScalar.ONE) //
         && OrthogonalMatrixQ.of(x);
   }
-  //
-  // @Override // from MemberQ
-  // public boolean isTangent(Tensor p, Tensor v) {
-  // return AntisymmetricMatrixQ.of(LinearSolve.of(p, v), chop);
-  // }
 }

@@ -1,11 +1,11 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.dt;
+package ch.ethz.idsc.sophus.lie.son;
 
 import ch.ethz.idsc.sophus.lie.LieExponential;
 
-public enum DtManifold {
+public enum SonManifold {
   ;
   public static final LieExponential INSTANCE = LieExponential.of( //
-      DtGroup.INSTANCE, //
-      DtExponential.INSTANCE);
+      SonGroup.INSTANCE, //
+      SonExponential.INSTANCE);
 }

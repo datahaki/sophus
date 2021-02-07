@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 
 public enum Se2Manifold {
   ;
-  public static final LieExponential INSTANCE = //
-      LieExponential.of(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE);
+  public static final LieExponential INSTANCE = LieExponential.of( //
+      Se2Group.INSTANCE, //
+      Se2CoveringExponential.INSTANCE);
 }

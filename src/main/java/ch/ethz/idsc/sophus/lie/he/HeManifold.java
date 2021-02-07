@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.lie.LieExponential;
 
 public enum HeManifold {
   ;
-  public static final LieExponential HS_EXP = //
-      LieExponential.of(HeGroup.INSTANCE, HeExponential.INSTANCE);
+  public static final LieExponential INSTANCE = LieExponential.of( //
+      HeGroup.INSTANCE, //
+      HeExponential.INSTANCE);
 }
