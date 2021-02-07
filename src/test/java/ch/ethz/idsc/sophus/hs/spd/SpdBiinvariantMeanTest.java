@@ -38,7 +38,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
     assertTrue(fails < 3);
   }
 
-  public void testTransformOn() {
+  public void testTransformSon() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 4; ++n)
       for (int count = 0; count < 5; ++count) {
