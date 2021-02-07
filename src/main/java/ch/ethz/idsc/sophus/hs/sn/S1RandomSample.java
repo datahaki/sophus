@@ -22,6 +22,6 @@ import ch.ethz.idsc.tensor.sca.Clips;
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    return AngleVector.of(RandomVariate.of(DISTRIBUTION));
+    return AngleVector.of(RandomVariate.of(DISTRIBUTION, random));
   }
 }

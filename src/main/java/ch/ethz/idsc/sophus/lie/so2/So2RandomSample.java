@@ -20,6 +20,6 @@ public enum So2RandomSample implements RandomSampleInterface {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    return RotationMatrix.of(RandomVariate.of(DISTRIBUTION));
+    return RotationMatrix.of(RandomVariate.of(DISTRIBUTION, random));
   }
 }

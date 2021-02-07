@@ -25,37 +25,32 @@ public class SnManifoldTest extends TestCase {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(SnManifold.INSTANCE);
 
+  private static Tensor randomCloud(Tensor mean, int n) {
+    Distribution distribution = NormalDistribution.of(0, 0.1);
+    return Tensor.of(RandomVariate.of(distribution, n, mean.length()).stream().map(mean::add).map(NORMALIZE));
+  }
+
   public void testLinearReproduction() {
-    Distribution distribution = NormalDistribution.of(0, 0.2);
-    int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int d = 3; d < 7; ++d)
-        for (int n = d + 1; n < d + 3; ++n)
-          try {
-            Tensor mean = UnitVector.of(d, 0);
-            Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
-            Tensor weights = barycentricCoordinate.weights(sequence, mean);
-            VectorQ.requireLength(weights, n);
-            AffineQ.require(weights, Chop._08);
-            Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
-            Chop._06.requireAllZero(evaluate);
-            Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
-          } catch (Exception exception) {
-            ++fails;
-          }
-    assertTrue(fails < 4);
+      for (int d = 2; d < 6; ++d) {
+        Tensor mean = UnitVector.of(d, 0);
+        for (int n = d + 1; n < d + 3; ++n) {
+          Tensor sequence = randomCloud(mean, n);
+          Tensor weights = barycentricCoordinate.weights(sequence, mean);
+          VectorQ.requireLength(weights, n);
+          AffineQ.require(weights, Chop._08);
+          Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
+          Chop._06.requireAllZero(evaluate);
+          Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
+        }
+      }
   }
 
   public void testLagrangeProperty() {
-    Distribution distribution = NormalDistribution.of(0, 0.2);
-    int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int d = 3; d < 7; ++d)
-        for (int n = d + 1; n < d + 3; ++n)
-        // try
-        {
-          Tensor center = UnitVector.of(d, 0);
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(center::add).map(NORMALIZE));
+      for (int d = 2; d < 6; ++d) {
+        for (int n = d + 1; n < d + 3; ++n) {
+          Tensor sequence = randomCloud(UnitVector.of(d, 0), n);
           int count = 0;
           for (Tensor mean : sequence) {
             Tensor weights = barycentricCoordinate.weights(sequence, mean);
@@ -68,20 +63,16 @@ public class SnManifoldTest extends TestCase {
             ++count;
           }
         }
-    // catch (Exception exception) {
-    // ++fails;
-    // }
-    // assertTrue(fails < 3);
+      }
   }
 
   public void testBiinvariance() {
-    Distribution distribution = NormalDistribution.of(0, 0.2);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int d = 3; d < 7; ++d) {
+      for (int d = 2; d < 6; ++d) {
+        Tensor mean = UnitVector.of(d, 0);
         RandomSampleInterface randomSampleInterface = SonRandomSample.of(d);
         for (int n = d + 1; n < d + 3; ++n) {
-          Tensor mean = UnitVector.of(d, 0);
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(mean::add).map(NORMALIZE));
+          Tensor sequence = randomCloud(mean, n);
           Tensor weights = barycentricCoordinate.weights(sequence, mean);
           VectorQ.requireLength(weights, n);
           AffineQ.require(weights, Chop._08);
@@ -93,8 +84,11 @@ public class SnManifoldTest extends TestCase {
           {
             Tensor matrix = RandomSample.of(randomSampleInterface);
             Tensor mean2 = matrix.dot(mean);
-            Tensor evaluate = new MeanDefect(Tensor.of(sequence.stream().map(matrix::dot)), weights, SnManifold.INSTANCE.exponential(mean2)).tangent();
+            Tensor shifted = Tensor.of(sequence.stream().map(matrix::dot));
+            Tensor evaluate = new MeanDefect(shifted, weights, SnManifold.INSTANCE.exponential(mean2)).tangent();
             Chop._10.requireAllZero(evaluate);
+            Tensor weights2 = barycentricCoordinate.weights(shifted, mean2);
+            Chop._06.requireClose(weights, weights2);
           }
         }
       }
