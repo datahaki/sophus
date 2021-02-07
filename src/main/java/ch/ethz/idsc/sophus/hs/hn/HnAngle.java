@@ -1,51 +1,75 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import java.io.Serializable;
-
 import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
+import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.api.TensorScalarFunction;
+import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class HnAngle implements Serializable {
+public class HnAngle implements TensorScalarFunction {
   private final Tensor x;
-  private final Tensor y;
-  private final Scalar cosh_d;
 
-  public HnAngle(Tensor x, Tensor y) {
-    this.x = x;
-    this.y = y;
-    cosh_d = cosh_d(x, y);
+  /** @param x */
+  public HnAngle(Tensor x) {
+    this.x = HnMemberQ.INSTANCE.require(x);
   }
 
-  public Scalar cosh_d() {
-    return cosh_d;
-  }
-
-  public Scalar angle() {
-    return ArcCosh.FUNCTION.apply(cosh_d);
-  }
-
-  // TODO the presence of this function here hides that log is log_x(y)
-  public Tensor log() {
-    return y.subtract(x.multiply(cosh_d())).multiply(SinhcInverse.FUNCTION.apply(angle()));
-  }
-
-  /** @param x
-   * @param y
+  /** @param y
    * @return result guaranteed to be greater equals 1 */
-  private static Scalar cosh_d(Tensor x, Tensor y) {
-    HnMemberQ.INSTANCE.require(x);
-    HnMemberQ.INSTANCE.require(y);
+  private Scalar _cosh_d(Tensor y) {
     Scalar xy = HnBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, xy))
       return xy;
     // TODO use taylor series
     Chop._08.requireClose(xy, RealScalar.ONE);
     return RealScalar.ONE;
+  }
+
+  @Override
+  public Scalar apply(Tensor y) {
+    return new Inner(y, _cosh_d(y)).angle();
+  }
+
+  public Tensor log(Tensor y) {
+    return new Inner(y, _cosh_d(y)).log();
+  }
+
+  public Tensor vectorLog(Tensor y) {
+    return new Inner(y, _cosh_d(y)).vectorLog();
+  }
+
+  /***************************************************/
+  private class Inner {
+    private final Tensor y;
+    private final Scalar cosh_d;
+    private final Scalar angle;
+
+    private Inner(Tensor y, Scalar cosh_d) {
+      this.y = HnMemberQ.INSTANCE.require(y);
+      this.cosh_d = cosh_d;
+      angle = ArcCosh.FUNCTION.apply(cosh_d);
+    }
+
+    public Scalar angle() {
+      return angle;
+    }
+
+    public Tensor log() {
+      return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(angle));
+    }
+
+    public Tensor vectorLog() {
+      Tensor log = log().extract(0, y.length() - 1);
+      Scalar factor = angle.divide(Hypot.ofVector(log));
+      return DeterminateScalarQ.of(factor) //
+          ? log.multiply(factor)
+          : log;
+    }
   }
 }

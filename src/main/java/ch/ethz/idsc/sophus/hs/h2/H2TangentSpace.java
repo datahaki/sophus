@@ -5,28 +5,20 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.hn.HnAngle;
-import ch.ethz.idsc.sophus.lie.r2.Extract2D;
-import ch.ethz.idsc.tensor.DeterminateScalarQ;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.red.Hypot;
 
 public class H2TangentSpace implements TangentSpace, Serializable {
-  private final Tensor x;
+  private final HnAngle hnAngle;
 
   /** @param x vector of length 3 */
   public H2TangentSpace(Tensor x) {
-    this.x = VectorQ.requireLength(x, 3);
+    VectorQ.requireLength(x, 3);
+    hnAngle = new HnAngle(x);
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
-    HnAngle hnAngle = new HnAngle(x, y);
-    Tensor log = Extract2D.FUNCTION.apply(hnAngle.log());
-    Scalar factor = hnAngle.angle().divide(Hypot.ofVector(log));
-    return DeterminateScalarQ.of(factor) //
-        ? log.multiply(factor)
-        : log;
+    return hnAngle.vectorLog(y);
   }
 }

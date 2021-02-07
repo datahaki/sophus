@@ -15,6 +15,6 @@ public enum HnMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor x, Tensor y) {
-    return new HnAngle(x, y).angle();
+    return new HnAngle(x).apply(y);
   }
 }

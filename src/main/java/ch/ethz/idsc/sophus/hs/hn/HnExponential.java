@@ -17,9 +17,11 @@ import ch.ethz.idsc.tensor.sca.Cosh;
 public class HnExponential implements Exponential, TangentSpace, Serializable {
   private final Tensor x;
   private final THnMemberQ tHnMemberQ;
+  private final HnAngle hnAngle;
 
   public HnExponential(Tensor x) {
-    this.x = HnMemberQ.INSTANCE.require(x);
+    this.x = x;
+    hnAngle = new HnAngle(x);
     tHnMemberQ = new THnMemberQ(x);
   }
 
@@ -33,11 +35,11 @@ public class HnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    return new HnAngle(x, y).log();
+    return hnAngle.log(y);
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
-    return log(y);
+    return log(y); // TODO think about using hnAngle.vectorLog !?
   }
 }
