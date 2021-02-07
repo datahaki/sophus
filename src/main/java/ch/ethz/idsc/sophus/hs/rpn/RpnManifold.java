@@ -3,13 +3,12 @@ package ch.ethz.idsc.sophus.hs.rpn;
 
 import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
-public enum RpnManifold implements HsExponential, VectorLogManifold {
+public enum RpnManifold implements HsExponential {
   INSTANCE;
 
   @Override // from HsExponential

@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -25,9 +26,9 @@ public enum SpdGeodesic implements GeodesicInterface {
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    SpdExponential spdExp = new SpdExponential(p);
-    Tensor w = spdExp.log(q);
-    return scalar -> spdExp.exp(w.multiply(scalar));
+    Exponential exponential = new SpdExponential(p);
+    Tensor w = exponential.log(q);
+    return scalar -> exponential.exp(w.multiply(scalar));
   }
 
   @Override // from GeodesicInterface

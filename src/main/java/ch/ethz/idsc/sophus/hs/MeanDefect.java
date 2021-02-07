@@ -38,7 +38,7 @@ public class MeanDefect implements Serializable {
     tangent = weights.dot(Tensor.of(sequence.stream().map(exponential::log)));
   }
 
-  /** @return tangent vector in the direction of true weighted average 
+  /** @return tangent vector in the direction of true weighted average
    * (however, vector may have the form of a matrix) */
   public Tensor tangent() {
     return tangent;

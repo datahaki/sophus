@@ -6,7 +6,6 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.crv.decim.HsLineDistance.NormImpl;
 import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsMidpoint;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.math.Exponential;
@@ -18,15 +17,15 @@ public class HsMidpointLineDistance implements LineDistance, Serializable {
    * @return */
   public static LineDistance of(LieGroup lieGroup, Exponential exponential) {
     // FIXME flatten log instead of log!
-    return of(LieExponential.of(lieGroup, exponential), LieExponential.of(lieGroup, exponential));
+    return of(LieExponential.of(lieGroup, exponential));
   }
 
   /** @param vectorLogManifold
    * @param hsExponential
    * @return */
-  public static LineDistance of(VectorLogManifold vectorLogManifold, HsExponential hsExponential) {
+  public static LineDistance of(HsExponential hsExponential) {
     return new HsMidpointLineDistance( //
-        new HsLineDistance(vectorLogManifold), //
+        new HsLineDistance(hsExponential), //
         new HsMidpoint(hsExponential));
   }
 

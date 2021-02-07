@@ -3,11 +3,10 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
-public enum HnManifold implements HsExponential, VectorLogManifold {
+public enum HnManifold implements HsExponential {
   INSTANCE;
 
   @Override // from HsExponential
