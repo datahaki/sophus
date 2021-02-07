@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 public enum DtManifold {
   ;
   public static final VectorLogManifold INSTANCE = //
-      LieVectorLogManifold.of(DtGroup.INSTANCE, DtExponential.INSTANCE::vectorLog);
+      LieVectorLogManifold.of(DtGroup.INSTANCE, DtExponential.INSTANCE);
   public static final HsExponential HS_EXP = //
       LieExponential.of(DtGroup.INSTANCE, DtExponential.INSTANCE);
 }

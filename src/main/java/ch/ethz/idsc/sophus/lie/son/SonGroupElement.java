@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.lie.son;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 
 /** Reference: http://ethaneade.com/lie.pdf */
 public class SonGroupElement implements LieGroupElement {
@@ -38,7 +37,7 @@ public class SonGroupElement implements LieGroupElement {
 
   @Override // from LieGroupElement
   public Tensor dL(Tensor v) { // v is skew with dimensions 3 x 3
-    return matrix.dot(new TSonMemberQ(IdentityMatrix.of(matrix.length())).require(v)); // consistent with So3Transport
+    return matrix.dot(TSonMemberQ.INSTANCE.require(v)); // consistent with So3Transport
   }
 
   @Override // from LieGroupElement

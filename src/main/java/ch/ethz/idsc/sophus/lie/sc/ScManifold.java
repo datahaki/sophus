@@ -7,5 +7,5 @@ import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 public enum ScManifold {
   ;
   public static final VectorLogManifold INSTANCE = //
-      LieVectorLogManifold.of(ScGroup.INSTANCE, ScExponential.INSTANCE::log);
+      LieVectorLogManifold.of(ScGroup.INSTANCE, ScExponential.INSTANCE);
 }

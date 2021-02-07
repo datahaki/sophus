@@ -15,6 +15,6 @@ public enum SonTransport implements HsTransport {
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
     Tensor qpinv = q.dot(Inverse.of(p));
-    return vp -> qpinv.dot(new TSonMemberQ(p).require(vp));
+    return vp -> qpinv.dot(vp);
   }
 }

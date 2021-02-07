@@ -1,14 +1,15 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.rn;
+package ch.ethz.idsc.sophus.lie.gln;
 
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
+import ch.ethz.idsc.sophus.lie.son.SonGroup;
 
-public enum RnManifold {
+public enum GlnManifold {
   ;
   public static final VectorLogManifold INSTANCE = //
-      LieVectorLogManifold.of(RnGroup.INSTANCE, RnExponential.INSTANCE);
+      LieVectorLogManifold.of(SonGroup.INSTANCE, GlnExponential.INSTANCE);
   public static final LieExponential HS_EXP = //
-      LieExponential.of(RnGroup.INSTANCE, RnExponential.INSTANCE);
+      LieExponential.of(SonGroup.INSTANCE, GlnExponential.INSTANCE);
 }

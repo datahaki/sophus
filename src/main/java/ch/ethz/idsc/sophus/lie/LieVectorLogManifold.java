@@ -7,25 +7,24 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 public class LieVectorLogManifold implements VectorLogManifold, Serializable {
   /** @param lieGroup
-   * @param vectorLog
+   * @param tangentSpace
    * @return */
-  public static VectorLogManifold of(LieGroup lieGroup, TensorUnaryOperator vectorLog) {
+  public static VectorLogManifold of(LieGroup lieGroup, TangentSpace tangentSpace) {
     return new LieVectorLogManifold( //
         Objects.requireNonNull(lieGroup), //
-        Objects.requireNonNull(vectorLog));
+        Objects.requireNonNull(tangentSpace));
   }
 
   /***************************************************/
   private final LieGroup lieGroup;
-  private final TensorUnaryOperator vectorLog;
+  private final TangentSpace tangentSpace;
 
-  private LieVectorLogManifold(LieGroup lieGroup, TensorUnaryOperator vectorLog) {
+  private LieVectorLogManifold(LieGroup lieGroup, TangentSpace tangentSpace) {
     this.lieGroup = lieGroup;
-    this.vectorLog = vectorLog;
+    this.tangentSpace = tangentSpace;
   }
 
   @Override // from VectorLogManifold
@@ -43,7 +42,7 @@ public class LieVectorLogManifold implements VectorLogManifold, Serializable {
 
     @Override // from TangentSpace
     public Tensor vectorLog(Tensor q) {
-      return vectorLog.apply(lieGroupElement.combine(q));
+      return tangentSpace.vectorLog(lieGroupElement.combine(q));
     }
   }
 }

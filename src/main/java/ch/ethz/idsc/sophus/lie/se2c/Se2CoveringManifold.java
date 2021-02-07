@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 public enum Se2CoveringManifold {
   ;
   public static final VectorLogManifold INSTANCE = //
-      LieVectorLogManifold.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE::log);
+      LieVectorLogManifold.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE);
   public static final LieExponential HS_EXP = //
       LieExponential.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE);
 }
