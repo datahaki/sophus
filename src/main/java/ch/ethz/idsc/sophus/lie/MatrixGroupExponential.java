@@ -10,6 +10,7 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 
 // TODO this class is somewhat obsolete/redundant with LieExponential
+@Deprecated
 public abstract class MatrixGroupExponential implements Exponential, TangentSpace, Serializable {
   private final Tensor p;
 

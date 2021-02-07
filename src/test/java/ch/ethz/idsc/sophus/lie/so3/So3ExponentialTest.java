@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class So3ExponentialTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    Serialization.copy(new So3Exponential(So3TestHelper.spawn_So3()));
+    Serialization.copy(So3Exponential.INSTANCE);
   }
 
   public void testAdjoint() {
@@ -48,13 +48,13 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testFailOrthogonal() {
-    AssertFail.of(() -> new So3Exponential(So3TestHelper.spawn_so3()));
+    AssertFail.of(() -> So3Exponential.INSTANCE.log(So3TestHelper.spawn_so3()));
   }
 
-  public void testFailTangent() {
-    Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
-    new So3Exponential(IdentityMatrix.of(3)).exp(wedge);
-    So3Exponential so3Exponential = new So3Exponential(So3TestHelper.spawn_So3());
-    AssertFail.of(() -> so3Exponential.exp(wedge));
-  }
+//  public void testFailTangent() {
+//    Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
+//    new So3Exponential(IdentityMatrix.of(3)).exp(wedge);
+////    So3Exponential so3Exponential = new So3Exponential(So3TestHelper.spawn_So3());
+//    AssertFail.of(() -> so3Exponential.exp(wedge));
+//  }
 }

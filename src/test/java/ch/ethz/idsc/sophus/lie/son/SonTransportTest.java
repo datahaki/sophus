@@ -40,7 +40,7 @@ public class SonTransportTest extends TestCase {
     new TSonMemberQ(p).require(vp);
     Tensor vq1 = SonTransport.INSTANCE.shift(p, q).apply(vp);
     new TSonMemberQ(q).require(vq1);
-    HsTransport hsTransport = PoleLadder.of(So3Manifold.INSTANCE);
+    HsTransport hsTransport = PoleLadder.of(So3Manifold.HS_EXP);
     Tensor vq2 = hsTransport.shift(p, q).apply(vp);
     Tensor vq3 = SubdivideTransport.of(hsTransport, So3Geodesic.INSTANCE, 100).shift(p, q).apply(vp);
     // TODO does not match
