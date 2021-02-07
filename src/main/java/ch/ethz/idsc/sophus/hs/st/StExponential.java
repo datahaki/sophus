@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.st;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -19,7 +18,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * "Eichfeldtheorie"
  * by Helga Baum, 2005 */
 // TODO class contains unimplemented methods
-public class StExponential implements Exponential, TangentSpace, Serializable {
+public class StExponential implements Exponential, Serializable {
   @SuppressWarnings("unused")
   private final Tensor x;
 

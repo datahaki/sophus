@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
@@ -25,7 +24,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * 
  * @see GlnGroup
  * @see LieGroupElement */
-public enum Se3Exponential implements Exponential, TangentSpace {
+public enum Se3Exponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

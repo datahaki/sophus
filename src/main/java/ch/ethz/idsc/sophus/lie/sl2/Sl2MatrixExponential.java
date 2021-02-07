@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.sl2;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Sinhc;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -27,7 +26,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
  * Geometry VI Riemannian Geometry
  * Chapter 12. Metric Properties of Geodesics, p.158
  * by M. M. Postnikov */
-public enum Sl2MatrixExponential implements Exponential, TangentSpace {
+public enum Sl2MatrixExponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID = IdentityMatrix.of(2);

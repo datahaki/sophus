@@ -5,12 +5,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** all tangent vectors are assumed to be in the tangent space at the neutral element,
  * i.e. given in the basis of TeG */
-public class LieExponential implements HsExponential, Serializable {
+public class LieExponential implements HsExponential, VectorLogManifold, Serializable {
   /** @param lieGroup
    * @param exponential
    * @return */
@@ -34,6 +36,11 @@ public class LieExponential implements HsExponential, Serializable {
     return new ExponentialImpl(point);
   }
 
+  @Override
+  public TangentSpace logAt(Tensor point) {
+    return new ExponentialImpl(point);
+  }
+
   private class ExponentialImpl implements Exponential, Serializable {
     private final LieGroupElement element;
     private final LieGroupElement inverse;
@@ -53,6 +60,11 @@ public class LieExponential implements HsExponential, Serializable {
     @Override // from Exponential
     public Tensor log(Tensor point) {
       return exponential.log(inverse.combine(point));
+    }
+
+    @Override // from TangentSpace
+    public Tensor vectorLog(Tensor point) {
+      return exponential.vectorLog(inverse.combine(point));
     }
   }
 }

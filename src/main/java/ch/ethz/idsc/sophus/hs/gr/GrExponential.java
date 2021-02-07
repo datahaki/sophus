@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -17,7 +16,7 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 /** Reference:
  * Geomstats: A Python Package for Riemannian Geometry in Machine Learning
  * by Nina Miolane, Alice Le Brigant, Johan Mathe, Benjamin Hou et al., 2020 */
-public class GrExponential implements Exponential, TangentSpace, Serializable {
+public class GrExponential implements Exponential, Serializable {
   private final Tensor x;
   private final TGrMemberQ tGrMemberQ;
   private final Tensor id;

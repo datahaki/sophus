@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -31,7 +30,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * implementation of log is based on
  * "Barycentric Subspace Analysis on Manifolds"
  * by Xavier Pennec, 2016, p. 8 */
-public class SnExponential implements Exponential, TangentSpace, Serializable {
+public class SnExponential implements Exponential, Serializable {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---

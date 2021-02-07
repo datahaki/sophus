@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r2s;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -10,7 +9,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Flatten;
 
-public enum R2SExponential implements Exponential, TangentSpace {
+public enum R2SExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential

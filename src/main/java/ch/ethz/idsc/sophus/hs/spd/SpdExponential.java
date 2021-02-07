@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.Tensor;
@@ -31,7 +30,7 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdMatrixExponential */
-public class SpdExponential implements Exponential, TangentSpace, Serializable {
+public class SpdExponential implements Exponential, Serializable {
   private final Tensor pp;
   private final Tensor pn;
 

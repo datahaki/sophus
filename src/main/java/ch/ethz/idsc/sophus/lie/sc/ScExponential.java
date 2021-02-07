@@ -1,13 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.sc;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
 
-public enum ScExponential implements Exponential, TangentSpace {
+public enum ScExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential

@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
@@ -11,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * the logarithm function is the identity
  * 
  * @see LieExponential */
-public enum RnExponential implements Exponential, TangentSpace {
+public enum RnExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential

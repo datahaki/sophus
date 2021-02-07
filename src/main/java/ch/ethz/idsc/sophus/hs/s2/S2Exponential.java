@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.s2;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.sn.SnExponential;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
@@ -14,7 +13,7 @@ import ch.ethz.idsc.tensor.mat.Orthogonalize;
 
 /** 2-dimensional tangent space at given point of 2-dimensional sphere
  * i.e. tangent space not embedded in R^3 */
-public class S2Exponential implements Exponential, TangentSpace, Serializable {
+public class S2Exponential implements Exponential, Serializable {
   private static final Tensor ID3 = IdentityMatrix.of(3);
   // ---
   private final Exponential exponential;

@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.rpn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.sn.SnAngle;
 import ch.ethz.idsc.sophus.hs.sn.TSnMemberQ;
 import ch.ethz.idsc.sophus.math.Exponential;
@@ -21,7 +20,7 @@ import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** real projective plane */
-public class RpnExponential implements Exponential, TangentSpace, Serializable {
+public class RpnExponential implements Exponential, Serializable {
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---

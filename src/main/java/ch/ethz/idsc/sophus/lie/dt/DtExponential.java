@@ -1,7 +1,6 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.dt;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Expc;
 import ch.ethz.idsc.sophus.math.sca.Logc;
@@ -24,7 +23,7 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * Reference 2:
  * "Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations."
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, pp. 27-31, 2006 */
-public enum DtExponential implements Exponential, TangentSpace {
+public enum DtExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential
@@ -45,7 +44,7 @@ public enum DtExponential implements Exponential, TangentSpace {
         lambda_t.get(1).multiply(Logc.FUNCTION.apply(lambda)));
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor lambda_t) {
     return Flatten.of(log(lambda_t));
   }

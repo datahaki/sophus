@@ -43,6 +43,12 @@ public enum SpdMatrixExponential implements Exponential {
     return Symmetrize.of(MatrixLog.ofSymmetric(g));
   }
 
+  @Override
+  public Tensor vectorLog(Tensor point) {
+    // TODO not sure what is the difference to SpdExponential
+    throw new UnsupportedOperationException();
+  }
+
   /** n(g) == n(Inverse[g])
    * 
    * @param g spd

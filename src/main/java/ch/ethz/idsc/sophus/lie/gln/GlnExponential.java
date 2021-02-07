@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.gln;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Flatten;
@@ -12,7 +11,7 @@ import ch.ethz.idsc.tensor.lie.MatrixLog;
  * 
  * input X is a square matrix
  * input M is an invertible matrix */
-public enum GlnExponential implements Exponential, TangentSpace {
+public enum GlnExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential
@@ -25,7 +24,7 @@ public enum GlnExponential implements Exponential, TangentSpace {
     return MatrixLog.of(matrix);
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor vectorLog(Tensor matrix) {
     return Flatten.of(log(matrix));
   }
