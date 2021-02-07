@@ -65,7 +65,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     for (Biinvariant biinvariant : PDA) {
       TensorUnaryOperator weightingInterface = biinvariant.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 2), sequence);
-      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionWeighting.of(weightingInterface, sequence);
+      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._08.requireClose(tensor, UnitVector.of(n, index));

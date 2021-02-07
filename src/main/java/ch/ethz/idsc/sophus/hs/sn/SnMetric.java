@@ -20,6 +20,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * 
  * @see VectorAngle
  * @see HnAngle */
+// TODO perhaps de-symmetrize function e.g. SnAngle(x).to(y)
 public enum SnMetric implements TensorMetric {
   INSTANCE;
 

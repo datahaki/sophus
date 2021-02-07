@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.IOException;
 import java.util.Arrays;
 
+import ch.ethz.idsc.sophus.lie.LieDifferences;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Differences;
@@ -26,21 +27,21 @@ public class HsDifferencesTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
-    HsDifferences lieDifferences = //
-        Serialization.copy(new HsDifferences(RnManifold.HS_EXP));
+    LieDifferences lieDifferences = //
+        Serialization.copy(new LieDifferences(RnManifold.HS_EXP));
     assertEquals(lieDifferences.apply(tensor), Differences.of(tensor));
   }
 
   public void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 3);
-    HsDifferences lieDifferences = Se2Differences.INSTANCE;
+    LieDifferences lieDifferences = Se2Differences.INSTANCE;
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 3));
   }
 
   public void testSe2antiCommute() {
     Distribution distribution = UniformDistribution.unit();
-    HsDifferences lieDifferences = Se2Differences.INSTANCE;
+    LieDifferences lieDifferences = Se2Differences.INSTANCE;
     for (int index = 0; index < 10; ++index) {
       Tensor p = RandomVariate.of(distribution, 3);
       Tensor q = RandomVariate.of(distribution, 3);
@@ -56,11 +57,11 @@ public class HsDifferencesTest extends TestCase {
     for (int index = 0; index < 10; ++index)
       tensor.append(Se3Matrix.of( //
           Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
-    HsDifferences lieDifferences = Se3Differences.INSTANCE;
+    LieDifferences lieDifferences = Se3Differences.INSTANCE;
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 2, 3));
   }
 
   public void testLieGroupNullFail() {
-    AssertFail.of(() -> new HsDifferences(null));
+    AssertFail.of(() -> new LieDifferences(null));
   }
 }

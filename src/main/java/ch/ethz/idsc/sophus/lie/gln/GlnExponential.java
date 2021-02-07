@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.mat.Inverse;
 
+// TODO whut!?
 public class GlnExponential extends MatrixGroupExponential {
   private final Tensor pinv;
 

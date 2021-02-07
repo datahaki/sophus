@@ -1,10 +1,13 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.lie;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.Differences;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
@@ -14,23 +17,27 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * 
  * <pre>
  * HsDifferences[{a, b, c, d, e}] == {log a^-1.b, log b^-1.c, log c^-1.d, log d^-1.e}
- * </pre> */
-public final class HsDifferences implements TensorUnaryOperator {
-  private final HsExponential hsExponential;
+ * </pre>
+ * 
+ * @see Differences */
+// TODO this is dangerous: since log_p gives tangent vector at p etc. -> not comparable!?
+public final class LieDifferences implements TensorUnaryOperator {
+  private final LieExponential hsExponential;
 
   /** @param hsExponential
    * @throws Exception if either parameter is null */
-  public HsDifferences(HsExponential hsExponential) {
+  public LieDifferences(LieExponential hsExponential) {
     this.hsExponential = Objects.requireNonNull(hsExponential);
   }
 
   @Override
   public Tensor apply(Tensor tensor) {
-    Tensor result = Tensors.reserve(tensor.length() - 1);
-    Tensor prev = tensor.get(0);
-    for (int index = 1; index < tensor.length(); ++index)
-      result.append(pair(prev, prev = tensor.get(index)));
-    return result;
+    List<Tensor> list = new ArrayList<>(tensor.length() - 1);
+    Iterator<Tensor> iterator = tensor.iterator();
+    Tensor prev = iterator.next();
+    while (iterator.hasNext())
+      list.add(pair(prev, prev = iterator.next()));
+    return Unprotect.using(list);
   }
 
   /** @param p element of the lie group

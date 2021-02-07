@@ -6,7 +6,6 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Sinhc;
-import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Cosh;
@@ -17,14 +16,16 @@ import ch.ethz.idsc.tensor.sca.Cosh;
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
 public class HnExponential implements Exponential, TangentSpace, Serializable {
   private final Tensor x;
+  private final THnMemberQ tHnMemberQ;
 
   public HnExponential(Tensor x) {
     this.x = HnMemberQ.INSTANCE.require(x);
+    tHnMemberQ = new THnMemberQ(x);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    new THnMemberQ(x).require(v);
+    tHnMemberQ.require(v);
     Scalar vn = HnNorm.INSTANCE.norm(v);
     Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
     return HnProjection.INSTANCE.apply(exp);
@@ -32,8 +33,7 @@ public class HnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    HnAngle hnAngle = new HnAngle(x, y);
-    return y.subtract(x.multiply(hnAngle.cosh_d())).multiply(SinhcInverse.FUNCTION.apply(hnAngle.angle()));
+    return new HnAngle(x, y).log();
   }
 
   @Override // from TangentSpace

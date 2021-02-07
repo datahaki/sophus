@@ -8,14 +8,13 @@ import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
-/**
- * 
- */
+/** all tangent vectors are assumed to be in the tangent space at the neutral element,
+ * i.e. given in the basis of TeG */
 public class LieExponential implements HsExponential, Serializable {
   /** @param lieGroup
    * @param exponential
    * @return */
-  public static HsExponential of(LieGroup lieGroup, Exponential exponential) {
+  public static LieExponential of(LieGroup lieGroup, Exponential exponential) {
     return new LieExponential( //
         Objects.requireNonNull(lieGroup), //
         Objects.requireNonNull(exponential));
