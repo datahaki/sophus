@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class PoleLadderTest extends TestCase {
   public void testRn() {
-    HsTransport hsTransport = PoleLadder.of(RnManifold.HS_EXP);
+    HsTransport hsTransport = PoleLadder.of(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);

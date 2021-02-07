@@ -23,8 +23,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HeManifoldTest extends TestCase {
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
-  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.of( //
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.HS_EXP);
+  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.HS_EXP, MetricCoordinate.of( //
       NormWeighting.of( //
           new HeTarget(RnNorm.INSTANCE, RealScalar.ONE), //
           InversePowerVariogram.of(1))));

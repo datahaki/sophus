@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 
 public class HsMidpointTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    HsMidpoint hsMidpoint = Serialization.copy(new HsMidpoint(RnManifold.HS_EXP));
+    HsMidpoint hsMidpoint = Serialization.copy(new HsMidpoint(RnManifold.INSTANCE));
     Tensor tensor = hsMidpoint.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
     ExactTensorQ.require(tensor);
     assertEquals(tensor, Tensors.vector(3, 1, 9));

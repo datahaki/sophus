@@ -51,7 +51,7 @@ public class RnBiinvariantMeanTest extends TestCase {
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(RnManifold.HS_EXP, Chop._12);
+      IterativeBiinvariantMean.of(RnManifold.INSTANCE, Chop._12);
 
   public void testSimple2() {
     Tensor sequence = Tensors.of( //
@@ -60,7 +60,7 @@ public class RnBiinvariantMeanTest extends TestCase {
         RnExponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
     Tensor log = new MeanDefect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), //
-        RnManifold.HS_EXP.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)))).tangent();
+        RnManifold.INSTANCE.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)))).tangent();
     Chop._10.requireAllZero(log);
   }
 

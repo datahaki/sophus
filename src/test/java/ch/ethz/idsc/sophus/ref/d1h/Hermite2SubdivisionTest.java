@@ -11,11 +11,11 @@ import junit.framework.TestCase;
 
 public class Hermite2SubdivisionTest extends TestCase {
   public void testQuantity() throws ClassNotFoundException, IOException {
-    TestHelper.checkQuantity(Hermite2Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE));
+    TestHelper.checkQuantity(Hermite2Subdivisions.standard(RnManifold.INSTANCE, RnTransport.INSTANCE));
   }
 
   public void testNullFail() {
-    AssertFail.of(() -> Hermite2Subdivisions.standard(Se2CoveringManifold.HS_EXP, null));
+    AssertFail.of(() -> Hermite2Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
     AssertFail.of(() -> Hermite2Subdivisions.standard(null, RnTransport.INSTANCE));
   }
 }

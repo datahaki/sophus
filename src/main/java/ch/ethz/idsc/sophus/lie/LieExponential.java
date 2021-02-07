@@ -36,7 +36,7 @@ public class LieExponential implements HsExponential, VectorLogManifold, Seriali
     return new ExponentialImpl(point);
   }
 
-  @Override
+  @Override // from VectorLogManifold
   public TangentSpace logAt(Tensor point) {
     return new ExponentialImpl(point);
   }
@@ -52,8 +52,6 @@ public class LieExponential implements HsExponential, VectorLogManifold, Seriali
 
     @Override // from Exponential
     public Tensor exp(Tensor vector) {
-      // System.out.println(vector);
-      // TODO x is tangent vector at point (not at neutral elem.)
       return element.combine(exponential.exp(vector));
     }
 

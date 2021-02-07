@@ -5,5 +5,5 @@ import ch.ethz.idsc.sophus.lie.LieDifferences;
 
 public enum Se2CoveringDifferences {
   ;
-  public static final LieDifferences INSTANCE = new LieDifferences(Se2CoveringManifold.HS_EXP);
+  public static final LieDifferences INSTANCE = new LieDifferences(Se2CoveringManifold.INSTANCE);
 }

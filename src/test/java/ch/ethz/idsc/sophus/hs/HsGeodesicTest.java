@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 
 public class HsGeodesicTest extends TestCase {
   public void testSe2() {
-    HsGeodesic lieGroupGeodesic = new HsGeodesic(Se2CoveringManifold.HS_EXP);
+    HsGeodesic lieGroupGeodesic = new HsGeodesic(Se2CoveringManifold.INSTANCE);
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(4, 5, 6);
     Scalar lambda = RealScalar.of(0.7);

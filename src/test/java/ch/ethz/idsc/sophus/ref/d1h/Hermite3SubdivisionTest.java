@@ -24,7 +24,7 @@ public class Hermite3SubdivisionTest extends TestCase {
     Tensor control = Tensors.fromString("{{3, 4}, {1, -3}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().string(RealScalar.ONE, control);
     TensorIteration tensorIteration2 = //
-        Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .string(RealScalar.ONE, control);
     for (int count = 0; count < 6; ++count) {
       Tensor it1 = tensorIteration1.iterate();
@@ -40,10 +40,10 @@ public class Hermite3SubdivisionTest extends TestCase {
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
     TensorIteration tensorIteration1 = //
-        Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .string(RealScalar.ONE, cp1);
     TensorIteration tensorIteration2 = //
-        Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .string(RealScalar.ONE, Reverse.of(cp2));
     for (int count = 0; count < 3; ++count) {
       Tensor result1 = tensorIteration1.iterate();
@@ -57,7 +57,7 @@ public class Hermite3SubdivisionTest extends TestCase {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().cyclic(RealScalar.ONE, control);
     TensorIteration tensorIteration2 = //
-        Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .cyclic(RealScalar.ONE, control);
     for (int count = 0; count < 6; ++count) {
       Tensor it1 = tensorIteration1.iterate();
@@ -69,12 +69,12 @@ public class Hermite3SubdivisionTest extends TestCase {
   }
 
   public void testQuantity() throws ClassNotFoundException, IOException {
-    TestHelper.checkQuantity(Hermite3Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+    TestHelper.checkQuantity(Hermite3Subdivisions.of(RnManifold.INSTANCE, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
   }
 
   public void testNullFail() {
-    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.HS_EXP, null, RnBiinvariantMean.INSTANCE));
+    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, null, RnBiinvariantMean.INSTANCE));
     AssertFail.of(() -> Hermite3Subdivisions.of(null, RnTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
-    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.HS_EXP, RnTransport.INSTANCE, null));
+    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, RnTransport.INSTANCE, null));
   }
 }

@@ -28,7 +28,7 @@ public class HsDifferencesTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
     LieDifferences lieDifferences = //
-        Serialization.copy(new LieDifferences(RnManifold.HS_EXP));
+        Serialization.copy(new LieDifferences(RnManifold.INSTANCE));
     assertEquals(lieDifferences.apply(tensor), Differences.of(tensor));
   }
 

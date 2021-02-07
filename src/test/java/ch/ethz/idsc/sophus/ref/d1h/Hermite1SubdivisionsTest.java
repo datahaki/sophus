@@ -18,7 +18,7 @@ public class Hermite1SubdivisionsTest extends TestCase {
   public void testSimple() {
     TestHelper.check( //
         RnHermite1Subdivisions.instance(), //
-        Hermite1Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE));
+        Hermite1Subdivisions.standard(RnManifold.INSTANCE, RnTransport.INSTANCE));
   }
 
   public void testParams() {
@@ -26,7 +26,7 @@ public class Hermite1SubdivisionsTest extends TestCase {
     Scalar mu = RationalScalar.of(-1, 3);
     TestHelper.check( //
         RnHermite1Subdivisions.of(lambda, mu), //
-        Hermite1Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, lambda, mu));
+        Hermite1Subdivisions.of(RnManifold.INSTANCE, RnTransport.INSTANCE, lambda, mu));
   }
 
   public void testSerializableCast() throws ClassNotFoundException, IOException {

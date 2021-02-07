@@ -32,7 +32,7 @@ public class So3ManifoldTest extends TestCase {
     Tensor mean = Rodrigues.vectorExp(Tensors.vector(0.4, 0.2, 0.3));
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor weights = barycentricCoordinate.weights(sequence, mean);
-      Tensor defect = new MeanDefect(sequence, weights, So3Manifold.HS_EXP.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, So3Manifold.INSTANCE.exponential(mean)).tangent();
       Chop._10.requireAllZero(defect);
     }
   }

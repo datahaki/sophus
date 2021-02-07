@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 public class SchildLadderTest extends TestCase {
   public void testRn() {
-    HsTransport hsTransport = SchildLadderExt.of(RnManifold.HS_EXP);
+    HsTransport hsTransport = SchildLadderExt.of(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);

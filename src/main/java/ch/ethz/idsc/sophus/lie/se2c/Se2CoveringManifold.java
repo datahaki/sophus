@@ -1,14 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieExponential;
-import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 
 public enum Se2CoveringManifold {
   ;
-  public static final VectorLogManifold INSTANCE = //
-      LieVectorLogManifold.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE);
-  public static final LieExponential HS_EXP = //
+  public static final LieExponential INSTANCE = //
       LieExponential.of(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE);
 }

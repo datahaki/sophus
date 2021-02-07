@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 
 public class GeodesicIIR2Test extends TestCase {
   public void testSimple() {
-    GeodesicInterface geodesicInterface = new HsGeodesic(Se2Manifold.HS_EXP);
+    GeodesicInterface geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
     GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicInterface, alpha);
     Tensor vector0 = Tensors.vector(1, 2, 0.25);
@@ -35,7 +35,7 @@ public class GeodesicIIR2Test extends TestCase {
   }
 
   public void testLinear() {
-    GeodesicInterface geodesicInterface = new HsGeodesic(RnManifold.HS_EXP);
+    GeodesicInterface geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
     TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicInterface, alpha);
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));

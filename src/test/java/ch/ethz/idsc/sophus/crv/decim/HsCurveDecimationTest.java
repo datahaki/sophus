@@ -14,7 +14,7 @@ public class HsCurveDecimationTest extends TestCase {
   public void testSimple() {
     for (HsCurveDecimation hsCurveDecimation : HsCurveDecimation.values()) {
       CurveDecimation curveDecimation = //
-          hsCurveDecimation.of(Se2Manifold.INSTANCE, Se2Manifold.HS_EXP, RealScalar.of(0.4));
+          hsCurveDecimation.of(Se2Manifold.INSTANCE, Se2Manifold.INSTANCE, RealScalar.of(0.4));
       Tensor tensor = curveDecimation.apply(RandomVariate.of(UniformDistribution.unit(), 100, 3));
       assertTrue(tensor.length() < 100);
     }
@@ -23,7 +23,7 @@ public class HsCurveDecimationTest extends TestCase {
   public void testQuantity() {
     for (HsCurveDecimation hsCurveDecimation : HsCurveDecimation.values()) {
       CurveDecimation curveDecimation = //
-          hsCurveDecimation.of(RnManifold.INSTANCE, RnManifold.HS_EXP, Quantity.of(0.7, "m"));
+          hsCurveDecimation.of(RnManifold.INSTANCE, RnManifold.INSTANCE, Quantity.of(0.7, "m"));
       Tensor tensor = curveDecimation.apply(RandomVariate.of(UniformDistribution.unit(), 100, 3).map(s -> Quantity.of(s, "m")));
       assertTrue(tensor.length() < 90);
     }

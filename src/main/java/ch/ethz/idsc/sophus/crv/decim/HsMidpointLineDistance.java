@@ -9,7 +9,6 @@ import ch.ethz.idsc.sophus.hs.HsMidpoint;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieExponential;
 import ch.ethz.idsc.sophus.lie.LieGroup;
-import ch.ethz.idsc.sophus.lie.LieVectorLogManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
@@ -19,7 +18,7 @@ public class HsMidpointLineDistance implements LineDistance, Serializable {
    * @return */
   public static LineDistance of(LieGroup lieGroup, Exponential exponential) {
     // FIXME flatten log instead of log!
-    return of(LieVectorLogManifold.of(lieGroup, exponential::log), LieExponential.of(lieGroup, exponential));
+    return of(LieExponential.of(lieGroup, exponential), LieExponential.of(lieGroup, exponential));
   }
 
   /** @param vectorLogManifold

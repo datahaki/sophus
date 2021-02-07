@@ -13,7 +13,7 @@ public enum So3BiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
   private static final IterativeBiinvariantMean BIINVARIANT_MEAN_IMPLICIT = //
-      IterativeBiinvariantMean.of(So3Manifold.HS_EXP, Chop._12);
+      IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Chop._12);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
