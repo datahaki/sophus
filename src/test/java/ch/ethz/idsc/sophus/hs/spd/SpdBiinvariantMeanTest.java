@@ -10,9 +10,8 @@ import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -48,11 +47,10 @@ public class SpdBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, len));
         Tensor mL = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
-        Tensor g = RandomSample.of(SonRandomSample.of(fn));
-        Tensor sR = Tensor.of(sequence.stream().map(t -> g.dot(t).dot(Transpose.of(g))));
+        Tensor g = RandomSample.of(SonRandomSample.of(n));
+        Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
         Tensor mR = SpdBiinvariantMean.INSTANCE.mean(sR, weights);
-        Tensor mM = Transpose.of(g).dot(mR).dot(g);
-        Chop._06.requireClose(mL, mM);
+        Chop._06.requireClose(mR, BasisTransform.ofForm(mL, g));
       }
   }
 
@@ -60,7 +58,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
     Distribution distribution = UniformDistribution.unit();
     int fails = 0;
     for (int n = 2; n < 4; ++n)
-      for (int count = 0; count < 4; ++count)
+      for (int count = 0; count < 3; ++count)
         try {
           int fn = n;
           int len = n * n + count;
@@ -68,12 +66,11 @@ public class SpdBiinvariantMeanTest extends TestCase {
           Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, len));
           Tensor mL = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
           Tensor g = RandomVariate.of(distribution, fn, fn);
-          Tensor sR = Tensor.of(sequence.stream().map(t -> g.dot(t).dot(Transpose.of(g))));
+          Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
           Tensor mR = SpdBiinvariantMean.INSTANCE.mean(sR, weights);
-          Tensor gi = Inverse.of(g);
-          Tensor mM = gi.dot(mR).dot(Transpose.of(gi));
-          Chop._06.requireClose(mL, mM);
+          Chop._06.requireClose(mR, BasisTransform.ofForm(mL, g));
         } catch (Exception e) {
+          System.err.println("fail");
           ++fails;
         }
     assertTrue(fails < 3);

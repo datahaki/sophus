@@ -34,12 +34,12 @@ public class MeanDefect implements Serializable {
    * @param weights
    * @param exponential at estimated weighted average of given sequence */
   public MeanDefect(Tensor sequence, Tensor weights, Exponential exponential) {
-    // TODO class design is not good
     this.exponential = exponential;
     tangent = weights.dot(Tensor.of(sequence.stream().map(exponential::log)));
   }
 
-  /** @return vector in the direction of true weighted average */
+  /** @return tangent vector in the direction of true weighted average 
+   * (however, vector may have the form of a matrix) */
   public Tensor tangent() {
     return tangent;
   }

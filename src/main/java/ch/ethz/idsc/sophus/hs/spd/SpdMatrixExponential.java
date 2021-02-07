@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
@@ -39,14 +40,13 @@ public enum SpdMatrixExponential implements Exponential {
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor g) {
-    return Symmetrize.of(MatrixLog.ofSymmetric(g));
+  public Tensor log(Tensor p) {
+    return Symmetrize.of(MatrixLog.ofSymmetric(p));
   }
 
-  @Override
-  public Tensor vectorLog(Tensor point) {
-    // TODO not sure what is the difference to SpdExponential
-    throw new UnsupportedOperationException();
+  @Override // from TangentSpace
+  public Tensor vectorLog(Tensor p) {
+    return Vectorize.of(log(p), 0);
   }
 
   /** n(g) == n(Inverse[g])
