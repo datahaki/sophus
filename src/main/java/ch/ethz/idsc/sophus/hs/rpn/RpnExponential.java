@@ -4,8 +4,7 @@ package ch.ethz.idsc.sophus.hs.rpn;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.hs.TangentSpace;
-import ch.ethz.idsc.sophus.hs.sn.SnMemberQ;
-import ch.ethz.idsc.sophus.hs.sn.SnMetric;
+import ch.ethz.idsc.sophus.hs.sn.SnAngle;
 import ch.ethz.idsc.sophus.hs.sn.TSnMemberQ;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
@@ -27,13 +26,15 @@ public class RpnExponential implements Exponential, TangentSpace, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final Tensor x;
+  private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
   private final TSnMemberQ tSnMemberQ;
 
   /** @param x on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
   public RpnExponential(Tensor x) {
-    this.x = SnMemberQ.INSTANCE.require(x);
+    this.x = x;
+    snAngle = new SnAngle(x);
     tSnMemberQ = new TSnMemberQ(x);
     projection = Projection.on(x);
     if (x.length() < 2)
@@ -46,8 +47,8 @@ public class RpnExponential implements Exponential, TangentSpace, Serializable {
     Scalar vn = Hypot.ofVector(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     y = NORMALIZE.apply(y);
-    Scalar d_xyp = SnMetric.INSTANCE.distance(x, y);
-    Scalar d_xyn = SnMetric.INSTANCE.distance(x, y.negate());
+    Scalar d_xyp = snAngle.apply(y);
+    Scalar d_xyn = snAngle.apply(y.negate());
     return Scalars.lessEquals(d_xyp, d_xyn) //
         ? y
         : y.negate();
@@ -55,8 +56,8 @@ public class RpnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    Scalar d_xyp = SnMetric.INSTANCE.distance(x, y);
-    Scalar d_xyn = SnMetric.INSTANCE.distance(x, y.negate());
+    Scalar d_xyp = snAngle.apply(y);
+    Scalar d_xyn = snAngle.apply(y.negate());
     if (Scalars.lessEquals(d_xyp, d_xyn))
       return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xyp);
     y = y.negate();

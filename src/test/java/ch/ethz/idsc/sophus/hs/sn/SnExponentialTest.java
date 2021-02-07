@@ -77,4 +77,9 @@ public class SnExponentialTest extends TestCase {
   public void testMatrixFail() {
     AssertFail.of(() -> new SnExponential(HilbertMatrix.of(3)));
   }
+
+  public void testLogMemberFail() {
+    SnExponential snExponential = new SnExponential(UnitVector.of(3, 0));
+    AssertFail.of(() -> snExponential.log(Tensors.vector(1, 2, 3)));
+  }
 }

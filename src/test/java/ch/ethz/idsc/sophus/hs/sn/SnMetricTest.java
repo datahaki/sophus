@@ -2,8 +2,10 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.lie.rn.RnNorm;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
@@ -41,5 +43,10 @@ public class SnMetricTest extends TestCase {
       Scalar norm = RnNorm.INSTANCE.norm(new SnExponential(p).log(q));
       Tolerance.CHOP.requireClose(norm, a1);
     }
+  }
+
+  public void testMemberQFail() {
+    AssertFail.of(() -> SnMetric.INSTANCE.distance(Tensors.vector(1, 0), Tensors.vector(1, 1)));
+    AssertFail.of(() -> SnMetric.INSTANCE.distance(Tensors.vector(1, 1), Tensors.vector(1, 0)));
   }
 }

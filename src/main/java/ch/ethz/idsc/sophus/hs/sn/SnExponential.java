@@ -36,13 +36,15 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
   // ---
   private final Tensor x;
+  private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
   private final TSnMemberQ tSnMemberQ;
 
   /** @param x on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
   public SnExponential(Tensor x) {
-    this.x = SnMemberQ.INSTANCE.require(x);
+    this.x = x;
+    snAngle = new SnAngle(x);
     tSnMemberQ = new TSnMemberQ(x);
     projection = Projection.on(x);
     if (x.length() < 2)
@@ -59,7 +61,7 @@ public class SnExponential implements Exponential, TangentSpace, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    Scalar d_xy = SnMetric.INSTANCE.distance(x, y);
+    Scalar d_xy = snAngle.apply(y); // throws an Exception if y not member of Sn
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xy);
   }
 
