@@ -12,7 +12,9 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
 import ch.ethz.idsc.tensor.itp.Interpolation;
 import ch.ethz.idsc.tensor.sca.Floor;
 
-/** univariate geodesic interpolation */
+/** univariate geodesic interpolation
+ * 
+ * for bivariate or higher interpolation use {@link BiinvariantMeanInterpolation} */
 public class GeodesicInterpolation extends AbstractInterpolation implements Serializable {
   /** @param binaryAverage
    * @param tensor
