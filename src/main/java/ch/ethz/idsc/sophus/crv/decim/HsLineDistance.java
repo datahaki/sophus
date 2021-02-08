@@ -25,10 +25,10 @@ public class HsLineDistance implements LineDistance, Serializable {
 
   @Override // from LineDistance
   public NormImpl tensorNorm(Tensor beg, Tensor end) {
-    TangentSpace vectorLog = vectorLogManifold.logAt(beg);
+    TangentSpace tangentSpace = vectorLogManifold.logAt(beg);
     return new NormImpl( //
-        vectorLog, //
-        NORMALIZE_UNLESS_ZERO.apply(vectorLog.vectorLog(end)));
+        tangentSpace, //
+        NORMALIZE_UNLESS_ZERO.apply(tangentSpace.vectorLog(end)));
   }
 
   public class NormImpl implements TensorNorm, Serializable {

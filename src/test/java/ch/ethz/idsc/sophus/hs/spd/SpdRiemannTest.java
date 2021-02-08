@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -59,6 +60,9 @@ public class SpdRiemannTest extends TestCase {
       e11 = tuo.apply(e11);
       e12 = tuo.apply(e12);
       e13 = tuo.apply(e13);
+      SymmetricMatrixQ.require(e11);
+      SymmetricMatrixQ.require(e12);
+      SymmetricMatrixQ.require(e13);
       SpdRiemann spdRiemann = new SpdRiemann(q);
       Scalar s1112 = spdRiemann.sectional(e11, e12);
       Chop._10.requireClose(s1112, RationalScalar.of(-1, 4));
