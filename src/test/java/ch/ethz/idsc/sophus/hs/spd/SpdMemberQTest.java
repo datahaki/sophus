@@ -14,7 +14,8 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SpdMemberQTest extends TestCase {
-  private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
+  private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { //
+      Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
 
   public void testSimple() {
     for (int n = 1; n < 10; ++n)
@@ -22,13 +23,12 @@ public class SpdMemberQTest extends TestCase {
   }
 
   public void testBiinvarianceSon() {
-    int fails = 0;
-    for (int n = 2; n < 4; ++n) {
+    for (int n = 2; n < 6; ++n) {
       for (Biinvariants biinvariants : BIINVARIANTS)
-        for (int count = 0; count < 4; ++count)
-          try {
+        if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4)
+          for (int count = 1; count < 4; ++count) {
             int fn = n;
-            int len = n * n + count;
+            int len = n * (n + 1) / 2 + count;
             Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
             Tensor mL = TestHelper.generateSpd(fn);
             Tensor weights1 = biinvariants.coordinate( //
@@ -39,39 +39,29 @@ public class SpdMemberQTest extends TestCase {
             Tensor mR = BasisTransform.ofForm(mL, g);
             Tensor weights2 = biinvariants.coordinate( //
                 SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
-            Chop._06.requireClose(weights1, weights2);
-          } catch (Exception exception) {
-            System.out.println(getClass().getSimpleName() + " Son fail " + biinvariants);
-            ++fails;
+            Chop._02.requireClose(weights1, weights2);
           }
     }
-    assertTrue(fails < 5);
   }
 
   public void testBiinvarianceGln() {
-    int fails = 0;
     for (int n = 2; n < 4; ++n) {
       for (Biinvariants biinvariants : BIINVARIANTS)
-        for (int count = 0; count < 4; ++count)
-          try {
-            int fn = n;
-            int len = n * n + count;
-            Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
-            Tensor mL = TestHelper.generateSpd(fn);
-            Tensor weights1 = biinvariants.coordinate( //
-                SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
-            // ---
-            Tensor g = RandomVariate.of(NormalDistribution.standard(), n, n);
-            Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
-            Tensor mR = BasisTransform.ofForm(mL, g);
-            Tensor weights2 = biinvariants.coordinate( //
-                SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
-            Chop._06.requireClose(weights1, weights2);
-          } catch (Exception exception) {
-            System.out.println(getClass().getSimpleName() + " Gln fail " + biinvariants);
-            ++fails;
-          }
+        for (int count = 1; count < 4; ++count) {
+          int fn = n;
+          int len = n * (n + 1) / 2 + count;
+          Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
+          Tensor mL = TestHelper.generateSpd(fn);
+          Tensor weights1 = biinvariants.coordinate( //
+              SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
+          // ---
+          Tensor g = RandomVariate.of(NormalDistribution.standard(), n, n);
+          Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
+          Tensor mR = BasisTransform.ofForm(mL, g);
+          Tensor weights2 = biinvariants.coordinate( //
+              SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
+          Chop._02.requireClose(weights1, weights2);
+        }
     }
-    assertTrue(fails < 5);
   }
 }

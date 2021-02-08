@@ -59,14 +59,14 @@ public class BarycentricRationalInterpolationTest extends TestCase {
 
   public void testLinearReproduction() {
     Distribution distribution = NormalDistribution.standard();
-    Tensor tensor = Sort.of(RandomVariate.of(distribution, 10));
+    Tensor knots = Sort.of(RandomVariate.of(distribution, 10));
     int fails = 0;
     for (int d = 0; d < 4; ++d)
       try {
-        ScalarTensorFunction scalarTensorFunction = BarycentricRationalInterpolation.of(tensor, d);
+        ScalarTensorFunction scalarTensorFunction = BarycentricRationalInterpolation.of(knots, d);
         Scalar x = RandomVariate.of(distribution);
         Tensor weights = scalarTensorFunction.apply(x);
-        Tensor tensor2 = RnBiinvariantMean.INSTANCE.mean(tensor, weights);
+        Tensor tensor2 = RnBiinvariantMean.INSTANCE.mean(knots, weights);
         Chop._08.requireClose(x, tensor2);
       } catch (Exception exception) {
         ++fails;

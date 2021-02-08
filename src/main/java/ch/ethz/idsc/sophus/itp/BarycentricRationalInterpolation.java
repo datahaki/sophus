@@ -16,7 +16,9 @@ import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.io.ScalarArray;
 import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
 
-/** References:
+/** affine weights that satisfy the barycentric equation, i.e. reproduce linear functions
+ * 
+ * References:
  * "Barycentric Rational Interpolation"
  * in NR, 2007
  * 
@@ -51,20 +53,23 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
   private final Scalar[] knots;
   private final Scalar[] w;
 
-  private BarycentricRationalInterpolation(Tensor _knots, int d) {
+  private BarycentricRationalInterpolation(Tensor _knots, int degree) {
     knots = ScalarArray.ofVector(_knots);
     w = new Scalar[knots.length];
     for (int k = 0; k < knots.length; ++k) {
-      int imin = Math.max(k - d, 0);
-      int imax = k >= knots.length - d ? knots.length - d - 1 : k;
+      int imin = Math.max(k - degree, 0);
+      int imax = knots.length - degree <= k//
+          ? knots.length - degree - 1
+          : k;
       Scalar temp = SIGNUM[imin & 1];
       Scalar sum = RealScalar.ZERO;
+      Scalar knots_k = knots[k];
       for (int i = imin; i <= imax; ++i) {
         final int fk = k;
-        Scalar term = IntStream.rangeClosed(i, Math.min(i + d, knots.length - 1)) //
+        Scalar term = IntStream.rangeClosed(i, Math.min(i + degree, knots.length - 1)) //
             .filter(j -> j != fk) //
             .mapToObj(j -> knots[j]) //
-            .map(knots[fk]::subtract) //
+            .map(knots_k::subtract) //
             .reduce(Scalar::multiply) //
             .orElse(RealScalar.ONE) //
             .under(temp);
