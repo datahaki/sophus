@@ -32,7 +32,7 @@ public enum KullbackLeiblerDivergence implements TensorMetric {
     return Trace.of(s1.add(s2)).subtract(RealScalar.of(2 * p1.length()));
   }
 
-  /** the implentation is from the paper from Shinohara et al. 
+  /** the implentation is from the paper from Shinohara et al.
    * which probably has some typo?
    * 
    * @param p1

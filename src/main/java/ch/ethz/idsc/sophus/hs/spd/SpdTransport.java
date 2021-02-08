@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 
 /** References:
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
- * by Nicolas Guigui, Xavier Pennec, 2020 p.27 
+ * by Nicolas Guigui, Xavier Pennec, 2020 p.27
  * 
  * @see PoleLadder */
 public enum SpdTransport implements HsTransport {

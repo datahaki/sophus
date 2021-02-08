@@ -1,10 +1,9 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.lie;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-import ch.ethz.idsc.sophus.lie.LieDifferences;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Differences;
@@ -23,7 +22,7 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class HsDifferencesTest extends TestCase {
+public class LieDifferencesTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);

@@ -17,7 +17,6 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * "Eichfeldtheorie"
  * by Helga Baum, 2005 */
-// TODO class contains unimplemented methods
 public class StExponential implements Exponential, Serializable {
   @SuppressWarnings("unused")
   private final Tensor x;
