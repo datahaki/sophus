@@ -38,7 +38,7 @@ import ch.ethz.idsc.tensor.sca.Floor;
 
   @Override // from Interpolation
   public Tensor get(Tensor index) {
-    // LONGTERM JPH implement
+    // TODO implement
     throw new UnsupportedOperationException();
   }
 

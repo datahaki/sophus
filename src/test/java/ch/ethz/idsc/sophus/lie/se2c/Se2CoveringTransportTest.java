@@ -16,15 +16,11 @@ public class Se2CoveringTransportTest extends TestCase {
     Tensor v = TestHelper.spawn_se2C();
     Tensor r1 = Se2CoveringTransport.INSTANCE.shift(p, q).apply(v);
     HsTransport hsTransport = PoleLadder.of(Se2CoveringManifold.INSTANCE);
-    // System.out.println(r1);
     Tensor r2 = hsTransport.shift(p, q).apply(v);
     Chop._10.requireClose(v.Get(2), r1.Get(2));
     Chop._10.requireClose(v.Get(2), r2.Get(2));
-    // TODO investigate remaining coordinates
-    // System.out.println(r2);
     HsTransport transport = SymmetrizeTransport.of(hsTransport);
     Tensor r3 = transport.shift(p, q).apply(v);
-    // System.out.println(r3);
     Chop._10.requireClose(r2, r3);
   }
 
@@ -37,15 +33,7 @@ public class Se2CoveringTransportTest extends TestCase {
         PoleLadder.of(Se2CoveringManifold.INSTANCE), //
         Se2CoveringGeodesic.INSTANCE, 100);
     Tensor r2 = hsTransport.shift(p, q).apply(v);
-    // System.out.println(r1);
-    // System.out.println(r2);
     Chop._08.requireClose(v.Get(2), r1.Get(2));
     Chop._08.requireClose(v.Get(2), r2.Get(2));
-    // TODO investigate remaining coordinates
-    // System.out.println(r2);
-    // HsTransport transport = SymmetrizeTransport.of(hsTransport);
-    // Tensor r3 = transport.shift(p, q).apply(v);
-    // // System.out.println(r3);
-    // Chop._10.requireClose(r2, r3);
   }
 }

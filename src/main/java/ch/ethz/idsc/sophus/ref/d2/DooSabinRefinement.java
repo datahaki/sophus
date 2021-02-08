@@ -41,7 +41,7 @@ public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
         out.addVert(biinvariantMean.mean(sequence, RotateLeft.of(weights, offset)));
       out.ind.append(Range.of(ofs, ofs + n));
     }
-    // TODO JPH add quads at vertices and edges
+    // TODO add quads at vertices and edges
     return out;
   }
 }
