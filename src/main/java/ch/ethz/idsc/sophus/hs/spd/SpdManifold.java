@@ -8,7 +8,8 @@ import ch.ethz.idsc.tensor.Tensor;
 
 /** Sym+(n) == GL+(n)/SO(n)
  * 
- * where GL+(n) is the space of matrices with positive determinant
+ * Quote: "where GL+(n) is the space of matrices with positive determinant
+ * (we take here the connected components of positive determinant to simplify)"
  * 
  * Reference:
  * "Riemannian Geometry for the Statistical Analysis of Diffusion Tensor Data"

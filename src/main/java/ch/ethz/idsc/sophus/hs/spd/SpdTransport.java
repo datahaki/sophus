@@ -17,12 +17,24 @@ public enum SpdTransport implements HsTransport {
 
   @Override
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    Tensor w = new SpdExponential(p).log(q);
-    MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
-    Tensor ps = matrixSqrt.sqrt();
-    Tensor pi = matrixSqrt.sqrt_inverse();
-    Tensor mid = MatrixExp.of(pi.dot(w).dot(pi).multiply(RationalScalar.HALF));
-    Tensor pt = ps.dot(mid).dot(pi); // TODO check if there is a typo in the article here
-    return v -> pt.dot(v).dot(Transpose.of(pt));
+    return new Inner(p, q);
+  }
+
+  private static class Inner implements TensorUnaryOperator {
+    private final Tensor pt;
+
+    public Inner(Tensor p, Tensor q) {
+      Tensor w = new SpdExponential(p).log(q);
+      MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
+      Tensor ps = matrixSqrt.sqrt();
+      Tensor pi = matrixSqrt.sqrt_inverse();
+      Tensor mid = MatrixExp.of(pi.dot(w).dot(pi).multiply(RationalScalar.HALF));
+      pt = ps.dot(mid).dot(pi); // TODO check if there is a typo in the article here
+    }
+
+    @Override
+    public Tensor apply(Tensor v) {
+      return pt.dot(v).dot(Transpose.of(pt)); // TODO precompute Transpose
+    }
   }
 }
