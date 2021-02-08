@@ -10,20 +10,20 @@ import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import junit.framework.TestCase;
 
-public class HsCurveDecimationTest extends TestCase {
+public class LineDistancesTest extends TestCase {
   public void testSimple() {
-    for (HsCurveDecimation hsCurveDecimation : HsCurveDecimation.values()) {
-      CurveDecimation curveDecimation = //
-          hsCurveDecimation.of(Se2Manifold.INSTANCE, RealScalar.of(0.4));
+    for (LineDistances lineDistances : LineDistances.values()) {
+      CurveDecimation curveDecimation = CurveDecimation.of( //
+          lineDistances.supply(Se2Manifold.INSTANCE), RealScalar.of(0.4));
       Tensor tensor = curveDecimation.apply(RandomVariate.of(UniformDistribution.unit(), 100, 3));
       assertTrue(tensor.length() < 100);
     }
   }
 
   public void testQuantity() {
-    for (HsCurveDecimation hsCurveDecimation : HsCurveDecimation.values()) {
-      CurveDecimation curveDecimation = //
-          hsCurveDecimation.of(RnManifold.INSTANCE, Quantity.of(0.7, "m"));
+    for (LineDistances lineDistances : LineDistances.values()) {
+      CurveDecimation curveDecimation = CurveDecimation.of( //
+          lineDistances.supply(RnManifold.INSTANCE), Quantity.of(0.7, "m"));
       Tensor tensor = curveDecimation.apply(RandomVariate.of(UniformDistribution.unit(), 100, 3).map(s -> Quantity.of(s, "m")));
       assertTrue(tensor.length() < 90);
     }
