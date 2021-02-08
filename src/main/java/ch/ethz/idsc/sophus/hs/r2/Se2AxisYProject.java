@@ -22,7 +22,7 @@ public class Se2AxisYProject implements TensorScalarFunction {
         RealScalar.ZERO, //
         DoubleScalar.POSITIVE_INFINITY };
     // ---
-    final Unit unit;
+    private final Unit unit;
 
     MapSingular(Unit unit) {
       this.unit = unit;

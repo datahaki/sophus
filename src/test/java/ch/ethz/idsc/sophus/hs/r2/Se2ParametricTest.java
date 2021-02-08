@@ -9,6 +9,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -70,5 +71,14 @@ public class Se2ParametricTest extends TestCase {
       Chop._14.requireClose(dpq, eqp);
       Chop._14.requireClose(epq, eqp);
     }
+  }
+
+  public void testSymmetrize() {
+    Distribution distribution = NormalDistribution.standard();
+    Tensor p = RandomVariate.of(distribution, 3);
+    Tensor q = RandomVariate.of(distribution, 3);
+    Scalar pq = Se2Parametric.INSTANCE.distance(p, q);
+    Scalar qp = Se2Parametric.INSTANCE.distance(q, p);
+    Tolerance.CHOP.requireClose(pq, qp);
   }
 }

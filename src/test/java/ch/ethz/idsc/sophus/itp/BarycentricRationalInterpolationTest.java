@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.crv.bri;
+package ch.ethz.idsc.sophus.itp;
 
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.usr.AssertFail;

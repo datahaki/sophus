@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.lie.r2.RotationMatrix;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -41,11 +42,15 @@ public class Se2RigidMotionFitTest extends TestCase {
 
   public void testWeights() {
     Distribution distribution = NormalDistribution.standard();
-    for (int n = 5; n < 11; ++n) {
-      Tensor weights = RandomVariate.of(UniformDistribution.unit(), 10);
-      Tensor points = RandomVariate.of(distribution, 10, 3);
-      Tensor target = RandomVariate.of(distribution, 10, 3);
-      AssertFail.of(() -> Se2RigidMotionFit.of(target, points, weights));
-    }
+    Tensor points = RandomVariate.of(distribution, 10, 3);
+    Tensor target = RandomVariate.of(distribution, 10, 3);
+    AssertFail.of(() -> Se2RigidMotionFit.of(target, points));
+    Tensor weights = RandomVariate.of(UniformDistribution.unit(), 10);
+    AssertFail.of(() -> Se2RigidMotionFit.of(target, points, weights));
+  }
+
+  public void testEmptyFail() {
+    AssertFail.of(() -> Se2RigidMotionFit.of(Tensors.empty(), Tensors.empty()));
+    AssertFail.of(() -> Se2RigidMotionFit.of(Tensors.empty(), Tensors.empty(), Tensors.empty()));
   }
 }
