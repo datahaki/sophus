@@ -23,7 +23,7 @@ public class HnExponentialTest extends TestCase {
       Tensor y = hnExponential.exp(v);
       HnMemberQ.INSTANCE.require(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-      Tolerance.CHOP.requireClose(dxy, HnNorm.INSTANCE.norm(v));
+      Tolerance.CHOP.requireClose(dxy, HnNorm.INSTANCE.ofVector(v));
     }
   }
 
@@ -40,7 +40,7 @@ public class HnExponentialTest extends TestCase {
       HnMemberQ.INSTANCE.require(y);
       Tolerance.CHOP.requireClose(x, y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-      Chop._04.requireClose(dxy, HnNorm.INSTANCE.norm(v));
+      Chop._04.requireClose(dxy, HnNorm.INSTANCE.ofVector(v));
     }
   }
 
@@ -53,7 +53,7 @@ public class HnExponentialTest extends TestCase {
       Tensor v = hnExponential.log(y);
       new THnMemberQ(x).require(v);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-      Scalar vn1 = HnNorm.INSTANCE.norm(v);
+      Scalar vn1 = HnNorm.INSTANCE.ofVector(v);
       Chop._08.requireClose(dxy, vn1);
     }
   }
@@ -66,7 +66,7 @@ public class HnExponentialTest extends TestCase {
       Tensor v = hnExponential.log(x);
       new THnMemberQ(x).require(v);
       Scalar dxy = HnMetric.INSTANCE.distance(x, x);
-      Scalar vn1 = HnNorm.INSTANCE.norm(v);
+      Scalar vn1 = HnNorm.INSTANCE.ofVector(v);
       Chop._06.requireClose(dxy, vn1);
     }
   }

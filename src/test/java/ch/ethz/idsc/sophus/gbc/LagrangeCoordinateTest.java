@@ -3,17 +3,23 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
+import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ComplexScalar;
+import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.pdf.NegativeBinomialDistribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.red.Entrywise;
+import ch.ethz.idsc.tensor.red.Mean;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Imag;
 import junit.framework.TestCase;
@@ -46,14 +52,21 @@ public class LagrangeCoordinateTest extends TestCase {
             RandomVariate.of(NormalDistribution.standard(), n, d));
         {
           Tensor weights = idw.origin(levers);
-          Chop._12.allZero(Imag.of(weights));
+          Tolerance.CHOP.allZero(Imag.of(weights));
         }
         {
           Tensor weights = genesis.origin(levers);
-          // System.out.println(Imag.of(weights));
           _check(levers, weights);
         }
       }
+  }
+
+  public void testLagrange() {
+    Tensor sequence = RandomVariate.of(NegativeBinomialDistribution.of(3, 0.6), 10, 3);
+    Tensor point = Mean.of(sequence);
+    ExactTensorQ.require(point);
+    // does not produce equal weights
+    Biinvariants.METRIC.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
   }
 
   public void testNullFail() {

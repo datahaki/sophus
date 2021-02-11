@@ -7,5 +7,5 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 /** normalization of tangent vectors */
 public enum HnNormalize {
   ;
-  public static final TensorUnaryOperator INSTANCE = Normalize.with(HnNorm.INSTANCE::norm);
+  public static final TensorUnaryOperator INSTANCE = Normalize.with(HnNorm.INSTANCE::ofVector);
 }

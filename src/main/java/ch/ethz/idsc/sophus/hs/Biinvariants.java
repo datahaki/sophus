@@ -14,6 +14,7 @@ import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeveragesGenesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
+import ch.ethz.idsc.sophus.hs.hn.HnBiinvariant;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
@@ -24,10 +25,17 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * by Jan Hakenberg, 2020 */
 public enum Biinvariants implements Biinvariant {
   /** left-invariant (biinvariant only if a biinvariant metric exists)
-   * results in a symmetric distance matrix -> can use for kriging */
+   * results in a symmetric distance matrix -> can use for kriging
+   * 
+   * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1]
+   * for alternative implementations
+   * @see HnBiinvariant#METRIC */
   METRIC {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+      // Objects.requireNonNull(vectorLogManifold);
+      // Objects.requireNonNull(sequence);
+      // return point -> Tensor.of(new HsDesign(vectorLogManifold).stream(sequence, point).map(Norm._2::ofVector));
       return HsGenesis.wrap(vectorLogManifold, MetricDistanceVector.INSTANCE, sequence);
     }
 
@@ -146,31 +154,6 @@ public enum Biinvariants implements Biinvariant {
     }
   }, //
   ;
-
-  @Override // from Biinvariant
-  public final TensorUnaryOperator var_dist( //
-      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
-    Objects.requireNonNull(variogram);
-    return point -> tensorUnaryOperator.apply(point).map(variogram);
-  }
-
-  @Override // from Biinvariant
-  public final TensorUnaryOperator weighting( //
-      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    TensorUnaryOperator tensorUnaryOperator = var_dist(vectorLogManifold, variogram, sequence);
-    return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
-  }
-
-  @Override // from Biinvariant
-  public TensorUnaryOperator lagrainate( //
-      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    TensorUnaryOperator tensorUnaryOperator = weighting(vectorLogManifold, variogram, sequence);
-    // LONGTERM inefficient, since levers are computed twice
-    return point -> LagrangeCoordinates.of( //
-        Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog)), // levers
-        tensorUnaryOperator.apply(point)); // target
-  }
 
   /** @return */
   public abstract String title();

@@ -19,4 +19,8 @@ public class THnMemberQ implements MemberQ, Serializable {
   public boolean test(Tensor v) {
     return Chop._06.isZero(LBilinearForm.between(x, v));
   }
+
+  public Tensor project(Tensor v) {
+    return v.add(x.multiply(LBilinearForm.between(x, v)));
+  }
 }

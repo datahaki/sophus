@@ -27,7 +27,7 @@ public class H2ManifoldTest extends TestCase {
       VectorQ.requireLength(log_h2, 2);
       Chop._08.requireClose(Hypot.ofVector(log_h2), distance);
       Tensor log_hn = HnManifold.INSTANCE.logAt(p).vectorLog(q);
-      Scalar norm = HnNorm.INSTANCE.norm(log_hn);
+      Scalar norm = HnNorm.INSTANCE.ofVector(log_hn);
       Chop._08.requireClose(distance, norm);
     }
   }

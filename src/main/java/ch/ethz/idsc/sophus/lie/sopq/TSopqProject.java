@@ -6,6 +6,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
+/** projects a square matrix to an element from the Lie algebra SO(p, q) */
 public class TSopqProject implements TensorUnaryOperator {
   private final Tensor form;
 

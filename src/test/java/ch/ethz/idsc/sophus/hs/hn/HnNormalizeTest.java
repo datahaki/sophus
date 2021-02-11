@@ -16,7 +16,7 @@ public class HnNormalizeTest extends TestCase {
       Tensor xn = RandomVariate.of(distribution, d);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
       v = HnNormalize.INSTANCE.apply(v);
-      Tolerance.CHOP.requireClose(HnNorm.INSTANCE.norm(v), RealScalar.ONE);
+      Tolerance.CHOP.requireClose(HnNorm.INSTANCE.ofVector(v), RealScalar.ONE);
     }
   }
 }
