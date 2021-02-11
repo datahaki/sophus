@@ -18,11 +18,11 @@ public enum HnNorm implements TensorNorm {
 
   @Override // from TensorNorm
   public Scalar norm(Tensor v) {
-    // FIXME v is from which tangent space !?
-    Scalar n2 = HnNormSquared.INSTANCE.norm(v);
+    // norm does not depend on base point (which is the case also for S^n)
+    Scalar n2 = LBilinearForm.normSquared(v);
     if (Sign.isPositiveOrZero(n2))
       return Sqrt.FUNCTION.apply(n2);
-    Chop._06.requireZero(n2);
+    Chop._08.requireZero(n2);
     return n2.zero();
   }
 }

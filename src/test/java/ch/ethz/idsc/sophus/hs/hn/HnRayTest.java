@@ -21,7 +21,7 @@ public class HnRayTest extends TestCase {
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
       v = HnNormalize.INSTANCE.apply(v);
       Tolerance.CHOP.requireClose(HnNorm.INSTANCE.norm(v), RealScalar.ONE);
-      Tolerance.CHOP.requireZero(HnBilinearForm.between(x, v));
+      Tolerance.CHOP.requireZero(LBilinearForm.between(x, v));
       Tensor y = hnRay.shoot(v, RandomVariate.of(distribution));
       HnMemberQ.INSTANCE.require(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);

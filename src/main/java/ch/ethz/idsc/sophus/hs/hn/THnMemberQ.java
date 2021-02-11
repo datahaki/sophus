@@ -17,6 +17,6 @@ public class THnMemberQ implements MemberQ, Serializable {
 
   @Override // from MemberQ
   public boolean test(Tensor v) {
-    return Chop._06.isZero(HnBilinearForm.between(x, v));
+    return Chop._06.isZero(LBilinearForm.between(x, v));
   }
 }

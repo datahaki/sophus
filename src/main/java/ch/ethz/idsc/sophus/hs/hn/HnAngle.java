@@ -23,7 +23,7 @@ public class HnAngle implements TensorScalarFunction {
   /** @param y
    * @return result guaranteed to be greater equals 1 */
   private Scalar _cosh_d(Tensor y) {
-    Scalar xy = HnBilinearForm.between(x, y).negate();
+    Scalar xy = LBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, xy))
       return xy;
     // TODO use taylor series

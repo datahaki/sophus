@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.red.Total;
  * 
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
-/* package */ enum HnBilinearForm {
+/* package */ enum LBilinearForm {
   ;
   /** @param p point or tangent vector
    * @param q point or tangent vector
@@ -20,5 +20,9 @@ import ch.ethz.idsc.tensor.red.Total;
     Tensor pq = p.pmul(q);
     pq.set(Scalar::negate, pq.length() - 1); // toggle sign in last entry
     return Total.ofVector(pq);
+  }
+
+  public static Scalar normSquared(Tensor x) {
+    return between(x, x);
   }
 }

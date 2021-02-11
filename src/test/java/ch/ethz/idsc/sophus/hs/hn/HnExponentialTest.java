@@ -19,6 +19,7 @@ public class HnExponentialTest extends TestCase {
       Tensor x = HnWeierstrassCoordinate.toPoint(xn);
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, RandomVariate.of(distribution, d));
+      new THnMemberQ(x).require(v);
       Tensor y = hnExponential.exp(v);
       HnMemberQ.INSTANCE.require(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
@@ -33,6 +34,7 @@ public class HnExponentialTest extends TestCase {
       Tensor x = HnWeierstrassCoordinate.toPoint(xn);
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, Array.zeros(d));
+      new THnMemberQ(x).require(v);
       assertEquals(v, Array.zeros(d + 1));
       Tensor y = hnExponential.exp(v);
       HnMemberQ.INSTANCE.require(y);

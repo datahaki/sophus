@@ -20,10 +20,12 @@ public class HnWeierstrassCoordinateTest extends TestCase {
     for (int d = 1; d < 5; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);
       Tensor x = HnWeierstrassCoordinate.toPoint(xn);
+      assertEquals(x.length(), d + 1);
       HnMemberQ.INSTANCE.require(x);
       Tensor vn = RandomVariate.of(distribution, d);
       Tensor v = HnWeierstrassCoordinate.toTangent(xn, vn);
       Serialization.copy(new THnMemberQ(x)).require(v);
+      assertEquals(v.length(), d + 1);
     }
   }
 

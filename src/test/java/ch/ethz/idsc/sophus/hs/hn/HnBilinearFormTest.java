@@ -23,7 +23,7 @@ public class HnBilinearFormTest extends TestCase {
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       HnMemberQ.INSTANCE.require(p);
       HnMemberQ.INSTANCE.require(q);
-      Scalar pq = HnBilinearForm.between(p, q);
+      Scalar pq = LBilinearForm.between(p, q);
       assertTrue(Scalars.lessEquals(pq, RealScalar.ONE.negate()));
     }
   }
@@ -38,13 +38,13 @@ public class HnBilinearFormTest extends TestCase {
         Tensor p = RandomVariate.of(distribution, d + 1);
         Tensor q = RandomVariate.of(distribution, d + 1);
         Tolerance.CHOP.requireClose( //
-            HnBilinearForm.between(p, q), //
+            LBilinearForm.between(p, q), //
             J.dot(p).dot(q));
       }
     }
   }
 
   public void testFail() {
-    AssertFail.of(() -> HnBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
+    AssertFail.of(() -> LBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
   }
 }

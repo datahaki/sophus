@@ -21,7 +21,7 @@ public class HnRay {
    * @return */
   public Tensor shoot(Tensor v, Scalar t) {
     new THnMemberQ(x).require(v);
-    Tolerance.CHOP.requireClose(HnNormSquared.INSTANCE.norm(v), RealScalar.ONE);
+    Tolerance.CHOP.requireClose(LBilinearForm.normSquared(v), RealScalar.ONE);
     return x.multiply(Cosh.FUNCTION.apply(t)).add(v.multiply(Sinh.FUNCTION.apply(t)));
   }
 }

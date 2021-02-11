@@ -10,7 +10,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class HnNormSquaredTest extends TestCase {
-  // private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Tolerance.CHOP);
   public void testNegative() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -19,7 +18,7 @@ public class HnNormSquaredTest extends TestCase {
       HnMemberQ.INSTANCE.require(p);
       HnMemberQ.INSTANCE.require(q);
       Tensor dif = p.subtract(q);
-      Scalar dd = HnNormSquared.INSTANCE.norm(dif);
+      Scalar dd = LBilinearForm.normSquared(dif);
       Sign.requirePositiveOrZero(dd);
     }
   }

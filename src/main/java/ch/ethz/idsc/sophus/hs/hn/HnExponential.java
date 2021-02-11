@@ -39,6 +39,7 @@ public class HnExponential implements Exponential, Serializable {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
-    return log(y); // TODO think about using hnAngle.vectorLog !?
+    // embedding of TxH^n in R^(n+1) is not tight (consistent with S^n)
+    return log(y);
   }
 }
