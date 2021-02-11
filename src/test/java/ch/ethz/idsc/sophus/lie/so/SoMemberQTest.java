@@ -1,8 +1,6 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
-import ch.ethz.idsc.sophus.lie.so.SoMemberQ;
-import ch.ethz.idsc.sophus.lie.so.TSoMemberQ;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;

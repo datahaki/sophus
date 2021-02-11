@@ -1,8 +1,6 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.gln;
+package ch.ethz.idsc.sophus.lie.gl;
 
-import ch.ethz.idsc.sophus.lie.gl.GlGroup;
-import ch.ethz.idsc.sophus.lie.gl.GlGroupElement;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.r2.RotationMatrix;

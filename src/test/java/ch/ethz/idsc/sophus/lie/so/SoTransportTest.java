@@ -1,7 +1,6 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
-import ch.ethz.idsc.sophus.lie.so.SoTransport;
 import ch.ethz.idsc.sophus.lie.so3.So3RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.tensor.Tensor;

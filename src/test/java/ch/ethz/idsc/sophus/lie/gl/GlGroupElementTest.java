@@ -1,9 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.gln;
+package ch.ethz.idsc.sophus.lie.gl;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.lie.gl.GlGroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2GroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2Matrix;
 import ch.ethz.idsc.sophus.usr.AssertFail;

@@ -1,11 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.lie.so.SoManifold;
-import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
-import ch.ethz.idsc.sophus.lie.so.TSoMemberQ;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;

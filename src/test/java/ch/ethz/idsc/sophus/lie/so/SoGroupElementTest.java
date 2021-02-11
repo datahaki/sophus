@@ -1,10 +1,8 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.so.SoGroup;
-import ch.ethz.idsc.sophus.lie.so.SoGroupElement;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.lie.so3.So3TestHelper;
 import ch.ethz.idsc.sophus.usr.AssertFail;
