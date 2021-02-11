@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 public class BiinvariantTest extends TestCase {
   public void testAbsolute() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    Biinvariant biinvariant = Biinvariants.METRIC;
+    Biinvariant biinvariant = MetricBiinvariant.RIEMANN;
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     TensorUnaryOperator weightingInterface = Serialization.copy( //
         biinvariant.distances(RnManifold.INSTANCE, sequence));

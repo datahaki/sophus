@@ -24,7 +24,7 @@ public class HsWeiszfeldMethodTest extends TestCase {
       for (int n = 2; n < 20; n += 4)
         try {
           Tensor sequence = RandomVariate.of(distribution, n, d);
-          TensorUnaryOperator create = Biinvariants.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence);
+          TensorUnaryOperator create = MetricBiinvariant.RIEMANN.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence);
           SpatialMedian sm1 = HsWeiszfeldMethod.of( //
               RnBiinvariantMean.INSTANCE, //
               create, //

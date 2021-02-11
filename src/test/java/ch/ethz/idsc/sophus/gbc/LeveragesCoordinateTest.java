@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.hs.sn.SnManifold;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
@@ -34,7 +35,7 @@ public class LeveragesCoordinateTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, length, 1);
       Tensor origin = RandomVariate.of(distribution, 1);
       Chop._08.requireClose( //
-          Biinvariants.METRIC.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
+          MetricBiinvariant.RIEMANN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
           Biinvariants.LEVERAGES.weighting(vectorLogManifold, variogram, sequence).apply(origin));
     }
   }

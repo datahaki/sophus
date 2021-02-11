@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.gbc;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
@@ -66,7 +66,7 @@ public class LagrangeCoordinateTest extends TestCase {
     Tensor point = Mean.of(sequence);
     ExactTensorQ.require(point);
     // does not produce equal weights
-    Biinvariants.METRIC.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
+    MetricBiinvariant.RIEMANN.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
   }
 
   public void testNullFail() {

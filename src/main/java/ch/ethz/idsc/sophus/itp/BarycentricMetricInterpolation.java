@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.itp;
 
-import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,12 +17,12 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
    * @return */
   public static ScalarTensorFunction of(Tensor knots, ScalarUnaryOperator variogram) {
     return new BarycentricMetricInterpolation( //
-        Biinvariants.METRIC.coordinate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
+        MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
   }
 
   public static ScalarTensorFunction la(Tensor knots, ScalarUnaryOperator variogram) {
     return new BarycentricMetricInterpolation( //
-        Biinvariants.METRIC.lagrainate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
+        MetricBiinvariant.RIEMANN.lagrainate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
   }
 
   /***************************************************/

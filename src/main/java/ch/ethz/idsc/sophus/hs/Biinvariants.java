@@ -7,14 +7,11 @@ import ch.ethz.idsc.sophus.dv.CupolaBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.GardenDistanceVector;
 import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
 import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
-import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
 import ch.ethz.idsc.sophus.gbc.CupolaCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
 import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeveragesGenesis;
-import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
-import ch.ethz.idsc.sophus.hs.hn.HnBiinvariant;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
@@ -24,44 +21,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public enum Biinvariants implements Biinvariant {
-  /** left-invariant (biinvariant only if a biinvariant metric exists)
-   * results in a symmetric distance matrix -> can use for kriging
-   * 
-   * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1]
-   * for alternative implementations
-   * @see HnBiinvariant#METRIC */
-  // TODO extract since not universal, and requires external vector norm
-  METRIC {
-    @Override // from Biinvariant
-    public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      // Objects.requireNonNull(vectorLogManifold);
-      // Objects.requireNonNull(sequence);
-      // return point -> Tensor.of(new HsDesign(vectorLogManifold).stream(sequence, point).map(Norm._2::ofVector));
-      return HsGenesis.wrap(vectorLogManifold, MetricDistanceVector.INSTANCE, sequence);
-    }
-
-    @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsGenesis.wrap(vectorLogManifold, MetricCoordinate.of(variogram), sequence);
-    }
-
-    @Override // from Biinvariant
-    public TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      Objects.requireNonNull(vectorLogManifold);
-      Objects.requireNonNull(variogram);
-      Objects.requireNonNull(sequence);
-      return point -> {
-        Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
-        Tensor target = NormalizeTotal.FUNCTION.apply(MetricDistanceVector.INSTANCE.origin(levers).map(variogram));
-        return LagrangeCoordinates.of(levers, target);
-      };
-    }
-
-    @Override
-    public String title() {
-      return "Metric";
-    }
-  },
   /** bi-invariant
    * does not result in a symmetric distance matrix -> should not use for kriging
    * 

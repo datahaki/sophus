@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
@@ -35,7 +36,7 @@ import junit.framework.TestCase;
 public class KrigingTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final Biinvariant[] BIINV = { Biinvariants.HARBOR };
-  private static final Biinvariant[] SYMME = { Biinvariants.METRIC, Biinvariants.HARBOR };
+  private static final Biinvariant[] SYMME = { MetricBiinvariant.RIEMANN, Biinvariants.HARBOR };
 
   public void testSimple2() {
     Distribution distributiox = NormalDistribution.standard();
@@ -130,7 +131,7 @@ public class KrigingTest extends TestCase {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     TensorUnaryOperator weightingInterface = //
-        Biinvariants.METRIC.var_dist(RnManifold.INSTANCE, variogram, sequence);
+        MetricBiinvariant.RIEMANN.var_dist(RnManifold.INSTANCE, variogram, sequence);
     Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);

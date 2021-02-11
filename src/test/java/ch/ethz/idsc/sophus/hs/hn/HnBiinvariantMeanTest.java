@@ -35,7 +35,7 @@ public class HnBiinvariantMeanTest extends TestCase {
     for (int d = 2; d < 4; ++d) {
       int n = d + 1;
       for (Biinvariant biinvariant : new Biinvariant[] { //
-          HnBiinvariant.METRIC, //
+          HnMetricBiinvariant.INSTANCE, //
           Biinvariants.LEVERAGES, //
           Biinvariants.GARDEN })
         try {

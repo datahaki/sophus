@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.itp;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
-import ch.ethz.idsc.sophus.hs.Biinvariants;
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.WeightingInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -60,7 +60,7 @@ public class InverseDistanceWeightingTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator shw = Biinvariants.METRIC.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+        TensorUnaryOperator shw = MetricBiinvariant.RIEMANN.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         Tensor weights1 = weightingInterface.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
