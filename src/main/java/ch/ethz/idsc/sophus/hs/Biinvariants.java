@@ -11,7 +11,6 @@ import ch.ethz.idsc.sophus.dv.MetricDistanceVector;
 import ch.ethz.idsc.sophus.gbc.CupolaCoordinate;
 import ch.ethz.idsc.sophus.gbc.GardenCoordinate;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
-import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeveragesGenesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
@@ -29,12 +28,24 @@ public enum Biinvariants implements Biinvariant {
   METRIC {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, MetricDistanceVector.INSTANCE, sequence);
+      return HsGenesis.wrap(vectorLogManifold, MetricDistanceVector.INSTANCE, sequence);
     }
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(variogram), sequence);
+      return HsGenesis.wrap(vectorLogManifold, MetricCoordinate.of(variogram), sequence);
+    }
+
+    @Override // from Biinvariant
+    public TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      Objects.requireNonNull(vectorLogManifold);
+      Objects.requireNonNull(variogram);
+      Objects.requireNonNull(sequence);
+      return point -> {
+        Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
+        Tensor target = NormalizeTotal.FUNCTION.apply(MetricDistanceVector.INSTANCE.origin(levers).map(variogram));
+        return LagrangeCoordinates.of(target, levers);
+      };
     }
 
     @Override
@@ -51,12 +62,24 @@ public enum Biinvariants implements Biinvariant {
   LEVERAGES {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
+      return HsGenesis.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
     }
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsCoordinates.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
+      return HsGenesis.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
+    }
+
+    @Override // from Biinvariant
+    public TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      Objects.requireNonNull(vectorLogManifold);
+      Objects.requireNonNull(variogram);
+      Objects.requireNonNull(sequence);
+      return point -> {
+        Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
+        Tensor target = NormalizeTotal.FUNCTION.apply(LeveragesDistanceVector.INSTANCE.origin(levers).map(variogram));
+        return LagrangeCoordinates.of(target, levers);
+      };
     }
 
     @Override
@@ -140,10 +163,10 @@ public enum Biinvariants implements Biinvariant {
   }
 
   @Override // from Biinvariant
-  public final TensorUnaryOperator lagrainate( //
+  public TensorUnaryOperator lagrainate( //
       VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = weighting(vectorLogManifold, variogram, sequence);
-    // TODO this is inefficient, since levers are probably computed twice
+    // LONGTERM inefficient, since levers are computed twice
     return point -> LagrangeCoordinates.of( //
         tensorUnaryOperator.apply(point), // target
         Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog))); // levers

@@ -32,7 +32,9 @@ public interface Biinvariant {
    * @return operator that provides barycentric coordinates */
   TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
-  /** @param vectorLogManifold
+  /** barycentric coordinate solution of lagrange multiplier system
+   * 
+   * @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return operator that provides barycentric coordinates */

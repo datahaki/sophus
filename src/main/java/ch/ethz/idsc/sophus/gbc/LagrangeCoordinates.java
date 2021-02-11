@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -10,6 +11,7 @@ import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.rn.LagrangeMultiplier;
+import ch.ethz.idsc.tensor.sca.Chop;
 
 public enum LagrangeCoordinates {
   ;
@@ -26,6 +28,7 @@ public enum LagrangeCoordinates {
     /* least squares is required if eqs do not have max rank, which is the case
      * when the tangent space parameterization is not 1 to 1 */
     Tensor solve = new LagrangeMultiplier(CACHE.apply(n), target, eqs, rhs).solve();
+    AffineQ.require(solve, Chop._02); // conceptual check
     return NormalizeTotal.FUNCTION.apply(solve);
   }
 }

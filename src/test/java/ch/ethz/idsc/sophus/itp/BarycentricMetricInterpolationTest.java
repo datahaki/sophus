@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class BarycentricMetricInterpolationTest extends TestCase {
-  public void testSimple() {
+  public void testSimpleBa() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricMetricInterpolation.of(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));
     assertEquals(scalarTensorFunction.apply(RealScalar.of(1)), UnitVector.of(3, 0));
@@ -21,6 +21,18 @@ public class BarycentricMetricInterpolationTest extends TestCase {
     Tensor w1 = scalarTensorFunction.apply(RationalScalar.of(3, 2));
     ExactTensorQ.require(w1);
     assertEquals(w1, Tensors.fromString("{85/169, 335/676, 1/676}"));
+    Tensor w2 = scalarTensorFunction.apply(RealScalar.of(2.0001));
+    Chop._03.requireClose(w2, UnitVector.of(3, 1));
+  }
+
+  public void testSimpleLa() {
+    ScalarTensorFunction scalarTensorFunction = //
+        BarycentricMetricInterpolation.la(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));
+    assertEquals(scalarTensorFunction.apply(RealScalar.of(1)), UnitVector.of(3, 0));
+    assertEquals(scalarTensorFunction.apply(RealScalar.of(4)), UnitVector.of(3, 2));
+    Tensor w1 = scalarTensorFunction.apply(RationalScalar.of(3, 2));
+    ExactTensorQ.require(w1);
+    assertEquals(w1, Tensors.fromString("{60/119, 235/476, 1/476}"));
     Tensor w2 = scalarTensorFunction.apply(RealScalar.of(2.0001));
     Chop._03.requireClose(w2, UnitVector.of(3, 1));
   }
