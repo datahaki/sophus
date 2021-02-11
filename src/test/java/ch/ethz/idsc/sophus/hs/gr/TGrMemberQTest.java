@@ -9,6 +9,7 @@ import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
@@ -22,7 +23,7 @@ public class TGrMemberQTest extends TestCase {
     Tensor pre = RandomVariate.of(NormalDistribution.standard(), n, n);
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
     assertFalse(tGrMemberQ.test(pre));
-    Tensor v = StaticHelper.projectTangent(x, pre);
+    Tensor v = tGrMemberQ.project(pre).multiply(Pi.VALUE);
     tGrMemberQ.require(v);
   }
 

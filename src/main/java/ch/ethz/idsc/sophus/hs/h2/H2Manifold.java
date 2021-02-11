@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum H2Manifold implements VectorLogManifold {
   INSTANCE;
 
-  @Override
+  @Override // from VectorLogManifold
   public TangentSpace logAt(Tensor p) {
     return new H2TangentSpace(p);
   }

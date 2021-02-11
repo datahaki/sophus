@@ -6,6 +6,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.red.Total;
 
 /** indefinite non-degenerate symmetric bilinear form
+ * with diagonal representation
+ * [1, 1, ..., 1, -1]
  * 
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
@@ -16,7 +18,7 @@ import ch.ethz.idsc.tensor.red.Total;
    * @return */
   public static Scalar between(Tensor p, Tensor q) {
     Tensor pq = p.pmul(q);
-    pq.set(Scalar::negate, pq.length() - 1);
+    pq.set(Scalar::negate, pq.length() - 1); // toggle sign in last entry
     return Total.ofVector(pq);
   }
 }

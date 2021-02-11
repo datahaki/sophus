@@ -12,6 +12,7 @@ public enum HnProjection implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor x) {
+    // TODO not clear from where to where x is projected!?
     Scalar xn2 = HnNormSquared.INSTANCE.norm(x); // if x in H^n then equals to -1
     return x.divide(Sqrt.FUNCTION.apply(xn2.negate()));
   }

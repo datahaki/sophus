@@ -28,6 +28,6 @@ public class LagrangeCoordinate implements Genesis, Serializable {
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    return LagrangeCoordinates.of(genesis.origin(levers), levers);
+    return LagrangeCoordinates.of(levers, genesis.origin(levers));
   }
 }

@@ -23,7 +23,7 @@ public class GrExponential implements Exponential, Serializable {
   private final Tensor x2_id;
 
   /** @param x rank k projector of Gr(n, k)
-   * @throws Exception if x is not an element in the grassmannian manifold */
+   * @throws Exception if x is not an element in the Grassmann manifold */
   public GrExponential(Tensor x) {
     this.x = GrMemberQ.INSTANCE.require(x);
     tGrMemberQ = new TGrMemberQ(x);

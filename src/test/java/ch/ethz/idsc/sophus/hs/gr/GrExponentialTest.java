@@ -26,9 +26,10 @@ public class GrExponentialTest extends TestCase {
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
     GrExponential grExponential = new GrExponential(x);
+    TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = StaticHelper.projectTangent(x, pre);
+    Tensor v = tGrMemberQ.project(pre);
     new TGrMemberQ(x).require(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
@@ -43,10 +44,11 @@ public class GrExponentialTest extends TestCase {
   public void testSimple() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 0}}");
     GrExponential grExponential = new GrExponential(x);
+    TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = StaticHelper.projectTangent(x, pre);
-    new TGrMemberQ(x).require(v);
+    Tensor v = tGrMemberQ.project(pre);
+    tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
     Tensor log = grExponential.log(exp);
@@ -56,9 +58,10 @@ public class GrExponentialTest extends TestCase {
   public void testShift() {
     Tensor x = RandomSample.of(GrRandomSample.of(2, 1));
     GrExponential grExponential = new GrExponential(x);
+    TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = StaticHelper.projectTangent(x, pre);
+    Tensor v = tGrMemberQ.project(pre);
     Tensor exp = grExponential.exp(v);
     assertTrue(GrassmannQ.of(exp));
     Tensor log = grExponential.log(exp);
@@ -74,9 +77,10 @@ public class GrExponentialTest extends TestCase {
       assertEquals(MatrixRank.of(x), k);
       GrassmannQ.require(x);
       GrExponential grExponential = new GrExponential(x);
+      TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
       Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
-      Tensor v = StaticHelper.projectTangent(x, pre);
-      new TGrMemberQ(x).require(v);
+      Tensor v = tGrMemberQ.project(pre);
+      tGrMemberQ.require(v);
       assertFalse(Chop._05.allZero(v));
       Tensor exp = grExponential.exp(v);
       GrassmannQ.require(exp);

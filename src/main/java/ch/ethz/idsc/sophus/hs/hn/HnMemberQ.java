@@ -15,13 +15,8 @@ public enum HnMemberQ implements MemberQ {
   @Override // from MemberQ
   public boolean test(Tensor x) {
     Scalar xn = Last.of(x);
-    if (Scalars.lessEquals(RealScalar.ONE, xn))
-      return Chop._08.isClose(HnNormSquared.INSTANCE.norm(x), RealScalar.ONE.negate());
-    return false;
+    return Scalars.lessEquals(RealScalar.ONE, xn) //
+        ? Chop._08.isClose(HnNormSquared.INSTANCE.norm(x), RealScalar.ONE.negate())
+        : false;
   }
-  //
-  // @Override // from MemberQ
-  // public boolean isTangent(Tensor x, Tensor v) {
-  // return chop.isZero(HnBilinearForm.between(x, v));
-  // }
 }

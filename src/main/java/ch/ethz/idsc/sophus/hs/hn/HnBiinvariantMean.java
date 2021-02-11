@@ -7,8 +7,6 @@ import ch.ethz.idsc.tensor.sca.Chop;
 
 public enum HnBiinvariantMean {
   ;
-  public static final BiinvariantMean INSTANCE = of(Chop._06);
-
   /** @param chop
    * @return */
   public static BiinvariantMean of(Chop chop) {

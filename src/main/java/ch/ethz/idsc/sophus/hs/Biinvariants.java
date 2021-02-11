@@ -44,7 +44,7 @@ public enum Biinvariants implements Biinvariant {
       return point -> {
         Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
         Tensor target = NormalizeTotal.FUNCTION.apply(MetricDistanceVector.INSTANCE.origin(levers).map(variogram));
-        return LagrangeCoordinates.of(target, levers);
+        return LagrangeCoordinates.of(levers, target);
       };
     }
 
@@ -78,7 +78,7 @@ public enum Biinvariants implements Biinvariant {
       return point -> {
         Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
         Tensor target = NormalizeTotal.FUNCTION.apply(LeveragesDistanceVector.INSTANCE.origin(levers).map(variogram));
-        return LagrangeCoordinates.of(target, levers);
+        return LagrangeCoordinates.of(levers, target);
       };
     }
 
@@ -168,8 +168,8 @@ public enum Biinvariants implements Biinvariant {
     TensorUnaryOperator tensorUnaryOperator = weighting(vectorLogManifold, variogram, sequence);
     // LONGTERM inefficient, since levers are computed twice
     return point -> LagrangeCoordinates.of( //
-        tensorUnaryOperator.apply(point), // target
-        Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog))); // levers
+        Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog)), // levers
+        tensorUnaryOperator.apply(point)); // target
   }
 
   /** @return */

@@ -11,6 +11,7 @@ public enum HnNormSquared implements TensorNorm {
 
   @Override // from TensorNorm
   public Scalar norm(Tensor x) {
+    // TODO what is this: distance from what point/norm of which vector!?
     return HnBilinearForm.between(x, x);
   }
 }

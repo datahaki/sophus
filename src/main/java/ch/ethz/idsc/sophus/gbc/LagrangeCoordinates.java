@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -13,14 +14,15 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.opt.rn.LagrangeMultiplier;
 import ch.ethz.idsc.tensor.sca.Chop;
 
+/** @see HsDesign */
 public enum LagrangeCoordinates {
   ;
   private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, 10);
 
-  /** @param target
-   * @param levers
+  /** @param levers
+   * @param target
    * @return */
-  public static Tensor of(Tensor target, Tensor levers) {
+  public static Tensor of(Tensor levers, Tensor target) {
     int n = levers.length();
     Tensor eqs = Transpose.of(levers).append(ConstantArray.of(RealScalar.ONE, n));
     int d = eqs.length();

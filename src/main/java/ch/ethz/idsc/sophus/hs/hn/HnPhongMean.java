@@ -13,6 +13,7 @@ public enum HnPhongMean implements BiinvariantMean {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return HnProjection.INSTANCE.apply(AffineQ.require(weights, Chop._08).dot(sequence));
+    AffineQ.require(weights, Chop._08);
+    return HnProjection.INSTANCE.apply(weights.dot(sequence));
   }
 }
