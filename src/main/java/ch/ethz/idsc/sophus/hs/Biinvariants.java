@@ -30,6 +30,7 @@ public enum Biinvariants implements Biinvariant {
    * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1]
    * for alternative implementations
    * @see HnBiinvariant#METRIC */
+  // TODO extract since not universal, and requires external vector norm
   METRIC {
     @Override // from Biinvariant
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
