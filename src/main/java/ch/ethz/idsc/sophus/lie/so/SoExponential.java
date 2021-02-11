@@ -1,17 +1,14 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.gln;
+package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 
-/** Exp_e[X] and Log_e[M]
- * 
- * input X is a square matrix
- * input M is an invertible matrix */
-public enum GlnExponential implements Exponential {
+/** SO(n) group of orthogonal matrices with determinant +1 */
+public enum SoExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential
@@ -26,6 +23,6 @@ public enum GlnExponential implements Exponential {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor matrix) {
-    return Flatten.of(log(matrix));
+    return Vectorize.of(log(matrix), -1);
   }
 }

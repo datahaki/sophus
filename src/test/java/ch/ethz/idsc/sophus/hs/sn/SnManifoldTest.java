@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
+import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
@@ -70,7 +70,7 @@ public class SnManifoldTest extends TestCase {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 2; d < 6; ++d) {
         Tensor mean = UnitVector.of(d, 0);
-        RandomSampleInterface randomSampleInterface = SonRandomSample.of(d);
+        RandomSampleInterface randomSampleInterface = SoRandomSample.of(d);
         for (int n = d + 1; n < d + 3; ++n) {
           Tensor sequence = randomCloud(mean, n);
           Tensor weights = barycentricCoordinate.weights(sequence, mean);

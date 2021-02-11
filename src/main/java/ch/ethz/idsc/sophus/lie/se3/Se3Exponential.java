@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se3;
 
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
+import ch.ethz.idsc.sophus.lie.gl.GlGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * from "Lie Groups for 2D and 3D Transformations" by Ethan Eade
  * http://ethaneade.com/
  * 
- * @see GlnGroup
+ * @see GlGroup
  * @see LieGroupElement */
 public enum Se3Exponential implements Exponential {
   INSTANCE;

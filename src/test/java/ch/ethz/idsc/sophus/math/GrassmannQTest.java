@@ -11,7 +11,6 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
@@ -68,8 +67,8 @@ public class GrassmannQTest extends TestCase {
     Tensor H = V.dot(sigma_inverse.dot(VT)); // "hat matrix"
     GrassmannQ.require(H, Chop._09);
     // ---
-    Scalar scalar = Trace.of(H);
-    Chop._07.requireClose(scalar, Round.of(scalar));
+    Tensor traceh = Trace.of(H);
+    Chop._07.requireClose(traceh, Round.of(traceh));
     // ---
     Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
     InfluenceMatrix influenceMatrix = InfluenceMatrix.of(matrix);

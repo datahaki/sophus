@@ -1,22 +1,22 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
 
 /** Reference: http://ethaneade.com/lie.pdf */
-public class SonGroupElement implements LieGroupElement {
+public class SoGroupElement implements LieGroupElement {
   /** @param matrix orthogonal with determinant +1
    * @return */
-  public static SonGroupElement of(Tensor matrix) {
-    return new SonGroupElement(SonMemberQ.INSTANCE.require(matrix));
+  public static SoGroupElement of(Tensor matrix) {
+    return new SoGroupElement(SoMemberQ.INSTANCE.require(matrix));
   }
 
   /***************************************************/
   private final Tensor matrix;
 
-  private SonGroupElement(Tensor matrix) {
+  private SoGroupElement(Tensor matrix) {
     this.matrix = matrix;
   }
 
@@ -26,18 +26,18 @@ public class SonGroupElement implements LieGroupElement {
   }
 
   @Override // from LieGroupElement
-  public SonGroupElement inverse() {
-    return new SonGroupElement(Transpose.of(matrix));
+  public SoGroupElement inverse() {
+    return new SoGroupElement(Transpose.of(matrix));
   }
 
   @Override // from LieGroupElement
   public Tensor combine(Tensor tensor) {
-    return matrix.dot(SonMemberQ.INSTANCE.require(tensor));
+    return matrix.dot(SoMemberQ.INSTANCE.require(tensor));
   }
 
   @Override // from LieGroupElement
   public Tensor dL(Tensor v) { // v is skew with dimensions 3 x 3
-    return matrix.dot(TSonMemberQ.INSTANCE.require(v)); // consistent with So3Transport
+    return matrix.dot(TSoMemberQ.INSTANCE.require(v)); // consistent with So3Transport
   }
 
   @Override // from LieGroupElement

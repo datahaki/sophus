@@ -3,6 +3,8 @@ package ch.ethz.idsc.sophus.lie.son;
 
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.lie.so.SoGroup;
+import ch.ethz.idsc.sophus.lie.so.SoGroupElement;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.lie.so3.So3TestHelper;
 import ch.ethz.idsc.sophus.usr.AssertFail;
@@ -15,19 +17,19 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SonGroupElementTest extends TestCase {
-  private static final LieGroup LIE_GROUP = SonGroup.INSTANCE;
+public class SoGroupElementTest extends TestCase {
+  private static final LieGroup LIE_GROUP = SoGroup.INSTANCE;
 
   public void testBlub() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
-    SonGroupElement.of(orth).combine(matr);
-    AssertFail.of(() -> SonGroupElement.of(orth).combine(matr.add(matr)));
+    SoGroupElement.of(orth).combine(matr);
+    AssertFail.of(() -> SoGroupElement.of(orth).combine(matr.add(matr)));
   }
 
   public void testAdjoint() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
-    SonGroupElement so3GroupElement = SonGroupElement.of(orth);
+    SoGroupElement so3GroupElement = SoGroupElement.of(orth);
     Tensor vector = So3TestHelper.spawn_so3();
     Tensor adjoint = so3GroupElement.adjoint(vector);
     AntisymmetricMatrixQ.require(adjoint);
@@ -72,25 +74,25 @@ public class SonGroupElementTest extends TestCase {
   }
 
   public void testSimple() {
-    SonGroupElement so3GroupElement = SonGroupElement.of(IdentityMatrix.of(3));
+    SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     so3GroupElement.inverse();
     AssertFail.of(() -> so3GroupElement.combine(HilbertMatrix.of(3)));
   }
 
   public void testDetNegFail() {
-    AssertFail.of(() -> SonGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
+    AssertFail.of(() -> SoGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
   }
 
   public void testDetNegCombineFail() {
-    SonGroupElement so3GroupElement = SonGroupElement.of(IdentityMatrix.of(3));
+    SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     AssertFail.of(() -> so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1)));
   }
 
   public void testFail() {
-    AssertFail.of(() -> SonGroupElement.of(HilbertMatrix.of(3)));
+    AssertFail.of(() -> SoGroupElement.of(HilbertMatrix.of(3)));
   }
 
   public void testSize4Ok() {
-    SonGroupElement.of(IdentityMatrix.of(4));
+    SoGroupElement.of(IdentityMatrix.of(4));
   }
 }

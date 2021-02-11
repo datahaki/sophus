@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se3;
 
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
+import ch.ethz.idsc.sophus.lie.gl.GlGroup;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.mat.LinearSolve;
  * 
  * input p and q are 4 x 4 matrices that encode affine transformations
  * 
- * @see GlnGroup
+ * @see GlGroup
  * @see LieGroupElement */
 public enum Se3Geodesic implements GeodesicInterface {
   INSTANCE;

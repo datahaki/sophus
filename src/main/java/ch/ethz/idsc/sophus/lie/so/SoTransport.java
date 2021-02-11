@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.Tensor;
@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.mat.Inverse;
 /** Reference:
  * "Hermite subdivision on manifolds via parallel transport"
  * by Caroline Moosmueller, 2017 */
-public enum SonTransport implements HsTransport {
+public enum SoTransport implements HsTransport {
   INSTANCE;
 
   @Override // from HsTransport

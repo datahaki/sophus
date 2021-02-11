@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 
-public enum SonMemberQ implements MemberQ {
+public enum SoMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.so3;
 import java.util.Random;
 
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
-import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
+import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.Cross;
@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.sca.N;
 /** Reference:
  * "Spheres and Rotations" eq. (21.5.17) in NR, 2007
  * 
- * @see SonRandomSample */
+ * @see SoRandomSample */
 public enum So3RandomSample implements RandomSampleInterface {
   INSTANCE;
 

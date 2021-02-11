@@ -1,12 +1,12 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public enum TSonMemberQ implements MemberQ {
+public enum TSoMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ

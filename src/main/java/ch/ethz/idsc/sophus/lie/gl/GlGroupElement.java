@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.gln;
+package ch.ethz.idsc.sophus.lie.gl;
 
 import java.io.Serializable;
 
@@ -16,19 +16,19 @@ import ch.ethz.idsc.tensor.mat.SquareMatrixQ;
  * new LinearGroupElement(LinearSolve.of(a, b))
  * 
  * @see So3Geodesic */
-public class GlnGroupElement implements LieGroupElement, Serializable {
+public class GlGroupElement implements LieGroupElement, Serializable {
   /** @param matrix square and invertible
    * @return
    * @throws Exception if given matrix is not invertible */
-  public static GlnGroupElement of(Tensor matrix) {
-    return new GlnGroupElement(matrix, Inverse.of(matrix));
+  public static GlGroupElement of(Tensor matrix) {
+    return new GlGroupElement(matrix, Inverse.of(matrix));
   }
 
   /***************************************************/
   private final Tensor matrix;
   private final Tensor inverse;
 
-  private GlnGroupElement(Tensor matrix, Tensor inverse) {
+  private GlGroupElement(Tensor matrix, Tensor inverse) {
     this.matrix = matrix;
     this.inverse = inverse;
   }
@@ -39,8 +39,8 @@ public class GlnGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
-  public GlnGroupElement inverse() {
-    return new GlnGroupElement(inverse, matrix);
+  public GlGroupElement inverse() {
+    return new GlGroupElement(inverse, matrix);
   }
 
   @Override // from LieGroupElement

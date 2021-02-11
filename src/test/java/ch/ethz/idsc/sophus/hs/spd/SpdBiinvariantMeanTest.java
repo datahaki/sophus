@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
+import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.tensor.Tensor;
@@ -47,7 +47,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
         Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, len));
         Tensor mL = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
-        Tensor g = RandomSample.of(SonRandomSample.of(n));
+        Tensor g = RandomSample.of(SoRandomSample.of(n));
         Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
         Tensor mR = SpdBiinvariantMean.INSTANCE.mean(sR, weights);
         Chop._06.requireClose(mR, BasisTransform.ofForm(mL, g));

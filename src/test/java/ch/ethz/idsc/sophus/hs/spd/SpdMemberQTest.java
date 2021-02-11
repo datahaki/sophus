@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.hs.Biinvariants;
-import ch.ethz.idsc.sophus.lie.son.SonRandomSample;
+import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
@@ -34,7 +34,7 @@ public class SpdMemberQTest extends TestCase {
             Tensor weights1 = biinvariants.coordinate( //
                 SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
             // ---
-            Tensor g = RandomSample.of(SonRandomSample.of(n));
+            Tensor g = RandomSample.of(SoRandomSample.of(n));
             Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
             Tensor mR = BasisTransform.ofForm(mL, g);
             Tensor weights2 = biinvariants.coordinate( //

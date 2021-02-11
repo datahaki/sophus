@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.lie.son;
+package ch.ethz.idsc.sophus.lie.so;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -20,17 +20,17 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
  * 
  * @see So2RandomSample
  * @see So3RandomSample */
-public class SonRandomSample implements RandomSampleInterface, Serializable {
+public class SoRandomSample implements RandomSampleInterface, Serializable {
   /** @param n positive
    * @return random sampler in SO(n) */
   public static RandomSampleInterface of(int n) {
-    return new SonRandomSample(Integers.requirePositive(n));
+    return new SoRandomSample(Integers.requirePositive(n));
   }
 
   /***************************************************/
   private final int n;
 
-  private SonRandomSample(int n) {
+  private SoRandomSample(int n) {
     this.n = n;
   }
 
