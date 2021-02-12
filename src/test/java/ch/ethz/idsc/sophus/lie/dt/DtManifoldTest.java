@@ -42,7 +42,7 @@ public class DtManifoldTest extends TestCase {
         }
   }
 
-  public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
+  public void testAffineBiinvariant() {
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)

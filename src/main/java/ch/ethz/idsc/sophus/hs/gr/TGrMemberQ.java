@@ -11,7 +11,9 @@ import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 
-/** tangent space at given point x */
+/** tangent space at given point x
+ * 
+ * The dimensionality of TGr(n, k) is k * (n - k). */
 public class TGrMemberQ implements MemberQ, Serializable {
   private final Tensor x;
 

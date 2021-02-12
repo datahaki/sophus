@@ -11,6 +11,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.pdf.NormalDistribution;
+import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class TSnMemberQTest extends TestCase {
@@ -28,7 +30,12 @@ public class TSnMemberQTest extends TestCase {
       Tensor x = RandomSample.of(randomSampleInterface);
       Tensor y = RandomSample.of(randomSampleInterface);
       Tensor v = new SnExponential(x).log(y);
-      new TSnMemberQ(x).require(v);
+      TSnMemberQ tSnMemberQ = new TSnMemberQ(x);
+      tSnMemberQ.require(v);
+      Tensor w = RandomVariate.of(NormalDistribution.standard(), d + 1);
+      assertFalse(tSnMemberQ.test(w));
+      w = tSnMemberQ.project(w);
+      assertTrue(tSnMemberQ.test(w));
     }
   }
 

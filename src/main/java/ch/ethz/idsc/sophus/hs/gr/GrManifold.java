@@ -14,17 +14,21 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * Gr(n, k) is represented by n x matrices of rank k satisfying P.P = P and P' = P
  * 
+ * The dimensionality of Gr(n, k) is k * (n - k).
+ * 
  * Gr(n, k) is a homogoneous space, quotient of the special orthogonal
  * group by the subgroup of rotations stabilising a k-dimensional subspace:
  * 
- * Gr(n, k) ~ O(n)/(O(k) x O(n-k))
- * Gr(n, k) ~ SO(n)/(SO(k) x SO(n-k))
+ * Gr(n, k) ~ O(n) / (O(k) x O(n-k))
+ * Gr(n, k) ~ SO(n) / (SO(k) x SO(n-k))
  * 
  * It is therefore customary to represent the Grassmann manifold by equivalence classes
  * of orthogonal k-frames in R^n.
  * 
  * For such a representation, work in the Stiefel manifold instead:
- * Gr(n, k) ~ St(n, k) / SO(k) */
+ * Gr(n, k) ~ St(n, k) / SO(k)
+ * 
+ * Gr(n, 1) ~ S^(n - 1) / {+-1} */
 public enum GrManifold implements HsExponential {
   INSTANCE;
 
