@@ -2,13 +2,11 @@
 package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
-import ch.ethz.idsc.tensor.DeterminateScalarQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorScalarFunction;
-import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Chop;
 
@@ -40,10 +38,6 @@ public class HnAngle implements TensorScalarFunction {
     return new Inner(y, _cosh_d(y)).log();
   }
 
-  public Tensor vectorLog(Tensor y) {
-    return new Inner(y, _cosh_d(y)).vectorLog();
-  }
-
   /***************************************************/
   private class Inner {
     private final Tensor y;
@@ -62,14 +56,6 @@ public class HnAngle implements TensorScalarFunction {
 
     public Tensor log() {
       return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(angle));
-    }
-
-    public Tensor vectorLog() {
-      Tensor log = log().extract(0, y.length() - 1);
-      Scalar factor = angle.divide(Hypot.ofVector(log));
-      return DeterminateScalarQ.of(factor) //
-          ? log.multiply(factor)
-          : log;
     }
   }
 }

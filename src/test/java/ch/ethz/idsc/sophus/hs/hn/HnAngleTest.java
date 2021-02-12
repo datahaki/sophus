@@ -14,7 +14,6 @@ public class HnAngleTest extends TestCase {
     HnAngle hnAngle = Serialization.copy(new HnAngle(UnitVector.of(4, 3)));
     assertTrue(Scalars.isZero(hnAngle.apply(UnitVector.of(4, 3))));
     AssertFail.of(() -> hnAngle.log(UnitVector.of(4, 2)));
-    AssertFail.of(() -> hnAngle.vectorLog(UnitVector.of(4, 2)));
     AssertFail.of(() -> hnAngle.apply(UnitVector.of(4, 2)));
   }
 

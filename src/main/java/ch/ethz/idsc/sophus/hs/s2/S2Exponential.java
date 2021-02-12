@@ -22,7 +22,7 @@ public class S2Exponential implements Exponential, Serializable {
   /** @param xyz vector of the form {x, y, z} with unit length */
   public S2Exponential(Tensor xyz) {
     exponential = new SnExponential(xyz);
-    project = Orthogonalize.of(Join.of(Tensors.of(xyz), ID3)).extract(1, 3);
+    project = Tensor.of(Orthogonalize.of(Join.of(Tensors.of(xyz), ID3)).stream().skip(1).limit(2));
   }
 
   @Override // from Exponential

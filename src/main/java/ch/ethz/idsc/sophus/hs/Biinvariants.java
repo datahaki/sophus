@@ -17,7 +17,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
-/** Reference:
+/** list of biinvariant weightings and barycentric coordinates regardless whether a
+ * biinvariant metric exists on the manifold.
+ * 
+ * <p>Reference:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public enum Biinvariants implements Biinvariant {

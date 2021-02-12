@@ -25,9 +25,9 @@ public class UniformWindowSampler extends BaseWindowSampler {
   @Override // from BaseWindowSampler
   protected Tensor samples(int length) {
     return isContinuous //
-        ? Subdivide.of(RationalScalar.HALF.negate(), RationalScalar.HALF, length + 1) //
+        ? Tensor.of(Subdivide.of(RationalScalar.HALF.negate(), RationalScalar.HALF, length + 1) //
             .map(windowFunction) //
-            .extract(1, length + 1)
+            .stream().skip(1).limit(length))
         : Subdivide.of(RationalScalar.HALF.negate(), RationalScalar.HALF, length - 1) //
             .map(windowFunction);
   }
