@@ -49,11 +49,6 @@ public enum Biinvariants implements Biinvariant {
         return LagrangeCoordinates.of(levers, target);
       };
     }
-
-    @Override
-    public String title() {
-      return "Leverage";
-    }
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging */
@@ -66,11 +61,6 @@ public enum Biinvariants implements Biinvariant {
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
-    }
-
-    @Override
-    public String title() {
-      return "Garden";
     }
   },
   /** bi-invariant
@@ -87,11 +77,6 @@ public enum Biinvariants implements Biinvariant {
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return HarborCoordinate.of(vectorLogManifold, variogram, sequence);
     }
-
-    @Override
-    public String title() {
-      return "Harbor";
-    }
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
@@ -107,14 +92,6 @@ public enum Biinvariants implements Biinvariant {
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
       return CupolaCoordinate.of(vectorLogManifold, variogram, sequence);
     }
-
-    @Override
-    public String title() {
-      return "Cupola";
-    }
   }, //
   ;
-
-  /** @return */
-  public abstract String title();
 }

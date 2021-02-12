@@ -8,11 +8,6 @@ import ch.ethz.idsc.tensor.ext.Serialization;
 import junit.framework.TestCase;
 
 public class BiinvariantsTest extends TestCase {
-  public void testToStringNotNull() {
-    for (Biinvariants biinvariants : Biinvariants.values())
-      assertNotNull(biinvariants.title());
-  }
-
   public void testDistanceSequenceNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {

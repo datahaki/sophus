@@ -29,8 +29,8 @@ public enum LagrangeCoordinates {
     Tensor rhs = UnitVector.of(d, d - 1);
     /* least squares is required if eqs do not have max rank, which is the case
      * when the tangent space parameterization is not 1 to 1 */
-    Tensor solve = new LagrangeMultiplier(CACHE.apply(n), target, eqs, rhs).solve();
-    AffineQ.require(solve, Chop._02); // conceptual check
-    return NormalizeTotal.FUNCTION.apply(solve);
+    Tensor weights = new LagrangeMultiplier(CACHE.apply(n), target, eqs, rhs).solve();
+    AffineQ.require(weights, Chop._02); // conceptual check
+    return NormalizeTotal.FUNCTION.apply(weights);
   }
 }
