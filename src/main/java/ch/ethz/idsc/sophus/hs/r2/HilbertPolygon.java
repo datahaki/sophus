@@ -20,7 +20,7 @@ public enum HilbertPolygon {
     Tensor ante = Tensors.vector((1 << n), 0);
     Tensor post = Tensors.vector(1, 0);
     Tensor tensor = HilbertCurve.of(n);
-    if (n % 2 == 0)
+    if (Integers.isEven(n))
       return Join.of(Tensors.of(ante), tensor, Tensors.of(post));
     tensor.set(ante, 0);
     tensor.set(post, tensor.length() - 1);

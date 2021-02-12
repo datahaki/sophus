@@ -80,7 +80,7 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
       final int k = p.length();
       if (chop.allZero(v))
         return;
-      Scalar f = RealScalar.of(Math.multiplyExact(SIGN[k % 2] * (k + 1), total_q + 1)) //
+      Scalar f = RealScalar.of(Math.multiplyExact(SIGN[k & 1] * (k + 1), total_q + 1)) //
           .multiply((Scalar) Times.pmul(Join.of(p, q).map(Factorial.FUNCTION)));
       sum.set(v.divide(f)::add, d - 1);
       if (d < degree) {

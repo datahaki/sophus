@@ -41,17 +41,16 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
       return tensor.copy();
     Tensor value = bSpline1CurveSubdivision.cyclic(tensor);
     for (int count = 2; count <= degree; ++count) {
-      boolean odd = count % 2 == 1;
       Nocopy nocopy = new Nocopy(value.length());
-      if (odd) {
-        Tensor p = Last.of(value);
-        for (int index = 0; index < value.length(); ++index)
-          nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
-      } else {
+      if (Integers.isEven(count)) {
         Tensor p = value.get(0);
         for (int index = 1; index < value.length(); ++index)
           nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
         nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(0)));
+      } else {
+        Tensor p = Last.of(value);
+        for (int index = 0; index < value.length(); ++index)
+          nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
       }
       tensor = value;
       value = nocopy.tensor();
@@ -67,7 +66,7 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
       return tensor.copy();
     Tensor value = bSpline1CurveSubdivision.string(tensor);
     for (int count = 2; count <= degree; ++count) {
-      boolean odd = count % 2 == 1;
+      boolean odd = !Integers.isEven(count);
       Nocopy nocopy = new Nocopy(value.length() + 1);
       if (odd)
         nocopy.append(tensor.get(0));

@@ -87,7 +87,7 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
     this.degree = degree;
     this.sequence = sequence;
     half = degree / 2;
-    Scalar shift = degree % 2 == 0 //
+    Scalar shift = Integers.isEven(degree) //
         ? RationalScalar.HALF
         : RealScalar.ZERO;
     last = sequence.length() - 1;
@@ -95,7 +95,7 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
     navigableMap = new TreeMap<>();
     navigableMap.put(knots.Get(0), 0);
     for (int index = 1; index < knots.length(); ++index)
-      navigableMap.put(degree % 2 == 0 //
+      navigableMap.put(Integers.isEven(degree) //
           ? (Scalar) RnGeodesic.INSTANCE.midpoint(knots.Get(index - 1), knots.Get(index))
           : knots.Get(index), index);
     samples = Unprotect.references(Range.of(-degree + 1, sequence.length() + degree) //

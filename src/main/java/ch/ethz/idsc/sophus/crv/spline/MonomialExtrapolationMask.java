@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Binomial;
 import ch.ethz.idsc.tensor.ext.Cache;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** the weights follow from a linear system of equations with entries
  * LHS=x^k for x=-deg, ..., 0, and k = 0, ..., deg
@@ -33,8 +34,7 @@ public class MonomialExtrapolationMask implements Function<Integer, Tensor>, Ser
   @Override
   public Tensor apply(Integer length) {
     Binomial binomial = Binomial.of(length);
-    int negate = length % 2;
-    return Tensors.vector(k -> k % 2 == negate //
+    return Tensors.vector(k -> Integers.isEven(k + length) //
         ? binomial.over(k).negate()
         : binomial.over(k), length);
   }

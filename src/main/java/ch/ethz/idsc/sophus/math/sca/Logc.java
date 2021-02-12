@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Series;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Log;
 import ch.ethz.idsc.tensor.sca.Sinc;
@@ -19,7 +20,7 @@ public enum Logc implements ScalarUnaryOperator {
   FUNCTION;
 
   private static final ScalarUnaryOperator SERIES = //
-      Series.of(Tensors.vector(i -> RationalScalar.of(i % 2 == 0 ? 1 : -1, i + 1), 10));
+      Series.of(Tensors.vector(i -> RationalScalar.of(Integers.isEven(i) ? 1 : -1, i + 1), 10));
 
   @Override
   public Scalar apply(Scalar lambda) {

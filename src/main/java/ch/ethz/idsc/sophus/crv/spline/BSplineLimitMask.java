@@ -7,6 +7,7 @@ import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** function defined for positive odd integers
  * 
@@ -19,7 +20,7 @@ public enum BSplineLimitMask implements Function<Integer, Tensor> {
 
   @Override
   public Tensor apply(Integer degree) {
-    if (degree % 2 == 0)
+    if (Integers.isEven(degree))
       throw new IllegalArgumentException("" + degree);
     int extent = (degree - 1) / 2;
     return Range.of(extent + 1, degree + extent + 1) //

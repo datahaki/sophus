@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 /** GeodesicCenter projects a sequence of points to their geodesic center
@@ -66,7 +67,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
     /* package */ static Tensor of(Tensor mask) {
-      if (mask.length() % 2 == 0)
+      if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);
       int radius = (mask.length() - 1) / 2;
@@ -95,7 +96,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
-    if (tensor.length() % 2 != 1)
+    if (Integers.isEven(tensor.length()))
       throw TensorRuntimeException.of(tensor);
     // spatial neighborhood we want to consider for centering
     int radius = (tensor.length() - 1) / 2;

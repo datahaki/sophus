@@ -169,7 +169,7 @@ public class CliffordAlgebra {
         for (int i = 0; i < m; ++i) {
           if (Scalars.lessThan(scalars[i + 1], scalars[i])) {
             flag = true;
-            ++swaps;
+            swaps ^= 1;
             Scalar copy = scalars[i];
             scalars[i] = scalars[i + 1];
             scalars[i + 1] = copy;
@@ -182,11 +182,11 @@ public class CliffordAlgebra {
         if (!deque.isEmpty() && deque.peekLast().equals(scalar)) {
           Scalar duplicate = deque.pollLast(); // check for sign in scalar product 0, ..., n-1
           if (signature_p <= duplicate.number().intValue())
-            ++swaps;
+            swaps ^= 1;
         } else
           deque.add(scalar);
       }
-      sign = SIGN[swaps % 2];
+      sign = SIGN[swaps];
       normal = Tensor.of(deque.stream());
     }
 
