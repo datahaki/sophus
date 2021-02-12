@@ -50,9 +50,9 @@ public class HnBiinvariantMeanTest extends TestCase {
           Chop._06.requireClose(mean, point);
           Tensor x = RandomVariate.of(NormalDistribution.standard(), n, n);
           x = new TSopqProject(d, 1).apply(x);
-          Tensor sopq = MatrixExp.of(x);
-          Tensor seq_l = Tensor.of(sequence.stream().map(sopq::dot));
-          Tensor pnt_l = sopq.dot(point);
+          HnAction hnAction = new HnAction(MatrixExp.of(x));
+          Tensor seq_l = Tensor.of(sequence.stream().map(hnAction));
+          Tensor pnt_l = hnAction.apply(point);
           Tensor w2 = biinvariant.coordinate(HnManifold.INSTANCE, variogram, seq_l).apply(pnt_l);
           Tensor m2 = HnBiinvariantMean.of(Chop._08).mean(seq_l, w2);
           Chop._06.requireClose(m2, pnt_l);

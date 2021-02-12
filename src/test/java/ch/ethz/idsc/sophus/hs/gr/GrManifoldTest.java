@@ -9,8 +9,8 @@ import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.alg.Binomial;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -26,15 +26,24 @@ public class GrManifoldTest extends TestCase {
       int d = Binomial.of(n, k).number().intValue();
       Tensor seq_o = RandomSample.of(randomSampleInterface, d + 2);
       Tensor pnt_o = RandomSample.of(randomSampleInterface);
-      Tensor so = RandomSample.of(SoRandomSample.of(n));
+      GrAction grAction = new GrAction(RandomSample.of(SoRandomSample.of(n)));
       for (Biinvariant biinvariant : new Biinvariant[] { //
           MetricBiinvariant.RIEMANN, Biinvariants.LEVERAGES, Biinvariants.GARDEN }) {
         Tensor w_o = biinvariant.coordinate(vectorLogManifold, variogram, seq_o).apply(pnt_o);
-        Tensor seq_l = Tensor.of(seq_o.stream().map(matrix -> BasisTransform.ofMatrix(matrix, so)));
-        Tensor pnt_l = BasisTransform.ofMatrix(pnt_o, so);
+        Tensor seq_l = Tensor.of(seq_o.stream().map(grAction));
+        Tensor pnt_l = grAction.apply(pnt_o);
         Tensor w_l = biinvariant.coordinate(vectorLogManifold, variogram, seq_l).apply(pnt_l);
         Chop._10.requireClose(w_o, w_l);
       }
     }
+  }
+
+  public void testMismatch() {
+    int n = 5;
+    Tensor p1 = RandomSample.of(GrRandomSample.of(n, 1));
+    Tensor p2 = RandomSample.of(GrRandomSample.of(n, 2));
+    Tensor q = RandomSample.of(GrRandomSample.of(n, 4));
+    AssertFail.of(() -> new GrExponential(p1).log(q));
+    AssertFail.of(() -> new GrExponential(p2).log(q));
   }
 }

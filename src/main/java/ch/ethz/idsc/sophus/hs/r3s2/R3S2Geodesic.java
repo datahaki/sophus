@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r3s2;
 
-import ch.ethz.idsc.sophus.hs.sn.SnRotationMatrix;
+import ch.ethz.idsc.sophus.hs.sn.SnAction;
 import ch.ethz.idsc.sophus.lie.se3.Se3Geodesic;
 import ch.ethz.idsc.sophus.lie.se3.Se3Matrix;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
@@ -28,7 +28,7 @@ public enum R3S2Geodesic implements GeodesicInterface {
     Tensor pn = p.get(1);
     Tensor qt = q.get(0);
     Tensor qn = q.get(1);
-    Tensor rotation = SnRotationMatrix.of(pn, qn);
+    Tensor rotation = SnAction.match(pn, qn);
     Tensor pSe3 = Se3Matrix.of(ID3, pt);
     Tensor qSe3 = Se3Matrix.of(rotation, qt);
     return scalar -> {

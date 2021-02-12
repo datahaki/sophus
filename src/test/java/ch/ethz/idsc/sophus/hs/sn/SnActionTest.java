@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class SnRotationMatrixTest extends TestCase {
+public class SnActionTest extends TestCase {
   private static final Distribution UNIFORM = NormalDistribution.standard();
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
@@ -44,7 +44,7 @@ public class SnRotationMatrixTest extends TestCase {
       Tensor wx = Cross.skew3(w);
       Tensor wd = TensorWedge.of(a, b).negate();
       Tolerance.CHOP.requireClose(wx, wd);
-      Tensor rotation1 = SnRotationMatrix.of(a, b);
+      Tensor rotation1 = SnAction.match(a, b);
       assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._10));
       Chop._08.requireClose(rotation1.dot(a), b);
       Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
@@ -57,10 +57,10 @@ public class SnRotationMatrixTest extends TestCase {
       for (int count = 0; count < 10; ++count) {
         Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
-        Tensor rotation1 = SnRotationMatrix.of(a, b);
-        Tensor rotation2 = SnRotationMatrix.of(b, a);
+        Tensor rotation1 = SnAction.match(a, b);
+        Tensor rotation2 = SnAction.match(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
-        Chop._08.requireClose(rotation1.dot(a), b);
+        Chop._08.requireClose(new SnAction(rotation1).apply(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
         Chop._10.requireClose(rotation1, Inverse.of(rotation2));
       }
@@ -72,8 +72,8 @@ public class SnRotationMatrixTest extends TestCase {
       for (int count = 0; count < 10; ++count) {
         Tensor a = RandomSample.of(randomSampleInterface);
         Tensor b = RandomSample.of(randomSampleInterface);
-        Tensor rotation1 = SnRotationMatrix.of(a, b);
-        Tensor rotation2 = SnRotationMatrix.of(b, a);
+        Tensor rotation1 = SnAction.match(a, b);
+        Tensor rotation2 = SnAction.match(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
         Chop._08.requireClose(rotation1.dot(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);

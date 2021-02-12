@@ -18,12 +18,12 @@ public enum SpdManifold implements HsExponential {
   INSTANCE;
 
   @Override // from HsExponential
-  public Exponential exponential(Tensor point) {
-    return new SpdExponential(point);
+  public Exponential exponential(Tensor p) {
+    return new SpdExponential(p);
   }
 
   @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor point) {
-    return new SpdExponential(point);
+  public TangentSpace logAt(Tensor p) {
+    return new SpdExponential(p);
   }
 }

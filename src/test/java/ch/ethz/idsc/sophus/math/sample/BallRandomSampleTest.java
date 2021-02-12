@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.math.sample;
 
 import ch.ethz.idsc.sophus.hs.r3s2.R3S2Geodesic;
-import ch.ethz.idsc.sophus.hs.sn.SnRotationMatrix;
+import ch.ethz.idsc.sophus.hs.sn.SnAction;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -101,7 +101,7 @@ public class BallRandomSampleTest extends TestCase {
           BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
       Tensor p = NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor q = NORMALIZE.apply(RandomSample.of(randomSampleInterface));
-      Tensor tensor = SnRotationMatrix.of(p, q);
+      Tensor tensor = SnAction.match(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
       assertTrue(OrthogonalMatrixQ.of(tensor, Chop._10));
     }
