@@ -9,10 +9,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.Last;
-import ch.ethz.idsc.tensor.alg.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.lie.Cross;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 /** .
  * G0 - Position, tangent of curve is not continuous, example: polygons
@@ -26,7 +26,7 @@ import ch.ethz.idsc.tensor.red.Norm;
  * @see Curvature2D */
 public enum CurvatureComb {
   ;
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
   private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param tensor with dimensions n x 2 with points of curve

@@ -4,9 +4,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Phong projection is faster than {@link SnBiinvariantMean}.
@@ -22,11 +20,9 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public enum SnPhongMean implements BiinvariantMean {
   INSTANCE;
 
-  /** R^n+1 -> S^n */
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return NORMALIZE.apply(AffineQ.require(weights, Chop._08).dot(sequence));
+    // R^n+1 -> S^n
+    return VectorNorm2.NORMALIZE.apply(AffineQ.require(weights, Chop._08).dot(sequence));
   }
 }

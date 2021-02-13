@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.itp;
 
 import java.util.stream.IntStream;
 
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -15,6 +14,7 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.io.ScalarArray;
 import ch.ethz.idsc.tensor.itp.InterpolatingPolynomial;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** affine weights that satisfy the barycentric equation, i.e. reproduce linear functions
  * 

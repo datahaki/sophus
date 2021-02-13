@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.red.Hypot;
+import ch.ethz.idsc.tensor.nrm.Hypot;
 
 public enum SnMemberQ implements MemberQ {
   INSTANCE;

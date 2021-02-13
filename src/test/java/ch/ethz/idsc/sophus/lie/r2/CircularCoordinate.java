@@ -2,12 +2,12 @@
 package ch.ethz.idsc.sophus.lie.r2;
 
 import ch.ethz.idsc.sophus.math.Genesis;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.red.Total;
 
 public enum CircularCoordinate implements Genesis {

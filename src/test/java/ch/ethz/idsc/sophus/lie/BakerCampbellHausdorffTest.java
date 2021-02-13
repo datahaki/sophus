@@ -17,11 +17,11 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.lie.LeviCivitaTensor;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.num.Boole;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.N;
 import junit.framework.TestCase;
@@ -109,7 +109,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
     for (int degree = 1; degree < 6; ++degree) {
       BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
       Tensor z = binaryOperator.apply(x, y);
-      Scalar err = Norm._2.between(res, z);
+      Scalar err = VectorNorm2.between(res, z);
       assertTrue(Scalars.lessThan(err, cmp));
       cmp = err;
     }
@@ -127,7 +127,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
     for (int degree = 1; degree < 6; ++degree) {
       BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
       Tensor z = binaryOperator.apply(x, y);
-      Scalar err = Norm._2.between(res, z);
+      Scalar err = VectorNorm2.between(res, z);
       assertTrue(Scalars.lessThan(err, cmp));
       cmp = err;
     }

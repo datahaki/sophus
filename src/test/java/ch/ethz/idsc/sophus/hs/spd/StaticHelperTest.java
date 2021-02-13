@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.red.Trace;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -27,6 +27,6 @@ public class StaticHelperTest extends TestCase {
     Tensor log = MatrixLog.of(q);
     Chop._07.requireClose(Total.ofVector(diag), Trace.of(log));
     Tensor log2 = log.dot(log);
-    Chop._07.requireClose(Norm2Squared.ofVector(diag), Trace.of(log2));
+    Chop._07.requireClose(VectorNorm2Squared.of(diag), Trace.of(log2));
   }
 }

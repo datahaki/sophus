@@ -9,6 +9,6 @@ public enum HnDistanceVector implements Genesis {
 
   @Override
   public Tensor origin(Tensor levers) {
-    return Tensor.of(levers.stream().map(HnNorm.INSTANCE::ofVector));
+    return Tensor.of(levers.stream().map(HnNorm::of));
   }
 }

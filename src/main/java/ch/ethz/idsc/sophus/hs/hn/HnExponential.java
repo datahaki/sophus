@@ -27,7 +27,7 @@ public class HnExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tHnMemberQ.require(v);
-    Scalar vn = HnNorm.INSTANCE.ofVector(v);
+    Scalar vn = HnNorm.of(v);
     Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
     return HnProjection.INSTANCE.apply(exp);
   }

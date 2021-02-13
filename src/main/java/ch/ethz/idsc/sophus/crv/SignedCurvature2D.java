@@ -9,8 +9,8 @@ import ch.ethz.idsc.sophus.lie.r2.Det2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Hypot;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.Hypot;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 /** The implementation supports the use of Quantity.
  * The signed curvature is a Quantity with negated unit,
@@ -35,7 +35,7 @@ public enum SignedCurvature2D {
     Tensor d_ab = b.subtract(a);
     Scalar v = Det2D.of(d_ab, c.subtract(b));
     Scalar w = (Scalar) d_ab.dot(c.subtract(a));
-    Scalar n = Norm._2.between(c, b);
+    Scalar n = VectorNorm2.between(c, b);
     Scalar den = Hypot.of(v, w).multiply(n);
     return Scalars.isZero(den) //
         ? Optional.empty()

@@ -8,24 +8,21 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SnActionTest extends TestCase {
   private static final Distribution UNIFORM = NormalDistribution.standard();
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   public void testSimple() {
     Scalar scalar = RealScalar.of(0.5);
@@ -38,8 +35,8 @@ public class SnActionTest extends TestCase {
 
   public void testMatch3D() {
     for (int count = 0; count < 20; ++count) {
-      Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
-      Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
+      Tensor a = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
+      Tensor b = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
       Tensor w = Cross.of(a, b);
       Tensor wx = Cross.skew3(w);
       Tensor wd = TensorWedge.of(a, b).negate();
@@ -55,8 +52,8 @@ public class SnActionTest extends TestCase {
   public void testTargetNDim() {
     for (int d = 2; d < 6; ++d)
       for (int count = 0; count < 10; ++count) {
-        Tensor a = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
-        Tensor b = NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
+        Tensor a = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
+        Tensor b = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor rotation1 = SnAction.match(a, b);
         Tensor rotation2 = SnAction.match(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));

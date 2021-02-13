@@ -8,13 +8,13 @@ import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.red.Frobenius;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 import junit.framework.TestCase;
 
 public class InfluenceBiinvariantVectorTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     InfluenceBiinvariantVector influenceBiinvariantVector = new InfluenceBiinvariantVector( //
-        RnManifold.INSTANCE, Tensors.empty(), (TensorMetric & Serializable) (x, y) -> Frobenius.between(x, y));
+        RnManifold.INSTANCE, Tensors.empty(), (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
     Serialization.copy(influenceBiinvariantVector);
   }
 }

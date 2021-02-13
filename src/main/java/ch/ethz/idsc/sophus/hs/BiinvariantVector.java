@@ -4,10 +4,10 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** immutable
  * 

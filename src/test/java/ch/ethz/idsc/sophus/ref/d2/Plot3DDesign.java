@@ -8,21 +8,21 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.api.TensorScalarFunction;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.HomeDirectory;
 import ch.ethz.idsc.tensor.io.Put;
 import ch.ethz.idsc.tensor.lie.Cross;
+import ch.ethz.idsc.tensor.nrm.Normalize;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.red.Nest;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 class Plot3DDesign {
   private static final Scalar DT = RealScalar.of(0.01);
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
+  private static final TensorUnaryOperator NORMALIZE = Normalize.with(VectorNorm2::of);
   // ---
   private final TensorScalarFunction tensorScalarFunction;
 

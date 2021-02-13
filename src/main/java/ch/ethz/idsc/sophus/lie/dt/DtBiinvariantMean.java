@@ -4,11 +4,11 @@ package ch.ethz.idsc.sophus.lie.dt;
 import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.sc.ScBiinvariantMean;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.math.sca.Logc;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** @param sequence of (lambda_i, t_i) points in ST(n) and weights non-negative and normalized
  * @return associated biinvariant mean which is the solution to the barycentric equation

@@ -8,17 +8,13 @@ import ch.ethz.idsc.sophus.hs.sn.SnMetric;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.lie.Cross;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.num.Pi;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Abs;
 
 public enum S2LineDistance implements LineDistance {
   INSTANCE;
-
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
 
   @Override
   public TensorNorm tensorNorm(Tensor p, Tensor q) {
@@ -29,7 +25,7 @@ public enum S2LineDistance implements LineDistance {
     private final Tensor cross;
 
     public S2Line(Tensor p, Tensor q) {
-      cross = NORMALIZE.apply(Cross.of(p, q));
+      cross = VectorNorm2.NORMALIZE.apply(Cross.of(p, q));
     }
 
     @Override // from TensorNorm

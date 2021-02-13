@@ -12,11 +12,11 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.nrm.MatrixNorm2;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
@@ -26,7 +26,7 @@ public class HarborDistanceVectorTest extends TestCase {
    * @param sequence
    * @return */
   public static BiinvariantVectorFunction norm2(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new InfluenceBiinvariantVector(vectorLogManifold, sequence, (x, y) -> Norm._2.ofMatrix(x.subtract(y)));
+    return new InfluenceBiinvariantVector(vectorLogManifold, sequence, (x, y) -> MatrixNorm2.of(x.subtract(y)));
   }
 
   public void testRn() {

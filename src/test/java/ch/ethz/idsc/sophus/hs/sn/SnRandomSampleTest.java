@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -18,7 +18,7 @@ public class SnRandomSampleTest extends TestCase {
     for (int dimension = 0; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(SnRandomSample.of(dimension));
       Tensor tensor = RandomSample.of(randomSampleInterface);
-      Chop._12.requireClose(Norm._2.ofVector(tensor), RealScalar.ONE);
+      Chop._12.requireClose(VectorNorm2.of(tensor), RealScalar.ONE);
       assertEquals(tensor.length(), dimension + 1);
     }
   }

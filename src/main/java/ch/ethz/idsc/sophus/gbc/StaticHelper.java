@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Mahalanobis;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** Reference:
  * "Biinvariant Distance Vectors"

@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
-import ch.ethz.idsc.tensor.red.Hypot;
+import ch.ethz.idsc.tensor.nrm.Hypot;
 
 /** left-invariant Riemannian distance on SO(3)
  * 

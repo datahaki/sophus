@@ -46,6 +46,6 @@ public class GardenDistanceVector implements TensorUnaryOperator {
   public Tensor apply(Tensor point) {
     AtomicInteger atomicInteger = new AtomicInteger();
     return Tensor.of(array.stream() //
-        .map(mahalanobis -> mahalanobis.ofVector(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
+        .map(mahalanobis -> mahalanobis.norm(tangentSpaces.get(atomicInteger.getAndIncrement()).vectorLog(point))));
   }
 }

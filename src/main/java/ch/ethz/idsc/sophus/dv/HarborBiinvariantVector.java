@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.hs.BiinvariantVectorFunction;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Frobenius;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 
 /** for Rn and Sn the frobenius distance results in identical coordinates as the 2-norm distance
  * 
@@ -23,6 +23,6 @@ public enum HarborBiinvariantVector {
    * @return */
   public static BiinvariantVectorFunction of(VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new InfluenceBiinvariantVector( //
-        vectorLogManifold, sequence, (TensorMetric & Serializable) (x, y) -> Frobenius.between(x, y));
+        vectorLogManifold, sequence, (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
   }
 }

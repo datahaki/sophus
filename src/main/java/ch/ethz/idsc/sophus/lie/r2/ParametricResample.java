@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 /** method of equidistant resampling of a sequence of irregular spaced points */
 // TODO generalize to Rn
@@ -34,9 +34,9 @@ public class ParametricResample implements Serializable {
   /** @param points sequence of lidar points in ccw- or cw-direction
    * @return points grouped by connectivity and resampled equidistantly */
   public ResampleResult apply(Tensor points) {
-    Tensor dista = Tensor.of(points.stream().map(Norm._2::ofVector)); // distance of points from origin
+    Tensor dista = Tensor.of(points.stream().map(VectorNorm2::of)); // distance of points from origin
     Tensor diffs = Differences.of(points); // displacement vectors
-    Tensor delta = Tensor.of(diffs.stream().map(Norm._2::ofVector)); // length of displacement vectors
+    Tensor delta = Tensor.of(diffs.stream().map(VectorNorm2::of)); // length of displacement vectors
     List<Tensor> list = new LinkedList<>(); // return structure
     Tensor ret = Tensors.empty(); // initialize connected segment
     Scalar sum = RealScalar.ZERO; // parameter

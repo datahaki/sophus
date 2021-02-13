@@ -6,8 +6,8 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.red.Hypot;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.nrm.Hypot;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Power;
@@ -33,7 +33,7 @@ public enum NylanderPower {
     Scalar phi = ArcTan.of(x, y).multiply(exponent);
     Scalar theta = ArcTan.of(z, Hypot.of(x, y)).multiply(exponent);
     Scalar sin_theta = Sin.FUNCTION.apply(theta);
-    Scalar r = Norm2Squared.ofVector(vector);
+    Scalar r = VectorNorm2Squared.of(vector);
     return Tensors.of( //
         sin_theta.multiply(Cos.FUNCTION.apply(phi)), //
         sin_theta.multiply(Sin.FUNCTION.apply(phi)), //

@@ -5,25 +5,22 @@ import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.math.StochasticMatrixQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.nrm.VectorNorm1;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class BiinvariantMeanTest extends TestCase {
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._1);
   private static final Distribution DISTRIBUTION = UniformDistribution.unit();
 
   /** @param n
    * @return */
   private static Tensor affine(int n) {
     Tensor matrix = RandomVariate.of(DISTRIBUTION, n, n);
-    matrix = StochasticMatrixQ.requireRows(Tensor.of(matrix.stream().map(NORMALIZE)), Chop._08);
+    matrix = StochasticMatrixQ.requireRows(Tensor.of(matrix.stream().map(VectorNorm1.NORMALIZE)), Chop._08);
     StochasticMatrixQ.requireRows(Inverse.of(matrix), Chop._10);
     return matrix;
   }

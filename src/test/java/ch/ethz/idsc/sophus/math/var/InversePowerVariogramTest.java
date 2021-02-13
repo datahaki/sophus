@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.math.var;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.DoubleScalar;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -11,6 +10,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import junit.framework.TestCase;
 
 public class InversePowerVariogramTest extends TestCase {

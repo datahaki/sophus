@@ -8,12 +8,10 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.num.Pi;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 /** geodesic on n-dimensional sphere embedded in R^(n+1)
@@ -27,8 +25,6 @@ import ch.ethz.idsc.tensor.sca.Sin;
 public enum SnGeodesic implements GeodesicInterface {
   INSTANCE;
 
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-
   @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Scalar a = SnMetric.INSTANCE.distance(p, q);
@@ -36,7 +32,7 @@ public enum SnGeodesic implements GeodesicInterface {
       return scalar -> p.copy();
     if (Tolerance.CHOP.isClose(a, Pi.VALUE))
       throw TensorRuntimeException.of(p, q); // when p == -q
-    return scalar -> NORMALIZE.apply(Tensors.of( //
+    return scalar -> VectorNorm2.NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
         Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
   }
@@ -51,6 +47,6 @@ public enum SnGeodesic implements GeodesicInterface {
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
-    return NORMALIZE.apply(SnMemberQ.INSTANCE.require(p).add(SnMemberQ.INSTANCE.require(q)));
+    return VectorNorm2.NORMALIZE.apply(SnMemberQ.INSTANCE.require(p).add(SnMemberQ.INSTANCE.require(q)));
   }
 }

@@ -9,12 +9,12 @@ import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.hn.HnMetricBiinvariant;
 import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
 import ch.ethz.idsc.sophus.math.Genesis;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.api.TensorScalarFunction;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.red.VectorNormInterface;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 /** left-invariant (biinvariant only if a biinvariant metric exists)
  * results in a symmetric distance matrix -> can use for kriging
@@ -33,16 +33,16 @@ import ch.ethz.idsc.tensor.red.VectorNormInterface;
  * @see HnMetricBiinvariant */
 public class MetricBiinvariant implements Biinvariant, Serializable {
   /** scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
-  public static final Biinvariant RIEMANN = new MetricBiinvariant(Norm._2);
+  public static final Biinvariant RIEMANN = new MetricBiinvariant(VectorNorm2::of);
 
-  public static Biinvariant of(VectorNormInterface vectorNormInterface) {
+  public static Biinvariant of(TensorScalarFunction vectorNormInterface) {
     return new MetricBiinvariant(Objects.requireNonNull(vectorNormInterface));
   }
 
   /***************************************************/
-  private final VectorNormInterface vectorNormInterface;
+  private final TensorScalarFunction vectorNormInterface;
 
-  private MetricBiinvariant(VectorNormInterface vectorNormInterface) {
+  private MetricBiinvariant(TensorScalarFunction vectorNormInterface) {
     this.vectorNormInterface = vectorNormInterface;
   }
 
@@ -51,7 +51,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
     Objects.requireNonNull(vectorLogManifold);
     Objects.requireNonNull(sequence);
     return point -> Tensor.of(new HsDesign(vectorLogManifold).stream(sequence, point) //
-        .map(vectorNormInterface::ofVector));
+        .map(vectorNormInterface));
   }
 
   @Override // from Biinvariant
@@ -70,7 +70,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
       return LagrangeCoordinates.of( //
           levers, //
           NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
-              .map(vectorNormInterface::ofVector) //
+              .map(vectorNormInterface) //
               .map(variogram))));
     };
   }

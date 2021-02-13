@@ -6,5 +6,5 @@ import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 
 public enum HnMetricBiinvariant {
   ;
-  public static final Biinvariant INSTANCE = MetricBiinvariant.of(HnNorm.INSTANCE);
+  public static final Biinvariant INSTANCE = MetricBiinvariant.of(HnNorm::of);
 }

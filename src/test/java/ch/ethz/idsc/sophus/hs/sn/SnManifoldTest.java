@@ -9,25 +9,22 @@ import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SnManifoldTest extends TestCase {
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(SnManifold.INSTANCE);
 
   private static Tensor randomCloud(Tensor mean, int n) {
     Distribution distribution = NormalDistribution.of(0, 0.1);
-    return Tensor.of(RandomVariate.of(distribution, n, mean.length()).stream().map(mean::add).map(NORMALIZE));
+    return Tensor.of(RandomVariate.of(distribution, n, mean.length()).stream().map(mean::add).map(VectorNorm2.NORMALIZE));
   }
 
   public void testLinearReproduction() {

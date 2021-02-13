@@ -5,7 +5,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Last;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
 
 /** Poincare ball model
  * 
@@ -17,7 +17,7 @@ public enum BnCoordinate {
   /** @param x in Bn
    * @return coordinate in Hn */
   public static Tensor bnToHn(Tensor x) {
-    Scalar xn2 = Norm2Squared.ofVector(x);
+    Scalar xn2 = VectorNorm2Squared.of(x);
     return x.add(x).append(RealScalar.ONE.add(xn2)).divide(RealScalar.ONE.subtract(xn2));
   }
 

@@ -5,10 +5,10 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.red.Norm;
 import junit.framework.TestCase;
 
 public class DubinsPathComparatorsTest extends TestCase {
@@ -23,7 +23,7 @@ public class DubinsPathComparatorsTest extends TestCase {
     Tensor end = RandomVariate.of(distribution, 3);
     for (DubinsPathComparators dubinsPathComparator : DubinsPathComparators.values()) {
       DubinsPath dubinsPath = FixedRadiusDubins.of(start, end, RealScalar.ONE).stream().min(dubinsPathComparator).get();
-      Scalar scalar = Norm._2.between(start.extract(0, 2), end.extract(0, 2));
+      Scalar scalar = VectorNorm2.between(start.extract(0, 2), end.extract(0, 2));
       assertTrue(Scalars.lessThan(scalar, dubinsPath.length()));
     }
   }

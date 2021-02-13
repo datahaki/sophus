@@ -7,30 +7,26 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.Range;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.io.Primitives;
 import ch.ethz.idsc.tensor.lie.Permutations;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class So2CoveringBiinvariantMeanTest extends TestCase {
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Total::ofVector);
-
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
     Distribution shifted = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length).map(RealScalar.of(10)::add);
-      Tensor weights = NORMALIZE.apply(RandomVariate.of(UniformDistribution.unit(), length));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), length));
       Scalar solution = So2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       for (int count = 0; count < 10; ++count) {
         Scalar shift = RandomVariate.of(shifted);
@@ -61,6 +57,6 @@ public class So2CoveringBiinvariantMeanTest extends TestCase {
   }
 
   public void testFailTensor() {
-    AssertFail.of(() -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NORMALIZE.apply(Tensors.vector(1, 1, 1))));
+    AssertFail.of(() -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1))));
   }
 }

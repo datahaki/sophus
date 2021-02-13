@@ -13,11 +13,11 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.mat.MatrixRank;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.red.Frobenius;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -84,7 +84,7 @@ public class GrExponentialTest extends TestCase {
       assertFalse(Chop._05.allZero(v));
       Tensor exp = grExponential.exp(v);
       GrassmannQ.require(exp);
-      assertTrue(Scalars.lessThan(RealScalar.of(0.001), Frobenius.between(x, exp)));
+      assertTrue(Scalars.lessThan(RealScalar.of(0.001), FrobeniusNorm.between(x, exp)));
       Tensor w = grExponential.log(exp);
       Chop._05.requireClose(v, w);
     }

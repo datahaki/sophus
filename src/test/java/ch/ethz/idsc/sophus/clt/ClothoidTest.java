@@ -14,13 +14,13 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.qty.Quantity;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -34,7 +34,7 @@ public class ClothoidTest extends TestCase {
       Tensor q = RandomVariate.of(distribution, 3);
       Clothoid curve = Serialization.copy(CLOTHOID_BUILDER.curve(p, q));
       Scalar length = Serialization.copy(curve).length();
-      Scalar between = Norm._2.between(p.extract(0, 2), q.extract(0, 2));
+      Scalar between = VectorNorm2.between(p.extract(0, 2), q.extract(0, 2));
       assertTrue(Scalars.lessEquals(between, length));
     }
   }

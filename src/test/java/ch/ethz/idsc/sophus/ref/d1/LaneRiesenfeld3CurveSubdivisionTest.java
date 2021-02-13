@@ -12,15 +12,15 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
+import ch.ethz.idsc.tensor.nrm.Normalize;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.num.Rationalize;
 import ch.ethz.idsc.tensor.red.Nest;
-import ch.ethz.idsc.tensor.red.Norm;
 import junit.framework.TestCase;
 
 public class LaneRiesenfeld3CurveSubdivisionTest extends TestCase {
@@ -75,7 +75,7 @@ public class LaneRiesenfeld3CurveSubdivisionTest extends TestCase {
     Tensor tensor = Subdivide.of(-0.5, 0.8, 6) //
         .map(scalar -> Tensors.of(scalar, RealScalar.of(0.3), RealScalar.ONE));
     tensor = Tensor.of(tensor.stream() //
-        .map(Normalize.with(Norm._2)) //
+        .map(Normalize.with(VectorNorm2::of)) //
         .map(row -> Tensors.of(row, row)));
     TensorUnaryOperator string = LaneRiesenfeld3CurveSubdivision.of(R3S2Geodesic.INSTANCE)::string;
     Tensor apply = string.apply(tensor);

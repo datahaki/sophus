@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.gr;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Frobenius;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 
 /** Reference:
  * "Geometric mean and geodesic regression on Grassmannians"
@@ -14,6 +14,6 @@ public enum GrMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Frobenius.of(new GrExponential(p).log(q));
+    return FrobeniusNorm.of(new GrExponential(p).log(q));
   }
 }

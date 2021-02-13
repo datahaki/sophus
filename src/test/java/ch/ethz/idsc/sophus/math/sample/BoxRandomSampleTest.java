@@ -12,8 +12,8 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.red.Mean;
-import ch.ethz.idsc.tensor.red.Norm;
 import junit.framework.TestCase;
 
 public class BoxRandomSampleTest extends TestCase {
@@ -22,7 +22,7 @@ public class BoxRandomSampleTest extends TestCase {
     Tensor width = Tensors.vector(1, 1, 1);
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(offset.subtract(width), offset.add(width));
     Tensor samples = RandomSample.of(randomSampleInterface, 100);
-    Scalars.compare(Norm._2.ofVector(Mean.of(samples).subtract(offset)), RealScalar.of(0.1));
+    Scalars.compare(VectorNorm2.of(Mean.of(samples).subtract(offset)), RealScalar.of(0.1));
     assertEquals(Dimensions.of(samples), Arrays.asList(100, 3));
   }
 

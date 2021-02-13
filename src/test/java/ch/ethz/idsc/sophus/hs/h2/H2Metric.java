@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
 import ch.ethz.idsc.tensor.sca.ArcCosh;
 import ch.ethz.idsc.tensor.sca.Sign;
 
@@ -24,6 +24,6 @@ public enum H2Metric implements TensorMetric {
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     Scalar pqy = Sign.requirePositive(p.Get(1)).multiply(Sign.requirePositive(q.Get(1)));
-    return ArcCosh.FUNCTION.apply(Norm2Squared.between(p, q).divide(pqy.add(pqy)).add(RealScalar.ONE));
+    return ArcCosh.FUNCTION.apply(VectorNorm2Squared.between(p, q).divide(pqy.add(pqy)).add(RealScalar.ONE));
   }
 }

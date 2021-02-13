@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -62,8 +62,8 @@ public class SchildLadderTest extends TestCase {
       Tensor t1 = shift1.apply(v2);
       Tensor t2 = shift2.apply(v2);
       Tensor t3 = shift3.apply(v2);
-      Scalar d13 = Norm._2.between(t1, t3);
-      Scalar d23 = Norm._2.between(t2, t3);
+      Scalar d13 = VectorNorm2.between(t1, t3);
+      Scalar d23 = VectorNorm2.between(t2, t3);
       Chop._12.requireClose(d13, d23);
     }
   }

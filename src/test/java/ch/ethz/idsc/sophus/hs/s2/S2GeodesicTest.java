@@ -9,24 +9,20 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Normalize;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class S2GeodesicTest extends TestCase {
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-
   public void testSimple() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
     Tensor split = S2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
-    assertEquals(Norm._2.of(split), RealScalar.ONE);
+    assertEquals(VectorNorm2.of(split), RealScalar.ONE);
     assertEquals(split.Get(0), split.Get(1));
     assertTrue(Scalars.isZero(split.Get(2)));
   }
@@ -49,12 +45,12 @@ public class S2GeodesicTest extends TestCase {
   public void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
-      Tensor p = NORMALIZE.apply(RandomVariate.of(distribution, 3));
-      Tensor q = NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor p = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor q = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Chop._14.requireClose(p, S2Geodesic.INSTANCE.split(p, q, RealScalar.ZERO));
       Tensor r = S2Geodesic.INSTANCE.split(p, q, RealScalar.ONE);
       Chop._12.requireClose(q, r);
-      Chop._12.requireClose(Norm._2.of(r), RealScalar.ONE);
+      Chop._12.requireClose(VectorNorm2.of(r), RealScalar.ONE);
     }
   }
 

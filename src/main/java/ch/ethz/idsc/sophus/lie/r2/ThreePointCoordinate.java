@@ -6,9 +6,9 @@ import java.util.function.BiFunction;
 
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.math.Genesis;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** Three-point coordinates are also referred to as "Complete family of coordinates"
  * 

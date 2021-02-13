@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 public class HsProjectedLineDistance implements LineDistance, Serializable {
   private final HsExponential hsExponential;
@@ -36,7 +36,7 @@ public class HsProjectedLineDistance implements LineDistance, Serializable {
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
       Tensor c = hsLineProjection.onto(beg, end, r);
-      return Norm._2.ofVector(hsExponential.exponential(c).log(r));
+      return VectorNorm2.of(hsExponential.exponential(c).log(r));
     }
   }
 }

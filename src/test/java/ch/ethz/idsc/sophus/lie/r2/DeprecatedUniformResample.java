@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 /** initial implementation for resampling a sequence of irregular spaced points
  * 
@@ -35,9 +35,9 @@ import ch.ethz.idsc.tensor.red.Norm;
   /** @param points sequence of lidar points in ccw- or cw-direction
    * @return list of points grouped by connectivity and resampled equidistantly */
   List<Tensor> apply(Tensor points) {
-    Tensor dista = Tensor.of(points.stream().map(Norm._2::ofVector));
+    Tensor dista = Tensor.of(points.stream().map(VectorNorm2::of));
     Tensor diffs = Differences.of(points);
-    Tensor delta = Tensor.of(diffs.stream().map(Norm._2::ofVector));
+    Tensor delta = Tensor.of(diffs.stream().map(VectorNorm2::of));
     List<Tensor> total = new LinkedList<>();
     Tensor ret = Tensors.empty();
     Scalar sum = RealScalar.ZERO;
