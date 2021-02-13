@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.nrm.Hypot;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Imag;
@@ -41,7 +41,7 @@ import ch.ethz.idsc.tensor.sca.Real;
     Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
     Scalar plength = RealScalar.ZERO;
     try {
-      plength = Hypot.ofVector(diff).divide(Abs.FUNCTION.apply(one));
+      plength = VectorNorm2.of(diff).divide(Abs.FUNCTION.apply(one));
     } catch (Exception exception) {
       System.err.println("---");
       System.err.println(diff);

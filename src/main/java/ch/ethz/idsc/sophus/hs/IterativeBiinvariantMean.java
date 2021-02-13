@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Barycentric Fixed Point Iteration
@@ -50,6 +52,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
+    AffineQ.require(weights, Tolerance.CHOP);
     return apply(sequence, weights).get();
   }
 

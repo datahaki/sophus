@@ -9,7 +9,7 @@ import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.nrm.Hypot;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -22,7 +22,7 @@ public class S2ManifoldTest extends TestCase {
       TangentSpace tangentSpace = S2Manifold.INSTANCE.logAt(p);
       Tensor log = tangentSpace.vectorLog(q);
       VectorQ.requireLength(log, 2);
-      Chop._08.requireClose(Hypot.ofVector(log), SnMetric.INSTANCE.distance(p, q));
+      Chop._08.requireClose(VectorNorm2.of(log), SnMetric.INSTANCE.distance(p, q));
     }
   }
 

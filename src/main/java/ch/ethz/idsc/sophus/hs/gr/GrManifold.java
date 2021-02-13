@@ -28,7 +28,10 @@ import ch.ethz.idsc.tensor.Tensor;
  * For such a representation, work in the Stiefel manifold instead:
  * Gr(n, k) ~ St(n, k) / SO(k)
  * 
- * Gr(n, 1) ~ S^(n - 1) / {+-1} */
+ * Gr(n, 1) ~ S^(n - 1) / {+-1}
+ * 
+ * The first Grassmann manifold that is not isomorphic to a projective space
+ * is Gr(4, 2) */
 public enum GrManifold implements HsExponential {
   INSTANCE;
 

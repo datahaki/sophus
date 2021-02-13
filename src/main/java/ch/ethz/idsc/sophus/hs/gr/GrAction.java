@@ -6,14 +6,16 @@ import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
+import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** the pole ladder is exact in symmetric spaces */
 public class GrAction implements TensorUnaryOperator {
   private final Tensor g;
 
+  /** @param g from SO(n) */
   public GrAction(Tensor g) {
-    this.g = g;
+    this.g = OrthogonalMatrixQ.require(g);
   }
 
   @Override

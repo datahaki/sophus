@@ -22,15 +22,14 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrExponentialTest extends TestCase {
-  // private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = tGrMemberQ.project(pre);
-    new TGrMemberQ(x).require(v);
+    Tensor v = StaticHelper.project(x, pre);
+    tGrMemberQ.require(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
@@ -47,7 +46,7 @@ public class GrExponentialTest extends TestCase {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = tGrMemberQ.project(pre);
+    Tensor v = StaticHelper.project(x, pre);
     tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
@@ -61,7 +60,8 @@ public class GrExponentialTest extends TestCase {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = tGrMemberQ.project(pre);
+    Tensor v = StaticHelper.project(x, pre);
+    tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     assertTrue(GrassmannQ.of(exp));
     Tensor log = grExponential.log(exp);
@@ -79,7 +79,7 @@ public class GrExponentialTest extends TestCase {
       GrExponential grExponential = new GrExponential(x);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
       Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
-      Tensor v = tGrMemberQ.project(pre);
+      Tensor v = StaticHelper.project(x, pre);
       tGrMemberQ.require(v);
       assertFalse(Chop._05.allZero(v));
       Tensor exp = grExponential.exp(v);

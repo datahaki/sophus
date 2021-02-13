@@ -19,7 +19,7 @@ public class GrTransportTest extends TestCase {
     Tensor q = RandomSample.of(randomSampleInterface);
     Distribution distribution = LogisticDistribution.of(1, 3);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    Tensor pv = tGrMemberQ.project(RandomVariate.of(distribution, n, n));
+    Tensor pv = StaticHelper.project(p, RandomVariate.of(distribution, n, n));
     Tensor log = new GrExponential(p).log(q);
     tGrMemberQ.require(log);
     Tensor qv = GrTransport.INSTANCE.shift(p, q).apply(pv);

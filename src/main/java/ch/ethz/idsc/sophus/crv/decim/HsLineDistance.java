@@ -10,7 +10,6 @@ import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.nrm.Hypot;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
@@ -56,7 +55,7 @@ public class HsLineDistance implements LineDistance, Serializable {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor tensor) {
-      return Hypot.ofVector(orthogonal(tensor));
+      return VectorNorm2.of(orthogonal(tensor));
     }
   }
 }

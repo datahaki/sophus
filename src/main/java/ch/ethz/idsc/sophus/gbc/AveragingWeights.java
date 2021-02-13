@@ -21,4 +21,8 @@ public enum AveragingWeights implements Genesis {
   public Tensor origin(Tensor levers) {
     return CACHE.apply(levers.length());
   }
+
+  public static Tensor of(int length) {
+    return CACHE.apply(length);
+  }
 }

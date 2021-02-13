@@ -9,7 +9,6 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.TensorProduct;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.nrm.Hypot;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.sca.ArcSin;
 import ch.ethz.idsc.tensor.sca.Clips;
@@ -35,7 +34,7 @@ public enum SnLineDistance implements LineDistance {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
-      return ArcSin.FUNCTION.apply(Clips.unit().apply(Hypot.ofVector(m.dot(r))));
+      return ArcSin.FUNCTION.apply(Clips.unit().apply(VectorNorm2.of(m.dot(r))));
     }
   }
 }

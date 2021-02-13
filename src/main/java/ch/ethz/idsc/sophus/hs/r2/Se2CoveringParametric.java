@@ -36,6 +36,6 @@ public class Se2CoveringParametric implements TensorMetric, Serializable {
   @Override // from TensorMetric
   public final Scalar distance(Tensor p, Tensor q) {
     Tensor log = Se2CoveringExponential.INSTANCE.log(lieGroup.element(p).inverse().combine(q));
-    return Hypot.ofVector(log.extract(0, 2));
+    return Hypot.of(log.Get(0), log.Get(1));
   }
 }

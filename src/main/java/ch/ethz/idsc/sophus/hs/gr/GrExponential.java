@@ -39,7 +39,9 @@ public class GrExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor y) {
     GrMemberQ.INSTANCE.require(y);
-    return MatrixBracket.of(MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), x);
+    Tensor v = MatrixBracket.of(MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), x);
+    tGrMemberQ.require(v);
+    return v; // tGrMemberQ.project(v);
   }
 
   @Override // from TangentSpace

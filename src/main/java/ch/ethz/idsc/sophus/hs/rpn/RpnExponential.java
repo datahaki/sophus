@@ -11,7 +11,6 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.nrm.Hypot;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.red.Projection;
@@ -41,7 +40,7 @@ public class RpnExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tSnMemberQ.require(v);
-    Scalar vn = Hypot.ofVector(v);
+    Scalar vn = VectorNorm2.of(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     y = VectorNorm2.NORMALIZE.apply(y);
     Scalar d_xyp = snAngle.apply(y);
