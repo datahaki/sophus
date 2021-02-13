@@ -5,9 +5,11 @@ import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Vectorize;
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.BasisTransform;
+import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.MatrixSqrt;
@@ -57,6 +59,12 @@ public class SpdExponential implements Exponential, Serializable {
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
     return Vectorize.of(log(q), 0);
+  }
+
+  public Tensor endomorphism(Tensor q) {
+    Tensor w = log(q).multiply(RationalScalar.HALF);
+    Tensor mid = Spd0Exponential.INSTANCE.exp(basis(w, pn));
+    return Transpose.of(pp.dot(mid).dot(pn)); // mid is treated as (1, 1) tensor
   }
 
   /** Reference:

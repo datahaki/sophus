@@ -20,6 +20,10 @@ public class THnMemberQ implements MemberQ, Serializable {
     return Chop._06.isZero(LBilinearForm.between(x, v));
   }
 
+  /** projection is idempotent
+   * 
+   * @param v
+   * @return projection of v to plane orthogonal to base point x */
   public Tensor project(Tensor v) {
     return v.add(x.multiply(LBilinearForm.between(x, v)));
   }

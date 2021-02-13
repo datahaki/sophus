@@ -6,6 +6,7 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
@@ -19,6 +20,8 @@ public class THnMemberQTest extends TestCase {
     assertFalse(tHnMemberQ.test(v));
     Tensor xv = tHnMemberQ.project(v);
     assertTrue(tHnMemberQ.test(xv));
+    Tensor xw = tHnMemberQ.project(xv);
+    Tolerance.CHOP.requireClose(xv, xw);
   }
 
   public void testNullFail() {

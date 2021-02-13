@@ -11,6 +11,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
@@ -36,6 +37,8 @@ public class TSnMemberQTest extends TestCase {
       assertFalse(tSnMemberQ.test(w));
       w = tSnMemberQ.project(w);
       assertTrue(tSnMemberQ.test(w));
+      Tensor w2 = tSnMemberQ.project(w);
+      Tolerance.CHOP.requireClose(w, w2);
     }
   }
 
