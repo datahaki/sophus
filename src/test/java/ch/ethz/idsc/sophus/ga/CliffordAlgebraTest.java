@@ -164,15 +164,16 @@ public class CliffordAlgebraTest extends TestCase {
     Chop._08.requireClose(exp1, exp2);
   }
 
-  public void testCommutatorPositive() { // TODO SLOW
-    for (int n = 0; n <= 4; ++n) {
-      CliffordAlgebra cliffordAlgebra = CliffordAlgebra.positive(n);
-      JacobiIdentity.require(cliffordAlgebra.cp());
-    }
+  public void testCommutatorPositive() {
+    for (int p = 0; p <= 2; ++p)
+      for (int q = 0; q < 2; ++q) {
+        CliffordAlgebra cliffordAlgebra = CliffordAlgebra.of(p, q);
+        JacobiIdentity.require(cliffordAlgebra.cp());
+      }
   }
 
   public void testCommutatorNegative() {
-    for (int n = 0; n <= 4; ++n) {
+    for (int n = 0; n <= 3; ++n) {
       CliffordAlgebra cliffordAlgebra = CliffordAlgebra.negative(n);
       JacobiIdentity.require(cliffordAlgebra.cp());
     }

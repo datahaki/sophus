@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.itp;
 
 import java.io.IOException;
+import java.util.Random;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
@@ -100,26 +101,27 @@ public class KrigingTest extends TestCase {
     }
   }
 
-  public void testBarycentric() throws ClassNotFoundException, IOException { // TODO SLOW
+  public void testBarycentric() throws ClassNotFoundException, IOException {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
-    for (int n = 5; n < 10; ++n)
-      for (int d = 1; d < 4; ++d) {
-        Tensor sequence = RandomVariate.of(distribution, n, d);
-        for (Biinvariant biinvariant : SYMME) {
-          TensorUnaryOperator tensorUnaryOperator = //
-              Serialization.copy(biinvariant.var_dist(RnManifold.INSTANCE, variogram, sequence));
-          Kriging kriging = Serialization.copy(Kriging.barycentric(tensorUnaryOperator, sequence));
-          for (int index = 0; index < sequence.length(); ++index) {
-            Tensor tensor = kriging.estimate(sequence.get(index));
-            Chop._08.requireClose(tensor, UnitVector.of(n, index));
-            // ---
-            Tensor point = RandomVariate.of(distribution, d);
-            Tensor weights = kriging.estimate(point);
-            AffineQ.require(weights, Chop._08);
-          }
+    int n = 5 + random.nextInt(5);
+    for (int d = 1; d < 4; ++d) {
+      Tensor sequence = RandomVariate.of(distribution, n, d);
+      for (Biinvariant biinvariant : SYMME) {
+        TensorUnaryOperator tensorUnaryOperator = //
+            Serialization.copy(biinvariant.var_dist(RnManifold.INSTANCE, variogram, sequence));
+        Kriging kriging = Serialization.copy(Kriging.barycentric(tensorUnaryOperator, sequence));
+        for (int index = 0; index < sequence.length(); ++index) {
+          Tensor tensor = kriging.estimate(sequence.get(index));
+          Chop._08.requireClose(tensor, UnitVector.of(n, index));
+          // ---
+          Tensor point = RandomVariate.of(distribution, d);
+          Tensor weights = kriging.estimate(point);
+          AffineQ.require(weights, Chop._08);
         }
       }
+    }
   }
 
   public void testQuantityAbsolute() {

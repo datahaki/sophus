@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs;
 
 import java.io.IOException;
+import java.util.Random;
 
 import ch.ethz.idsc.sophus.hs.sn.SnPhongMean;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
@@ -70,19 +71,19 @@ public class BiinvariantTest extends TestCase {
     }
   }
 
-  public void testSimplePD() throws ClassNotFoundException, IOException { // TODO SLOW
+  public void testSimplePD() throws ClassNotFoundException, IOException {
+    Random random = new Random();
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Distribution distribution = NormalDistribution.standard();
-      for (int n = 8; n < 12; ++n) {
-        Tensor sequence = RandomVariate.of(distribution, n, 3);
-        TensorUnaryOperator shepardInterpolation = Serialization.copy( //
-            biinvariant.weighting(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
-        RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
-        Tensor values = RandomSample.of(randomSampleInterface, n);
-        Tensor point = RandomVariate.of(distribution, 3);
-        Tensor evaluate = CrossAveraging.of(p -> shepardInterpolation.apply(p), SnPhongMean.INSTANCE, values).apply(point);
-        VectorQ.requireLength(evaluate, 5);
-      }
+      int n = 4 + random.nextInt(4);
+      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
+      TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
+          biinvariant.weighting(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
+      RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
+      Tensor values = RandomSample.of(randomSampleInterface, random, n);
+      Tensor point = RandomVariate.of(distribution, random, 3);
+      Tensor evaluate = CrossAveraging.of(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
+      VectorQ.requireLength(evaluate, 5);
     }
   }
 }

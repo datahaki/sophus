@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import java.util.Random;
+
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeveragesCoordinate;
@@ -64,20 +66,19 @@ public class SpdManifoldTest extends TestCase {
   // assertTrue(errors < 5);
   // }
 
-  public void testLagrangeProperty() { // TODO SLOW
+  public void testLagrangeProperty() {
+    Random random = new Random();
     int d = 2;
-    for (int len = 5; len < 10; ++len) {
+    for (int len = 5; len < 8; ++len) {
       Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
       for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES(sequence)) {
-        int index = 0;
-        for (Tensor point : sequence) {
-          Tensor weights = barycentricCoordinate.weights(sequence, point);
-          AffineQ.require(weights, Chop._08);
-          Chop._06.requireClose(weights, UnitVector.of(len, index));
-          Tensor spd = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._08.requireClose(spd, point);
-          ++index;
-        }
+        int index = random.nextInt(sequence.length());
+        Tensor point = sequence.get(index);
+        Tensor weights = barycentricCoordinate.weights(sequence, point);
+        AffineQ.require(weights, Chop._08);
+        Chop._06.requireClose(weights, UnitVector.of(len, index));
+        Tensor spd = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
+        Chop._08.requireClose(spd, point);
       }
     }
   }

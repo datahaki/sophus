@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import java.util.Random;
+
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
@@ -37,75 +39,72 @@ public class So3ManifoldTest extends TestCase {
     }
   }
 
-  public void testLinearReproduction() { // TODO SLOW
+  public void testLinearReproduction() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
+    int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
-      int fails = 0;
-      for (int n = 4; n < 10; ++n)
-        try {
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
-          Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
-          Tensor weights1 = barycentricCoordinate.weights(sequence, mean);
-          Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
-          Chop._08.requireClose(mean, o2);
-          // ---
-          LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3());
-          Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
-          Tensor weights2 = barycentricCoordinate.weights(seqlft, lieGroupElement.combine(mean));
-          Chop._06.requireClose(weights1, weights2);
-          // ---
-          {
-            TensorMapping tensorMapping = LIE_GROUP_OPS.inversion();
-            Chop._06.requireClose(weights1, //
-                barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
-          }
-        } catch (Exception exception) {
-          ++fails;
-        }
-      assertTrue(fails < 3);
-    }
-  }
-
-  public void testLagrange() { // TODO SLOW
-    Distribution distribution = NormalDistribution.of(0.0, 0.1);
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
-        int index = 0;
-        for (Tensor mean : sequence) {
-          Tensor weights = barycentricCoordinate.weights(sequence, mean);
-          Chop._06.requireClose(weights, UnitVector.of(n, index));
-          Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._06.requireClose(mean, o2);
-          ++index;
-        }
-      }
-  }
-
-  public void testAffineLinearReproduction() {
-    int fail = 0;
-    Distribution distribution = NormalDistribution.of(0.0, 0.3);
-    Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    BarycentricCoordinate AFFINE = AffineWrap.of(So3Manifold.INSTANCE);
-    for (int n = 4; n < 10; ++n)
+      int n = 4 + random.nextInt(2);
       try {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
         Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
-        Tensor weights1 = AFFINE.weights(sequence, mean);
+        Tensor weights1 = barycentricCoordinate.weights(sequence, mean);
         Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
         Chop._08.requireClose(mean, o2);
         // ---
         LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3());
         Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
-        Tensor weights2 = AFFINE.weights(seqlft, lieGroupElement.combine(mean));
-        Chop._10.requireClose(weights1, weights2);
+        Tensor weights2 = barycentricCoordinate.weights(seqlft, lieGroupElement.combine(mean));
+        Chop._06.requireClose(weights1, weights2);
         // ---
-        TensorMapping tensorMapping = LIE_GROUP_OPS.inversion();
-        Chop._10.requireClose(weights1, AFFINE.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
+        {
+          TensorMapping tensorMapping = LIE_GROUP_OPS.inversion();
+          Chop._06.requireClose(weights1, //
+              barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
+        }
       } catch (Exception exception) {
-        ++fail;
+        ++fails;
       }
-    assertTrue(fail < 3);
+    }
+    assertTrue(fails <= 2);
+  }
+
+  public void testLagrange() {
+    Random random = new Random();
+    Distribution distribution = NormalDistribution.of(0.0, 0.1);
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+      int n = 4 + random.nextInt(2);
+      Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(Rodrigues::vectorExp));
+      int index = 0;
+      for (Tensor point : sequence) {
+        Tensor weights = barycentricCoordinate.weights(sequence, point);
+        Chop._06.requireClose(weights, UnitVector.of(n, index));
+        Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+        Chop._06.requireClose(point, o2);
+        ++index;
+      }
+    }
+  }
+
+  public void testAffineLinearReproduction() {
+    Random random = new Random();
+    Distribution distribution = NormalDistribution.of(0.0, 0.3);
+    Distribution d2 = NormalDistribution.of(0.0, 0.1);
+    BarycentricCoordinate AFFINE = AffineWrap.of(So3Manifold.INSTANCE);
+    int n = 4 + random.nextInt(2);
+    Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
+    Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
+    Tensor weights1 = AFFINE.weights(sequence, mean);
+    Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
+    Chop._08.requireClose(mean, o2);
+    // ---
+    LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3());
+    Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
+    Tensor weights2 = AFFINE.weights(seqlft, lieGroupElement.combine(mean));
+    Chop._10.requireClose(weights1, weights2);
+    // ---
+    TensorMapping tensorMapping = LIE_GROUP_OPS.inversion();
+    Chop._10.requireClose(weights1, AFFINE.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
   }
 }

@@ -22,32 +22,30 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrBiinvariantMeanTest extends TestCase {
-  public void testBiinvariant() { // TODO SLOW
+  public void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
     RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 2); // 4 dimensional
     Scalar maxDist = RealScalar.of(1.4);
-    for (int count = 0; count < 10; ++count) {
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor sequence = Tensors.of(p);
-      for (int iter = 0; iter < 10; ++iter) {
-        Tensor q = RandomSample.of(randomSampleInterface);
-        Scalar distance = GrMetric.INSTANCE.distance(p, q);
-        if (Scalars.lessThan(distance, maxDist))
-          sequence.append(q);
-      }
-      int n = sequence.length();
-      Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
-      AssertFail.of(() -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
-      Tensor point = GrBiinvariantMean.INSTANCE.mean(sequence, weights);
-      GrMemberQ.INSTANCE.require(point);
-      GrMetric.INSTANCE.distance(p, point);
-      {
-        Tensor g = RandomSample.of(SoRandomSample.of(4));
-        GrAction grAction = new GrAction(g);
-        Tensor seq_l = Tensor.of(sequence.stream().map(grAction));
-        Tensor pnt_l = GrBiinvariantMean.INSTANCE.mean(seq_l, weights);
-        Chop._08.requireClose(grAction.apply(point), pnt_l);
-      }
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor sequence = Tensors.of(p);
+    for (int iter = 0; iter < 10; ++iter) {
+      Tensor q = RandomSample.of(randomSampleInterface);
+      Scalar distance = GrMetric.INSTANCE.distance(p, q);
+      if (Scalars.lessThan(distance, maxDist))
+        sequence.append(q);
+    }
+    int n = sequence.length();
+    Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
+    AssertFail.of(() -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
+    Tensor point = GrBiinvariantMean.INSTANCE.mean(sequence, weights);
+    GrMemberQ.INSTANCE.require(point);
+    GrMetric.INSTANCE.distance(p, point);
+    {
+      Tensor g = RandomSample.of(SoRandomSample.of(4));
+      GrAction grAction = new GrAction(g);
+      Tensor seq_l = Tensor.of(sequence.stream().map(grAction));
+      Tensor pnt_l = GrBiinvariantMean.INSTANCE.mean(seq_l, weights);
+      Chop._08.requireClose(grAction.apply(point), pnt_l);
     }
   }
 
