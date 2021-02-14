@@ -9,6 +9,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public class THnMemberQ implements MemberQ, Serializable {
+  private static final Chop CHOP = Chop._06;
+  // ---
   private final Tensor x;
 
   public THnMemberQ(Tensor x) {
@@ -17,7 +19,7 @@ public class THnMemberQ implements MemberQ, Serializable {
 
   @Override // from MemberQ
   public boolean test(Tensor v) {
-    return Chop._06.isZero(LBilinearForm.between(x, v));
+    return CHOP.isZero(LBilinearForm.between(x, v));
   }
 
   /** projection is idempotent

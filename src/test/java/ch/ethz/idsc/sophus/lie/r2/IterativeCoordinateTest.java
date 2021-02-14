@@ -160,11 +160,12 @@ public class IterativeCoordinateTest extends TestCase {
   };
 
   public void testS2() {
+    Random random = new Random(2);
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor point = UnitVector.of(3, 0);
     int count = 0;
     for (int n = 3; n < 10; ++n) {
-      Tensor sequence = RandomSample.of(randomSampleInterface, n);
+      Tensor sequence = RandomSample.of(randomSampleInterface, random, n);
       HsDesign hsDesign = new HsDesign(S2Manifold.INSTANCE);
       Tensor levers = hsDesign.matrix(sequence, point);
       if (Polygons.isInside(levers)) {
@@ -180,6 +181,6 @@ public class IterativeCoordinateTest extends TestCase {
         ++count;
       }
     }
-    assertTrue(0 < count);
+    assertTrue(2 < count);
   }
 }

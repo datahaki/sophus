@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.itp;
 
 import java.io.IOException;
+import java.util.Random;
 
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
@@ -46,8 +47,9 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
   public void testNormalized() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
-    Tensor sequence = RandomVariate.of(distribution, n, 3);
-    Tensor values = RandomVariate.of(distribution, n, 2);
+    Random random = new Random(1);
+    Tensor sequence = RandomVariate.of(distribution, random, n, 3);
+    Tensor values = RandomVariate.of(distribution, random, n, 2);
     for (Biinvariant biinvariant : PDA) {
       TensorUnaryOperator weightingInterface = biinvariant.var_dist(RnManifold.INSTANCE, PowerVariogram.of(1, 2), sequence);
       TensorUnaryOperator tensorUnaryOperator = //

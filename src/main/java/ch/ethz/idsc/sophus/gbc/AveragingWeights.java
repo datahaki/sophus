@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.ext.Cache;
 public enum AveragingWeights implements Genesis {
   INSTANCE;
 
-  private static final int MAX_SIZE = 16;
+  private static final int MAX_SIZE = 24;
   private static final Cache<Integer, Tensor> CACHE = Cache.of(AveragingWeights::build, MAX_SIZE);
 
   private static Tensor build(int n) {

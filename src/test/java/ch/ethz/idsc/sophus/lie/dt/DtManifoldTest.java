@@ -4,13 +4,12 @@ package ch.ethz.idsc.sophus.lie.dt;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.TensorMapping;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -73,7 +72,7 @@ public class DtManifoldTest extends TestCase {
       for (int length = n + 2; length < n + 8; ++length) {
         int fn = n;
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
-        Tensor constant = ConstantArray.of(RationalScalar.of(1, length), length);
+        Tensor constant = AveragingWeights.of(length);
         Tensor center = DtBiinvariantMean.INSTANCE.mean(sequence, constant);
         Tensor weights = barycentricCoordinate.weights(sequence, center);
         Tolerance.CHOP.requireClose(weights, constant);

@@ -1,12 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.r3;
 
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -22,7 +21,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
       Tensor polygon = CirclePoints.of(n);
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
-      Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
+      Tolerance.CHOP.requireClose(weights, AveragingWeights.of(n));
     }
   }
 
@@ -32,7 +31,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
       polygon = polygon.map(s -> Quantity.of(s, "s"));
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
-      Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
+      Tolerance.CHOP.requireClose(weights, AveragingWeights.of(n));
     }
   }
 
@@ -55,7 +54,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 3, 3);
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
-      Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, 3), 3));
+      Tolerance.CHOP.requireClose(weights, AveragingWeights.of(3));
     }
   }
 
@@ -64,7 +63,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 2, 3);
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
-      Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, 2), 2));
+      Tolerance.CHOP.requireClose(weights, AveragingWeights.of(2));
     }
   }
 
@@ -73,7 +72,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 1, 3);
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
-      Tolerance.CHOP.requireClose(weights, ConstantArray.of(RationalScalar.of(1, 1), 1));
+      Tolerance.CHOP.requireClose(weights, AveragingWeights.of(1));
     }
   }
 

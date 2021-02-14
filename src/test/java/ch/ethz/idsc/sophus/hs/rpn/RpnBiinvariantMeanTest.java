@@ -2,14 +2,13 @@
 package ch.ethz.idsc.sophus.hs.rpn;
 
 import ch.ethz.idsc.sophus.crv.ArcTan2D;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.lie.r2.AngleVector;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
@@ -50,7 +49,7 @@ public class RpnBiinvariantMeanTest extends TestCase {
         try {
           Tensor angles = RandomVariate.of(distribution, n);
           Tensor sequence = angles.map(AngleVector::of);
-          Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
+          Tensor weights = AveragingWeights.of(n);
           Tensor point = RpnBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
         } catch (Exception exception) {

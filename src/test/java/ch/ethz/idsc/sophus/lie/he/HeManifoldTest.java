@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.lie.he;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
@@ -11,11 +12,9 @@ import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
@@ -78,7 +77,7 @@ public class HeManifoldTest extends TestCase {
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
         int fn = n;
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
-        Tensor constant = ConstantArray.of(RationalScalar.of(1, length), length);
+        Tensor constant = AveragingWeights.of(length);
         Tensor center = HeBiinvariantMean.INSTANCE.mean(sequence, constant);
         Tensor weights = barycentricCoordinate.weights(sequence, center);
         Tolerance.CHOP.requireClose(weights, constant);
