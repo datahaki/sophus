@@ -100,7 +100,7 @@ public class KrigingTest extends TestCase {
     }
   }
 
-  public void testBarycentric() throws ClassNotFoundException, IOException {
+  public void testBarycentric() throws ClassNotFoundException, IOException { // TODO SLOW
     Distribution distribution = NormalDistribution.standard();
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (int n = 5; n < 10; ++n)

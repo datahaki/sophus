@@ -22,7 +22,7 @@ public enum Se2RigidMotionFit {
 
   /** @param points with dimensions N x 2
    * @param target with dimensions N x 2
-   * @param weights with dimensions N
+   * @param weights with dimensions N with entries that sum up to 1
    * @return */
   public static Tensor of(Tensor points, Tensor target, Tensor weights) {
     return of(RigidMotionFit.of(points, target, weights));

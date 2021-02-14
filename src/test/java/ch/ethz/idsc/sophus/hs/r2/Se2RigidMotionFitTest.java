@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r2;
 
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -37,6 +38,8 @@ public class Se2RigidMotionFitTest extends TestCase {
       Tensor target = Tensor.of(points.stream().map(se2ForwardAction::apply));
       Tensor rigidMotionFit = Se2RigidMotionFit.of(points, target);
       Chop._08.requireClose(xya, rigidMotionFit);
+      Tensor rigidMotionFi2 = Se2RigidMotionFit.of(points, target, AveragingWeights.of(n));
+      Chop._08.requireClose(xya, rigidMotionFi2);
     }
   }
 

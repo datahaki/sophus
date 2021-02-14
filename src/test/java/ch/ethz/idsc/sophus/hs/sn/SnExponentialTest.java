@@ -8,6 +8,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.lie.r2.AngleVector;
@@ -69,8 +70,12 @@ public class SnExponentialTest extends TestCase {
     AssertFail.of(() -> new SnExponential(Tensors.empty()));
   }
 
-  public void test1Fail() {
-    AssertFail.of(() -> new SnExponential(UnitVector.of(1, 0)));
+  public void testDim0Len1() {
+    Tensor p = UnitVector.of(1, 0);
+    SnExponential snExponential = new SnExponential(p);
+    snExponential.exp(Array.zeros(1));
+    Tensor v = snExponential.log(p);
+    assertEquals(v, Array.zeros(1));
   }
 
   public void testMatrixFail() {

@@ -37,7 +37,7 @@ public class So3ManifoldTest extends TestCase {
     }
   }
 
-  public void testLinearReproduction() {
+  public void testLinearReproduction() { // TODO SLOW
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
@@ -67,7 +67,7 @@ public class So3ManifoldTest extends TestCase {
     }
   }
 
-  public void testLagrange() {
+  public void testLagrange() { // TODO SLOW
     Distribution distribution = NormalDistribution.of(0.0, 0.1);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 4; n < 10; ++n) {

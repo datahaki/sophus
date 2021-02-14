@@ -57,8 +57,9 @@ public class SpdExponentialTest extends TestCase {
       Exponential exponential = new SpdExponential(IdentityMatrix.of(n));
       Tensor x = TestHelper.generateSim(n);
       Chop._08.requireClose(exponential.exp(x), Spd0Exponential.INSTANCE.exp(x));
-      Tensor p = TestHelper.generateSpd(n);
-      Chop._08.requireClose(exponential.log(p), Spd0Exponential.INSTANCE.log(p));
+      Tensor q = TestHelper.generateSpd(n);
+      Chop._08.requireClose(exponential.log(q), Spd0Exponential.INSTANCE.log(q));
+      Chop._08.requireClose(exponential.vectorLog(q), Spd0Exponential.INSTANCE.vectorLog(q));
     }
   }
 

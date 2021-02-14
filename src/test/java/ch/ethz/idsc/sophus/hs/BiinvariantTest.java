@@ -70,7 +70,7 @@ public class BiinvariantTest extends TestCase {
     }
   }
 
-  public void testSimplePD() throws ClassNotFoundException, IOException {
+  public void testSimplePD() throws ClassNotFoundException, IOException { // TODO SLOW
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Distribution distribution = NormalDistribution.standard();
       for (int n = 8; n < 12; ++n) {

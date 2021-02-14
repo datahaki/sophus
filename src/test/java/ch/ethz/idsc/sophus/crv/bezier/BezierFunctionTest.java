@@ -31,11 +31,14 @@ public class BezierFunctionTest extends TestCase {
 
   public void testRn() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}, {3, 1}}");
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGeodesic.INSTANCE, control);
+    ScalarTensorFunction stf1 = BezierFunction.of(RnGeodesic.INSTANCE, control);
     Scalar scalar = RationalScalar.of(1, 4);
-    Tensor tensor = scalarTensorFunction.apply(scalar);
+    Tensor tensor = stf1.apply(scalar);
     assertEquals(tensor, Tensors.fromString("{3/4, 7/16}"));
     ExactTensorQ.require(tensor);
+    Tensor domain = Subdivide.of(0, 1, 7);
+    ScalarTensorFunction stf2 = BezierFunction.of(RnBiinvariantMean.INSTANCE, control);
+    assertEquals(domain.map(stf1), domain.map(stf2));
   }
 
   public void testSe2Covering() {

@@ -49,7 +49,7 @@ public class SnManifoldTest extends TestCase {
     assertTrue(fails <= 2);
   }
 
-  public void testLagrangeProperty() {
+  public void testLagrangeProperty() { // TODO SLOW
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 2; d < 6; ++d) {
         for (int n = d + 1; n < d + 3; ++n) {
@@ -69,7 +69,7 @@ public class SnManifoldTest extends TestCase {
       }
   }
 
-  public void testBiinvariance() {
+  public void testBiinvariance() { // TODO SLOW
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 2; d < 6; ++d) {
         Tensor mean = UnitVector.of(d, 0);

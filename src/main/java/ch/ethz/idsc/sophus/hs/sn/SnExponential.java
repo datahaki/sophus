@@ -6,7 +6,6 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
@@ -35,6 +34,8 @@ public class SnExponential implements Exponential, Serializable {
   private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
   private final TSnMemberQ tSnMemberQ;
+  /** only needed for vectorLog */
+  private final Tensor tSnProjection;
 
   /** @param x on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
@@ -43,8 +44,7 @@ public class SnExponential implements Exponential, Serializable {
     snAngle = new SnAngle(x);
     tSnMemberQ = new TSnMemberQ(x);
     projection = Projection.on(x);
-    if (x.length() < 2)
-      throw TensorRuntimeException.of(x);
+    tSnProjection = TSnProjection.unsafe(x);
   }
 
   @Override // from Exponential
@@ -55,14 +55,14 @@ public class SnExponential implements Exponential, Serializable {
     return VectorNorm2.NORMALIZE.apply(y);
   }
 
+  /** @throws Exception if y not member of Sn */
   @Override // from Exponential
   public Tensor log(Tensor y) {
-    Scalar d_xy = snAngle.apply(y); // throws an Exception if y not member of Sn
-    return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xy);
+    return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(snAngle.apply(y));
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
-    return log(y);
+    return tSnProjection.dot(log(y));
   }
 }

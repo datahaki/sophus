@@ -38,12 +38,12 @@ public enum Spd0Exponential implements Exponential {
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor p) {
-    return Symmetrize.of(MatrixLog.ofSymmetric(p));
+  public Tensor log(Tensor q) {
+    return Symmetrize.of(MatrixLog.ofSymmetric(q));
   }
 
   @Override // from TangentSpace
-  public Tensor vectorLog(Tensor p) {
-    return Vectorize.of(log(p), 0);
+  public Tensor vectorLog(Tensor q) {
+    return Vectorize.of(log(q), 0);
   }
 }

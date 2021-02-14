@@ -22,7 +22,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrBiinvariantMeanTest extends TestCase {
-  public void testBiinvariant() {
+  public void testBiinvariant() { // TODO SLOW
     Distribution distribution = ExponentialDistribution.of(1);
     RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 2); // 4 dimensional
     Scalar maxDist = RealScalar.of(1.4);

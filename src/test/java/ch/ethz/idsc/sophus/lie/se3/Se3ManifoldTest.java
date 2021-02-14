@@ -31,7 +31,7 @@ public class Se3ManifoldTest extends TestCase {
       GbcHelper.biinvariant(Se3Manifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);
 
-  public void testRandom() {
+  public void testRandom() { // TODO SLOW
     int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
       for (int n = 7; n < 13; ++n) {
@@ -65,7 +65,7 @@ public class Se3ManifoldTest extends TestCase {
       }
   }
 
-  public void testRelativeRandom() {
+  public void testRelativeRandom() { // TODO SLOW
     BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES)
       for (int n = 7; n < 11; ++n) {

@@ -9,6 +9,9 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
+import ch.ethz.idsc.tensor.alg.Subdivide;
+import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import junit.framework.TestCase;
@@ -28,5 +31,11 @@ public class InversePowerVariogramTest extends TestCase {
   public void testInverse() {
     assertEquals(InversePowerVariogram.of(1).apply(RealScalar.of(2)), RationalScalar.HALF);
     assertEquals(InversePowerVariogram.of(2).apply(RealScalar.of(2)), RationalScalar.of(1, 4));
+  }
+
+  public void testExponentZero() throws ClassNotFoundException, IOException {
+    ScalarUnaryOperator suo = Serialization.copy(InversePowerVariogram.of(0));
+    Tensor domain = Subdivide.of(-1, 1, 6);
+    assertEquals(domain.map(suo), ConstantArray.of(RealScalar.ONE, 7));
   }
 }

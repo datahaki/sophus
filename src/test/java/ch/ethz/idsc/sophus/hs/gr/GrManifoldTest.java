@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrManifoldTest extends TestCase {
-  public void testBiinvariance() {
+  public void testBiinvariance() { // TODO SLOW
     int n = 4;
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     VectorLogManifold vectorLogManifold = GrManifold.INSTANCE;

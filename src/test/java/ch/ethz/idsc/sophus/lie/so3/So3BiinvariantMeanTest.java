@@ -29,7 +29,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     Chop._10.requireAllZero(log);
   }
 
-  public void testConvergence() {
+  public void testConvergence() { // TODO SLOW
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 4; n < 10; ++n) {

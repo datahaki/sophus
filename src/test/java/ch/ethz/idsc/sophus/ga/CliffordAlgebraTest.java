@@ -38,11 +38,13 @@ public class CliffordAlgebraTest extends TestCase {
   public void testD1() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.positive(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, 1}}, {{0, 1}, {1, 0}}}"));
+    assertEquals(cliffordAlgebra.gp(), CliffordAlgebra.of(1, 0).gp());
   }
 
   public void testD1Complex() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.negative(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, -1}}, {{0, 1}, {1, 0}}}"));
+    assertEquals(cliffordAlgebra.gp(), CliffordAlgebra.of(0, 1).gp());
     Tensor x = Tensors.vector(2, 5);
     Tensor y = Tensors.vector(1, -3);
     Tensor m = cliffordAlgebra.gp(x, y);
@@ -162,7 +164,7 @@ public class CliffordAlgebraTest extends TestCase {
     Chop._08.requireClose(exp1, exp2);
   }
 
-  public void testCommutatorPositive() {
+  public void testCommutatorPositive() { // TODO SLOW
     for (int n = 0; n <= 4; ++n) {
       CliffordAlgebra cliffordAlgebra = CliffordAlgebra.positive(n);
       JacobiIdentity.require(cliffordAlgebra.cp());

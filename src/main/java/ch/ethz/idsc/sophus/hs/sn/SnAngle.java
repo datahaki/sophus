@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.api.TensorScalarFunction;
 import ch.ethz.idsc.tensor.sca.ArcCos;
 import ch.ethz.idsc.tensor.sca.Clips;
 
+/** maps a point q to the (angular) distance from base point p */
 public class SnAngle implements TensorScalarFunction {
   private final Tensor x;
 

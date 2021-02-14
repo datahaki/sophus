@@ -15,7 +15,11 @@ public enum TSnProjection {
   /** @param x vector of length n
    * @return matrix of size n-1 x n that satisfies matrix . x == 0 */
   public static Tensor of(Tensor x) {
-    int n = SnMemberQ.INSTANCE.require(x).length();
+    return unsafe(SnMemberQ.INSTANCE.require(x));
+  }
+
+  /* package */ static Tensor unsafe(Tensor x) {
+    int n = x.length();
     return Tensor.of(Orthogonalize.of(Join.of(Tensors.of(x), CACHE.apply(n))).stream().skip(1).limit(n - 1));
   }
 }

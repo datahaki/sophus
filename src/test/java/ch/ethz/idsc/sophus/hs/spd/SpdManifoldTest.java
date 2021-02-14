@@ -64,7 +64,7 @@ public class SpdManifoldTest extends TestCase {
   // assertTrue(errors < 5);
   // }
 
-  public void testLagrangeProperty() {
+  public void testLagrangeProperty() { // TODO SLOW
     int d = 2;
     for (int len = 5; len < 10; ++len) {
       Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);

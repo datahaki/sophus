@@ -40,6 +40,8 @@ public class Hermite3SubdivisionsTest extends TestCase {
     Scalar omega = RealScalar.ZERO;
     TestHelper.check(Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE), //
         Hermite3Subdivisions.of(RnManifold.INSTANCE, LieTransport.INSTANCE, RnBiinvariantMean.INSTANCE, theta, omega));
+    TestHelper.check(Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE), //
+        Hermite3Subdivisions.of(RnManifold.INSTANCE, LieTransport.INSTANCE, theta, omega));
   }
 
   public void testP1() {

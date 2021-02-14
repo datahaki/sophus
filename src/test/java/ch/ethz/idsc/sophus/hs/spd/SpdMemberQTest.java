@@ -22,7 +22,7 @@ public class SpdMemberQTest extends TestCase {
       SpdMemberQ.INSTANCE.require(TestHelper.generateSpd(n));
   }
 
-  public void testBiinvarianceSon() {
+  public void testBiinvarianceSon() { // TODO SLOW
     for (int n = 2; n < 6; ++n) {
       for (Biinvariants biinvariants : BIINVARIANTS)
         if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4)
@@ -44,7 +44,7 @@ public class SpdMemberQTest extends TestCase {
     }
   }
 
-  public void testBiinvarianceGln() {
+  public void testBiinvarianceGln() { // TODO SLOW
     int fails = 0;
     for (int n = 2; n < 4; ++n) {
       for (Biinvariants biinvariants : BIINVARIANTS)
