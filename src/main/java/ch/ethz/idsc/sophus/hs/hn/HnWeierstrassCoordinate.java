@@ -1,11 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Append;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** R^n -> Hn
@@ -35,6 +35,6 @@ public enum HnWeierstrassCoordinate {
   }
 
   private static Scalar xn(Tensor x) {
-    return Sqrt.FUNCTION.apply(RnNormSquared.INSTANCE.norm(x).add(RealScalar.ONE));
+    return Sqrt.FUNCTION.apply(VectorNorm2Squared.of(x).add(RealScalar.ONE));
   }
 }

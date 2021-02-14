@@ -12,7 +12,6 @@ import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.sophus.lie.rn.RnNormSquared;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.TensorMapping;
@@ -33,6 +32,7 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -54,7 +54,7 @@ public class Se2CoveringManifoldTest extends TestCase {
   private static final BarycentricCoordinate AD_INVAR = HsCoordinates.wrap( //
       Se2CoveringManifold.INSTANCE, //
       MetricCoordinate.of( //
-          NormWeighting.of(new Se2CoveringTarget(RnNormSquared.INSTANCE, RealScalar.ONE), InversePowerVariogram.of(1))));
+          NormWeighting.of(new Se2CoveringTarget(VectorNorm2Squared::of, RealScalar.ONE), InversePowerVariogram.of(1))));
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();

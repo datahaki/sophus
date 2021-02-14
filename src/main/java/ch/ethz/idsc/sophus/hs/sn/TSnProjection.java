@@ -13,7 +13,7 @@ public enum TSnProjection {
   private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, 10);
 
   /** @param x vector of length n
-   * @return matrix of size n-1 x n */
+   * @return matrix of size n-1 x n that satisfies matrix . x == 0 */
   public static Tensor of(Tensor x) {
     int n = SnMemberQ.INSTANCE.require(x).length();
     return Tensor.of(Orthogonalize.of(Join.of(Tensors.of(x), CACHE.apply(n))).stream().skip(1).limit(n - 1));

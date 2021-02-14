@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -36,7 +35,7 @@ public class SnMetricTest extends TestCase {
       Scalar a1 = SnMetric.INSTANCE.distance(p, q);
       Scalar a2 = _check(p, q);
       Chop._12.requireClose(a1, a2);
-      Scalar norm = RnNorm.INSTANCE.norm(new SnExponential(p).log(q));
+      Scalar norm = VectorNorm2.of(new SnExponential(p).log(q));
       Tolerance.CHOP.requireClose(norm, a1);
     }
   }

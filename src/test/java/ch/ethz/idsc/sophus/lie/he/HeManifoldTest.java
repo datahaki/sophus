@@ -8,7 +8,6 @@ import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
@@ -19,6 +18,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -26,7 +26,7 @@ public class HeManifoldTest extends TestCase {
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.of( //
       NormWeighting.of( //
-          new HeTarget(RnNorm.INSTANCE, RealScalar.ONE), //
+          new HeTarget(VectorNorm2::of, RealScalar.ONE), //
           InversePowerVariogram.of(1))));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // LeveragesCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
