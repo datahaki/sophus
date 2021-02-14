@@ -35,15 +35,17 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
   /** scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
   public static final Biinvariant RIEMANN = new MetricBiinvariant(VectorNorm2::of);
 
-  public static Biinvariant of(TensorScalarFunction vectorNormInterface) {
-    return new MetricBiinvariant(Objects.requireNonNull(vectorNormInterface));
+  /** @param tensorScalarFunction norm
+   * @return */
+  public static Biinvariant of(TensorScalarFunction tensorScalarFunction) {
+    return new MetricBiinvariant(Objects.requireNonNull(tensorScalarFunction));
   }
 
   /***************************************************/
-  private final TensorScalarFunction vectorNormInterface;
+  private final TensorScalarFunction tensorScalarFunction;
 
-  private MetricBiinvariant(TensorScalarFunction vectorNormInterface) {
-    this.vectorNormInterface = vectorNormInterface;
+  private MetricBiinvariant(TensorScalarFunction tensorScalarFunction) {
+    this.tensorScalarFunction = tensorScalarFunction;
   }
 
   @Override // from Biinvariant
@@ -51,12 +53,12 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
     Objects.requireNonNull(vectorLogManifold);
     Objects.requireNonNull(sequence);
     return point -> Tensor.of(new HsDesign(vectorLogManifold).stream(sequence, point) //
-        .map(vectorNormInterface));
+        .map(tensorScalarFunction));
   }
 
   @Override // from Biinvariant
   public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    Genesis genesis = MetricCoordinate.of(InverseDistanceWeighting.of(variogram, vectorNormInterface));
+    Genesis genesis = MetricCoordinate.of(InverseDistanceWeighting.of(variogram, tensorScalarFunction));
     return HsGenesis.wrap(vectorLogManifold, genesis, sequence);
   }
 
@@ -70,7 +72,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
       return LagrangeCoordinates.of( //
           levers, //
           NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
-              .map(vectorNormInterface) //
+              .map(tensorScalarFunction) //
               .map(variogram))));
     };
   }

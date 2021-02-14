@@ -28,21 +28,21 @@ public class InverseDistanceWeighting implements Genesis, Serializable {
   }
 
   /** @param variogram
-   * @param vectorNormInterface
+   * @param tensorScalarFunction norm
    * @return */
-  public static Genesis of(ScalarUnaryOperator variogram, TensorScalarFunction vectorNormInterface) {
+  public static Genesis of(ScalarUnaryOperator variogram, TensorScalarFunction tensorScalarFunction) {
     return new InverseDistanceWeighting( //
         Objects.requireNonNull(variogram), //
-        Objects.requireNonNull(vectorNormInterface));
+        Objects.requireNonNull(tensorScalarFunction));
   }
 
   /***************************************************/
   private final ScalarUnaryOperator variogram;
   private final TensorScalarFunction tensorScalarFunction;
 
-  private InverseDistanceWeighting(ScalarUnaryOperator variogram, TensorScalarFunction vectorNormInterface) {
+  private InverseDistanceWeighting(ScalarUnaryOperator variogram, TensorScalarFunction tensorScalarFunction) {
     this.variogram = variogram;
-    this.tensorScalarFunction = vectorNormInterface;
+    this.tensorScalarFunction = tensorScalarFunction;
   }
 
   @Override // from Genesis

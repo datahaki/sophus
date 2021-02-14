@@ -6,12 +6,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
 
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
+import ch.ethz.idsc.sophus.math.SpatialMedian;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.opt.rn.SpatialMedian;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** iterative method to find solution to Fermat-Weber Problem
@@ -56,14 +55,12 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
   }
 
   private Optional<Tensor> minimum(Tensor sequence, UnaryOperator<Tensor> unaryOperator) {
-    Tensor equalw = ConstantArray.of(RationalScalar.of(1, sequence.length()), sequence.length());
+    Tensor equalw = AveragingWeights.of(sequence.length());
     Tensor point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(equalw)));
     int iteration = 0;
     while (++iteration < MAX_ITERATIONS) {
-      Tensor prev = point;
       Tensor weights = weightingInterface.apply(point);
-      point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(weights)));
-      if (chop.isClose(point, prev))
+      if (chop.isClose(point, point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(weights)))))
         return Optional.of(point);
     }
     return Optional.empty();

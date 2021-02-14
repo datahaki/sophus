@@ -1,12 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r2;
 
+import ch.ethz.idsc.sophus.lie.rn.RigidMotionFit;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.opt.rn.RigidMotionFit;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 
 public enum Se2RigidMotionFit {

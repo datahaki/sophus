@@ -3,12 +3,12 @@ package ch.ethz.idsc.sophus.hs;
 
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
+import ch.ethz.idsc.sophus.lie.rn.WeiszfeldMethod;
+import ch.ethz.idsc.sophus.math.SpatialMedian;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.opt.rn.SpatialMedian;
-import ch.ethz.idsc.tensor.opt.rn.WeiszfeldMethod;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
