@@ -61,6 +61,10 @@ public class SpdExponential implements Exponential, Serializable {
     return Vectorize.of(log(q), 0);
   }
 
+  /** @param q point in Spd
+   * @return linear mapping that defines parallel transport of tangent vectors
+   * along geodesic from base point p to q
+   * @see SpdTransport */
   public Tensor endomorphism(Tensor q) {
     Tensor w = log(q).multiply(RationalScalar.HALF);
     Tensor mid = Spd0Exponential.INSTANCE.exp(basis(w, pn));
