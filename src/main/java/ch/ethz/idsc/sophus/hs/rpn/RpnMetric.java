@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.red.Min;
 import ch.ethz.idsc.tensor.red.VectorAngle;
 
-/**  */
+/** real projective plane */
 public enum RpnMetric implements TensorMetric {
   INSTANCE;
 

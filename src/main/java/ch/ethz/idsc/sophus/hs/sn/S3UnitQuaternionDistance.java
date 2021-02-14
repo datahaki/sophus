@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.s3;
+package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.math.Metric;
 import ch.ethz.idsc.tensor.Quaternion;
@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * 
  * <p>Reference:
  * https://en.wikipedia.org/wiki/Quaternion */
-public enum UnitQuaternionDistance implements Metric<Quaternion> {
+public enum S3UnitQuaternionDistance implements Metric<Quaternion> {
   INSTANCE;
 
   private static final Scalar HALF = RealScalar.of(0.5);

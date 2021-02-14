@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.math.GeodesicInterface;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -20,8 +21,8 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * "Freeform Curves on Spheres of Arbitrary Dimension"
  * by Scott Schaefer and Ron Goldman, 2005, page 2
  * 
- * <p>the use of SnGeodesic.INSTANCE is preferred over HsGeodesic.
- * The implementation is symmetric in p and q and more efficient than HsGeodesic. */
+ * <p>the use of SnGeodesic.INSTANCE is preferred over {@link HsGeodesic}. The
+ * implementation is symmetric in p and q and more efficient than HsGeodesic. */
 public enum SnGeodesic implements GeodesicInterface {
   INSTANCE;
 

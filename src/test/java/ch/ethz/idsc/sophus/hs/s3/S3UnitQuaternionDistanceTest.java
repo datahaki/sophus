@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.s3;
 
+import ch.ethz.idsc.sophus.hs.sn.S3UnitQuaternionDistance;
 import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -14,7 +15,7 @@ import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Log;
 import junit.framework.TestCase;
 
-public class UnitQuaternionDistanceTest extends TestCase {
+public class S3UnitQuaternionDistanceTest extends TestCase {
   public void testSimple() {
     Quaternion p = Quaternion.of(3, 1, 2, 3);
     p = p.divide(Abs.FUNCTION.apply(p));
@@ -22,13 +23,13 @@ public class UnitQuaternionDistanceTest extends TestCase {
     q = q.divide(Abs.of(q));
     Chop._14.requireClose(Abs.FUNCTION.apply(p), RealScalar.ONE);
     Chop._14.requireClose(Abs.FUNCTION.apply(q), RealScalar.ONE);
-    Scalar d1 = UnitQuaternionDistance.INSTANCE.distance(p, q);
-    Scalar dq = UnitQuaternionDistance.INSTANCE.distance(p.multiply(q), q.multiply(q));
-    Scalar dp = UnitQuaternionDistance.INSTANCE.distance(p.multiply(p), p.multiply(q));
+    Scalar d1 = S3UnitQuaternionDistance.INSTANCE.distance(p, q);
+    Scalar dq = S3UnitQuaternionDistance.INSTANCE.distance(p.multiply(q), q.multiply(q));
+    Scalar dp = S3UnitQuaternionDistance.INSTANCE.distance(p.multiply(p), p.multiply(q));
     Chop._14.requireClose(d1, dp);
     Chop._14.requireClose(d1, dq);
-    Chop._14.requireAllZero(UnitQuaternionDistance.INSTANCE.distance(p, p));
-    Scalar distance = LogUnitQuaternionDistance.INSTANCE.distance(p, q);
+    Chop._14.requireAllZero(S3UnitQuaternionDistance.INSTANCE.distance(p, p));
+    Scalar distance = S3LogUnitQuaternionDistance.INSTANCE.distance(p, q);
     Chop._14.requireClose(dp, distance);
     Chop._14.requireClose(dq, distance);
   }
@@ -38,12 +39,12 @@ public class UnitQuaternionDistanceTest extends TestCase {
     Quaternion p1 = Quaternion.of(0, 1, 0, 0);
     Quaternion p2 = Quaternion.of(0, 0, 1, 0);
     Quaternion p3 = Quaternion.of(0, 0, 0, 1);
-    Scalar d01a = UnitQuaternionDistance.INSTANCE.distance(p0, p1);
+    Scalar d01a = S3UnitQuaternionDistance.INSTANCE.distance(p0, p1);
     Chop._14.requireClose(d01a, Pi.HALF);
-    Scalar d01b = LogUnitQuaternionDistance.INSTANCE.distance(p0, p1);
+    Scalar d01b = S3LogUnitQuaternionDistance.INSTANCE.distance(p0, p1);
     Chop._14.requireClose(d01a, d01b);
-    Scalar d23a = UnitQuaternionDistance.INSTANCE.distance(p2, p3);
-    Scalar d23b = LogUnitQuaternionDistance.INSTANCE.distance(p2, p3);
+    Scalar d23a = S3UnitQuaternionDistance.INSTANCE.distance(p2, p3);
+    Scalar d23b = S3LogUnitQuaternionDistance.INSTANCE.distance(p2, p3);
     Chop._14.requireClose(d23a, d23b);
     assertEquals(Abs.FUNCTION.apply(p0), RealScalar.ONE);
     assertEquals(Abs.FUNCTION.apply(p1), RealScalar.ONE);

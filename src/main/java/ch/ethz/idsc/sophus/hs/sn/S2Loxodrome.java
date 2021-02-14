@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs.s2;
+package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -12,16 +12,16 @@ import ch.ethz.idsc.tensor.sca.Sin;
 /** curve on the 2-dimensional sphere
  * 
  * https://de.wikipedia.org/wiki/Loxodrome */
-public class Loxodrome implements ScalarTensorFunction {
+public class S2Loxodrome implements ScalarTensorFunction {
   /** @param angle */
   public static ScalarTensorFunction of(Scalar angle) {
-    return new Loxodrome(angle);
+    return new S2Loxodrome(angle);
   }
 
   /***************************************************/
   private final Scalar angle;
 
-  private Loxodrome(Scalar angle) {
+  private S2Loxodrome(Scalar angle) {
     this.angle = angle;
   }
 
