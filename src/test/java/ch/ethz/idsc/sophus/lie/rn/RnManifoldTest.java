@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
+import java.util.Random;
+
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
@@ -29,76 +31,81 @@ public class RnManifoldTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(RnGroup.INSTANCE);
 
   public void testSimple() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
-    for (int n = 2; n < 5; ++n)
-      for (int length = n + 1; length < 8; ++length) {
-        Tensor points = RandomVariate.of(distribution, length, n);
-        Tensor mean = RandomVariate.of(distribution, n);
-        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
-          Tensor weights = barycentricCoordinate.weights(points, mean);
-          Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
-          Chop._08.requireClose(mean, result);
-        }
+    for (int n = 2; n < 5; ++n) {
+      int length = n + 1 + random.nextInt(3);
+      Tensor points = RandomVariate.of(distribution, length, n);
+      Tensor mean = RandomVariate.of(distribution, n);
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+        Tensor weights = barycentricCoordinate.weights(points, mean);
+        Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
+        Chop._08.requireClose(mean, result);
       }
+    }
   }
 
   public void testRandom() {
+    Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
-    for (int n = 2; n < 5; ++n)
-      for (int length = n + 1; length < 8; ++length) {
-        Tensor points = RandomVariate.of(distribution, length, n);
-        Tensor xya = RandomVariate.of(distribution, n);
-        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
-          Tensor weights = barycentricCoordinate.weights(points, xya);
-          Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
-          Tensor x_recreated = biinvariantMean.mean(points, weights);
-          Chop._06.requireClose(xya, x_recreated);
-          Tensor shift = RandomVariate.of(distribution, n);
-          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
-            Chop._04.requireClose(weights, //
-                barycentricCoordinate.weights(tensorMapping.slash(points), tensorMapping.apply(xya)));
-        }
+    for (int n = 2; n < 4; ++n) {
+      int length = n + 1 + random.nextInt(3);
+      Tensor points = RandomVariate.of(distribution, length, n);
+      Tensor xya = RandomVariate.of(distribution, n);
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+        Tensor weights = barycentricCoordinate.weights(points, xya);
+        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+        Tensor x_recreated = biinvariantMean.mean(points, weights);
+        Chop._06.requireClose(xya, x_recreated);
+        Tensor shift = RandomVariate.of(distribution, n);
+        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
+          Chop._04.requireClose(weights, //
+              barycentricCoordinate.weights(tensorMapping.slash(points), tensorMapping.apply(xya)));
       }
+    }
   }
 
   public void testLinearReproduction() {
+    Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
-    for (int n = 2; n < 6; ++n)
-      for (int length = n + 1; length < 8; ++length) {
-        Tensor points = RandomVariate.of(distribution, length, n);
-        Tensor x = RandomVariate.of(distribution, n);
-        TensorUnaryOperator tensorUnaryOperator = //
-            MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
-        Tensor weights = tensorUnaryOperator.apply(x);
-        Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
-        Chop._06.requireClose(x, y);
-      }
+    for (int n = 2; n < 6; ++n) {
+      int length = n + 1 + random.nextInt(3);
+      Tensor points = RandomVariate.of(distribution, length, n);
+      Tensor x = RandomVariate.of(distribution, n);
+      TensorUnaryOperator tensorUnaryOperator = //
+          MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+      Tensor weights = tensorUnaryOperator.apply(x);
+      Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
+      Chop._06.requireClose(x, y);
+    }
   }
 
   public void testLagrangeProperty() {
+    Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
-    for (int n = 2; n < 6; ++n)
-      for (int length = n + 1; length < 8; ++length) {
-        Tensor points = RandomVariate.of(distribution, length, n);
-        TensorUnaryOperator tensorUnaryOperator = //
-            MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
-        Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
-      }
+    for (int n = 2; n < 6; ++n) {
+      int length = n + 1 + random.nextInt(3);
+      Tensor points = RandomVariate.of(distribution, length, n);
+      TensorUnaryOperator tensorUnaryOperator = //
+          MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+      Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
+    }
   }
 
   public void testQuantity() {
+    Random random = new Random();
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    for (int n = 2; n < 6; ++n)
-      for (int length = n + 1; length < 8; ++length) {
-        Tensor points = RandomVariate.of(distribution, length, n);
-        Tensor x = RandomVariate.of(distribution, n);
-        TensorUnaryOperator tensorUnaryOperator = //
-            MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
-        Tensor weights = tensorUnaryOperator.apply(x);
-        Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
-        Chop._06.requireClose(x, y);
-      }
+    for (int n = 2; n < 6; ++n) {
+      int length = n + 1 + random.nextInt(3);
+      Tensor points = RandomVariate.of(distribution, length, n);
+      Tensor x = RandomVariate.of(distribution, n);
+      TensorUnaryOperator tensorUnaryOperator = //
+          MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+      Tensor weights = tensorUnaryOperator.apply(x);
+      Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
+      Chop._06.requireClose(x, y);
+    }
   }
 
   public void testAffineSimple() {

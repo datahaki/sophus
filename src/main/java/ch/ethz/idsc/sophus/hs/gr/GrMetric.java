@@ -12,7 +12,6 @@ import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 public enum GrMetric implements TensorMetric {
   INSTANCE;
 
-  // TODO check distance of "antipodal" frames
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return FrobeniusNorm.of(new GrExponential(p).log(q));

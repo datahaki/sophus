@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
@@ -27,5 +28,15 @@ public class HnTransportTest extends TestCase {
     // System.out.println(vpq);
     // System.out.println(apply);
     Chop._08.requireClose(p, exp);
+  }
+
+  public void testNonMemberFail() {
+    int d = 3;
+    Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
+    Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+    Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+    TensorUnaryOperator shift = HnTransport.INSTANCE.shift(p, q);
+    Tensor v = RandomVariate.of(distribution, d + 1);
+    AssertFail.of(() -> shift.apply(v));
   }
 }

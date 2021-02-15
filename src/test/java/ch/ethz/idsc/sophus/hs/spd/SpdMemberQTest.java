@@ -28,22 +28,22 @@ public class SpdMemberQTest extends TestCase {
     Random random = new Random();
     int n = 2 + random.nextInt(3);
     for (Biinvariants biinvariants : BIINVARIANTS)
-      if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4)
-        for (int count = 1; count < 4; ++count) {
-          int fn = n;
-          int len = n * (n + 1) / 2 + count;
-          Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
-          Tensor mL = TestHelper.generateSpd(fn);
-          Tensor weights1 = biinvariants.coordinate( //
-              SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
-          // ---
-          Tensor g = RandomSample.of(SoRandomSample.of(n), random);
-          Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
-          Tensor mR = BasisTransform.ofForm(mL, g);
-          Tensor weights2 = biinvariants.coordinate( //
-              SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
-          Chop._02.requireClose(weights1, weights2);
-        }
+      if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4) {
+        int count = 1 + random.nextInt(3);
+        int fn = n;
+        int len = n * (n + 1) / 2 + count;
+        Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
+        Tensor mL = TestHelper.generateSpd(fn);
+        Tensor weights1 = biinvariants.coordinate( //
+            SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
+        // ---
+        Tensor g = RandomSample.of(SoRandomSample.of(n), random);
+        Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
+        Tensor mR = BasisTransform.ofForm(mL, g);
+        Tensor weights2 = biinvariants.coordinate( //
+            SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
+        Chop._02.requireClose(weights1, weights2);
+      }
   }
 
   public void testBiinvarianceGln() {
@@ -51,25 +51,25 @@ public class SpdMemberQTest extends TestCase {
     Random random = new Random();
     int n = 2 + random.nextInt(2);
     for (Biinvariants biinvariants : BIINVARIANTS)
-      for (int count = 1; count < 4; ++count)
-        try {
-          int fn = n;
-          int len = n * (n + 1) / 2 + count;
-          Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
-          Tensor mL = TestHelper.generateSpd(fn);
-          Tensor weights1 = biinvariants.coordinate( //
-              SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
-          // ---
-          Tensor g = RandomVariate.of(NormalDistribution.standard(), random, n, n);
-          Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
-          Tensor mR = BasisTransform.ofForm(mL, g);
-          Tensor weights2 = biinvariants.coordinate( //
-              SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
-          Chop._02.requireClose(weights1, weights2);
-        } catch (Exception exception) {
-          exception.printStackTrace();
-          ++fails;
-        }
+      try {
+        int count = 1 + random.nextInt(3);
+        int fn = n;
+        int len = n * (n + 1) / 2 + count;
+        Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
+        Tensor mL = TestHelper.generateSpd(fn);
+        Tensor weights1 = biinvariants.coordinate( //
+            SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
+        // ---
+        Tensor g = RandomVariate.of(NormalDistribution.standard(), random, n, n);
+        Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
+        Tensor mR = BasisTransform.ofForm(mL, g);
+        Tensor weights2 = biinvariants.coordinate( //
+            SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
+        Chop._02.requireClose(weights1, weights2);
+      } catch (Exception exception) {
+        exception.printStackTrace();
+        ++fails;
+      }
     assertTrue(fails <= 2);
   }
 }

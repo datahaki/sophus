@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 public class SchildLadderTest extends TestCase {
   public void testRn() {
-    HsTransport hsTransport = SchildLadderExt.of(RnManifold.INSTANCE);
+    HsTransport hsTransport = SchildLadder.of(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);
@@ -34,7 +34,7 @@ public class SchildLadderTest extends TestCase {
   public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
-    TensorUnaryOperator shift1 = SchildLadderExt.of(SnManifold.INSTANCE).shift(orig, dest);
+    TensorUnaryOperator shift1 = SchildLadder.of(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift3 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);

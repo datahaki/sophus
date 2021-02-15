@@ -71,7 +71,7 @@ public class Se3ManifoldTest extends TestCase {
     Random random = new Random();
     BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
-      int n = 7 + random.nextInt(4);
+      int n = 7 + random.nextInt(3);
       int fails = 0;
       try {
         Tensor points = Tensors.vector(i -> TestHelper.spawn_Se3(), n);

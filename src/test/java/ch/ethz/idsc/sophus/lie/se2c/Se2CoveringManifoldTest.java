@@ -73,45 +73,45 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   public void testLinearReproduction() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    Random random = new Random(1);
-    for (int n = 4; n < 8; ++n) {
-      Tensor points = RandomVariate.of(distribution, random, n, 3);
-      Tensor target = AveragingWeights.of(n);
-      Tensor x = Se2CoveringBiinvariantMean.INSTANCE.mean(points, target);
-      for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES) {
-        Tensor weights = barycentricCoordinate.weights(points, x);
-        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights);
-        Chop._06.requireClose(x, x_recreated);
-      }
+    int n = 4 + random.nextInt(4);
+    Tensor points = RandomVariate.of(distribution, random, n, 3);
+    Tensor target = AveragingWeights.of(n);
+    Tensor x = Se2CoveringBiinvariantMean.INSTANCE.mean(points, target);
+    for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES) {
+      Tensor weights = barycentricCoordinate.weights(points, x);
+      Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      Tensor x_recreated = biinvariantMean.mean(points, weights);
+      Chop._06.requireClose(x, x_recreated);
     }
   }
 
   public void testRandom() {
+    Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES)
-      for (int n = 4; n < 8; ++n) {
-        Tensor points = RandomVariate.of(distributiox, n, 3);
-        Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights, Chop._08);
-        Tensor check1 = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
-        Chop._06.requireClose(check1, xya);
-        Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights);
-        Chop._06.requireClose(xya, x_recreated);
-        Tensor shift = TestHelper.spawn_Se2C();
-        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = tensorMapping.slash(points);
-          Tensor one = tensorMapping.apply(xya);
-          Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
-          Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
-        }
+    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
+      int n = 4 + random.nextInt(4);
+      Tensor points = RandomVariate.of(distributiox, n, 3);
+      Tensor xya = RandomVariate.of(distribution, 3);
+      Tensor weights = barycentricCoordinate.weights(points, xya);
+      AffineQ.require(weights, Chop._08);
+      Tensor check1 = Se2CoveringBiinvariantMean.INSTANCE.mean(points, weights);
+      Chop._06.requireClose(check1, xya);
+      Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      Tensor x_recreated = biinvariantMean.mean(points, weights);
+      Chop._06.requireClose(xya, x_recreated);
+      Tensor shift = TestHelper.spawn_Se2C();
+      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+        Tensor all = tensorMapping.slash(points);
+        Tensor one = tensorMapping.apply(xya);
+        Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
+        Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
       }
+    }
   }
 
   public void testNullFail() {
@@ -120,15 +120,15 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   public void testLagrange() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
-    for (int n = 4; n < 10; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
-      for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
-        for (int index = 0; index < n; ++index) {
-          Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
-          AffineQ.require(weights, Chop._08);
-          Chop._06.requireClose(weights, UnitVector.of(n, index));
-        }
+    int n = 4 + random.nextInt(4);
+    Tensor sequence = RandomVariate.of(distribution, n, 3);
+    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
+      for (int index = 0; index < n; ++index) {
+        Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
+        AffineQ.require(weights, Chop._08);
+        Chop._06.requireClose(weights, UnitVector.of(n, index));
       }
     }
   }
@@ -141,82 +141,84 @@ public class Se2CoveringManifoldTest extends TestCase {
   }
 
   public void testQuantity() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
-    for (int n = 4; n < 10; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
-      sequence.set(Se2CoveringManifoldTest::withUnits, Tensor.ALL);
-      for (BarycentricCoordinate barycentricCoordinate : QUANTITY_COORDINATES) {
-        for (int index = 0; index < n; ++index) {
-          Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
-          AffineQ.require(weights, Chop._08);
-          Chop._06.requireClose(weights, UnitVector.of(n, index));
-        }
-        Tensor weights = barycentricCoordinate.weights(sequence, withUnits(RandomVariate.of(distribution, 3)));
+    int n = 4 + random.nextInt(4);
+    Tensor sequence = RandomVariate.of(distribution, n, 3);
+    sequence.set(Se2CoveringManifoldTest::withUnits, Tensor.ALL);
+    for (BarycentricCoordinate barycentricCoordinate : QUANTITY_COORDINATES) {
+      for (int index = 0; index < n; ++index) {
+        Tensor weights = barycentricCoordinate.weights(sequence, sequence.get(index));
         AffineQ.require(weights, Chop._08);
+        Chop._06.requireClose(weights, UnitVector.of(n, index));
       }
+      Tensor weights = barycentricCoordinate.weights(sequence, withUnits(RandomVariate.of(distribution, 3)));
+      AffineQ.require(weights, Chop._08);
     }
   }
 
   public void testProjection() {
+    Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distributiox, n, 3);
-        Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights = barycentricCoordinate.weights(points, xya);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
-        Tensor influence = matrix.dot(PseudoInverse.of(matrix));
-        SymmetricMatrixQ.require(influence, Chop._10);
-        Chop._10.requireClose(Symmetrize.of(influence), influence);
-        AffineQ.require(weights, Chop._08);
-        Tensor check1 = biinvariantMean.mean(points, weights);
-        Chop._06.requireClose(check1, xya);
-        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights);
-        Chop._06.requireClose(xya, x_recreated);
-        Tensor shift = TestHelper.spawn_Se2C();
-        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = tensorMapping.slash(points);
-          Tensor one = tensorMapping.apply(xya);
-          Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
-          Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
-          Tensor design = new HsDesign(vectorLogManifold).matrix(all, one);
-          Chop._06.requireClose(influence, InfluenceMatrix.of(design).matrix());
-        }
+    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
+      int n = 4 + random.nextInt(4);
+      Tensor points = RandomVariate.of(distributiox, n, 3);
+      Tensor xya = RandomVariate.of(distribution, 3);
+      Tensor weights = barycentricCoordinate.weights(points, xya);
+      Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
+      Tensor influence = matrix.dot(PseudoInverse.of(matrix));
+      SymmetricMatrixQ.require(influence, Chop._10);
+      Chop._10.requireClose(Symmetrize.of(influence), influence);
+      AffineQ.require(weights, Chop._08);
+      Tensor check1 = biinvariantMean.mean(points, weights);
+      Chop._06.requireClose(check1, xya);
+      Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      Tensor x_recreated = biinvariantMean.mean(points, weights);
+      Chop._06.requireClose(xya, x_recreated);
+      Tensor shift = TestHelper.spawn_Se2C();
+      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+        Tensor all = tensorMapping.slash(points);
+        Tensor one = tensorMapping.apply(xya);
+        Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
+        Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
+        Tensor design = new HsDesign(vectorLogManifold).matrix(all, one);
+        Chop._06.requireClose(influence, InfluenceMatrix.of(design).matrix());
       }
+    }
   }
 
   public void testProjectionIntoAdInvariant() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor sequence = RandomVariate.of(distribution, n, 3);
-        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-        Tensor xya = biinvariantMean.mean(sequence, weights);
-        Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
-        AffineQ.require(weights1, Chop._08);
-        Chop._08.requireClose(weights, weights);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
-        Tensor residualMaker = InfluenceMatrix.of(matrix).residualMaker();
-        Chop._08.requireClose(residualMaker.dot(weights), weights);
-        assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
-        Chop._08.requireClose(Symmetrize.of(residualMaker), residualMaker);
-        Eigensystem eigensystem = Eigensystem.ofSymmetric(Symmetrize.of(residualMaker));
-        Tensor unitize = Unitize.of(eigensystem.values().map(Tolerance.CHOP));
-        Chop._08.requireClose(eigensystem.values(), unitize);
-        assertEquals(Total.ofVector(unitize), RealScalar.of(n - 3));
-        for (int index = 0; index < n - 3; ++index) {
-          Chop._08.requireClose(eigensystem.values().get(index), RealScalar.ONE);
-          Tensor eigenw = NormalizeTotal.FUNCTION.apply(eigensystem.vectors().get(index));
-          Tensor recons = biinvariantMean.mean(sequence, eigenw);
-          Chop._07.requireClose(xya, recons);
-        }
+    for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
+      int n = 4 + random.nextInt(4);
+      Tensor sequence = RandomVariate.of(distribution, n, 3);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
+      Tensor xya = biinvariantMean.mean(sequence, weights);
+      Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
+      AffineQ.require(weights1, Chop._08);
+      Chop._08.requireClose(weights, weights);
+      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
+      Tensor residualMaker = InfluenceMatrix.of(matrix).residualMaker();
+      Chop._08.requireClose(residualMaker.dot(weights), weights);
+      assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
+      Chop._08.requireClose(Symmetrize.of(residualMaker), residualMaker);
+      Eigensystem eigensystem = Eigensystem.ofSymmetric(Symmetrize.of(residualMaker));
+      Tensor unitize = Unitize.of(eigensystem.values().map(Tolerance.CHOP));
+      Chop._08.requireClose(eigensystem.values(), unitize);
+      assertEquals(Total.ofVector(unitize), RealScalar.of(n - 3));
+      for (int index = 0; index < n - 3; ++index) {
+        Chop._08.requireClose(eigensystem.values().get(index), RealScalar.ONE);
+        Tensor eigenw = NormalizeTotal.FUNCTION.apply(eigensystem.vectors().get(index));
+        Tensor recons = biinvariantMean.mean(sequence, eigenw);
+        Chop._07.requireClose(xya, recons);
       }
+    }
   }
 
   private static final BarycentricCoordinate[] BIINVARIANT_COORDINATES = { //
@@ -226,60 +228,61 @@ public class Se2CoveringManifoldTest extends TestCase {
       AD_INVAR };
 
   public void testA4Exact() {
+    // Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES) {
-      final int n = 4;
-      for (int count = 0; count < 10; ++count) {
-        Tensor points = RandomVariate.of(distribution, n, 3);
-        Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(points);
-        Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor w1 = barycentricCoordinate.weights(points, xya);
-        Tensor w2 = se2CoveringBarycenter.apply(xya);
-        Chop._04.requireClose(w1, w2);
-        Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(points, w1);
-        Chop._04.requireClose(xya, mean);
-      }
+      int n = 4;
+      Tensor points = RandomVariate.of(distribution, n, 3);
+      Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(points);
+      Tensor xya = RandomVariate.of(distribution, 3);
+      Tensor w1 = barycentricCoordinate.weights(points, xya);
+      Tensor w2 = se2CoveringBarycenter.apply(xya);
+      Chop._04.requireClose(w1, w2);
+      Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(points, w1);
+      Chop._04.requireClose(xya, mean);
     }
   }
 
   public void testALinearReproduction() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distribution, n, 3);
-        Tensor target = AveragingWeights.of(n);
-        Tensor x = Se2CoveringBiinvariantMean.INSTANCE.mean(points, target);
-        Tensor weights = barycentricCoordinate.weights(points, x);
-        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights);
-        Chop._06.requireClose(x, x_recreated);
-      }
+    for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES) {
+      int n = 4 + random.nextInt(4);
+      Tensor points = RandomVariate.of(distribution, n, 3);
+      Tensor target = AveragingWeights.of(n);
+      Tensor x = Se2CoveringBiinvariantMean.INSTANCE.mean(points, target);
+      Tensor weights = barycentricCoordinate.weights(points, x);
+      Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      Tensor x_recreated = biinvariantMean.mean(points, weights);
+      Chop._06.requireClose(x, x_recreated);
+    }
   }
 
   public void testARandom() {
+    Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distributiox, n, 3);
-        Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor weights = barycentricCoordinate.weights(points, xya);
-        AffineQ.require(weights, Chop._08);
-        Tensor check1 = biinvariantMean.mean(points, weights);
-        Chop._07.requireClose(check1, xya);
-        Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
-        Tensor x_recreated = biinvariantMean.mean(points, weights);
-        Chop._06.requireClose(xya, x_recreated);
-        Tensor shift = TestHelper.spawn_Se2C();
-        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = tensorMapping.slash(points);
-          Tensor one = tensorMapping.apply(xya);
-          Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
-          Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
-        }
+    for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES) {
+      int n = 4 + random.nextInt(4);
+      Tensor points = RandomVariate.of(distributiox, n, 3);
+      Tensor xya = RandomVariate.of(distribution, 3);
+      Tensor weights = barycentricCoordinate.weights(points, xya);
+      AffineQ.require(weights, Chop._08);
+      Tensor check1 = biinvariantMean.mean(points, weights);
+      Chop._07.requireClose(check1, xya);
+      Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
+      Tensor x_recreated = biinvariantMean.mean(points, weights);
+      Chop._06.requireClose(xya, x_recreated);
+      Tensor shift = TestHelper.spawn_Se2C();
+      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+        Tensor all = tensorMapping.slash(points);
+        Tensor one = tensorMapping.apply(xya);
+        Chop._06.requireClose(one, biinvariantMean.mean(all, weights));
+        Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
       }
+    }
   }
 
   public void testDiagonalNorm() {

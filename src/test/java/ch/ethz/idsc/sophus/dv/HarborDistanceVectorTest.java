@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.dv;
 
+import java.util.Random;
+
 import ch.ethz.idsc.sophus.hs.Biinvariant;
 import ch.ethz.idsc.sophus.hs.BiinvariantVector;
 import ch.ethz.idsc.sophus.hs.BiinvariantVectorFunction;
@@ -30,37 +32,37 @@ public class HarborDistanceVectorTest extends TestCase {
   }
 
   public void testRn() {
+    Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
-    for (int length = 4; length < 10; ++length) {
-      Tensor sequence = RandomVariate.of(distribution, length, 3);
-      Tensor point = RandomVariate.of(distribution, 3);
-      BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
-      BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
-      BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
-      BiinvariantVector v1 = d1.biinvariantVector(point);
-      BiinvariantVector v2 = d2.biinvariantVector(point);
-      BiinvariantVector v3 = d3.biinvariantVector(point);
-      Chop._10.requireClose(v1.weighting(s -> s), v2.weighting(s -> s));
-      assertEquals(v1.distances().length(), v3.distances().length());
-    }
+    int length = 4 + random.nextInt(6);
+    Tensor sequence = RandomVariate.of(distribution, length, 3);
+    Tensor point = RandomVariate.of(distribution, 3);
+    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
+    BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
+    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
+    BiinvariantVector v1 = d1.biinvariantVector(point);
+    BiinvariantVector v2 = d2.biinvariantVector(point);
+    BiinvariantVector v3 = d3.biinvariantVector(point);
+    Chop._10.requireClose(v1.weighting(s -> s), v2.weighting(s -> s));
+    assertEquals(v1.distances().length(), v3.distances().length());
   }
 
   public void testSe2C() {
+    Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    for (int length = 5; length < 10; ++length) {
-      Tensor sequence = RandomVariate.of(distribution, length, 3);
-      Tensor point = RandomVariate.of(distribution, 3);
-      BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
-      BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
-      BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
-      BiinvariantVector v1 = d1.biinvariantVector(point);
-      BiinvariantVector v2 = d2.biinvariantVector(point);
-      BiinvariantVector v3 = d3.biinvariantVector(point);
-      assertEquals(v1.distances().length(), v2.distances().length());
-      assertEquals(v1.distances().length(), v3.distances().length());
-    }
+    int length = 4 + random.nextInt(4);
+    Tensor sequence = RandomVariate.of(distribution, length, 3);
+    Tensor point = RandomVariate.of(distribution, 3);
+    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
+    BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
+    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
+    BiinvariantVector v1 = d1.biinvariantVector(point);
+    BiinvariantVector v2 = d2.biinvariantVector(point);
+    BiinvariantVector v3 = d3.biinvariantVector(point);
+    assertEquals(v1.distances().length(), v2.distances().length());
+    assertEquals(v1.distances().length(), v3.distances().length());
   }
 
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);

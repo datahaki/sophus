@@ -14,8 +14,6 @@ public enum GrTransport implements HsTransport {
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    TensorUnaryOperator shift = POLE_LADDER.shift(p, q);
-    TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    return pv -> shift.apply(tGrMemberQ.require(pv));
+    return POLE_LADDER.shift(p, q);
   }
 }

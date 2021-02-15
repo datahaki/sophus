@@ -18,8 +18,6 @@ public enum HnTransport implements HsTransport {
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    TensorUnaryOperator shift = POLE_LADDER.shift(p, q);
-    THnMemberQ tHnMemberQ = new THnMemberQ(p);
-    return pv -> shift.apply(tHnMemberQ.require(pv));
+    return POLE_LADDER.shift(p, q);
   }
 }

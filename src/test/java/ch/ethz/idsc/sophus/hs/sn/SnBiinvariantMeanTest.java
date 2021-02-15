@@ -27,29 +27,27 @@ public class SnBiinvariantMeanTest extends TestCase {
 
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int count = 0; count < 10; ++count) {
-        Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
-        Tensor mean = rotation.dot(VectorNorm2.NORMALIZE.apply(Tensors.vector(1, 1, 1)));
-        Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
-        Chop._08.requireClose(sequence, Transpose.of(rotation));
-        Tensor weights = barycentricCoordinate.weights(sequence, mean);
-        Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
-        Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
-        Chop._12.requireAllZero(evaluate);
-        Chop._05.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
-      }
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+      Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
+      Tensor mean = rotation.dot(VectorNorm2.NORMALIZE.apply(Tensors.vector(1, 1, 1)));
+      Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
+      Chop._08.requireClose(sequence, Transpose.of(rotation));
+      Tensor weights = barycentricCoordinate.weights(sequence, mean);
+      Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
+      Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
+      Chop._12.requireAllZero(evaluate);
+      Chop._05.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
+    }
   }
 
   public void testS1Linear() {
     Distribution distribution = UniformDistribution.of(0, Math.PI);
-    for (int n = 2; n < 10; ++n)
-      for (int count = 0; count < 10; ++count) {
-        Tensor angles = RandomVariate.of(distribution, n);
-        Tensor sequence = angles.map(AngleVector::of);
-        Tensor weights = AveragingWeights.of(n);
-        Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);
-        Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
-      }
+    for (int n = 2; n < 10; ++n) {
+      Tensor angles = RandomVariate.of(distribution, n);
+      Tensor sequence = angles.map(AngleVector::of);
+      Tensor weights = AveragingWeights.of(n);
+      Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);
+      Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
+    }
   }
 }

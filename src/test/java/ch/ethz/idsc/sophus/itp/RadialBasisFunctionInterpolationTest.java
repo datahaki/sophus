@@ -27,6 +27,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
   public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   public void testSimple() throws ClassNotFoundException, IOException {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -37,10 +38,9 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
         TensorUnaryOperator weightingInterface = biinvariant.weighting(RnManifold.INSTANCE, variograms.of(RealScalar.TWO), sequence);
         TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
             RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values));
-        for (int index = 0; index < sequence.length(); ++index) {
-          Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
-          Chop._08.requireClose(tensor, values.get(index));
-        }
+        int index = random.nextInt(sequence.length());
+        Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
+        Chop._08.requireClose(tensor, values.get(index));
       }
   }
 

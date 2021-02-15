@@ -4,6 +4,8 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.hs.gr.GrTransport;
+import ch.ethz.idsc.sophus.hs.hn.HnTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.MidpointInterface;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,7 +21,9 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020 p.14
  * 
- * @see SchildLadder */
+ * @see SchildLadder
+ * @see GrTransport
+ * @see HnTransport */
 public class PoleLadder implements HsTransport, Serializable {
   /** @param hsExponential
    * @param midpointInterface
@@ -45,28 +49,28 @@ public class PoleLadder implements HsTransport, Serializable {
     this.midpointInterface = midpointInterface;
   }
 
-  @Override
-  public TensorUnaryOperator shift(Tensor xo, Tensor xw) {
-    return new Rung(xo, xw);
+  @Override // from HsTransport
+  public TensorUnaryOperator shift(Tensor p, Tensor q) {
+    return new Rung(p, q);
   }
 
   private class Rung implements TensorUnaryOperator {
-    private final Exponential exp_xo;
-    private final Exponential exp_xw;
-    private final Exponential exp_mi;
+    private final Exponential exp_p;
+    private final Exponential exp_q;
+    private final Exponential exp_m;
 
-    private Rung(Tensor xo, Tensor xw) {
-      exp_xo = hsExponential.exponential(xo);
-      exp_xw = hsExponential.exponential(xw);
-      Tensor mi = Objects.isNull(midpointInterface) //
-          ? HsMidpoint.of(exp_xo, xw)
-          : midpointInterface.midpoint(xo, xw);
-      exp_mi = hsExponential.exponential(mi);
+    private Rung(Tensor p, Tensor q) {
+      exp_p = hsExponential.exponential(p);
+      exp_q = hsExponential.exponential(q);
+      Tensor m = Objects.isNull(midpointInterface) //
+          ? HsMidpoint.of(exp_p, q)
+          : midpointInterface.midpoint(p, q);
+      exp_m = hsExponential.exponential(m);
     }
 
     @Override
-    public Tensor apply(Tensor vo) {
-      return exp_xw.log(exp_mi.exp(exp_mi.log(exp_xo.exp(vo)).negate())).negate();
+    public Tensor apply(Tensor v) {
+      return exp_q.log(exp_m.exp(exp_m.log(exp_p.exp(v)).negate())).negate();
     }
   }
 }

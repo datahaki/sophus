@@ -7,6 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -50,5 +51,15 @@ public class GrMetricTest extends TestCase {
     Tensor q = projection1(y);
     Scalar distance = GrMetric.INSTANCE.distance(p, q);
     Chop._10.requireClose(distance, RealScalar.of(1.9499331103710236));
+  }
+
+  public void testAntipodal() {
+    Tensor p = DiagonalMatrix.of(1, 0);
+    Tensor q = DiagonalMatrix.of(0, 1);
+    GrMemberQ.INSTANCE.require(p);
+    GrMemberQ.INSTANCE.require(q);
+    Scalar distance = GrMetric.INSTANCE.distance(p, q);
+    // TODO check distance of "antipodal" frames, why is this zero?
+    // System.out.println(distance);
   }
 }

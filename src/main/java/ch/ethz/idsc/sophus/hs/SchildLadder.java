@@ -11,6 +11,8 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** Guigui Pennec, p. 6
  * 
+ * exact in R^n
+ * 
  * @see PoleLadder */
 public class SchildLadder implements HsTransport, Serializable {
   /** @param hsExponential
@@ -37,30 +39,30 @@ public class SchildLadder implements HsTransport, Serializable {
     this.midpointInterface = midpointInterface;
   }
 
-  @Override
-  public TensorUnaryOperator shift(Tensor xo, Tensor xw) {
-    return new Rung(xo, xw);
+  @Override // from HsTransport
+  public TensorUnaryOperator shift(Tensor p, Tensor q) {
+    return new Rung(p, q);
   }
 
   private class Rung implements TensorUnaryOperator {
-    private final Tensor xw;
-    private final Exponential exp_xo;
-    private final Exponential exp_xw;
+    private final Tensor q;
+    private final Exponential exp_p;
+    private final Exponential exp_q;
 
-    private Rung(Tensor xo, Tensor xw) {
-      this.xw = xw;
-      exp_xo = hsExponential.exponential(xo);
-      exp_xw = hsExponential.exponential(xw);
+    private Rung(Tensor p, Tensor q) {
+      this.q = q;
+      exp_p = hsExponential.exponential(p);
+      exp_q = hsExponential.exponential(q);
     }
 
     @Override
-    public Tensor apply(Tensor vo) {
-      Tensor xv = exp_xo.exp(vo);
-      Tensor mi = Objects.isNull(midpointInterface) //
-          ? HsMidpoint.of(exp_xw, xv)
-          : midpointInterface.midpoint(xw, xv);
-      Tensor xm = exp_xo.log(mi);
-      return exp_xw.log(exp_xo.exp(xm.add(xm)));
+    public Tensor apply(Tensor v) {
+      Tensor x = exp_p.exp(v);
+      Tensor m = Objects.isNull(midpointInterface) //
+          ? HsMidpoint.of(exp_q, x)
+          : midpointInterface.midpoint(q, x);
+      Tensor xm = exp_p.log(m);
+      return exp_q.log(exp_p.exp(xm.add(xm)));
     }
   }
 }

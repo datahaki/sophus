@@ -40,31 +40,32 @@ public class KrigingTest extends TestCase {
   private static final Biinvariant[] SYMME = { MetricBiinvariant.RIEMANN, Biinvariants.HARBOR };
 
   public void testSimple2() {
+    Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     PowerVariogram powerVariogram = PowerVariogram.of(1, 1.4);
-    for (Biinvariant biinvariant : BIINV)
-      for (int n = 4; n < 10; ++n) {
-        Tensor points = RandomVariate.of(distributiox, n, 3);
-        Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor values = RandomVariate.of(distributiox, n);
-        Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
-        TensorUnaryOperator tensorUnaryOperator1 = //
-            biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, points);
-        Kriging kriging1 = Kriging.regression(tensorUnaryOperator1, points, values, covariance);
-        Tensor est1 = kriging1.estimate(xya);
-        Scalar var1 = kriging1.variance(xya);
-        Tensor shift = RandomVariate.of(distribution, 3);
-        for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-          Tensor all = tensorMapping.slash(points);
-          TensorUnaryOperator tensorUnaryOperatorL = //
-              biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, all);
-          Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, all, values, covariance);
-          Tensor one = tensorMapping.apply(xya);
-          Chop._10.requireClose(est1, krigingL.estimate(one));
-          Chop._10.requireClose(var1, krigingL.variance(one));
-        }
+    for (Biinvariant biinvariant : BIINV) {
+      int n = 4 + random.nextInt(6);
+      Tensor points = RandomVariate.of(distributiox, n, 3);
+      Tensor xya = RandomVariate.of(distribution, 3);
+      Tensor values = RandomVariate.of(distributiox, n);
+      Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
+      TensorUnaryOperator tensorUnaryOperator1 = //
+          biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, points);
+      Kriging kriging1 = Kriging.regression(tensorUnaryOperator1, points, values, covariance);
+      Tensor est1 = kriging1.estimate(xya);
+      Scalar var1 = kriging1.variance(xya);
+      Tensor shift = RandomVariate.of(distribution, 3);
+      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+        Tensor all = tensorMapping.slash(points);
+        TensorUnaryOperator tensorUnaryOperatorL = //
+            biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, all);
+        Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, all, values, covariance);
+        Tensor one = tensorMapping.apply(xya);
+        Chop._10.requireClose(est1, krigingL.estimate(one));
+        Chop._10.requireClose(var1, krigingL.variance(one));
       }
+    }
   }
 
   public void testSimple() throws ClassNotFoundException, IOException {

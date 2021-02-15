@@ -22,13 +22,13 @@ public class GrExponential implements Exponential, Serializable {
   private final Tensor id;
   private final Tensor x2_id;
 
-  /** @param x rank k projector of Gr(n, k)
+  /** @param p rank k projector of Gr(n, k)
    * @throws Exception if x is not an element in the Grassmann manifold */
-  public GrExponential(Tensor x) {
-    this.x = GrMemberQ.INSTANCE.require(x);
-    tGrMemberQ = new TGrMemberQ(x);
-    id = IdentityMatrix.of(x.length());
-    x2_id = p2_id(x);
+  public GrExponential(Tensor p) {
+    this.x = GrMemberQ.INSTANCE.require(p);
+    tGrMemberQ = new TGrMemberQ(p);
+    id = IdentityMatrix.of(p.length());
+    x2_id = p2_id(p);
   }
 
   @Override // from Exponential
@@ -37,21 +37,22 @@ public class GrExponential implements Exponential, Serializable {
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor y) {
-    GrMemberQ.INSTANCE.require(y);
-    Tensor v = MatrixBracket.of(MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), x);
+  public Tensor log(Tensor q) {
+    GrMemberQ.INSTANCE.require(q);
+    Tensor v = MatrixBracket.of(MatrixLog.of(p2_id(q).dot(x2_id)).multiply(RationalScalar.HALF), x);
     tGrMemberQ.require(v);
-    return v; // tGrMemberQ.project(v);
+    return v;
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
+    // k * (n - k) coefficients are sufficient according to theory
     return Flatten.of(log(y));
   }
 
-  /** @param p
+  /** @param q
    * @return p * 2 - id */
-  private Tensor p2_id(Tensor p) {
-    return p.add(p).subtract(id);
+  private Tensor p2_id(Tensor q) {
+    return q.add(q).subtract(id);
   }
 }
