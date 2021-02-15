@@ -21,14 +21,14 @@ public class HnNormTest extends TestCase {
       Scalar distance = HnMetric.INSTANCE.distance(p, q); // uses HnAngle
       Tensor log_hn = HnManifold.INSTANCE.logAt(p).vectorLog(q);
       VectorQ.requireLength(log_hn, d + 1);
-      Scalar norm = HnNorm.of(log_hn);
+      Scalar norm = HnVectorNorm.of(log_hn);
       Chop._08.requireClose(distance, norm);
       Tensor r = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       TensorUnaryOperator tuo = HnTransport.INSTANCE.shift(p, r);
       Tensor tv = tuo.apply(log_hn);
       assertFalse(new THnMemberQ(p).test(tv));
       new THnMemberQ(r).require(tv);
-      Chop._08.requireClose(distance, HnNorm.of(tv));
+      Chop._08.requireClose(distance, HnVectorNorm.of(tv));
     }
   }
 }

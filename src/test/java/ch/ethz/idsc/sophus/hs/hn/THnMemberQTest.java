@@ -22,6 +22,9 @@ public class THnMemberQTest extends TestCase {
     assertTrue(tHnMemberQ.test(xv));
     Tensor xw = tHnMemberQ.project(xv);
     Tolerance.CHOP.requireClose(xv, xw);
+    Tensor nv = HnVectorNorm.NORMALIZE.apply(xv);
+    Tensor nw = tHnMemberQ.project(nv);
+    Tolerance.CHOP.requireClose(nv, nw);
   }
 
   public void testNullFail() {

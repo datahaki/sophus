@@ -2,8 +2,9 @@
 package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Drop;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.nrm.Normalize;
+import ch.ethz.idsc.tensor.sca.Chop;
 
 /** in geomstats, the corresponding function is "regularize"
  * 
@@ -11,8 +12,10 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 public enum HnProjection implements TensorUnaryOperator {
   INSTANCE;
 
+  private static final TensorUnaryOperator NORMALIZE = Normalize.with(HnPointNorm.INSTANCE, Chop._08);
+
   @Override
   public Tensor apply(Tensor x) {
-    return HnWeierstrassCoordinate.toPoint(Drop.tail(x, 1));
+    return NORMALIZE.apply(x);
   }
 }

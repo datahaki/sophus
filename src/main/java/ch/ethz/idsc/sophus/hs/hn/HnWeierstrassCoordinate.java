@@ -26,7 +26,7 @@ public enum HnWeierstrassCoordinate {
     return Append.of(x, xn(x));
   }
 
-  /** @param x
+  /** @param x vector of length n
    * @param v vector of length n
    * @return vector of length n + 1 */
   public static Tensor toTangent(Tensor x, Tensor v) {

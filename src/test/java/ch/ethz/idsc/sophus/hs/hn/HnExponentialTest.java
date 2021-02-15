@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
+import java.util.Random;
+
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
@@ -23,7 +25,7 @@ public class HnExponentialTest extends TestCase {
       Tensor y = hnExponential.exp(v);
       HnMemberQ.INSTANCE.require(y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-      Tolerance.CHOP.requireClose(dxy, HnNorm.of(v));
+      Tolerance.CHOP.requireClose(dxy, HnVectorNorm.of(v));
     }
   }
 
@@ -40,29 +42,30 @@ public class HnExponentialTest extends TestCase {
       HnMemberQ.INSTANCE.require(y);
       Tolerance.CHOP.requireClose(x, y);
       Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-      Chop._04.requireClose(dxy, HnNorm.of(v));
+      Chop._04.requireClose(dxy, HnVectorNorm.of(v));
     }
   }
 
   public void testLog() {
-    Distribution distribution = NormalDistribution.of(0, 1000);
+    Random random = new Random(1);
+    Distribution distribution = NormalDistribution.of(0, 5);
     for (int d = 1; d < 4; ++d)
       for (int count = 0; count < 100; ++count) {
-        Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-        Tensor z = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+        Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, d));
+        Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, d));
+        Tensor z = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, d));
         HnExponential hnExponential = new HnExponential(x);
         Tensor vy = hnExponential.log(y);
         Tensor vz = hnExponential.log(z);
         THnMemberQ tHnMemberQ = new THnMemberQ(x);
         tHnMemberQ.require(vy);
         tHnMemberQ.require(vz);
-        Tensor sum = vy.add(vz);
-        tHnMemberQ.require(sum);
-        Tensor a = hnExponential.exp(sum);
+        Tensor v = vy.add(vz);
+        tHnMemberQ.require(v);
+        Tensor a = hnExponential.exp(v);
         HnMemberQ.INSTANCE.require(a);
         Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-        Scalar vn1 = HnNorm.of(vy);
+        Scalar vn1 = HnVectorNorm.of(vy);
         Chop._06.requireClose(dxy, vn1);
       }
   }
@@ -75,7 +78,7 @@ public class HnExponentialTest extends TestCase {
       Tensor v = hnExponential.log(x);
       new THnMemberQ(x).require(v);
       Scalar dxy = HnMetric.INSTANCE.distance(x, x);
-      Scalar vn1 = HnNorm.of(v);
+      Scalar vn1 = HnVectorNorm.of(v);
       Chop._06.requireClose(dxy, vn1);
     }
   }

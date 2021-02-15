@@ -16,7 +16,7 @@ public class HnRay {
     this.x = HnMemberQ.INSTANCE.require(x);
   }
 
-  /** @param v with {@link HnNorm} == 1
+  /** @param v with {@link HnVectorNorm} == 1
    * @param t any real number
    * @return */
   public Tensor shoot(Tensor v, Scalar t) {
