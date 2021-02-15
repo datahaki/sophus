@@ -42,14 +42,20 @@ public class GrExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     GrMemberQ.INSTANCE.require(q);
-    Tensor v = MatrixBracket.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF), p);
-    tGrMemberQ.require(v);
-    return v;
+    return MatrixBracket.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF), p);
   }
 
-  public Tensor midpoint(Tensor q) {
+  /* package */ Tensor midpoint(Tensor q) {
     // matrix bracket is obsolete
     Tensor v = MatrixExp.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(N1_4));
+    return BasisTransform.ofMatrix(p, v);
+  }
+
+  /** @param q
+   * @return Exp_p[-Log_p[q]] */
+  /* package */ Tensor flip(Tensor q) {
+    // matrix bracket is obsolete
+    Tensor v = MatrixExp.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF));
     return BasisTransform.ofMatrix(p, v);
   }
 

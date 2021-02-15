@@ -16,6 +16,6 @@ public class HnGeodesic extends HsGeodesic {
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
-    return HnProjection.INSTANCE.apply(p.add(q)); // TODO this projection is not the right op here
+    return HnProjection.INSTANCE.apply(p.add(q));
   }
 }

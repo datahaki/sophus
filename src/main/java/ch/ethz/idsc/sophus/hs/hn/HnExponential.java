@@ -38,6 +38,12 @@ public class HnExponential implements Exponential, Serializable {
     return hnAngle.log(y);
   }
 
+  /** @param y
+   * @return Exp_x[-Log_x[y]] */
+  /* package */ Tensor flip(Tensor y) {
+    return null; // TODO
+  }
+
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
     // embedding of TxH^n in R^(n+1) is not tight (consistent with S^n)
