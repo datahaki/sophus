@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.ga;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -35,23 +36,23 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * https://en.wikipedia.org/wiki/Clifford_algebra */
 public class CliffordAlgebra {
   private static final Scalar[] SIGN = { RealScalar.ONE, RealScalar.ONE.negate() };
-  private static final int MAX_SIZE = 6;
-  private static final Function<Integer, CliffordAlgebra> POSITIVE = Cache.of(p -> new CliffordAlgebra(p, 0), MAX_SIZE);
-  private static final Function<Integer, CliffordAlgebra> NEGATIVE = Cache.of(q -> new CliffordAlgebra(0, q), MAX_SIZE);
+  private static final int MAX_SIZE = 12;
+  private static final Function<List<Integer>, CliffordAlgebra> CACHE = //
+      Cache.of(list -> new CliffordAlgebra(list.get(0), list.get(1)), MAX_SIZE);
 
-  /** @param p
-   * @param q
+  /** @param p non-negative
+   * @param q non-negative
    * @return Cl(p, q) */
   public static CliffordAlgebra of(int p, int q) {
-    return new CliffordAlgebra( //
+    return CACHE.apply(Arrays.asList( //
         Integers.requirePositiveOrZero(p), //
-        Integers.requirePositiveOrZero(q));
+        Integers.requirePositiveOrZero(q)));
   }
 
   /** @param p non-negative
    * @return Cl(p, 0) */
   public static CliffordAlgebra positive(int p) {
-    return POSITIVE.apply(Integers.requirePositiveOrZero(p));
+    return of(p, 0);
   }
 
   /** Remark:
@@ -61,7 +62,7 @@ public class CliffordAlgebra {
    * @param q non-negative
    * @return Cl(0, q) */
   public static CliffordAlgebra negative(int q) {
-    return NEGATIVE.apply(Integers.requirePositiveOrZero(q));
+    return of(0, q);
   }
 
   /***************************************************/
@@ -163,13 +164,13 @@ public class CliffordAlgebra {
       Scalar[] scalars = ScalarArray.ofVector(a);
       boolean flag = true;
       int m = scalars.length - 1;
-      int swaps = 0;
+      int parity = 0;
       while (flag) {
         flag = false;
         for (int i = 0; i < m; ++i) {
           if (Scalars.lessThan(scalars[i + 1], scalars[i])) {
             flag = true;
-            swaps ^= 1;
+            parity ^= 1;
             Scalar copy = scalars[i];
             scalars[i] = scalars[i + 1];
             scalars[i + 1] = copy;
@@ -182,11 +183,11 @@ public class CliffordAlgebra {
         if (!deque.isEmpty() && deque.peekLast().equals(scalar)) {
           Scalar duplicate = deque.pollLast(); // check for sign in scalar product 0, ..., n-1
           if (signature_p <= duplicate.number().intValue())
-            swaps ^= 1;
+            parity ^= 1;
         } else
           deque.add(scalar);
       }
-      sign = SIGN[swaps];
+      sign = SIGN[parity];
       normal = Tensor.of(deque.stream());
     }
 

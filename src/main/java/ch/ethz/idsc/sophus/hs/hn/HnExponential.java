@@ -4,10 +4,8 @@ package ch.ethz.idsc.sophus.hs.hn;
 import java.io.Serializable;
 
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.sca.Sinhc;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Cosh;
 
 /** hyperboloid model
  * 
@@ -27,9 +25,16 @@ public class HnExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tHnMemberQ.require(v);
-    Scalar vn = HnNorm.of(v);
-    Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
-    return HnProjection.INSTANCE.apply(exp);
+    Scalar n2 = HnNorm.squared(v);
+    Tensor res = HnSeries.of(n2);
+    Scalar cosh = res.Get(0);
+    Scalar sinhc = res.Get(1);
+    Tensor exp = x.multiply(cosh).add(v.multiply(sinhc));
+    // the error here is really bad: ratio approx. 0.99 - 1.01
+    // System.out.println(HnMemberQ.ratio(exp));
+    exp = HnProjection.INSTANCE.apply(exp);
+    // HnMemberQ.INSTANCE.require(exp);
+    return exp; //
   }
 
   @Override // from Exponential

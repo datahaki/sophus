@@ -45,17 +45,26 @@ public class HnExponentialTest extends TestCase {
   }
 
   public void testLog() {
-    Distribution distribution = NormalDistribution.of(0, 10);
-    for (int d = 1; d < 4; ++d) {
-      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      HnExponential hnExponential = new HnExponential(x);
-      Tensor v = hnExponential.log(y);
-      new THnMemberQ(x).require(v);
-      Scalar dxy = HnMetric.INSTANCE.distance(x, y);
-      Scalar vn1 = HnNorm.of(v);
-      Chop._08.requireClose(dxy, vn1);
-    }
+    Distribution distribution = NormalDistribution.of(0, 1000);
+    for (int d = 1; d < 4; ++d)
+      for (int count = 0; count < 100; ++count) {
+        Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+        Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+        Tensor z = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+        HnExponential hnExponential = new HnExponential(x);
+        Tensor vy = hnExponential.log(y);
+        Tensor vz = hnExponential.log(z);
+        THnMemberQ tHnMemberQ = new THnMemberQ(x);
+        tHnMemberQ.require(vy);
+        tHnMemberQ.require(vz);
+        Tensor sum = vy.add(vz);
+        tHnMemberQ.require(sum);
+        Tensor a = hnExponential.exp(sum);
+        HnMemberQ.INSTANCE.require(a);
+        Scalar dxy = HnMetric.INSTANCE.distance(x, y);
+        Scalar vn1 = HnNorm.of(vy);
+        Chop._06.requireClose(dxy, vn1);
+      }
   }
 
   public void testLogZero() {

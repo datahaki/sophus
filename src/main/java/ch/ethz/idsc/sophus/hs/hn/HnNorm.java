@@ -18,12 +18,18 @@ public enum HnNorm {
   ;
   public static final TensorUnaryOperator NORMALIZE = Normalize.with(HnNorm::of);
 
+  /** @param v tangent vector
+   * @return */
   public static Scalar of(Tensor v) {
     // norm does not depend on base point (which is the case also for S^n)
-    Scalar n2 = LBilinearForm.normSquared(v);
+    Scalar n2 = squared(v);
     if (Sign.isPositiveOrZero(n2))
       return Sqrt.FUNCTION.apply(n2);
     Chop._08.requireZero(n2);
     return n2.zero();
+  }
+
+  public static Scalar squared(Tensor v) {
+    return LBilinearForm.normSquared(v);
   }
 }
