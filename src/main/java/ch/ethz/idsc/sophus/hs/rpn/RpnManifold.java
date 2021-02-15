@@ -1,14 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.rpn;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
-public enum RpnManifold implements HsExponential {
+public enum RpnManifold implements HsManifold {
   INSTANCE;
 
   @Override // from HsExponential

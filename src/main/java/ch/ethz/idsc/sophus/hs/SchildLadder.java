@@ -15,27 +15,27 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * 
  * @see PoleLadder */
 public class SchildLadder implements HsTransport, Serializable {
-  /** @param hsExponential
+  /** @param hsManifold
    * @param midpointInterface
    * @return */
-  public static HsTransport of(HsExponential hsExponential, MidpointInterface midpointInterface) {
+  public static HsTransport of(HsManifold hsManifold, MidpointInterface midpointInterface) {
     return new SchildLadder( //
-        Objects.requireNonNull(hsExponential), //
+        Objects.requireNonNull(hsManifold), //
         Objects.requireNonNull(midpointInterface));
   }
 
-  /** @param hsExponential
+  /** @param hsManifold
    * @return */
-  public static HsTransport of(HsExponential hsExponential) {
-    return new SchildLadder(Objects.requireNonNull(hsExponential), null);
+  public static HsTransport of(HsManifold hsManifold) {
+    return new SchildLadder(Objects.requireNonNull(hsManifold), null);
   }
 
   /***************************************************/
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
   private final MidpointInterface midpointInterface;
 
-  private SchildLadder(HsExponential hsExponential, MidpointInterface midpointInterface) {
-    this.hsExponential = hsExponential;
+  private SchildLadder(HsManifold hsManifold, MidpointInterface midpointInterface) {
+    this.hsManifold = hsManifold;
     this.midpointInterface = midpointInterface;
   }
 
@@ -51,8 +51,8 @@ public class SchildLadder implements HsTransport, Serializable {
 
     private Rung(Tensor p, Tensor q) {
       this.q = q;
-      exp_p = hsExponential.exponential(p);
-      exp_q = hsExponential.exponential(q);
+      exp_p = hsManifold.exponential(p);
+      exp_q = hsManifold.exponential(q);
     }
 
     @Override

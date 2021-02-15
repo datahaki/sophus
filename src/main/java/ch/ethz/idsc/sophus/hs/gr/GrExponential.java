@@ -6,6 +6,7 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.alg.Flatten;
@@ -17,31 +18,39 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
  * Geomstats: A Python Package for Riemannian Geometry in Machine Learning
  * by Nina Miolane, Alice Le Brigant, Johan Mathe, Benjamin Hou et al., 2020 */
 public class GrExponential implements Exponential, Serializable {
-  private final Tensor x;
+  private static final Scalar N1_4 = RationalScalar.of(-1, 4);
+  private final Tensor p;
   private final TGrMemberQ tGrMemberQ;
-  private final Tensor id;
-  private final Tensor x2_id;
+  /** negative identity matrix */
+  private final Tensor nid;
+  private final Tensor p2_id;
 
   /** @param p rank k projector of Gr(n, k)
-   * @throws Exception if x is not an element in the Grassmann manifold */
+   * @throws Exception if p is not an element in the Grassmann manifold */
   public GrExponential(Tensor p) {
-    this.x = GrMemberQ.INSTANCE.require(p);
+    this.p = GrMemberQ.INSTANCE.require(p);
     tGrMemberQ = new TGrMemberQ(p);
-    id = IdentityMatrix.of(p.length());
-    x2_id = p2_id(p);
+    nid = IdentityMatrix.of(p.length()).negate();
+    p2_id = bic(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    return BasisTransform.ofMatrix(x, MatrixExp.of(MatrixBracket.of(x, tGrMemberQ.require(v))));
+    return BasisTransform.ofMatrix(p, MatrixExp.of(MatrixBracket.of(p, tGrMemberQ.require(v))));
   }
 
   @Override // from Exponential
   public Tensor log(Tensor q) {
     GrMemberQ.INSTANCE.require(q);
-    Tensor v = MatrixBracket.of(MatrixLog.of(p2_id(q).dot(x2_id)).multiply(RationalScalar.HALF), x);
+    Tensor v = MatrixBracket.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF), p);
     tGrMemberQ.require(v);
     return v;
+  }
+
+  public Tensor midpoint(Tensor q) {
+    // matrix bracket is obsolete
+    Tensor v = MatrixExp.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(N1_4));
+    return BasisTransform.ofMatrix(p, v);
   }
 
   @Override // from TangentSpace
@@ -51,8 +60,8 @@ public class GrExponential implements Exponential, Serializable {
   }
 
   /** @param q
-   * @return p * 2 - id */
-  private Tensor p2_id(Tensor q) {
-    return q.add(q).subtract(id);
+   * @return q * 2 - id */
+  private Tensor bic(Tensor q) {
+    return q.add(nid).add(q);
   }
 }

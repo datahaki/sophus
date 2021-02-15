@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
@@ -32,7 +32,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * The first Grassmann manifold that is not isomorphic to a projective space
  * is Gr(4, 2) */
-public enum GrManifold implements HsExponential {
+public enum GrManifold implements HsManifold {
   INSTANCE;
 
   @Override // from VectorLogManifold

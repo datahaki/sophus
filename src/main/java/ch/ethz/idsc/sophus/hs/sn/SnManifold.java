@@ -1,12 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
-public enum SnManifold implements HsExponential {
+public enum SnManifold implements HsManifold {
   INSTANCE;
 
   @Override // from HsExponential

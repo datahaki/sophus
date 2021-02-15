@@ -1,34 +1,34 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.decim;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 
 /** various norms for curve decimation */
 public enum LineDistances {
   STANDARD {
     @Override
-    public LineDistance supply(HsExponential hsExponential) {
-      return new HsLineDistance(hsExponential);
+    public LineDistance supply(HsManifold hsManifold) {
+      return new HsLineDistance(hsManifold);
     }
   },
   MIDPOINT {
     @Override
-    public LineDistance supply(HsExponential hsExponential) {
-      return HsMidpointLineDistance.of(hsExponential);
+    public LineDistance supply(HsManifold hsManifold) {
+      return HsMidpointLineDistance.of(hsManifold);
     }
   },
   SYMMETRIZED {
     @Override
-    public LineDistance supply(HsExponential hsExponential) {
-      return new SymmetricLineDistance(new HsLineDistance(hsExponential));
+    public LineDistance supply(HsManifold hsManifold) {
+      return new SymmetricLineDistance(new HsLineDistance(hsManifold));
     }
   },
   PROJECTED {
     @Override
-    public LineDistance supply(HsExponential hsExponential) {
-      return new HsProjectedLineDistance(hsExponential);
+    public LineDistance supply(HsManifold hsManifold) {
+      return new HsProjectedLineDistance(hsManifold);
     }
   };
 
-  public abstract LineDistance supply(HsExponential hsExponential);
+  public abstract LineDistance supply(HsManifold hsManifold);
 }

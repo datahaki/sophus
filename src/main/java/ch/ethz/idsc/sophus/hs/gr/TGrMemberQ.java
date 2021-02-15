@@ -4,8 +4,10 @@ package ch.ethz.idsc.sophus.hs.gr;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.sca.Chop;
 
@@ -25,5 +27,9 @@ public class TGrMemberQ implements MemberQ, Serializable {
   public boolean test(Tensor v) {
     return SymmetricMatrixQ.of(v, CHOP) //
         && CHOP.isClose(x.dot(v).add(v.dot(x)), v);
+  }
+
+  public Tensor forceProject(Tensor v) {
+    return MatrixBracket.of(x, TensorWedge.of(v));
   }
 }

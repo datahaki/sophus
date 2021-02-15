@@ -25,27 +25,27 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * @see GrTransport
  * @see HnTransport */
 public class PoleLadder implements HsTransport, Serializable {
-  /** @param hsExponential
+  /** @param hsManifold
    * @param midpointInterface
    * @return */
-  public static HsTransport of(HsExponential hsExponential, MidpointInterface midpointInterface) {
+  public static HsTransport of(HsManifold hsManifold, MidpointInterface midpointInterface) {
     return new PoleLadder( //
-        Objects.requireNonNull(hsExponential), //
+        Objects.requireNonNull(hsManifold), //
         Objects.requireNonNull(midpointInterface));
   }
 
-  /** @param hsExponential
+  /** @param hsManifold
    * @return */
-  public static HsTransport of(HsExponential hsExponential) {
-    return new PoleLadder(Objects.requireNonNull(hsExponential), null);
+  public static HsTransport of(HsManifold hsManifold) {
+    return new PoleLadder(Objects.requireNonNull(hsManifold), null);
   }
 
   /***************************************************/
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
   private final MidpointInterface midpointInterface;
 
-  private PoleLadder(HsExponential hsExponential, MidpointInterface midpointInterface) {
-    this.hsExponential = hsExponential;
+  private PoleLadder(HsManifold hsManifold, MidpointInterface midpointInterface) {
+    this.hsManifold = hsManifold;
     this.midpointInterface = midpointInterface;
   }
 
@@ -60,12 +60,12 @@ public class PoleLadder implements HsTransport, Serializable {
     private final Exponential exp_m;
 
     private Rung(Tensor p, Tensor q) {
-      exp_p = hsExponential.exponential(p);
-      exp_q = hsExponential.exponential(q);
+      exp_p = hsManifold.exponential(p);
+      exp_q = hsManifold.exponential(q);
       Tensor m = Objects.isNull(midpointInterface) //
           ? HsMidpoint.of(exp_p, q)
           : midpointInterface.midpoint(p, q);
-      exp_m = hsExponential.exponential(m);
+      exp_m = hsManifold.exponential(m);
     }
 
     @Override

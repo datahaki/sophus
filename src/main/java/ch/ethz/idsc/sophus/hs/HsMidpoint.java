@@ -18,15 +18,15 @@ public class HsMidpoint implements MidpointInterface, Serializable {
   }
 
   /***************************************************/
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
 
-  /** @param hsExponential */
-  public HsMidpoint(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
+  /** @param hsManifold */
+  public HsMidpoint(HsManifold hsManifold) {
+    this.hsManifold = Objects.requireNonNull(hsManifold);
   }
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
-    return of(hsExponential.exponential(p), q);
+    return of(hsManifold.exponential(p), q);
   }
 }

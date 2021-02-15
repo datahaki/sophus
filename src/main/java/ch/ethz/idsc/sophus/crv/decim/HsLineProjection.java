@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.crv.decim;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
@@ -11,10 +11,10 @@ import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 public class HsLineProjection {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
   // ---
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
 
-  public HsLineProjection(HsExponential hsExponential) {
-    this.hsExponential = hsExponential;
+  public HsLineProjection(HsManifold hsManifold) {
+    this.hsManifold = hsManifold;
   }
 
   public Tensor onto(Tensor p, Tensor q, Tensor r) {
@@ -29,7 +29,7 @@ public class HsLineProjection {
     // p = exponential.exp(project);
     // }
     for (int count = 0; count < 6; ++count) {
-      Exponential exponential = hsExponential.exponential(p);
+      Exponential exponential = hsManifold.exponential(p);
       Tensor lq = exponential.log(q);
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);
       Tensor lr = exponential.log(r);

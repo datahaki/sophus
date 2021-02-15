@@ -24,28 +24,28 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private static final int MAX_ITERATIONS = 100;
 
-  /** @param hsExponential
+  /** @param hsManifold
    * @param chop
    * @param initialGuess
    * @return */
-  public static IterativeBiinvariantMean of(HsExponential hsExponential, Chop chop, BiinvariantMean initialGuess) {
-    return new IterativeBiinvariantMean(hsExponential, chop, initialGuess);
+  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, BiinvariantMean initialGuess) {
+    return new IterativeBiinvariantMean(hsManifold, chop, initialGuess);
   }
 
-  /** @param hsExponential
+  /** @param hsManifold
    * @param chop
    * @return */
-  public static IterativeBiinvariantMean of(HsExponential hsExponential, Chop chop) {
-    return of(hsExponential, chop, ArgMaxBiinvariantMean.INSTANCE);
+  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop) {
+    return of(hsManifold, chop, ArgMaxBiinvariantMean.INSTANCE);
   }
 
   /***************************************************/
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
   private final Chop chop;
   private final BiinvariantMean initialGuess;
 
-  private IterativeBiinvariantMean(HsExponential hsExponential, Chop chop, BiinvariantMean initialGuess) {
-    this.hsExponential = hsExponential;
+  private IterativeBiinvariantMean(HsManifold hsManifold, Chop chop, BiinvariantMean initialGuess) {
+    this.hsManifold = hsManifold;
     this.chop = Objects.requireNonNull(chop);
     this.initialGuess = Objects.requireNonNull(initialGuess);
   }
@@ -62,7 +62,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
     Tensor shifted = initialGuess.mean(sequence, weights); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, hsExponential.exponential(shifted));
+      MeanDefect meanDefect = new MeanDefect(sequence, weights, hsManifold.exponential(shifted));
       shifted = meanDefect.shifted();
       if (chop.allZero(meanDefect.tangent()))
         return Optional.of(shifted);

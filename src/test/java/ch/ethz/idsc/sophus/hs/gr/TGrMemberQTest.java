@@ -9,7 +9,6 @@ import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.alg.Dimensions;
@@ -18,12 +17,16 @@ import ch.ethz.idsc.tensor.alg.Join;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.MatrixRank;
+import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.LogisticDistribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.PoissonDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.pdf.UniformDistribution;
+import ch.ethz.idsc.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class TGrMemberQTest extends TestCase {
@@ -48,15 +51,20 @@ public class TGrMemberQTest extends TestCase {
   }
 
   public void testProject() {
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 2); // 4 dimensional
-    for (int count = 0; count < 10; ++count) {
+    int n = 4;
+    Distribution distribution = UniformDistribution.unit();
+    RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, 2); // 4 dimensional
+    for (int count = 0; count < 5; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      Scalar distance = GrMetric.INSTANCE.distance(p, q);
-      // System.out.println(distance);
       Tensor v = new GrExponential(p).log(q);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p); // .require(v);
       tGrMemberQ.require(v);
+      Tolerance.CHOP.requireAllZero(GrIdentities.of(p, v));
+      Tensor w = tGrMemberQ.forceProject(RandomVariate.of(distribution, n, n));
+      tGrMemberQ.require(w);
+      Sign.requirePositive(FrobeniusNorm.of(w));
+      Tolerance.CHOP.requireAllZero(GrIdentities.of(p, w));
       // System.out.println(Pretty.of(v.map(Round._3)));
       // Tensor w = tGrMemberQ.project(v);
       // System.out.println(Pretty.of(w.map(Round._3)));

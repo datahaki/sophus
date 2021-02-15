@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.ref.d1h;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Nocopy;
@@ -24,7 +24,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * factor in position (1, 1) of matrices A(-1) A(1)
    * with same sign and equal to 1/2 */
   // ---
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;
   private final TensorUnaryOperator tripleCenter;
@@ -47,13 +47,13 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * @param vpqr
    * @throws Exception if either parameters is null */
   public Hermite3Subdivision( //
-      HsExponential hsExponential, HsTransport hsTransport, //
+      HsManifold hsManifold, HsTransport hsTransport, //
       TensorUnaryOperator tripleCenter, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
-    this.hsExponential = hsExponential;
+    this.hsManifold = hsManifold;
     this.hsTransport = hsTransport;
-    hsGeodesic = new HsGeodesic(hsExponential);
+    hsGeodesic = new HsGeodesic(hsManifold);
     this.tripleCenter = Objects.requireNonNull(tripleCenter);
     this.mgv = Objects.requireNonNull(mgv);
     this.mvg = mvg.add(mvg);
@@ -102,9 +102,9 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Tensor cv1v1 = hsTransport.shift(pg, cg1).apply(pv); // at cg1
       Tensor cv1v2 = hsTransport.shift(rg, cg1).apply(rv); // at cg1
       Tensor cv1df = cv1v2.subtract(cv1v1).multiply(cgk);
-      Tensor cg = hsExponential.exponential(cg1).exp(cv1df);
+      Tensor cg = hsManifold.exponential(cg1).exp(cv1df);
       // ---
-      Exponential exponential = hsExponential.exponential(cg);
+      Exponential exponential = hsManifold.exponential(cg);
       Tensor clpg = exponential.log(pg); // p - c
       Tensor clrg = exponential.log(rg); // r - c
       Tensor cv1 = clrg.subtract(clpg).multiply(cvk); // r - p
@@ -128,9 +128,9 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv);
       Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv);
       Tensor rg1df = rg1v2.subtract(rg1v1).multiply(rgk);
-      Tensor rg = hsExponential.exponential(rg1).exp(rg1df);
+      Tensor rg = hsManifold.exponential(rg1).exp(rg1df);
       // ---
-      Exponential exponential = hsExponential.exponential(rg);
+      Exponential exponential = hsManifold.exponential(rg);
       Tensor rlpg = exponential.log(pg); // p - r
       Tensor rlqg = exponential.log(qg); // q - r
       Tensor rv1 = rlqg.subtract(rlpg).multiply(rvk); // q - p

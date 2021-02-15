@@ -4,19 +4,19 @@ package ch.ethz.idsc.sophus.crv.decim;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
 
 public class HsProjectedLineDistance implements LineDistance, Serializable {
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
   private final HsLineProjection hsLineProjection;
 
-  public HsProjectedLineDistance(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
-    hsLineProjection = new HsLineProjection(hsExponential);
+  public HsProjectedLineDistance(HsManifold hsManifold) {
+    this.hsManifold = Objects.requireNonNull(hsManifold);
+    hsLineProjection = new HsLineProjection(hsManifold);
   }
 
   @Override // from LineDistance
@@ -36,7 +36,7 @@ public class HsProjectedLineDistance implements LineDistance, Serializable {
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
       Tensor c = hsLineProjection.onto(beg, end, r);
-      return VectorNorm2.of(hsExponential.exponential(c).log(r));
+      return VectorNorm2.of(hsManifold.exponential(c).log(r));
     }
   }
 }

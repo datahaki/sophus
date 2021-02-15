@@ -1,13 +1,13 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.s2;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** 2-dimensional tangent space parameterization */
-public enum S2Manifold implements HsExponential {
+public enum S2Manifold implements HsManifold {
   INSTANCE;
 
   @Override // from HsExponential

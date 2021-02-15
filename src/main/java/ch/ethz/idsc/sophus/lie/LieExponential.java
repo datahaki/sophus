@@ -4,14 +4,14 @@ package ch.ethz.idsc.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
 /** all tangent vectors are assumed to be in the tangent space at the neutral element,
  * i.e. given in the basis of TeG */
-public class LieExponential implements HsExponential, Serializable {
+public class LieExponential implements HsManifold, Serializable {
   /** @param lieGroup G
    * @param exponential at TeG
    * @return */

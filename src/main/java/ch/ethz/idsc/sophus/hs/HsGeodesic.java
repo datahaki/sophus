@@ -12,16 +12,16 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** general implementation of geodesic using exp/log */
 public class HsGeodesic implements GeodesicInterface, Serializable {
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
 
-  /** @param hsExponential */
-  public HsGeodesic(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
+  /** @param hsManifold */
+  public HsGeodesic(HsManifold hsManifold) {
+    this.hsManifold = Objects.requireNonNull(hsManifold);
   }
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Exponential exponential = hsExponential.exponential(p);
+    Exponential exponential = hsManifold.exponential(p);
     Tensor log = exponential.log(q);
     return scalar -> exponential.exp(log.multiply(scalar));
   }
