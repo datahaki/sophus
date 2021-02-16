@@ -13,7 +13,6 @@ import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Binomial;
 import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.num.Pi;
@@ -23,16 +22,16 @@ import junit.framework.TestCase;
 public class GrManifoldTest extends TestCase {
   public void testBiinvariance() {
     Biinvariant[] biinvariants = new Biinvariant[] { //
-        MetricBiinvariant.RIEMANN, //
+        MetricBiinvariant.VECTORIZE0, //
         Biinvariants.LEVERAGES, //
         Biinvariants.GARDEN };
     Random random = new Random();
-    int n = 4;
+    int n = 3 + random.nextInt(3);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     VectorLogManifold vectorLogManifold = GrManifold.INSTANCE;
     for (int k = 1; k < n; ++k) {
       RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
-      int d = Binomial.of(n, k).number().intValue();
+      int d = k * (n - k);
       Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
       Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
       Biinvariant biinvariant = biinvariants[random.nextInt(biinvariants.length)];

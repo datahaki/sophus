@@ -2,7 +2,6 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
-import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -23,8 +22,12 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * 
  * <p>the use of SnGeodesic.INSTANCE is preferred over {@link HsGeodesic}. The
  * implementation is symmetric in p and q and more efficient than HsGeodesic. */
-public enum SnGeodesic implements Geodesic {
-  INSTANCE;
+public class SnGeodesic extends HsGeodesic {
+  public static final HsGeodesic INSTANCE = new SnGeodesic();
+
+  private SnGeodesic() {
+    super(SnManifold.INSTANCE);
+  }
 
   @Override // from ParametricCurve
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
@@ -36,18 +39,5 @@ public enum SnGeodesic implements Geodesic {
     return scalar -> VectorNorm2.NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
         Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
-  }
-
-  /** p and q are vectors of length 3 with unit length
-   * 
-   * Careful: function does not check length of input vectors! */
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
-  }
-
-  @Override // from MidpointInterface
-  public Tensor midpoint(Tensor p, Tensor q) {
-    return VectorNorm2.NORMALIZE.apply(SnMemberQ.INSTANCE.require(p).add(SnMemberQ.INSTANCE.require(q)));
   }
 }

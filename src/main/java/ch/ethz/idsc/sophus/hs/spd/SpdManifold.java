@@ -17,13 +17,13 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum SpdManifold implements HsManifold {
   INSTANCE;
 
-  @Override // from HsManifold
-  public Exponential exponential(Tensor p) {
+  @Override // from VectorLogManifold
+  public TangentSpace logAt(Tensor p) {
     return new SpdExponential(p);
   }
 
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor p) {
+  @Override // from HsManifold
+  public Exponential exponential(Tensor p) {
     return new SpdExponential(p);
   }
 }

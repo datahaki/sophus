@@ -137,10 +137,6 @@ public class SnGeodesicTest extends TestCase {
     AssertFail.of(() -> SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
   }
 
-  public void testMidpointFail() {
-    AssertFail.of(() -> SnGeodesic.INSTANCE.midpoint(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6)));
-  }
-
   public void testMidpointAntipodesFail() {
     AssertFail.of(() -> SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate()));
   }

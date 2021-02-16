@@ -22,7 +22,7 @@ public class SpdTransportTest extends TestCase {
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");
     TensorUnaryOperator tu1 = Serialization.copy(SpdTransport.INSTANCE.shift(p, q));
-    TensorUnaryOperator tu2 = Serialization.copy(PoleLadder.of(SpdManifold.INSTANCE, SpdGeodesic.INSTANCE).shift(p, q));
+    TensorUnaryOperator tu2 = Serialization.copy(PoleLadder.of(SpdManifold.INSTANCE).shift(p, q));
     Chop._08.requireClose(tu1.apply(e11), tu2.apply(e11));
     Chop._08.requireClose(tu1.apply(e12), tu2.apply(e12));
     Chop._08.requireClose(tu1.apply(e13), tu2.apply(e13));
@@ -36,7 +36,7 @@ public class SpdTransportTest extends TestCase {
     for (int c = 0; c < 5; ++c) {
       Tensor q = TestHelper.generateSpd(3);
       TensorUnaryOperator tu1 = SpdTransport.INSTANCE.shift(p, q);
-      TensorUnaryOperator tu2 = PoleLadder.of(SpdManifold.INSTANCE, SpdGeodesic.INSTANCE).shift(p, q);
+      TensorUnaryOperator tu2 = PoleLadder.of(SpdManifold.INSTANCE).shift(p, q);
       Chop._08.requireClose(tu1.apply(e11), tu2.apply(e11));
       Chop._08.requireClose(tu1.apply(e12), tu2.apply(e12));
       Chop._08.requireClose(tu1.apply(e13), tu2.apply(e13));

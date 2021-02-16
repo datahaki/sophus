@@ -6,9 +6,12 @@ import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.LagrangeCoordinates;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
+import ch.ethz.idsc.sophus.hs.gr.GrExponential;
 import ch.ethz.idsc.sophus.hs.hn.HnMetricBiinvariant;
+import ch.ethz.idsc.sophus.hs.spd.SpdExponential;
 import ch.ethz.idsc.sophus.itp.InverseDistanceWeighting;
 import ch.ethz.idsc.sophus.math.Genesis;
+import ch.ethz.idsc.sophus.math.Vectorize0Norm2;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorScalarFunction;
@@ -32,8 +35,15 @@ import ch.ethz.idsc.tensor.nrm.VectorNorm2;
  * for alternative implementations
  * @see HnMetricBiinvariant */
 public class MetricBiinvariant implements Biinvariant, Serializable {
-  /** scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
-  public static final Biinvariant RIEMANN = new MetricBiinvariant(VectorNorm2::of);
+  /** Careful: not suitable for {@link SpdExponential}, and {@link GrExponential}
+   * because these implementations drop coefficients of the log in the vectorLog
+   * implementation. that means the scalar product on the subspace would have to be
+   * adapted.
+   * 
+   * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
+  public static final Biinvariant EUCLIDEAN = new MetricBiinvariant(VectorNorm2::of);
+  /** for {@link SpdExponential}, and {@link GrExponential} */
+  public static final Biinvariant VECTORIZE0 = new MetricBiinvariant(Vectorize0Norm2.INSTANCE);
 
   /** @param tensorScalarFunction norm
    * @return */

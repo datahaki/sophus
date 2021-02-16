@@ -7,7 +7,6 @@ import java.util.Objects;
 import ch.ethz.idsc.sophus.hs.gr.GrTransport;
 import ch.ethz.idsc.sophus.hs.hn.HnTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.MidpointInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
@@ -26,27 +25,16 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * @see HnTransport */
 public class PoleLadder implements HsTransport, Serializable {
   /** @param hsManifold
-   * @param midpointInterface
-   * @return */
-  public static HsTransport of(HsManifold hsManifold, MidpointInterface midpointInterface) {
-    return new PoleLadder( //
-        Objects.requireNonNull(hsManifold), //
-        Objects.requireNonNull(midpointInterface));
-  }
-
-  /** @param hsManifold
    * @return */
   public static HsTransport of(HsManifold hsManifold) {
-    return new PoleLadder(Objects.requireNonNull(hsManifold), null);
+    return new PoleLadder(Objects.requireNonNull(hsManifold));
   }
 
   /***************************************************/
   private final HsManifold hsManifold;
-  private final MidpointInterface midpointInterface;
 
-  private PoleLadder(HsManifold hsManifold, MidpointInterface midpointInterface) {
+  private PoleLadder(HsManifold hsManifold) {
     this.hsManifold = hsManifold;
-    this.midpointInterface = midpointInterface;
   }
 
   @Override // from HsTransport
@@ -62,15 +50,12 @@ public class PoleLadder implements HsTransport, Serializable {
     private Rung(Tensor p, Tensor q) {
       exp_p = hsManifold.exponential(p);
       exp_q = hsManifold.exponential(q);
-      Tensor m = Objects.isNull(midpointInterface) //
-          ? HsMidpoint.of(exp_p, q)
-          : midpointInterface.midpoint(p, q);
+      Tensor m = exp_p.midpoint(q);
       exp_m = hsManifold.exponential(m);
     }
 
     @Override
     public Tensor apply(Tensor v) {
-      // return exp_q.log(exp_m.exp(exp_m.log(exp_p.exp(v)).negate())).negate();
       return exp_q.log(exp_m.flip(exp_p.exp(v))).negate();
     }
   }

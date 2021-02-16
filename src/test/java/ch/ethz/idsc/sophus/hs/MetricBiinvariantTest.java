@@ -8,6 +8,6 @@ import junit.framework.TestCase;
 
 public class MetricBiinvariantTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    Serialization.copy(MetricBiinvariant.RIEMANN);
+    Serialization.copy(MetricBiinvariant.EUCLIDEAN);
   }
 }

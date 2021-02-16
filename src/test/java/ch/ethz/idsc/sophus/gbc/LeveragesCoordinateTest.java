@@ -33,7 +33,7 @@ public class LeveragesCoordinateTest extends TestCase {
       Tensor sequence = RandomVariate.of(distribution, length, 1);
       Tensor origin = RandomVariate.of(distribution, 1);
       Chop._08.requireClose( //
-          MetricBiinvariant.RIEMANN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
+          MetricBiinvariant.EUCLIDEAN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
           Biinvariants.LEVERAGES.weighting(vectorLogManifold, variogram, sequence).apply(origin));
     }
   }

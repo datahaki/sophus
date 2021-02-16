@@ -30,13 +30,13 @@ public class LieExponential implements HsManifold, Serializable {
     this.exponential = exponential;
   }
 
-  @Override // from HsManifold
-  public Exponential exponential(Tensor point) {
+  @Override // from VectorLogManifold
+  public TangentSpace logAt(Tensor point) {
     return new ExponentialImpl(point);
   }
 
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor point) {
+  @Override // from HsManifold
+  public Exponential exponential(Tensor point) {
     return new ExponentialImpl(point);
   }
 
@@ -44,24 +44,24 @@ public class LieExponential implements HsManifold, Serializable {
     private final LieGroupElement element;
     private final LieGroupElement inverse;
 
-    public ExponentialImpl(Tensor point) {
-      element = lieGroup.element(point);
+    public ExponentialImpl(Tensor p) {
+      element = lieGroup.element(p);
       inverse = element.inverse();
     }
 
     @Override // from Exponential
-    public Tensor exp(Tensor vector) {
-      return element.combine(exponential.exp(vector));
+    public Tensor exp(Tensor v) {
+      return element.combine(exponential.exp(v));
     }
 
     @Override // from Exponential
-    public Tensor log(Tensor point) {
-      return exponential.log(inverse.combine(point));
+    public Tensor log(Tensor q) {
+      return exponential.log(inverse.combine(q));
     }
 
     @Override // from TangentSpace
-    public Tensor vectorLog(Tensor point) {
-      return exponential.vectorLog(inverse.combine(point));
+    public Tensor vectorLog(Tensor q) {
+      return exponential.vectorLog(inverse.combine(q));
     }
   }
 }

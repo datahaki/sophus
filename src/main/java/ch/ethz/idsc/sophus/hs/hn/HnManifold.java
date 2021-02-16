@@ -10,13 +10,13 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum HnManifold implements HsManifold {
   INSTANCE;
 
-  @Override // from HsManifold
-  public Exponential exponential(Tensor x) {
+  @Override // from VectorLogManifold
+  public TangentSpace logAt(Tensor x) {
     return new HnExponential(x);
   }
 
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor x) {
+  @Override // from HsManifold
+  public Exponential exponential(Tensor x) {
     return new HnExponential(x);
   }
 
@@ -24,5 +24,10 @@ public enum HnManifold implements HsManifold {
   public Tensor flip(Tensor p, Tensor q) {
     Scalar nxy = LBilinearForm.between(p, q).negate();
     return p.add(p).multiply(nxy).subtract(q);
+  }
+
+  @Override // from MidpointInterface
+  public Tensor midpoint(Tensor p, Tensor q) {
+    return HnProjection.INSTANCE.apply(p.add(q));
   }
 }

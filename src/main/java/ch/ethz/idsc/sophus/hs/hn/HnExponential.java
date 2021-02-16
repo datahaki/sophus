@@ -38,12 +38,14 @@ public class HnExponential implements Exponential, Serializable {
     return hnAngle.log(q);
   }
 
-  /** @param q
-   * @return Exp_p[-Log_p[q]] */
-  @Override
+  @Override // from Exponential
   public Tensor flip(Tensor q) {
-    Scalar nxy = LBilinearForm.between(p, q).negate();
-    return p.add(p).multiply(nxy).subtract(q);
+    return HnManifold.INSTANCE.flip(p, q);
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    return HnManifold.INSTANCE.midpoint(p, q);
   }
 
   @Override // from TangentSpace

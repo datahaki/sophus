@@ -30,4 +30,9 @@ public class HsGeodesic implements Geodesic, Serializable {
   public Tensor split(Tensor p, Tensor q, Scalar scalar) {
     return curve(p, q).apply(scalar);
   }
+
+  @Override // from MidpointInterface
+  public Tensor midpoint(Tensor p, Tensor q) {
+    return hsManifold.midpoint(p, q);
+  }
 }

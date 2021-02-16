@@ -4,6 +4,9 @@ package ch.ethz.idsc.sophus.hs.gr;
 import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.tensor.Tensor;
 
+/** Reference:
+ * "Geometric mean and geodesic regression on Grassmannians"
+ * by E. Batzies, K. Hueper, L. Machado, F. Silva Leite, 2015 */
 public enum GrIdentities {
   ;
   /** @param p

@@ -16,8 +16,8 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * The dimensionality of Gr(n, k) is k * (n - k).
  * 
- * Gr(n, k) is a homogoneous space, quotient of the special orthogonal
- * group by the subgroup of rotations stabilising a k-dimensional subspace:
+ * Gr(n, k) is a homogeneous space, quotient of the special orthogonal
+ * group by the subgroup of rotations stabilizing a k-dimensional subspace:
  * 
  * Gr(n, k) ~ O(n) / (O(k) x O(n-k))
  * Gr(n, k) ~ SO(n) / (SO(k) x SO(n-k))
@@ -30,8 +30,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * Gr(n, 1) ~ S^(n - 1) / {+-1}
  * 
- * The first Grassmann manifold that is not isomorphic to a projective space
- * is Gr(4, 2) */
+ * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2) */
 public enum GrManifold implements HsManifold {
   INSTANCE;
 
@@ -43,10 +42,5 @@ public enum GrManifold implements HsManifold {
   @Override // from HsManifold
   public Exponential exponential(Tensor x) {
     return new GrExponential(x);
-  }
-
-  @Override
-  public Tensor flip(Tensor p, Tensor q) {
-    return new GrExponential(p).flip(q);
   }
 }

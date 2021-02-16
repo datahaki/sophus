@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -30,6 +31,8 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * 
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020 p.27
+ * 
+ * use with {@link MetricBiinvariant#VECTORIZE0}
  * 
  * @see MatrixExp
  * @see MatrixLog

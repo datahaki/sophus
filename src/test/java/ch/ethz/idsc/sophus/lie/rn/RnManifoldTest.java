@@ -74,7 +74,7 @@ public class RnManifoldTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor x = RandomVariate.of(distribution, n);
       TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+          MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
       Tensor weights = tensorUnaryOperator.apply(x);
       Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
       Chop._06.requireClose(x, y);
@@ -88,7 +88,7 @@ public class RnManifoldTest extends TestCase {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
       TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+          MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
       Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
     }
   }
@@ -101,7 +101,7 @@ public class RnManifoldTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor x = RandomVariate.of(distribution, n);
       TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.RIEMANN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+          MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
       Tensor weights = tensorUnaryOperator.apply(x);
       Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
       Chop._06.requireClose(x, y);

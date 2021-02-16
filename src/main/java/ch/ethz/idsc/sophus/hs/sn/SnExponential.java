@@ -60,6 +60,16 @@ public class SnExponential implements Exponential, Serializable {
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(snAngle.apply(y));
   }
 
+  @Override // from Exponential
+  public Tensor flip(Tensor q) {
+    return SnManifold.INSTANCE.flip(p, q);
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    return SnManifold.INSTANCE.midpoint(p, q);
+  }
+
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
     return tSnProjection.dot(log(y));

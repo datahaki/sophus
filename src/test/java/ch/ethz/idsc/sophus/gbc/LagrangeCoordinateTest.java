@@ -66,7 +66,7 @@ public class LagrangeCoordinateTest extends TestCase {
     Tensor point = Mean.of(sequence);
     ExactTensorQ.require(point);
     // does not produce equal weights
-    MetricBiinvariant.RIEMANN.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
+    MetricBiinvariant.EUCLIDEAN.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
   }
 
   public void testNullFail() {

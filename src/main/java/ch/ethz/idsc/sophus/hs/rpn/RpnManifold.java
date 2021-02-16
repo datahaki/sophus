@@ -11,13 +11,13 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum RpnManifold implements HsManifold {
   INSTANCE;
 
-  @Override // from HsManifold
-  public Exponential exponential(Tensor point) {
+  @Override // from VectorLogManifold
+  public TangentSpace logAt(Tensor point) {
     return new RpnExponential(point);
   }
 
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor point) {
+  @Override // from HsManifold
+  public Exponential exponential(Tensor point) {
     return new RpnExponential(point);
   }
 }
