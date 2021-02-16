@@ -5,6 +5,7 @@ import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.mat.LinearSolve;
 
 /** Sym+(n) == GL+(n)/SO(n)
  * 
@@ -25,5 +26,10 @@ public enum SpdManifold implements HsManifold {
   @Override // from HsManifold
   public Exponential exponential(Tensor p) {
     return new SpdExponential(p);
+  }
+
+  @Override // from HsManifold
+  public Tensor flip(Tensor p, Tensor q) {
+    return p.dot(LinearSolve.of(q, p));
   }
 }

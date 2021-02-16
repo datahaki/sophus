@@ -1,6 +1,6 @@
 # ch.ethz.idsc.sophus <a href="https://travis-ci.org/datahaki/sophus"><img src="https://travis-ci.org/datahaki/sophus.svg?branch=master" alt="Build Status"></a>
 
-Library for non-linear geometry computation in Java, version `0.0.4`
+Library for non-linear geometry computation in Java, version `0.0.5`
 
 ![sophus](https://user-images.githubusercontent.com/4012178/76152560-1aa1fe00-60c1-11ea-8318-c25a61b6be64.png)
 
@@ -40,7 +40,8 @@ Dubins path curvature
 
 ## Features
 
-* geodesics in Lie-groups and homogeneous spaces: Euclidean space `R^n`, special Euclidean group `SE(2)`, hyperbolic half-plane `H2`, n-dimensional sphere `S^n`, ...
+* Lie-groups: Euclidean space `R^n`, special orthogonal group `SO(3)`, special Euclidean groups `SE(2)`, `SE(3)`, ...
+* Homogeneous spaces: sphere `S^n`, hyperbolic plane `H^n`, symmetric positive definite matrices `SPD(n)`, Grassmann manifold `Gr(n,k)`
 * parametric curves defined by control points in non-linear spaces: `GeodesicBSplineFunction`, ...
 * non-linear smoothing of noisy localization data `GeodesicCenterFilter`
 * Dubins path
@@ -133,7 +134,7 @@ Specify `repository` and `dependency` of the tensor library in the `pom.xml` fil
   <dependency>
     <groupId>ch.ethz.idsc</groupId>
     <artifactId>sophus</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
   </dependency>
 </dependencies>
 ```

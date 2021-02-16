@@ -42,7 +42,7 @@ public class GrManifoldTest extends TestCase {
       Tensor seq_l = Tensor.of(seq_o.stream().map(grAction));
       Tensor pnt_l = grAction.apply(pnt_o);
       Tensor w_l = biinvariant.coordinate(vectorLogManifold, variogram, seq_l).apply(pnt_l);
-      Chop._10.requireClose(w_o, w_l);
+      Chop._06.requireClose(w_o, w_l);
     }
   }
 

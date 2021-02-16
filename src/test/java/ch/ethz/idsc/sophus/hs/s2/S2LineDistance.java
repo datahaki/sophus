@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.s2;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.crv.decim.LineDistance;
+import ch.ethz.idsc.sophus.decim.LineDistance;
 import ch.ethz.idsc.sophus.hs.sn.SnMetric;
 import ch.ethz.idsc.sophus.math.TensorNorm;
 import ch.ethz.idsc.tensor.Scalar;

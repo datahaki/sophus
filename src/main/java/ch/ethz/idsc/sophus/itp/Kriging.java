@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.itp;
 
 import java.io.Serializable;
 
+import ch.ethz.idsc.sophus.math.LagrangeMultiplier;
 import ch.ethz.idsc.sophus.math.var.ExponentialVariogram;
 import ch.ethz.idsc.sophus.math.var.PowerVariogram;
 import ch.ethz.idsc.sophus.math.var.SphericalVariogram;
@@ -16,7 +17,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
-import ch.ethz.idsc.tensor.opt.rn.LagrangeMultiplier;
 import ch.ethz.idsc.tensor.qty.Quantity;
 
 /** implementation of kriging for homogeneous spaces

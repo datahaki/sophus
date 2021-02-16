@@ -15,7 +15,6 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
-import ch.ethz.idsc.tensor.mat.LinearSolve;
 
 /** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
  * 
@@ -65,7 +64,7 @@ public class SpdExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor flip(Tensor q) {
     // return basis(Spd0Exponential.INSTANCE.flip(q), p);
-    return p.dot(LinearSolve.of(q, p)); // nice interpretation
+    return SpdManifold.INSTANCE.flip(p, q);
   }
 
   @Override // from Exponential

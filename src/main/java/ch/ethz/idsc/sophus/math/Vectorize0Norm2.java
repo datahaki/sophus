@@ -23,15 +23,13 @@ public enum Vectorize0Norm2 implements TensorScalarFunction {
     if (1e-10 < Math.abs(kd - k))
       throw TensorRuntimeException.of(vector);
     Tensor vn = Tensors.reserve(vector.length());
-    int len = 0;
+    int index = 0;
     int next = 0;
-    for (int i = 0; i < n; ++i) {
-      if (i == next)
-        next += ++len;
-      Scalar value = vector.Get(i);
-      vn.append(i + 1 == next //
-          ? value
-          : value.multiply(SQRT2));
+    int delta = 0;
+    for (Tensor value : vector) {
+      if (index == next)
+        next += ++delta;
+      vn.append(++index == next ? value : value.multiply(SQRT2));
     }
     return VectorNorm2.of(vn);
   }

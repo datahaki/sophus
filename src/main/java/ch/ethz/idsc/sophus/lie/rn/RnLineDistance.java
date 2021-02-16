@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.rn;
 
-import ch.ethz.idsc.sophus.crv.decim.HsLineDistance;
-import ch.ethz.idsc.sophus.crv.decim.LineDistance;
+import ch.ethz.idsc.sophus.decim.HsLineDistance;
+import ch.ethz.idsc.sophus.decim.LineDistance;
 
 public enum RnLineDistance {
   ;

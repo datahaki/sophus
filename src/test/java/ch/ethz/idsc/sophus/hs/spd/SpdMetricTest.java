@@ -2,11 +2,13 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.Vectorize0Norm2;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
 import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -36,6 +38,9 @@ public class SpdMetricTest extends TestCase {
           BasisTransform.ofForm(p, v), //
           BasisTransform.ofForm(q, v));
       Chop._06.requireClose(pq, v_pq);
+      Scalar d2 = FrobeniusNorm.of(new SpdExponential(p).log(q));
+      Scalar d3 = Vectorize0Norm2.INSTANCE.apply(new SpdExponential(p).vectorLog(q));
+      Chop._08.requireClose(d2, d3);
     }
   }
 

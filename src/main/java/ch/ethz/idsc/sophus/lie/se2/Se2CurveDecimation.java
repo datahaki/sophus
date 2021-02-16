@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2;
 
-import ch.ethz.idsc.sophus.crv.decim.CurveDecimation;
+import ch.ethz.idsc.sophus.decim.CurveDecimation;
 import ch.ethz.idsc.tensor.Scalar;
 
 public enum Se2CurveDecimation {

@@ -3,7 +3,6 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.bn.BnCoordinate;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.ext.Serialization;

@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.hs.h2;
 import java.io.IOException;
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.fit.SphereFit;
 import ch.ethz.idsc.sophus.math.sample.BallRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
@@ -15,7 +16,6 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.nrm.VectorNorm2;
-import ch.ethz.idsc.tensor.opt.rn.SphereFit;
 import ch.ethz.idsc.tensor.red.Nest;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
