@@ -28,7 +28,7 @@ public class GrExponentialTest extends TestCase {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = StaticHelper.project(x, pre);
+    Tensor v = tGrMemberQ.forceProject(pre);
     tGrMemberQ.require(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
@@ -46,7 +46,7 @@ public class GrExponentialTest extends TestCase {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = StaticHelper.project(x, pre);
+    Tensor v = tGrMemberQ.forceProject(pre);
     tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     GrassmannQ.require(exp);
@@ -60,7 +60,7 @@ public class GrExponentialTest extends TestCase {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = StaticHelper.project(x, pre);
+    Tensor v = tGrMemberQ.forceProject(pre);
     tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     assertTrue(GrassmannQ.of(exp));
@@ -79,7 +79,7 @@ public class GrExponentialTest extends TestCase {
       GrExponential grExponential = new GrExponential(x);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
       Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
-      Tensor v = StaticHelper.project(x, pre);
+      Tensor v = tGrMemberQ.forceProject(pre);
       tGrMemberQ.require(v);
       assertFalse(Chop._05.allZero(v));
       Tensor exp = grExponential.exp(v);

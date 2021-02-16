@@ -42,30 +42,32 @@ public class GrExponential implements Exponential, Serializable {
     return BasisTransform.ofMatrix(p, MatrixExp.of(MatrixBracket.of(p, tGrMemberQ.require(v))));
   }
 
+  private Tensor mLog(Tensor q) {
+    return MatrixLog.of(bic(q).dot(p2_id));
+  }
+
   @Override // from Exponential
   public Tensor log(Tensor q) {
     GrMemberQ.INSTANCE.require(q);
-    return MatrixBracket.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF), p);
+    return MatrixBracket.of(mLog(q).multiply(RationalScalar.HALF), p);
   }
 
   @Override // from Exponential
   public Tensor flip(Tensor q) {
     // matrix bracket is obsolete
-    Tensor v = MatrixExp.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF));
-    return BasisTransform.ofMatrix(p, v);
+    return BasisTransform.ofMatrix(p, MatrixExp.of(mLog(q).multiply(RationalScalar.HALF)));
   }
 
   @Override // from Exponential
   public Tensor midpoint(Tensor q) {
     // matrix bracket is obsolete
-    Tensor v = MatrixExp.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(N1_4));
-    return BasisTransform.ofMatrix(p, v);
+    return BasisTransform.ofMatrix(p, MatrixExp.of(mLog(q).multiply(N1_4)));
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
     // TODO k * (n - k) coefficients are sufficient according to theory
-    return Vectorize.of(log(q), 0);
+    return Vectorize.of(log(q), 0); // n (n + 1) / 2
   }
 
   /** @param q

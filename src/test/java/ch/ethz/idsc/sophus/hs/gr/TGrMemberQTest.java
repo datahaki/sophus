@@ -38,7 +38,7 @@ public class TGrMemberQTest extends TestCase {
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
     Tensor pre = RandomVariate.of(NormalDistribution.standard(), n, n);
     assertFalse(tGrMemberQ.test(pre));
-    final Tensor v = StaticHelper.project(x, pre).multiply(Pi.VALUE);
+    final Tensor v = tGrMemberQ.forceProject(pre).multiply(Pi.VALUE);
     tGrMemberQ.require(v);
     // System.out.println(Pretty.of(v.map(Round._3)));
     // System.out.println(SymmetricMatrixQ.of(v));
@@ -79,9 +79,10 @@ public class TGrMemberQTest extends TestCase {
       int fn = n;
       for (int k = 0; k <= n; ++k) {
         Tensor x = RandomSample.of(GrRandomSample.of(n, k));
+        TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 3) //
-            .mapToObj(i -> Flatten.of(StaticHelper.project(x, RandomVariate.of(distribution, fn, fn)))));
+            .mapToObj(i -> Flatten.of(tGrMemberQ.forceProject(RandomVariate.of(distribution, fn, fn)))));
         int r = MatrixRank.of(samples);
         if (r != expected)
           ++fails;
@@ -98,9 +99,10 @@ public class TGrMemberQTest extends TestCase {
         Tensor diagon = Join.of(ConstantArray.of(RealScalar.ONE, k), ConstantArray.of(RealScalar.ZERO, n - k));
         Tensor x = DiagonalMatrix.with(diagon);
         GrMemberQ.INSTANCE.require(x);
+        TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 5) //
-            .mapToObj(i -> Flatten.of(StaticHelper.project(x, RandomVariate.of(distribution, fn, fn)))));
+            .mapToObj(i -> Flatten.of(tGrMemberQ.forceProject(RandomVariate.of(distribution, fn, fn)))));
         int r = MatrixRank.of(samples);
         assertEquals(r, expected);
       }

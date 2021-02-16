@@ -29,6 +29,13 @@ public class TGrMemberQ implements MemberQ, Serializable {
         && CHOP.isClose(x.dot(v).add(v.dot(x)), v);
   }
 
+  /** Cafeful: projection is not idempotent!!!
+   * duplicate application maps to zero
+   * 
+   * Reference: geomstats - grassmannian.py
+   * 
+   * @param v
+   * @return */
   public Tensor forceProject(Tensor v) {
     return MatrixBracket.of(x, TensorWedge.of(v));
   }
