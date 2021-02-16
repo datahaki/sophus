@@ -26,6 +26,12 @@ public class SpdExponentialTest extends TestCase {
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);
       Chop._08.requireClose(q, exp);
+      Tensor f1 = spdExp.flip(q);
+      Tensor f2 = spdExp.exp(w.negate());
+      Chop._08.requireClose(f1, f2);
+      Tensor m1 = spdExp.midpoint(q);
+      Tensor m2 = spdExp.exp(w.multiply(RationalScalar.HALF));
+      Chop._08.requireClose(m1, m2);
     }
   }
 

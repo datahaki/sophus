@@ -2,6 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.usr.AssertFail;
+import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
@@ -16,6 +17,11 @@ public class Spd0ExponentialTest extends TestCase {
       Tensor g = Spd0Exponential.INSTANCE.exp(x);
       Tensor r = Spd0Exponential.INSTANCE.log(g);
       Chop._07.requireClose(x, r);
+      Tensor m1 = //
+          Spd0Exponential.INSTANCE.exp(Spd0Exponential.INSTANCE.log(g).multiply(RationalScalar.HALF));
+      Tensor m2 = //
+          Spd0Exponential.INSTANCE.midpoint(g);
+      Chop._07.requireClose(m1, m2);
     }
   }
 

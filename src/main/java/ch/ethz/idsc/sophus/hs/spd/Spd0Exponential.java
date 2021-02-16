@@ -6,7 +6,9 @@ import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
+import ch.ethz.idsc.tensor.mat.Inverse;
 
 /** Exponential map at IdentityMatrix in SPD
  * 
@@ -40,6 +42,16 @@ public enum Spd0Exponential implements Exponential {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     return Symmetrize.of(MatrixLog.ofSymmetric(q));
+  }
+
+  @Override // from Exponential
+  public Tensor flip(Tensor q) {
+    return Inverse.of(q);
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    return MatrixSqrt.ofSymmetric(q).sqrt();
   }
 
   @Override // from TangentSpace

@@ -15,6 +15,7 @@ import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
+import ch.ethz.idsc.tensor.mat.LinearSolve;
 
 /** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
  * 
@@ -38,12 +39,14 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
  * @see MatrixLog
  * @see Spd0Exponential */
 public class SpdExponential implements Exponential, Serializable {
+  private final Tensor p;
   private final Tensor pp;
   private final Tensor pn;
 
   /** @param p symmetric
    * @throws Exception if p is not symmetric */
   public SpdExponential(Tensor p) {
+    this.p = p;
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
     pp = matrixSqrt.sqrt();
     pn = matrixSqrt.sqrt_inverse();
@@ -57,6 +60,17 @@ public class SpdExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     return basis(Spd0Exponential.INSTANCE.log(basis(q, pn)), pp);
+  }
+
+  @Override // from Exponential
+  public Tensor flip(Tensor q) {
+    // return basis(Spd0Exponential.INSTANCE.flip(q), p);
+    return p.dot(LinearSolve.of(q, p)); // nice interpretation
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    return basis(Spd0Exponential.INSTANCE.midpoint(basis(q, pn)), pp);
   }
 
   @Override // from TangentSpace

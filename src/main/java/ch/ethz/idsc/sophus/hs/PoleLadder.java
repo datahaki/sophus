@@ -4,8 +4,6 @@ package ch.ethz.idsc.sophus.hs;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.gr.GrTransport;
-import ch.ethz.idsc.sophus.hs.hn.HnTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
@@ -20,9 +18,7 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020 p.14
  * 
- * @see SchildLadder
- * @see GrTransport
- * @see HnTransport */
+ * @see SchildLadder */
 public class PoleLadder implements HsTransport, Serializable {
   /** @param hsManifold
    * @return */
