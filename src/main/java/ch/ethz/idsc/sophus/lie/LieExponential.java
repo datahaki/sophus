@@ -30,7 +30,7 @@ public class LieExponential implements HsManifold, Serializable {
     this.exponential = exponential;
   }
 
-  @Override // from HsExponential
+  @Override // from HsManifold
   public Exponential exponential(Tensor point) {
     return new ExponentialImpl(point);
   }

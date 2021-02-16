@@ -6,7 +6,7 @@ import java.io.IOException;
 import ch.ethz.idsc.sophus.hs.r2.Se2Parametric;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.sophus.math.win.KnotSpacing;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -39,7 +39,7 @@ public class GeodesicCatmullRomTest extends TestCase {
   }
 
   public void testCentripetalInterpolatory() {
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     Tensor control = Tensors.empty();
     for (int index = 0; index < 5; index++)
       control.append(Tensors.vector(Math.random(), Math.random(), Math.random()));

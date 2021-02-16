@@ -14,7 +14,9 @@ import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Binomial;
+import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -47,7 +49,7 @@ public class GrManifoldTest extends TestCase {
     int n = 5;
     Tensor p1 = RandomSample.of(GrRandomSample.of(n, 1));
     Tensor p2 = RandomSample.of(GrRandomSample.of(n, 2));
-    Tensor q = RandomSample.of(GrRandomSample.of(n, 4));
+    Tensor q = ConstantArray.of(Pi.VALUE, n, n);
     AssertFail.of(() -> new GrExponential(p1).log(q));
     AssertFail.of(() -> new GrExponential(p2).log(q));
   }

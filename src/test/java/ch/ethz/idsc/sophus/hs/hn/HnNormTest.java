@@ -19,7 +19,7 @@ public class HnNormTest extends TestCase {
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       VectorQ.requireLength(p, d + 1);
       Scalar distance = HnMetric.INSTANCE.distance(p, q); // uses HnAngle
-      Tensor log_hn = HnManifold.INSTANCE.logAt(p).vectorLog(q);
+      Tensor log_hn = HnManifold.INSTANCE.exponential(p).log(q);
       VectorQ.requireLength(log_hn, d + 1);
       Scalar norm = HnVectorNorm.of(log_hn);
       Chop._08.requireClose(distance, norm);

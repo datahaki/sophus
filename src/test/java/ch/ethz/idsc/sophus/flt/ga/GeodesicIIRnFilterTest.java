@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.flt.ga;
 
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,7 +19,7 @@ public class GeodesicIIRnFilterTest extends TestCase {
     Tensor r = q.add(q);
     Tensor s = r.add(q);
     Tensor control = Tensors.of(p, q, r, s);
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
     Tensor refined = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, 2, RealScalar.of(Math.random())).apply(control);
     assertEquals(refined.get(0), p);
@@ -33,7 +33,7 @@ public class GeodesicIIRnFilterTest extends TestCase {
     Tensor r = q.add(q);
     Tensor s = r.add(q);
     Tensor control = Tensors.of(p, q, r, s);
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
     Tensor refined = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, 2, RealScalar.of(Math.random())).apply(control);
     assertEquals(refined.get(0), p);
@@ -47,7 +47,7 @@ public class GeodesicIIRnFilterTest extends TestCase {
     Tensor r = q.add(q);
     Tensor s = r.add(q);
     Tensor control = Tensors.of(p, q, r, s);
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
     Tensor refined = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, 2, RealScalar.of(0.5)).apply(control);
     assertEquals(refined.get(0), p);
@@ -59,7 +59,7 @@ public class GeodesicIIRnFilterTest extends TestCase {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 0, 0}, {4, 0, 0}, {5, 0, 0}}");
     Scalar alpha = RealScalar.of(0.5);
     final int radius = 3;
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
     Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, radius, alpha).apply(control);
     assertEquals(control, actual);
@@ -69,7 +69,7 @@ public class GeodesicIIRnFilterTest extends TestCase {
     Tensor control = Tensors.fromString("{{0, 0.2, 0}, {1, 0, 0}, {2, 7, 0}, {3, 9, 0}, {3, 0, 0}, {-1, 0, -1}}");
     Scalar alpha = RealScalar.of(1);
     final int radius = 3;
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
     Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, radius, alpha).apply(control);
     Chop._09.requireClose(control, actual);
@@ -79,7 +79,7 @@ public class GeodesicIIRnFilterTest extends TestCase {
     Tensor control = Tensors.fromString("{{0, 0.2, 0}, {1, 0, 0}, {2, 7, 0}, {3, 9, 0}, {3, 0, 0}, {-1, 0, -1}}");
     Scalar alpha = RealScalar.of(0);
     final int radius = 3;
-    GeodesicInterface geodesicInterface = Se2Geodesic.INSTANCE;
+    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
     Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, radius, alpha).apply(control);
     Tensor expected = Tensors.fromString(

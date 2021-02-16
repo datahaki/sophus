@@ -1,7 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.dt;
 
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
  * 
  * Another reference for ST is "Deep Compositing Using Lie Algebras" by Tom Duff. The article
  * parameterizes the group differently with the scaling coefficient alpha := 1 - lambda */
-public enum DtGeodesic implements GeodesicInterface {
+public enum DtGeodesic implements Geodesic {
   INSTANCE;
 
   @Override // from TensorGeodesic

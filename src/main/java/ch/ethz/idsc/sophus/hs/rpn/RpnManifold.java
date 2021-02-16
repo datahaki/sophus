@@ -11,7 +11,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum RpnManifold implements HsManifold {
   INSTANCE;
 
-  @Override // from HsExponential
+  @Override // from HsManifold
   public Exponential exponential(Tensor point) {
     return new RpnExponential(point);
   }

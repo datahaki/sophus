@@ -59,6 +59,7 @@ public class GrMetricTest extends TestCase {
     GrMemberQ.INSTANCE.require(p);
     GrMemberQ.INSTANCE.require(q);
     Scalar distance = GrMetric.INSTANCE.distance(p, q);
+    distance.zero();
     // TODO check distance of "antipodal" frames, why is this zero?
     // System.out.println(distance);
   }

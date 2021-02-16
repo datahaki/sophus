@@ -3,8 +3,10 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.util.Random;
 
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
@@ -81,5 +83,22 @@ public class HnExponentialTest extends TestCase {
       Scalar vn1 = HnVectorNorm.of(v);
       Chop._06.requireClose(dxy, vn1);
     }
+  }
+
+  public void testSpecific() {
+    Tensor x = Tensors.vector(2, Math.sqrt(5));
+    Tensor y = Tensors.vector(3, Math.sqrt(10));
+    HnMemberQ.INSTANCE.require(x);
+    HnMemberQ.INSTANCE.require(y);
+    HnExponential hnExponential = new HnExponential(x);
+    Tensor v = hnExponential.log(y);
+    Tolerance.CHOP.requireClose(v, Tensors.vector(0.8381028390566728, 0.7496219681065144));
+    Scalar vnorm = HnVectorNorm.of(v);
+    Tolerance.CHOP.requireClose(vnorm, RealScalar.of(0.37481098405325747));
+    Tensor yr = hnExponential.exp(v);
+    Tolerance.CHOP.requireClose(yr, Tensors.vector(3, 3.1622776601683817));
+    // Scalar lf = LBilinearForm.between(x, y);
+    // System.out.println(lf);
+    // System.out.println(v);
   }
 }

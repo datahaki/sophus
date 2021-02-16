@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -19,7 +19,7 @@ public enum DualC2FourPointCurveSubdivision {
    * 
    * @param geodesicInterface
    * @return */
-  public static CurveSubdivision cubic(GeodesicInterface geodesicInterface) {
+  public static CurveSubdivision cubic(Geodesic geodesicInterface) {
     return of(geodesicInterface, RationalScalar.of(1, 128));
   }
 
@@ -29,14 +29,14 @@ public enum DualC2FourPointCurveSubdivision {
    * 
    * @param geodesicInterface
    * @return */
-  public static CurveSubdivision tightest(GeodesicInterface geodesicInterface) {
+  public static CurveSubdivision tightest(Geodesic geodesicInterface) {
     return of(geodesicInterface, RealScalar.of(0.013723));
   }
 
   /** @param geodesicInterface
    * @param omega tension parameter
    * @return */
-  public static CurveSubdivision of(GeodesicInterface geodesicInterface, Scalar omega) {
+  public static CurveSubdivision of(Geodesic geodesicInterface, Scalar omega) {
     Scalar pq_f = RealScalar.of(3).add(RealScalar.of(36).multiply(omega)) //
         .divide(RealScalar.of(3).add(RealScalar.of(8).multiply(omega)));
     Scalar rs_f = RealScalar.of(20).multiply(omega) //

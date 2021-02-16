@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 
 public class SplitParametricCurveTest extends TestCase {
   public void testSimple() {
-    GeodesicInterface geodesicInterface = SplitParametricCurve.of(RnGeodesic.INSTANCE);
+    Geodesic geodesicInterface = SplitParametricCurve.of(RnGeodesic.INSTANCE);
     ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertEquals(scalarTensorFunction.apply(RealScalar.ZERO), UnitVector.of(3, 0));
     assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.vector(0.5, 0.5, 0));

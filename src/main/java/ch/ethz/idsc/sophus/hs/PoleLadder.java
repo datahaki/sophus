@@ -70,7 +70,8 @@ public class PoleLadder implements HsTransport, Serializable {
 
     @Override
     public Tensor apply(Tensor v) {
-      return exp_q.log(exp_m.exp(exp_m.log(exp_p.exp(v)).negate())).negate();
+      // return exp_q.log(exp_m.exp(exp_m.log(exp_p.exp(v)).negate())).negate();
+      return exp_q.log(exp_m.flip(exp_p.exp(v))).negate();
     }
   }
 }

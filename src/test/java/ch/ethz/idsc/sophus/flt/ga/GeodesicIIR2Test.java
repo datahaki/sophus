@@ -7,7 +7,7 @@ import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 
 public class GeodesicIIR2Test extends TestCase {
   public void testSimple() {
-    GeodesicInterface geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
+    Geodesic geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
     GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicInterface, alpha);
     Tensor vector0 = Tensors.vector(1, 2, 0.25);
@@ -35,7 +35,7 @@ public class GeodesicIIR2Test extends TestCase {
   }
 
   public void testLinear() {
-    GeodesicInterface geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
+    Geodesic geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
     TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicInterface, alpha);
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));

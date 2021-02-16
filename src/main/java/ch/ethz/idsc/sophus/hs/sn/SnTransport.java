@@ -11,7 +11,8 @@ public enum SnTransport implements HsTransport {
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
+    TSnMemberQ tSnMemberQ = new TSnMemberQ(orig);
     Tensor matrix = SnAction.match(orig, dest);
-    return vector -> matrix.dot(new TSnMemberQ(orig).require(vector));
+    return vector -> matrix.dot(tSnMemberQ.require(vector));
   }
 }

@@ -8,11 +8,17 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * Log[g.m.g^-1] == Ad[g].Log[m] */
 public interface Exponential extends TangentSpace {
-  /** @param vector in the tangent space
+  /** @param v vector in the tangent space
    * @return point in the manifold */
-  Tensor exp(Tensor vector);
+  Tensor exp(Tensor v);
 
-  /** @param point in the manifold
+  /** @param q point in the manifold
    * @return vector in the tangent space */
-  Tensor log(Tensor point);
+  Tensor log(Tensor q);
+
+  /** @param q
+   * @return exp(log(q).negate()) */
+  default Tensor flip(Tensor q) {
+    return exp(log(q).negate());
+  }
 }

@@ -40,8 +40,13 @@ public enum GrManifold implements HsManifold {
     return new GrExponential(x);
   }
 
-  @Override // from HsExponential
+  @Override // from HsManifold
   public Exponential exponential(Tensor x) {
     return new GrExponential(x);
+  }
+
+  @Override
+  public Tensor flip(Tensor p, Tensor q) {
+    return new GrExponential(p).flip(q);
   }
 }

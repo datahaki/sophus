@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum S2Manifold implements HsManifold {
   INSTANCE;
 
-  @Override // from HsExponential
+  @Override // from HsManifold
   public Exponential exponential(Tensor p) {
     return new S2Exponential(p);
   }

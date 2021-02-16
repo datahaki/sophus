@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 
 /** References:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
@@ -20,5 +20,5 @@ import ch.ethz.idsc.sophus.math.GeodesicInterface;
  * Tests on Manifold-valued Data */
 public enum SpdGeodesic {
   ;
-  public static final GeodesicInterface INSTANCE = new HsGeodesic(SpdManifold.INSTANCE);
+  public static final Geodesic INSTANCE = new HsGeodesic(SpdManifold.INSTANCE);
 }

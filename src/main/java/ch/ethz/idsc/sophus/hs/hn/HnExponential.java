@@ -12,41 +12,43 @@ import ch.ethz.idsc.tensor.sca.Cosh;
 /** hyperboloid model
  * 
  * Reference:
- * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
+ * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016
+ * 
+ * @see HnGeodesic */
 public class HnExponential implements Exponential, Serializable {
-  private final Tensor x;
+  private final Tensor p;
   private final HnAngle hnAngle;
   private final THnMemberQ tHnMemberQ;
 
-  public HnExponential(Tensor x) {
-    this.x = x;
-    hnAngle = new HnAngle(x);
-    tHnMemberQ = new THnMemberQ(x);
+  public HnExponential(Tensor p) {
+    this.p = p;
+    hnAngle = new HnAngle(p);
+    tHnMemberQ = new THnMemberQ(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tHnMemberQ.require(v);
     Scalar vn = HnVectorNorm.of(v);
-    Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
-    exp = HnProjection.INSTANCE.apply(exp); // analogous to S^n
-    return HnMemberQ.INSTANCE.require(exp);
+    return p.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor y) {
-    return hnAngle.log(y);
+  public Tensor log(Tensor q) {
+    return hnAngle.log(q);
   }
 
-  /** @param y
-   * @return Exp_x[-Log_x[y]] */
-  /* package */ Tensor flip(Tensor y) {
-    return null; // TODO
+  /** @param q
+   * @return Exp_p[-Log_p[q]] */
+  @Override
+  public Tensor flip(Tensor q) {
+    Scalar nxy = LBilinearForm.between(p, q).negate();
+    return p.add(p).multiply(nxy).subtract(q);
   }
 
   @Override // from TangentSpace
-  public Tensor vectorLog(Tensor y) {
-    // embedding of TxH^n in R^(n+1) is not tight (consistent with S^n)
-    return log(y);
+  public Tensor vectorLog(Tensor q) {
+    // embedding of TxH^n in R^(n+1) is not tight
+    return log(q);
   }
 }

@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.s2;
 
 import ch.ethz.idsc.sophus.hs.sn.SnGeodesic;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * https://en.wikipedia.org/wiki/N-sphere
  * 
  * superseded by {@link SnGeodesic} */
-public enum S2Geodesic implements GeodesicInterface {
+public enum S2Geodesic implements Geodesic {
   INSTANCE;
 
   @Override // from TensorGeodesic

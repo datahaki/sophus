@@ -7,9 +7,11 @@ import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.sophus.math.ScalarProductForm;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Transpose;
-import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.sca.Chop;
 
 public class SopqMemberQ implements MemberQ, Serializable {
+  private static final Chop CHOP = Chop._08;
+  // ---
   private final Tensor form;
 
   public SopqMemberQ(int p, int q) {
@@ -18,6 +20,6 @@ public class SopqMemberQ implements MemberQ, Serializable {
 
   @Override // from MemberQ
   public boolean test(Tensor x) {
-    return Tolerance.CHOP.isClose(Transpose.of(x).dot(form).dot(x), form);
+    return CHOP.isClose(Transpose.of(x).dot(form).dot(x), form);
   }
 }

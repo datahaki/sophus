@@ -30,29 +30,28 @@ import ch.ethz.idsc.tensor.sca.Sinc;
 public class SnExponential implements Exponential, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
   // ---
-  private final Tensor x;
+  private final Tensor p;
   private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
   private final TSnMemberQ tSnMemberQ;
   /** only needed for vectorLog */
   private final Tensor tSnProjection;
 
-  /** @param x on S^n
+  /** @param p on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
-  public SnExponential(Tensor x) {
-    this.x = x;
-    snAngle = new SnAngle(x);
-    tSnMemberQ = new TSnMemberQ(x);
-    projection = Projection.on(x);
-    tSnProjection = TSnProjection.unsafe(x);
+  public SnExponential(Tensor p) {
+    this.p = p;
+    snAngle = new SnAngle(p);
+    tSnMemberQ = new TSnMemberQ(p);
+    projection = Projection.on(p);
+    tSnProjection = TSnProjection.unsafe(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tSnMemberQ.require(v);
     Scalar vn = VectorNorm2.of(v);
-    Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
-    return VectorNorm2.NORMALIZE.apply(y);
+    return p.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
   }
 
   /** @throws Exception if y not member of Sn */

@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.r3s2;
 import ch.ethz.idsc.sophus.hs.sn.SnAction;
 import ch.ethz.idsc.sophus.lie.se3.Se3Geodesic;
 import ch.ethz.idsc.sophus.lie.se3.Se3Matrix;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.mat.IdentityMatrix;
  * 
  * Elements of R3S2 are tensors of the form
  * {{px, py, pz}, {nx, ny, nz}} */
-public enum R3S2Geodesic implements GeodesicInterface {
+public enum R3S2Geodesic implements Geodesic {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

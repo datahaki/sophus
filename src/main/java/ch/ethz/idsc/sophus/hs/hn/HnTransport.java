@@ -2,22 +2,34 @@
 package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.sophus.hs.HsTransport;
-import ch.ethz.idsc.sophus.hs.PoleLadder;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
-/** the pole ladder is exact in symmetric spaces
- * 
- * Reference:
- * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
- * Nicolas Guigui, Xavier Pennec, 2020 */
+/** several enhancements over the pole ladder:
+ * faster midpoint and flip computation */
 public enum HnTransport implements HsTransport {
   INSTANCE;
 
-  private static final HsTransport POLE_LADDER = PoleLadder.of(HnManifold.INSTANCE);
-
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    return POLE_LADDER.shift(p, q);
+    return new Rung(p, q);
+  }
+
+  private class Rung implements TensorUnaryOperator {
+    private final HnExponential exp_p;
+    private final HnExponential exp_q;
+    private final HnExponential exp_m;
+
+    private Rung(Tensor p, Tensor q) {
+      exp_p = new HnExponential(p);
+      exp_q = new HnExponential(q);
+      Tensor m = HnGeodesic.INSTANCE.midpoint(p, q);
+      exp_m = new HnExponential(m);
+    }
+
+    @Override
+    public Tensor apply(Tensor v) {
+      return exp_q.log(exp_m.flip(exp_p.exp(v))).negate();
+    }
   }
 }

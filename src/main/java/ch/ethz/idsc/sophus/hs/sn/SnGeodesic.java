@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * 
  * <p>the use of SnGeodesic.INSTANCE is preferred over {@link HsGeodesic}. The
  * implementation is symmetric in p and q and more efficient than HsGeodesic. */
-public enum SnGeodesic implements GeodesicInterface {
+public enum SnGeodesic implements Geodesic {
   INSTANCE;
 
   @Override // from ParametricCurve

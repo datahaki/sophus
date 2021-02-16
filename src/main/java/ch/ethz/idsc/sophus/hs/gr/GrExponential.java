@@ -53,7 +53,8 @@ public class GrExponential implements Exponential, Serializable {
 
   /** @param q
    * @return Exp_p[-Log_p[q]] */
-  /* package */ Tensor flip(Tensor q) {
+  @Override
+  public Tensor flip(Tensor q) {
     // matrix bracket is obsolete
     Tensor v = MatrixExp.of(MatrixLog.of(bic(q).dot(p2_id)).multiply(RationalScalar.HALF));
     return BasisTransform.ofMatrix(p, v);

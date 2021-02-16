@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -23,7 +23,7 @@ public class SubdivideTransport implements HsTransport, Serializable {
    * @param geodesicInterface
    * @param n
    * @return */
-  public static HsTransport of(HsTransport hsTransport, GeodesicInterface geodesicInterface, int n) {
+  public static HsTransport of(HsTransport hsTransport, Geodesic geodesicInterface, int n) {
     return new SubdivideTransport( //
         Objects.requireNonNull(hsTransport), //
         Objects.requireNonNull(geodesicInterface), //
@@ -32,11 +32,11 @@ public class SubdivideTransport implements HsTransport, Serializable {
 
   /***************************************************/
   private final HsTransport hsTransport;
-  private final GeodesicInterface geodesicInterface;
+  private final Geodesic geodesicInterface;
   private final Tensor domain;
   private final Scalar factor;
 
-  public SubdivideTransport(HsTransport hsTransport, GeodesicInterface geodesicInterface, int n) {
+  public SubdivideTransport(HsTransport hsTransport, Geodesic geodesicInterface, int n) {
     this.hsTransport = hsTransport;
     this.geodesicInterface = geodesicInterface;
     domain = Subdivide.of(0, 1, n);

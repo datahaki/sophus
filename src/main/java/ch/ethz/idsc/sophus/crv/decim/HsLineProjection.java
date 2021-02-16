@@ -19,7 +19,7 @@ public class HsLineProjection {
 
   public Tensor onto(Tensor p, Tensor q, Tensor r) {
     // while (true) {
-    // Exponential exponential = hsExponential.exponential(p);
+    // Exponential exponential = hsManifold.exponential(p);
     // Tensor lq = exponential.log(q);
     // Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);
     // Tensor lr = exponential.log(r);

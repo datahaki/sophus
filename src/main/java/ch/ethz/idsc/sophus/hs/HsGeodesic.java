@@ -5,13 +5,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** general implementation of geodesic using exp/log */
-public class HsGeodesic implements GeodesicInterface, Serializable {
+public class HsGeodesic implements Geodesic, Serializable {
   private final HsManifold hsManifold;
 
   /** @param hsManifold */

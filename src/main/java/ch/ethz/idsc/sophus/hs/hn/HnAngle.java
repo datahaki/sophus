@@ -21,11 +21,11 @@ public class HnAngle implements TensorScalarFunction {
   /** @param y
    * @return result guaranteed to be greater equals 1 */
   private Scalar _cosh_d(Tensor y) {
-    Scalar xy = LBilinearForm.between(x, y).negate();
-    if (Scalars.lessEquals(RealScalar.ONE, xy))
-      return xy;
+    Scalar cosh_d = LBilinearForm.between(x, y).negate();
+    if (Scalars.lessEquals(RealScalar.ONE, cosh_d))
+      return cosh_d;
     // TODO use taylor series
-    Chop._08.requireClose(xy, RealScalar.ONE);
+    Chop._08.requireClose(cosh_d, RealScalar.ONE);
     return RealScalar.ONE;
   }
 
