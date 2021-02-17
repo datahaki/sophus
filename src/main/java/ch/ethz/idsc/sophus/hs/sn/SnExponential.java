@@ -35,7 +35,7 @@ public class SnExponential implements Exponential, Serializable {
   private final TensorUnaryOperator projection;
   private final TSnMemberQ tSnMemberQ;
   /** only needed for vectorLog */
-  private final Tensor tSnProjection;
+  final Tensor tSnProjection;
 
   /** @param p on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
@@ -68,6 +68,10 @@ public class SnExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor midpoint(Tensor q) {
     return SnManifold.INSTANCE.midpoint(p, q);
+  }
+
+  public Tensor endomorphism(Tensor q) {
+    return SnManifold.INSTANCE.endomorphism(p, q);
   }
 
   @Override // from TangentSpace

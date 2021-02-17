@@ -12,14 +12,14 @@ public enum TSnProjection {
   ;
   private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, 10);
 
-  /** @param x vector of length n
+  /** @param p vector of length n
    * @return matrix of size n-1 x n that satisfies matrix . x == 0 */
-  public static Tensor of(Tensor x) {
-    return unsafe(SnMemberQ.INSTANCE.require(x));
+  public static Tensor of(Tensor p) {
+    return unsafe(SnMemberQ.INSTANCE.require(p));
   }
 
-  /* package */ static Tensor unsafe(Tensor x) {
-    int n = x.length();
-    return Tensor.of(Orthogonalize.of(Join.of(Tensors.of(x), CACHE.apply(n))).stream().skip(1).limit(n - 1));
+  /* package */ static Tensor unsafe(Tensor p) {
+    int n = p.length();
+    return Tensor.of(Orthogonalize.of(Join.of(Tensors.of(p), CACHE.apply(n))).stream().skip(1).limit(n - 1));
   }
 }

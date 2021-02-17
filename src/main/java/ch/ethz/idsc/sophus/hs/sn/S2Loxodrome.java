@@ -1,6 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
+import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -13,9 +14,16 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * 
  * https://de.wikipedia.org/wiki/Loxodrome */
 public class S2Loxodrome implements ScalarTensorFunction {
-  /** @param angle */
+  /** @param angle
+   * @return */
   public static ScalarTensorFunction of(Scalar angle) {
     return new S2Loxodrome(angle);
+  }
+
+  /** @param angle
+   * @return */
+  public static ScalarTensorFunction of(Number angle) {
+    return of(RealScalar.of(angle));
   }
 
   /***************************************************/
@@ -29,9 +37,9 @@ public class S2Loxodrome implements ScalarTensorFunction {
   public Tensor apply(Scalar scalar) {
     Scalar f = ArcTan.FUNCTION.apply(scalar.multiply(angle));
     Scalar cf = Cos.FUNCTION.apply(f);
-    Scalar x = Cos.FUNCTION.apply(scalar).multiply(cf);
-    Scalar y = Sin.FUNCTION.apply(scalar).multiply(cf);
-    Scalar z = Sin.FUNCTION.apply(f);
-    return Tensors.of(x, y, z);
+    return Tensors.of( //
+        Cos.FUNCTION.apply(scalar).multiply(cf), //
+        Sin.FUNCTION.apply(scalar).multiply(cf), //
+        Sin.FUNCTION.apply(f));
   }
 }

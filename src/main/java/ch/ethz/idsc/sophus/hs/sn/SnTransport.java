@@ -10,9 +10,9 @@ public enum SnTransport implements HsTransport {
   INSTANCE;
 
   @Override // from HsTransport
-  public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
-    TSnMemberQ tSnMemberQ = new TSnMemberQ(orig);
-    Tensor matrix = SnAction.match(orig, dest);
+  public TensorUnaryOperator shift(Tensor p, Tensor q) {
+    TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
+    Tensor matrix = SnManifold.INSTANCE.endomorphism(p, q);
     return vector -> matrix.dot(tSnMemberQ.require(vector));
   }
 }

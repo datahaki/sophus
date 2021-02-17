@@ -41,7 +41,7 @@ public class SnActionTest extends TestCase {
       Tensor wx = Cross.skew3(w);
       Tensor wd = TensorWedge.of(a, b).negate();
       Tolerance.CHOP.requireClose(wx, wd);
-      Tensor rotation1 = SnAction.match(a, b);
+      Tensor rotation1 = SnManifold.INSTANCE.endomorphism(a, b);
       assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._10));
       Chop._08.requireClose(rotation1.dot(a), b);
       Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
@@ -54,8 +54,8 @@ public class SnActionTest extends TestCase {
       for (int count = 0; count < 10; ++count) {
         Tensor a = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor b = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
-        Tensor rotation1 = SnAction.match(a, b);
-        Tensor rotation2 = SnAction.match(b, a);
+        Tensor rotation1 = SnManifold.INSTANCE.endomorphism(a, b);
+        Tensor rotation2 = SnManifold.INSTANCE.endomorphism(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
         Chop._08.requireClose(new SnAction(rotation1).apply(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
@@ -69,8 +69,8 @@ public class SnActionTest extends TestCase {
       for (int count = 0; count < 10; ++count) {
         Tensor a = RandomSample.of(randomSampleInterface);
         Tensor b = RandomSample.of(randomSampleInterface);
-        Tensor rotation1 = SnAction.match(a, b);
-        Tensor rotation2 = SnAction.match(b, a);
+        Tensor rotation1 = SnManifold.INSTANCE.endomorphism(a, b);
+        Tensor rotation2 = SnManifold.INSTANCE.endomorphism(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));
         Chop._08.requireClose(rotation1.dot(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
