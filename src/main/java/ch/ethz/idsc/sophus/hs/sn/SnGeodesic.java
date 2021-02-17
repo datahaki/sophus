@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.sca.Sin;
 
@@ -36,7 +36,7 @@ public class SnGeodesic extends HsGeodesic {
       return scalar -> p.copy();
     if (Tolerance.CHOP.isClose(a, Pi.VALUE))
       throw TensorRuntimeException.of(p, q); // when p == -q
-    return scalar -> VectorNorm2.NORMALIZE.apply(Tensors.of( //
+    return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
         Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
   }

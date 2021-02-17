@@ -18,7 +18,7 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
 import ch.ethz.idsc.tensor.nrm.Normalize;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.num.Rationalize;
 import ch.ethz.idsc.tensor.red.Nest;
 import junit.framework.TestCase;
@@ -75,7 +75,7 @@ public class LaneRiesenfeld3CurveSubdivisionTest extends TestCase {
     Tensor tensor = Subdivide.of(-0.5, 0.8, 6) //
         .map(scalar -> Tensors.of(scalar, RealScalar.of(0.3), RealScalar.ONE));
     tensor = Tensor.of(tensor.stream() //
-        .map(Normalize.with(VectorNorm2::of)) //
+        .map(Normalize.with(Vector2Norm::of)) //
         .map(row -> Tensors.of(row, row)));
     TensorUnaryOperator string = LaneRiesenfeld3CurveSubdivision.of(R3S2Geodesic.INSTANCE)::string;
     Tensor apply = string.apply(tensor);

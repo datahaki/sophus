@@ -13,7 +13,7 @@ import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.alg.VectorQ;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -26,7 +26,7 @@ public class SnManifoldTest extends TestCase {
 
   private static Tensor randomCloud(Tensor mean, int n) {
     Distribution distribution = NormalDistribution.of(0, 0.1);
-    return Tensor.of(RandomVariate.of(distribution, n, mean.length()).stream().map(mean::add).map(VectorNorm2.NORMALIZE));
+    return Tensor.of(RandomVariate.of(distribution, n, mean.length()).stream().map(mean::add).map(Vector2Norm.NORMALIZE));
   }
 
   public void testLinearReproduction() {

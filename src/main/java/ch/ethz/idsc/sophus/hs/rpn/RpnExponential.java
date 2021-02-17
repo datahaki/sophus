@@ -12,14 +12,14 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.Projection;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** real projective plane */
 public class RpnExponential implements Exponential, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final Tensor x;
   private final SnAngle snAngle;
@@ -40,9 +40,9 @@ public class RpnExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tSnMemberQ.require(v);
-    Scalar vn = VectorNorm2.of(v);
+    Scalar vn = Vector2Norm.of(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
-    y = VectorNorm2.NORMALIZE.apply(y);
+    y = Vector2Norm.NORMALIZE.apply(y);
     Scalar d_xyp = snAngle.apply(y);
     Scalar d_xyn = snAngle.apply(y.negate());
     return Scalars.lessEquals(d_xyp, d_xyn) //

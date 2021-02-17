@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.ext.HomeDirectory;
 import ch.ethz.idsc.tensor.img.ArrayPlot;
 import ch.ethz.idsc.tensor.img.ColorDataGradients;
 import ch.ethz.idsc.tensor.io.Export;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.ArgMin;
 import ch.ethz.idsc.tensor.red.Min;
 
@@ -34,7 +34,7 @@ import ch.ethz.idsc.tensor.red.Min;
     Tensor seed = Tensors.of(start);
     for (int count = 0; count < 4; ++count)
       seed = Flatten.of(Outer.of(Se2onR2Demo::action, actions, seed), 1);
-    Tensor tensor = Tensor.of(seed.stream().map(VectorNorm2::of));
+    Tensor tensor = Tensor.of(seed.stream().map(Vector2Norm::of));
     Scalar dist = (Scalar) tensor.stream().reduce(Min::of).get();
     return RealScalar.of(ArgMin.of(tensor) * 0.01).add(dist);
   }

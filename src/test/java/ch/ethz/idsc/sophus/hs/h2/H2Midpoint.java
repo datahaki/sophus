@@ -6,7 +6,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
+import ch.ethz.idsc.tensor.nrm.Vector2NormSquared;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** Careful: H2Midpoint uses different coordinates than HnGeodesic for n == 2!
@@ -36,7 +36,7 @@ public enum H2Midpoint implements MidpointInterface {
   private static Tensor psi(Tensor x) {
     Scalar x0 = x.Get(0);
     Scalar x1 = x.Get(1);
-    Scalar xs = VectorNorm2Squared.of(x);
+    Scalar xs = Vector2NormSquared.of(x);
     return Tensors.of( //
         RealScalar.ONE.add(xs), //
         x0.add(x0), //

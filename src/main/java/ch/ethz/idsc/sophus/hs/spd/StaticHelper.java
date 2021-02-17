@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.hs.spd;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Eigensystem;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Log;
 
 /* package */ enum StaticHelper {
@@ -34,6 +34,6 @@ import ch.ethz.idsc.tensor.sca.Log;
         .map(Log.FUNCTION));
     // note that Norm2Squared.ofVector(diag) == Trace.of(MatrixLog.of(q)^2)
     // note that Total.ofVector(diag) == Trace.of(MatrixLog.of(q))
-    return VectorNorm2.of(diag); // corresponds to beta == 0
+    return Vector2Norm.of(diag); // corresponds to beta == 0
   }
 }

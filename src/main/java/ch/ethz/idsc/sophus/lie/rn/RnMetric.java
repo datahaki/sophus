@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.lie.rn;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /** Euclidean vector metric */
 public enum RnMetric implements TensorMetric {
@@ -12,6 +12,6 @@ public enum RnMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return VectorNorm2.between(p, q);
+    return Vector2Norm.between(p, q);
   }
 }

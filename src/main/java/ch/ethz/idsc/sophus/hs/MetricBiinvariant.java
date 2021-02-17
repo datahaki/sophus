@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorScalarFunction;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /** left-invariant (biinvariant only if a biinvariant metric exists)
  * results in a symmetric distance matrix -> can use for kriging
@@ -41,7 +41,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
    * adapted.
    * 
    * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
-  public static final Biinvariant EUCLIDEAN = new MetricBiinvariant(VectorNorm2::of);
+  public static final Biinvariant EUCLIDEAN = new MetricBiinvariant(Vector2Norm::of);
   /** for {@link SpdExponential}, and {@link GrExponential} */
   public static final Biinvariant VECTORIZE0 = new MetricBiinvariant(Vectorize0Norm2.INSTANCE);
 

@@ -20,7 +20,7 @@ import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -32,7 +32,7 @@ public class SnGeodesicTest extends TestCase {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
     Tensor split = SnGeodesic.INSTANCE.split(p, q, RationalScalar.HALF);
-    assertEquals(VectorNorm2.of(split), RealScalar.ONE);
+    assertEquals(Vector2Norm.of(split), RealScalar.ONE);
     assertEquals(split.Get(0), split.Get(1));
     assertTrue(Scalars.isZero(split.Get(2)));
   }
@@ -85,8 +85,8 @@ public class SnGeodesicTest extends TestCase {
     Distribution distribution = NormalDistribution.standard();
     HsGeodesic hsGeodesic = new HsGeodesic(SnManifold.INSTANCE);
     for (int index = 0; index < 10; ++index) {
-      Tensor p = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
-      Tensor q = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor q = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Scalar scalar = RandomVariate.of(distribution);
       Tensor split2 = S2Geodesic.INSTANCE.split(p, q, scalar);
       Tensor splitn = SnGeodesic.INSTANCE.split(p, q, scalar);
@@ -99,12 +99,12 @@ public class SnGeodesicTest extends TestCase {
   public void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
-      Tensor p = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
-      Tensor q = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor q = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Chop._14.requireClose(p, SnGeodesic.INSTANCE.split(p, q, RealScalar.ZERO));
       Tensor r = SnGeodesic.INSTANCE.split(p, q, RealScalar.ONE);
       Chop._12.requireClose(q, r);
-      Chop._14.requireClose(VectorNorm2.of(r), RealScalar.ONE);
+      Chop._14.requireClose(Vector2Norm.of(r), RealScalar.ONE);
     }
   }
 

@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorScalarFunction;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /** Inverse Distance Weighting does not reproduce linear functions in general. Therefore,
  * Inverse distance weights <b>do not</b> fall in the category of generalized barycentric
@@ -24,7 +24,7 @@ public class InverseDistanceWeighting implements Genesis, Serializable {
    * @return
    * @see InversePowerVariogram */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return of(variogram, VectorNorm2::of);
+    return of(variogram, Vector2Norm::of);
   }
 
   /** @param variogram

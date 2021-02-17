@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.itp.Fit;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.Mean;
 import ch.ethz.idsc.tensor.red.ScalarSummaryStatistics;
 
@@ -63,7 +63,7 @@ public enum MinTriangleAreaSquared implements Genesis {
   /* package */ static Tensor normalize(Tensor polygon) {
     polygon = Tensor.of(polygon.stream().map(Mean.of(polygon).negate()::add));
     ScalarSummaryStatistics scalarSummaryStatistics = polygon.stream() //
-        .map(VectorNorm2::of) //
+        .map(Vector2Norm::of) //
         .collect(ScalarSummaryStatistics.collector());
     Scalar scalar = scalarSummaryStatistics.getAverage();
     return Scalars.isZero(scalar) //

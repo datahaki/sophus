@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -17,7 +17,7 @@ public class SnFastMeanTest extends TestCase {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n)
         try {
-          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(VectorNorm2.NORMALIZE));
+          Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(Vector2Norm.NORMALIZE));
           Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
           Tensor mean1 = SnFastMean.INSTANCE.mean(sequence, weights);
           Tensor mean2 = SnBiinvariantMean.INSTANCE.mean(sequence, weights);

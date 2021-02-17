@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.lie.r2.AngleVector;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -51,7 +51,7 @@ public class SnExponentialTest extends TestCase {
   public void testId() {
     for (int dim = 2; dim < 6; ++dim)
       for (int count = 0; count < 20; ++count) {
-        Tensor point = VectorNorm2.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), dim));
+        Tensor point = Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), dim));
         Tensor apply = new SnExponential(point).exp(point.map(Scalar::zero));
         Tolerance.CHOP.requireClose(point, apply);
       }
@@ -60,7 +60,7 @@ public class SnExponentialTest extends TestCase {
   public void testLog() {
     Tensor point = UnitVector.of(3, 0);
     SnExponential snExp = new SnExponential(point);
-    Tensor g = VectorNorm2.NORMALIZE.apply(Tensors.vector(1, 1, 1));
+    Tensor g = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 1, 1));
     Tensor vector = snExp.log(g);
     Tensor retr = snExp.exp(vector);
     Chop._10.requireClose(g, retr);

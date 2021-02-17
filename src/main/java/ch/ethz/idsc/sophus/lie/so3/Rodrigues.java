@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.ArcCos;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.N;
@@ -43,7 +43,7 @@ public enum Rodrigues implements Exponential {
   /** @param vector of length 3
    * @return orthogonal matrix with dimensions 3 x 3 */
   public static Tensor vectorExp(Tensor vector) {
-    Scalar beta = VectorNorm2.of(vector);
+    Scalar beta = Vector2Norm.of(vector);
     Scalar s1 = Sinc.FUNCTION.apply(beta);
     Tensor X1 = Cross.skew3(vector.multiply(s1));
     Scalar h2 = Sinc.FUNCTION.apply(beta.multiply(HALF));

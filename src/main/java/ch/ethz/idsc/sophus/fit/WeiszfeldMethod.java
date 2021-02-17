@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.ArgMin;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.N;
@@ -52,7 +52,7 @@ public class WeiszfeldMethod implements SpatialMedian, Serializable {
     Tensor point = N.DOUBLE.of(weights.dot(sequence)); // initial value
     int iteration = 0;
     while (++iteration < MAX_ITERATIONS) {
-      Tensor dist = Tensor.of(sequence.stream().map(point.negate()::add).map(VectorNorm2::of));
+      Tensor dist = Tensor.of(sequence.stream().map(point.negate()::add).map(Vector2Norm::of));
       int index = ArgMin.of(dist);
       if (Scalars.isZero(dist.Get(index)))
         return Optional.of(point);

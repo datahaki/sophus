@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.mat.QRSignOperator;
 import ch.ethz.idsc.tensor.mat.QRSignOperators;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.mat.UnitaryMatrixQ;
-import ch.ethz.idsc.tensor.nrm.VectorNormInfinity;
+import ch.ethz.idsc.tensor.nrm.VectorInfinityNorm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -179,7 +179,7 @@ public class RodriguesTest extends TestCase {
       Tensor matrix = So3TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
       specialOps(matrix);
       QRDecomposition qr = QRDecomposition.of(matrix, QRSignOperators.ORIENTATION);
-      Scalar infNorm = VectorNormInfinity.of(Diagonal.of(qr.getR()).map(Decrement.ONE));
+      Scalar infNorm = VectorInfinityNorm.of(Diagonal.of(qr.getR()).map(Decrement.ONE));
       assertTrue(Scalars.lessThan(infNorm, RealScalar.of(0.1)));
     }
   }

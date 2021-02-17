@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -25,7 +25,7 @@ public class HeManifoldTest extends TestCase {
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.of( //
       NormWeighting.of( //
-          new HeTarget(VectorNorm2::of, RealScalar.ONE), //
+          new HeTarget(Vector2Norm::of, RealScalar.ONE), //
           InversePowerVariogram.of(1))));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // LeveragesCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //

@@ -23,7 +23,7 @@ import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -84,7 +84,7 @@ public class GrassmannQTest extends TestCase {
     Chop._08.requireClose(H, p);
     // ---
     Tensor d1 = influenceMatrix.leverages_sqrt();
-    Tensor d2 = Tensor.of(influenceMatrix.matrix().stream().map(VectorNorm2::of));
+    Tensor d2 = Tensor.of(influenceMatrix.matrix().stream().map(Vector2Norm::of));
     Chop._08.requireClose(d1, d2);
     return sigma_inverse;
   }

@@ -6,7 +6,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Sin;
 
@@ -21,7 +21,7 @@ import ch.ethz.idsc.tensor.sca.Sin;
    * @return length of geodesic between p and q when projected to R^2 including the number of windings */
   @Override
   public Scalar distance(Tensor p, Tensor q) {
-    Scalar norm = VectorNorm2.between(p.extract(0, 2), q.extract(0, 2));
+    Scalar norm = Vector2Norm.between(p.extract(0, 2), q.extract(0, 2));
     Scalar alpha = q.Get(2).subtract(p.Get(2));
     if (Scalars.isZero(alpha))
       return norm;

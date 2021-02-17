@@ -11,10 +11,10 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 public class HsLineDistance implements LineDistance, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final VectorLogManifold vectorLogManifold;
 
@@ -55,7 +55,7 @@ public class HsLineDistance implements LineDistance, Serializable {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor tensor) {
-      return VectorNorm2.of(orthogonal(tensor));
+      return Vector2Norm.of(orthogonal(tensor));
     }
   }
 }

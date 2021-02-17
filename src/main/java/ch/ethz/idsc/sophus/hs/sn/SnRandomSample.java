@@ -7,7 +7,7 @@ import java.util.Random;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Integers;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 
@@ -42,6 +42,6 @@ public class SnRandomSample implements RandomSampleInterface, Serializable {
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
     // ignore the risk that random vector could be (0, 0, ..., 0)
-    return VectorNorm2.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), random, length));
+    return Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), random, length));
   }
 }

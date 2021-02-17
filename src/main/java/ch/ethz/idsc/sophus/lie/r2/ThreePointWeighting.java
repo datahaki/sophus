@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:
  * weighting satisfies barycentric equation but do not necessarily sum up to one. */
@@ -37,7 +37,7 @@ public class ThreePointWeighting implements Genesis, Serializable {
     Scalar[] dens = new Scalar[length];
     int ind = 0;
     for (Tensor dif : levers) { // dif is vector of length 2
-      Scalar den = VectorNorm2.of(dif); // use of metric
+      Scalar den = Vector2Norm.of(dif); // use of metric
       if (Scalars.isZero(den))
         return UnitVector.of(length, ind);
       auxs[ind] = biFunction.apply(dif, den);

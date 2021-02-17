@@ -6,7 +6,7 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.math.StochasticMatrixQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Inverse;
-import ch.ethz.idsc.tensor.nrm.VectorNorm1;
+import ch.ethz.idsc.tensor.nrm.Vector1Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -20,7 +20,7 @@ public class BiinvariantMeanTest extends TestCase {
    * @return */
   private static Tensor affine(int n) {
     Tensor matrix = RandomVariate.of(DISTRIBUTION, n, n);
-    matrix = StochasticMatrixQ.requireRows(Tensor.of(matrix.stream().map(VectorNorm1.NORMALIZE)), Chop._08);
+    matrix = StochasticMatrixQ.requireRows(Tensor.of(matrix.stream().map(Vector1Norm.NORMALIZE)), Chop._08);
     StochasticMatrixQ.requireRows(Inverse.of(matrix), Chop._10);
     return matrix;
   }

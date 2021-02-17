@@ -9,7 +9,7 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.BernoulliDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -60,7 +60,7 @@ public class LieGroupBSplineInterpolationTest extends TestCase {
     for (int index = 0; index < 100; ++index) {
       iteration = iteration.stepGaussSeidel();
       Tensor q = iteration.control();
-      if (Scalars.isZero(VectorNorm2.between(p, q)))
+      if (Scalars.isZero(Vector2Norm.between(p, q)))
         return;
       p = q;
     }

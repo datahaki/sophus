@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.qty.Quantity;
 import ch.ethz.idsc.tensor.qty.QuantityMagnitude;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -27,7 +27,7 @@ public class BallRandomSampleTest extends TestCase {
     Scalar radius = RealScalar.of(2);
     RandomSampleInterface rsi = BallRandomSample.of(center, radius);
     Tensor vector = RandomSample.of(rsi).subtract(center);
-    assertTrue(Scalars.lessEquals(VectorNorm2.of(vector), radius));
+    assertTrue(Scalars.lessEquals(Vector2Norm.of(vector), radius));
   }
 
   public void test1D() {
@@ -45,7 +45,7 @@ public class BallRandomSampleTest extends TestCase {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.ONE);
     for (int count = 0; count < 100; ++count) {
       Tensor loc = RandomSample.of(diskRandomSample);
-      Scalar rad = VectorNorm2.of(loc);
+      Scalar rad = Vector2Norm.of(loc);
       assertTrue(Scalars.lessEquals(rad, RealScalar.ONE));
     }
   }
@@ -77,8 +77,8 @@ public class BallRandomSampleTest extends TestCase {
         BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
     int fails = 0;
     for (int index = 0; index < 20; ++index) {
-      Tensor pn = VectorNorm2.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
-      Tensor qn = VectorNorm2.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor pn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor qn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor p = Tensors.of(pn, pn);
       Tensor q = Tensors.of(qn, qn);
       try {
@@ -95,8 +95,8 @@ public class BallRandomSampleTest extends TestCase {
     for (int index = 0; index < 50; ++index) {
       RandomSampleInterface randomSampleInterface = //
           BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
-      Tensor p = VectorNorm2.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
-      Tensor q = VectorNorm2.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor p = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor q = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor tensor = SnAction.match(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
       assertTrue(OrthogonalMatrixQ.of(tensor, Chop._10));

@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -20,10 +20,10 @@ public class SnPhongMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(1, 0.2);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(VectorNorm2.NORMALIZE));
+        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(Vector2Norm.NORMALIZE));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
         Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights);
-        Tolerance.CHOP.requireClose(mean, VectorNorm2.NORMALIZE.apply(mean));
+        Tolerance.CHOP.requireClose(mean, Vector2Norm.NORMALIZE.apply(mean));
       }
   }
 
@@ -31,8 +31,8 @@ public class SnPhongMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 2; d < 4; ++d)
       for (int count = 0; count < 10; ++count) {
-        Tensor x = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, d));
-        Tensor y = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, d));
+        Tensor x = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, d));
+        Tensor y = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, d));
         Tensor m1 = SnGeodesic.INSTANCE.midpoint(x, y);
         SnMemberQ.INSTANCE.require(m1);
         Tensor m2 = SnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);

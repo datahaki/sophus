@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.TensorRuntimeException;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.TensorScalarFunction;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 public enum Vectorize0Norm2 implements TensorScalarFunction {
@@ -31,6 +31,6 @@ public enum Vectorize0Norm2 implements TensorScalarFunction {
         next += ++delta;
       vn.append(++index == next ? value : value.multiply(SQRT2));
     }
-    return VectorNorm2.of(vn);
+    return Vector2Norm.of(vn);
   }
 }

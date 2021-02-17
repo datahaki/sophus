@@ -28,15 +28,15 @@ public class GrManifoldTest extends TestCase {
         Biinvariants.LEVERAGES, //
         Biinvariants.GARDEN };
     Random random = new Random();
-    int n = 3 + random.nextInt(3);
+    int n = 3 + random.nextInt(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     VectorLogManifold vectorLogManifold = GrManifold.INSTANCE;
-    for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
-      int d = k * (n - k);
-      Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
-      Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
-      Biinvariant biinvariant = biinvariants[random.nextInt(biinvariants.length)];
+    int k = 1 + random.nextInt(n - 1);
+    RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+    int d = k * (n - k);
+    Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
+    Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
+    for (Biinvariant biinvariant : biinvariants) {
       Tensor w_o = biinvariant.coordinate(vectorLogManifold, variogram, seq_o).apply(pnt_o);
       GrAction grAction = new GrAction(RandomSample.of(SoRandomSample.of(n), random));
       Tensor seq_l = Tensor.of(seq_o.stream().map(grAction));

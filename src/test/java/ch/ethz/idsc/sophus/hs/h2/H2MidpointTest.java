@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.Nest;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
@@ -45,7 +45,7 @@ public class H2MidpointTest extends TestCase {
     Chop._12.requireClose(sphereFit.radius(), RealScalar.of(1.457737973711335));
     Tensor residual = Tensor.of(tensor.stream() //
         .map(sphereFit.center()::subtract) //
-        .map(VectorNorm2::of) //
+        .map(Vector2Norm::of) //
         .map(sphereFit.radius()::subtract));
     Chop._12.requireAllZero(residual);
   }

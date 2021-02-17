@@ -5,7 +5,7 @@ import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /* package */ enum InverseNorm implements Genesis {
   INSTANCE;
@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.nrm.VectorNorm2;
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
     return Tensor.of(levers.stream() //
-        .map(VectorNorm2::of) //
+        .map(Vector2Norm::of) //
         .map(VARIOGRAM));
   }
 }

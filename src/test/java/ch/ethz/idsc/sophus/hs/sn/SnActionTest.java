@@ -14,7 +14,7 @@ import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.Inverse;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -35,8 +35,8 @@ public class SnActionTest extends TestCase {
 
   public void testMatch3D() {
     for (int count = 0; count < 20; ++count) {
-      Tensor a = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
-      Tensor b = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
+      Tensor a = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
+      Tensor b = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
       Tensor w = Cross.of(a, b);
       Tensor wx = Cross.skew3(w);
       Tensor wd = TensorWedge.of(a, b).negate();
@@ -52,8 +52,8 @@ public class SnActionTest extends TestCase {
   public void testTargetNDim() {
     for (int d = 2; d < 6; ++d)
       for (int count = 0; count < 10; ++count) {
-        Tensor a = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
-        Tensor b = VectorNorm2.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
+        Tensor a = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
+        Tensor b = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
         Tensor rotation1 = SnAction.match(a, b);
         Tensor rotation2 = SnAction.match(b, a);
         assertTrue(OrthogonalMatrixQ.of(rotation1, Chop._08));

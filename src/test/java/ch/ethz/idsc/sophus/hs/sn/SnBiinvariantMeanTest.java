@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.r2.AngleVector;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -29,7 +29,7 @@ public class SnBiinvariantMeanTest extends TestCase {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
-      Tensor mean = rotation.dot(VectorNorm2.NORMALIZE.apply(Tensors.vector(1, 1, 1)));
+      Tensor mean = rotation.dot(Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 1, 1)));
       Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
       Chop._08.requireClose(sequence, Transpose.of(rotation));
       Tensor weights = barycentricCoordinate.weights(sequence, mean);

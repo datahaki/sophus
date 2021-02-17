@@ -15,14 +15,14 @@ import ch.ethz.idsc.tensor.ext.HomeDirectory;
 import ch.ethz.idsc.tensor.io.Put;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.nrm.Normalize;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.Nest;
 import ch.ethz.idsc.tensor.sca.AbsSquared;
 import ch.ethz.idsc.tensor.sca.Sin;
 
 class Plot3DDesign {
   private static final Scalar DT = RealScalar.of(0.01);
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(VectorNorm2::of);
+  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Vector2Norm::of);
   // ---
   private final TensorScalarFunction tensorScalarFunction;
 

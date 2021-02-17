@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.Projection;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
@@ -28,7 +28,7 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * "Barycentric Subspace Analysis on Manifolds"
  * by Xavier Pennec, 2016, p. 8 */
 public class SnExponential implements Exponential, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final Tensor p;
   private final SnAngle snAngle;
@@ -50,7 +50,7 @@ public class SnExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor exp(Tensor v) {
     tSnMemberQ.require(v);
-    Scalar vn = VectorNorm2.of(v);
+    Scalar vn = Vector2Norm.of(v);
     return p.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
   }
 

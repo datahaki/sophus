@@ -5,13 +5,13 @@ import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 public enum SnMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
   public boolean test(Tensor x) {
-    return Tolerance.CHOP.isClose(VectorNorm2.of(x), RealScalar.ONE);
+    return Tolerance.CHOP.isClose(Vector2Norm.of(x), RealScalar.ONE);
   }
 }

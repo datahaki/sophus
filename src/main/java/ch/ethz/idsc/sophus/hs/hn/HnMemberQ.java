@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Drop;
 import ch.ethz.idsc.tensor.alg.Last;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sign;
 
@@ -26,6 +26,6 @@ public enum HnMemberQ implements MemberQ {
   public static Scalar ratio(Tensor x) {
     Scalar xn = Last.of(x);
     Sign.requirePositive(xn);
-    return VectorNorm2.of(Drop.tail(x, 1).append(RealScalar.ONE)).divide(xn);
+    return Vector2Norm.of(Drop.tail(x, 1).append(RealScalar.ONE)).divide(xn);
   }
 }

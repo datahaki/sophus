@@ -5,7 +5,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Append;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /** R^n -> Hn
  * 
@@ -34,6 +34,6 @@ public enum HnWeierstrassCoordinate {
   }
 
   private static Scalar xn(Tensor x) {
-    return VectorNorm2.of(Append.of(x, RealScalar.ONE));
+    return Vector2Norm.of(Append.of(x, RealScalar.ONE));
   }
 }

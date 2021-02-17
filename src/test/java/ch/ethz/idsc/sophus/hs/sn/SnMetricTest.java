@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -30,12 +30,12 @@ public class SnMetricTest extends TestCase {
   public void testDirect() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
-      Tensor p = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
-      Tensor q = VectorNorm2.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
+      Tensor q = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Scalar a1 = SnMetric.INSTANCE.distance(p, q);
       Scalar a2 = _check(p, q);
       Chop._12.requireClose(a1, a2);
-      Scalar norm = VectorNorm2.of(new SnExponential(p).log(q));
+      Scalar norm = Vector2Norm.of(new SnExponential(p).log(q));
       Tolerance.CHOP.requireClose(norm, a1);
     }
   }

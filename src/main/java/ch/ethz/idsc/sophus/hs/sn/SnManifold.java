@@ -6,7 +6,7 @@ import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 public enum SnManifold implements HsManifold {
   INSTANCE;
@@ -29,6 +29,6 @@ public enum SnManifold implements HsManifold {
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
-    return VectorNorm2.NORMALIZE.apply(p.add(q));
+    return Vector2Norm.NORMALIZE.apply(p.add(q));
   }
 }

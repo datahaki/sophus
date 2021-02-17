@@ -12,7 +12,7 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -49,7 +49,7 @@ public class LeveragesCoordinateTest extends TestCase {
         for (int n = d + 1; n < d + 3; ++n) {
           Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream() //
               .map(mean::add) //
-              .map(VectorNorm2.NORMALIZE));
+              .map(Vector2Norm.NORMALIZE));
           bc1.weights(sequence, mean);
         }
       }

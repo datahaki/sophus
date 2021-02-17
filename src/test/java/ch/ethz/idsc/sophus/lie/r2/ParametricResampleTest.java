@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Differences;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clip;
 import ch.ethz.idsc.tensor.sca.Clips;
@@ -44,7 +44,7 @@ public class ParametricResampleTest extends TestCase {
     List<Tensor> pnts = resampleResult.getPoints();
     assertEquals(pnts.size(), 1);
     Tensor difs = Differences.of(pnts.get(0));
-    Tensor norm = Tensor.of(difs.stream().map(VectorNorm2::of));
+    Tensor norm = Tensor.of(difs.stream().map(Vector2Norm::of));
     Clip clip = Clips.interval(0.297, 0.299);
     norm.stream().map(Scalar.class::cast).forEach(clip::requireInside);
   }

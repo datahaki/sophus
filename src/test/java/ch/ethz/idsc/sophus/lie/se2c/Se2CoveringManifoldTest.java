@@ -32,7 +32,7 @@ import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2Squared;
+import ch.ethz.idsc.tensor.nrm.Vector2NormSquared;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -54,7 +54,7 @@ public class Se2CoveringManifoldTest extends TestCase {
   private static final BarycentricCoordinate AD_INVAR = HsCoordinates.wrap( //
       Se2CoveringManifold.INSTANCE, //
       MetricCoordinate.of( //
-          NormWeighting.of(new Se2CoveringTarget(VectorNorm2Squared::of, RealScalar.ONE), InversePowerVariogram.of(1))));
+          NormWeighting.of(new Se2CoveringTarget(Vector2NormSquared::of, RealScalar.ONE), InversePowerVariogram.of(1))));
 
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();

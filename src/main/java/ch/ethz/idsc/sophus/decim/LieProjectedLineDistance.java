@@ -12,10 +12,10 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 public class LieProjectedLineDistance implements LineDistance, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(VectorNorm2::of);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final LieGroup lieGroup;
   private final Exponential exponential;
@@ -47,7 +47,7 @@ public class LieProjectedLineDistance implements LineDistance, Serializable {
       Tensor project = vector.dot(normal).pmul(normal);
       Tensor along = lieBeg.combine(exponential.exp(project));
       Tensor dir = lieGroup.element(along).inverse().combine(tensor);
-      return VectorNorm2.of(exponential.log(dir));
+      return Vector2Norm.of(exponential.log(dir));
     }
   }
 }

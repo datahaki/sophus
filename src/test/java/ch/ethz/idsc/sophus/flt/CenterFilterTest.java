@@ -15,7 +15,7 @@ import ch.ethz.idsc.tensor.alg.Dimensions;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -56,7 +56,7 @@ public class CenterFilterTest extends TestCase {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(SnGeodesic.INSTANCE, HannWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 1);
     Distribution distribution = NormalDistribution.standard();
-    Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(VectorNorm2.NORMALIZE));
+    Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(Vector2Norm.NORMALIZE));
     Tensor result = geodesicCenterFilter.apply(tensor);
     assertEquals(Dimensions.of(tensor), Dimensions.of(result));
   }

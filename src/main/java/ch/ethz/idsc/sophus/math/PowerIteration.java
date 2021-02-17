@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.math;
 import java.util.Optional;
 
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.nrm.VectorNorm2;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
@@ -31,7 +31,7 @@ public enum PowerIteration {
     int max = matrix.length() * FACTOR;
     for (int iteration = 0; iteration < max; ++iteration) {
       final Tensor prev = vector;
-      vector = VectorNorm2.NORMALIZE.apply(matrix.dot(vector));
+      vector = Vector2Norm.NORMALIZE.apply(matrix.dot(vector));
       if (CHOP.allZero(prev.subtract(vector)) || //
           CHOP.allZero(prev.add(vector)))
         return Optional.of(vector);
