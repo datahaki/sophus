@@ -12,7 +12,7 @@ public enum GrMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean test(Tensor x) {
-    return GrassmannQ.of(x, Chop._10);
+  public boolean test(Tensor p) {
+    return GrassmannQ.of(p, Chop._10);
   }
 }

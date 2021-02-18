@@ -17,10 +17,10 @@ public enum HnMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean test(Tensor x) {
-    Scalar xn = Last.of(x);
+  public boolean test(Tensor p) {
+    Scalar xn = Last.of(p);
     return Sign.isPositive(xn) //
-        && Chop._08.isClose(ratio(x), RationalScalar.ONE);
+        && Chop._08.isClose(ratio(p), RationalScalar.ONE);
   }
 
   public static Scalar ratio(Tensor x) {

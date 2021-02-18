@@ -29,6 +29,8 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
  * 
  * @see CenterFilter */
 public class GeodesicCenter implements TensorUnaryOperator {
+  private static final int CACHE_MAX_SIZE = 24;
+
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
    * @return operator that maps a sequence of odd number of points to their geodesic center
@@ -91,7 +93,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   private GeodesicCenter(BinaryAverage binaryAverage, Function<Integer, Tensor> function) {
     this.binaryAverage = Objects.requireNonNull(binaryAverage);
-    this.function = Cache.of(new Splits(function), 32);
+    this.function = Cache.of(new Splits(function), CACHE_MAX_SIZE);
   }
 
   @Override // from TensorUnaryOperator

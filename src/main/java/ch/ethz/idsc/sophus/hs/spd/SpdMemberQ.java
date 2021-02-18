@@ -10,8 +10,8 @@ public enum SpdMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean test(Tensor x) {
-    return SymmetricMatrixQ.of(x) //
-        && PositiveDefiniteMatrixQ.ofHermitian(x);
+  public boolean test(Tensor p) {
+    return SymmetricMatrixQ.of(p) //
+        && PositiveDefiniteMatrixQ.ofHermitian(p);
   }
 }

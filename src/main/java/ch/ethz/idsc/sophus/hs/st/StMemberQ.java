@@ -5,12 +5,12 @@ import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 
+/** k x n matrix with k <= n */
 public enum StMemberQ implements MemberQ {
   INSTANCE;
 
-  @Override
-  public boolean test(Tensor x) {
-    // FIXME
-    return OrthogonalMatrixQ.of(x);
+  @Override // from MemberQ
+  public boolean test(Tensor p) {
+    return OrthogonalMatrixQ.of(p);
   }
 }

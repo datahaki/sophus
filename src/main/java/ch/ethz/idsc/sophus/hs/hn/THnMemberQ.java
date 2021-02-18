@@ -11,15 +11,15 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public class THnMemberQ implements MemberQ, Serializable {
   private static final Chop CHOP = Chop._06;
   // ---
-  private final Tensor x;
+  private final Tensor p;
 
-  public THnMemberQ(Tensor x) {
-    this.x = Objects.requireNonNull(x);
+  public THnMemberQ(Tensor p) {
+    this.p = Objects.requireNonNull(p);
   }
 
   @Override // from MemberQ
   public boolean test(Tensor v) {
-    return CHOP.isZero(LBilinearForm.between(x, v));
+    return CHOP.isZero(LBilinearForm.between(p, v));
   }
 
   /** projection is idempotent
@@ -27,6 +27,6 @@ public class THnMemberQ implements MemberQ, Serializable {
    * @param v
    * @return projection of v to plane orthogonal to base point x */
   public Tensor project(Tensor v) {
-    return v.add(x.multiply(LBilinearForm.between(x, v)));
+    return v.add(p.multiply(LBilinearForm.between(p, v)));
   }
 }

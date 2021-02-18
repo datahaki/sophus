@@ -16,17 +16,18 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * The dimensionality of TGr(n, k) is k * (n - k). */
 public class TGrMemberQ implements MemberQ, Serializable {
   private static final Chop CHOP = Chop._06;
-  private final Tensor x;
+  // ---
+  private final Tensor p;
 
-  /** @param x in Gr(n, k) */
-  public TGrMemberQ(Tensor x) {
-    this.x = Objects.requireNonNull(x);
+  /** @param p in Gr(n, k) */
+  public TGrMemberQ(Tensor p) {
+    this.p = Objects.requireNonNull(p);
   }
 
   @Override // from MemberQ
   public boolean test(Tensor v) {
     return SymmetricMatrixQ.of(v, CHOP) //
-        && CHOP.isClose(x.dot(v).add(v.dot(x)), v);
+        && CHOP.isClose(p.dot(v).add(v.dot(p)), v);
   }
 
   /** Cafeful: projection is not idempotent!!!
@@ -37,6 +38,7 @@ public class TGrMemberQ implements MemberQ, Serializable {
    * @param v
    * @return */
   public Tensor forceProject(Tensor v) {
-    return MatrixBracket.of(x, TensorWedge.of(v));
+    // LONGTERM find projection that is idempotent
+    return MatrixBracket.of(p, TensorWedge.of(v));
   }
 }
