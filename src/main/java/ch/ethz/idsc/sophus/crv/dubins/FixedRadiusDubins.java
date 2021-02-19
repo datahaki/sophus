@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.crv.dubins.DubinsPath.Type;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;

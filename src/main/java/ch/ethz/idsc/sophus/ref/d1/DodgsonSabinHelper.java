@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
-import ch.ethz.idsc.sophus.crv.SignedCurvature2D;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.math.d2.SignedCurvature2D;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;

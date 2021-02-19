@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.qty.Unit;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 import ch.ethz.idsc.tensor.sca.Sign;
-import ch.ethz.idsc.tensor.sca.SignInterface;
 
 public class Se2AxisYProject implements TensorScalarFunction {
   private static class MapSingular implements TensorScalarFunction {
@@ -31,8 +30,8 @@ public class Se2AxisYProject implements TensorScalarFunction {
     @Override
     public Scalar apply(Tensor p) {
       Scalar px = p.Get(0);
-      SignInterface signInterface = (SignInterface) px;
-      return Quantity.of(SIGNUM[1 + signInterface.signInt()], unit);
+      int sign = Scalars.intValueExact(Sign.FUNCTION.apply(px));
+      return Quantity.of(SIGNUM[1 + sign], unit);
     }
   }
 

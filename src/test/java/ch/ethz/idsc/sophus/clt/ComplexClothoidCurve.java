@@ -1,9 +1,9 @@
 // code by ureif
 package ch.ethz.idsc.sophus.clt;
 
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.so2.So2;
 import ch.ethz.idsc.sophus.math.Geodesic;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;

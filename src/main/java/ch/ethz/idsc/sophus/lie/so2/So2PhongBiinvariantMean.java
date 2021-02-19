@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so2;
 
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.r2.AngleVector;
