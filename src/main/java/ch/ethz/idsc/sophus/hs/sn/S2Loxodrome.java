@@ -7,8 +7,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.sca.ArcTan;
-import ch.ethz.idsc.tensor.sca.Cos;
-import ch.ethz.idsc.tensor.sca.Sin;
 
 /** curve on the 2-dimensional sphere
  * 
@@ -35,11 +33,6 @@ public class S2Loxodrome implements ScalarTensorFunction {
 
   @Override
   public Tensor apply(Scalar scalar) {
-    Scalar f = ArcTan.FUNCTION.apply(scalar.multiply(angle));
-    Scalar cf = Cos.FUNCTION.apply(f);
-    return Tensors.of( //
-        Cos.FUNCTION.apply(scalar).multiply(cf), //
-        Sin.FUNCTION.apply(scalar).multiply(cf), //
-        Sin.FUNCTION.apply(f));
+    return SnEulerAngle.of(Tensors.of(scalar, ArcTan.FUNCTION.apply(scalar.multiply(angle))));
   }
 }
