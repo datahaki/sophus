@@ -6,9 +6,9 @@ import java.util.function.Function;
 
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Binomial;
 import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.ext.Integers;
+import ch.ethz.idsc.tensor.num.Binomial;
 
 /** the weights follow from a linear system of equations with entries
  * LHS=x^k for x=-deg, ..., 0, and k = 0, ..., deg

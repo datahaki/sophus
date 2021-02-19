@@ -13,7 +13,7 @@ public interface HsManifold extends VectorLogManifold, MidpointInterface {
    * @return exponential map at given point p on manifold */
   Exponential exponential(Tensor p);
 
-  /** related to "involution"/"involutive automorphism" 
+  /** related to "involution"/"involutive automorphism"
    * 
    * @param p
    * @param q

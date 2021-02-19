@@ -7,7 +7,7 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Series;
+import ch.ethz.idsc.tensor.num.Series;
 import ch.ethz.idsc.tensor.red.Times;
 
 /** Merrien interpolatory Hermite subdivision scheme of order two

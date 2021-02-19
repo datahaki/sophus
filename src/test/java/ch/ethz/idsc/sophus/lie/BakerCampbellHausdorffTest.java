@@ -18,10 +18,10 @@ import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.lie.LeviCivitaTensor;
 import ch.ethz.idsc.tensor.nrm.Vector2Norm;
-import ch.ethz.idsc.tensor.num.Boole;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
+import ch.ethz.idsc.tensor.red.KroneckerDelta;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.N;
 import junit.framework.TestCase;
@@ -41,9 +41,9 @@ public class BakerCampbellHausdorffTest extends TestCase {
   }
 
   public void testHe1Basis() {
-    Tensor b0 = Array.of(l -> Boole.of(l.equals(Arrays.asList(0, 1))), 3, 3);
-    Tensor b1 = Array.of(l -> Boole.of(l.equals(Arrays.asList(1, 2))), 3, 3);
-    Tensor b2 = Array.of(l -> Boole.of(l.equals(Arrays.asList(0, 2))), 3, 3);
+    Tensor b0 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(0, 1)), 3, 3);
+    Tensor b1 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(1, 2)), 3, 3);
+    Tensor b2 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(0, 2)), 3, 3);
     Tensor basis = Tensors.of(b0, b1, b2);
     _check(LieAlgebras.he1(), basis);
   }
