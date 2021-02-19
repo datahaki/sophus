@@ -58,7 +58,7 @@ public class Se2AxisYProject implements TensorScalarFunction {
   private Se2AxisYProject(Scalar vx, Scalar be) {
     this.vx = Abs.FUNCTION.apply(vx);
     this.be = be;
-    se = be.multiply(Sign.of(vx));
+    se = be.multiply(Sign.FUNCTION.apply(vx));
   }
 
   @Override
