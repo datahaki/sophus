@@ -6,9 +6,12 @@ import java.util.Arrays;
 
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.lie.se2.Se2Differences;
+import ch.ethz.idsc.sophus.lie.se2.Se2RandomSample;
 import ch.ethz.idsc.sophus.lie.se3.Se3Differences;
 import ch.ethz.idsc.sophus.lie.se3.Se3Matrix;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
+import ch.ethz.idsc.sophus.math.sample.RandomSample;
+import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -31,19 +34,13 @@ public class LieDifferencesTest extends TestCase {
     assertEquals(lieDifferences.apply(tensor), Differences.of(tensor));
   }
 
-  public void testSe2() {
+  public void testPairFunction() {
     Distribution distribution = UniformDistribution.unit();
-    Tensor tensor = RandomVariate.of(distribution, 10, 3);
-    LieDifferences lieDifferences = Se2Differences.INSTANCE;
-    assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 3));
-  }
-
-  public void testSe2antiCommute() {
-    Distribution distribution = UniformDistribution.unit();
+    RandomSampleInterface randomSampleInterface = Se2RandomSample.of(distribution);
     LieDifferences lieDifferences = Se2Differences.INSTANCE;
     for (int index = 0; index < 10; ++index) {
-      Tensor p = RandomVariate.of(distribution, 3);
-      Tensor q = RandomVariate.of(distribution, 3);
+      Tensor p = RandomSample.of(randomSampleInterface);
+      Tensor q = RandomSample.of(randomSampleInterface);
       Tensor v1 = lieDifferences.pair(p, q);
       Tensor v2 = lieDifferences.pair(q, p).negate();
       Chop._12.requireClose(v1, v2);
