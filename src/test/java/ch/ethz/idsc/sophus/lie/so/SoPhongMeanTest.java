@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so;
 
-import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
 import ch.ethz.idsc.sophus.lie.so3.So3Manifold;
@@ -10,12 +9,12 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.ArgMax;
-import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SoPhongMeanTest extends TestCase {
@@ -29,12 +28,23 @@ public class SoPhongMeanTest extends TestCase {
     OrthogonalMatrixQ.require(m0);
     Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
     OrthogonalMatrixQ.require(m1);
-    BiinvariantMean biinvariantMean = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Chop._08);
-    Tensor mE = biinvariantMean.mean(sequence, weights);
-    OrthogonalMatrixQ.require(mE);
-    Scalar d1E = So3Metric.INSTANCE.distance(m1, mE);
-    Scalar d0E = So3Metric.INSTANCE.distance(m0, mE);
-    System.out.println(d0E);
-    System.out.println(d1E);
+    {
+      Tensor mE0 = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+      OrthogonalMatrixQ.require(mE0);
+      Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
+      Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);
+      d0E.add(d1E);
+      System.out.println(d0E);
+      System.out.println(d1E);
+    }
+    {
+      Tensor mE1 = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
+      OrthogonalMatrixQ.require(mE1);
+      Scalar d0E = So3Metric.INSTANCE.distance(m0, mE1);
+      Scalar d1E = So3Metric.INSTANCE.distance(m1, mE1);
+      d0E.add(d1E);
+      System.out.println(d0E);
+      System.out.println(d1E);
+    }
   }
 }
