@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.hs.r3;
 
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.lie.Quaternion;
 import junit.framework.TestCase;
 
 public class CornerTangentTest extends TestCase {

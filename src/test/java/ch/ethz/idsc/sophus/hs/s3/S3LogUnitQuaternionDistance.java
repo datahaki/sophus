@@ -3,8 +3,8 @@ package ch.ethz.idsc.sophus.hs.s3;
 
 import ch.ethz.idsc.sophus.hs.sn.S3UnitQuaternionDistance;
 import ch.ethz.idsc.sophus.math.Metric;
-import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.lie.Quaternion;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Log;
 

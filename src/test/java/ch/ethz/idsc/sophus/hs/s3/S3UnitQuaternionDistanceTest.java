@@ -2,9 +2,9 @@
 package ch.ethz.idsc.sophus.hs.s3;
 
 import ch.ethz.idsc.sophus.hs.sn.S3UnitQuaternionDistance;
-import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.lie.Quaternion;
 import ch.ethz.idsc.tensor.num.Pi;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;

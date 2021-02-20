@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r3;
 
-import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.lie.Quaternion;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public enum CornerTangent {
