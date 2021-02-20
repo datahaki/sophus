@@ -36,6 +36,6 @@ public class StRandomSample implements RandomSampleInterface, Serializable {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    return Orthogonalize.invariant(RandomVariate.of(NormalDistribution.standard(), random, k, n));
+    return Orthogonalize.usingPD(RandomVariate.of(NormalDistribution.standard(), random, k, n));
   }
 }

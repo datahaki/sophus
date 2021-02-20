@@ -4,14 +4,11 @@ package ch.ethz.idsc.sophus.fit;
 import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Last;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.lie.TensorProduct;
-import ch.ethz.idsc.tensor.mat.Det;
-import ch.ethz.idsc.tensor.mat.SingularValueDecomposition;
+import ch.ethz.idsc.tensor.mat.Orthogonalize;
 import ch.ethz.idsc.tensor.mat.Tolerance;
-import ch.ethz.idsc.tensor.sca.Sign;
 
 /** function computes the best-fitting rigid transformation that aligns
  * two sets of corresponding n elements from d-dimensional vector space.
@@ -45,16 +42,7 @@ public class RigidMotionFit implements TensorUnaryOperator {
     Tensor qm = weights.dot(target); // weighted mean of target coordinates
     Tensor xt = Tensor.of(origin.stream().map(pm.negate()::add)); // levers to origin coordinates
     Tensor yt = Tensor.of(target.stream().map(qm.negate()::add)); // levers to target coordinates
-    SingularValueDecomposition svd = //
-        SingularValueDecomposition.of(Transpose.of(xt).dot(weights.pmul(yt)));
-    Tensor ut = Transpose.of(svd.getU());
-    Tensor rotation = svd.getV().dot(ut);
-    if (Sign.isNegative(Det.of(rotation))) {
-      Tensor ue = Last.of(ut).negate();
-      int last = ut.length() - 1;
-      Tensor delta = TensorProduct.of(svd.getV().get(Tensor.ALL, last), ue.add(ue));
-      rotation = rotation.add(delta);
-    }
+    Tensor rotation = Orthogonalize.usingSvd(Transpose.of(Transpose.of(xt).dot(weights.pmul(yt))));
     return new RigidMotionFit(rotation, qm.subtract(rotation.dot(pm)));
   }
 
@@ -88,6 +76,6 @@ public class RigidMotionFit implements TensorUnaryOperator {
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[rotation=%s, translation=%s]", getClass().getSimpleName(), rotation(), translation());
+    return String.format("%s[%s]", getClass().getSimpleName(), Tensors.message(rotation(), translation()));
   }
 }
