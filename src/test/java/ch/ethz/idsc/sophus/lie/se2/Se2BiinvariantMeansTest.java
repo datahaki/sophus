@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.lie.se2;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.sophus.usr.AssertFail;

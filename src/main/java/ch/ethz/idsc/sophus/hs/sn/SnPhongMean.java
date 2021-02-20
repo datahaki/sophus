@@ -1,11 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.nrm.Vector2Norm;
-import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Phong projection is faster than {@link SnBiinvariantMean}.
  * However, Phong projection is not the inverse to inverse distance coordinates.
@@ -22,7 +20,6 @@ public enum SnPhongMean implements BiinvariantMean {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    // R^n+1 -> S^n
-    return Vector2Norm.NORMALIZE.apply(AffineQ.require(weights, Chop._08).dot(sequence));
+    return Vector2Norm.NORMALIZE.apply(weights.dot(sequence)); // R^(n+1) -> S^n
   }
 }

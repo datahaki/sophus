@@ -3,9 +3,9 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.util.Random;
 
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;

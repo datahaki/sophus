@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.crv.bezier;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;

@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.hs.spd;
 import java.io.IOException;
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so.SoRandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.tensor.Tensor;

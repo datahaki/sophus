@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Function;
 
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.flt.ga.GeodesicCenter;
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
 import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.HsTransport;

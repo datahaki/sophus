@@ -4,11 +4,11 @@ package ch.ethz.idsc.sophus.lie.se3;
 import java.util.Arrays;
 import java.util.Random;
 
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.TensorMapping;

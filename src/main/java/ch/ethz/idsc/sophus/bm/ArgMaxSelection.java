@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.bm;
 
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
@@ -10,7 +10,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
  * converges to exact mean.
  * 
  * @see IterativeBiinvariantMean */
-/* package */ enum ArgMaxBiinvariantMean implements BiinvariantMean {
+/* package */ enum ArgMaxSelection implements BiinvariantMean {
   INSTANCE;
 
   @Override // from BiinvariantMean

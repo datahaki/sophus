@@ -3,12 +3,12 @@ package ch.ethz.idsc.sophus.ply.d2;
 
 import java.util.Random;
 
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
 import ch.ethz.idsc.sophus.gbc.LeveragesGenesis;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.hs.HsDesign;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.hs.s2.S2Exponential;
 import ch.ethz.idsc.sophus.hs.s2.S2Manifold;
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;

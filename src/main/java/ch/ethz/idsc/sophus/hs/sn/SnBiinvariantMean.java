@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.sn;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Buss and Fillmore prove for data on spheres S^2, the step size of 1 for

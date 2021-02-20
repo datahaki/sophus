@@ -1,7 +1,7 @@
 // code by jph
 package ch.ethz.idsc.sophus.ply.d2;
 
-import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.lie.rn.RnExponential;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.r2.CirclePoints;

@@ -179,14 +179,13 @@ public class CliffordAlgebra {
         --m;
       }
       Deque<Scalar> deque = new ArrayDeque<>();
-      for (Scalar scalar : scalars) {
+      for (Scalar scalar : scalars)
         if (!deque.isEmpty() && deque.peekLast().equals(scalar)) {
-          Scalar duplicate = deque.pollLast(); // check for sign in scalar product 0, ..., n-1
+          Scalar duplicate = deque.pollLast(); // check for sign in scalar product 0, ..., n - 1
           if (signature_p <= duplicate.number().intValue())
             parity ^= 1;
         } else
           deque.add(scalar);
-      }
       sign = SIGN[parity];
       normal = Tensor.of(deque.stream());
     }

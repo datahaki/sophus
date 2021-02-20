@@ -1,5 +1,5 @@
 // code by jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.bm;
 
 import java.io.Serializable;
 
@@ -21,9 +21,7 @@ import ch.ethz.idsc.tensor.Tensor;
  * by Xavier Pennec, Vincent Arsigny, p.21, 2012
  * 
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017
- * 
- * @see BiinvariantMean */
+ * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
 public class MeanDefect implements Serializable {
   private final Exponential exponential;
   private final Tensor tangent;

@@ -1,8 +1,8 @@
 // code by ob, jph
 package ch.ethz.idsc.sophus.lie.dt;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.bm.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Range;

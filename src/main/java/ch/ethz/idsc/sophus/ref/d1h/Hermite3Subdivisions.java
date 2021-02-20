@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.ref.d1h;
 
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.tensor.RationalScalar;

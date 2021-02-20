@@ -1,9 +1,10 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.bm;
 
 import java.io.IOException;
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;

@@ -3,10 +3,10 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;

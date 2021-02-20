@@ -1,10 +1,11 @@
 // code by ob, jph
-package ch.ethz.idsc.sophus.hs;
+package ch.ethz.idsc.sophus.bm;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -36,7 +37,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @return */
   public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop) {
-    return of(hsManifold, chop, ArgMaxBiinvariantMean.INSTANCE);
+    return of(hsManifold, chop, ArgMaxSelection.INSTANCE);
   }
 
   /***************************************************/

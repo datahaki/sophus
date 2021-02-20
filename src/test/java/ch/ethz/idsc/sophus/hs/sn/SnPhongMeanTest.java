@@ -47,6 +47,13 @@ public class SnPhongMeanTest extends TestCase {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = UnitVector.of(3, 1);
     SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
-    AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
+    // AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
+  }
+
+  public void testAntipodalFail() {
+    Tensor x = UnitVector.of(3, 0);
+    Tensor y = x.negate();
+    AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5)));
+    // AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
   }
 }

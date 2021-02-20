@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.so2;
 
 import java.util.Random;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.bm.BiinvariantMeanTestHelper;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;

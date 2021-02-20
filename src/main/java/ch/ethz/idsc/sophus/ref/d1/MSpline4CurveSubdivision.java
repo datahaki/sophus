@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.BiinvariantMeans;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMeans;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

@@ -1,7 +1,7 @@
 // code by ob
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;

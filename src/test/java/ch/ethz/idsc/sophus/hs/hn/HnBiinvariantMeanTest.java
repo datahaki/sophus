@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.Biinvariant;
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
 import ch.ethz.idsc.sophus.hs.Biinvariants;
 import ch.ethz.idsc.sophus.lie.sopq.TSopqProject;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
