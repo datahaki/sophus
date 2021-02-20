@@ -15,21 +15,21 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * 
  * uses biinvariant mean */
 public final class MSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision implements Serializable {
-  private static final Tensor MASK_MID = Tensors.vector(4, 4).divide(RealScalar.of(8));
-  private static final Tensor MASK_CEN = Tensors.vector(1, 6, 1).divide(RealScalar.of(8));
+  private static final Tensor MASK_MIDDLE = Tensors.vector(4, 4).divide(RealScalar.of(8));
+  private static final Tensor MASK_CENTER = Tensors.vector(1, 6, 1).divide(RealScalar.of(8));
   // ---
-  private final TensorUnaryOperator midpoint;
+  private final TensorUnaryOperator middle;
   private final TensorUnaryOperator center;
 
   /** @param biinvariantMean */
   public MSpline3CurveSubdivision(BiinvariantMean biinvariantMean) {
-    midpoint = BiinvariantMeans.of(biinvariantMean, MASK_MID);
-    center = BiinvariantMeans.of(biinvariantMean, MASK_CEN);
+    middle = BiinvariantMeans.of(biinvariantMean, MASK_MIDDLE);
+    center = BiinvariantMeans.of(biinvariantMean, MASK_CENTER);
   }
 
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor q, Tensor r) {
-    return midpoint.apply(Unprotect.byRef(q, r));
+    return middle.apply(Unprotect.byRef(q, r));
   }
 
   @Override // from AbstractBSpline3CurveSubdivision

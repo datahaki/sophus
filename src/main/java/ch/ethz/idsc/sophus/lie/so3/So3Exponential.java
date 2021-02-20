@@ -9,9 +9,8 @@ import ch.ethz.idsc.tensor.Tensor;
 public enum So3Exponential implements Exponential {
   INSTANCE;
 
-  /** @throws Exception if vp is not tangent to p */
   @Override // from Exponential
-  public Tensor exp(Tensor v) {
+  public Tensor exp(Tensor v) { // v is vector of length 3
     return Rodrigues.vectorExp(v);
   }
 

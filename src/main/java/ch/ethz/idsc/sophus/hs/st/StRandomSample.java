@@ -6,9 +6,8 @@ import java.util.Random;
 
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.ext.Integers;
-import ch.ethz.idsc.tensor.lie.MatrixSqrt;
+import ch.ethz.idsc.tensor.mat.Orthogonalize;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 
@@ -37,7 +36,6 @@ public class StRandomSample implements RandomSampleInterface, Serializable {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    Tensor z = RandomVariate.of(NormalDistribution.standard(), random, k, n);
-    return MatrixSqrt.of(z.dot(Transpose.of(z))).sqrt_inverse().dot(z);
+    return Orthogonalize.invariant(RandomVariate.of(NormalDistribution.standard(), random, k, n));
   }
 }

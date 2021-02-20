@@ -1,7 +1,6 @@
 // code by jph
 package ch.ethz.idsc.sophus.bm;
 
-import ch.ethz.idsc.sophus.bm.BiinvariantMeans;
 import ch.ethz.idsc.sophus.lie.so2c.So2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensors;
