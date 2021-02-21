@@ -7,6 +7,7 @@ import java.util.Optional;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.mat.LeastSquares;
 import ch.ethz.idsc.tensor.mat.MatrixRank;
@@ -56,6 +57,6 @@ public class SphereFit implements Serializable {
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[center=%s, radius=%s]", getClass().getSimpleName(), center(), radius());
+    return String.format("%s[%s]", getClass().getSimpleName(), Tensors.message(center(), radius()));
   }
 }

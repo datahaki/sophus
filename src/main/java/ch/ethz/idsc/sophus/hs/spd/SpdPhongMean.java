@@ -15,9 +15,6 @@ public enum SpdPhongMean implements BiinvariantMean {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    // return PolarDecomposition.of(weights.dot(sequence)).getS();
     return MatrixExp.ofSymmetric(weights.dot(Tensor.of(sequence.stream().map(MatrixLog::ofSymmetric))));
-    // return WeightedGeometricMean.INSTANCE.mean(sequence, weights);
-    // return PolarDecomposition.of(WeightedGeometricMean.INSTANCE.mean(sequence, weights)).getS();
   }
 }

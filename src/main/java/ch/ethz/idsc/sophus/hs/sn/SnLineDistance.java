@@ -27,9 +27,9 @@ public enum SnLineDistance implements LineDistance {
 
     public SnLine(Tensor p, Tensor q) {
       Tensor id_pp = IdentityMatrix.of(p.length()).subtract(TensorProduct.of(p, p));
-      Tensor qn = Vector2Norm.NORMALIZE.apply(id_pp.dot(q));
-      Tensor Q = TensorProduct.of(qn, qn);
-      m = id_pp.subtract(id_pp.dot(Q));
+      Tensor qn = Vector2Norm.NORMALIZE.apply(id_pp.dot(q)); // qn is orthogonal to p
+      // Tolerance.CHOP.requireZero((Scalar) p.dot(qn));
+      m = id_pp.subtract(TensorProduct.of(qn, qn)); // m(x) = x - <x,p>p - <x,qn>qn
     }
 
     @Override // from TensorNorm

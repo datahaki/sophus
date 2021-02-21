@@ -31,6 +31,7 @@ public class HsLineProjection {
     for (int count = 0; count < 6; ++count) {
       Exponential exponential = hsManifold.exponential(p);
       Tensor lq = exponential.log(q);
+      // FIXME not generic: log not always vector, metric different
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);
       Tensor lr = exponential.log(r);
       Tensor project = lr.dot(normal).pmul(normal);
