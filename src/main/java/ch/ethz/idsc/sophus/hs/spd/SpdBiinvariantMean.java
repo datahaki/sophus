@@ -11,6 +11,6 @@ public enum SpdBiinvariantMean {
 
   /** @param chop */
   public static BiinvariantMean of(Chop chop) {
-    return IterativeBiinvariantMean.of(SpdManifold.INSTANCE, chop);
+    return IterativeBiinvariantMean.of(SpdManifold.INSTANCE, chop, SpdPhongMean.INSTANCE);
   }
 }

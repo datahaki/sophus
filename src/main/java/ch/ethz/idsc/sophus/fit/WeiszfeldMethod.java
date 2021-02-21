@@ -10,7 +10,6 @@ import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.ArgMin;
@@ -48,7 +47,7 @@ public class WeiszfeldMethod implements SpatialMedian, Serializable {
 
   @Override // from SpatialMedian
   public Optional<Tensor> weighted(Tensor sequence, Tensor weights) {
-    AffineQ.require(weights, Tolerance.CHOP);
+    AffineQ.require(weights);
     Tensor point = N.DOUBLE.of(weights.dot(sequence)); // initial value
     int iteration = 0;
     while (++iteration < MAX_ITERATIONS) {

@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.sopq;
 
 import ch.ethz.idsc.sophus.math.ScalarProductForm;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.alg.MatrixDotTranspose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** projects a square matrix to an element from the Lie algebra SO(p, q) */
@@ -16,6 +16,6 @@ public class TSopqProject implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor x) {
-    return x.subtract(form.dot(Transpose.of(x)).dot(form));
+    return x.subtract(MatrixDotTranspose.of(form, x).dot(form));
   }
 }

@@ -15,7 +15,6 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.sca.Chop;
 
 /** GeodesicExtrapolate projects a sequence of points to their next (expected) point
  * with each point weighted as provided by an external function. */
@@ -54,7 +53,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
      * @throws Exception if mask is not affine */
     /* package */ static Tensor of(Tensor mask) {
       // check for affinity
-      AffineQ.require(mask, Chop._08);
+      AffineQ.require(mask);
       // no extrapolation possible
       if (mask.length() == 1)
         return Tensors.vector(1);

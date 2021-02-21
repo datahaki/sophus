@@ -8,7 +8,6 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.Orthogonalize;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** function computes the best-fitting rigid transformation that aligns
  * two sets of corresponding n elements from d-dimensional vector space.
@@ -25,7 +24,7 @@ public class RigidMotionFit implements TensorUnaryOperator {
    * @return
    * @throws Exception if total of weights does not equal 1 */
   public static RigidMotionFit of(Tensor origin, Tensor target, Tensor weights) {
-    AffineQ.require(weights, Tolerance.CHOP);
+    AffineQ.require(weights);
     return _of(origin, target, weights);
   }
 

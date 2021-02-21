@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
+import ch.ethz.idsc.sophus.lie.so3.So3Geodesic;
 import ch.ethz.idsc.sophus.lie.so3.So3Manifold;
 import ch.ethz.idsc.sophus.lie.so3.So3Metric;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -79,5 +80,14 @@ public class SoPhongMeanTest extends TestCase {
       Tolerance.CHOP.requireZero(d0E);
       Tolerance.CHOP.requireZero(d1E);
     }
+  }
+
+  public void testTwoExactMidpoint() {
+    Distribution distribution = UniformDistribution.of(-0.2, 0.2);
+    Tensor p = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
+    Tensor q = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
+    Tensor m1 = So3Geodesic.INSTANCE.midpoint(p, q);
+    Tensor m2 = SoPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
+    Tolerance.CHOP.requireClose(m1, m2);
   }
 }

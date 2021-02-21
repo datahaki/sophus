@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.alg.MatrixDotTranspose;
 import ch.ethz.idsc.tensor.alg.Transpose;
 
 /** Reference: http://ethaneade.com/lie.pdf */
@@ -42,6 +43,6 @@ public class SoGroupElement implements LieGroupElement {
 
   @Override // from LieGroupElement
   public Tensor adjoint(Tensor v) { // v is skew with dimensions 3 x 3
-    return dL(v).dot(Transpose.of(matrix));
+    return MatrixDotTranspose.of(dL(v), matrix);
   }
 }
