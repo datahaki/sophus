@@ -20,6 +20,9 @@ public enum AffineQ {
     return vector;
   }
 
+  /** @param vector
+   * @return given vector
+   * @throws Exception if scalar entries of given mask do not add up to one */
   public static Tensor require(Tensor vector) {
     return require(vector, Tolerance.CHOP);
   }

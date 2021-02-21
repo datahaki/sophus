@@ -211,10 +211,10 @@ public class RodriguesTest extends TestCase {
   }
 
   public void testOrthogonalize() {
-    for (int count = 0; count < 10; ++count) {
-      Tensor matrix = So3TestHelper.spawn_So3();
-      Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
-    }
+    Tensor matrix = So3TestHelper.spawn_So3();
+    Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
+    Tolerance.CHOP.requireClose(Orthogonalize.usingSvd(matrix), matrix);
+    Tolerance.CHOP.requireClose(Orthogonalize.usingPD(matrix), matrix);
   }
 
   public void testFail() {

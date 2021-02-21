@@ -16,8 +16,8 @@ public enum HnManifold implements HsManifold {
   }
 
   @Override // from HsManifold
-  public Exponential exponential(Tensor x) {
-    return new HnExponential(x);
+  public Exponential exponential(Tensor p) {
+    return new HnExponential(p);
   }
 
   @Override

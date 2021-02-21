@@ -16,13 +16,6 @@ public class StRandomSampleTest extends TestCase {
     StMemberQ.INSTANCE.require(matrix);
   }
 
-  public void testNaive() {
-    RandomSampleInterface randomSampleInterface = StRandomSampleNaive.of(5, 3);
-    Tensor matrix = RandomSample.of(randomSampleInterface);
-    OrthogonalMatrixQ.require(matrix);
-    StMemberQ.INSTANCE.require(matrix);
-  }
-
   public void testFail() {
     AssertFail.of(() -> StRandomSample.of(3, -1));
     AssertFail.of(() -> StRandomSample.of(3, 4));

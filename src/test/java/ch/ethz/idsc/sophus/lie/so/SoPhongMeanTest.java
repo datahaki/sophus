@@ -2,17 +2,21 @@
 package ch.ethz.idsc.sophus.lie.so;
 
 import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.so3.So3BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.so3.So3Exponential;
 import ch.ethz.idsc.sophus.lie.so3.So3Geodesic;
 import ch.ethz.idsc.sophus.lie.so3.So3Manifold;
 import ch.ethz.idsc.sophus.lie.so3.So3Metric;
+import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.FrobeniusNorm;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -89,5 +93,19 @@ public class SoPhongMeanTest extends TestCase {
     Tensor m1 = So3Geodesic.INSTANCE.midpoint(p, q);
     Tensor m2 = SoPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
     Tolerance.CHOP.requireClose(m1, m2);
+  }
+
+  public void testTwoMidpoint() {
+    Distribution distribution = UniformDistribution.of(-0.2, 0.2);
+    Tensor p = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
+    Tensor q = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
+    Tensor weights = Tensors.vector(0.2, 0.8);
+    AffineQ.require(weights);
+    Tensor sequence = Tensors.of(p, q);
+    Tensor m1 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor m2 = SoPhongMean.INSTANCE.mean(sequence, weights);
+    assertTrue(Scalars.lessThan(FrobeniusNorm.between(m1, m2), RealScalar.of(0.1)));
+    // System.out.println(Pretty.of(m1));
+    // System.out.println(Pretty.of(m2));
   }
 }
