@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.math.AffineQ;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Chop;
 
@@ -32,11 +33,23 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     return new IterativeBiinvariantMean(hsManifold, chop, initialGuess);
   }
 
-  /** @param hsManifold
+  /** uses arg max of weights in sequence as initial guess
+   * 
+   * @param hsManifold
    * @param chop
    * @return */
   public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop) {
     return of(hsManifold, chop, ArgMaxSelection.INSTANCE);
+  }
+
+  /** uses ...
+   * 
+   * @param hsManifold
+   * @param chop
+   * @param geodesic
+   * @return */
+  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, Geodesic geodesic) {
+    return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesic));
   }
 
   /***************************************************/

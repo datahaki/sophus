@@ -29,8 +29,8 @@ public class SpdPhongMeanTest extends TestCase {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
       int fd = d;
       Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fd), n);
-      Distribution distribution_w = UniformDistribution.of(0.1, 1);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
+      Distribution distribution = UniformDistribution.of(0.1, 1);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.of(SpdManifold.INSTANCE, Chop._10);

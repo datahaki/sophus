@@ -25,7 +25,7 @@ public class LBilinearFormTest extends TestCase {
       assertTrue(Scalars.lessThan(LBilinearForm.between(p, q), RealScalar.of(-1)));
     }
   }
-  
+
   public void testNegative() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -57,5 +57,4 @@ public class LBilinearFormTest extends TestCase {
   public void testFail() {
     AssertFail.of(() -> LBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
   }
-
 }
