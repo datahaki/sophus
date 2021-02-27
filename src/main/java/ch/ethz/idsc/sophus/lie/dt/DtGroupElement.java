@@ -22,8 +22,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * @see DtGroup */
 public class DtGroupElement implements LieGroupElement, Serializable {
-  private static final long serialVersionUID = 6208657139932851834L;
-  // ---
   private final Scalar lambda;
   private final Tensor t;
 
@@ -60,10 +58,10 @@ public class DtGroupElement implements LieGroupElement, Serializable {
 
   @Override // from LieGroupElement
   public Tensor combine(Tensor lambda_t) {
-    DtGroupElement stGroupElement = new DtGroupElement(lambda_t);
+    DtGroupElement dtGroupElement = new DtGroupElement(lambda_t);
     return Tensors.of( //
-        stGroupElement.lambda.multiply(lambda), //
-        stGroupElement.t.multiply(lambda).add(t));
+        dtGroupElement.lambda.multiply(lambda), //
+        dtGroupElement.t.multiply(lambda).add(t));
   }
 
   @Override // from LieGroupElement

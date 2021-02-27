@@ -8,8 +8,8 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Series;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.num.Series;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 /** Reference:
@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * <p>The input of the variogram has unit of a.
  * The output of the variogram has unit of b. */
 public class SphericalVariogram implements ScalarUnaryOperator {
-  private static final long serialVersionUID = -356955967203509809L;
-
   /** @param a positive
    * @param b
    * @return */
@@ -56,5 +54,10 @@ public class SphericalVariogram implements ScalarUnaryOperator {
     return Scalars.lessThan(r, a) //
         ? series.apply(r.divide(a))
         : b;
+  }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s, %s]", getClass().getSimpleName(), a, b);
   }
 }

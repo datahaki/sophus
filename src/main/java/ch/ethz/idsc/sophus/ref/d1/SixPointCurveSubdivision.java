@@ -17,7 +17,6 @@ import ch.ethz.idsc.tensor.Tensor;
  * Another reference by Johannes Wallner:
  * "On convergent interpolatory subdivision schemes in Riemannian Geometry", p.2 */
 public class SixPointCurveSubdivision extends AbstractSixPointCurveSubdivision {
-  private static final long serialVersionUID = 5765316852558848912L;
   private static final Scalar PQ = RationalScalar.of(25, 22);
   private static final Scalar _R = RationalScalar.of(75, 64);
 

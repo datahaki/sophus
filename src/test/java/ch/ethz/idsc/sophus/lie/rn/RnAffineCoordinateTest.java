@@ -2,14 +2,13 @@
 package ch.ethz.idsc.sophus.lie.rn;
 
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.usr.AssertFail;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
@@ -29,7 +28,7 @@ public class RnAffineCoordinateTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, 2);
       TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
-      Chop._10.requireClose(weights, ConstantArray.of(RealScalar.of(1.0 / n), n));
+      Chop._10.requireClose(weights, AveragingWeights.of(n));
     }
   }
 
@@ -39,7 +38,7 @@ public class RnAffineCoordinateTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, 2);
       TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
-      Chop._10.requireClose(weights, ConstantArray.of(RationalScalar.of(1, n), n));
+      Chop._10.requireClose(weights, AveragingWeights.of(n));
       // ExactTensorQ.require(weights);
     }
   }
@@ -50,7 +49,7 @@ public class RnAffineCoordinateTest extends TestCase {
       Tensor points = RandomVariate.of(distribution, n, n - 1);
       TensorUnaryOperator affineCoordinates = RnAffineCoordinate.of(points);
       Tensor weights = affineCoordinates.apply(Mean.of(points));
-      Chop._10.requireClose(weights, ConstantArray.of(RealScalar.of(1.0 / n), n));
+      Chop._10.requireClose(weights, AveragingWeights.of(n));
       Chop._10.requireClose(Tensor.of(points.stream().map(affineCoordinates)), IdentityMatrix.of(n));
     }
   }

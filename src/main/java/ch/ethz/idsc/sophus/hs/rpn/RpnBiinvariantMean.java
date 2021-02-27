@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.rpn;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public enum RpnBiinvariantMean {

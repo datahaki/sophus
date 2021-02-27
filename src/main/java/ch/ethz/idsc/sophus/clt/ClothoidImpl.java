@@ -4,14 +4,14 @@ package ch.ethz.idsc.sophus.clt;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.clt.par.ClothoidIntegral;
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.qty.Quantity;
-import ch.ethz.idsc.tensor.red.Hypot;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.Imag;
 import ch.ethz.idsc.tensor.sca.Real;
@@ -23,8 +23,6 @@ import ch.ethz.idsc.tensor.sca.Real;
  * 
  * Reference: U. Reif slides */
 /* package */ final class ClothoidImpl implements Clothoid {
-  private static final long serialVersionUID = -3063589096504266270L;
-  // ---
   private final LieGroupElement lieGroupElement;
   private final LagrangeQuadratic lagrangeQuadratic;
   private final Tensor diff;
@@ -43,7 +41,7 @@ import ch.ethz.idsc.tensor.sca.Real;
     Scalar one = clothoidIntegral.one(); // ideally should have Im[one] == 0
     Scalar plength = RealScalar.ZERO;
     try {
-      plength = Hypot.ofVector(diff).divide(Abs.FUNCTION.apply(one));
+      plength = Vector2Norm.of(diff).divide(Abs.FUNCTION.apply(one));
     } catch (Exception exception) {
       System.err.println("---");
       System.err.println(diff);

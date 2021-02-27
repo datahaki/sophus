@@ -4,22 +4,20 @@ package ch.ethz.idsc.sophus.lie.he;
 import java.io.IOException;
 
 import ch.ethz.idsc.sophus.gbc.AffineWrap;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.HsCoordinates;
-import ch.ethz.idsc.sophus.gbc.LeverageCoordinate;
 import ch.ethz.idsc.sophus.gbc.MetricCoordinate;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
-import ch.ethz.idsc.sophus.lie.rn.RnNorm;
 import ch.ethz.idsc.sophus.math.NormWeighting;
 import ch.ethz.idsc.sophus.math.TensorMapping;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
-import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -27,11 +25,11 @@ public class HeManifoldTest extends TestCase {
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, MetricCoordinate.of( //
       NormWeighting.of( //
-          new HeTarget(RnNorm.INSTANCE, RealScalar.ONE), //
+          new HeTarget(Vector2Norm::of, RealScalar.ONE), //
           InversePowerVariogram.of(1))));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      LeverageCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      LeverageCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
+      // LeveragesCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
+      // LeveragesCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE, //
       INSTANCE //
   };
@@ -79,7 +77,7 @@ public class HeManifoldTest extends TestCase {
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
         int fn = n;
         Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
-        Tensor constant = ConstantArray.of(RationalScalar.of(1, length), length);
+        Tensor constant = AveragingWeights.of(length);
         Tensor center = HeBiinvariantMean.INSTANCE.mean(sequence, constant);
         Tensor weights = barycentricCoordinate.weights(sequence, center);
         Tolerance.CHOP.requireClose(weights, constant);

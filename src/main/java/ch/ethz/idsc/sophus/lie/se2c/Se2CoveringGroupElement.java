@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * 
  * {@link Se2CoveringGroup} */
 public class Se2CoveringGroupElement implements LieGroupElement, Serializable {
-  private static final long serialVersionUID = -7435976318417827762L;
-  // ---
   private final Scalar px;
   private final Scalar py;
   private final Scalar pa;

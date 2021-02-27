@@ -3,13 +3,11 @@ package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.krg.Kriging;
+import ch.ethz.idsc.sophus.itp.Kriging;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 public class KrigingCoordinate implements TensorUnaryOperator, VectorField {
-  private static final long serialVersionUID = 1978234055331468414L;
-
   /** @param tensorUnaryOperator
    * @param vectorLogManifold
    * @param sequence

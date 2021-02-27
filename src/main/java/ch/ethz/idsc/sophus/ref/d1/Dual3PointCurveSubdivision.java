@@ -16,7 +16,6 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
  * 
  * Chaikin's rule is used for the generation of the first and last point */
 public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Serializable {
-  private static final long serialVersionUID = -1362749832403205798L;
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
   private static final Scalar _3_4 = RationalScalar.of(3, 4);
   // ---

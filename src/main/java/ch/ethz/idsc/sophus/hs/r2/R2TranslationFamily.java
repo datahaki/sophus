@@ -11,8 +11,6 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 /** the term "family" conveys the meaning that the translation
  * depends on a single parameter, for instance time */
 public abstract class R2TranslationFamily implements R2RigidFamily, Serializable {
-  private static final long serialVersionUID = 7460394095456201685L;
-
   @Override // from BijectionFamily
   public final TensorUnaryOperator forward(Scalar scalar) {
     Tensor offset = function_apply(scalar);
@@ -27,7 +25,7 @@ public abstract class R2TranslationFamily implements R2RigidFamily, Serializable
 
   @Override // from RigidFamily
   public final Tensor forward_se2(Scalar scalar) {
-    return Se2Matrix.translation(function_apply(scalar)); // TODO JPH test coverage
+    return Se2Matrix.translation(function_apply(scalar));
   }
 
   /** @param scalar

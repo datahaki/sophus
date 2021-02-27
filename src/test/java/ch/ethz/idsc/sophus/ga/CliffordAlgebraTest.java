@@ -5,13 +5,13 @@ import ch.ethz.idsc.sophus.lie.JacobiIdentity;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.ExactTensorQ;
-import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.alg.Dot;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.lie.Quaternion;
 import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.mat.Tolerance;
@@ -38,11 +38,13 @@ public class CliffordAlgebraTest extends TestCase {
   public void testD1() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.positive(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, 1}}, {{0, 1}, {1, 0}}}"));
+    assertEquals(cliffordAlgebra.gp(), CliffordAlgebra.of(1, 0).gp());
   }
 
   public void testD1Complex() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.negative(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, -1}}, {{0, 1}, {1, 0}}}"));
+    assertEquals(cliffordAlgebra.gp(), CliffordAlgebra.of(0, 1).gp());
     Tensor x = Tensors.vector(2, 5);
     Tensor y = Tensors.vector(1, -3);
     Tensor m = cliffordAlgebra.gp(x, y);
@@ -163,14 +165,15 @@ public class CliffordAlgebraTest extends TestCase {
   }
 
   public void testCommutatorPositive() {
-    for (int n = 0; n <= 4; ++n) {
-      CliffordAlgebra cliffordAlgebra = CliffordAlgebra.positive(n);
-      JacobiIdentity.require(cliffordAlgebra.cp());
-    }
+    for (int p = 0; p <= 2; ++p)
+      for (int q = 0; q < 2; ++q) {
+        CliffordAlgebra cliffordAlgebra = CliffordAlgebra.of(p, q);
+        JacobiIdentity.require(cliffordAlgebra.cp());
+      }
   }
 
   public void testCommutatorNegative() {
-    for (int n = 0; n <= 4; ++n) {
+    for (int n = 0; n <= 3; ++n) {
       CliffordAlgebra cliffordAlgebra = CliffordAlgebra.negative(n);
       JacobiIdentity.require(cliffordAlgebra.cp());
     }

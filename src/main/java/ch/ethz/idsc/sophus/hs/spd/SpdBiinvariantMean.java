@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 public enum SpdBiinvariantMean {
@@ -11,6 +11,6 @@ public enum SpdBiinvariantMean {
 
   /** @param chop */
   public static BiinvariantMean of(Chop chop) {
-    return IterativeBiinvariantMean.of(SpdManifold.INSTANCE, chop);
+    return IterativeBiinvariantMean.of(SpdManifold.INSTANCE, chop, SpdPhongMean.INSTANCE);
   }
 }

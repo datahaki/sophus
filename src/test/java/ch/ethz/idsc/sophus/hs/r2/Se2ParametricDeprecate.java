@@ -6,7 +6,7 @@ import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
 /** length of geodesic between p and q in SE(2) when projected to R^2
@@ -19,6 +19,6 @@ import ch.ethz.idsc.tensor.sca.Sinc;
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     Scalar alpha = So2.MOD.apply(p.Get(2).subtract(q.get(2))).multiply(HALF);
-    return Norm._2.between(p.extract(0, 2), q.extract(0, 2)).divide(Sinc.FUNCTION.apply(alpha));
+    return Vector2Norm.between(p.extract(0, 2), q.extract(0, 2)).divide(Sinc.FUNCTION.apply(alpha));
   }
 }

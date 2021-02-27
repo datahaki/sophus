@@ -2,8 +2,8 @@
 package ch.ethz.idsc.sophus.clt;
 
 import ch.ethz.idsc.sophus.clt.mid.OriginalApproximation;
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.so2.So2;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -14,7 +14,6 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 /** Reference:
  * Ulrich Reif slides */
 /* package */ abstract class ClothoidCurve implements ScalarTensorFunction {
-  private static final long serialVersionUID = -5470923394934029193L;
   protected static final Scalar _1 = RealScalar.of(1.0);
   // ---
   private final Tensor pxy;

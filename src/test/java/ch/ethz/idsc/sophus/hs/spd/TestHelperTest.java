@@ -47,4 +47,9 @@ public class TestHelperTest extends TestCase {
   public void testNonSymmetricFail() {
     AssertFail.of(() -> MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4)));
   }
+
+  public void testZeroFail() {
+    AssertFail.of(() -> TestHelper.generateSim(0));
+    AssertFail.of(() -> TestHelper.generateSim(-1));
+  }
 }

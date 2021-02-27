@@ -1,11 +1,16 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
+import ch.ethz.idsc.sophus.math.AffineQ;
 import ch.ethz.idsc.sophus.math.AppendOne;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.mat.CholeskyDecomposition;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
+import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Reference:
  * "Affine generalised barycentric coordinates"
@@ -21,10 +26,12 @@ public enum AffineCoordinate implements Genesis {
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
     Tensor x = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
-    int d = levers.get(0).length();
+    int d = Unprotect.dimension1Hint(levers);
     Tensor u = UnitVector.of(d + 1, d);
     Tensor matrix = Transpose.of(x).dot(x);
     Tensor z = CholeskyDecomposition.of(matrix).solve(u);
-    return x.dot(z);
+    Tensor weights = x.dot(z);
+    AffineQ.require(weights, Chop._02);
+    return NormalizeTotal.FUNCTION.apply(weights);
   }
 }

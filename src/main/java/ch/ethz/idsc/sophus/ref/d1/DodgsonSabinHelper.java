@@ -1,16 +1,16 @@
 // code by jph
 package ch.ethz.idsc.sophus.ref.d1;
 
-import ch.ethz.idsc.sophus.crv.SignedCurvature2D;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
+import ch.ethz.idsc.sophus.math.d2.SignedCurvature2D;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.lie.Cross;
-import ch.ethz.idsc.tensor.red.Norm;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
+import ch.ethz.idsc.tensor.nrm.Vector2NormSquared;
 import ch.ethz.idsc.tensor.red.Times;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Sqrt;
@@ -38,7 +38,7 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
 
   static Tensor intersectCircleLine(Tensor b, Tensor c, Scalar r, Scalar lam) {
     Tensor D = c.subtract(b);
-    double d = Norm2Squared.ofVector(D).number().doubleValue();
+    double d = Vector2NormSquared.of(D).number().doubleValue();
     double l2 = lam.multiply(lam).number().doubleValue();
     double R2 = r.multiply(r).number().doubleValue();
     double fa = 1 / (1 + Math.sqrt(1 - R2 * d * 0.25));
@@ -50,9 +50,9 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   }
 
   static Scalar lambda(Tensor a, Tensor b, Tensor c, Tensor d, Scalar r) {
-    Scalar ac = Norm._2.between(a, c);
-    Scalar bd = Norm._2.between(b, d);
-    Scalar bc = Norm2Squared.between(b, c); // squared
+    Scalar ac = Vector2Norm.between(a, c);
+    Scalar bd = Vector2Norm.between(b, d);
+    Scalar bc = Vector2NormSquared.between(b, c); // squared
     Scalar mu = ac.divide(bd);
     Scalar res = Times.of(r, r, bc, _1_4);
     Scalar h = res.divide(RealScalar.ONE.add(Sqrt.of(RealScalar.ONE.subtract(res))));
@@ -64,8 +64,8 @@ import ch.ethz.idsc.tensor.sca.Sqrt;
   }
 
   static Scalar averageCurvature(Tensor a, Tensor b, Tensor c, Tensor d) {
-    Scalar ac = Norm._2.between(a, c);
-    Scalar bd = Norm._2.between(b, d);
+    Scalar ac = Vector2Norm.between(a, c);
+    Scalar bd = Vector2Norm.between(b, d);
     return SignedCurvature2D.of(c, b, a).get().multiply(bd).add( //
         SignedCurvature2D.of(d, c, b).get().multiply(ac)) //
         .divide(bd.add(ac));

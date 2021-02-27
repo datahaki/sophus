@@ -1,44 +1,46 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
+import ch.ethz.idsc.sophus.lie.LieDifferences;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.Unprotect;
 import ch.ethz.idsc.tensor.alg.Differences;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
-/** HsDifferences is the generalization of {@link Differences}
- * The input are elements from the Lie group.
- * The return sequence consists of elements from the Lie algebra.
+/** EXPERIMENTAL
  * 
  * <pre>
- * HsDifferences[{a, b, c, d, e}] == {log a^-1.b, log b^-1.c, log c^-1.d, log d^-1.e}
- * </pre> */
+ * HsDifferences[{a, b, c, d, e}] == {{a, log_a[b]}, {b, log_b[c]}, ..., {d, log_d[e]}}
+ * </pre>
+ * 
+ * @see Differences
+ * @see LieDifferences */
 public final class HsDifferences implements TensorUnaryOperator {
-  private static final long serialVersionUID = -2623684602810832239L;
-  // ---
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
 
-  /** @param hsExponential
+  /** @param hsManifold
    * @throws Exception if either parameter is null */
-  public HsDifferences(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
+  public HsDifferences(HsManifold hsManifold) {
+    this.hsManifold = Objects.requireNonNull(hsManifold);
   }
 
   @Override
   public Tensor apply(Tensor tensor) {
-    Tensor result = Tensors.reserve(tensor.length() - 1);
-    Tensor prev = tensor.get(0);
-    for (int index = 1; index < tensor.length(); ++index)
-      result.append(pair(prev, prev = tensor.get(index)));
-    return result;
+    List<Tensor> list = new ArrayList<>(tensor.length() - 1);
+    Iterator<Tensor> iterator = tensor.iterator();
+    Tensor prev = iterator.next();
+    while (iterator.hasNext())
+      list.add(pair(prev, prev = iterator.next()));
+    return Unprotect.using(list);
   }
 
-  /** @param p element of the lie group
-   * @param q element of the lie group
-   * @return vector == log(p^-1 . q) so that exp(vector) == p^-1 . q */
-  public Tensor pair(Tensor p, Tensor q) {
-    return hsExponential.exponential(p).log(q);
+  /* package */ Tensor pair(Tensor p, Tensor q) {
+    return Tensors.of(p, hsManifold.exponential(p).log(q));
   }
 }

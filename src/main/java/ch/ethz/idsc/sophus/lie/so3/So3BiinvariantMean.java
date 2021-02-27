@@ -1,10 +1,11 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.lie.so.SoPhongMean;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Chop;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** Reference:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
@@ -12,11 +13,11 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public enum So3BiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
-  private static final IterativeBiinvariantMean BIINVARIANT_MEAN_IMPLICIT = //
-      IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Chop._12);
+  private static final BiinvariantMean BIINVARIANT_MEAN = //
+      IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return BIINVARIANT_MEAN_IMPLICIT.apply(sequence, weights).get();
+    return BIINVARIANT_MEAN.mean(sequence, weights);
   }
 }

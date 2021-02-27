@@ -1,8 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.math;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 
 public enum Vectorize {
   ;
@@ -10,15 +11,9 @@ public enum Vectorize {
    * @param index for instance 0 to include diagonal elements, or -1 to exclude diagonal elements
    * @return vector
    * @throws Exception if given matrix is not a tensor of rank at least 2 */
-  public static Tensor lt(Tensor matrix, int index) {
-    Tensor vector = Tensors.reserve(numel(matrix, index));
-    for (Tensor row : matrix)
-      row.stream().limit(++index).forEach(vector::append);
-    return vector;
-  }
-
-  /* package */ static int numel(Tensor matrix, int index) {
-    int n = matrix.length() + index;
-    return n * (n + 1) / 2;
+  public static Tensor of(Tensor matrix, int index) {
+    AtomicInteger atomicInteger = new AtomicInteger(index + 1);
+    return Tensor.of(matrix.stream() //
+        .flatMap(row -> row.stream().limit(atomicInteger.getAndIncrement())));
   }
 }

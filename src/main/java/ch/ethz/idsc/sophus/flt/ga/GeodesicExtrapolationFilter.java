@@ -12,8 +12,6 @@ import ch.ethz.idsc.tensor.ext.BoundedLinkedList;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 public class GeodesicExtrapolationFilter implements TensorUnaryOperator {
-  private static final long serialVersionUID = 5694117245723468962L;
-
   /** @param geodesicExtrapolation
    * @param radius
    * @return */

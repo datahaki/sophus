@@ -4,8 +4,8 @@ package ch.ethz.idsc.sophus.ref.d1h;
 import java.util.Arrays;
 import java.util.List;
 
+import ch.ethz.idsc.sophus.lie.LieTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
-import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.TensorIteration;
 import ch.ethz.idsc.sophus.usr.AssertFail;
@@ -19,13 +19,13 @@ import junit.framework.TestCase;
 
 public class Hermite2SubdivisionsTest extends TestCase {
   public void testSimple() {
-    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE));
-    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnManifold.HS_EXP, RnTransport.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnManifold.INSTANCE, LieTransport.INSTANCE));
   }
 
   static final List<HermiteSubdivision> LIST = Arrays.asList( //
-      Hermite2Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE), //
-      Hermite2Subdivisions.manifold(RnManifold.HS_EXP, RnTransport.INSTANCE));
+      Hermite2Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE), //
+      Hermite2Subdivisions.manifold(RnManifold.INSTANCE, LieTransport.INSTANCE));
 
   public void testStringReverseRn() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
@@ -44,12 +44,12 @@ public class Hermite2SubdivisionsTest extends TestCase {
   }
 
   public void testNullA1Fail() {
-    AssertFail.of(() -> Hermite2Subdivisions.standard(Se2CoveringManifold.HS_EXP, null));
-    AssertFail.of(() -> Hermite2Subdivisions.standard(null, RnTransport.INSTANCE));
+    AssertFail.of(() -> Hermite2Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
+    AssertFail.of(() -> Hermite2Subdivisions.standard(null, LieTransport.INSTANCE));
   }
 
   public void testNullA2Fail() {
-    AssertFail.of(() -> Hermite2Subdivisions.manifold(Se2CoveringManifold.HS_EXP, null));
-    AssertFail.of(() -> Hermite2Subdivisions.manifold(null, RnTransport.INSTANCE));
+    AssertFail.of(() -> Hermite2Subdivisions.manifold(Se2CoveringManifold.INSTANCE, null));
+    AssertFail.of(() -> Hermite2Subdivisions.manifold(null, LieTransport.INSTANCE));
   }
 }

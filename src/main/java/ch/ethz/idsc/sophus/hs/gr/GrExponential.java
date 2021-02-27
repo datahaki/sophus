@@ -3,56 +3,76 @@ package ch.ethz.idsc.sophus.hs.gr;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
-import ch.ethz.idsc.sophus.hs.TangentSpace;
+import ch.ethz.idsc.sophus.hs.MetricBiinvariant;
 import ch.ethz.idsc.sophus.lie.MatrixBracket;
 import ch.ethz.idsc.sophus.math.Exponential;
+import ch.ethz.idsc.sophus.math.Vectorize;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.BasisTransform;
-import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.mat.Tolerance;
 
 /** Reference:
  * Geomstats: A Python Package for Riemannian Geometry in Machine Learning
- * by Nina Miolane, Alice Le Brigant, Johan Mathe, Benjamin Hou et al., 2020 */
-public class GrExponential implements Exponential, TangentSpace, Serializable {
-  private static final long serialVersionUID = 890237176692323021L;
-  private static final HsMemberQ HS_MEMBER_Q = GrMemberQ.of(Tolerance.CHOP);
-  // ---
-  private final Tensor x;
-  private final Tensor id;
-  private final Tensor x2_id;
+ * by Nina Miolane, Alice Le Brigant, Johan Mathe, Benjamin Hou et al., 2020
+ * 
+ * use with {@link MetricBiinvariant#VECTORIZE0} */
+public class GrExponential implements Exponential, Serializable {
+  private static final Scalar N1_4 = RationalScalar.of(-1, 4);
+  private final Tensor p;
+  private final TGrMemberQ tGrMemberQ;
+  /** negative identity matrix */
+  private final Tensor nid;
+  private final Tensor p2_id;
 
-  /** @param x rank k projector of Gr(n, k) */
-  public GrExponential(Tensor x) {
-    this.x = x;
-    id = IdentityMatrix.of(x.length());
-    x2_id = p2_id(x);
+  /** @param p rank k projector of Gr(n, k)
+   * @throws Exception if p is not an element in the Grassmann manifold */
+  public GrExponential(Tensor p) {
+    this.p = GrMemberQ.INSTANCE.require(p);
+    tGrMemberQ = new TGrMemberQ(p);
+    nid = IdentityMatrix.of(p.length()).negate();
+    p2_id = bic(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    return BasisTransform.ofMatrix(x, MatrixExp.of(MatrixBracket.of(x, HS_MEMBER_Q.requireTangent(x, v))));
+    return BasisTransform.ofMatrix(p, MatrixExp.of(MatrixBracket.of(p, tGrMemberQ.require(v))));
+  }
+
+  private Tensor mLog(Tensor q) {
+    return MatrixLog.of(bic(q).dot(p2_id));
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor y) {
-    return MatrixBracket.of(MatrixLog.of(p2_id(y).dot(x2_id)).multiply(RationalScalar.HALF), x);
+  public Tensor log(Tensor q) {
+    GrMemberQ.INSTANCE.require(q);
+    return MatrixBracket.of(mLog(q).multiply(RationalScalar.HALF), p);
+  }
+
+  @Override // from Exponential
+  public Tensor flip(Tensor q) {
+    // matrix bracket is obsolete
+    return BasisTransform.ofMatrix(p, MatrixExp.of(mLog(q).multiply(RationalScalar.HALF)));
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    // matrix bracket is obsolete
+    return BasisTransform.ofMatrix(p, MatrixExp.of(mLog(q).multiply(N1_4)));
   }
 
   @Override // from TangentSpace
-  public Tensor vectorLog(Tensor y) {
-    return Flatten.of(log(y));
+  public Tensor vectorLog(Tensor q) {
+    // TODO k * (n - k) coefficients are sufficient according to theory
+    return Vectorize.of(log(q), 0); // n (n + 1) / 2
   }
 
-  /** @param p
-   * @return p * 2 - id
-   * @throws Exception if p is not an element in the grassmannian manifold */
-  private Tensor p2_id(Tensor p) {
-    return HS_MEMBER_Q.requirePoint(p).add(p).subtract(id);
+  /** @param q
+   * @return q * 2 - id */
+  private Tensor bic(Tensor q) {
+    return q.add(nid).add(q);
   }
 }

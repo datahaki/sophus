@@ -7,19 +7,17 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.crv.dubins.DubinsPath.Type;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringGroup;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Sign;
 
 /** stream produces at least 2 and at most 6 {@link DubinsPath} */
 public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
-  private static final long serialVersionUID = -371504692477362756L;
-
   /** @param xya vector of length 3
    * @param radius
    * @return */
@@ -60,7 +58,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     Tensor gnorm = type.isFirstTurnRight() ? Se2Flip.FUNCTION.apply(xya) : xya;
     Tensor center3 = Se2CoveringGroup.INSTANCE.element(gnorm).combine(h);
     Tensor deltacenter = Se2CoveringGroup.INSTANCE.element(center1).inverse().combine(center3);
-    Scalar dist_tr = Norm._2.ofVector(deltacenter.extract(0, 2));
+    Scalar dist_tr = Vector2Norm.of(deltacenter.extract(0, 2));
     Scalar th_tr = ArcTan2D.of(deltacenter);
     Scalar th_total = deltacenter.Get(2);
     th_tr = StaticHelper.principalValue(th_tr);

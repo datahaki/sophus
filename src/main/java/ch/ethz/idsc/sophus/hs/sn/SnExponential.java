@@ -3,19 +3,13 @@ package ch.ethz.idsc.sophus.hs.sn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.TensorRuntimeException;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.alg.NormalizeUnlessZero;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.red.Hypot;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.NormalizeUnlessZero;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.red.Projection;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Cos;
 import ch.ethz.idsc.tensor.sca.Sinc;
 
@@ -33,41 +27,55 @@ import ch.ethz.idsc.tensor.sca.Sinc;
  * implementation of log is based on
  * "Barycentric Subspace Analysis on Manifolds"
  * by Xavier Pennec, 2016, p. 8 */
-public class SnExponential implements Exponential, TangentSpace, Serializable {
-  private static final long serialVersionUID = -3715922243477203953L;
-  private static final HsMemberQ HS_MEMBER_Q = SnMemberQ.of(Chop._06);
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Norm._2);
+public class SnExponential implements Exponential, Serializable {
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
-  private final Tensor x;
+  private final Tensor p;
+  private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
+  private final TSnMemberQ tSnMemberQ;
+  /** only needed for vectorLog */
+  final Tensor tSnProjection;
 
-  /** @param x on S^n
+  /** @param p on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
-  public SnExponential(Tensor x) {
-    this.x = HS_MEMBER_Q.requirePoint(x);
-    projection = Projection.on(x);
-    if (x.length() < 2)
-      throw TensorRuntimeException.of(x);
+  public SnExponential(Tensor p) {
+    this.p = p;
+    snAngle = new SnAngle(p);
+    tSnMemberQ = new TSnMemberQ(p);
+    projection = Projection.on(p);
+    tSnProjection = TSnProjection.unsafe(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    HS_MEMBER_Q.requireTangent(x, v);
-    Scalar vn = Hypot.ofVector(v);
-    Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
-    return NORMALIZE.apply(y);
+    tSnMemberQ.require(v);
+    Scalar vn = Vector2Norm.of(v);
+    return p.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
+  }
+
+  /** @throws Exception if y not member of Sn */
+  @Override // from Exponential
+  public Tensor log(Tensor y) {
+    return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(snAngle.apply(y));
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor y) {
-    HS_MEMBER_Q.requirePoint(y);
-    Scalar d_xy = SnMetric.INSTANCE.distance(x, y);
-    return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xy);
+  public Tensor flip(Tensor q) {
+    return SnManifold.INSTANCE.flip(p, q);
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    return SnManifold.INSTANCE.midpoint(p, q);
+  }
+
+  public Tensor endomorphism(Tensor q) {
+    return SnManifold.INSTANCE.endomorphism(p, q);
   }
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor y) {
-    return log(y);
+    return tSnProjection.dot(log(y));
   }
 }

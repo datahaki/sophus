@@ -1,18 +1,21 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.hn;
 
-import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.sca.Sqrt;
+import ch.ethz.idsc.tensor.nrm.Normalize;
+import ch.ethz.idsc.tensor.sca.Chop;
 
-/** @see HnGeodesic */
+/** in geomstats, the corresponding function is "regularize"
+ * 
+ * @see HnGeodesic */
 public enum HnProjection implements TensorUnaryOperator {
   INSTANCE;
 
+  private static final TensorUnaryOperator NORMALIZE = Normalize.with(HnPointNorm.INSTANCE, Chop._08);
+
   @Override
   public Tensor apply(Tensor x) {
-    Scalar xn2 = HnNormSquared.INSTANCE.norm(x); // if x in H^n then equals to -1
-    return x.divide(Sqrt.FUNCTION.apply(xn2.negate()));
+    return NORMALIZE.apply(x);
   }
 }

@@ -1,39 +1,18 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import ch.ethz.idsc.sophus.hs.AbstractHsMemberQ;
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
+import ch.ethz.idsc.sophus.math.GrassmannQ;
+import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
+import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.sca.Chop;
 
-public class GrMemberQ extends AbstractHsMemberQ implements Serializable {
-  private static final long serialVersionUID = 8544347081121190371L;
-
-  /** @param chop
-   * @return */
-  public static HsMemberQ of(Chop chop) {
-    return new GrMemberQ(Objects.requireNonNull(chop));
-  }
-
-  /***************************************************/
-  private final Chop chop;
-
-  private GrMemberQ(Chop chop) {
-    this.chop = chop;
-  }
+/** rank can be determined via {@link Eigensystem} */
+public enum GrMemberQ implements MemberQ {
+  INSTANCE;
 
   @Override // from MemberQ
-  public boolean isPoint(Tensor x) {
-    return GrassmannQ.of(x, chop);
-  }
-
-  @Override // from MemberQ
-  public boolean isTangent(Tensor x, Tensor v) {
-    return SymmetricMatrixQ.of(v, chop) //
-        && chop.isClose(x.dot(v).add(v.dot(x)), v);
+  public boolean test(Tensor p) {
+    return GrassmannQ.of(p, Chop._10);
   }
 }

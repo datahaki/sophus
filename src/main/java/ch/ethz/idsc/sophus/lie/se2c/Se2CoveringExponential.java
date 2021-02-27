@@ -56,4 +56,9 @@ public enum Se2CoveringExponential implements Exponential {
         y.divide(tan).subtract(x).multiply(be2), //
         be);
   }
+
+  @Override // from TangentSpace
+  public Tensor vectorLog(Tensor g) {
+    return log(g);
+  }
 }

@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
+import ch.ethz.idsc.sophus.hs.HsManifold;
 import ch.ethz.idsc.sophus.hs.HsTransport;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.TensorIteration;
@@ -22,9 +22,7 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
-  private static final long serialVersionUID = 2669412117143216050L;
-  // ---
-  private final HsExponential hsExponential;
+  private final HsManifold hsManifold;
   private final HsTransport hsTransport;
   private final HsGeodesic hsGeodesic;
   private final Scalar lgg;
@@ -34,7 +32,7 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
   private final Scalar hvg;
   private final Tensor vpq;
 
-  /** @param hsExponential
+  /** @param hsManifold
    * @param hsTransport
    * @param lgg
    * @param lgv
@@ -43,11 +41,11 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
    * @param vpq
    * @throws Exception if either parameters is null */
   public Hermite2Subdivision( //
-      HsExponential hsExponential, HsTransport hsTransport, //
+      HsManifold hsManifold, HsTransport hsTransport, //
       Scalar lgg, Scalar lgv, Scalar hgv, Scalar hvg, Tensor vpq) {
-    this.hsExponential = hsExponential;
+    this.hsManifold = hsManifold;
     this.hsTransport = hsTransport;
-    hsGeodesic = new HsGeodesic(hsExponential);
+    hsGeodesic = new HsGeodesic(hsManifold);
     this.lgg = lgg;
     hgg = RealScalar.ONE.subtract(this.lgg);
     this.lgv = Objects.requireNonNull(lgv);
@@ -91,9 +89,9 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
         Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv.multiply(rgp));
         Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv.multiply(rgq));
         Tensor rv1df = rg1v1.subtract(rg1v2);
-        Tensor rg = hsExponential.exponential(rg1).exp(rv1df);
+        Tensor rg = hsManifold.exponential(rg1).exp(rv1df);
         // ---
-        Exponential exponential = hsExponential.exponential(rg);
+        Exponential exponential = hsManifold.exponential(rg);
         Tensor lrp = exponential.log(pg); // p - r
         Tensor lrq = exponential.log(qg); // q - r
         Tensor rv1 = lrq.subtract(lrp).multiply(rvk);
@@ -109,9 +107,9 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
         Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv.multiply(rgq));
         Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv.multiply(rgp));
         Tensor rv1df = rg1v1.subtract(rg1v2);
-        Tensor rg = hsExponential.exponential(rg1).exp(rv1df);
+        Tensor rg = hsManifold.exponential(rg1).exp(rv1df);
         // ---
-        Exponential exponential = hsExponential.exponential(rg);
+        Exponential exponential = hsManifold.exponential(rg);
         Tensor lrp = exponential.log(pg); // p - r
         Tensor lrq = exponential.log(qg); // q - r
         Tensor rv1 = lrq.subtract(lrp).multiply(rvk);

@@ -1,9 +1,9 @@
 // code by ureif
 package ch.ethz.idsc.sophus.clt;
 
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
 import ch.ethz.idsc.sophus.lie.so2.So2;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.ComplexScalar;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -16,7 +16,7 @@ import ch.ethz.idsc.tensor.sca.Real;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /** original implementation */
-/* package */ enum ComplexClothoidCurve implements GeodesicInterface {
+/* package */ enum ComplexClothoidCurve implements Geodesic {
   INSTANCE;
 
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.lie.LieGroup;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
 import ch.ethz.idsc.sophus.lie.ScalarBiinvariantMean;
@@ -19,8 +19,6 @@ import ch.ethz.idsc.tensor.Tensors;
  * 
  * weights are required to be affine */
 public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializable {
-  private static final long serialVersionUID = -3740692365906664693L;
-
   /** @param scalarBiinvariantMean
    * @return */
   public static BiinvariantMean covering(ScalarBiinvariantMean scalarBiinvariantMean) {

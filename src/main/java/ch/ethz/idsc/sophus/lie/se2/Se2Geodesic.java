@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.lie.se2;
 
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
@@ -13,7 +13,7 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
  * References:
  * http://vixra.org/abs/1807.0463
  * https://www.youtube.com/watch?v=2vDciaUgL4E */
-public enum Se2Geodesic implements GeodesicInterface {
+public enum Se2Geodesic implements Geodesic {
   INSTANCE;
 
   @Override // from GeodesicInterface

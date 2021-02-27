@@ -3,30 +3,29 @@ package ch.ethz.idsc.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.krg.HarborDistances;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.dv.HarborBiinvariantVector;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
+import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** immutable
  * 
- * @see HarborDistances */
+ * @see HarborBiinvariantVector */
 public class BiinvariantVector implements Serializable {
-  private static final long serialVersionUID = -1348113806577012382L;
-  // ---
-  private final Tensor matrix;
+  private final InfluenceMatrix influenceMatrix;
   private final Tensor vector;
 
-  /** @param influenceMatrix square and symmetric
+  /** @param influenceMatrix
    * @param vector */
-  public BiinvariantVector(Tensor influenceMatrix, Tensor vector) {
-    this.matrix = influenceMatrix;
+  public BiinvariantVector(InfluenceMatrix influenceMatrix, Tensor vector) {
+    this.influenceMatrix = influenceMatrix;
     this.vector = vector;
   }
 
   /** @return */
   public Tensor distances() {
-    return vector.copy();
+    return vector;
   }
 
   /** @return vector of affine weights */
@@ -36,7 +35,6 @@ public class BiinvariantVector implements Serializable {
 
   /** @return generalized barycentric coordinate */
   public Tensor coordinate(ScalarUnaryOperator variogram) {
-    Tensor weights = weighting(variogram);
-    return NormalizeTotal.FUNCTION.apply(weights.subtract(matrix.dot(weights)));
+    return NormalizeTotal.FUNCTION.apply(influenceMatrix.kernel(weighting(variogram)));
   }
 }

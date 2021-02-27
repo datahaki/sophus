@@ -25,7 +25,6 @@ import ch.ethz.idsc.tensor.sca.Factorial;
  * Reference: Neeb
  * Hakenberg.de kernel.nb */
 public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializable {
-  private static final long serialVersionUID = -5427741907026433689L;
   private static final Scalar _0 = RealScalar.ZERO;
   private static final Scalar _1 = RealScalar.ONE;
   private static final int[] SIGN = { 1, -1 };
@@ -81,7 +80,7 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
       final int k = p.length();
       if (chop.allZero(v))
         return;
-      Scalar f = RealScalar.of(Math.multiplyExact(SIGN[k % 2] * (k + 1), total_q + 1)) //
+      Scalar f = RealScalar.of(Math.multiplyExact(SIGN[k & 1] * (k + 1), total_q + 1)) //
           .multiply((Scalar) Times.pmul(Join.of(p, q).map(Factorial.FUNCTION)));
       sum.set(v.divide(f)::add, d - 1);
       if (d < degree) {

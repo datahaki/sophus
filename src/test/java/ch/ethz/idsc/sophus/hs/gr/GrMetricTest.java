@@ -1,14 +1,17 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.gr;
 
+import ch.ethz.idsc.sophus.math.Vectorize0Norm2;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
+import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -50,5 +53,18 @@ public class GrMetricTest extends TestCase {
     Tensor q = projection1(y);
     Scalar distance = GrMetric.INSTANCE.distance(p, q);
     Chop._10.requireClose(distance, RealScalar.of(1.9499331103710236));
+  }
+
+  public void testAntipodal() {
+    Tensor p = DiagonalMatrix.of(1, 0);
+    Tensor q = DiagonalMatrix.of(0, 1);
+    GrMemberQ.INSTANCE.require(p);
+    GrMemberQ.INSTANCE.require(q);
+    Scalar d1 = GrMetric.INSTANCE.distance(p, q);
+    d1.zero();
+    Scalar d2 = Vectorize0Norm2.INSTANCE.apply(new GrExponential(p).vectorLog(q));
+    Tolerance.CHOP.requireClose(d1, d2);
+    // TODO check distance of "antipodal" frames, why is this zero?
+    // System.out.println(distance);
   }
 }

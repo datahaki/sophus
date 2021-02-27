@@ -14,7 +14,6 @@ import ch.ethz.idsc.tensor.red.Total;
  * 
  * "Baker-Campbell-Hausdorff formula" Wikipedia */
 public class BchApprox implements BinaryOperator<Tensor>, Serializable {
-  private static final long serialVersionUID = 5183446072329786511L;
   public static final int DEGREE = 5;
 
   /** @param ad

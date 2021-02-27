@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.sca.Exp;
 import ch.ethz.idsc.tensor.sca.Sqrt;
 
 /* package */ class ClothoidPartialDegree2 implements ClothoidPartial, Serializable {
-  private static final long serialVersionUID = 8444256561231795420L;
   private static final Scalar _N1_1_4 = ComplexScalar.of(+0.7071067811865476, 0.7071067811865475);
   private static final Scalar _N1_3_4 = ComplexScalar.of(-0.7071067811865475, 0.7071067811865476);
   private static final Scalar _1_4 = RationalScalar.of(1, 4);

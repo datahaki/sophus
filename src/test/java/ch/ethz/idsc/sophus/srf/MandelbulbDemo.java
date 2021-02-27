@@ -8,7 +8,7 @@ import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.img.ColorDataGradients;
-import ch.ethz.idsc.tensor.red.Norm2Squared;
+import ch.ethz.idsc.tensor.nrm.Vector2NormSquared;
 import ch.ethz.idsc.tensor.sca.Clips;
 
 /* package */ enum MandelbulbDemo {
@@ -26,10 +26,10 @@ import ch.ethz.idsc.tensor.sca.Clips;
       Scalar nrm = null;
       for (int index = 0; index < DEPTH; ++index) {
         x = NylanderPower.of(x.add(c), EXPONENT);
-        if (Scalars.lessThan(THRESHOLD, Norm2Squared.ofVector(x)))
+        if (Scalars.lessThan(THRESHOLD, Vector2NormSquared.of(x)))
           return RealScalar.ZERO;
         if (index == 6)
-          nrm = Norm2Squared.ofVector(x.add(c)); //
+          nrm = Vector2NormSquared.of(x.add(c)); //
       }
       return nrm;
     }

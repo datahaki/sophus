@@ -17,8 +17,6 @@ import ch.ethz.idsc.tensor.sca.Sin;
  * @see Se2ForwardAction
  * @see Se2GroupElement */
 /* package */ class Se2InverseAction implements TensorUnaryOperator {
-  private static final long serialVersionUID = -7282256690987792192L;
-  // ---
   private final Scalar px;
   private final Scalar py;
   private final Scalar ca;

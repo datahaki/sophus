@@ -15,13 +15,10 @@ import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
-import ch.ethz.idsc.tensor.sca.Chop;
 
 /** GeodesicExtrapolate projects a sequence of points to their next (expected) point
  * with each point weighted as provided by an external function. */
 public class GeodesicExtrapolation implements TensorUnaryOperator {
-  private static final long serialVersionUID = -8236139183742722464L;
-
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length "sequence.length - 2"
    * @return operator that maps a sequence of number of points to their next (expected) point
@@ -40,8 +37,6 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
 
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
-    private static final long serialVersionUID = 2346357295827295423L;
-    // ---
     private final Function<Integer, Tensor> function;
 
     private Splits(Function<Integer, Tensor> function) {
@@ -58,7 +53,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
      * @throws Exception if mask is not affine */
     /* package */ static Tensor of(Tensor mask) {
       // check for affinity
-      AffineQ.require(mask, Chop._08);
+      AffineQ.require(mask);
       // no extrapolation possible
       if (mask.length() == 1)
         return Tensors.vector(1);
@@ -66,7 +61,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
       Scalar factor = mask.Get(0);
       // Calculate interpolation splits
       for (int index = 1; index < mask.length() - 1; ++index) {
-        factor = factor.add(mask.get(index));
+        factor = factor.add(mask.Get(index));
         Scalar lambda = mask.Get(index).divide(factor);
         splits.append(lambda);
       }

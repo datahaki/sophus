@@ -18,6 +18,7 @@ import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
+import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.itp.BinaryAverage;
 
 /** GeodesicCenter projects a sequence of points to their geodesic center
@@ -28,7 +29,7 @@ import ch.ethz.idsc.tensor.itp.BinaryAverage;
  * 
  * @see CenterFilter */
 public class GeodesicCenter implements TensorUnaryOperator {
-  private static final long serialVersionUID = 4589805294648304429L;
+  private static final int CACHE_MAX_SIZE = 24;
 
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
@@ -53,8 +54,6 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
-    private static final long serialVersionUID = 5863453422611618530L;
-    // ---
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {
@@ -70,7 +69,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
     /* package */ static Tensor of(Tensor mask) {
-      if (mask.length() % 2 == 0)
+      if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);
       int radius = (mask.length() - 1) / 2;
@@ -94,12 +93,12 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   private GeodesicCenter(BinaryAverage binaryAverage, Function<Integer, Tensor> function) {
     this.binaryAverage = Objects.requireNonNull(binaryAverage);
-    this.function = Cache.of(new Splits(function), 32);
+    this.function = Cache.of(new Splits(function), CACHE_MAX_SIZE);
   }
 
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
-    if (tensor.length() % 2 != 1)
+    if (Integers.isEven(tensor.length()))
       throw TensorRuntimeException.of(tensor);
     // spatial neighborhood we want to consider for centering
     int radius = (tensor.length() - 1) / 2;

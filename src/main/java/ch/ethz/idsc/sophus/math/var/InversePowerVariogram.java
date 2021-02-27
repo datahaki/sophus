@@ -13,8 +13,6 @@ import ch.ethz.idsc.tensor.sca.Power;
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 public class InversePowerVariogram implements ScalarUnaryOperator {
-  private static final long serialVersionUID = -2883681777358160119L;
-
   /** @param exponent for instance 2
    * @return */
   public static ScalarUnaryOperator of(Scalar exponent) {
@@ -43,5 +41,10 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
     return Scalars.isZero(r) //
         ? DoubleScalar.POSITIVE_INFINITY
         : power.apply(r);
+  }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s]", getClass().getSimpleName(), power);
   }
 }

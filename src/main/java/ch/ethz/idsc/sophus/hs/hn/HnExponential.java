@@ -3,46 +3,54 @@ package ch.ethz.idsc.sophus.hs.hn;
 
 import java.io.Serializable;
 
-import ch.ethz.idsc.sophus.hs.HsMemberQ;
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.sophus.math.sca.Sinhc;
-import ch.ethz.idsc.sophus.math.sca.SinhcInverse;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Cosh;
 
 /** hyperboloid model
  * 
  * Reference:
- * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
-public class HnExponential implements Exponential, TangentSpace, Serializable {
-  private static final long serialVersionUID = -6560335617147241734L;
-  private static final HsMemberQ HS_MEMBER_Q = HnMemberQ.of(Chop._06);
-  // ---
-  private final Tensor x;
+ * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016
+ * 
+ * @see HnGeodesic */
+public class HnExponential implements Exponential, Serializable {
+  private final Tensor p;
+  private final HnAngle hnAngle;
+  private final THnMemberQ tHnMemberQ;
 
-  public HnExponential(Tensor x) {
-    this.x = HS_MEMBER_Q.requirePoint(x);
+  public HnExponential(Tensor p) {
+    this.p = p;
+    hnAngle = new HnAngle(p);
+    tHnMemberQ = new THnMemberQ(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    HS_MEMBER_Q.requireTangent(x, v);
-    Scalar vn = HnNorm.INSTANCE.norm(v);
-    Tensor exp = x.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
-    return HnProjection.INSTANCE.apply(exp);
+    tHnMemberQ.require(v);
+    Scalar vn = HnVectorNorm.of(v);
+    return p.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor y) {
-    HnAngle hnAngle = new HnAngle(x, y);
-    return y.subtract(x.multiply(hnAngle.cosh_d())).multiply(SinhcInverse.FUNCTION.apply(hnAngle.angle()));
+  public Tensor log(Tensor q) {
+    return hnAngle.log(q);
+  }
+
+  @Override // from Exponential
+  public Tensor flip(Tensor q) {
+    return HnManifold.INSTANCE.flip(p, q);
+  }
+
+  @Override // from Exponential
+  public Tensor midpoint(Tensor q) {
+    return HnManifold.INSTANCE.midpoint(p, q);
   }
 
   @Override // from TangentSpace
-  public Tensor vectorLog(Tensor y) {
-    return log(y);
+  public Tensor vectorLog(Tensor q) {
+    // embedding of TxH^n in R^(n+1) is not tight
+    return log(q);
   }
 }

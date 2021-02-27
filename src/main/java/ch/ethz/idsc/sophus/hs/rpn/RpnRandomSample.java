@@ -5,15 +5,12 @@ import java.io.Serializable;
 import java.util.Random;
 
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
-import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.ext.Integers;
 import ch.ethz.idsc.tensor.sca.Abs;
 
 public class RpnRandomSample implements RandomSampleInterface, Serializable {
-  private static final long serialVersionUID = 3982233339122358560L;
-
   /** Example:
    * dimension == 1 corresponds to the half circle in the plane
    * 
@@ -32,7 +29,7 @@ public class RpnRandomSample implements RandomSampleInterface, Serializable {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    Tensor tensor = RandomSample.of(randomSampleInterface);
+    Tensor tensor = randomSampleInterface.randomSample(random);
     tensor.set(Abs.FUNCTION, 0);
     return tensor;
   }

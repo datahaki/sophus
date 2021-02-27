@@ -44,18 +44,16 @@ public enum RnAffineCoordinate implements BarycentricCoordinate {
    * @return
    * @throws Exception if given sequence is empty */
   public static TensorUnaryOperator of(Tensor sequence) {
-    return new Operator(sequence);
+    return new Inner(sequence);
   }
 
-  private static class Operator implements TensorUnaryOperator {
-    private static final long serialVersionUID = 2479098402937803459L;
-    // ---
+  private static class Inner implements TensorUnaryOperator {
     private final Scalar _1_n;
     /** negative mean */
     private final Tensor negm;
     private final Tensor pinv;
 
-    private Operator(Tensor sequence) {
+    private Inner(Tensor sequence) {
       _1_n = RationalScalar.of(1, sequence.length());
       negm = Mean.of(sequence).negate();
       pinv = PseudoInverse.of(Tensor.of(sequence.stream().map(negm::add)));

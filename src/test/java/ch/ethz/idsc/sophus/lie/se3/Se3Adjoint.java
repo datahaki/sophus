@@ -15,8 +15,6 @@ import ch.ethz.idsc.tensor.mat.Inverse;
  * code based on derivation by Ethan Eade
  * "Lie Groups for 2D and 3D Transformations", p. 11 */
 /* package */ class Se3Adjoint implements TensorUnaryOperator {
-  private static final long serialVersionUID = 7994590867905215335L;
-
   /** @param g element from Lie Group SE3 as 4x4 affine matrix
    * @return */
   public static TensorUnaryOperator forward(Tensor g) {

@@ -16,13 +16,13 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.UnitVector;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.red.Norm;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SchildLadderTest extends TestCase {
   public void testRn() {
-    HsTransport hsTransport = SchildLadderExt.of(RnManifold.HS_EXP);
+    HsTransport hsTransport = SchildLadder.of(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);
@@ -34,7 +34,7 @@ public class SchildLadderTest extends TestCase {
   public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
-    TensorUnaryOperator shift1 = SchildLadderExt.of(SnManifold.INSTANCE).shift(orig, dest);
+    TensorUnaryOperator shift1 = SchildLadder.of(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift3 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
@@ -62,8 +62,8 @@ public class SchildLadderTest extends TestCase {
       Tensor t1 = shift1.apply(v2);
       Tensor t2 = shift2.apply(v2);
       Tensor t3 = shift3.apply(v2);
-      Scalar d13 = Norm._2.between(t1, t3);
-      Scalar d23 = Norm._2.between(t2, t3);
+      Scalar d13 = Vector2Norm.between(t1, t3);
+      Scalar d23 = Vector2Norm.between(t2, t3);
       Chop._12.requireClose(d13, d23);
     }
   }

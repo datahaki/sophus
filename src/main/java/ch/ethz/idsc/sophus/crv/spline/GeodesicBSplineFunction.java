@@ -28,7 +28,7 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * is different from Mathematica.
  * 
  * tensor::BSplineFunction is parameterized over the interval
- * [0, control.length()-1]
+ * [0, control.length() - 1]
  * 
  * tensor::BSplineFunction can be instantiated for all degrees
  * regardless of the length of the control points.
@@ -36,21 +36,19 @@ import ch.ethz.idsc.tensor.sca.Clips;
  * Mathematica::BSplineFunction throws an exception if number
  * of control points is insufficient for the specified degree. */
 public class GeodesicBSplineFunction implements ScalarTensorFunction {
-  private static final long serialVersionUID = 4983517325026965617L;
-
   /** the control point are stored by reference, i.e. modifications to
    * given tensor alter the behavior of this BSplineFunction instance.
    * 
    * @param binaryAverage
    * @param degree of polynomial basis function, non-negative integer
-   * @param control points with at least one element
+   * @param sequence of control points with at least one element
    * @return */
-  public static GeodesicBSplineFunction of(BinaryAverage binaryAverage, int degree, Tensor control) {
+  public static GeodesicBSplineFunction of(BinaryAverage binaryAverage, int degree, Tensor sequence) {
     return new GeodesicBSplineFunction( //
         Objects.requireNonNull(binaryAverage), //
         Integers.requirePositiveOrZero(degree), //
-        Range.of(0, control.length()), //
-        control);
+        Range.of(0, sequence.length()), //
+        sequence);
   }
 
   /** the control point are stored by reference, i.e. modifications to
@@ -59,22 +57,22 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
    * @param binaryAverage
    * @param degree of polynomial basis function, non-negative integer
    * @param knots vector of the same length as control
-   * @param control points with at least one element
+   * @param sequence of control points with at least one element
    * @return
    * @throws Exception */
-  public static GeodesicBSplineFunction of(BinaryAverage binaryAverage, int degree, Tensor knots, Tensor control) {
+  public static GeodesicBSplineFunction of(BinaryAverage binaryAverage, int degree, Tensor knots, Tensor sequence) {
     OrderedQ.require(knots);
     return new GeodesicBSplineFunction( //
         Objects.requireNonNull(binaryAverage), //
         Integers.requirePositiveOrZero(degree), //
-        VectorQ.requireLength(knots, control.length()), //
-        control);
+        VectorQ.requireLength(knots, sequence.length()), //
+        sequence);
   }
 
   /***************************************************/
   private final BinaryAverage binaryAverage;
   private final int degree;
-  private final Tensor control;
+  private final Tensor sequence;
   /** half == degree / 2 */
   private final int half;
   /** index of last control point */
@@ -84,23 +82,23 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
   private final NavigableMap<Scalar, Integer> navigableMap;
   private final Tensor samples;
 
-  private GeodesicBSplineFunction(BinaryAverage binaryAverage, int degree, Tensor knots, Tensor control) {
+  private GeodesicBSplineFunction(BinaryAverage binaryAverage, int degree, Tensor knots, Tensor sequence) {
     this.binaryAverage = binaryAverage;
     this.degree = degree;
-    this.control = control;
+    this.sequence = sequence;
     half = degree / 2;
-    Scalar shift = degree % 2 == 0 //
+    Scalar shift = Integers.isEven(degree) //
         ? RationalScalar.HALF
         : RealScalar.ZERO;
-    last = control.length() - 1;
+    last = sequence.length() - 1;
     domain = Clips.interval(knots.Get(0), Last.of(knots));
     navigableMap = new TreeMap<>();
     navigableMap.put(knots.Get(0), 0);
     for (int index = 1; index < knots.length(); ++index)
-      navigableMap.put(degree % 2 == 0 //
+      navigableMap.put(Integers.isEven(degree) //
           ? (Scalar) RnGeodesic.INSTANCE.midpoint(knots.Get(index - 1), knots.Get(index))
           : knots.Get(index), index);
-    samples = Unprotect.references(Range.of(-degree + 1, control.length() + degree) //
+    samples = Unprotect.references(Range.of(-degree + 1, sequence.length() + degree) //
         .map(index -> index.subtract(shift)) //
         .map(Clips.interval(0, last)) //
         .map(LinearInterpolation.of(knots)::at));
@@ -131,7 +129,7 @@ public class GeodesicBSplineFunction implements ScalarTensorFunction {
         samples.extract(k, k + 2 * degree), //
         Tensor.of(IntStream.range(k - half, hi - half) // control
             .map(this::bound) //
-            .mapToObj(control::get)));
+            .mapToObj(sequence::get)));
   }
 
   // helper function

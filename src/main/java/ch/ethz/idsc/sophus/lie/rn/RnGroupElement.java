@@ -11,8 +11,6 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * the adjoint map is the identity for each group element */
 public class RnGroupElement implements LieGroupElement, Serializable {
-  private static final long serialVersionUID = 3526812468106998246L;
-  // ---
   private final Tensor coordinate;
 
   public RnGroupElement(Tensor coordinate) {

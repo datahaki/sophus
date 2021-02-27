@@ -3,7 +3,7 @@ package ch.ethz.idsc.sophus.lie.se2;
 
 import java.util.List;
 
-import ch.ethz.idsc.sophus.crv.decim.CurveDecimation;
+import ch.ethz.idsc.sophus.decim.CurveDecimation;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Dimensions;

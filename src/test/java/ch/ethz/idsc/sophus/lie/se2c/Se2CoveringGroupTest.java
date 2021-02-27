@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
+import java.util.Random;
+
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
 import ch.ethz.idsc.sophus.gbc.HarborCoordinate;
@@ -24,44 +26,42 @@ public class Se2CoveringGroupTest extends TestCase {
   }
 
   public void testAdInv() {
-    for (int count = 0; count < 10; ++count) {
-      Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), 8);
-      Tensor point = TestHelper.spawn_Se2C();
-      Tensor shift = TestHelper.spawn_Se2C();
-      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-        Tensor all = tensorMapping.slash(sequence);
-        Tensor one = tensorMapping.apply(point);
-        for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
-          Tensor w1 = barycentricCoordinate.weights(sequence, point);
-          Tensor w2 = barycentricCoordinate.weights(all, one);
-          if (!Chop._03.isClose(w1, w2)) {
-            System.out.println("---");
-            System.out.println(w1);
-            System.out.println(w2);
-            fail();
-          }
+    Random random = new Random();
+    int n = 5 + random.nextInt(3);
+    Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
+    Tensor point = TestHelper.spawn_Se2C();
+    Tensor shift = TestHelper.spawn_Se2C();
+    for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
+      Tensor all = tensorMapping.slash(sequence);
+      Tensor one = tensorMapping.apply(point);
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
+        Tensor w1 = barycentricCoordinate.weights(sequence, point);
+        Tensor w2 = barycentricCoordinate.weights(all, one);
+        if (!Chop._03.isClose(w1, w2)) {
+          System.out.println("---");
+          System.out.println(w1);
+          System.out.println(w2);
+          fail();
         }
-        for (int exp = 0; exp < 3; ++exp) {
-          TensorUnaryOperator gr1 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
-          TensorUnaryOperator gr2 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), all);
-          Tensor w1 = gr1.apply(point);
-          Tensor w2 = gr2.apply(one);
-          Chop._10.requireClose(w1, w2);
-        }
+      }
+      for (int exp = 0; exp < 3; ++exp) {
+        TensorUnaryOperator gr1 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
+        TensorUnaryOperator gr2 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), all);
+        Tensor w1 = gr1.apply(point);
+        Tensor w2 = gr2.apply(one);
+        Chop._10.requireClose(w1, w2);
       }
     }
   }
 
   public void testLinearReproduction() {
-    for (int length = 5; length < 10; ++length) {
-      Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), length);
-      TensorUnaryOperator grCoordinate = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
-      for (int count = 0; count < 10; ++count) {
-        Tensor point = TestHelper.spawn_Se2C();
-        Tensor weights = grCoordinate.apply(point);
-        Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-        Chop._05.requireClose(point, mean);
-      }
-    }
+    Random random = new Random();
+    int n = 5 + random.nextInt(5);
+    Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
+    TensorUnaryOperator grCoordinate = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
+    Tensor point = TestHelper.spawn_Se2C();
+    Tensor weights = grCoordinate.apply(point);
+    Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Chop._05.requireClose(point, mean);
   }
 }

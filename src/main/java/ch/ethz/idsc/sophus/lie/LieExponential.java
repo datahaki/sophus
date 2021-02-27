@@ -4,20 +4,18 @@ package ch.ethz.idsc.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
+import ch.ethz.idsc.sophus.hs.HsManifold;
+import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Tensor;
 
-/**
- * 
- */
-public class LieExponential implements HsExponential, Serializable {
-  private static final long serialVersionUID = -1771924999128144298L;
-
-  /** @param lieGroup
-   * @param exponential
+/** all tangent vectors are assumed to be in the tangent space at the neutral element,
+ * i.e. given in the basis of TeG */
+public class LieExponential implements HsManifold, Serializable {
+  /** @param lieGroup G
+   * @param exponential at TeG
    * @return */
-  public static HsExponential of(LieGroup lieGroup, Exponential exponential) {
+  public static LieExponential of(LieGroup lieGroup, Exponential exponential) {
     return new LieExponential( //
         Objects.requireNonNull(lieGroup), //
         Objects.requireNonNull(exponential));
@@ -32,31 +30,38 @@ public class LieExponential implements HsExponential, Serializable {
     this.exponential = exponential;
   }
 
-  @Override // from HsExponential
+  @Override // from VectorLogManifold
+  public TangentSpace logAt(Tensor point) {
+    return new ExponentialImpl(point);
+  }
+
+  @Override // from HsManifold
   public Exponential exponential(Tensor point) {
     return new ExponentialImpl(point);
   }
 
   private class ExponentialImpl implements Exponential, Serializable {
-    private static final long serialVersionUID = 1572938118717771657L;
-    // ---
     private final LieGroupElement element;
     private final LieGroupElement inverse;
 
-    public ExponentialImpl(Tensor point) {
-      element = lieGroup.element(point);
+    public ExponentialImpl(Tensor p) {
+      element = lieGroup.element(p);
       inverse = element.inverse();
     }
 
     @Override // from Exponential
-    public Tensor exp(Tensor vector) {
-      // TODO x is tangent vector at point (not at neutral elem.)
-      return element.combine(exponential.exp(vector));
+    public Tensor exp(Tensor v) {
+      return element.combine(exponential.exp(v));
     }
 
     @Override // from Exponential
-    public Tensor log(Tensor point) {
-      return exponential.log(inverse.combine(point));
+    public Tensor log(Tensor q) {
+      return exponential.log(inverse.combine(q));
+    }
+
+    @Override // from TangentSpace
+    public Tensor vectorLog(Tensor q) {
+      return exponential.vectorLog(inverse.combine(q));
     }
   }
 }

@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import ch.ethz.idsc.sophus.lie.LieTransport;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
-import ch.ethz.idsc.sophus.lie.rn.RnTransport;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -18,7 +18,7 @@ public class Hermite1SubdivisionsTest extends TestCase {
   public void testSimple() {
     TestHelper.check( //
         RnHermite1Subdivisions.instance(), //
-        Hermite1Subdivisions.standard(RnManifold.HS_EXP, RnTransport.INSTANCE));
+        Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));
   }
 
   public void testParams() {
@@ -26,7 +26,7 @@ public class Hermite1SubdivisionsTest extends TestCase {
     Scalar mu = RationalScalar.of(-1, 3);
     TestHelper.check( //
         RnHermite1Subdivisions.of(lambda, mu), //
-        Hermite1Subdivisions.of(RnManifold.HS_EXP, RnTransport.INSTANCE, lambda, mu));
+        Hermite1Subdivisions.of(RnManifold.INSTANCE, LieTransport.INSTANCE, lambda, mu));
   }
 
   public void testSerializableCast() throws ClassNotFoundException, IOException {

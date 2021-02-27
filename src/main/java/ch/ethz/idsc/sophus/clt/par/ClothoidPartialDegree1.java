@@ -8,8 +8,6 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.sca.Exp;
 
 /* package */ class ClothoidPartialDegree1 implements ClothoidPartial, Serializable {
-  private static final long serialVersionUID = 8387109520968276351L;
-  // ---
   private final Scalar c0;
   private final Scalar c1;
   private final Scalar factor;

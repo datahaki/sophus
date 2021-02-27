@@ -11,7 +11,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.sca.Clips;
 
 public class PriorityClothoid implements ClothoidBuilder, Serializable {
-  private static final long serialVersionUID = 1337901901218072361L;
   private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(15.0), 101);
 
   /** @param comparator

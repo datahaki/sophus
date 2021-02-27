@@ -7,7 +7,6 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /* package */ class Se2AdjointComp implements TensorUnaryOperator {
-  private static final long serialVersionUID = 2943351612823021589L;
   private final Tensor matrix;
 
   /** @param element from Lie Group SE2 as coordinates {x, y, omega} */

@@ -13,19 +13,15 @@ import ch.ethz.idsc.tensor.qty.Unit;
 import ch.ethz.idsc.tensor.sca.Abs;
 import ch.ethz.idsc.tensor.sca.ArcTan;
 import ch.ethz.idsc.tensor.sca.Sign;
-import ch.ethz.idsc.tensor.sca.SignInterface;
 
 public class Se2AxisYProject implements TensorScalarFunction {
-  private static final long serialVersionUID = -2090599423068993025L;
-
   private static class MapSingular implements TensorScalarFunction {
-    private static final long serialVersionUID = -4472897251378604329L;
     private static final Scalar[] SIGNUM = { //
         DoubleScalar.NEGATIVE_INFINITY, //
         RealScalar.ZERO, //
         DoubleScalar.POSITIVE_INFINITY };
     // ---
-    final Unit unit;
+    private final Unit unit;
 
     MapSingular(Unit unit) {
       this.unit = unit;
@@ -34,8 +30,8 @@ public class Se2AxisYProject implements TensorScalarFunction {
     @Override
     public Scalar apply(Tensor p) {
       Scalar px = p.Get(0);
-      SignInterface signInterface = (SignInterface) px;
-      return Quantity.of(SIGNUM[1 + signInterface.signInt()], unit);
+      int sign = Scalars.intValueExact(Sign.FUNCTION.apply(px));
+      return Quantity.of(SIGNUM[1 + sign], unit);
     }
   }
 
@@ -62,7 +58,7 @@ public class Se2AxisYProject implements TensorScalarFunction {
   private Se2AxisYProject(Scalar vx, Scalar be) {
     this.vx = Abs.FUNCTION.apply(vx);
     this.be = be;
-    se = be.multiply(Sign.of(vx));
+    se = be.multiply(Sign.FUNCTION.apply(vx));
   }
 
   @Override

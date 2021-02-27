@@ -29,5 +29,7 @@ public class GeodesicInterpolationTest extends TestCase {
         sequence.get(2));
     AssertFail.of(() -> interpolation.at(RealScalar.of(-0.01)));
     AssertFail.of(() -> interpolation.at(RealScalar.of(2.01)));
+    AssertFail.of(() -> interpolation.get(RealScalar.of(0)));
+    AssertFail.of(() -> interpolation.get(Tensors.vector(0)));
   }
 }

@@ -1,11 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.sc;
 
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.ExponentialDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -24,7 +23,7 @@ public class ScBiinvariantMeanTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n);
       Scalar geomet = (Scalar) GeometricMean.of(sequence);
-      Tensor weights = ConstantArray.of(RationalScalar.of(1, sequence.length()), sequence.length());
+      Tensor weights = AveragingWeights.of(sequence.length());
       Tensor scmean = ScBiinvariantMean.INSTANCE.mean(sequence.map(Tensors::of), weights);
       Chop._10.requireClose(Tensors.of(geomet), scmean);
     }

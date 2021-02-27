@@ -4,14 +4,10 @@ package ch.ethz.idsc.sophus.hs;
 import ch.ethz.idsc.sophus.lie.rn.RnManifold;
 import ch.ethz.idsc.sophus.math.var.InversePowerVariogram;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.ext.Serialization;
 import junit.framework.TestCase;
 
 public class BiinvariantsTest extends TestCase {
-  public void testToStringNotNull() {
-    for (Biinvariants biinvariants : Biinvariants.values())
-      assertNotNull(biinvariants.title());
-  }
-
   public void testDistanceSequenceNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {
@@ -64,6 +60,16 @@ public class BiinvariantsTest extends TestCase {
         fail();
       } catch (Exception exception) {
         // ---
+      }
+  }
+
+  public void testSerializationFail() {
+    for (Biinvariant biinvariant : Biinvariants.values())
+      try {
+        Serialization.copy(biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), Tensors.empty()));
+      } catch (Exception exception) {
+        System.out.println(biinvariant);
+        fail();
       }
   }
 }

@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.gbc;
 
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.Mahalanobis;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** Reference:
  * "Biinvariant Distance Vectors"
@@ -17,6 +17,7 @@ import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
    * @param vector
    * @return mapping of vector to solution of barycentric equation */
   public static Tensor barycentric(Tensor design, Tensor vector) {
-    return NormalizeTotal.FUNCTION.apply(InfluenceMatrix.of(design).kernel(vector));
+    // Mahalanobis is faster by a tiny amount than InfluenceMatrix[...] for this computation
+    return NormalizeTotal.FUNCTION.apply(new Mahalanobis(design).kernel(vector));
   }
 }

@@ -6,12 +6,10 @@ import java.util.Random;
 
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Integers;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
-import ch.ethz.idsc.tensor.red.Norm;
 
 /** random sample on n-dimensional sphere
  * random samples are vectors of length n + 1
@@ -22,9 +20,6 @@ import ch.ethz.idsc.tensor.red.Norm;
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/Sphere.html">Sphere</a> */
 public class SnRandomSample implements RandomSampleInterface, Serializable {
-  private static final long serialVersionUID = 7503818121782258222L;
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
-
   /** Example:
    * dimension == 1 corresponds to the unit circle in the plane
    * dimension == 2 corresponds to the "standard", surface sphere embedded in 3-dimensional Euclidean space
@@ -47,6 +42,6 @@ public class SnRandomSample implements RandomSampleInterface, Serializable {
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
     // ignore the risk that random vector could be (0, 0, ..., 0)
-    return NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), length));
+    return Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), random, length));
   }
 }

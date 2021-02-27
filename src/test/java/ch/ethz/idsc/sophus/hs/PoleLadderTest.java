@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class PoleLadderTest extends TestCase {
   public void testRn() {
-    HsTransport hsTransport = PoleLadder.of(RnManifold.HS_EXP);
+    HsTransport hsTransport = PoleLadder.of(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);
@@ -32,7 +32,7 @@ public class PoleLadderTest extends TestCase {
   public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
-    HsTransport poleLadder = PoleLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE);
+    HsTransport poleLadder = PoleLadder.of(SnManifold.INSTANCE);
     TensorUnaryOperator shift1 = //
         Serialization.copy(poleLadder).shift(orig, dest);
     TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnGeodesic.INSTANCE, 7).shift(orig, dest);
@@ -65,7 +65,6 @@ public class PoleLadderTest extends TestCase {
   }
 
   public void testNullFail() {
-    AssertFail.of(() -> PoleLadder.of(SnManifold.INSTANCE, null));
     AssertFail.of(() -> PoleLadder.of(null));
   }
 }

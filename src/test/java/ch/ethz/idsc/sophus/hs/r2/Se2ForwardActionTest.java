@@ -3,6 +3,7 @@ package ch.ethz.idsc.sophus.hs.r2;
 
 import java.io.IOException;
 
+import ch.ethz.idsc.sophus.lie.se2.Se2GroupElement;
 import ch.ethz.idsc.sophus.lie.se2.Se2Matrix;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringExponential;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringIntegrator;
@@ -11,6 +12,10 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Serialization;
+import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.pdf.Distribution;
+import ch.ethz.idsc.tensor.pdf.NormalDistribution;
+import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -34,6 +39,15 @@ public class Se2ForwardActionTest extends TestCase {
     assertEquals(r.extract(0, 2), v.extract(0, 2));
     Se2ForwardAction se2ForwardAction = new Se2ForwardAction(Se2CoveringExponential.INSTANCE.exp(u));
     assertEquals(se2ForwardAction.apply(p), v.extract(0, 2));
+  }
+
+  public void testPureSe2() {
+    Distribution distribution = NormalDistribution.standard();
+    Tensor p = RandomVariate.of(distribution, 3);
+    Tensor q = RandomVariate.of(distribution, 3);
+    Tolerance.CHOP.requireClose( //
+        new Se2GroupElement(p).combine(q).extract(0, 2), //
+        new Se2ForwardAction(p).apply(q.extract(0, 2)));
   }
 
   public void testSerializable() throws ClassNotFoundException, IOException {

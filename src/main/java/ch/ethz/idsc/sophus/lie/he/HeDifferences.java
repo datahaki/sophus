@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.hs.HsDifferences;
+import ch.ethz.idsc.sophus.lie.LieDifferences;
 
 public enum HeDifferences {
   ;
-  public static final HsDifferences INSTANCE = new HsDifferences(HeManifold.HS_EXP);
+  public static final LieDifferences INSTANCE = new LieDifferences(HeManifold.INSTANCE);
 }

@@ -1,9 +1,9 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.HsDifferences;
+import ch.ethz.idsc.sophus.lie.LieDifferences;
 
 public enum Se2CoveringDifferences {
   ;
-  public static final HsDifferences INSTANCE = new HsDifferences(Se2CoveringManifold.HS_EXP);
+  public static final LieDifferences INSTANCE = new LieDifferences(Se2CoveringManifold.INSTANCE);
 }

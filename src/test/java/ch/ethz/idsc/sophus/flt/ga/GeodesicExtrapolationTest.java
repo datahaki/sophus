@@ -4,7 +4,6 @@ package ch.ethz.idsc.sophus.flt.ga;
 import java.util.function.Function;
 
 import ch.ethz.idsc.sophus.crv.spline.MonomialExtrapolationMask;
-import ch.ethz.idsc.sophus.flt.TestKernels;
 import ch.ethz.idsc.sophus.lie.rn.RnGeodesic;
 import ch.ethz.idsc.sophus.lie.se2.Se2Geodesic;
 import ch.ethz.idsc.sophus.math.win.HalfWindowSampler;
@@ -21,6 +20,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Sin;
 import ch.ethz.idsc.tensor.sca.win.DirichletWindow;
 import ch.ethz.idsc.tensor.sca.win.GaussianWindow;
+import ch.ethz.idsc.tensor.sca.win.WindowFunctions;
 import junit.framework.TestCase;
 
 public class GeodesicExtrapolationTest extends TestCase {
@@ -78,8 +78,8 @@ public class GeodesicExtrapolationTest extends TestCase {
   }
 
   public void testSimple() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, smoothingKernel.get());
       for (int index = 2; index < 10; ++index) {
         Chop._12.requireClose(tensorUnaryOperator.apply(Range.of(0, index)), RealScalar.of(index));
       }
@@ -87,8 +87,8 @@ public class GeodesicExtrapolationTest extends TestCase {
   }
 
   public void testSingle() {
-    for (ScalarUnaryOperator smoothingKernel : TestKernels.values()) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, smoothingKernel);
+    for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
+      TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, smoothingKernel.get());
       Chop._12.requireClose(tensorUnaryOperator.apply(Tensors.vector(10)), RealScalar.of(10));
     }
   }

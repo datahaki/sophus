@@ -14,12 +14,17 @@ public enum RnExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential
-  public Tensor exp(Tensor x) {
-    return x.copy();
+  public Tensor exp(Tensor v) {
+    return v.copy();
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor g) {
-    return g.copy();
+  public Tensor log(Tensor y) {
+    return y.copy();
+  }
+
+  @Override // from TangentSpace
+  public Tensor vectorLog(Tensor y) {
+    return y.copy();
   }
 }

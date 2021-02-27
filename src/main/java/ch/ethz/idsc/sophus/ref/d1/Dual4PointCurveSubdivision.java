@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.sophus.math.Nocopy;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -15,9 +15,7 @@ import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** dual scheme */
 public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializable {
-  private static final long serialVersionUID = -837520585040665030L;
-  // ---
-  private final GeodesicInterface geodesicInterface;
+  private final Geodesic geodesicInterface;
   private final Scalar lo_pq;
   private final Scalar lo_rs;
   private final Scalar lo_pqrs;
@@ -30,7 +28,7 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
    * @param rs_f
    * @param pqrs */
   public Dual4PointCurveSubdivision( //
-      GeodesicInterface geodesicInterface, //
+      Geodesic geodesicInterface, //
       Scalar pq_f, Scalar rs_f, Scalar pqrs) {
     this.geodesicInterface = Objects.requireNonNull(geodesicInterface);
     this.lo_pq = pq_f;

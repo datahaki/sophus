@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.MidpointInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
@@ -21,56 +20,39 @@ import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
  * 
  * @see SchildLadder */
 public class PoleLadder implements HsTransport, Serializable {
-  private static final long serialVersionUID = 4757879299647479170L;
-
-  /** @param hsExponential
-   * @param midpointInterface
+  /** @param hsManifold
    * @return */
-  public static HsTransport of(HsExponential hsExponential, MidpointInterface midpointInterface) {
-    return new PoleLadder( //
-        Objects.requireNonNull(hsExponential), //
-        Objects.requireNonNull(midpointInterface));
-  }
-
-  /** @param hsExponential
-   * @return */
-  public static HsTransport of(HsExponential hsExponential) {
-    return new PoleLadder(Objects.requireNonNull(hsExponential), null);
+  public static HsTransport of(HsManifold hsManifold) {
+    return new PoleLadder(Objects.requireNonNull(hsManifold));
   }
 
   /***************************************************/
-  private final HsExponential hsExponential;
-  private final MidpointInterface midpointInterface;
+  private final HsManifold hsManifold;
 
-  private PoleLadder(HsExponential hsExponential, MidpointInterface midpointInterface) {
-    this.hsExponential = hsExponential;
-    this.midpointInterface = midpointInterface;
+  private PoleLadder(HsManifold hsManifold) {
+    this.hsManifold = hsManifold;
   }
 
-  @Override
-  public TensorUnaryOperator shift(Tensor xo, Tensor xw) {
-    return new Rung(xo, xw);
+  @Override // from HsTransport
+  public TensorUnaryOperator shift(Tensor p, Tensor q) {
+    return new Rung(p, q);
   }
 
   private class Rung implements TensorUnaryOperator {
-    private static final long serialVersionUID = -2072546621888144264L;
-    // ---
-    private final Exponential exp_xo;
-    private final Exponential exp_xw;
-    private final Exponential exp_mi;
+    private final Exponential exp_p;
+    private final Exponential exp_q;
+    private final Exponential exp_m;
 
-    private Rung(Tensor xo, Tensor xw) {
-      exp_xo = hsExponential.exponential(xo);
-      exp_xw = hsExponential.exponential(xw);
-      Tensor mi = Objects.isNull(midpointInterface) //
-          ? HsMidpoint.of(exp_xo, xw)
-          : midpointInterface.midpoint(xo, xw);
-      exp_mi = hsExponential.exponential(mi);
+    private Rung(Tensor p, Tensor q) {
+      exp_p = hsManifold.exponential(p);
+      exp_q = hsManifold.exponential(q);
+      Tensor m = exp_p.midpoint(q);
+      exp_m = hsManifold.exponential(m);
     }
 
     @Override
-    public Tensor apply(Tensor vo) {
-      return exp_xw.log(exp_mi.exp(exp_mi.log(exp_xo.exp(vo)).negate())).negate();
+    public Tensor apply(Tensor v) {
+      return exp_q.log(exp_m.flip(exp_p.exp(v))).negate();
     }
   }
 }

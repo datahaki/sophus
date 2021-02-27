@@ -1,31 +1,27 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.rpn;
 
-import ch.ethz.idsc.sophus.crv.ArcTan2D;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
+import ch.ethz.idsc.sophus.gbc.AveragingWeights;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.sophus.math.d2.ArcTan2D;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.ConstantArray;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.lie.r2.AngleVector;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
 import ch.ethz.idsc.tensor.red.Mean;
-import ch.ethz.idsc.tensor.red.Norm;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class RpnBiinvariantMeanTest extends TestCase {
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Norm._2);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
 
   public void testSpecific() {
@@ -33,7 +29,7 @@ public class RpnBiinvariantMeanTest extends TestCase {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int count = 0; count < 10; ++count) {
         Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
-        Tensor mean = rotation.dot(NORMALIZE.apply(Tensors.vector(1, 1, 1)));
+        Tensor mean = rotation.dot(Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 1, 1)));
         Tensor sequence = Tensor.of(IdentityMatrix.of(3).stream().map(rotation::dot));
         Tensor weights = barycentricCoordinate.weights(sequence, mean);
         Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
@@ -53,7 +49,7 @@ public class RpnBiinvariantMeanTest extends TestCase {
         try {
           Tensor angles = RandomVariate.of(distribution, n);
           Tensor sequence = angles.map(AngleVector::of);
-          Tensor weights = ConstantArray.of(RationalScalar.of(1, n), n);
+          Tensor weights = AveragingWeights.of(n);
           Tensor point = RpnBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
         } catch (Exception exception) {

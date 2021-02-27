@@ -1,22 +1,12 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.hs.HsExponential;
-import ch.ethz.idsc.sophus.hs.TangentSpace;
-import ch.ethz.idsc.sophus.hs.VectorLogManifold;
-import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.sophus.lie.LieExponential;
+import ch.ethz.idsc.sophus.lie.so.SoGroup;
 
-public enum So3Manifold implements HsExponential, VectorLogManifold {
-  INSTANCE;
-
-  @Override // from HsExponential
-  public Exponential exponential(Tensor point) {
-    return new So3Exponential(point);
-  }
-
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor point) {
-    return new So3Exponential(point);
-  }
+public enum So3Manifold {
+  ;
+  public static final LieExponential INSTANCE = LieExponential.of( //
+      SoGroup.INSTANCE, //
+      So3Exponential.INSTANCE);
 }

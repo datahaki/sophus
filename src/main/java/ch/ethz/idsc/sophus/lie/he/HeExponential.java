@@ -1,21 +1,21 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.he;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Flatten;
 
-public enum HeExponential implements Exponential, TangentSpace {
+public enum HeExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential
   public Tensor exp(Tensor uvw) {
     Tensor u = uvw.get(0);
     Tensor v = uvw.get(1);
-    Tensor w = uvw.Get(2);
+    Scalar w = uvw.Get(2);
     return Tensors.of( //
         u, //
         v, //
@@ -26,7 +26,7 @@ public enum HeExponential implements Exponential, TangentSpace {
   public Tensor log(Tensor xyz) {
     Tensor x = xyz.get(0);
     Tensor y = xyz.get(1);
-    Tensor z = xyz.Get(2);
+    Scalar z = xyz.Get(2);
     return Tensors.of( //
         x, //
         y, //

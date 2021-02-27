@@ -3,35 +3,30 @@ package ch.ethz.idsc.sophus.lie.rn;
 
 import java.util.Optional;
 
+import ch.ethz.idsc.sophus.bm.IterativeBiinvariantMean;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.IterativeBiinvariantMean;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.ExactTensorQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
-import ch.ethz.idsc.tensor.alg.Normalize;
-import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
-import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class RnBiinvariantMeanTest extends TestCase {
-  private static final TensorUnaryOperator NORMALIZE = Normalize.with(Total::ofVector);
-
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(3));
     int length = 10;
     Tensor sequence = RandomVariate.of(distribution, length, 3);
-    Tensor weights = NORMALIZE.apply(RandomVariate.of(distribution, length));
+    Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
     Tensor mean = RnBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._14.requireClose(mean, weights.dot(sequence));
   }
@@ -40,7 +35,7 @@ public class RnBiinvariantMeanTest extends TestCase {
     Distribution distribution = DiscreteUniformDistribution.of(10, 100);
     int length = 10;
     Tensor sequence = RandomVariate.of(distribution, length, 3);
-    Tensor weights = NORMALIZE.apply(RandomVariate.of(distribution, length));
+    Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
     Tensor mean = RnBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._14.requireClose(mean, weights.dot(sequence));
     ExactTensorQ.require(mean);
@@ -51,7 +46,7 @@ public class RnBiinvariantMeanTest extends TestCase {
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(RnManifold.HS_EXP, Chop._12);
+      IterativeBiinvariantMean.of(RnManifold.INSTANCE, Chop._12);
 
   public void testSimple2() {
     Tensor sequence = Tensors.of( //
@@ -60,7 +55,7 @@ public class RnBiinvariantMeanTest extends TestCase {
         RnExponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
     Tensor log = new MeanDefect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), //
-        RnManifold.HS_EXP.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)))).tangent();
+        RnManifold.INSTANCE.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)))).tangent();
     Chop._10.requireAllZero(log);
   }
 

@@ -1,8 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.r3;
 
-import ch.ethz.idsc.tensor.Quaternion;
 import ch.ethz.idsc.tensor.Scalar;
+import ch.ethz.idsc.tensor.lie.Quaternion;
 
 /** Amir Vaxman, Christian Müller, and Ofir Weber */
 public enum CrossRatio {

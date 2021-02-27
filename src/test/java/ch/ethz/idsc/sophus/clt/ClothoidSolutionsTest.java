@@ -18,6 +18,7 @@ import junit.framework.TestCase;
 
 public class ClothoidSolutionsTest extends TestCase {
   private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(15.0));
+  private static final int ATTEMPTS = 3;
 
   public void testS1Odd() {
     Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1), RealScalar.of(0.3));
@@ -36,12 +37,12 @@ public class ClothoidSolutionsTest extends TestCase {
     // ClothoidSolutions cs2 = ClothoidSolutions.of(+0.1, -0.3);
     // Tensor sol1 = cs1.lambdas();
     // Tensor sol2 = cs2.lambdas();
-    // Chop._04.requireClose(sol1, sol2); // LONGTERM
+    // Chop._04.requireClose(sol1, sol2);
   }
 
   public void testRandomS1Odd() {
     Distribution distribution = UniformDistribution.of(-20, 20);
-    for (int count = 0; count < 10; ++count) {
+    for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
       Scalar s2 = RandomVariate.of(distribution);
       Search cs1 = CLOTHOID_SOLUTIONS.new Search(s1, s2);
@@ -56,7 +57,7 @@ public class ClothoidSolutionsTest extends TestCase {
 
   public void testRandomS2Even() {
     Distribution distribution = UniformDistribution.of(-20, 20);
-    for (int count = 0; count < 10; ++count) {
+    for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
       Scalar s2 = RandomVariate.of(distribution);
       Search cs1 = CLOTHOID_SOLUTIONS.new Search(s1, s2);
@@ -71,7 +72,7 @@ public class ClothoidSolutionsTest extends TestCase {
 
   public void testS1Period2Pi() {
     Distribution distribution = UniformDistribution.of(-20, 20);
-    for (int count = 0; count < 10; ++count) {
+    for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
       Scalar s2 = RandomVariate.of(distribution);
       Search cs1 = CLOTHOID_SOLUTIONS.new Search(s1, s2);
@@ -86,7 +87,7 @@ public class ClothoidSolutionsTest extends TestCase {
 
   public void testS1Period2PiMod() {
     Distribution distribution = UniformDistribution.of(-20, 20);
-    for (int count = 0; count < 10; ++count) {
+    for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
       Scalar s2 = RandomVariate.of(distribution);
       Search cs1 = CLOTHOID_SOLUTIONS.new Search(s1, s2);
@@ -102,7 +103,7 @@ public class ClothoidSolutionsTest extends TestCase {
 
   public void testS1Period2PiMirror() {
     Distribution distribution = UniformDistribution.of(-20, 20);
-    for (int count = 0; count < 10; ++count) {
+    for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
       Scalar s2 = RandomVariate.of(distribution);
       Search cs1 = CLOTHOID_SOLUTIONS.new Search(s1, s2);

@@ -2,23 +2,10 @@
 package ch.ethz.idsc.sophus.hs.hn;
 
 import ch.ethz.idsc.sophus.hs.HsGeodesic;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
-import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.sophus.math.Geodesic;
 
-/** hyperboloid model
- * 
- * fast midpoint computation */
-public class HnGeodesic extends HsGeodesic {
-  private static final long serialVersionUID = 1632671383451535334L;
-  public static final GeodesicInterface INSTANCE = new HnGeodesic();
-
-  /***************************************************/
-  private HnGeodesic() {
-    super(HnManifold.INSTANCE);
-  }
-
-  @Override // from MidpointInterface
-  public Tensor midpoint(Tensor p, Tensor q) {
-    return HnProjection.INSTANCE.apply(p.add(q));
-  }
+/** hyperboloid model with fast midpoint computation */
+public enum HnGeodesic {
+  ;
+  public static final Geodesic INSTANCE = new HsGeodesic(HnManifold.INSTANCE);
 }

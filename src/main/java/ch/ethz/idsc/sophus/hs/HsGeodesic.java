@@ -5,25 +5,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.math.Exponential;
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 
 /** general implementation of geodesic using exp/log */
-public class HsGeodesic implements GeodesicInterface, Serializable {
-  private static final long serialVersionUID = -5509228388279045851L;
-  // ---
-  private final HsExponential hsExponential;
+public class HsGeodesic implements Geodesic, Serializable {
+  private final HsManifold hsManifold;
 
-  /** @param hsExponential */
-  public HsGeodesic(HsExponential hsExponential) {
-    this.hsExponential = Objects.requireNonNull(hsExponential);
+  /** @param hsManifold */
+  public HsGeodesic(HsManifold hsManifold) {
+    this.hsManifold = Objects.requireNonNull(hsManifold);
   }
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Exponential exponential = hsExponential.exponential(p);
+    Exponential exponential = hsManifold.exponential(p);
     Tensor log = exponential.log(q);
     return scalar -> exponential.exp(log.multiply(scalar));
   }
@@ -31,5 +29,10 @@ public class HsGeodesic implements GeodesicInterface, Serializable {
   @Override // from GeodesicInterface
   public Tensor split(Tensor p, Tensor q, Scalar scalar) {
     return curve(p, q).apply(scalar);
+  }
+
+  @Override // from MidpointInterface
+  public Tensor midpoint(Tensor p, Tensor q) {
+    return hsManifold.midpoint(p, q);
   }
 }

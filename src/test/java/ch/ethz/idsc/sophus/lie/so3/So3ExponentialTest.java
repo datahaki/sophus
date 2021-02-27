@@ -3,24 +3,22 @@ package ch.ethz.idsc.sophus.lie.so3;
 
 import java.io.IOException;
 
-import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
-import ch.ethz.idsc.sophus.lie.gln.GlnGroupElement;
-import ch.ethz.idsc.sophus.lie.son.SonGroup;
-import ch.ethz.idsc.sophus.lie.son.SonGroupElement;
+import ch.ethz.idsc.sophus.lie.gl.GlGroup;
+import ch.ethz.idsc.sophus.lie.gl.GlGroupElement;
+import ch.ethz.idsc.sophus.lie.so.SoGroup;
+import ch.ethz.idsc.sophus.lie.so.SoGroupElement;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.alg.VectorQ;
 import ch.ethz.idsc.tensor.ext.Serialization;
-import ch.ethz.idsc.tensor.lie.TensorWedge;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 import ch.ethz.idsc.tensor.mat.Tolerance;
 import junit.framework.TestCase;
 
 public class So3ExponentialTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
-    Serialization.copy(new So3Exponential(So3TestHelper.spawn_So3()));
+    Serialization.copy(So3Exponential.INSTANCE);
   }
 
   public void testAdjoint() {
@@ -29,14 +27,16 @@ public class So3ExponentialTest extends TestCase {
       Tensor v = So3TestHelper.spawn_so3();
       Tensor tensor = LinearSolve.of(g, v).dot(g);
       AntisymmetricMatrixQ.require(tensor);
+      // AntisymmetricMatrixQ.require(So3Exponential.INSTANCE.log(g));
+      VectorQ.requireLength(So3Exponential.INSTANCE.vectorLog(g), 3);
     }
   }
 
   public void testLinearGroup() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
-      SonGroupElement so3GroupElement = SonGroup.INSTANCE.element(g);
-      GlnGroupElement linearGroupElement = GlnGroup.INSTANCE.element(g);
+      SoGroupElement so3GroupElement = SoGroup.INSTANCE.element(g);
+      GlGroupElement linearGroupElement = GlGroup.INSTANCE.element(g);
       Tensor v = So3TestHelper.spawn_so3();
       Tolerance.CHOP.requireClose( //
           so3GroupElement.adjoint(v), //
@@ -48,13 +48,6 @@ public class So3ExponentialTest extends TestCase {
   }
 
   public void testFailOrthogonal() {
-    AssertFail.of(() -> new So3Exponential(So3TestHelper.spawn_so3()));
-  }
-
-  public void testFailTangent() {
-    Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
-    new So3Exponential(IdentityMatrix.of(3)).exp(wedge);
-    So3Exponential so3Exponential = new So3Exponential(So3TestHelper.spawn_So3());
-    AssertFail.of(() -> so3Exponential.exp(wedge));
+    AssertFail.of(() -> So3Exponential.INSTANCE.log(So3TestHelper.spawn_so3()));
   }
 }

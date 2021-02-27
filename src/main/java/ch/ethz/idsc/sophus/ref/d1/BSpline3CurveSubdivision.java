@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.Tensor;
  * 
  * Dyn/Sharon 2014 p.16 show that the scheme has a contractivity factor of mu = 1/2 */
 public class BSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision implements Serializable {
-  private static final long serialVersionUID = -6139448345425575878L;
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
   private static final Scalar _3_4 = RationalScalar.of(3, 4);
   // ---

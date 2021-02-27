@@ -1,9 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se3;
 
-import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.lie.LieGroupElement;
-import ch.ethz.idsc.sophus.lie.gln.GlnGroup;
+import ch.ethz.idsc.sophus.lie.gl.GlGroup;
 import ch.ethz.idsc.sophus.lie.so3.Rodrigues;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.RationalScalar;
@@ -13,7 +12,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Flatten;
 import ch.ethz.idsc.tensor.lie.Cross;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.red.Hypot;
+import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 
 /** a group element of SE(3) is represented as a 4x4 affine transformation matrix
  * 
@@ -23,9 +22,9 @@ import ch.ethz.idsc.tensor.red.Hypot;
  * from "Lie Groups for 2D and 3D Transformations" by Ethan Eade
  * http://ethaneade.com/
  * 
- * @see GlnGroup
+ * @see GlGroup
  * @see LieGroupElement */
-public enum Se3Exponential implements Exponential, TangentSpace {
+public enum Se3Exponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);
@@ -34,7 +33,7 @@ public enum Se3Exponential implements Exponential, TangentSpace {
   public Tensor exp(Tensor u_w) {
     Tensor u = u_w.get(0); // translation
     Tensor w = u_w.get(1); // rotation
-    Scalar theta = Hypot.ofVector(w);
+    Scalar theta = Vector2Norm.of(w);
     Tensor wx = Cross.skew3(w);
     Tensor wx2 = wx.dot(wx);
     Se3Numerics se3Numerics = new Se3Numerics(theta);
@@ -49,7 +48,7 @@ public enum Se3Exponential implements Exponential, TangentSpace {
     Tensor R = Se3Matrix.rotation(g);
     Tensor wx = Rodrigues.INSTANCE.log(R);
     Tensor w = Rodrigues.vectorize(wx);
-    Scalar theta = Hypot.ofVector(w);
+    Scalar theta = Vector2Norm.of(w);
     Tensor wx2 = wx.dot(wx);
     Se3Numerics se3Numerics = new Se3Numerics(theta);
     Tensor Vi = ID3.subtract(wx.multiply(RationalScalar.HALF)).add(wx2.multiply(se3Numerics.D));

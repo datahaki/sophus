@@ -2,11 +2,12 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.sophus.hs.sn.SnRandomSample;
-import ch.ethz.idsc.sophus.lie.r2.Polygons;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
+import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
+import ch.ethz.idsc.sophus.ply.d2.Polygons;
 import ch.ethz.idsc.tensor.Tensor;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -36,7 +37,7 @@ public class AffineCoordinateTest extends TestCase {
         Tensor levers = RandomVariate.of(distribution, n + k, d);
         Tensor w1 = genesis.origin(levers);
         Tensor w2 = AffineCoordinate.INSTANCE.origin(levers);
-        Chop._07.requireClose(w1, w2);
+        Chop._04.requireClose(w1, w2);
       }
   }
 
@@ -46,13 +47,11 @@ public class AffineCoordinateTest extends TestCase {
     for (int n = 4; n < 10; ++n)
       for (int count = 0; count < 10; ++count) {
         Tensor levers = RandomVariate.of(distribution, n, d);
-        Tensor origin = levers.copy();
         if (Polygons.isInside(levers)) {
           for (int i = 0; i < 3; ++i) {
             Tensor weights = AffineCoordinate.INSTANCE.origin(levers);
             weights = NormalizeTotal.FUNCTION.apply(weights.map(Exp.FUNCTION));
             levers = weights.pmul(levers);
-            // System.out.println(weights.dot(origin));
           }
         }
       }

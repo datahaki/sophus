@@ -1,11 +1,10 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.se2c;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMeanTestHelper;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
+import ch.ethz.idsc.sophus.bm.BiinvariantMeanTestHelper;
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.lie.LieGroupOps;
 import ch.ethz.idsc.sophus.lie.rn.RnBiinvariantMean;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
@@ -16,6 +15,7 @@ import ch.ethz.idsc.tensor.alg.Join;
 import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.io.Primitives;
 import ch.ethz.idsc.tensor.lie.Permutations;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 import ch.ethz.idsc.tensor.pdf.UniformDistribution;
@@ -50,7 +50,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.HS_EXP.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.INSTANCE.exponential(mean)).tangent();
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }
@@ -67,7 +67,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       QuantityMagnitude.SI().in("m").apply(mean.Get(0));
       QuantityMagnitude.SI().in("m").apply(mean.Get(1));
-      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.HS_EXP.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.INSTANCE.exponential(mean)).tangent();
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }

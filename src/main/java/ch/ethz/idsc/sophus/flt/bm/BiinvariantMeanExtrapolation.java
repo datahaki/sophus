@@ -4,15 +4,13 @@ package ch.ethz.idsc.sophus.flt.bm;
 import java.util.Objects;
 import java.util.function.Function;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
  * with each point weighted as provided by an external function. */
 public class BiinvariantMeanExtrapolation implements TensorUnaryOperator {
-  private static final long serialVersionUID = 2384078728952623507L;
-
   /** @param biinvariantMean non-null
    * @param function non-null
    * @return

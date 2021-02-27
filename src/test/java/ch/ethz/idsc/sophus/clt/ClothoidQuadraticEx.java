@@ -7,7 +7,6 @@ import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 
 /* package */ class ClothoidQuadraticEx implements ScalarUnaryOperator {
-  private static final long serialVersionUID = -3274719133556718916L;
   private static final Scalar N4 = RealScalar.of(-4);
   // ---
   private final Scalar b0;

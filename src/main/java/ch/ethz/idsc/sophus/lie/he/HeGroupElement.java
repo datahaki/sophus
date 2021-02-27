@@ -21,8 +21,6 @@ import ch.ethz.idsc.tensor.alg.VectorQ;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.29, Section 4.2, 2012 */
 public class HeGroupElement implements LieGroupElement, Serializable {
-  private static final long serialVersionUID = 7733121807627532655L;
-  // ---
   private final Tensor x;
   private final Tensor y;
   private final Scalar z;

@@ -2,27 +2,26 @@
 package ch.ethz.idsc.sophus.hs.spd;
 
 import ch.ethz.idsc.sophus.hs.HsTransport;
-import ch.ethz.idsc.tensor.RationalScalar;
+import ch.ethz.idsc.sophus.hs.PoleLadder;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.lie.MatrixExp;
-import ch.ethz.idsc.tensor.lie.MatrixSqrt;
 
-/** References:
+/** Closed-form solution for the parallel transport of a tangent vector along the
+ * geodesic. Consistent with {@link PoleLadder} method.
+ * 
+ * References:
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
- * by Nicolas Guigui, Xavier Pennec, 2020 p.27 */
+ * by Nicolas Guigui, Xavier Pennec, 2020 p.27
+ * 
+ * @see PoleLadder */
 public enum SpdTransport implements HsTransport {
   INSTANCE;
 
-  @Override
+  @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    Tensor w = new SpdExponential(p).log(q);
-    MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
-    Tensor ps = matrixSqrt.sqrt();
-    Tensor pi = matrixSqrt.sqrt_inverse();
-    Tensor mid = MatrixExp.of(pi.dot(w).dot(pi).multiply(RationalScalar.HALF));
-    Tensor pt = ps.dot(mid).dot(pi); // TODO check if there is a typo in the article here
-    return v -> pt.dot(v).dot(Transpose.of(pt));
+    Tensor pt = new SpdExponential(p).endomorphism(q);
+    // v is a symmetric matrix but is treated as rank 1
+    return v -> BasisTransform.ofForm(v, pt);
   }
 }

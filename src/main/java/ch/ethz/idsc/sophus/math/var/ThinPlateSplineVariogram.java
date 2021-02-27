@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
  * 
  * @see BinningMethod */
 public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
-  private static final long serialVersionUID = -3411688037709874342L;
-
   /** @param r0 positive */
   public static ScalarUnaryOperator of(Scalar r0) {
     return new ThinPlateSplineVariogram(Sign.requirePositive(r0));
@@ -41,7 +39,12 @@ public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
   @Override
   public Scalar apply(Scalar r) {
     return Scalars.isZero(r) //
-        ? r.multiply(r)
+        ? r.multiply(r) // units consistent with case 0 < r
         : r.multiply(r).multiply(Log.FUNCTION.apply(r.divide(r0)));
+  }
+
+  @Override // from Object
+  public String toString() {
+    return String.format("%s[%s]", getClass().getSimpleName(), r0);
   }
 }

@@ -17,6 +17,7 @@ import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.ext.Cache;
+import ch.ethz.idsc.tensor.ext.Integers;
 
 /** GeodesicCenterMidSeeded projects a sequence of points to their geodesic center
  * Difference to GeodesicCenter: starting to average in the center of the tree going outwards
@@ -25,8 +26,6 @@ import ch.ethz.idsc.tensor.ext.Cache;
  * <p>Careful: the implementation only supports sequences with ODD number of elements!
  * When a sequence of even length is provided an Exception is thrown. */
 public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
-  private static final long serialVersionUID = 3145017432103008275L;
-
   /** @param splitInterface
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
    * @return operator that maps a sequence of odd number of points to their geodesic center
@@ -45,8 +44,6 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
 
   /***************************************************/
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
-    private static final long serialVersionUID = -805020197154997981L;
-    // ---
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {
@@ -62,7 +59,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
     /* package */ static Tensor of(Tensor mask) {
-      if (mask.length() % 2 == 0)
+      if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);
       int radius = (mask.length() - 1) / 2;
@@ -91,7 +88,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
 
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
-    if (tensor.length() % 2 != 1)
+    if (Integers.isEven(tensor.length()))
       throw TensorRuntimeException.of(tensor);
     // spatial neighborhood we want to consider for centering
     int radius = (tensor.length() - 1) / 2;

@@ -1,12 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
+import java.util.Random;
+
+import ch.ethz.idsc.sophus.bm.MeanDefect;
 import ch.ethz.idsc.sophus.gbc.BarycentricCoordinate;
 import ch.ethz.idsc.sophus.gbc.GbcHelper;
-import ch.ethz.idsc.sophus.hs.MeanDefect;
-import ch.ethz.idsc.sophus.math.NormalizeTotal;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -30,16 +32,17 @@ public class So3BiinvariantMeanTest extends TestCase {
   }
 
   public void testConvergence() {
+    Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 4; n < 10; ++n) {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
-        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-        Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
-        Tensor w2 = barycentricCoordinate.weights(sequence, mean);
-        Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
-        Chop._08.requireClose(mean, o2);
-      }
+    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
+      int n = 4 + random.nextInt(6);
+      Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(Rodrigues::vectorExp));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), random, n));
+      Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+      Tensor w2 = barycentricCoordinate.weights(sequence, mean);
+      Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
+      Chop._08.requireClose(mean, o2);
+    }
   }
 
   public void testConvergenceExact() {

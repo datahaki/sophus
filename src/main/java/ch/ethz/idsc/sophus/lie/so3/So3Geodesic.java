@@ -1,13 +1,13 @@
 // code by jph
 package ch.ethz.idsc.sophus.lie.so3;
 
-import ch.ethz.idsc.sophus.math.GeodesicInterface;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarTensorFunction;
 import ch.ethz.idsc.tensor.mat.LinearSolve;
 
-public enum So3Geodesic implements GeodesicInterface {
+public enum So3Geodesic implements Geodesic {
   INSTANCE;
 
   @Override // from ParametricCurve

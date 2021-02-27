@@ -4,6 +4,7 @@ package ch.ethz.idsc.sophus.gbc;
 import java.util.Arrays;
 import java.util.List;
 
+import ch.ethz.idsc.sophus.gbc.amp.Amplifiers;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.srf.SurfaceMesh;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.RealScalar;
@@ -18,8 +18,6 @@ import ch.ethz.idsc.tensor.red.FirstPosition;
  * "Recursively generated B-spline surfaces on arbitrary topological meshes"
  * by Catmull, Clark; Computer-Aided Design 16(6), 1978 */
 public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializable {
-  private static final long serialVersionUID = 8029255158598623913L;
-
   /** @param biinvariantMean non-null
    * @return */
   public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {
@@ -43,7 +41,7 @@ public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializab
     for (List<Integer> list : out.vertToFace()) {
       int n = list.size();
       if (2 < n) {
-        // TODO JPH identify boundary
+        // TODO identify boundary
         Tensor sequence = Tensors.reserve(2 * n + 1);
         Tensor weights = Tensors.reserve(2 * n + 1);
         Scalar ga = RationalScalar.of(1, 4);

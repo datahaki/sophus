@@ -18,4 +18,9 @@ public enum ScExponential implements Exponential {
   public Tensor log(Tensor g) {
     return g.map(Log.FUNCTION);
   }
+
+  @Override
+  public Tensor vectorLog(Tensor g) {
+    return log(g);
+  }
 }

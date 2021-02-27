@@ -12,8 +12,6 @@ import ch.ethz.idsc.tensor.pdf.InverseCDF;
 
 /** function defined on the interval [0, 1] */
 public class ArcLengthParameterization implements ScalarTensorFunction {
-  private static final long serialVersionUID = 6299801538585797304L;
-
   /** @param distances vector with non-negative entries
    * @param binaryAverage non-null
    * @param tensor with length one more than length of given differences

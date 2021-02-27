@@ -10,7 +10,6 @@ import ch.ethz.idsc.sophus.math.Distances;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.sophus.ref.d1.CurveSubdivision;
 import ch.ethz.idsc.tensor.Scalar;
-import ch.ethz.idsc.tensor.Scalars;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Append;
 import ch.ethz.idsc.tensor.alg.Subdivide;
@@ -23,8 +22,6 @@ import ch.ethz.idsc.tensor.sca.Sign;
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/Resampling.html">Resampling</a> */
 public class UniformResample implements CurveSubdivision, Serializable {
-  private static final long serialVersionUID = 2546948348065655171L;
-
   /** @param tensorMetric
    * @param binaryAverage
    * @param spacing positive
@@ -59,7 +56,7 @@ public class UniformResample implements CurveSubdivision, Serializable {
     Tensor distances = Distances.of(tensorMetric, tensor);
     ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, binaryAverage, tensor);
     Scalar length = Total.ofVector(distances);
-    int n = Scalars.intValueExact(Round.FUNCTION.apply(length.divide(spacing)));
+    int n = Round.intValueExact(length.divide(spacing));
     return Tensor.of(Subdivide.of(0, 1, n).stream() //
         .limit(n) //
         .map(Scalar.class::cast) //

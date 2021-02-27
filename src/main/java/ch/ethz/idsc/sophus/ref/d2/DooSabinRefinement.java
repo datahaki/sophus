@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.ethz.idsc.sophus.hs.BiinvariantMean;
+import ch.ethz.idsc.sophus.bm.BiinvariantMean;
 import ch.ethz.idsc.sophus.srf.SurfaceMesh;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Range;
@@ -16,8 +16,6 @@ import ch.ethz.idsc.tensor.io.Primitives;
  * "Behaviour of recursive division surfaces near extraordinary points"
  * by D. Doo, M. Sabin, Computer-Aided Design 10(6), 1978 */
 public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
-  private static final long serialVersionUID = 5861236933429477955L;
-
   /** @param biinvariantMean non-null
    * @return */
   public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {
@@ -43,7 +41,7 @@ public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
         out.addVert(biinvariantMean.mean(sequence, RotateLeft.of(weights, offset)));
       out.ind.append(Range.of(ofs, ofs + n));
     }
-    // TODO JPH add quads at vertices and edges
+    // TODO add quads at vertices and edges
     return out;
   }
 }
