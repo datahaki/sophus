@@ -4,7 +4,7 @@ package ch.ethz.idsc.sophus.ref.d1;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.ethz.idsc.sophus.math.ParametricCurve;
+import ch.ethz.idsc.sophus.math.Geodesic;
 import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
@@ -19,10 +19,10 @@ public class BSpline2CurveSubdivision extends AbstractBSpline2CurveSubdivision i
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
   private static final Scalar _3_4 = RationalScalar.of(3, 4);
   // ---
-  protected final ParametricCurve parametricCurve;
+  protected final Geodesic parametricCurve;
 
   /** @param parametricCurve non-null */
-  public BSpline2CurveSubdivision(ParametricCurve parametricCurve) {
+  public BSpline2CurveSubdivision(Geodesic parametricCurve) {
     this.parametricCurve = Objects.requireNonNull(parametricCurve);
   }
 
