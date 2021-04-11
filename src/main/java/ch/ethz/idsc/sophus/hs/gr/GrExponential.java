@@ -13,7 +13,6 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
-import ch.ethz.idsc.tensor.mat.IdentityMatrix;
 
 /** Reference:
  * Geomstats: A Python Package for Riemannian Geometry in Machine Learning
@@ -25,7 +24,6 @@ public class GrExponential implements Exponential, Serializable {
   private final Tensor p;
   private final TGrMemberQ tGrMemberQ;
   /** negative identity matrix */
-  private final Tensor nid;
   private final Tensor p2_id;
 
   /** @param p rank k projector of Gr(n, k)
@@ -33,8 +31,7 @@ public class GrExponential implements Exponential, Serializable {
   public GrExponential(Tensor p) {
     this.p = GrMemberQ.INSTANCE.require(p);
     tGrMemberQ = new TGrMemberQ(p);
-    nid = IdentityMatrix.of(p.length()).negate();
-    p2_id = bic(p);
+    p2_id = StaticHelper.bic(p);
   }
 
   @Override // from Exponential
@@ -43,7 +40,7 @@ public class GrExponential implements Exponential, Serializable {
   }
 
   private Tensor mLog(Tensor q) {
-    return MatrixLog.of(bic(q).dot(p2_id));
+    return MatrixLog.of(StaticHelper.bic(q).dot(p2_id));
   }
 
   @Override // from Exponential
@@ -68,11 +65,5 @@ public class GrExponential implements Exponential, Serializable {
   public Tensor vectorLog(Tensor q) {
     // TODO k * (n - k) coefficients are sufficient according to theory
     return Vectorize.of(log(q), 0); // n (n + 1) / 2
-  }
-
-  /** @param q
-   * @return q * 2 - id */
-  private Tensor bic(Tensor q) {
-    return q.add(nid).add(q);
   }
 }

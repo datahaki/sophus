@@ -17,7 +17,6 @@ public class TStProjection implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor v) {
-    Tensor aux = MatrixDotTranspose.of(x, v); // k x k
-    return v.subtract(Symmetrize.of(aux).dot(x));
+    return v.subtract(Symmetrize.of(MatrixDotTranspose.of(x, v)).dot(x));
   }
 }

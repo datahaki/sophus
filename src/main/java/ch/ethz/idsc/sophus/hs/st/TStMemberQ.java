@@ -13,6 +13,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 public class TStMemberQ implements MemberQ, Serializable {
   private final Tensor x;
 
+  /** @param x */
   public TStMemberQ(Tensor x) {
     this.x = x;
   }
