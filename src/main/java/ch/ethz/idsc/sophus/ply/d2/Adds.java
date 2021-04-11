@@ -30,8 +30,7 @@ import ch.ethz.idsc.tensor.ext.Cache;
   public static Tensor reverse(Tensor tensor) {
     Tensor result = Tensors.reserve(tensor.length());
     Iterator<Tensor> iterator = tensor.iterator();
-    Tensor prev = Last.of(tensor);
-    while (iterator.hasNext())
+    for (Tensor prev = Last.of(tensor); iterator.hasNext();)
       result.append(prev.add(prev = iterator.next()));
     return result;
   }

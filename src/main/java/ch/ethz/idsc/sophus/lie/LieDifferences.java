@@ -34,8 +34,7 @@ public final class LieDifferences implements TensorUnaryOperator {
   public Tensor apply(Tensor tensor) {
     List<Tensor> list = new ArrayList<>(tensor.length() - 1);
     Iterator<Tensor> iterator = tensor.iterator();
-    Tensor prev = iterator.next();
-    while (iterator.hasNext())
+    for (Tensor prev = iterator.next(); iterator.hasNext();)
       list.add(pair(prev, prev = iterator.next()));
     return Unprotect.using(list);
   }

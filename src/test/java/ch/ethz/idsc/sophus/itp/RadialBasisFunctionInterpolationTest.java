@@ -70,7 +70,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
-        Chop._08.requireClose(tensor, UnitVector.of(n, index));
+        Chop._05.requireClose(tensor, UnitVector.of(n, index));
         // ---
         Tensor point = RandomVariate.of(distribution, 3);
         Tensor weights = tensorUnaryOperator.apply(point);

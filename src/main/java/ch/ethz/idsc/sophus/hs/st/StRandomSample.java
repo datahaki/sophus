@@ -17,7 +17,7 @@ import ch.ethz.idsc.tensor.pdf.RandomVariate;
  * geomstats - stiefel.py */
 public class StRandomSample implements RandomSampleInterface, Serializable {
   /** @param n positive
-   * @param k no greater than n
+   * @param k non-negative, no greater than n
    * @return */
   public static RandomSampleInterface of(int n, int k) {
     return new StRandomSample(n, k);

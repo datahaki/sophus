@@ -59,8 +59,7 @@ public class SubdivideTransport implements HsTransport, Serializable {
     public Tensor apply(Tensor vo) {
       vo = vo.divide(factor);
       Iterator<Tensor> iterator = points.iterator();
-      Tensor prev = iterator.next();
-      while (iterator.hasNext())
+      for (Tensor prev = iterator.next(); iterator.hasNext();)
         vo = hsTransport.shift(prev, prev = iterator.next()).apply(vo);
       return vo.multiply(factor);
     }

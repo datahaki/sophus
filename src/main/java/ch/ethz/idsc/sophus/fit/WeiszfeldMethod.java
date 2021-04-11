@@ -49,8 +49,7 @@ public class WeiszfeldMethod implements SpatialMedian, Serializable {
   public Optional<Tensor> weighted(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
     Tensor point = N.DOUBLE.of(weights.dot(sequence)); // initial value
-    int iteration = 0;
-    while (++iteration < MAX_ITERATIONS) {
+    for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
       Tensor dist = Tensor.of(sequence.stream().map(point.negate()::add).map(Vector2Norm::of));
       int index = ArgMin.of(dist);
       if (Scalars.isZero(dist.Get(index)))
