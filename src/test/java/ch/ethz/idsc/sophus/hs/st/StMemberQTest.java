@@ -9,9 +9,12 @@ import junit.framework.TestCase;
 
 public class StMemberQTest extends TestCase {
   public void testSimple() {
-    RandomSampleInterface randomSampleInterface = StRandomSample.of(5, 3);
-    Tensor matrix = RandomSample.of(randomSampleInterface);
-    OrthogonalMatrixQ.require(matrix);
-    StMemberQ.INSTANCE.require(matrix);
+    for (int n = 3; n < 6; ++n)
+      for (int k = n - 2; k <= n; ++k) {
+        RandomSampleInterface randomSampleInterface = StRandomSample.of(n, k);
+        Tensor matrix = RandomSample.of(randomSampleInterface);
+        OrthogonalMatrixQ.require(matrix);
+        StMemberQ.INSTANCE.require(matrix);
+      }
   }
 }

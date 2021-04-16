@@ -1,6 +1,8 @@
 // code by jph
 package ch.ethz.idsc.sophus.itp;
 
+import java.lang.reflect.Modifier;
+
 import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
@@ -27,5 +29,9 @@ public class StaticHelperTest extends TestCase {
     Tensor tensor = Tensors.fromString("{1[m], 2[s]}");
     assertFalse(StringScalarQ.any(tensor));
     AssertFail.of(() -> StaticHelper.uniqueUnit(tensor));
+  }
+
+  public void testPackageVisibility() {
+    assertFalse(Modifier.isPublic(StaticHelper.class.getModifiers()));
   }
 }

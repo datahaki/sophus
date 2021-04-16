@@ -11,7 +11,7 @@ import ch.ethz.idsc.sophus.hs.HsDesign;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.sophus.math.TensorMetric;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.gr.InfluenceMatrix;
 
 /** for Rn and Sn the frobenius distance results in identical coordinates as the 2-norm distance
  * 

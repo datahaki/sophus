@@ -8,8 +8,8 @@ import ch.ethz.idsc.sophus.dv.LeveragesDistanceVector;
 import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.ScalarUnaryOperator;
-import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
-import ch.ethz.idsc.tensor.mat.Mahalanobis;
+import ch.ethz.idsc.tensor.mat.gr.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.gr.Mahalanobis;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** target coordinate is the preferred way to evaluate

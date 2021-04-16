@@ -5,8 +5,8 @@ import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.BasisTransform;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
+import ch.ethz.idsc.tensor.mat.ev.Eigensystem;
 import ch.ethz.idsc.tensor.sca.Chop;
 
 /** the pole ladder is exact in symmetric spaces */

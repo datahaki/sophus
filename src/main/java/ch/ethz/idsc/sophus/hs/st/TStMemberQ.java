@@ -11,15 +11,15 @@ import ch.ethz.idsc.tensor.sca.Chop;
 
 /** Reference: geomstats */
 public class TStMemberQ implements MemberQ, Serializable {
-  private final Tensor x;
+  private final Tensor p;
 
-  /** @param x */
-  public TStMemberQ(Tensor x) {
-    this.x = x;
+  /** @param p */
+  public TStMemberQ(Tensor p) {
+    this.p = p;
   }
 
   @Override // from MemberQ
   public boolean test(Tensor v) {
-    return AntisymmetricMatrixQ.of(MatrixDotTranspose.of(x, v), Chop._06);
+    return AntisymmetricMatrixQ.of(MatrixDotTranspose.of(p, v), Chop._06);
   }
 }

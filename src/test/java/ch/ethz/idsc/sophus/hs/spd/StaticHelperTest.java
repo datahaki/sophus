@@ -1,12 +1,14 @@
 // code by jph
 package ch.ethz.idsc.sophus.hs.spd;
 
+import java.lang.reflect.Modifier;
+
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
-import ch.ethz.idsc.tensor.mat.Eigensystem;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
+import ch.ethz.idsc.tensor.mat.ev.Eigensystem;
 import ch.ethz.idsc.tensor.nrm.Vector2NormSquared;
 import ch.ethz.idsc.tensor.red.Total;
 import ch.ethz.idsc.tensor.red.Trace;
@@ -28,5 +30,9 @@ public class StaticHelperTest extends TestCase {
     Chop._07.requireClose(Total.ofVector(diag), Trace.of(log));
     Tensor log2 = log.dot(log);
     Chop._07.requireClose(Vector2NormSquared.of(diag), Trace.of(log2));
+  }
+
+  public void testPackageVisibility() {
+    assertFalse(Modifier.isPublic(StaticHelper.class.getModifiers()));
   }
 }

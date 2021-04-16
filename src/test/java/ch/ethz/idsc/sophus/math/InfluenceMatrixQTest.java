@@ -10,19 +10,17 @@ import ch.ethz.idsc.sophus.lie.se2.Se2Manifold;
 import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringManifold;
 import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
-import ch.ethz.idsc.sophus.usr.AssertFail;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.alg.Transpose;
 import ch.ethz.idsc.tensor.lie.Symmetrize;
-import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.LeftNullSpace;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PositiveSemidefiniteMatrixQ;
 import ch.ethz.idsc.tensor.mat.PseudoInverse;
 import ch.ethz.idsc.tensor.mat.SymmetricMatrixQ;
-import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.mat.gr.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.gr.InfluenceMatrixQ;
 import ch.ethz.idsc.tensor.nrm.Vector2Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -33,19 +31,7 @@ import ch.ethz.idsc.tensor.sca.Chop;
 import ch.ethz.idsc.tensor.sca.Round;
 import junit.framework.TestCase;
 
-public class GrassmannQTest extends TestCase {
-  public void testSimple() {
-    Tensor matrix = Tensors.fromString("{{1, 0}, {2, 3}}");
-    assertFalse(GrassmannQ.of(matrix));
-    AssertFail.of(() -> GrassmannQ.require(matrix));
-  }
-
-  public void testChop() {
-    Tensor matrix = Tensors.fromString("{{1, 0}, {2, 3}}");
-    assertFalse(GrassmannQ.of(matrix, Tolerance.CHOP));
-    AssertFail.of(() -> GrassmannQ.require(matrix, Tolerance.CHOP));
-  }
-
+public class InfluenceMatrixQTest extends TestCase {
   public void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
@@ -65,7 +51,7 @@ public class GrassmannQTest extends TestCase {
     Tensor sigma_inverse = Symmetrize.of(pinv);
     // ---
     Tensor H = V.dot(sigma_inverse.dot(VT)); // "hat matrix"
-    GrassmannQ.require(H, Chop._09);
+    InfluenceMatrixQ.require(H, Chop._09);
     // ---
     Tensor traceh = Trace.of(H);
     Chop._07.requireClose(traceh, Round.of(traceh));
@@ -76,7 +62,7 @@ public class GrassmannQTest extends TestCase {
     Chop._08.requireClose(H, influenceMatrix.matrix());
     Tensor n = LeftNullSpace.usingQR(V);
     Tensor M = influenceMatrix.residualMaker();
-    GrassmannQ.require(M, Chop._09);
+    InfluenceMatrixQ.require(M, Chop._09);
     Chop._08.requireClose(M, Transpose.of(n).dot(n));
     // ---
     Tensor Xinv = PseudoInverse.of(V);

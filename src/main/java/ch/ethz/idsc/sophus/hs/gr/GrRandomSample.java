@@ -8,7 +8,7 @@ import ch.ethz.idsc.sophus.math.sample.RandomSampleInterface;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.ext.Integers;
-import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
+import ch.ethz.idsc.tensor.mat.gr.InfluenceMatrix;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
 

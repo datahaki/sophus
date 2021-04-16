@@ -10,8 +10,8 @@ import ch.ethz.idsc.tensor.alg.Array;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.IdentityMatrix;
-import ch.ethz.idsc.tensor.mat.InfluenceMatrix;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.mat.gr.InfluenceMatrix;
 import ch.ethz.idsc.tensor.sca.Chop;
 import junit.framework.TestCase;
 

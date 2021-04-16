@@ -6,9 +6,9 @@ import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
 import ch.ethz.idsc.tensor.lie.TensorWedge;
-import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.DiagonalMatrix;
 import ch.ethz.idsc.tensor.mat.HilbertMatrix;
+import ch.ethz.idsc.tensor.mat.re.Det;
 import junit.framework.TestCase;
 
 public class SoMemberQTest extends TestCase {

@@ -10,7 +10,7 @@ import ch.ethz.idsc.sophus.hs.TangentSpace;
 import ch.ethz.idsc.sophus.hs.VectorLogManifold;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
-import ch.ethz.idsc.tensor.mat.Mahalanobis;
+import ch.ethz.idsc.tensor.mat.gr.Mahalanobis;
 
 /** The evaluation of garden distances for a fixed set of landmarks is very efficient,
  * since the {@link Mahalanobis} form at the landmarks can be precomputed.

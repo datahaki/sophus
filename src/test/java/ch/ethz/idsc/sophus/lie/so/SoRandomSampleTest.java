@@ -12,9 +12,9 @@ import ch.ethz.idsc.tensor.alg.MatrixQ;
 import ch.ethz.idsc.tensor.ext.Serialization;
 import ch.ethz.idsc.tensor.lie.MatrixLog;
 import ch.ethz.idsc.tensor.mat.AntisymmetricMatrixQ;
-import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.mat.re.Det;
 import junit.framework.TestCase;
 
 public class SoRandomSampleTest extends TestCase {

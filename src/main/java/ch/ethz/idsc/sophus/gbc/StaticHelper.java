@@ -2,7 +2,7 @@
 package ch.ethz.idsc.sophus.gbc;
 
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.Mahalanobis;
+import ch.ethz.idsc.tensor.mat.gr.Mahalanobis;
 import ch.ethz.idsc.tensor.nrm.NormalizeTotal;
 
 /** Reference:

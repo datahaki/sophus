@@ -5,9 +5,9 @@ import ch.ethz.idsc.sophus.math.sample.RandomSample;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.alg.MatrixQ;
-import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.mat.re.Det;
 import junit.framework.TestCase;
 
 public class So3RandomSampleTest extends TestCase {

@@ -4,9 +4,9 @@ package ch.ethz.idsc.sophus.lie.so;
 import ch.ethz.idsc.sophus.math.MemberQ;
 import ch.ethz.idsc.tensor.RealScalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.mat.Det;
 import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
 import ch.ethz.idsc.tensor.mat.Tolerance;
+import ch.ethz.idsc.tensor.mat.re.Det;
 
 public enum SoMemberQ implements MemberQ {
   INSTANCE;

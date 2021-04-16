@@ -6,6 +6,7 @@ import ch.ethz.idsc.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.ethz.idsc.sophus.math.StochasticMatrixQ;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.mat.Inverse;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.nrm.Vector1Norm;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -35,7 +36,7 @@ public class BiinvariantMeanTest extends TestCase {
           .map(weights -> RnBiinvariantMean.INSTANCE.mean(sequence, weights)));
       Tensor result = Tensor.of(invers.stream() //
           .map(weights -> RnBiinvariantMean.INSTANCE.mean(mapped, weights)));
-      Chop._10.requireClose(sequence, result);
+      Tolerance.CHOP.requireClose(sequence, result);
     }
   }
 
@@ -49,7 +50,7 @@ public class BiinvariantMeanTest extends TestCase {
           .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights)));
       Tensor result = Tensor.of(invers.stream() //
           .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(mapped, weights)));
-      Chop._10.requireClose(sequence.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
+      Tolerance.CHOP.requireClose(sequence.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
     }
   }
 }

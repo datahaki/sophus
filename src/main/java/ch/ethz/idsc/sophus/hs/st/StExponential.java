@@ -6,14 +6,16 @@ import java.io.Serializable;
 import ch.ethz.idsc.sophus.math.Exponential;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
-import ch.ethz.idsc.tensor.alg.Join;
-import ch.ethz.idsc.tensor.alg.MatrixDotTranspose;
+import ch.ethz.idsc.tensor.alg.ArrayFlatten;
 import ch.ethz.idsc.tensor.alg.Transpose;
+import ch.ethz.idsc.tensor.api.TensorUnaryOperator;
 import ch.ethz.idsc.tensor.lie.MatrixExp;
-import ch.ethz.idsc.tensor.mat.QRDecomposition;
+import ch.ethz.idsc.tensor.mat.OrthogonalMatrixQ;
+import ch.ethz.idsc.tensor.mat.qr.QRDecomposition;
+import ch.ethz.idsc.tensor.mat.qr.QRMathematica;
 
 /** In the literature, the Stiefel manifold is denoted either as
- * St(n,p), or V_k(R^n)
+ * St(n, k), or V_k(R^n)
  * 
  * Reference:
  * "A matrix-algebraic algorithm for the Riemannian logarithm on the Stiefel manifold
@@ -26,37 +28,46 @@ import ch.ethz.idsc.tensor.mat.QRDecomposition;
  * 
  * Reference: geomstats */
 public class StExponential implements Exponential, Serializable {
-  private final Tensor x;
+  private final Tensor p;
   private final TStMemberQ tStMemberQ;
 
-  /** @param x column-orthogonal rectangular matrix with dimensions n x p */
-  public StExponential(Tensor x) {
-    this.x = StMemberQ.INSTANCE.require(x);
-    tStMemberQ = new TStMemberQ(x);
+  /** @param p orthogonal matrix with dimensions k x n
+   * @throws Exception if p is not member of Stiefel manifold
+   * @see StMemberQ
+   * @see OrthogonalMatrixQ */
+  public StExponential(Tensor p) {
+    this.p = StMemberQ.INSTANCE.require(p);
+    tStMemberQ = new TStMemberQ(p);
   }
 
   @Override
   public Tensor exp(Tensor v) {
     tStMemberQ.require(v);
-    Tensor a = MatrixDotTranspose.of(x, v);
-    Tensor k = v.subtract(a.dot(x)); // TODO check sign
-    Tensor kt = Transpose.of(k);
-    QRDecomposition qrDecomposition = QRDecomposition.of(kt);
-    Tensor ar = Join.of(a, Transpose.of(qrDecomposition.getR().negate())); // TODO check dim
-    Tensor zeros = v.map(Scalar::zero);
-    Tensor rz = Join.of(qrDecomposition.getR(), zeros); // TODO check dim
-    Tensor block = Join.of(ar, rz);
-    Tensor mn_e = MatrixExp.of(block);
-    return x.dot(mn_e).add(qrDecomposition.getQ().dot(mn_e));
+    Tensor vt = Transpose.of(v);
+    Tensor a = p.dot(vt);
+    // influence residual maker
+    Tensor design = Transpose.of(p);
+    Tensor ka = vt.subtract(design.dot(a));
+    QRDecomposition qrDecomposition = QRMathematica.wrap(QRDecomposition.of(ka));
+    Tensor r = qrDecomposition.getR();
+    Tensor block = ArrayFlatten.of(new Tensor[][] { // antisym.
+        { a, Transpose.of(r.negate()) }, //
+        { r, a.map(Scalar::zero) } });
+    Tensor mex = MatrixExp.of(block);
+    int k = p.length();
+    TensorUnaryOperator truncate = row -> row.extract(0, k);
+    Tensor fp = Tensor.of(mex.stream().limit(k).map(truncate));
+    Tensor fq = Tensor.of(mex.stream().skip(k).map(truncate));
+    return Transpose.of(design.dot(fp).add(qrDecomposition.getQ().dot(fq)));
   }
 
   @Override
-  public Tensor log(Tensor y) {
+  public Tensor log(Tensor q) {
     return null;
   }
 
   @Override
-  public Tensor vectorLog(Tensor y) {
+  public Tensor vectorLog(Tensor q) {
     return null;
   }
 }

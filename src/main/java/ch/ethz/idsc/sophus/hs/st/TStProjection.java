@@ -8,15 +8,15 @@ import ch.ethz.idsc.tensor.lie.Symmetrize;
 
 /** Reference: geomstats */
 public class TStProjection implements TensorUnaryOperator {
-  private final Tensor x;
+  private final Tensor p;
 
-  /** @param x */
-  public TStProjection(Tensor x) {
-    this.x = x;
+  /** @param p */
+  public TStProjection(Tensor p) {
+    this.p = p;
   }
 
   @Override
   public Tensor apply(Tensor v) {
-    return v.subtract(Symmetrize.of(MatrixDotTranspose.of(x, v)).dot(x));
+    return v.subtract(Symmetrize.of(MatrixDotTranspose.of(p, v)).dot(p));
   }
 }
