@@ -7,7 +7,6 @@ import java.util.Deque;
 import java.util.Objects;
 
 import ch.ethz.idsc.sophus.gbc.amp.IdentRamp;
-import ch.ethz.idsc.sophus.gbc.it.IterativeAffineCoordinate.Evaluation;
 import ch.ethz.idsc.sophus.math.Genesis;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;

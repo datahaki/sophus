@@ -5,6 +5,7 @@ import ch.ethz.idsc.tensor.RationalScalar;
 import ch.ethz.idsc.tensor.Scalar;
 import ch.ethz.idsc.tensor.Tensor;
 import ch.ethz.idsc.tensor.Tensors;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
 import ch.ethz.idsc.tensor.pdf.RandomVariate;
@@ -19,7 +20,7 @@ public class ClothoidCurve3Test extends TestCase {
     Tensor p2 = Tensors.fromString("{2, 3, 1}");
     Tensor q2 = Tensors.fromString("{4, 7, 2}");
     Tensor r2 = ComplexClothoidCurve.INSTANCE.split(p2, q2, RationalScalar.HALF);
-    Chop._11.requireClose(r1, ClothoidCurveTest.metric(r2));
+    Tolerance.CHOP.requireClose(r1, ClothoidCurveTest.metric(r2));
   }
 
   public void testPreserve() {

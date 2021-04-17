@@ -50,22 +50,4 @@ public class IterativeAffineCoordinate implements GenesisDeque, Serializable {
   public Tensor origin(Tensor levers) {
     return deque(levers).peekLast().weights();
   }
-
-  public static class Evaluation {
-    private final Tensor weights;
-    private final Tensor factors;
-
-    public Evaluation(Tensor weights, Tensor factors) {
-      this.weights = weights;
-      this.factors = factors;
-    }
-
-    public Tensor factors() {
-      return factors;
-    }
-
-    public Tensor weights() {
-      return weights;
-    }
-  }
 }

@@ -12,6 +12,7 @@ import ch.ethz.idsc.tensor.alg.Range;
 import ch.ethz.idsc.tensor.alg.Reverse;
 import ch.ethz.idsc.tensor.alg.Subdivide;
 import ch.ethz.idsc.tensor.alg.UnitVector;
+import ch.ethz.idsc.tensor.mat.Tolerance;
 import ch.ethz.idsc.tensor.pdf.DiscreteUniformDistribution;
 import ch.ethz.idsc.tensor.pdf.Distribution;
 import ch.ethz.idsc.tensor.pdf.NormalDistribution;
@@ -109,13 +110,13 @@ public class GeodesicBSplineFunctionTest extends TestCase {
         Tensor vector = Range.of(5, 5 + control.length());
         Tensor compar = domain.map(RealScalar.of(5)::add) //
             .map(GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, vector, control));
-        Chop._11.requireClose(result, compar);
+        Tolerance.CHOP.requireClose(result, compar);
       }
       {
         Tensor vector = Range.of(5, 5 + control.length()).map(RealScalar.of(2)::multiply);
         Tensor compar = domain.map(RealScalar.of(5)::add).map(RealScalar.of(2)::multiply) //
             .map(GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, vector, control));
-        Chop._11.requireClose(result, compar);
+        Tolerance.CHOP.requireClose(result, compar);
       }
     }
   }
