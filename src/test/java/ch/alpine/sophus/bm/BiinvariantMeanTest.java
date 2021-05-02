@@ -7,6 +7,7 @@ import ch.alpine.sophus.math.StochasticMatrixQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Inverse;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector1Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -47,8 +48,10 @@ public class BiinvariantMeanTest extends TestCase {
       Tensor matrix = affine(n);
       Tensor invers = Inverse.of(matrix);
       Tensor mapped = Tensor.of(matrix.stream() //
+          .map(NormalizeTotal.FUNCTION) //
           .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights)));
       Tensor result = Tensor.of(invers.stream() //
+          .map(NormalizeTotal.FUNCTION) //
           .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(mapped, weights)));
       Tolerance.CHOP.requireClose(sequence.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
     }

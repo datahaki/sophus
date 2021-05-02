@@ -7,6 +7,7 @@ import java.util.Random;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Orthogonalize;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -18,7 +19,8 @@ import ch.alpine.tensor.pdf.RandomVariate;
 public class StRandomSample implements RandomSampleInterface, Serializable {
   /** @param n positive
    * @param k non-negative, no greater than n
-   * @return */
+   * @return matrix that satisfies {@link OrthogonalMatrixQ} typically up to precision of 1e-10
+   * @see StMemberQ */
   public static RandomSampleInterface of(int n, int k) {
     return new StRandomSample(n, k);
   }
