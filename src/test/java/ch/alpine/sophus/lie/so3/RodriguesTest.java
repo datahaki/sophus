@@ -156,7 +156,7 @@ public class RodriguesTest extends TestCase {
       Scalar qrDet = Det.of(Q).multiply(Det.of(R));
       Chop._10.requireClose(qrDet, Det.of(A));
       Tensor lower = LowerTriangularize.of(R, -1);
-      Chop.NONE.requireAllZero(lower);
+      Tolerance.CHOP.requireAllZero(lower);
       Chop._10.requireClose(qrDet, qrDecomposition.det());
     }
     return qrDecomposition;
