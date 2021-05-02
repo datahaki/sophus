@@ -1,0 +1,17 @@
+// code by jph
+package ch.alpine.sophus.hs.s2;
+
+import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.mat.IdentityMatrix;
+import junit.framework.TestCase;
+
+public class S2ExponentialTest extends TestCase {
+  public void testSimple() {
+    S2Exponential s2Exponential = new S2Exponential(Tensors.vector(1, 0, 0));
+    Tensor tensor = s2Exponential.projection();
+    ExactTensorQ.require(tensor);
+    assertEquals(tensor, IdentityMatrix.of(3).extract(1, 3));
+  }
+}

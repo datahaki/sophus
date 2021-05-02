@@ -1,0 +1,47 @@
+// code by jph
+package ch.alpine.sophus.ref.d2;
+
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.stream.IntStream;
+
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.srf.SurfaceMesh;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.alg.RotateLeft;
+import ch.alpine.tensor.io.Primitives;
+
+/** Reference:
+ * "Behaviour of recursive division surfaces near extraordinary points"
+ * by D. Doo, M. Sabin, Computer-Aided Design 10(6), 1978 */
+public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
+  /** @param biinvariantMean non-null
+   * @return */
+  public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {
+    return new DooSabinRefinement(Objects.requireNonNull(biinvariantMean));
+  }
+
+  /***************************************************/
+  private final BiinvariantMean biinvariantMean;
+
+  private DooSabinRefinement(BiinvariantMean biinvariantMean) {
+    this.biinvariantMean = biinvariantMean;
+  }
+
+  @Override // from SurfaceMeshRefinement
+  public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
+    SurfaceMesh out = new SurfaceMesh();
+    for (Tensor face : surfaceMesh.ind) {
+      Tensor sequence = Tensor.of(IntStream.of(Primitives.toIntArray(face)).mapToObj(surfaceMesh.vrt::get));
+      int n = sequence.length();
+      Tensor weights = DooSabinWeights.CACHE.apply(n);
+      int ofs = out.vrt.length();
+      for (int offset = 0; offset < n; ++offset)
+        out.addVert(biinvariantMean.mean(sequence, RotateLeft.of(weights, offset)));
+      out.ind.append(Range.of(ofs, ofs + n));
+    }
+    // TODO add quads at vertices and edges
+    return out;
+  }
+}

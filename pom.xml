@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ch.ethz.idsc</groupId>
+	<groupId>ch.alpine</groupId>
 	<artifactId>sophus</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>sophus</name>
-	<url>http://www.hakenberg.de</url>
+	<url>https://github.com/datahaki/sophus</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,9 +17,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>ch.ethz.idsc</groupId>
+			<groupId>ch.alpine</groupId>
 			<artifactId>tensor</artifactId>
-			<version>0.9.3</version>
+			<version>0.9.4</version>
 		</dependency>
 		
 		<dependency>
