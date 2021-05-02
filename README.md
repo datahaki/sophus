@@ -1,6 +1,8 @@
-# ch.ethz.idsc.sophus <a href="https://travis-ci.org/datahaki/sophus"><img src="https://travis-ci.org/datahaki/sophus.svg?branch=master" alt="Build Status"></a>
+![alpine_877](https://user-images.githubusercontent.com/4012178/116814864-1b1a1580-ab5b-11eb-97e6-1441af4ececa.png)
 
-Library for non-linear geometry computations in Java, version `0.0.3`
+# ch.alpine.sophus <a href="https://travis-ci.com/datahaki/sophus"><img src="https://travis-ci.com/datahaki/sophus.svg?branch=master" alt="Build Status"></a>
+
+Library for non-linear geometry computations in Java, version `0.0.4`
 
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
@@ -170,9 +172,9 @@ Specify `repository` and `dependency` of the tensor library in the `pom.xml` fil
 
 <dependencies>
   <dependency>
-    <groupId>ch.ethz.idsc</groupId>
+    <groupId>ch.alpine</groupId>
     <artifactId>sophus</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
   </dependency>
 </dependencies>
 ```

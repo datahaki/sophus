@@ -1,0 +1,43 @@
+// code by jph
+package ch.alpine.sophus.hs.r2;
+
+import java.io.IOException;
+
+import ch.alpine.sophus.lie.se2.Se2GroupElement;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.mat.LinearSolve;
+import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.NormalDistribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.sca.Chop;
+import junit.framework.TestCase;
+
+public class Se2InverseActionTest extends TestCase {
+  public void testSimple() {
+    Tensor xya = Tensors.vector(1, 2, 3);
+    TensorUnaryOperator tensorUnaryOperator = new Se2InverseAction(xya);
+    Tensor p = Tensors.vector(6, -9, 1);
+    Tensor q1 = tensorUnaryOperator.apply(p);
+    Tensor q2 = LinearSolve.of(Se2Matrix.of(xya), p).extract(0, 2);
+    Chop._12.requireClose(q1, q2);
+  }
+
+  public void testPureSe2() {
+    Distribution distribution = NormalDistribution.standard();
+    Tensor p = RandomVariate.of(distribution, 3);
+    Tensor q = RandomVariate.of(distribution, 3);
+    Tolerance.CHOP.requireClose( //
+        new Se2GroupElement(p).inverse().combine(q).extract(0, 2), //
+        new Se2InverseAction(p).apply(q.extract(0, 2)));
+  }
+
+  public void testSerializable() throws ClassNotFoundException, IOException {
+    Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
+    Serialization.copy(se2Bijection.inverse());
+  }
+}

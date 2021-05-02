@@ -1,0 +1,46 @@
+// code by jph
+package ch.alpine.sophus.ref.d1;
+
+import java.util.Iterator;
+
+import ch.alpine.sophus.math.MidpointInterface;
+import ch.alpine.tensor.ScalarQ;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Last;
+
+/** linear B-spline
+ * 
+ * the scheme interpolates the control points
+ * 
+ * Dyn/Sharon 2014 p.14 show that the contractivity factor is mu = 1/2 */
+public abstract class AbstractBSpline1CurveSubdivision implements CurveSubdivision, MidpointInterface {
+  @Override // from CurveSubdivision
+  public Tensor cyclic(Tensor tensor) {
+    int length = tensor.length();
+    if (1 < length)
+      return stringNonEmpty(tensor).append(midpoint(Last.of(tensor), tensor.get(0)));
+    ScalarQ.thenThrow(tensor);
+    return tensor.copy();
+  }
+
+  @Override // from CurveSubdivision
+  public Tensor string(Tensor tensor) {
+    int length = tensor.length();
+    if (1 < length)
+      return stringNonEmpty(tensor);
+    ScalarQ.thenThrow(tensor);
+    return tensor.copy();
+  }
+
+  private Tensor stringNonEmpty(Tensor tensor) {
+    int length = tensor.length();
+    Tensor curve = Tensors.reserve(2 * length);
+    Iterator<Tensor> iterator = tensor.iterator();
+    Tensor p = iterator.next();
+    curve.append(p);
+    while (iterator.hasNext())
+      curve.append(midpoint(p, p = iterator.next())).append(p);
+    return curve;
+  }
+}
