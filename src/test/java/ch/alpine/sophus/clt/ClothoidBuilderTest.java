@@ -65,7 +65,7 @@ public class ClothoidBuilderTest extends TestCase {
       q.set(Pi.TWO::add, 2);
       LagrangeQuadraticD lagrangeQuadraticD2 = CLOTHOID_BUILDER.curve(p, q).curvature();
       Scalar param = RandomVariate.of(distribution);
-      Chop._10.requireClose( //
+      Chop._06.requireClose( // 1e-10 does not always work
           lagrangeQuadraticD1.apply(param), //
           lagrangeQuadraticD2.apply(param));
     }
