@@ -13,6 +13,6 @@ public enum GrMemberQ implements MemberQ {
 
   @Override // from MemberQ
   public boolean test(Tensor p) {
-    return InfluenceMatrixQ.of(p, Chop._10);
+    return InfluenceMatrixQ.of(p, Chop._08); // 1e-10 does not always work
   }
 }
