@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.Sign;
  * <a href="https://en.wikipedia.org/wiki/Graham_scan">Graham scan</a> */
 /* package */ enum GrahamScan {
   ;
-  private static final Comparator<Tensor> MINY_MINX = new Comparator<Tensor>() {
+  private static final Comparator<Tensor> MINY_MINX = new Comparator<>() {
     @Override
     public int compare(Tensor p1, Tensor p2) {
       int cmp = Scalars.compare(p1.Get(1), p2.Get(1));

@@ -46,10 +46,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
 
   @Override // from DubinsPathGenerator
   public Stream<DubinsPath> stream() {
-    return Stream.of(Type.values()) //
-        .map(this::create) //
-        .filter(Optional::isPresent) //
-        .map(Optional::get);
+    return Stream.of(Type.values()).map(this::create).flatMap(Optional::stream);
   }
 
   private Optional<DubinsPath> create(Type type) {

@@ -4,7 +4,7 @@
 
 	<groupId>ch.alpine</groupId>
 	<artifactId>sophus</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<packaging>jar</packaging>
 
 	<name>sophus</name>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>ch.alpine</groupId>
 			<artifactId>tensor</artifactId>
-			<version>0.9.4</version>
+			<version>0.9.5</version>
 		</dependency>
 		
 		<dependency>
@@ -54,10 +54,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>11</release>
 				</configuration>
 			</plugin>
 			<plugin>

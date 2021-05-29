@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import java.io.IOException;
-
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -16,7 +14,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;
 
 public class StExponentialTest extends TestCase {
-  public void testSimple() throws ClassNotFoundException, IOException {
+  public void testSimple() {
     int fails = 0;
     for (int n = 3; n < 6; ++n)
       for (int k = n - 2; k <= n; ++k)
