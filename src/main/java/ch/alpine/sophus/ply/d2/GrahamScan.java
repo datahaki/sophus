@@ -51,7 +51,7 @@ import ch.alpine.tensor.sca.Sign;
       return Tensors.empty();
     VectorQ.requireLength(list.get(0), 2);
     final Tensor point0 = Collections.min(list, MINY_MINX);
-    Collections.sort(list, new Comparator<Tensor>() {
+    Collections.sort(list, new Comparator<>() {
       @Override
       public int compare(Tensor p1, Tensor p2) {
         Tensor d10 = p1.subtract(point0);

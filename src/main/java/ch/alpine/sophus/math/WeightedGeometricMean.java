@@ -16,6 +16,6 @@ public enum WeightedGeometricMean implements BiinvariantMean {
     AtomicInteger atomicInteger = new AtomicInteger();
     return sequence.stream() //
         .map(point -> point.map(Power.function(weights.Get(atomicInteger.getAndIncrement())))) //
-        .reduce(Tensor::pmul).get();
+        .reduce(Tensor::pmul).orElseThrow();
   }
 }

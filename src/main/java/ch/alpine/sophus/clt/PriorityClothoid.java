@@ -32,7 +32,7 @@ public class PriorityClothoid implements ClothoidBuilder, Serializable {
     Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
     return ClothoidEmit.stream(clothoidContext, search.lambdas()) //
         .min(comparator) //
-        .get();
+        .orElseThrow();
   }
 
   @Override

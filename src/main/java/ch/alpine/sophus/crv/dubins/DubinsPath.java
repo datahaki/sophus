@@ -91,7 +91,7 @@ public class DubinsPath implements Serializable {
         segLength.stream() //
             .map(Scalar.class::cast) //
             .map(Sign::requirePositiveOrZero) //
-            .reduce(Scalar::add).get());
+            .reduce(Scalar::add).orElseThrow());
   }
 
   /***************************************************/

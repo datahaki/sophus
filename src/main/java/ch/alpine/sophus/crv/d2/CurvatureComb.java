@@ -70,7 +70,7 @@ public enum CurvatureComb {
   private static Tensor normal(Tensor a, Tensor b, Tensor c, Tensor tangent) {
     Optional<Scalar> optional = SignedCurvature2D.of(a, b, c);
     return optional.isPresent() //
-        ? NORMALIZE_UNLESS_ZERO.apply(Cross.of(tangent)).multiply(optional.get())
+        ? NORMALIZE_UNLESS_ZERO.apply(Cross.of(tangent)).multiply(optional.orElseThrow())
         : ZEROS;
   }
 }

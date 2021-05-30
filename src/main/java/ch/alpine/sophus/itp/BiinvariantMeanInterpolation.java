@@ -53,7 +53,7 @@ import ch.alpine.tensor.sca.Floor;
     Tensor weights = Flatten.of(index.subtract(findex).stream() //
         .map(scalar -> Tensors.of(RealScalar.ONE.subtract(scalar), scalar)) //
         .reduce(TensorProduct::of) //
-        .get(), n - 1);
+        .orElseThrow(), n - 1);
     List<Integer> fromIndex = findex.stream() //
         .map(Scalar.class::cast) //
         .map(Scalar::number) //

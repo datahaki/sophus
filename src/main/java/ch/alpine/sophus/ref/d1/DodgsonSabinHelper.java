@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Sqrt;
    * @param d
    * @return point between b and c */
   static Tensor midpoint(Tensor b, Tensor c, Tensor d) {
-    Scalar r = SignedCurvature2D.of(d, c, b).get();
+    Scalar r = SignedCurvature2D.of(d, c, b).orElseThrow();
     return intersectCircleLine(b, c, r, RealScalar.ZERO);
   }
 
@@ -66,8 +66,8 @@ import ch.alpine.tensor.sca.Sqrt;
   static Scalar averageCurvature(Tensor a, Tensor b, Tensor c, Tensor d) {
     Scalar ac = Vector2Norm.between(a, c);
     Scalar bd = Vector2Norm.between(b, d);
-    return SignedCurvature2D.of(c, b, a).get().multiply(bd).add( //
-        SignedCurvature2D.of(d, c, b).get().multiply(ac)) //
+    return SignedCurvature2D.of(c, b, a).orElseThrow().multiply(bd).add( //
+        SignedCurvature2D.of(d, c, b).orElseThrow().multiply(ac)) //
         .divide(bd.add(ac));
   }
 }

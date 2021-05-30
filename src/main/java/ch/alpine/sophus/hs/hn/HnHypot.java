@@ -15,7 +15,7 @@ public enum HnHypot {
   ;
   public static Scalar of(Tensor x, ScalarUnaryOperator suo) {
     Tensor abs = x.map(Abs.FUNCTION);
-    Scalar max = (Scalar) abs.stream().reduce(Max::of).get();
+    Scalar max = (Scalar) abs.stream().reduce(Max::of).orElseThrow();
     if (Scalars.isZero(max))
       return max;
     abs = abs.divide(max);

@@ -36,7 +36,7 @@ public enum AffineQ {
     Scalar sum = vector.stream() //
         .map(Scalar.class::cast) //
         .map(Sign::requirePositiveOrZero) //
-        .reduce(Scalar::add).get();
+        .reduce(Scalar::add).orElseThrow();
     chop.requireClose(sum, RealScalar.ONE);
     return vector;
   }
