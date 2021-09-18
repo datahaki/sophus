@@ -10,7 +10,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.num.Series;
+import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.red.Times;
 
 public enum Hermite2Subdivisions {
@@ -45,7 +45,7 @@ public enum Hermite2Subdivisions {
   public static HermiteSubdivision of(HsManifold hsManifold, HsTransport hsTransport, Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
-    Scalar an2_21 = Series.of(Tensors.vector(4, -2, -2)).apply(mu);
+    Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
     Scalar an2_22 = mu.multiply(mu).add(Times.of(RealScalar.of(8), lambda, RealScalar.ONE.subtract(mu)));
     Tensor ALQ = Tensors.of(Tensors.of(an2_11, an2_12), Tensors.of(an2_21, an2_22)).multiply(_1_8);
     // ---

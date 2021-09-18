@@ -25,4 +25,14 @@ public enum DistanceMatrix {
       }
     return matrix;
   }
+
+  /** @param x sequence of length n
+   * @param y sequence of length m
+   * @param tensorMetric
+   * @return matrix of size n x m */
+  public static Tensor of(Tensor x, Tensor y, TensorMetric tensorMetric) {
+    return Tensor.of(x.stream() //
+        .map(x_row -> Tensor.of(y.stream() //
+            .map(y_row -> tensorMetric.distance(x_row, y_row)))));
+  }
 }

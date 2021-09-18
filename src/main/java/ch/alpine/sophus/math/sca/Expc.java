@@ -5,7 +5,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.num.Series;
+import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Factorial;
@@ -17,7 +17,7 @@ public enum Expc implements ScalarUnaryOperator {
   FUNCTION;
 
   static final ScalarUnaryOperator SERIES = //
-      Series.of(Tensors.vector(i -> Factorial.of(i + 1).reciprocal(), 10));
+      Polynomial.of(Tensors.vector(i -> Factorial.of(i + 1).reciprocal(), 10));
 
   @Override
   public Scalar apply(Scalar mu) {

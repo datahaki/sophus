@@ -7,7 +7,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.num.Series;
+import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.red.Times;
 
 /** Merrien interpolatory Hermite subdivision scheme of order two
@@ -28,7 +28,7 @@ import ch.alpine.tensor.red.Times;
   public static RnHermite2Subdivision of(Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.of(2).add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.of(2), lambda, RealScalar.of(2).add(mu));
-    Scalar an2_21 = Series.of(Tensors.vector(4, -2, -2)).apply(mu);
+    Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
     Scalar an2_22 = mu.multiply(mu).add(Times.of(RealScalar.of(8), lambda, RealScalar.ONE.subtract(mu)));
     Tensor ALQ = Tensors.of(Tensors.of(an2_11, an2_12), Tensors.of(an2_21, an2_22)).multiply(_1_8);
     Tensor AHP = Tensors.of(Tensors.of(an2_11, an2_12.negate()), Tensors.of(an2_21.negate(), an2_22)).multiply(_1_8);

@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.num.Series;
+import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.DiscreteUniformDistribution;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -30,7 +30,7 @@ public class BiinvariantMeanExtrapolationTest extends TestCase {
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     Distribution distribution = DiscreteUniformDistribution.of(3, 12);
     for (int deg = 1; deg < 6; ++deg) {
-      ScalarUnaryOperator scalarUnaryOperator = Series.of(RandomVariate.of(distribution, deg + 1));
+      ScalarUnaryOperator scalarUnaryOperator = Polynomial.of(RandomVariate.of(distribution, deg + 1));
       Tensor sequence = Range.of(0, deg + 1).map(scalarUnaryOperator);
       Tensor predict = tensorUnaryOperator.apply(sequence);
       Scalar actual = scalarUnaryOperator.apply(RealScalar.of(deg + 1));
