@@ -52,7 +52,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesic));
   }
 
-  /***************************************************/
+  // ==================================================
   private final HsManifold hsManifold;
   private final Chop chop;
   private final BiinvariantMean initialGuess;

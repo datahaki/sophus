@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Abs;
     return new ReducingMean(Objects.requireNonNull(geodesic));
   }
 
-  /***************************************************/
+  // ---
   private final Geodesic geodesic;
 
   private ReducingMean(Geodesic geodesic) {

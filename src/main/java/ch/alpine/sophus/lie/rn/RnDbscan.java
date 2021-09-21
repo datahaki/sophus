@@ -27,7 +27,7 @@ public class RnDbscan {
 
   public void some(Tensor points) {
     MinMax minMax = MinMax.of(points);
-    NdMap<Integer> ndMap = new NdTreeMap<>(minMax.min(), minMax.max(), 5, 20); // magic const
+    NdMap<Integer> ndMap = NdTreeMap.of(minMax.min(), minMax.max(), 5); // magic const
     {
       int index = -1;
       for (Tensor p : points)
@@ -39,8 +39,7 @@ public class RnDbscan {
     int cluster = 0;
     for (Tensor p : points) {
       if (Objects.isNull(labels[index])) {
-        Collection<NdMatch<Integer>> collection = //
-            ndMap.cluster(new SphericalNdCluster<>(EuclideanNdCenter.of(p), eps));
+        Collection<NdMatch<Integer>> collection = SphericalNdCluster.of(ndMap, EuclideanNdCenter.of(p), eps);
         if (collection.size() < minPts) {
           labels[index] = NOISE; // noise
         } else {
