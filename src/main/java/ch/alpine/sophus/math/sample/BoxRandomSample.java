@@ -7,28 +7,34 @@ import java.util.List;
 import java.util.Random;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.opt.nd.NdBox;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 
 public class BoxRandomSample implements RandomSampleInterface, Serializable {
+  /** @param ndBox axis-aligned bounding box
+   * @return */
+  public static RandomSampleInterface of(NdBox ndBox) {
+    return new BoxRandomSample(ndBox);
+  }
+
   /** the parameters define the coordinate bounds of the axis-aligned box
    * from which the samples are drawn
    * 
    * @param min lower-left
-   * @param max upper-right */
+   * @param max upper-right 
+   * @see NdBox */
   public static RandomSampleInterface of(Tensor min, Tensor max) {
-    return new BoxRandomSample(min, max);
+    return of(NdBox.of(min, max));
   }
 
   /***************************************************/
   private final List<Distribution> distributions = new LinkedList<>();
 
-  private BoxRandomSample(Tensor min, Tensor max) {
-    VectorQ.requireLength(min, max.length());
-    for (int index = 0; index < min.length(); ++index)
-      distributions.add(UniformDistribution.of(min.Get(index), max.Get(index)));
+  private BoxRandomSample(NdBox ndBox) {
+    for (int index = 0; index < ndBox.dimensions(); ++index)
+      distributions.add(UniformDistribution.of(ndBox.clip(index)));
   }
 
   @Override // from RandomSampleInterface
