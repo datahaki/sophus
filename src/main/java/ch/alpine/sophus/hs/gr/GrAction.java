@@ -29,6 +29,7 @@ public class GrAction implements TensorUnaryOperator {
   public static Tensor match(Tensor p, Tensor q) {
     Eigensystem ep = Eigensystem.ofSymmetric(p);
     Eigensystem eq = Eigensystem.ofSymmetric(q);
+    // eigenvalue comparison to verify that p and q are from the same space Gr(n, k)
     Chop._08.requireClose(ep.values(), eq.values());
     return Transpose.of(ep.vectors()).dot(eq.vectors());
   }

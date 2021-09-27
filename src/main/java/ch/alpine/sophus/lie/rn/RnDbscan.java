@@ -13,14 +13,18 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
-import ch.alpine.tensor.opt.nd.NdClusterRadius;
+import ch.alpine.tensor.opt.nd.NdCollectRadius;
 import ch.alpine.tensor.opt.nd.NdMap;
 import ch.alpine.tensor.opt.nd.NdMatch;
 import ch.alpine.tensor.opt.nd.NdTreeMap;
 
 /** Density-based spatial clustering of applications with noise
  * 
- * Reference: Wikipedia */
+ * References:
+ * "A density-based algorithm for discovering clusters in large spatial
+ * databases with noise", by Ester, Kriegel, Sander, Xu, 1996
+ * 
+ * <a href="https://en.wikipedia.org/wiki/DBSCAN">Wikipedia</a> */
 public enum RnDbscan {
   ;
   public static final int NOISE = -1;
@@ -41,7 +45,7 @@ public enum RnDbscan {
     int cluster = -1;
     for (Tensor p : points) {
       if (Objects.isNull(labels[index])) { // else "Previously processed in inner loop"
-        Collection<NdMatch<Integer>> c_p = NdClusterRadius.of(ndMap, function.apply(p), radius);
+        Collection<NdMatch<Integer>> c_p = NdCollectRadius.of(ndMap, function.apply(p), radius);
         if (c_p.size() < minPts) // "Density check"
           labels[index] = NOISE; // "Label as Noise"
         else {
@@ -58,7 +62,7 @@ public enum RnDbscan {
             if (Objects.isNull(labels[index_q])) { // else "Previously processed (e.g., border point)"
               labels[index_q] = cluster; // "Label neighbor"
               Tensor q = points.get(index_q);
-              Collection<NdMatch<Integer>> c_q = NdClusterRadius.of(ndMap, function.apply(q), radius);
+              Collection<NdMatch<Integer>> c_q = NdCollectRadius.of(ndMap, function.apply(q), radius);
               if (minPts <= c_q.size()) // "Density check (if Q is a core point)"
                 c_q.stream().map(NdMatch::value).forEach(set::add); // "Add new neighbors to seed set"
             }
