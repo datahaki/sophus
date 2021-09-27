@@ -33,7 +33,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     return of(Se2CoveringGroup.INSTANCE.element(start).inverse().combine(end), radius);
   }
 
-  /***************************************************/
+  // ---
   private final Tensor xya;
   private final Scalar radius;
   private final Scalar zero;

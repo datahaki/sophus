@@ -25,7 +25,7 @@ public class StRandomSample implements RandomSampleInterface, Serializable {
     return new StRandomSample(n, k);
   }
 
-  /***************************************************/
+  // ---
   private final int n;
   private final int k;
 

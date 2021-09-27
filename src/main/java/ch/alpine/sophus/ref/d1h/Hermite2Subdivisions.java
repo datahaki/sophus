@@ -64,7 +64,7 @@ public enum Hermite2Subdivisions {
         Tensors.of(ALP.Get(1, 1), ALQ.Get(1, 1))); // vpq
   }
 
-  /***************************************************/
+  // ---
   /** lambda == -1/8, mu == -1/2
    * These parameters lead to the reproduction of P3 for the H1 scheme.
    * 
@@ -81,7 +81,7 @@ public enum Hermite2Subdivisions {
     return of(hsManifold, hsTransport, N1_8, N1_2);
   }
 
-  /***************************************************/
+  // ---
   /** lambda == -1/5, mu == 9/10
    * 
    * <p>Reference:

@@ -50,7 +50,7 @@ public class Se2AxisYProject implements TensorScalarFunction {
     return new Se2AxisYProject(vx, be);
   }
 
-  /***************************************************/
+  // ---
   private final Scalar vx;
   private final Scalar be;
   private final Scalar se;

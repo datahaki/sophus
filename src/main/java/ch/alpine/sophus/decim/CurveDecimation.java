@@ -33,7 +33,7 @@ public interface CurveDecimation extends TensorUnaryOperator {
     return new RamerDouglasPeucker(Objects.requireNonNull(lineDistance), epsilon);
   }
 
-  /***************************************************/
+  // ---
   public static interface Result {
     /** @return points in the decimated sequence */
     Tensor result();
@@ -42,7 +42,7 @@ public interface CurveDecimation extends TensorUnaryOperator {
     Tensor errors();
   }
 
-  /***************************************************/
+  // ---
   /** @param tensor
    * @return */
   Result evaluate(Tensor tensor);

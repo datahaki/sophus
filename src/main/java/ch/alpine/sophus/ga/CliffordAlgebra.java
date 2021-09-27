@@ -25,6 +25,7 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.io.ScalarArray;
 import ch.alpine.tensor.lie.MatrixExp;
 import ch.alpine.tensor.mat.LinearSolve;
@@ -65,7 +66,7 @@ public class CliffordAlgebra {
     return of(0, q);
   }
 
-  /***************************************************/
+  // ---
   private final int signature_p;
   private final Tensor gp;
   private final Tensor cp;
@@ -141,8 +142,8 @@ public class CliffordAlgebra {
     return MatrixExp.of(gp.dot(x)).get(Tensor.ALL, 0);
   }
 
-  // only for testing
-  /* package */ Tensor _exp(Tensor a) {
+  @PackageTestAccess
+  Tensor _exp(Tensor a) {
     Tensor sum = UnitVector.of(gp.length(), 0);
     Tensor p = sum;
     for (int k = 1; k < 40; ++k) {

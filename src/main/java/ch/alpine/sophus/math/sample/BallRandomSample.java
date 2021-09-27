@@ -39,7 +39,7 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
         Sign.requirePositiveOrZero(radius));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor center;
   private final Scalar radius;
   private final RandomSampleInterface randomSampleInterface;

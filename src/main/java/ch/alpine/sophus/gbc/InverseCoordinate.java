@@ -17,7 +17,7 @@ public class InverseCoordinate implements TensorUnaryOperator, VectorField {
     return new InverseCoordinate(tensorUnaryOperator, vectorLogManifold, sequence);
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final Tensor weights;
   private final HsDesign hsDesign;

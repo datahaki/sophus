@@ -30,7 +30,7 @@ public enum Variograms {
       return InverseMultiquadricVariogram.of(param);
     }
   },
-  /***************************************************/
+  // ---
   /** 0 -> 1, Infinity -> 0 */
   GAUSSIAN {
     @Override
@@ -38,7 +38,7 @@ public enum Variograms {
       return GaussianVariogram.of(param);
     }
   },
-  /***************************************************/
+  // ---
   /** 0 -> 0, Infinity -> 1 */
   EXPONENTIAL {
     @Override
@@ -53,7 +53,7 @@ public enum Variograms {
       return SphericalVariogram.of(param, RealScalar.ONE);
     }
   },
-  /***************************************************/
+  // ---
   /** 0 -> 0, Infinity -> Infinity */
   POWER {
     @Override
@@ -68,7 +68,7 @@ public enum Variograms {
       return ThinPlateSplineVariogram.of(param);
     }
   },
-  /***************************************************/
+  // ---
   ;
 
   /** @param param

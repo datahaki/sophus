@@ -17,7 +17,7 @@ public class HalfWindowSampler extends BaseWindowSampler {
     return Cache.of(new HalfWindowSampler(windowFunction), 32);
   }
 
-  /***************************************************/
+  // ---
   private HalfWindowSampler(ScalarUnaryOperator windowFunction) {
     super(windowFunction);
   }

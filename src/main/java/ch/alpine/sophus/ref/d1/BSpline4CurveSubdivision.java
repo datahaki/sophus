@@ -37,7 +37,7 @@ public enum BSpline4CurveSubdivision {
     return Split2LoDual3PointCurveSubdivision.of(splitInterface, P2_3, P1_16);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar P11_16 = RationalScalar.of(11, 16);
   private static final Scalar P1_11 = RationalScalar.of(1, 11);
 
@@ -47,7 +47,7 @@ public enum BSpline4CurveSubdivision {
     return Split2HiDual3PointCurveSubdivision.of(splitInterface, P11_16, P1_11);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar P5 = RealScalar.of(5);
   private static final Scalar P16 = RealScalar.of(16);
 

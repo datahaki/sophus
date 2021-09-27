@@ -24,7 +24,7 @@ public final class Se2Family implements R2RigidFamily, Serializable {
     });
   }
 
-  /***************************************************/
+  // ---
   private final ScalarTensorFunction function;
 
   /** @param function maps a {@link Scalar} to a vector {px, py, angle}

@@ -49,7 +49,7 @@ public class BezierFunction implements ScalarTensorFunction {
     return scalar -> biinvariantMean.mean(sequence, BernsteinBasis.of(degree, scalar));
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
   private final Tensor sequence;
 

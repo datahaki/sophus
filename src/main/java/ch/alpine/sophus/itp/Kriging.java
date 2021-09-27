@@ -93,7 +93,7 @@ public class Kriging implements Serializable {
     return new Kriging(tensorUnaryOperator, one, weights, inverse);
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final Scalar one;
   private final Tensor weights;

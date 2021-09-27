@@ -42,7 +42,7 @@ public class LieGroupOps implements Serializable {
     return tensor -> lieGroup.element(tensor).inverse().toCoordinate();
   }
 
-  /***************************************************/
+  // ---
   /** Hint: function is intended to use in tests to assert biinvariance
    * 
    * @param g

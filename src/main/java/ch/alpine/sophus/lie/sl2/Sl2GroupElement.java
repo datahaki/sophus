@@ -28,7 +28,7 @@ public class Sl2GroupElement implements LieGroupElement {
     return new Sl2GroupElement(a1, a2, a3);
   }
 
-  /***************************************************/
+  // ---
   private final Scalar a1;
   private final Scalar a2;
   private final Scalar a3;

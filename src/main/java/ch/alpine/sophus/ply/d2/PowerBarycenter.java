@@ -30,7 +30,7 @@ public class PowerBarycenter implements BiFunction<Tensor, Scalar, Tensor>, Seri
     return of(RealScalar.of(exponent));
   }
 
-  /***************************************************/
+  // ---
   private final ScalarUnaryOperator power;
 
   private PowerBarycenter(Scalar exponent) {

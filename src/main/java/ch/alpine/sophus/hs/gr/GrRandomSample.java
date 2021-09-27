@@ -27,7 +27,7 @@ public class GrRandomSample implements RandomSampleInterface, Serializable {
     return new GrRandomSample(n, k);
   }
 
-  /***************************************************/
+  // ---
   private final int n;
   private final int k;
 

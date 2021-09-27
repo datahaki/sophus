@@ -27,7 +27,7 @@ public class SoRandomSample implements RandomSampleInterface, Serializable {
     return new SoRandomSample(Integers.requirePositive(n));
   }
 
-  /***************************************************/
+  // ---
   private final int n;
 
   private SoRandomSample(int n) {

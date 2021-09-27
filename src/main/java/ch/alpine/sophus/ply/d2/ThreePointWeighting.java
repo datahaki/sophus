@@ -24,7 +24,7 @@ public class ThreePointWeighting implements Genesis, Serializable {
     return new ThreePointWeighting(Objects.requireNonNull(biFunction));
   }
 
-  /***************************************************/
+  // ---
   private final BiFunction<Tensor, Scalar, Tensor> biFunction;
 
   private ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction) {

@@ -57,7 +57,7 @@ import junit.framework.Assert;
     checkCyclic(hs1, hs2);
   }
 
-  /***************************************************/
+  // ---
   public static void checkP(int n, HermiteSubdivision hermiteSubdivision) {
     Distribution distribution = DiscreteUniformDistribution.of(-5, 6);
     Tensor coeffs = RandomVariate.of(distribution, n + 1);

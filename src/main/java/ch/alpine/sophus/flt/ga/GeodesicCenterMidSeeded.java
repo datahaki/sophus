@@ -42,7 +42,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     return new GeodesicCenterMidSeeded(splitInterface, UniformWindowSampler.of(windowFunction));
   }
 
-  /***************************************************/
+  // ---
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
     private final Function<Integer, Tensor> function;
 
@@ -77,7 +77,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     }
   }
 
-  /***************************************************/
+  // ---
   private final SplitInterface splitInterface;
   private final Function<Integer, Tensor> function;
 

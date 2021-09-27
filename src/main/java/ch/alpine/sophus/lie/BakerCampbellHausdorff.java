@@ -39,7 +39,7 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
         Tolerance.CHOP);
   }
 
-  /***************************************************/
+  // ---
   private final Tensor ad;
   private final int degree;
   private final Chop chop;

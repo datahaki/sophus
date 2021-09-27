@@ -22,7 +22,7 @@ public class LagrangeQuadraticD implements ScalarUnaryOperator {
         Objects.requireNonNull(c1));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar c0;
   private final Scalar c1;
 

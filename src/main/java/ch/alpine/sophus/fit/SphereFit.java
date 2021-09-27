@@ -36,7 +36,7 @@ public class SphereFit implements Serializable {
         Sqrt.FUNCTION.apply(x.Get(cols - 1).add(Vector2NormSquared.of(center)))));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor center;
   private final Scalar radius;
 

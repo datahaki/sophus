@@ -25,7 +25,7 @@ public class ClothoidTangentDefect implements ScalarUnaryOperator {
     return new ClothoidTangentDefect(s1, s2);
   }
 
-  /***************************************************/
+  // ---
   private final Scalar s1;
   private final Scalar s2_half;
   private final Scalar s2_half_sqr;

@@ -32,7 +32,7 @@ public class WeiszfeldMethod implements SpatialMedian, Serializable {
     return new WeiszfeldMethod(Objects.requireNonNull(chop));
   }
 
-  /***************************************************/
+  // ---
   private final Chop chop;
 
   /** @param chop */

@@ -26,7 +26,7 @@ public class MonomialExtrapolationMask implements Function<Integer, Tensor>, Ser
   public static final Function<Integer, Tensor> INSTANCE = //
       Cache.of(new MonomialExtrapolationMask(), 32);
 
-  /***************************************************/
+  // ---
   private MonomialExtrapolationMask() {
     // ---
   }

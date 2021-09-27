@@ -30,7 +30,7 @@ public class SchildLadder implements HsTransport, Serializable {
     return new SchildLadder(Objects.requireNonNull(hsManifold), null);
   }
 
-  /***************************************************/
+  // ---
   private final HsManifold hsManifold;
   private final MidpointInterface midpointInterface;
 

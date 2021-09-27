@@ -14,7 +14,7 @@ public class NormWeighting implements Genesis {
     return new NormWeighting(Objects.requireNonNull(tensorNorm), Objects.requireNonNull(variogram));
   }
 
-  /***************************************************/
+  // ---
   private final TensorNorm tensorNorm;
   private final ScalarUnaryOperator variogram;
 

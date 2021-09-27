@@ -29,7 +29,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
     return new IterativeCoordinate(Objects.requireNonNull(genesis), k);
   }
 
-  /***************************************************/
+  // ---
   private final Genesis genesis;
   private final int k;
 

@@ -35,7 +35,7 @@ import ch.alpine.tensor.sca.Floor;
     return new BiinvariantMeanInterpolation(Objects.requireNonNull(biinvariantMean), tensor);
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
   private final Tensor tensor;
 

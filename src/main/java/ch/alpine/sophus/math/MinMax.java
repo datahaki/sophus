@@ -21,7 +21,7 @@ public class MinMax implements Serializable {
     return new MinMax(tensor).ndBox();
   }
 
-  // ==================================================
+  // ---
   private final Tensor min;
   private final Tensor max;
 

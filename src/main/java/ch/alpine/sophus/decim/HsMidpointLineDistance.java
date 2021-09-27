@@ -28,7 +28,7 @@ public class HsMidpointLineDistance implements LineDistance, Serializable {
         new HsMidpoint(hsManifold));
   }
 
-  /***************************************************/
+  // ---
   private final HsLineDistance hsLineDistance;
   private final HsMidpoint hsMidpoint;
 

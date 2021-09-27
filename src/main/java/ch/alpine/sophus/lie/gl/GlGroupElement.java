@@ -24,7 +24,7 @@ public class GlGroupElement implements LieGroupElement, Serializable {
     return new GlGroupElement(matrix, Inverse.of(matrix));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor matrix;
   private final Tensor inverse;
 

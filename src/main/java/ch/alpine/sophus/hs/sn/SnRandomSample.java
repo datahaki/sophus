@@ -32,7 +32,7 @@ public class SnRandomSample implements RandomSampleInterface, Serializable {
         : new SnRandomSample(Integers.requirePositiveOrZero(dimension));
   }
 
-  /***************************************************/
+  // ---
   private final int length;
 
   private SnRandomSample(int dimension) {

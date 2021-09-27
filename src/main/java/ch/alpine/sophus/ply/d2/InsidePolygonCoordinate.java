@@ -17,7 +17,7 @@ public class InsidePolygonCoordinate implements Genesis, Serializable {
     return new InsidePolygonCoordinate(Objects.requireNonNull(genesis));
   }
 
-  /***************************************************/
+  // ---
   private final Genesis genesis;
 
   /** @param genesis that evaluates polygon coordinates at zero (0, 0) */

@@ -24,7 +24,7 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
     return new IterativeCoordinateMatrix(Integers.requirePositiveOrZero(k));
   }
 
-  /***************************************************/
+  // ---
   private final int k;
 
   /** @param genesis

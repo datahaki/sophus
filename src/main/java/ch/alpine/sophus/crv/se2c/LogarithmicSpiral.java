@@ -30,7 +30,7 @@ public class LogarithmicSpiral implements ScalarTensorFunction {
         RealScalar.of(b));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar a;
   private final Scalar b;
 

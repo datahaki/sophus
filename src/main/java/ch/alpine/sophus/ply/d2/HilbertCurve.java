@@ -28,7 +28,7 @@ public class HilbertCurve {
     return Tensor.of(new HilbertCurve(n).deque.stream());
   }
 
-  /***************************************************/
+  // ---
   private static final Tensor[] MOVES = CirclePoints.of(4).stream().toArray(Tensor[]::new);
   // ---
   private final Deque<Tensor> deque = new ArrayDeque<>();

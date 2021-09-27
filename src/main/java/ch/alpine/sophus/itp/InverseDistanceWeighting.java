@@ -36,7 +36,7 @@ public class InverseDistanceWeighting implements Genesis, Serializable {
         Objects.requireNonNull(tensorScalarFunction));
   }
 
-  /***************************************************/
+  // ---
   private final ScalarUnaryOperator variogram;
   private final TensorScalarFunction tensorScalarFunction;
 

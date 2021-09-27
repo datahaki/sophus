@@ -50,7 +50,7 @@ import ch.alpine.tensor.sca.Tan;
         Tensors.of(be2.negate(), m11));
   }
 
-  /***************************************************/
+  // ---
   /** matrix with dimensions 2 x 2 */
   private final Tensor lhs;
   /** vector of length 2 */

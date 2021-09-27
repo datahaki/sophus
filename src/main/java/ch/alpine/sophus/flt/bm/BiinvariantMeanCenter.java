@@ -30,7 +30,7 @@ public class BiinvariantMeanCenter implements TensorUnaryOperator {
     return new BiinvariantMeanCenter(Objects.requireNonNull(biinvariantMean), UniformWindowSampler.of(windowFunction));
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
   private final Function<Integer, Tensor> function;
 

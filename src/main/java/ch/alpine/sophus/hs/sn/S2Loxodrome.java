@@ -24,7 +24,7 @@ public class S2Loxodrome implements ScalarTensorFunction {
     return of(RealScalar.of(angle));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar angle;
 
   private S2Loxodrome(Scalar angle) {

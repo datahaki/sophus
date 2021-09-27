@@ -24,7 +24,7 @@ public enum HormannSabinCurveSubdivision {
     return Split2LoDual3PointCurveSubdivision.of(binaryAverage, P6_7, N3_32);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar OMEGA = RationalScalar.of(1, 32);
 
   /** @param geodesicInterface
@@ -37,7 +37,7 @@ public enum HormannSabinCurveSubdivision {
     return Split3Dual3PointCurveSubdivision.of(binaryAverage, pq_f, qr_f, pqqf);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar P27_32 = RationalScalar.of(27, 32);
   private static final Scalar N1_9 = RationalScalar.of(-1, 9);
 

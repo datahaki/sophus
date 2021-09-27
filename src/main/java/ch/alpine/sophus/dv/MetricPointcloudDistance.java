@@ -30,7 +30,7 @@ public class MetricPointcloudDistance implements TensorScalarFunction {
         Objects.requireNonNull(tensorMetric));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor points;
   private final TensorMetric tensorMetric;
 

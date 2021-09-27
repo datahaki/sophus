@@ -33,7 +33,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
         max);
   }
 
-  /***************************************************/
+  // ---
   private final Genesis genesis;
   private final Chop chop;
   private final int max;

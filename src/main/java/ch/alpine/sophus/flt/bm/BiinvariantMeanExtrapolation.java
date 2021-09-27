@@ -21,7 +21,7 @@ public class BiinvariantMeanExtrapolation implements TensorUnaryOperator {
         Objects.requireNonNull(function));
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
   private final Function<Integer, Tensor> function;
 

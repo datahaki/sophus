@@ -37,7 +37,7 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
     return of(tensorUnaryOperator, sequence, IdentityMatrix.of(sequence.length()));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final Tensor weights;
 

@@ -22,7 +22,7 @@ public class LagrangeInterpolation extends AbstractInterpolation {
     return new LagrangeInterpolation(binaryAverage, tensor);
   }
 
-  /***************************************************/
+  // ---
   private final ScalarTensorFunction scalarTensorFunction;
 
   private LagrangeInterpolation(BinaryAverage binaryAverage, Tensor tensor) {

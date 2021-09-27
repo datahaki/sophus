@@ -19,7 +19,7 @@ public class LagrangeCoordinate implements Genesis, Serializable {
     return new LagrangeCoordinate(Objects.requireNonNull(genesis));
   }
 
-  /***************************************************/
+  // ---
   private final Genesis genesis;
 
   private LagrangeCoordinate(Genesis genesis) {

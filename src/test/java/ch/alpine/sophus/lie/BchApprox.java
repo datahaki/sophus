@@ -22,7 +22,7 @@ public class BchApprox implements BinaryOperator<Tensor>, Serializable {
     return new BchApprox(JacobiIdentity.require(ad));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor ad;
 
   public BchApprox(Tensor ad) {

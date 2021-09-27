@@ -17,7 +17,7 @@ public class UniformWindowSampler extends BaseWindowSampler {
     return Cache.of(new UniformWindowSampler(windowFunction), 32);
   }
 
-  /***************************************************/
+  // ---
   private UniformWindowSampler(ScalarUnaryOperator windowFunction) {
     super(windowFunction);
   }

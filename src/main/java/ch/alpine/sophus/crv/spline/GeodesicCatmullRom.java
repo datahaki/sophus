@@ -30,7 +30,7 @@ public class GeodesicCatmullRom implements ScalarTensorFunction {
         control);
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
   private final Tensor control;
   private final Tensor knots;

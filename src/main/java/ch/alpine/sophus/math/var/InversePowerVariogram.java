@@ -29,7 +29,7 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
     return of(RealScalar.of(exponent));
   }
 
-  /***************************************************/
+  // ---
   private final ScalarUnaryOperator power;
 
   private InversePowerVariogram(ScalarUnaryOperator power) {

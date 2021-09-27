@@ -26,7 +26,7 @@ public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3Curve
     return new LaneRiesenfeld3CurveSubdivision(Objects.requireNonNull(midpointInterface));
   }
 
-  /***************************************************/
+  // ---
   private final MidpointInterface midpointInterface;
 
   private LaneRiesenfeld3CurveSubdivision(MidpointInterface midpointInterface) {

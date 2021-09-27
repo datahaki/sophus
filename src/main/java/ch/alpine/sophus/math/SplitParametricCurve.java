@@ -16,7 +16,7 @@ public class SplitParametricCurve implements Geodesic, Serializable {
     return new SplitParametricCurve(Objects.requireNonNull(binaryAverage));
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
 
   private SplitParametricCurve(BinaryAverage binaryAverage) {

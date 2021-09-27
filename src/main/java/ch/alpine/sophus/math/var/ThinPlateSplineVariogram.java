@@ -29,7 +29,7 @@ public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
     return of(RealScalar.of(r0));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar r0;
 
   private ThinPlateSplineVariogram(Scalar r0) {

@@ -35,7 +35,7 @@ import ch.alpine.tensor.ext.Cache;
     return result;
   }
 
-  /***************************************************/
+  // ---
   private static final Function<Integer, Tensor> CACHE = Cache.of(Adds::build, 32);
 
   /** @param n

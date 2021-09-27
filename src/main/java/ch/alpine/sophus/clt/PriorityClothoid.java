@@ -19,7 +19,7 @@ public class PriorityClothoid implements ClothoidBuilder, Serializable {
     return new PriorityClothoid(Objects.requireNonNull(comparator));
   }
 
-  /***************************************************/
+  // ---
   private final Comparator<Clothoid> comparator;
 
   private PriorityClothoid(Comparator<Clothoid> comparator) {

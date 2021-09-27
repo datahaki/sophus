@@ -23,7 +23,7 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
     return new LaneRiesenfeldCurveSubdivision(midpointInterface, Integers.requirePositive(degree));
   }
 
-  /***************************************************/
+  // ---
   /** linear curve subdivision */
   private final BSpline1CurveSubdivision bSpline1CurveSubdivision;
   private final int degree;

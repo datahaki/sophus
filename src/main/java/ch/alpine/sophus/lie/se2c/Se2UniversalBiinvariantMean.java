@@ -31,7 +31,7 @@ public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializabl
     return new Se2UniversalBiinvariantMean(Se2Group.INSTANCE, scalarBiinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar ZERO = RealScalar.ZERO;
   // ---
   private final LieGroup lieGroup;

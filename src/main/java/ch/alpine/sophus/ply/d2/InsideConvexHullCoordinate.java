@@ -17,7 +17,7 @@ public class InsideConvexHullCoordinate implements Genesis, Serializable {
     return new InsideConvexHullCoordinate(Objects.requireNonNull(genesis));
   }
 
-  /***************************************************/
+  // ---
   private final Genesis genesis;
 
   /** @param genesis that evaluates polygon coordinates at zero (0, 0) */

@@ -35,7 +35,7 @@ public class UniformResample implements CurveSubdivision, Serializable {
         Sign.requirePositive(spacing));
   }
 
-  /***************************************************/
+  // ---
   private final TensorMetric tensorMetric;
   private final BinaryAverage binaryAverage;
   private final Scalar spacing;

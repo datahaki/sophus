@@ -23,13 +23,13 @@ public class BoxRandomSample implements RandomSampleInterface, Serializable {
    * from which the samples are drawn
    * 
    * @param min lower-left
-   * @param max upper-right 
+   * @param max upper-right
    * @see NdBox */
   public static RandomSampleInterface of(Tensor min, Tensor max) {
     return of(NdBox.of(min, max));
   }
 
-  /***************************************************/
+  // ---
   private final List<Distribution> distributions = new LinkedList<>();
 
   private BoxRandomSample(NdBox ndBox) {

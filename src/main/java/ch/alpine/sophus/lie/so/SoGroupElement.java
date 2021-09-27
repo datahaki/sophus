@@ -14,7 +14,7 @@ public class SoGroupElement implements LieGroupElement {
     return new SoGroupElement(SoMemberQ.INSTANCE.require(matrix));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor matrix;
 
   private SoGroupElement(Tensor matrix) {

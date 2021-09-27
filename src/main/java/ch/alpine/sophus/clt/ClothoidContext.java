@@ -54,7 +54,7 @@ public final class ClothoidContext {
     return diff;
   }
 
-  /***************************************************/
+  // ---
   /** Hint: function only for the purpose of demonstration
    * 
    * @return */

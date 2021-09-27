@@ -32,7 +32,7 @@ public class KnotSpacing implements TensorUnaryOperator {
     return centripetal(tensorMetric, RealScalar.of(exponent));
   }
 
-  /***************************************************/
+  // ---
   private static final TensorUnaryOperator UNIFORM = tensor -> Range.of(0, tensor.length());
 
   /** uniform knot spacing is equivalent to centripetal with exponent == 0
@@ -50,7 +50,7 @@ public class KnotSpacing implements TensorUnaryOperator {
     return new KnotSpacing(Objects.requireNonNull(tensorMetric), scalar -> scalar);
   }
 
-  /***************************************************/
+  // ---
   private final TensorMetric tensorMetric;
   private final ScalarUnaryOperator variogram;
 

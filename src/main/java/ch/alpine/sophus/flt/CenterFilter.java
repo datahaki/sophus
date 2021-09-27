@@ -47,7 +47,7 @@ public class CenterFilter implements TensorUnaryOperator {
         Integers.requirePositiveOrZero(radius));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final int radius;
 

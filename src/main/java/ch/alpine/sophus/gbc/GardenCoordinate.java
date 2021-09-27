@@ -23,7 +23,7 @@ public class GardenCoordinate implements TensorUnaryOperator, VectorField {
     return new GardenCoordinate(vectorLogManifold, Objects.requireNonNull(variogram), sequence);
   }
 
-  /***************************************************/
+  // ---
   private final HsDesign hsDesign;
   private final ScalarUnaryOperator variogram;
   private final TensorUnaryOperator distances;

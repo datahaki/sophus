@@ -22,7 +22,7 @@ public class ArcLengthParameterization implements ScalarTensorFunction {
     throw TensorRuntimeException.of(distances, tensor);
   }
 
-  /***************************************************/
+  // ---
   private final InverseCDF inverseCDF;
   private final Interpolation interpolation;
 

@@ -51,7 +51,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
     return new MetricBiinvariant(Objects.requireNonNull(tensorScalarFunction));
   }
 
-  /***************************************************/
+  // ---
   private final TensorScalarFunction tensorScalarFunction;
 
   private MetricBiinvariant(TensorScalarFunction tensorScalarFunction) {

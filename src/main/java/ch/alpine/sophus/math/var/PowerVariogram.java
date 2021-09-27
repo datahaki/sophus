@@ -61,7 +61,7 @@ public class PowerVariogram implements ScalarUnaryOperator {
     return new PowerVariogram(num.divide(den), power);
   }
 
-  /***************************************************/
+  // ---
   private final Scalar alpha;
   private final ScalarUnaryOperator power;
 

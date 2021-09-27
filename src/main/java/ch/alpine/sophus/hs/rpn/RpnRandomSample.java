@@ -20,7 +20,7 @@ public class RpnRandomSample implements RandomSampleInterface, Serializable {
     return new RpnRandomSample(Integers.requirePositiveOrZero(dimension));
   }
 
-  /***************************************************/
+  // ---
   private final RandomSampleInterface randomSampleInterface;
 
   private RpnRandomSample(int dimension) {

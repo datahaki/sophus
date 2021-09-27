@@ -37,7 +37,7 @@ public enum LieAlgebras {
     return ad;
   }
 
-  /***************************************************/
+  // ---
   public static Tensor sl2_basis() {
     Tensor b1 = Tensors.fromString("{{1, 0}, {0, -1}}");
     Tensor b2 = Tensors.fromString("{{0, 1}, {-1, 0}}");

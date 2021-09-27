@@ -17,7 +17,7 @@ public class KrigingCoordinate implements TensorUnaryOperator, VectorField {
     return new KrigingCoordinate(tensorUnaryOperator, vectorLogManifold, sequence);
   }
 
-  /***************************************************/
+  // ---
   private final HsDesign hsDesign;
   private final Kriging kriging;
   private final Tensor sequence;

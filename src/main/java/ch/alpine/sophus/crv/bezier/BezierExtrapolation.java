@@ -17,7 +17,7 @@ public class BezierExtrapolation implements TensorUnaryOperator {
     return new BezierExtrapolation(Objects.requireNonNull(binaryAverage));
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
 
   private BezierExtrapolation(BinaryAverage binaryAverage) {

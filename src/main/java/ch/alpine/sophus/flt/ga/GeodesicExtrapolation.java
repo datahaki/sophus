@@ -35,7 +35,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
     return new GeodesicExtrapolation(binaryAverage, HalfWindowSampler.of(windowFunction));
   }
 
-  /***************************************************/
+  // ---
   /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
     private final Function<Integer, Tensor> function;
 
@@ -75,7 +75,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
     }
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
   private final Function<Integer, Tensor> function;
 

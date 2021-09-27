@@ -30,7 +30,7 @@ public class LinearMeshRefinement implements SurfaceMeshRefinement, Serializable
     return new LinearMeshRefinement(Objects.requireNonNull(biinvariantMean));
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
 
   /* package */ LinearMeshRefinement(BiinvariantMean biinvariantMean) {

@@ -80,7 +80,7 @@ public enum Hermite3Subdivisions {
     return _of(hsManifold, hsTransport, theta, omega).create(biinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   /** default with theta == 1/128 and omega == -1/16
    * 
    * @param hsManifold
@@ -106,7 +106,7 @@ public enum Hermite3Subdivisions {
     return _standard(hsManifold, hsTransport).create(biinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   /** C3
    * 
    * References:
@@ -149,7 +149,7 @@ public enum Hermite3Subdivisions {
     return _a1(hsManifold, hsTransport).create(biinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   /** C5
    * 
    * References:
@@ -192,7 +192,7 @@ public enum Hermite3Subdivisions {
     return _a2(hsManifold, hsTransport).create(biinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   /** "Noninterpolatory Hermite subdivision schemes"
    * by Han, Yu, Xue, 2004, p. 1358
    * 

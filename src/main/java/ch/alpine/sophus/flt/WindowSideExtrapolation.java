@@ -23,7 +23,7 @@ public class WindowSideExtrapolation implements Function<Integer, Tensor>, Seria
     return Cache.of(new WindowSideExtrapolation(windowFunction), 32);
   }
 
-  /***************************************************/
+  // ---
   private final Function<Integer, Tensor> halfWindowSampler;
 
   /* package */ WindowSideExtrapolation(ScalarUnaryOperator windowFunction) {
