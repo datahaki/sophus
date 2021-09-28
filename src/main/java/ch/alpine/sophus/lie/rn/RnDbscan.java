@@ -38,7 +38,7 @@ public enum RnDbscan {
     Integers.requirePositive(minPts);
     NdMap<Integer> ndMap = NdTreeMap.of(MinMax.ndBox(points));
     AtomicInteger atomicInteger = new AtomicInteger();
-    points.stream().forEach(point -> ndMap.add(point, atomicInteger.getAndIncrement()));
+    points.stream().forEach(point -> ndMap.insert(point, atomicInteger.getAndIncrement()));
     // ---
     Integer[] labels = new Integer[points.length()];
     int index = 0;

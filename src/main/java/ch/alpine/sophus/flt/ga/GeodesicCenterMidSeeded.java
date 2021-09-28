@@ -18,6 +18,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.ext.PackageTestAccess;
 
 /** GeodesicCenterMidSeeded projects a sequence of points to their geodesic center
  * Difference to GeodesicCenter: starting to average in the center of the tree going outwards
@@ -58,7 +59,8 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     /** @param mask symmetric vector of odd length
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
-    /* package */ static Tensor of(Tensor mask) {
+    @PackageTestAccess
+ static Tensor of(Tensor mask) {
       if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);

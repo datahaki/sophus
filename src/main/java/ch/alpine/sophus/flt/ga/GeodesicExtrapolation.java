@@ -14,6 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** GeodesicExtrapolate projects a sequence of points to their next (expected) point
@@ -36,7 +37,8 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
   }
 
   // ---
-  /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
+  @PackageTestAccess
+  static class Splits implements Function<Integer, Tensor>, Serializable {
     private final Function<Integer, Tensor> function;
 
     private Splits(Function<Integer, Tensor> function) {
@@ -51,7 +53,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
     /** @param causal affine mask
      * @return Tensor [i1, ..., in, e] with i being interpolatory weights and e the extrapolation weight
      * @throws Exception if mask is not affine */
-    /* package */ static Tensor of(Tensor mask) {
+    @PackageTestAccess static Tensor of(Tensor mask) {
       // check for affinity
       AffineQ.require(mask);
       // no extrapolation possible

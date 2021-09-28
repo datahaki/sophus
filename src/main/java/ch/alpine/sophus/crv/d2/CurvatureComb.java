@@ -11,6 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -45,13 +46,15 @@ public enum CurvatureComb {
 
   /** @param tensor of dimension n x 2
    * @return normals of dimension n x 2 scaled according to {@link SignedCurvature2D} */
-  /* package */ static Tensor string(Tensor tensor) {
+  @PackageTestAccess
+  static Tensor string(Tensor tensor) {
     return Curvature2D.string(tensor).pmul(Normal2D.string(tensor));
   }
 
   /** @param tensor of dimension n x 2
    * @return normals of dimension n x 2 scaled according to {@link SignedCurvature2D} */
-  /* package */ static Tensor cyclic(Tensor tensor) {
+  @PackageTestAccess
+  static Tensor cyclic(Tensor tensor) {
     int length = tensor.length();
     Nocopy normal = new Nocopy(length);
     if (0 < length) {

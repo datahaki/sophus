@@ -25,7 +25,7 @@ public class BiinvariantMeanExtrapolation implements TensorUnaryOperator {
   private final BiinvariantMean biinvariantMean;
   private final Function<Integer, Tensor> function;
 
-  /* package */ BiinvariantMeanExtrapolation(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) {
+  private BiinvariantMeanExtrapolation(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) {
     this.biinvariantMean = biinvariantMean;
     this.function = function;
   }

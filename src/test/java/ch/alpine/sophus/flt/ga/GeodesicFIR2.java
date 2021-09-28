@@ -16,6 +16,6 @@ public enum GeodesicFIR2 {
    * @return */
   public static TensorUnaryOperator of(BinaryAverage binaryAverage, Scalar alpha) {
     TensorUnaryOperator geodesicExtrapolation = tensor -> binaryAverage.split(tensor.get(0), tensor.get(1), RealScalar.TWO);
-    return new GeodesicFIRn(geodesicExtrapolation, binaryAverage, 2, alpha);
+    return GeodesicFIRn.of(geodesicExtrapolation, binaryAverage, 2, alpha);
   }
 }
