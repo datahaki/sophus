@@ -60,7 +60,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
     @PackageTestAccess
- static Tensor of(Tensor mask) {
+    static Tensor of(Tensor mask) {
       if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);

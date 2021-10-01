@@ -17,6 +17,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
@@ -44,7 +45,7 @@ import ch.alpine.tensor.sca.Sign;
    * and ArrayDeque because ArrayDeque#stream() reverses the order.
    * GrahamScan is used in several applications. No performance issues were
    * reported so far. */
-  static Tensor of(Stream<Tensor> stream, Chop chop) {
+  public static Tensor of(Stream<Tensor> stream, Chop chop) {
     // list is permuted during computation of convex hull
     List<Tensor> list = stream.collect(Collectors.toList());
     if (list.isEmpty())
@@ -106,6 +107,7 @@ import ch.alpine.tensor.sca.Sign;
    * @param p2
    * @param p3
    * @return Det2D[p2 - p1, p3 - p1] */
+  @PackageTestAccess
   static Scalar ccw(Tensor p1, Tensor p2, Tensor p3) {
     return Det2D.of(p2.subtract(p1), p3.subtract(p1));
   }

@@ -2,13 +2,15 @@
 package ch.alpine.sophus.ref.d1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.Nocopy;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.itp.BinaryAverage;
 
@@ -32,14 +34,15 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
     int length = tensor.length();
     if (length < 2)
       return tensor.copy();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     Tensor p = Last.of(tensor);
     Tensor q = tensor.get(0);
     for (int index = 1; index <= length; ++index) {
       Tensor r = tensor.get(index % length);
-      curve.append(lo(p, q, r)).append(hi(p, p = q, q = r));
+      list.add(lo(p, q, r));
+      list.add(hi(p, p = q, q = r));
     }
-    return curve.tensor();
+    return Unprotect.using(list);
   }
 
   @Override // from CurveSubdivision
@@ -48,16 +51,17 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
     int length = tensor.length();
     if (length < 2)
       return tensor.copy();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     Tensor p = tensor.get(0);
     Tensor q = tensor.get(1);
-    curve.append(lo(p, q)); // Chaikin's rule
+    list.add(lo(p, q)); // Chaikin's rule
     for (int index = 2; index < length; ++index) {
       Tensor r = tensor.get(index);
-      curve.append(lo(p, q, r)).append(hi(p, p = q, q = r));
+      list.add(lo(p, q, r));
+      list.add(hi(p, p = q, q = r));
     }
-    curve.append(hi(p, q)); // Chaikin's rule
-    return curve.tensor();
+    list.add(hi(p, q)); // Chaikin's rule
+    return Unprotect.using(list);
   }
 
   /** Example:

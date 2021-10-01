@@ -1,8 +1,11 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.math.Nocopy;
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 
 /** examples of extensions are
  * {@link BSpline3CurveSubdivision}, and
@@ -12,20 +15,23 @@ public abstract class RefiningBSpline3CurveSubdivision extends AbstractBSpline3C
   @Override
   protected final Tensor refine(Tensor tensor) {
     int length = tensor.length();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     {
       Tensor q = tensor.get(0);
       Tensor r = tensor.get(1);
-      curve.append(q).append(midpoint(q, r));
+      list.add(q);
+      list.add(midpoint(q, r));
     }
     int last = length - 1;
     Tensor p = tensor.get(0);
     for (int index = 1; index < last; /* nothing */ ) {
       Tensor q = tensor.get(index);
       Tensor r = tensor.get(++index);
-      curve.append(center(p, q, r)).append(midpoint(q, r));
+      list.add(center(p, q, r));
+      list.add(midpoint(q, r));
       p = q;
     }
-    return curve.append(tensor.get(last)).tensor();
+    list.add(tensor.get(last));
+    return Unprotect.using(list);
   }
 }

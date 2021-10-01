@@ -53,7 +53,8 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
     /** @param causal affine mask
      * @return Tensor [i1, ..., in, e] with i being interpolatory weights and e the extrapolation weight
      * @throws Exception if mask is not affine */
-    @PackageTestAccess static Tensor of(Tensor mask) {
+    @PackageTestAccess
+    static Tensor of(Tensor mask) {
       // check for affinity
       AffineQ.require(mask);
       // no extrapolation possible

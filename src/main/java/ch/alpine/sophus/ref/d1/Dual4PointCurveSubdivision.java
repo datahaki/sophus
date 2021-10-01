@@ -2,14 +2,16 @@
 package ch.alpine.sophus.ref.d1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.math.Geodesic;
-import ch.alpine.sophus.math.Nocopy;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
@@ -45,7 +47,7 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
     int length = tensor.length();
     if (length < 2)
       return tensor.copy();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     Tensor p = Last.of(tensor);
     Tensor q = tensor.get(0);
     Tensor r = tensor.get(1);
@@ -53,12 +55,13 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
       Tensor s = tensor.get((index + 2) % length);
       ScalarTensorFunction c_pq = geodesicInterface.curve(p, q);
       ScalarTensorFunction c_rs = geodesicInterface.curve(r, s);
-      curve.append(lo(c_pq, c_rs)).append(hi(c_pq, c_rs));
+      list.add(lo(c_pq, c_rs));
+      list.add(hi(c_pq, c_rs));
       p = q;
       q = r;
       r = s;
     }
-    return curve.tensor();
+    return Unprotect.using(list);
   }
 
   @Override // from CurveSubdivision

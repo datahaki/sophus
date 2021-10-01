@@ -1,12 +1,15 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.math.Nocopy;
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.alpine.sophus.math.SplitInterface;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 
 /** C1 interpolatory four-point scheme
@@ -60,15 +63,17 @@ public class FourPointCurveSubdivision extends BSpline1CurveSubdivision {
   @Override // from CurveSubdivision
   public Tensor cyclic(Tensor tensor) {
     int length = tensor.length();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     if (0 < length) {
       Tensor p = Last.of(tensor);
       Tensor q = tensor.get(0);
       Tensor r = tensor.get(1 % length);
-      for (int index = 0; index < length; ++index)
-        curve.append(q).append(center(p, p = q, q = r, r = tensor.get((index + 2) % length)));
+      for (int index = 0; index < length; ++index) {
+        list.add(q);
+        list.add(center(p, p = q, q = r, r = tensor.get((index + 2) % length)));
+      }
     }
-    return curve.tensor();
+    return Unprotect.using(list);
   }
 
   @Override // from CurveSubdivision
@@ -77,15 +82,20 @@ public class FourPointCurveSubdivision extends BSpline1CurveSubdivision {
     if (length < 3)
       return new BSpline3CurveSubdivision(splitInterface).string(tensor);
     // ---
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     Tensor p = tensor.get(0);
     Tensor q = tensor.get(1);
     Tensor r = tensor.get(2);
-    curve.append(p).append(triple_lo(p, q, r));
-    for (int index = 3; index < length; ++index)
-      curve.append(q).append(center(p, p = q, q = r, r = tensor.get(index)));
-    curve.append(q).append(triple_hi(p, q, r)).append(r);
-    return curve.tensor();
+    list.add(p);
+    list.add(triple_lo(p, q, r));
+    for (int index = 3; index < length; ++index) {
+      list.add(q);
+      list.add(center(p, p = q, q = r, r = tensor.get(index)));
+    }
+    list.add(q);
+    list.add(triple_hi(p, q, r));
+    list.add(r);
+    return Unprotect.using(list);
   }
 
   /** @param p
