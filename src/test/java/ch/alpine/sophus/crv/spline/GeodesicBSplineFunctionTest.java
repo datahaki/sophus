@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.itp.BSplineFunctionBase;
+import ch.alpine.tensor.itp.BSplineFunctionString;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.DiscreteUniformDistribution;
 import ch.alpine.tensor.pdf.Distribution;
@@ -31,7 +31,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     for (int n = 1; n < 10; ++n)
       for (int degree = 0; degree < 6; ++degree) {
         Tensor control = RandomVariate.of(distribution, n, 3);
-        ScalarTensorFunction stf1 = BSplineFunctionBase.string(degree, control);
+        ScalarTensorFunction stf1 = BSplineFunctionString.of(degree, control);
         ScalarTensorFunction stf2 = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, control);
         Scalar x1 = RandomVariate.of(UniformDistribution.of(0, n - 1));
         Tensor y1 = stf1.apply(x1);
