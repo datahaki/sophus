@@ -22,7 +22,9 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 /** for uniform knot spacing, the implementation matches
- * {@link BSplineFunctionString#of(int, Tensor)} */
+ * {@link BSplineFunctionString#of(int, Tensor)}
+ * 
+ * the implementation is more general as it uses arbitrary knot spacing */
 public class GeodesicBSplineFunction extends BSplineFunction {
   /** the control point are stored by reference, i.e. modifications to
    * given tensor alter the behavior of this BSplineFunction instance.

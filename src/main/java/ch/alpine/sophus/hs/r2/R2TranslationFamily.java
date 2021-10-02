@@ -4,6 +4,7 @@ package ch.alpine.sophus.hs.r2;
 import java.io.Serializable;
 
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -25,7 +26,7 @@ public abstract class R2TranslationFamily implements R2RigidFamily, Serializable
 
   @Override // from RigidFamily
   public final Tensor forward_se2(Scalar scalar) {
-    return Se2Matrix.translation(function_apply(scalar));
+    return Se2Matrix.of(function_apply(scalar).copy().append(RealScalar.ZERO));
   }
 
   /** @param scalar

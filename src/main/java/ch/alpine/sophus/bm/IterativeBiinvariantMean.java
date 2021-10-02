@@ -65,6 +65,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
       return sequence.get(ArgMax.of(AffineQ.require(weights)));
     }
   }
+
   // ---
   private final HsManifold hsManifold;
   private final Chop chop;

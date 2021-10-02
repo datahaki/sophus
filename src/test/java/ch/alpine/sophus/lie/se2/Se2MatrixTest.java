@@ -2,7 +2,6 @@
 package ch.alpine.sophus.lie.se2;
 
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -92,19 +91,5 @@ public class Se2MatrixTest extends TestCase {
     Tensor u = Tensors.vector(1.2, 0, 0);
     Tensor m = Se2CoveringExponential.INSTANCE.exp(u);
     assertEquals(m, u);
-  }
-
-  public void testTranslations() {
-    Tensor xya = Tensors.vector(1, 2, 0);
-    Tensor translate = Se2Matrix.translation(xya.extract(0, 2));
-    assertEquals(Se2Matrix.of(xya), translate);
-    ExactTensorQ.require(translate);
-  }
-
-  public void testFlipY() {
-    Tensor tensor = Se2Matrix.flipY(5);
-    ExactTensorQ.require(tensor);
-    assertEquals(tensor, Tensors.fromString("{{1, 0, 0}, {0, -1, 5}, {0, 0, 1}}"));
-    assertEquals(Det.of(tensor), RealScalar.ONE.negate());
   }
 }
