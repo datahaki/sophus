@@ -1,10 +1,11 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import ch.alpine.sophus.crv.d2.ParametricResample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

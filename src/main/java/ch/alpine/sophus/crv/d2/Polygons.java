@@ -1,6 +1,6 @@
 // code by jph
 // adapted from PNPOLY - Point Inclusion in Polygon Test W. Randolph Franklin (WRF)
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
 import java.util.Iterator;
 

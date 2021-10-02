@@ -8,7 +8,7 @@ import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.math.d2.ArcTan2D;
+import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.AngleVector;

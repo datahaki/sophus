@@ -4,10 +4,10 @@ package ch.alpine.sophus.gbc.d2;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
+import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;

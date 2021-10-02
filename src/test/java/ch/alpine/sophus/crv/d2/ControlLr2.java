@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;

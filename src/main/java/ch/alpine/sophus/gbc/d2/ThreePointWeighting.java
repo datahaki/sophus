@@ -2,8 +2,11 @@
 package ch.alpine.sophus.gbc.d2;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.jar.Pack200.Unpacker;
 
 import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.RealScalar;
@@ -11,6 +14,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.r2.Det2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -45,15 +49,15 @@ public class ThreePointWeighting implements Genesis, Serializable {
       dens[ind] = den;
       ++ind;
     }
-    Tensor tensor = Tensors.reserve(length);
+    List<Tensor> list = new ArrayList<>(length);
     for (int index = 0; index < length; ++index) {
       Tensor prev = auxs[(index + length - 1) % length];
       Tensor cntr = auxs[index];
       Tensor next = auxs[(index + 1) % length];
       Scalar diff = forward(cntr, next).subtract(forward(cntr, prev));
-      tensor.append(biFunction.apply(diff, dens[index]));
+      list.add(biFunction.apply(diff, dens[index]));
     }
-    return tensor;
+    return Unprotect.using(list);
   }
 
   private static Scalar forward(Tensor ofs1, Tensor ofs2) {

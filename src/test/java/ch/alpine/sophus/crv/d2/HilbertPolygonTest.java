@@ -1,6 +1,7 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
+import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.sophus.usr.AssertFail;
 import junit.framework.TestCase;
 

@@ -4,6 +4,7 @@ package ch.alpine.sophus.gbc.d2;
 import java.util.Random;
 
 import ch.alpine.sophus.bm.MeanDefect;
+import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
@@ -15,7 +16,6 @@ import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnExponential;
 import ch.alpine.sophus.math.Genesis;
-import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;

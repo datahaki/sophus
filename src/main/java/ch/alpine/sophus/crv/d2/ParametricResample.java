@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
 import java.io.Serializable;
 import java.util.LinkedList;

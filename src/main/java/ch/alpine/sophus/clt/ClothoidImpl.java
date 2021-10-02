@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.clt.par.ClothoidIntegral;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.math.d2.ArcTan2D;
+import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

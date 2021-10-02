@@ -2,10 +2,10 @@
 package ch.alpine.sophus.gbc.d2;
 
 import ch.alpine.sophus.bm.MeanDefect;
+import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.lie.rn.RnExponential;
 import ch.alpine.sophus.math.Genesis;
-import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.pdf.Distribution;

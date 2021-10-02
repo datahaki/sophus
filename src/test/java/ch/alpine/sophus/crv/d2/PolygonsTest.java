@@ -1,9 +1,10 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;

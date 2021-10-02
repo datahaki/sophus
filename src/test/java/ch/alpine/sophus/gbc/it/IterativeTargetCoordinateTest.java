@@ -3,9 +3,9 @@ package ch.alpine.sophus.gbc.it;
 
 import java.util.Deque;
 
+import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

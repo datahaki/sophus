@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.math;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

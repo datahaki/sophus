@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc.d2;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.math.Genesis;
-import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;

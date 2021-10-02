@@ -1,6 +1,8 @@
 // code by jph
-package ch.alpine.sophus.math.d2;
+package ch.alpine.sophus.crv.d2;
 
+import ch.alpine.sophus.crv.d2.HilbertCurve;
+import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensors;
