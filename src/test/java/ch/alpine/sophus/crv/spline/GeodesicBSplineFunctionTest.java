@@ -6,12 +6,15 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.itp.BSplineFunctionBase;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.DiscreteUniformDistribution;
 import ch.alpine.tensor.pdf.Distribution;
@@ -23,6 +26,20 @@ import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GeodesicBSplineFunctionTest extends TestCase {
+  public void testLetsSee() {
+    Distribution distribution = DiscreteUniformDistribution.of(-5, 5);
+    for (int n = 1; n < 10; ++n)
+      for (int degree = 0; degree < 6; ++degree) {
+        Tensor control = RandomVariate.of(distribution, n, 3);
+        ScalarTensorFunction stf1 = BSplineFunctionBase.string(degree, control);
+        ScalarTensorFunction stf2 = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, control);
+        Scalar x1 = RandomVariate.of(UniformDistribution.of(0, n - 1));
+        Tensor y1 = stf1.apply(x1);
+        Tensor y2 = stf2.apply(x1);
+        Tolerance.CHOP.requireClose(y1, y2);
+      }
+  }
+
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     int n = 20;

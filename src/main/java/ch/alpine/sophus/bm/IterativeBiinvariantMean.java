@@ -9,6 +9,7 @@ import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.red.ArgMax;
 import ch.alpine.tensor.sca.Chop;
 
 /** Barycentric Fixed Point Iteration
@@ -52,6 +53,18 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesic));
   }
 
+  /** serves as initial guess at begin of fix point iteration that
+   * converges to exact mean.
+   * 
+   * @see IterativeBiinvariantMean */
+  private static enum ArgMaxSelection implements BiinvariantMean {
+    INSTANCE;
+
+    @Override // from BiinvariantMean
+    public Tensor mean(Tensor sequence, Tensor weights) {
+      return sequence.get(ArgMax.of(AffineQ.require(weights)));
+    }
+  }
   // ---
   private final HsManifold hsManifold;
   private final Chop chop;

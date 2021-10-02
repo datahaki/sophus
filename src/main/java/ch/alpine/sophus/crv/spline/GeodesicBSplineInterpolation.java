@@ -6,11 +6,11 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 
 public class GeodesicBSplineInterpolation extends AbstractBSplineInterpolation {
-  /** @param binaryAverage
+  /** @param splitInterface
    * @param degree
    * @param target */
-  public GeodesicBSplineInterpolation(SplitInterface binaryAverage, int degree, Tensor target) {
-    super(binaryAverage, degree, target);
+  public GeodesicBSplineInterpolation(SplitInterface splitInterface, int degree, Tensor target) {
+    super(splitInterface, degree, target);
   }
 
   @Override // from AbstractBSplineInterpolation

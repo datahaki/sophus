@@ -27,7 +27,7 @@ public final class LieGroupBSplineInterpolation extends AbstractBSplineInterpola
     this.lieGroup = lieGroup;
   }
 
-  @Override // from GeodesicBSplineInterpolation
+  @Override // from AbstractBSplineInterpolation
   protected Tensor move(Tensor p, Tensor e, Tensor t) {
     return lieGroup.element(p).combine(lieGroup.element(e).inverse().combine(t));
   }
