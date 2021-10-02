@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -14,6 +15,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Join;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.MatrixRank;
@@ -73,22 +75,20 @@ public class TGrMemberQTest extends TestCase {
   }
 
   public void testDimensionsX() {
+    Random random = new Random(3);
     Distribution distribution = LogisticDistribution.of(0, 3);
-    int fails = 0;
     for (int n = 1; n < 6; ++n) {
       int fn = n;
       for (int k = 0; k <= n; ++k) {
-        Tensor x = RandomSample.of(GrRandomSample.of(n, k));
+        Tensor x = RandomSample.of(GrRandomSample.of(n, k), random);
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 3) //
-            .mapToObj(i -> Flatten.of(tGrMemberQ.forceProject(RandomVariate.of(distribution, fn, fn)))));
+            .mapToObj(i -> Flatten.of(tGrMemberQ.forceProject(RandomVariate.of(distribution, random, fn, fn)))));
         int r = MatrixRank.of(samples);
-        if (r != expected)
-          ++fails;
+        Integers.requireEquals(r, expected);
       }
     }
-    assertTrue(fails <= 2);
   }
 
   public void testDimensionsExact() {

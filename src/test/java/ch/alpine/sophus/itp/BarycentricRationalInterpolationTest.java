@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import java.util.Random;
+
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
@@ -58,20 +60,16 @@ public class BarycentricRationalInterpolationTest extends TestCase {
   }
 
   public void testLinearReproduction() {
+    Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
-    Tensor knots = Sort.of(RandomVariate.of(distribution, 10));
-    int fails = 0;
-    for (int d = 0; d < 4; ++d)
-      try {
-        ScalarTensorFunction scalarTensorFunction = BarycentricRationalInterpolation.of(knots, d);
-        Scalar x = RandomVariate.of(distribution);
-        Tensor weights = scalarTensorFunction.apply(x);
-        Tensor tensor2 = RnBiinvariantMean.INSTANCE.mean(knots, weights);
-        Chop._08.requireClose(x, tensor2);
-      } catch (Exception exception) {
-        ++fails;
-      }
-    assertTrue(fails <= 2);
+    Tensor knots = Sort.of(RandomVariate.of(distribution, random, 10));
+    for (int d = 0; d < 4; ++d) {
+      ScalarTensorFunction scalarTensorFunction = BarycentricRationalInterpolation.of(knots, d);
+      Scalar x = RandomVariate.of(distribution, random);
+      Tensor weights = scalarTensorFunction.apply(x);
+      Tensor tensor2 = RnBiinvariantMean.INSTANCE.mean(knots, weights);
+      Chop._08.requireClose(x, tensor2);
+    }
   }
 
   public void testUnorderedFail() {

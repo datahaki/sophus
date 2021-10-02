@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.math.sample;
 
+import java.util.Random;
+
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.usr.AssertFail;
@@ -73,22 +75,17 @@ public class BallRandomSampleTest extends TestCase {
   }
 
   public void testR3S2Geodesic() {
+    Random random = new Random(7);
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
-    int fails = 0;
     for (int index = 0; index < 20; ++index) {
-      Tensor pn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
-      Tensor qn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
+      Tensor pn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface, random));
+      Tensor qn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface, random));
       Tensor p = Tensors.of(pn, pn);
       Tensor q = Tensors.of(qn, qn);
-      try {
-        Tensor split = R3S2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
-        Chop._08.requireClose(split.get(0), split.get(1));
-      } catch (Exception exception) {
-        ++fails;
-      }
+      Tensor split = R3S2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
+      Chop._08.requireClose(split.get(0), split.get(1));
     }
-    assertTrue(fails < 5);
   }
 
   public void testRotationMatrix3D() {

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.sl2;
 
+import java.util.Random;
+
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
@@ -31,23 +33,19 @@ public class Sl2GroupElementTest extends TestCase {
   }
 
   public void testAdjointCombine() {
-    int fails = 0;
-    for (int count = 0; count < 10; ++count)
-      try {
-        Tensor a = TestHelper.spawn_Sl2();
-        Sl2GroupElement ga = Sl2Group.INSTANCE.element(a);
-        Tensor b = TestHelper.spawn_Sl2();
-        Sl2GroupElement gb = Sl2Group.INSTANCE.element(b);
-        Sl2GroupElement gab = Sl2Group.INSTANCE.element(ga.combine(b));
-        Tensor matrix = adjoint(gab);
-        ExactTensorQ.require(matrix);
-        Tensor Ad_a = adjoint(ga);
-        Tensor Ad_b = adjoint(gb);
-        assertEquals(matrix, Ad_b.dot(Ad_a));
-      } catch (Exception exception) {
-        ++fails;
-      }
-    assertTrue(fails < 4);
+    Random random = new Random(3);
+    for (int count = 0; count < 10; ++count) {
+      Tensor a = TestHelper.spawn_Sl2(random);
+      Sl2GroupElement ga = Sl2Group.INSTANCE.element(a);
+      Tensor b = TestHelper.spawn_Sl2(random);
+      Sl2GroupElement gb = Sl2Group.INSTANCE.element(b);
+      Sl2GroupElement gab = Sl2Group.INSTANCE.element(ga.combine(b));
+      Tensor matrix = adjoint(gab);
+      ExactTensorQ.require(matrix);
+      Tensor Ad_a = adjoint(ga);
+      Tensor Ad_b = adjoint(gb);
+      assertEquals(matrix, Ad_b.dot(Ad_a));
+    }
   }
 
   public void testFailZero() {

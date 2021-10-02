@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
+import java.util.Random;
+
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.so3.Rodrigues;
@@ -49,20 +51,16 @@ public class SoGroupElementTest extends TestCase {
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
-    int fails = 0;
-    for (int count = 0; count < 10; ++count)
-      try {
-        Tensor g = So3TestHelper.spawn_So3();
-        Tensor m = So3TestHelper.spawn_So3();
-        LieGroupElement ge = LIE_GROUP.element(g);
-        Tensor lhs = Rodrigues.INSTANCE.log( //
-            LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
-        Tensor rhs = ge.adjoint(Rodrigues.INSTANCE.log(m)); // Ad(g).Log[m]
-        Chop._10.requireClose(lhs, rhs);
-      } catch (Exception exception) {
-        ++fails;
-      }
-    assertTrue(fails < 2);
+    Random random = new Random(3);
+    for (int count = 0; count < 10; ++count) {
+      Tensor g = So3TestHelper.spawn_So3(random);
+      Tensor m = So3TestHelper.spawn_So3(random);
+      LieGroupElement ge = LIE_GROUP.element(g);
+      Tensor lhs = Rodrigues.INSTANCE.log( //
+          LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
+      Tensor rhs = ge.adjoint(Rodrigues.INSTANCE.log(m)); // Ad(g).Log[m]
+      Chop._10.requireClose(lhs, rhs);
+    }
   }
 
   public void testCombine() {
