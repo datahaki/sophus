@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.AffineCoordinate;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.tensor.RealScalar;
@@ -28,7 +28,7 @@ public class IterativeAffineCoordinateTest extends TestCase {
         GenesisDeque genesis = new IterativeAffineCoordinate(amplifiers.supply(3), k);
         for (int n = 3; n < 10; ++n) {
           Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
-          if (Polygons.isInsideConvexHull(levers)) {
+          if (OriginEnclosureQ.isInsideConvexHull(levers)) {
             _check(levers, AffineCoordinate.INSTANCE.origin(levers));
             _check(levers, genesis.origin(levers));
             Deque<Evaluation> deque = genesis.deque(levers);

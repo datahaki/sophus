@@ -4,7 +4,7 @@ package ch.alpine.sophus.gbc.d2;
 import java.util.Random;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
@@ -75,7 +75,7 @@ public class IterativeCoordinateTest extends TestCase {
       Interpolation interpolation = LinearInterpolation.of(polygon.extract(index, index + 2));
       Tensor x = interpolation.at(RealScalar.of(random.nextDouble()));
       Tensor levers = Tensor.of(polygon.stream().map(x::subtract));
-      if (Polygons.isInside(levers) && strict) {
+      if (OriginEnclosureQ.INSTANCE.test(levers) && strict) {
         Tensor weights = genesis.origin(levers);
         Chop._10.requireClose(RnBiinvariantMean.INSTANCE.mean(polygon, weights), x);
       }
@@ -106,7 +106,7 @@ public class IterativeCoordinateTest extends TestCase {
     Distribution distribution = UniformDistribution.of(-10, 10);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(distribution, n, 2);
-      if (Polygons.isInside(levers)) {
+      if (OriginEnclosureQ.INSTANCE.test(levers)) {
         Tensor weights = ThreePointCoordinate.of(Barycenter.MEAN_VALUE).origin(levers);
         Chop._07.requireClose( //
             weights, //
@@ -127,7 +127,7 @@ public class IterativeCoordinateTest extends TestCase {
     Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(distribution, n, 2);
-      if (Polygons.isInside(levers)) {
+      if (OriginEnclosureQ.INSTANCE.test(levers)) {
         for (int k = 0; k < 3; ++k) {
           Genesis ic = IterativeCoordinate.of(genesis, k);
           Tensor weights = ic.origin(levers);
@@ -169,7 +169,7 @@ public class IterativeCoordinateTest extends TestCase {
       Tensor sequence = RandomSample.of(randomSampleInterface, random, n);
       HsDesign hsDesign = new HsDesign(S2Manifold.INSTANCE);
       Tensor levers = hsDesign.matrix(sequence, point);
-      if (Polygons.isInside(levers)) {
+      if (OriginEnclosureQ.INSTANCE.test(levers)) {
         for (Genesis genesis : GENESIS)
           for (int k = 0; k < 3; ++k) {
             BarycentricCoordinate barycentricCoordinate = //

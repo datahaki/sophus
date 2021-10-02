@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.Genesis;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -47,7 +47,7 @@ public class AffineCoordinateTest extends TestCase {
     for (int n = 4; n < 10; ++n)
       for (int count = 0; count < 10; ++count) {
         Tensor levers = RandomVariate.of(distribution, n, d);
-        if (Polygons.isInside(levers)) {
+        if (OriginEnclosureQ.INSTANCE.test(levers)) {
           for (int i = 0; i < 3; ++i) {
             Tensor weights = AffineCoordinate.INSTANCE.origin(levers);
             weights = NormalizeTotal.FUNCTION.apply(weights.map(Exp.FUNCTION));

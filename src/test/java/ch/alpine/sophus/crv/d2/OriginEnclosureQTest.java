@@ -16,7 +16,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.qty.Unit;
 import junit.framework.TestCase;
 
-public class PolygonsTest extends TestCase {
+public class OriginEnclosureQTest extends TestCase {
   public void testInsidePlain() {
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
@@ -24,10 +24,10 @@ public class PolygonsTest extends TestCase {
         { 1, 1 }, //
         { 0, 1 } //
     });
-    assertFalse(Polygons.isInside(polygon));
+    assertFalse(OriginEnclosureQ.INSTANCE.test(polygon));
     for (int n = 3; n < 10; ++n) {
-      assertTrue(Polygons.isInside(CirclePoints.of(n)));
-      assertTrue(Polygons.isInside(Reverse.of(CirclePoints.of(n))));
+      assertTrue(OriginEnclosureQ.INSTANCE.test(CirclePoints.of(n)));
+      assertTrue(OriginEnclosureQ.INSTANCE.test(Reverse.of(CirclePoints.of(n))));
     }
   }
 
@@ -39,10 +39,10 @@ public class PolygonsTest extends TestCase {
         { 1, 1 }, //
         { 0, 1 } //
     });
-    assertFalse(Polygons.isInside(polygon.map(suo)));
+    assertFalse(OriginEnclosureQ.INSTANCE.test(polygon.map(suo)));
     for (int n = 3; n < 10; ++n) {
-      assertTrue(Polygons.isInside(CirclePoints.of(n).map(suo)));
-      assertTrue(Polygons.isInside(Reverse.of(CirclePoints.of(n)).map(suo)));
+      assertTrue(OriginEnclosureQ.INSTANCE.test(CirclePoints.of(n).map(suo)));
+      assertTrue(OriginEnclosureQ.INSTANCE.test(Reverse.of(CirclePoints.of(n)).map(suo)));
     }
   }
 
@@ -59,7 +59,7 @@ public class PolygonsTest extends TestCase {
   }
 
   public void testFail() {
-    AssertFail.of(() -> Polygons.isInside(IdentityMatrix.of(4)));
+    AssertFail.of(() -> OriginEnclosureQ.INSTANCE.test(IdentityMatrix.of(4)));
   }
 
   public void testCPointers() {

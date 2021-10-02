@@ -4,7 +4,7 @@ package ch.alpine.sophus.gbc.d2;
 import java.util.Objects;
 import java.util.OptionalInt;
 
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -47,7 +47,7 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
 
   @Override
   public Scalar apply(Tensor levers) {
-    if (Polygons.isInside(levers)) {
+    if (OriginEnclosureQ.INSTANCE.test(levers)) {
       Tensor scaling = InverseNorm.INSTANCE.origin(levers);
       OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
       if (!optionalInt.isPresent()) {

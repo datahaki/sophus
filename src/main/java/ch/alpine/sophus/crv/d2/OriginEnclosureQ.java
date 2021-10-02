@@ -2,6 +2,7 @@
 // adapted from PNPOLY - Point Inclusion in Polygon Test W. Randolph Franklin (WRF)
 package ch.alpine.sophus.crv.d2;
 
+import ch.alpine.sophus.math.MemberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -10,11 +11,13 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.lie.r2.ConvexHull;
 import ch.alpine.tensor.sca.Sign;
 
-public enum Polygons {
-  ;
+public enum OriginEnclosureQ implements MemberQ {
+  INSTANCE;
+
   /** @param levers matrix of dimension n x 2
    * @return true if origin (0, 0) is inside polygon spanned by levers */
-  public static boolean isInside(Tensor levers) {
+  @Override
+  public boolean test(Tensor levers) {
     if (Tensors.isEmpty(levers))
       return false;
     boolean c = false;
@@ -39,6 +42,6 @@ public enum Polygons {
   /** @param levers
    * @return whether origin is inside convex span of given levers */
   public static boolean isInsideConvexHull(Tensor levers) {
-    return isInside(ConvexHull.of(levers));
+    return INSTANCE.test(ConvexHull.of(levers));
   }
 }

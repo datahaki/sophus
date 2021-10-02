@@ -4,7 +4,7 @@ package ch.alpine.sophus.gbc.d2;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
@@ -28,7 +28,7 @@ public class InsideConvexHullCoordinate implements Genesis, Serializable {
 
   @Override // from BarycentricCoordinate
   public Tensor origin(Tensor levers) {
-    return Polygons.isInsideConvexHull(levers) //
+    return OriginEnclosureQ.isInsideConvexHull(levers) //
         ? genesis.origin(levers)
         : ConstantArray.of(DoubleScalar.INDETERMINATE, levers.length());
   }

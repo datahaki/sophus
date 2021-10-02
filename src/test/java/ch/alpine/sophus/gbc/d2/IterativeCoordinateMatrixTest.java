@@ -2,7 +2,7 @@
 package ch.alpine.sophus.gbc.d2;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.lie.rn.RnExponential;
 import ch.alpine.sophus.math.Genesis;
@@ -36,7 +36,7 @@ public class IterativeCoordinateMatrixTest extends TestCase {
       Genesis genesis = IterativeCoordinate.of(MetricCoordinate.affine(), k);
       for (int n = 3; n < 10; ++n) {
         Tensor levers = RandomVariate.of(distribution, n, 2);
-        if (Polygons.isInside(levers)) {
+        if (OriginEnclosureQ.INSTANCE.test(levers)) {
           Tensor weights = genesis.origin(levers);
           MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
           Tensor tangent = meanDefect.tangent();
