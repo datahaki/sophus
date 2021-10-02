@@ -25,8 +25,8 @@ public class SnManifoldTest extends TestCase {
       GbcHelper.barycentrics(SnManifold.INSTANCE);
 
   private static Tensor randomCloud(Tensor mean, int n, Random random) {
-    Distribution distribution = NormalDistribution.of(0, 0.1);
-    return Tensor.of(RandomVariate.of(distribution, n, mean.length()).stream().map(mean::add).map(Vector2Norm.NORMALIZE));
+    Distribution distribution = NormalDistribution.of(0, 0.2);
+    return Tensor.of(RandomVariate.of(distribution, random, n, mean.length()).stream().map(mean::add).map(Vector2Norm.NORMALIZE));
   }
 
   public void testLinearReproduction() {

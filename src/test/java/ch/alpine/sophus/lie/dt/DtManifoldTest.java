@@ -25,17 +25,18 @@ public class DtManifoldTest extends TestCase {
       AFFINE };
 
   public void testSimple() {
+    Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)
         for (int length = n + 2; length < n + 8; ++length) {
           int fn = n;
-          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(fn), length);
-          Tensor mean1 = TestHelper.spawn_St(n);
+          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_St(random, fn), length);
+          Tensor mean1 = TestHelper.spawn_St(random, n);
           Tensor weights = barycentricCoordinate.weights(sequence, mean1);
           Tensor mean2 = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._06.requireClose(mean1, mean2);
           // ---
-          Tensor shift = TestHelper.spawn_St(n);
+          Tensor shift = TestHelper.spawn_St(random, n);
           for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
             Chop._03.requireClose(weights, //
                 barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
