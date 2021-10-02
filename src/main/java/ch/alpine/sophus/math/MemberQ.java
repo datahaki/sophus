@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.math;
 
-import java.util.function.Predicate;
-
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 
@@ -11,7 +9,7 @@ import ch.alpine.tensor.TensorRuntimeException;
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/MemberQ.html">MemberQ</a> */
 @FunctionalInterface
-public interface MemberQ extends Predicate<Tensor> {
+public interface MemberQ extends Region<Tensor> {
   /** @param tensor
    * @return tensor
    * @throws Exception if given tensor does not have membership status */

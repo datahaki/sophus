@@ -4,7 +4,6 @@ package ch.alpine.sophus.crv.d2;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.sophus.crv.d2.Polygons;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
@@ -14,25 +13,10 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 import junit.framework.TestCase;
 
 public class PolygonsTest extends TestCase {
-  public void testInside() {
-    Tensor polygon = Tensors.matrix(new Number[][] { //
-        { 0, 0 }, //
-        { 1, 0 }, //
-        { 1, 1 }, //
-        { 0, 1 } //
-    });
-    assertTrue(Polygons.isInside(polygon, Tensors.vector(0.5, .5)));
-    assertTrue(Polygons.isInside(polygon, Tensors.vector(0.9, .9)));
-    assertTrue(Polygons.isInside(polygon, Tensors.vector(0.1, .1)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(0.1, -0.1)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(1, 1.1)));
-  }
-
   public void testInsidePlain() {
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
@@ -60,31 +44,6 @@ public class PolygonsTest extends TestCase {
       assertTrue(Polygons.isInside(CirclePoints.of(n).map(suo)));
       assertTrue(Polygons.isInside(Reverse.of(CirclePoints.of(n)).map(suo)));
     }
-  }
-
-  public void testInsideQuantity() {
-    ScalarUnaryOperator suo = s -> Quantity.of(s, "km");
-    Tensor polygon = Tensors.matrix(new Number[][] { //
-        { 0, 0 }, //
-        { 1, 0 }, //
-        { 1, 1 }, //
-        { 0, 1 } //
-    }).map(suo).unmodifiable();
-    assertTrue(Polygons.isInside(polygon, Tensors.vector(0.5, .5).map(suo)));
-    assertTrue(Polygons.isInside(polygon, Tensors.vector(0.9, .9).map(suo)));
-    assertTrue(Polygons.isInside(polygon, Tensors.vector(0.1, .1).map(suo)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(0.1, -0.1).map(suo)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(1, 1.1).map(suo)));
-  }
-
-  public void testInsideEmpty() {
-    Tensor polygon = Tensors.empty();
-    assertFalse(Polygons.isInside(polygon));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(0.5, .5)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(0.9, .9)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(0.1, .1)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(0.1, -0.1)));
-    assertFalse(Polygons.isInside(polygon, Tensors.vector(1, 1.1)));
   }
 
   public void testSome() {
@@ -119,6 +78,6 @@ public class PolygonsTest extends TestCase {
   }
 
   public void testScalarFail() {
-    AssertFail.of(() -> Polygons.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
+    AssertFail.of(() -> PolygonRegion.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
   }
 }

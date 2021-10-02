@@ -4,7 +4,7 @@ package ch.alpine.sophus.gbc.d2;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
-import ch.alpine.sophus.crv.d2.Polygons;
+import ch.alpine.sophus.crv.d2.PolygonRegion;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -75,6 +75,7 @@ public class ThreePointCoordinateTest extends TestCase {
   public void testScalingInvariant() {
     Scalar factor = RealScalar.of(2.3);
     Tensor polygon1 = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
+    PolygonRegion polygonRegion = new PolygonRegion(polygon1);
     Tensor polygon2 = polygon1.multiply(factor);
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Tensors.vector(0, 0), Tensors.vector(5, 5));
     for (Barycenter barycenter : Barycenter.values()) {
@@ -83,7 +84,7 @@ public class ThreePointCoordinateTest extends TestCase {
       // TensorUnaryOperator function2 = powerCoordinates.weights(polygon2);
       for (int count = 0; count < 10; ++count) {
         Tensor point = RandomSample.of(randomSampleInterface);
-        if (Polygons.isInside(polygon1, point)) {
+        if (polygonRegion.test(point)) {
           Tensor w1 = barycentricCoordinate.weights(polygon1, point);
           Tensor w2 = barycentricCoordinate.weights(polygon2, point.multiply(factor));
           Chop._08.requireClose(w1, w2);

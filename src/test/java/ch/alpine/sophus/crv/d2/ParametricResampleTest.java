@@ -3,8 +3,6 @@ package ch.alpine.sophus.crv.d2;
 
 import java.util.List;
 
-import ch.alpine.sophus.crv.d2.ParametricResample;
-import ch.alpine.sophus.crv.d2.ResampleResult;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
