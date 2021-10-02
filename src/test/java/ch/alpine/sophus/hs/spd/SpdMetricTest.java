@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.Vectorize0_2Norm;
+import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
@@ -39,7 +39,7 @@ public class SpdMetricTest extends TestCase {
           BasisTransform.ofForm(q, v));
       Chop._06.requireClose(pq, v_pq);
       Scalar d2 = FrobeniusNorm.of(new SpdExponential(p).log(q));
-      Scalar d3 = Vectorize0_2Norm.INSTANCE.norm(new SpdExponential(p).vectorLog(q));
+      Scalar d3 = LowerVectorize0_2Norm.INSTANCE.norm(new SpdExponential(p).vectorLog(q));
       Chop._08.requireClose(d2, d3);
     }
   }

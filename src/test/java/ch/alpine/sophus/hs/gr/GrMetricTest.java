@@ -1,7 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.math.Vectorize0_2Norm;
+import ch.alpine.sophus.math.LowerVectorize0_2Norm;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -12,6 +14,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
+import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -55,6 +58,24 @@ public class GrMetricTest extends TestCase {
     Chop._10.requireClose(distance, RealScalar.of(1.9499331103710236));
   }
 
+  public void testRandomSymmetry() {
+    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 3);
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    Scalar d1 = GrMetric.INSTANCE.distance(p, q);
+    Scalar d2 = GrMetric.INSTANCE.distance(q, p);
+    Tolerance.CHOP.requireClose(d1, d2);
+  }
+
+  public void testFrobenius() {
+    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 3);
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    Scalar d1 = GrMetric.INSTANCE.distance(p, q);
+    Scalar d2 = FrobeniusNorm.of(new GrExponential(p).log(q));
+    Tolerance.CHOP.requireClose(d1, d2);
+  }
+
   public void testAntipodal() {
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
@@ -62,7 +83,7 @@ public class GrMetricTest extends TestCase {
     GrMemberQ.INSTANCE.require(q);
     Scalar d1 = GrMetric.INSTANCE.distance(p, q);
     d1.zero();
-    Scalar d2 = Vectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
+    Scalar d2 = LowerVectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
     Tolerance.CHOP.requireClose(d1, d2);
     // TODO check distance of "antipodal" frames, why is this zero?
     // System.out.println(distance);
