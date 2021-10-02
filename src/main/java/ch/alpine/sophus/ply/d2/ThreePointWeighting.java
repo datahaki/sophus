@@ -6,13 +6,13 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 
 import ch.alpine.sophus.math.Genesis;
-import ch.alpine.sophus.math.d2.Det2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.lie.r2.Det2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:

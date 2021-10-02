@@ -3,13 +3,13 @@ package ch.alpine.sophus.crv.d2;
 
 import java.util.Iterator;
 
-import ch.alpine.sophus.math.d2.SignedCurvature2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.itp.InterpolatingPolynomial;
+import ch.alpine.tensor.lie.r2.SignedCurvature2D;
 
 /** @see CurvatureComb */
 public enum Curvature2D {

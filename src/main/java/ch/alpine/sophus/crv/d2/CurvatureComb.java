@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.sophus.math.d2.SignedCurvature2D;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -15,6 +14,7 @@ import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.lie.Cross;
+import ch.alpine.tensor.lie.r2.SignedCurvature2D;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 

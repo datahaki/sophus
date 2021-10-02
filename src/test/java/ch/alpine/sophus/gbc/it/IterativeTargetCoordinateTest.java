@@ -6,7 +6,7 @@ import java.util.Deque;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.ply.d2.ConvexHull;
+import ch.alpine.sophus.ply.d2.Polygons;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.NormalDistribution;
@@ -22,7 +22,7 @@ public class IterativeTargetCoordinateTest extends TestCase {
         new IterativeTargetCoordinate(InverseDistanceWeighting.of(InversePowerVariogram.of(2)), RealScalar.ONE, 100);
     for (int n = 5; n < 20; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
-      if (ConvexHull.isInside(levers)) {
+      if (Polygons.isInsideConvexHull(levers)) {
         Deque<Evaluation> deque = genesis.deque(levers);
         Tensor vector = genesis.origin(levers);
         AffineQ.require(vector, Chop._10);
