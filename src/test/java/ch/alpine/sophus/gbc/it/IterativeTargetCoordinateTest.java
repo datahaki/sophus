@@ -5,8 +5,8 @@ import java.util.Deque;
 
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.ply.d2.Polygons;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.NormalDistribution;

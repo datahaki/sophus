@@ -3,9 +3,9 @@ package ch.alpine.sophus.gbc;
 
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.ply.d2.Polygons;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;

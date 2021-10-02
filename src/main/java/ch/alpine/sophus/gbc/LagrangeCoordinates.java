@@ -17,7 +17,8 @@ import ch.alpine.tensor.sca.Chop;
 /** @see HsDesign */
 public enum LagrangeCoordinates {
   ;
-  private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, 10);
+  private static final int CACHE_SIZE = 10;
+  private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, CACHE_SIZE);
 
   /** @param levers
    * @param target

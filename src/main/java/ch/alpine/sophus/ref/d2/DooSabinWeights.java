@@ -15,7 +15,8 @@ import ch.alpine.tensor.sca.Cos;
 /* package */ enum DooSabinWeights implements Function<Integer, Tensor> {
   INSTANCE;
 
-  public static final Function<Integer, Tensor> CACHE = Cache.of(INSTANCE, 3 * 16);
+  private static final int CACHE_SIZE = 48;
+  public static final Function<Integer, Tensor> CACHE = Cache.of(INSTANCE, CACHE_SIZE);
 
   /* package */ static Tensor numeric(int n) {
     Tensor w = Range.of(1, n).multiply(Pi.TWO).divide(RealScalar.of(n));

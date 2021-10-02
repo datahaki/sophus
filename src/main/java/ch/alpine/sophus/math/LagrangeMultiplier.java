@@ -20,8 +20,6 @@ import ch.alpine.tensor.mat.LeastSquares;
  * 
  * @see ArrayFlatten */
 public final class LagrangeMultiplier implements Serializable {
-  private static final long serialVersionUID = -867790329410465764L;
-  // ---
   private final int n;
   private final Tensor matrix;
   private final Tensor b;

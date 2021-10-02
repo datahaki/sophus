@@ -4,8 +4,8 @@ package ch.alpine.sophus.math;
 import java.util.Objects;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Differences;
 import ch.alpine.tensor.alg.AdjacentReduce;
+import ch.alpine.tensor.alg.Differences;
 
 /** implementation taken from {@link Differences} */
 public class AdjacentDistances extends AdjacentReduce {

@@ -30,7 +30,7 @@ import ch.alpine.tensor.itp.BinaryAverage;
  * 
  * @see CenterFilter */
 public class GeodesicCenter implements TensorUnaryOperator {
-  private static final int CACHE_MAX_SIZE = 24;
+  private static final int CACHE_SIZE = 24;
 
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
@@ -95,7 +95,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
 
   private GeodesicCenter(BinaryAverage binaryAverage, Function<Integer, Tensor> function) {
     this.binaryAverage = Objects.requireNonNull(binaryAverage);
-    this.function = Cache.of(new Splits(function), CACHE_MAX_SIZE);
+    this.function = Cache.of(new Splits(function), CACHE_SIZE);
   }
 
   @Override // from TensorUnaryOperator

@@ -7,7 +7,7 @@ import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class KrigingCoordinate implements TensorUnaryOperator, VectorField {
+public class KrigingCoordinate implements TensorUnaryOperator {
   /** @param tensorUnaryOperator
    * @param vectorLogManifold
    * @param sequence

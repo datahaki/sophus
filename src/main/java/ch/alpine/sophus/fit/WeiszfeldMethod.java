@@ -23,7 +23,6 @@ import ch.alpine.tensor.sca.N;
  * "Weiszfeld’s Method: Old and New Results"
  * by Amir Beck, Shoham Sabach */
 public class WeiszfeldMethod implements SpatialMedian, Serializable {
-  private static final long serialVersionUID = -555862284852117669L;
   private static final int MAX_ITERATIONS = 512;
 
   /** @param chop non null

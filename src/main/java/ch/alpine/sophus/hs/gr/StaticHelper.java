@@ -7,7 +7,8 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 /* package */ enum StaticHelper {
   ;
-  private static final Cache<Integer, Tensor> CACHE = Cache.of(i -> IdentityMatrix.of(i).negate(), 8);
+  private static final int CACHE_SIZE = 8;
+  private static final Cache<Integer, Tensor> CACHE = Cache.of(i -> IdentityMatrix.of(i).negate(), CACHE_SIZE);
 
   /** @param q
    * @return q * 2 - id */

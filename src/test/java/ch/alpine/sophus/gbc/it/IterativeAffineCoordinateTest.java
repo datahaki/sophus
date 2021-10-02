@@ -7,7 +7,7 @@ import java.util.List;
 
 import ch.alpine.sophus.gbc.AffineCoordinate;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
-import ch.alpine.sophus.ply.d2.Polygons;
+import ch.alpine.sophus.math.d2.Polygons;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.NormalDistribution;

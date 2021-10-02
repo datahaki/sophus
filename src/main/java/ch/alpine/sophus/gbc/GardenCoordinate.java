@@ -14,12 +14,13 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 /** Reference:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public class GardenCoordinate implements TensorUnaryOperator, VectorField {
+public class GardenCoordinate implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public static TensorUnaryOperator of( //
+      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     return new GardenCoordinate(vectorLogManifold, Objects.requireNonNull(variogram), sequence);
   }
 

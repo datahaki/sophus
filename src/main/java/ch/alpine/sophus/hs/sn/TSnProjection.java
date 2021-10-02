@@ -10,7 +10,8 @@ import ch.alpine.tensor.mat.Orthogonalize;
 
 public enum TSnProjection {
   ;
-  private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, 10);
+  private static final int CACHE_SIZE = 10;
+  private static final Cache<Integer, Tensor> CACHE = Cache.of(IdentityMatrix::of, CACHE_SIZE);
 
   /** @param p vector of length n
    * @return matrix of size n-1 x n that satisfies matrix . x == 0 */

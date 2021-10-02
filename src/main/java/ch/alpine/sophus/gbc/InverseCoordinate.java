@@ -8,12 +8,13 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Inverse;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 
-public class InverseCoordinate implements TensorUnaryOperator, VectorField {
+public class InverseCoordinate implements TensorUnaryOperator {
   /** @param tensorUnaryOperator
    * @param vectorLogManifold
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of(TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public static TensorUnaryOperator of( //
+      TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
     return new InverseCoordinate(tensorUnaryOperator, vectorLogManifold, sequence);
   }
 
@@ -23,7 +24,8 @@ public class InverseCoordinate implements TensorUnaryOperator, VectorField {
   private final HsDesign hsDesign;
   private final Tensor sequence;
 
-  private InverseCoordinate(TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
+  private InverseCoordinate( //
+      TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.tensorUnaryOperator = tensorUnaryOperator;
     Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(tensorUnaryOperator)));
