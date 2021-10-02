@@ -11,7 +11,7 @@ import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.spd.SpdExponential;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.math.Genesis;
-import ch.alpine.sophus.math.Vectorize0Norm2;
+import ch.alpine.sophus.math.Vectorize0_2Norm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
@@ -43,7 +43,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
    * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
   public static final Biinvariant EUCLIDEAN = new MetricBiinvariant(Vector2Norm::of);
   /** for {@link SpdExponential}, and {@link GrExponential} */
-  public static final Biinvariant VECTORIZE0 = new MetricBiinvariant(Vectorize0Norm2.INSTANCE);
+  public static final Biinvariant VECTORIZE0 = new MetricBiinvariant(Vectorize0_2Norm.INSTANCE::norm);
 
   /** @param tensorScalarFunction norm
    * @return */

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.math.Vectorize0Norm2;
+import ch.alpine.sophus.math.Vectorize0_2Norm;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -62,7 +62,7 @@ public class GrMetricTest extends TestCase {
     GrMemberQ.INSTANCE.require(q);
     Scalar d1 = GrMetric.INSTANCE.distance(p, q);
     d1.zero();
-    Scalar d2 = Vectorize0Norm2.INSTANCE.apply(new GrExponential(p).vectorLog(q));
+    Scalar d2 = Vectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
     Tolerance.CHOP.requireClose(d1, d2);
     // TODO check distance of "antipodal" frames, why is this zero?
     // System.out.println(distance);

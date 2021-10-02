@@ -15,17 +15,19 @@ import junit.framework.TestCase;
 
 public class Vectorize0Norm2Test extends TestCase {
   public void testSimple() {
-    Tensor matrix = Symmetrize.of(RandomVariate.of(UniformDistribution.unit(), 3, 3));
-    Scalar n1 = FrobeniusNorm.of(matrix);
-    Tensor vector = Vectorize.of(matrix, 0);
-    Scalar n2 = Vectorize0Norm2.INSTANCE.apply(vector);
-    Tolerance.CHOP.requireClose(n1, n2);
+    for (int n = 1; n < 10; ++n) {
+      Tensor matrix = Symmetrize.of(RandomVariate.of(UniformDistribution.unit(), n, n));
+      Scalar n1 = FrobeniusNorm.of(matrix);
+      Tensor vector = LowerVectorize.of(matrix, 0);
+      Scalar n2 = Vectorize0_2Norm.INSTANCE.norm(vector);
+      Tolerance.CHOP.requireClose(n1, n2);
+    }
   }
 
   public void testLengthFail() {
-    AssertFail.of(() -> Vectorize0Norm2.INSTANCE.apply(Pi.VALUE));
-    AssertFail.of(() -> Vectorize0Norm2.INSTANCE.apply(Tensors.vector()));
-    AssertFail.of(() -> Vectorize0Norm2.INSTANCE.apply(Tensors.vector(1, 2)));
-    AssertFail.of(() -> Vectorize0Norm2.INSTANCE.apply(Tensors.vector(1, 2, 3, 4)));
+    AssertFail.of(() -> Vectorize0_2Norm.INSTANCE.norm(Pi.VALUE));
+    AssertFail.of(() -> Vectorize0_2Norm.INSTANCE.norm(Tensors.vector()));
+    AssertFail.of(() -> Vectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2)));
+    AssertFail.of(() -> Vectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2, 3, 4)));
   }
 }

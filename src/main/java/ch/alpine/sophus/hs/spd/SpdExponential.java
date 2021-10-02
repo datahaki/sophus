@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.Vectorize;
+import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -74,7 +74,7 @@ public class SpdExponential implements Exponential, Serializable {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
-    return Vectorize.of(log(q), 0);
+    return LowerVectorize.of(log(q), 0);
   }
 
   /** @param q point in Spd

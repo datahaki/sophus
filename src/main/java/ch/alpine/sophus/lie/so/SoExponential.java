@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.so;
 
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.Vectorize;
+import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.MatrixExp;
 import ch.alpine.tensor.lie.MatrixLog;
@@ -23,6 +23,6 @@ public enum SoExponential implements Exponential {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor matrix) {
-    return Vectorize.of(log(matrix), -1);
+    return LowerVectorize.of(log(matrix), -1);
   }
 }

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.math.TensorMetric;
-import ch.alpine.sophus.math.Vectorize0Norm2;
+import ch.alpine.sophus.math.Vectorize0_2Norm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
@@ -11,7 +11,7 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
  * "Geometric mean and geodesic regression on Grassmannians"
  * E. Batzies, K. Hueper, L. Machado, F. Silva Leite by 2015
  * 
- * @see Vectorize0Norm2 */
+ * @see Vectorize0_2Norm */
 public enum GrMetric implements TensorMetric {
   INSTANCE;
 

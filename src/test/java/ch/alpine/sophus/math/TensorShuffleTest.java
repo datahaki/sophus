@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math.sample;
+package ch.alpine.sophus.math;
 
 import java.util.HashSet;
 import java.util.Set;
