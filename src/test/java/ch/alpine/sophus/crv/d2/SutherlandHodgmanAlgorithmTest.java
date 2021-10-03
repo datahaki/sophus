@@ -12,16 +12,17 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 import junit.framework.TestCase;
 
 public class SutherlandHodgmanAlgorithmTest extends TestCase {
+  // the examples show that the algo is not symmetric A cap B != B cap A
   public void testSingle() {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(clip).apply(CirclePoints.of(4));
-    System.out.println(polyclipResult.tensor());
+    assertEquals(polyclipResult.tensor(), Tensors.empty());
   }
 
   public void testSingle2() {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(CirclePoints.of(4)).apply(clip);
-    System.out.println(polyclipResult.tensor());
+    assertEquals(polyclipResult.tensor(), clip);
   }
 
   public void testFail() {
