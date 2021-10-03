@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.rn;
 
 import java.util.Optional;
+import java.util.Random;
 
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
@@ -75,11 +76,12 @@ public class RnBiinvariantMeanTest extends TestCase {
   }
 
   public void testConvergenceExact() {
+    Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
-      Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(RnExponential.INSTANCE::exp));
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
+      Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(RnExponential.INSTANCE::exp));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), random, n));
       Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);
       Tensor mean = optional.get();
       Tensor w2 = barycentricCoordinate.weights(sequence, mean);
