@@ -2,6 +2,7 @@
 package ch.alpine.sophus.itp;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.itp.AbstractInterpolation;
 import ch.alpine.tensor.itp.Interpolation;
@@ -41,7 +41,7 @@ import ch.alpine.tensor.sca.Floor;
 
   private BiinvariantMeanInterpolation(BiinvariantMean biinvariantMean, Tensor tensor) {
     this.biinvariantMean = biinvariantMean;
-    this.tensor = Unprotect.references(tensor);
+    this.tensor = tensor;
   }
 
   @Override // from Interpolation
@@ -72,7 +72,7 @@ import ch.alpine.tensor.sca.Floor;
     if (Scalars.isZero(remain))
       return tensor.get(below);
     return biinvariantMean.mean( //
-        tensor.extract(below, below + 2), // sequence
+        tensor.block(Arrays.asList(below), Arrays.asList(2)), // sequence
         Tensors.of(RealScalar.ONE.subtract(remain), remain));
   }
 }

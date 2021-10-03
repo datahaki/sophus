@@ -36,7 +36,7 @@ public enum RnDbscan {
    * @return array of labels for each point, or -1 to indicate that respective point is noise */
   public static Integer[] of(Tensor points, Function<Tensor, NdCenterInterface> function, Scalar radius, int minPts) {
     Integers.requirePositive(minPts);
-    NdMap<Integer> ndMap = NdTreeMap.of(MinMax.ndBox(points));
+    NdMap<Integer> ndMap = NdTreeMap.of(MinMax.box(points));
     AtomicInteger atomicInteger = new AtomicInteger();
     points.stream().forEach(point -> ndMap.insert(point, atomicInteger.getAndIncrement()));
     // ---

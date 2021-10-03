@@ -18,7 +18,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.opt.nd.NdBox;
+import ch.alpine.tensor.opt.nd.Box;
 import ch.alpine.tensor.opt.nd.NdCenters;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Tally;
@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 
 public class RnDbscanTest extends TestCase {
   public void testSimple() {
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(NdBox.of(Tensors.vector(0, 0), Tensors.vector(1, 1)));
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Box.of(Tensors.vector(0, 0), Tensors.vector(1, 1)));
     Tensor points = RandomSample.of(randomSampleInterface, 40);
     Integer[] integers = RnDbscan.of(points, NdCenters.VECTOR_2_NORM, RealScalar.of(0.1), 3);
     assertEquals(integers.length, points.length());

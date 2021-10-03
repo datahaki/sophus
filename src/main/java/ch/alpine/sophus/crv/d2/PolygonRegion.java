@@ -15,24 +15,26 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.ext.PackageTestAccess;
-import ch.alpine.tensor.opt.nd.NdBox;
+import ch.alpine.tensor.opt.nd.Box;
 
 /** check if input tensor is inside a polygon in R^2 */
 public class PolygonRegion implements Region<Tensor>, Serializable {
-  private final NdBox ndBox;
+  private final Box box;
   private final Tensor polygon;
 
   /** @param polygon as matrix with dimensions n x 2 */
   public PolygonRegion(Tensor polygon) {
-    ndBox = MinMax.ndBox(polygon);
-    this.polygon = polygon;
     Integers.requireEquals(Unprotect.dimension1Hint(polygon), 2);
+    box = MinMax.box(polygon);
+    this.polygon = polygon;
   }
 
   @Override // from Region
   public boolean test(Tensor tensor) {
-    return ndBox.isInside(tensor) //
-        && isInside(polygon, tensor);
+    // TODO design strict: only valid input
+    Tensor point = tensor.extract(0, 2);
+    return box.isInside(point) //
+        && isInside(polygon, point);
   }
 
   public Tensor polygon() {

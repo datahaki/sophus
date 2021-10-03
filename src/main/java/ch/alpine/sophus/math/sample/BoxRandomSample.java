@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Random;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.opt.nd.NdBox;
+import ch.alpine.tensor.opt.nd.Box;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 
 public class BoxRandomSample implements RandomSampleInterface, Serializable {
-  /** @param ndBox axis-aligned bounding box
+  /** @param box axis-aligned bounding box
    * @return */
-  public static RandomSampleInterface of(NdBox ndBox) {
-    return new BoxRandomSample(ndBox);
+  public static RandomSampleInterface of(Box box) {
+    return new BoxRandomSample(box);
   }
 
   /** the parameters define the coordinate bounds of the axis-aligned box
@@ -24,17 +24,17 @@ public class BoxRandomSample implements RandomSampleInterface, Serializable {
    * 
    * @param min lower-left
    * @param max upper-right
-   * @see NdBox */
+   * @see Box */
   public static RandomSampleInterface of(Tensor min, Tensor max) {
-    return of(NdBox.of(min, max));
+    return of(Box.of(min, max));
   }
 
   // ---
   private final List<Distribution> distributions = new LinkedList<>();
 
-  private BoxRandomSample(NdBox ndBox) {
-    for (int index = 0; index < ndBox.dimensions(); ++index)
-      distributions.add(UniformDistribution.of(ndBox.clip(index)));
+  private BoxRandomSample(Box box) {
+    for (int index = 0; index < box.dimensions(); ++index)
+      distributions.add(UniformDistribution.of(box.getClip(index)));
   }
 
   @Override // from RandomSampleInterface

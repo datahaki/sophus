@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.opt.nd.NdBox;
+import ch.alpine.tensor.opt.nd.Box;
 import ch.alpine.tensor.red.Entrywise;
 
 /** inspired by
@@ -17,8 +17,8 @@ public class MinMax implements Serializable {
     return new MinMax(tensor);
   }
 
-  public static NdBox ndBox(Tensor tensor) {
-    return new MinMax(tensor).ndBox();
+  public static Box box(Tensor tensor) {
+    return new MinMax(tensor).box();
   }
 
   // ---
@@ -38,8 +38,8 @@ public class MinMax implements Serializable {
     return max.unmodifiable();
   }
 
-  public NdBox ndBox() {
-    return NdBox.of(min, max);
+  public Box box() {
+    return Box.of(min, max);
   }
 
   /** @return 2 x N matrix */

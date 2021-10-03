@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.crv.spline;
 
+import java.util.Arrays;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.alg.Range;
@@ -71,10 +71,10 @@ public class GeodesicBSplineFunction extends BSplineFunction {
       navigableMap.put(Integers.isEven(degree) //
           ? (Scalar) RnGeodesic.INSTANCE.midpoint(knots.Get(index - 1), knots.Get(index))
           : knots.Get(index), index);
-    samples = Unprotect.references(Range.of(-degree + 1, sequence.length() + degree) //
+    samples = Range.of(-degree + 1, sequence.length() + degree) //
         .map(index -> index.subtract(shift)) //
         .map(Clips.interval(0, last)) //
-        .map(LinearInterpolation.of(knots)::at));
+        .map(LinearInterpolation.of(knots)::at);
   }
 
   /** @param scalar inside interval [0, control.length() - 1]
@@ -96,7 +96,7 @@ public class GeodesicBSplineFunction extends BSplineFunction {
 
   @Override
   protected Tensor knots(int k) {
-    return samples.extract(k, k + 2 * degree);
+    return samples.block(Arrays.asList(k), Arrays.asList(2 * degree));
   }
 
   @Override
