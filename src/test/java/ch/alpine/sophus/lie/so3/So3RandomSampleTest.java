@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.so3;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixQ;
+import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Det;

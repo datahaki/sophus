@@ -9,8 +9,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.mat.LeastSquares;
-import ch.alpine.tensor.mat.MatrixRank;
+import ch.alpine.tensor.mat.pi.LeastSquares;
+import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.sca.Sqrt;
 

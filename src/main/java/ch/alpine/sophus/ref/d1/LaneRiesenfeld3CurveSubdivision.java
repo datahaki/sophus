@@ -11,6 +11,7 @@ import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** subdivision scheme with linear subdivision for mid-point insertion and
  * LaneRiesenfeldCurveSubdivision with degree 3 for vertex reposition.
@@ -51,13 +52,15 @@ public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3Curve
       list.add(qr);
       pq = qr;
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 
   @Override // from AbstractBSpline3CurveSubdivision
   protected Tensor refine(Tensor tensor) {
     int length = tensor.length();
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     Tensor pq;
     {
       Tensor q = tensor.get(0);
@@ -76,6 +79,7 @@ public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3Curve
       pq = qr;
     }
     list.add(tensor.get(last));
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 

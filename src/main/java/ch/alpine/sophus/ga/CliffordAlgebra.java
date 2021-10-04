@@ -28,7 +28,7 @@ import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.io.ScalarArray;
 import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.mat.LinearSolve;
+import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.sca.Chop;
 
 /** geometric algebra
@@ -100,6 +100,7 @@ public class CliffordAlgebra {
         .map(Reverse::of) //
         .map(SignedSubset::new) //
         .map(SignedSubset::sign));
+    Integers.requireEquals(list.size(), m);
   }
 
   /** @return geometric product tensor of rank 3 */

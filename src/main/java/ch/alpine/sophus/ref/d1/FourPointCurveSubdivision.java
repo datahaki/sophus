@@ -11,6 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** C1 interpolatory four-point scheme
  * Dubuc 1986, Dyn/Gregory/Levin 1987
@@ -73,6 +74,7 @@ public class FourPointCurveSubdivision extends BSpline1CurveSubdivision {
         list.add(center(p, p = q, q = r, r = tensor.get((index + 2) % length)));
       }
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 
@@ -82,7 +84,8 @@ public class FourPointCurveSubdivision extends BSpline1CurveSubdivision {
     if (length < 3)
       return new BSpline3CurveSubdivision(splitInterface).string(tensor);
     // ---
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     Tensor p = tensor.get(0);
     Tensor q = tensor.get(1);
     Tensor r = tensor.get(2);
@@ -95,6 +98,7 @@ public class FourPointCurveSubdivision extends BSpline1CurveSubdivision {
     list.add(q);
     list.add(triple_hi(p, q, r));
     list.add(r);
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 

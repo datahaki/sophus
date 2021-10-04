@@ -19,7 +19,7 @@ import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.mat.PositiveSemidefiniteMatrixQ;
-import ch.alpine.tensor.mat.PseudoInverse;
+import ch.alpine.tensor.mat.pi.PseudoInverse;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;

@@ -11,6 +11,7 @@ import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** quintic B-spline is implemented as an extension of
  * cubic B-spline refinement */
@@ -39,6 +40,7 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
       list.add(quinte(p, q, r));
       list.add(center(p, p = q, q = r, r = tensor.get((index + 2) % length)));
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 
@@ -51,7 +53,8 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
 
   private Tensor private_refine(Tensor tensor) {
     int length = tensor.length();
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     {
       Tensor q = tensor.get(0);
       Tensor r = tensor.get(1);
@@ -76,6 +79,7 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
       list.add(midpoint(r, q));
       list.add(q);
     }
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 

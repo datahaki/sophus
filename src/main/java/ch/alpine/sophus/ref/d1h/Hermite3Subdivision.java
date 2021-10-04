@@ -19,6 +19,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Integers;
 
 public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
   /** midpoint group element contribution from group elements
@@ -164,6 +165,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
         rvk = rvk.add(rvk);
         cgk = cgk.multiply(RationalScalar.HALF);
         cvk = cvk.add(cvk);
+        Integers.requireEquals(list.size(), 2 * length - 1);
         return control = Unprotect.using(list);
       }
     }
@@ -186,6 +188,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
         rvk = rvk.add(rvk);
         cgk = cgk.multiply(RationalScalar.HALF);
         cvk = cvk.add(cvk);
+        Integers.requireEquals(list.size(), 2 * length);
         return control = Unprotect.using(list);
       }
     }

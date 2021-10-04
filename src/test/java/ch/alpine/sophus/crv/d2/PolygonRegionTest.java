@@ -37,11 +37,11 @@ public class PolygonRegionTest extends TestCase {
         { 1, 1 }, //
         { 0, 1 } //
     });
-    assertTrue(PolygonRegion.isInside(polygon, Tensors.vector(0.5, .5)));
-    assertTrue(PolygonRegion.isInside(polygon, Tensors.vector(0.9, .9)));
-    assertTrue(PolygonRegion.isInside(polygon, Tensors.vector(0.1, .1)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(0.1, -0.1)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(1, 1.1)));
+    assertTrue(FranklinPnpoly.isInside(polygon, Tensors.vector(0.5, .5)));
+    assertTrue(FranklinPnpoly.isInside(polygon, Tensors.vector(0.9, .9)));
+    assertTrue(FranklinPnpoly.isInside(polygon, Tensors.vector(0.1, .1)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.1, -0.1)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(1, 1.1)));
   }
 
   public void testInsideQuantity() {
@@ -52,20 +52,20 @@ public class PolygonRegionTest extends TestCase {
         { 1, 1 }, //
         { 0, 1 } //
     }).map(suo).unmodifiable();
-    assertTrue(PolygonRegion.isInside(polygon, Tensors.vector(0.5, .5).map(suo)));
-    assertTrue(PolygonRegion.isInside(polygon, Tensors.vector(0.9, .9).map(suo)));
-    assertTrue(PolygonRegion.isInside(polygon, Tensors.vector(0.1, .1).map(suo)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(0.1, -0.1).map(suo)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(1, 1.1).map(suo)));
+    assertTrue(FranklinPnpoly.isInside(polygon, Tensors.vector(0.5, .5).map(suo)));
+    assertTrue(FranklinPnpoly.isInside(polygon, Tensors.vector(0.9, .9).map(suo)));
+    assertTrue(FranklinPnpoly.isInside(polygon, Tensors.vector(0.1, .1).map(suo)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.1, -0.1).map(suo)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(1, 1.1).map(suo)));
   }
 
   public void testInsideEmpty() {
     Tensor polygon = Tensors.empty();
     assertFalse(OriginEnclosureQ.INSTANCE.test(polygon));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(0.5, .5)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(0.9, .9)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(0.1, .1)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(0.1, -0.1)));
-    assertFalse(PolygonRegion.isInside(polygon, Tensors.vector(1, 1.1)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.5, .5)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.9, .9)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.1, .1)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.1, -0.1)));
+    assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(1, 1.1)));
   }
 }

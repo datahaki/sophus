@@ -4,10 +4,10 @@ package ch.alpine.sophus.math;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixQ;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.HermitianMatrixQ;
 import ch.alpine.tensor.mat.LowerTriangularize;
+import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 
 /** lower vectorize is typically used on matrices that have a symmetry across the diagonal

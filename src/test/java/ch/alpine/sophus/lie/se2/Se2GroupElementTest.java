@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.HilbertMatrix;
-import ch.alpine.tensor.mat.Inverse;
+import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;

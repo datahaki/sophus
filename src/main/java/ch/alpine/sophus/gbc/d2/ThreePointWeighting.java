@@ -14,6 +14,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.lie.r2.Det2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
@@ -55,6 +56,7 @@ public class ThreePointWeighting implements Genesis, Serializable {
       Scalar diff = forward(cntr, next).subtract(forward(cntr, prev));
       list.add(biFunction.apply(diff, dens[index]));
     }
+    Integers.requireEquals(list.size(), length);
     return Unprotect.using(list);
   }
 

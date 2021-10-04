@@ -8,7 +8,7 @@ import ch.alpine.tensor.lie.MatrixExp;
 import ch.alpine.tensor.lie.MatrixLog;
 import ch.alpine.tensor.lie.MatrixSqrt;
 import ch.alpine.tensor.lie.Symmetrize;
-import ch.alpine.tensor.mat.Inverse;
+import ch.alpine.tensor.mat.re.Inverse;
 
 /** Exponential map at IdentityMatrix in SPD
  * 

@@ -2,9 +2,9 @@
 package ch.alpine.sophus.hs.st;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixDotTranspose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.MatrixDotTranspose;
 
 /** Reference: geomstats */
 public class TStProjection implements TensorUnaryOperator {

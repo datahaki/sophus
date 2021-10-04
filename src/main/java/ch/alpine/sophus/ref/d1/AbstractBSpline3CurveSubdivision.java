@@ -9,6 +9,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** examples of extensions are
  * LaneRiesenfeld3CurveSubdivision
@@ -27,6 +28,7 @@ public abstract class AbstractBSpline3CurveSubdivision extends AbstractBSpline1C
       list.add(center(p, p = q, q = tensor.get(index % length)));
       list.add(midpoint(p, q));
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 

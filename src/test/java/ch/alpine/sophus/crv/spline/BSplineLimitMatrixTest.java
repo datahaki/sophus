@@ -5,7 +5,7 @@ import ch.alpine.sophus.math.StochasticMatrixQ;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.mat.Inverse;
+import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 

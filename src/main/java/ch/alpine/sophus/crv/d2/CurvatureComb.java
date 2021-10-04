@@ -12,6 +12,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.r2.SignedCurvature2D;
@@ -69,6 +70,7 @@ public enum CurvatureComb {
         q = r;
       }
     }
+    Integers.requireEquals(list.size(), length);
     return Unprotect.using(list);
   }
 

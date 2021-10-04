@@ -16,6 +16,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final HsManifold hsManifold;
@@ -110,6 +111,7 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
         list.add(p);
         rgk = rgk.multiply(RationalScalar.HALF);
         rvk = rvk.add(rvk);
+        Integers.requireEquals(list.size(), 2 * length - 1);
         return control = Unprotect.using(list);
       }
     }
@@ -128,6 +130,7 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
         }
         rgk = rgk.multiply(RationalScalar.HALF);
         rvk = rvk.add(rvk);
+        Integers.requireEquals(list.size(), 2 * length);
         return control = Unprotect.using(list);
       }
     }

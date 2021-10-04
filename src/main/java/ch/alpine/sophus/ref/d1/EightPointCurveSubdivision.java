@@ -10,6 +10,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
   private static final Scalar PQ = RationalScalar.of(49, 44);
@@ -42,6 +43,7 @@ public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
       list.add(s);
       list.add(center(p, q, r, s, t, u, v, w));
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 

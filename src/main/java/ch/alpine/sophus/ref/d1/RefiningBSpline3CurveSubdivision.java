@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 /** examples of extensions are
  * {@link BSpline3CurveSubdivision}, and
@@ -15,7 +16,8 @@ public abstract class RefiningBSpline3CurveSubdivision extends AbstractBSpline3C
   @Override
   protected final Tensor refine(Tensor tensor) {
     int length = tensor.length();
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     {
       Tensor q = tensor.get(0);
       Tensor r = tensor.get(1);
@@ -32,6 +34,7 @@ public abstract class RefiningBSpline3CurveSubdivision extends AbstractBSpline3C
       p = q;
     }
     list.add(tensor.get(last));
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 }

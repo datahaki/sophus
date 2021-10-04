@@ -10,6 +10,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 /** @see Regularization2Step */
 /* package */ class Regularization2StepString extends Regularization2Step {
@@ -35,6 +36,7 @@ import ch.alpine.tensor.Unprotect;
       curr = next;
     }
     list.add(curr.copy());
+    Integers.requireEquals(list.size(), tensor.length());
     return Unprotect.using(list);
   }
 }

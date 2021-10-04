@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 /** 2005 Malcolm A. Sabin, Neil A. Dodgson:
  * A Circle-Preserving Variant of the Four-Point Subdivision Scheme
@@ -31,6 +32,7 @@ public enum DodgsonSabinCurveSubdivision implements CurveSubdivision {
       Tensor d = tensor.get((index + 2 + tensor.length()) % tensor.length());
       list.add(DodgsonSabinHelper.midpoint(a, b, c, d));
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 
@@ -41,7 +43,8 @@ public enum DodgsonSabinCurveSubdivision implements CurveSubdivision {
     if (last < 2)
       return DodgsonSabinHelper.BSPLINE3_EUCLIDEAN.string(tensor);
     // ---
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     list.add(tensor.get(0));
     list.add(DodgsonSabinHelper.midpoint(tensor.get(0), tensor.get(1), tensor.get(2)));
     // ---
@@ -56,6 +59,7 @@ public enum DodgsonSabinCurveSubdivision implements CurveSubdivision {
     list.add(tensor.get(last - 1));
     list.add(DodgsonSabinHelper.midpoint(tensor.get(last), tensor.get(last - 1), tensor.get(last - 2)));
     list.add(tensor.get(last));
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 }

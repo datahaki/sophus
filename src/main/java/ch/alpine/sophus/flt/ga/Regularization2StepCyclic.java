@@ -11,6 +11,7 @@ import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** @see Regularization2Step */
 /* package */ class Regularization2StepCyclic extends Regularization2Step {
@@ -36,6 +37,7 @@ import ch.alpine.tensor.alg.Last;
       curr = next;
     }
     list.add(average(prev, curr, tensor.get(0)));
+    Integers.requireEquals(list.size(), tensor.length());
     return Unprotect.using(list);
   }
 }

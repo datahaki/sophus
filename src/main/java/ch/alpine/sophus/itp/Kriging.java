@@ -15,8 +15,8 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.mat.PseudoInverse;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.mat.pi.PseudoInverse;
 import ch.alpine.tensor.qty.Quantity;
 
 /** implementation of kriging for homogeneous spaces

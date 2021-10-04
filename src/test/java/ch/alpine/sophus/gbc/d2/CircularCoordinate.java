@@ -6,7 +6,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.mat.LinearSolve;
+import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.red.Total;
 

@@ -55,6 +55,7 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
           list.add(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
       }
       tensor = value;
+      Integers.requireEquals(list.size(), value.length());
       value = Unprotect.using(list);
     }
     return value;
@@ -69,7 +70,8 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
     Tensor value = bSpline1CurveSubdivision.string(tensor);
     for (int count = 2; count <= degree; ++count) {
       boolean odd = !Integers.isEven(count);
-      List<Tensor> list = new ArrayList<>(value.length() + 1);
+      int capacity = value.length() + (odd ? 1 : -1);
+      List<Tensor> list = new ArrayList<>(capacity);
       if (odd)
         list.add(tensor.get(0));
       Iterator<Tensor> iterator = value.iterator();
@@ -79,6 +81,7 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
       if (odd)
         list.add(Last.of(tensor));
       tensor = value;
+      Integers.requireEquals(list.size(), capacity);
       value = Unprotect.using(list);
     }
     return value;

@@ -10,6 +10,7 @@ import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** linear B-spline
  * 
@@ -37,7 +38,8 @@ public abstract class AbstractBSpline1CurveSubdivision implements CurveSubdivisi
 
   private Tensor stringNonEmpty(Tensor tensor) {
     int length = tensor.length();
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     Iterator<Tensor> iterator = tensor.iterator();
     Tensor p = iterator.next();
     list.add(p.copy());
@@ -45,6 +47,7 @@ public abstract class AbstractBSpline1CurveSubdivision implements CurveSubdivisi
       list.add(midpoint(p, p = iterator.next()));
       list.add(p.copy());
     }
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 }

@@ -5,8 +5,8 @@ import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.Inverse;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.mat.re.Inverse;
 
 public class InverseCoordinate implements TensorUnaryOperator {
   /** @param tensorUnaryOperator

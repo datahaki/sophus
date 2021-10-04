@@ -7,8 +7,8 @@ import ch.alpine.sophus.math.MemberQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.MatrixQ;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 

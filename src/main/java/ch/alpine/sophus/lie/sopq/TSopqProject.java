@@ -3,8 +3,8 @@ package ch.alpine.sophus.lie.sopq;
 
 import ch.alpine.sophus.math.ScalarProductForm;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixDotTranspose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.mat.MatrixDotTranspose;
 
 /** projects a square matrix to an element from the Lie algebra SO(p, q) */
 public class TSopqProject implements TensorUnaryOperator {

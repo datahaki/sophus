@@ -14,6 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.ext.Integers;
 
 /** dual scheme */
 public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializable {
@@ -61,6 +62,7 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
       q = r;
       r = s;
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 

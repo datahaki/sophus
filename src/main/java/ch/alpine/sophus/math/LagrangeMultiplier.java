@@ -8,9 +8,9 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ArrayFlatten;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.mat.CholeskyDecomposition;
 import ch.alpine.tensor.mat.ConjugateTranspose;
-import ch.alpine.tensor.mat.LeastSquares;
+import ch.alpine.tensor.mat.cd.CholeskyDecomposition;
+import ch.alpine.tensor.mat.pi.LeastSquares;
 
 /** Solves the following linear system
  * matrix=

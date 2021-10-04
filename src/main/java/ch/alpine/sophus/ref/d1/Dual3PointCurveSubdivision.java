@@ -12,6 +12,7 @@ import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** dual scheme
@@ -42,6 +43,7 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
       list.add(lo(p, q, r));
       list.add(hi(p, p = q, q = r));
     }
+    Integers.requireEquals(list.size(), 2 * length);
     return Unprotect.using(list);
   }
 
@@ -51,7 +53,8 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
     int length = tensor.length();
     if (length < 2)
       return tensor.copy();
-    List<Tensor> list = new ArrayList<>(2 * length);
+    int capacity = 2 * length - 2;
+    List<Tensor> list = new ArrayList<>(capacity);
     Tensor p = tensor.get(0);
     Tensor q = tensor.get(1);
     list.add(lo(p, q)); // Chaikin's rule
@@ -61,6 +64,7 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
       list.add(hi(p, p = q, q = r));
     }
     list.add(hi(p, q)); // Chaikin's rule
+    Integers.requireEquals(list.size(), capacity);
     return Unprotect.using(list);
   }
 

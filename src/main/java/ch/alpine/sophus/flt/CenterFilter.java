@@ -67,6 +67,7 @@ public class CenterFilter implements TensorUnaryOperator {
       int delta = Math.min(index - lo, hi - index);
       list.add(tensorUnaryOperator.apply(tensor.extract(index - delta, index + delta + 1)));
     }
+    Integers.requireEquals(list.size(), tensor.length());
     return Unprotect.using(list);
   }
 }

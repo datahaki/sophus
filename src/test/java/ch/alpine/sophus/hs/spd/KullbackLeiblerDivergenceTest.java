@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.mat.LinearSolve;
 import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixQ;
+import ch.alpine.tensor.mat.MatrixQ;
 
 public enum MatrixBracket {
   ;

@@ -5,8 +5,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.mat.LinearSolve;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.re.LinearSolve;
 
 public enum AdBuilder {
   ;

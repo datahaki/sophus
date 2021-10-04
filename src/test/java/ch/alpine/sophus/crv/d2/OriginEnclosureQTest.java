@@ -78,6 +78,6 @@ public class OriginEnclosureQTest extends TestCase {
   }
 
   public void testScalarFail() {
-    AssertFail.of(() -> PolygonRegion.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
+    AssertFail.of(() -> FranklinPnpoly.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
   }
 }
