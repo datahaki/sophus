@@ -41,8 +41,8 @@ public class LieDifferencesTest extends TestCase {
     for (int index = 0; index < 10; ++index) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      Tensor v1 = lieDifferences.pair(p, q);
-      Tensor v2 = lieDifferences.pair(q, p).negate();
+      Tensor v1 = lieDifferences.reduce(p, q);
+      Tensor v2 = lieDifferences.reduce(q, p).negate();
       Chop._12.requireClose(v1, v2);
     }
   }

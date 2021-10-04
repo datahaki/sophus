@@ -39,12 +39,12 @@ public class LagrangeQuadraticDTest extends TestCase {
   }
 
   public void testZero() {
-    LagrangeQuadraticD lagrangeQuadraticD = LagrangeQuadraticD.of(RealScalar.of(1e-9), RealScalar.of(1e-10));
+    LagrangeQuadraticD lagrangeQuadraticD = new LagrangeQuadraticD(RealScalar.of(1e-9), RealScalar.of(1e-10));
     assertTrue(lagrangeQuadraticD.isZero(Chop._08));
   }
 
   public void testNullFail() {
-    AssertFail.of(() -> LagrangeQuadraticD.of(null, RealScalar.ONE));
-    AssertFail.of(() -> LagrangeQuadraticD.of(RealScalar.ONE, null));
+    AssertFail.of(() -> new LagrangeQuadraticD(null, RealScalar.ONE));
+    AssertFail.of(() -> new LagrangeQuadraticD(RealScalar.ONE, null));
   }
 }

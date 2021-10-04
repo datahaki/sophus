@@ -13,24 +13,14 @@ import ch.alpine.tensor.sca.Chop;
 /** linear polynomial
  * s -> c1 * s + c0 */
 public class LagrangeQuadraticD implements ScalarUnaryOperator {
-  /** @param c0
-   * @param c1
-   * @return */
-  public static LagrangeQuadraticD of(Scalar c0, Scalar c1) {
-    return new LagrangeQuadraticD( //
-        Objects.requireNonNull(c0), //
-        Objects.requireNonNull(c1));
-  }
-
-  // ---
   private final Scalar c0;
   private final Scalar c1;
 
   /** @param c0
    * @param c1 */
-  /* package */ LagrangeQuadraticD(Scalar c0, Scalar c1) {
-    this.c0 = c0;
-    this.c1 = c1;
+  public LagrangeQuadraticD(Scalar c0, Scalar c1) {
+    this.c0 = Objects.requireNonNull(c0);
+    this.c1 = Objects.requireNonNull(c1);
   }
 
   @Override

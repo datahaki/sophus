@@ -5,6 +5,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.ext.PackageTestAccess;
 
 /** @param sequence of (x, y, z) points in He(n) of shape ((x1, ..., xm), (y1, ..., ym), z)
  * @param normalized non negative weights
@@ -20,7 +21,8 @@ import ch.alpine.tensor.Tensors;
 public enum HeBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
-  /* package */ static Tensor xydot(Tensor sequence) {
+  @PackageTestAccess
+  static Tensor xydot(Tensor sequence) {
     return Tensor.of(sequence.stream().map(xyz -> xyz.get(0).dot(xyz.get(1))));
   }
 

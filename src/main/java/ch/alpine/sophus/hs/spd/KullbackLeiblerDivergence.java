@@ -6,6 +6,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.Inverse;
@@ -32,13 +33,14 @@ public enum KullbackLeiblerDivergence implements TensorMetric {
     return Trace.of(s1.add(s2)).subtract(RealScalar.of(2 * p1.length()));
   }
 
-  /** the implentation is from the paper from Shinohara et al.
+  /** the implementation is from the paper from Shinohara et al.
    * which probably has some typo?
    * 
    * @param p1
    * @param p2
    * @return squared */
-  /* package */ static Scalar between(Tensor p1, Tensor p2) {
+  @PackageTestAccess
+  static Scalar between(Tensor p1, Tensor p2) {
     SymmetricMatrixQ.require(p1);
     SymmetricMatrixQ.require(p2);
     Tensor qinvp = LinearSolve.of(p2, p1);

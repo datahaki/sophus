@@ -10,6 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.itp.Fit;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -60,7 +61,8 @@ public enum MinTriangleAreaSquared implements Genesis {
 
   /** @param polygon
    * @return normalized polygon with mean zero and unit average lever length */
-  /* package */ static Tensor normalize(Tensor polygon) {
+  @PackageTestAccess
+  static Tensor normalize(Tensor polygon) {
     polygon = Tensor.of(polygon.stream().map(Mean.of(polygon).negate()::add));
     ScalarSummaryStatistics scalarSummaryStatistics = polygon.stream() //
         .map(Vector2Norm::of) //

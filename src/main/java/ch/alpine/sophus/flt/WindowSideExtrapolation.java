@@ -28,7 +28,7 @@ public class WindowSideExtrapolation implements Function<Integer, Tensor>, Seria
   // ---
   private final Function<Integer, Tensor> halfWindowSampler;
 
-  /* package */ WindowSideExtrapolation(ScalarUnaryOperator windowFunction) {
+  private WindowSideExtrapolation(ScalarUnaryOperator windowFunction) {
     halfWindowSampler = HalfWindowSampler.of(windowFunction);
   }
 

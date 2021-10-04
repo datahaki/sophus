@@ -13,6 +13,7 @@ import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Times;
@@ -55,7 +56,8 @@ public class BakerCampbellHausdorff implements BinaryOperator<Tensor>, Serializa
     return new Inner(x, y).sum();
   }
 
-  /* package */ Tensor series(Tensor x, Tensor y) {
+  @PackageTestAccess
+  Tensor series(Tensor x, Tensor y) {
     return new Inner(x, y).sum;
   }
 
