@@ -9,7 +9,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 public enum HeGeodesic implements Geodesic {
   INSTANCE;
 
-  @Override // from TensorGeodesic
+  @Override // from Geodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     HeGroupElement p_act = new HeGroupElement(p);
     Tensor delta = p_act.inverse().combine(q);

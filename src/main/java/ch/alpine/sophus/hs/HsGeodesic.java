@@ -19,7 +19,7 @@ public class HsGeodesic implements Geodesic, Serializable {
     this.hsManifold = Objects.requireNonNull(hsManifold);
   }
 
-  @Override // from TensorGeodesic
+  @Override // from Geodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Exponential exponential = hsManifold.exponential(p);
     Tensor log = exponential.log(q);
