@@ -10,7 +10,6 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.itp.LinearInterpolation;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
@@ -60,6 +59,7 @@ public class LagrangeQuadraticD implements ScalarUnaryOperator {
         Abs.FUNCTION.apply(tail()));
   }
 
+  /** @return integral of absolute value of function over the interval [0, 1] */
   public Scalar integralAbs() {
     Scalar sign_head = Sign.FUNCTION.apply(head());
     Scalar sign_tail = Sign.FUNCTION.apply(tail());
@@ -68,13 +68,9 @@ public class LagrangeQuadraticD implements ScalarUnaryOperator {
     Scalar abs_head = Abs.FUNCTION.apply(head());
     Scalar abs_tail = Abs.FUNCTION.apply(tail());
     Scalar sum = abs_head.add(abs_tail);
-    if (Scalars.isZero(sum))
-      return sum;
-    Scalar wlo = abs_head.divide(sum);
-    Scalar whi = RealScalar.ONE.subtract(wlo);
-    Scalar eval0 = LinearInterpolation.of(Tensors.of(abs_tail, abs_head)).At(wlo);
-    Scalar eval1 = abs_head.multiply(wlo).add(abs_tail.multiply(whi));
-    Tolerance.CHOP.requireClose(eval0, eval1);
-    return eval1.multiply(RationalScalar.HALF);
+    return Scalars.isZero(sum) //
+        ? sum
+        : LinearInterpolation.of(Tensors.of(abs_head, abs_tail)).At(abs_tail.divide(sum)) //
+            .multiply(RationalScalar.HALF);
   }
 }

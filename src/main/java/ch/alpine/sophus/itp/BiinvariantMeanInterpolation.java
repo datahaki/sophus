@@ -46,7 +46,7 @@ import ch.alpine.tensor.sca.Floor;
 
   @Override // from Interpolation
   public Tensor get(Tensor index) {
-    // LONGTERM implementation fails when any entry in index corresponds to exactly
+    // TODO implementation fails when any entry in index corresponds to exactly
     // the length of tensor in the respective dimensions
     int n = index.length();
     Tensor findex = Floor.of(index);

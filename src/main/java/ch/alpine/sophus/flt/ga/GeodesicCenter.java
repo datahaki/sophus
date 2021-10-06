@@ -50,7 +50,7 @@ public class GeodesicCenter implements TensorUnaryOperator {
    * @return
    * @throws Exception if either input parameter is null */
   public static TensorUnaryOperator of(BinaryAverage binaryAverage, ScalarUnaryOperator windowFunction) {
-    return new GeodesicCenter(binaryAverage, UniformWindowSampler.of(windowFunction));
+    return of(binaryAverage, UniformWindowSampler.of(windowFunction));
   }
 
   // ---

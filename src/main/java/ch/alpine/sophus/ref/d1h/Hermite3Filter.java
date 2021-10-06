@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -13,6 +15,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 /**  */
 public class Hermite3Filter implements HermiteFilter {
@@ -68,21 +71,22 @@ public class Hermite3Filter implements HermiteFilter {
     }
 
     private class StringIteration implements TensorIteration {
-      @Override // from HermiteSubdivision
+      @Override // from TensorIteration
       public Tensor iterate() {
         int length = control.length();
-        Tensor string = Tensors.reserve(length);
+        List<Tensor> list = new ArrayList<>(length);
         Tensor p = control.get(0);
-        string.append(p); // interpolation
+        list.add(p); // interpolation
         Tensor q = control.get(1);
         for (int index = 2; index < length; ++index) {
           Tensor r = control.get(index);
-          string.append(center(p, q, r));
+          list.add(center(p, q, r));
           p = q;
           q = r;
         }
-        string.append(q);
-        return control = string;
+        list.add(q);
+        Integers.requireEquals(length, list.size());
+        return control = Unprotect.using(list);
       }
     }
   }

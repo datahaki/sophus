@@ -1,38 +1,44 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.num.Boole;
 
 /* package */ enum Adds {
   ;
   /** @param tensor non-empty
    * @return */
   public static Tensor forward(Tensor tensor) {
-    Tensor result = Tensors.reserve(tensor.length());
+    List<Tensor> list = new ArrayList<>(tensor.length());
     Iterator<Tensor> iterator = tensor.iterator();
     Tensor prev = iterator.next();
     Tensor _1st = prev;
     while (iterator.hasNext())
-      result.append(prev.add(prev = iterator.next()));
-    return result.append(prev.add(_1st));
+      list.add(prev.add(prev = iterator.next()));
+    list.add(prev.add(_1st));
+    Integers.requireEquals(tensor.length(), list.size());
+    return Unprotect.using(list);
   }
 
   /** @param tensor non-empty
    * @return */
   public static Tensor reverse(Tensor tensor) {
-    Tensor result = Tensors.reserve(tensor.length());
+    List<Tensor> list = new ArrayList<>(tensor.length());
     Iterator<Tensor> iterator = tensor.iterator();
     for (Tensor prev = Last.of(tensor); iterator.hasNext();)
-      result.append(prev.add(prev = iterator.next()));
-    return result;
+      list.add(prev.add(prev = iterator.next()));
+    Integers.requireEquals(tensor.length(), list.size());
+    return Unprotect.using(list);
   }
 
   // ---
@@ -42,12 +48,10 @@ import ch.alpine.tensor.ext.Cache;
   /** @param n
    * @return */
   public static Tensor matrix(int n) {
-    return CACHE.apply(n);
+    return CACHE.apply(Integers.requirePositive(n));
   }
 
   private static Tensor build(int n) {
-    return Array.of(list -> Math.floorMod(list.get(1) - list.get(0), n) < 2 //
-        ? RealScalar.ONE
-        : RealScalar.ZERO, n, n);
+    return Tensors.matrix((i, j) -> Boole.of(Math.floorMod(j - i, n) < 2), n, n);
   }
 }
