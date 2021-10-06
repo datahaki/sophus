@@ -16,9 +16,9 @@ public enum PerlinContinuousNoise implements NativeContinuousNoise {
 
   @Override
   public double at(double x, double y, double z) {
-    int X = Noise.floor(x) & 255; // FIND UNIT CUBE THAT
-    int Y = Noise.floor(y) & 255; // CONTAINS POINT.
-    int Z = Noise.floor(z) & 255;
+    int X = StaticHelper.floor(x) & 255; // FIND UNIT CUBE THAT
+    int Y = StaticHelper.floor(y) & 255; // CONTAINS POINT.
+    int Z = StaticHelper.floor(z) & 255;
     x -= Math.floor(x); // FIND RELATIVE X, Y, Z
     y -= Math.floor(y); // OF POINT IN CUBE.
     z -= Math.floor(z);

@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import ch.alpine.tensor.ext.Integers;
 
+// TODO not used at all
 public class LayeredContinuousNoise implements NativeContinuousNoise, Serializable {
   /** WARNING: values are not copied but used by reference
    *

@@ -31,13 +31,4 @@ package ch.alpine.sophus.math.noise;
     for (int i = 0; i < 512; ++i)
       perm_12[i] = perm[i] % 12;
   }
-
-  /** method is faster than (int)Math.floor(x)
-   * 
-   * @param x
-   * @return */
-  static int floor(double x) {
-    int xi = (int) x;
-    return x < xi ? xi - 1 : xi;
-  }
 }
