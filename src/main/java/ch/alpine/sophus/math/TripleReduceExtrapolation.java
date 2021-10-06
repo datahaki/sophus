@@ -25,6 +25,7 @@ public abstract class TripleReduceExtrapolation implements TensorUnaryOperator {
   @Override
   public final Tensor apply(Tensor points) {
     int length = points.length();
+    // TODO does not always produce the right units!
     Tensor vector = Array.zeros(length);
     if (2 < length) {
       Iterator<Tensor> iterator = points.iterator();
@@ -35,8 +36,8 @@ public abstract class TripleReduceExtrapolation implements TensorUnaryOperator {
         vector.set(reduce(p, p = q, q = iterator.next()), ++index);
       int last = length - 1;
       if (4 < length) {
-        vector.set(INTERPOLATING_POLYNOMIAL.scalarTensorFunction(vector.extract(1, 4)).apply(RealScalar.ZERO), 0);
-        vector.set(INTERPOLATING_POLYNOMIAL.scalarTensorFunction(vector.extract(length - 4, last)).apply(LAST), last);
+        vector.set(INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(vector.extract(1, 4)).apply(RealScalar.ZERO), 0);
+        vector.set(INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(vector.extract(length - 4, last)).apply(LAST), last);
       } else {
         vector.set(vector.Get(1), 0);
         vector.set(vector.Get(length - 2), last);
