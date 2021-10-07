@@ -28,6 +28,7 @@ public class HsLineProjection {
     // return p;
     // p = exponential.exp(project);
     // }
+    // TODO magic const
     for (int count = 0; count < 6; ++count) {
       Exponential exponential = hsManifold.exponential(p);
       Tensor lq = exponential.log(q);

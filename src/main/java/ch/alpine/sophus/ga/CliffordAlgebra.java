@@ -156,17 +156,17 @@ public class CliffordAlgebra {
     return sum;
   }
 
-  // TODO implementation not as efficient as could be
   private class SignedSubset {
     private final Scalar sign;
     private final Tensor normal;
 
-    /** @param a for instance {5, 2, 3, 0, 3, 5} */
-    public SignedSubset(Tensor a) {
-      Scalar[] scalars = ScalarArray.ofVector(a);
+    /** @param indices for instance {5, 2, 3, 0, 3, 5} */
+    public SignedSubset(Tensor indices) {
+      Scalar[] scalars = ScalarArray.ofVector(indices);
       boolean flag = true;
       int m = scalars.length - 1;
       int parity = 0;
+      // TODO implementation not as efficient as could be
       while (flag) {
         flag = false;
         for (int i = 0; i < m; ++i) {

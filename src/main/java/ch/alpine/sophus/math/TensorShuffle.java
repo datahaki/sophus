@@ -18,6 +18,6 @@ public enum TensorShuffle {
   /** @param tensor
    * @return stream of entries of tensor in random order */
   public static Stream<Tensor> stream(Tensor tensor) {
-    return Arrays.stream(RandomPermutation.ofLength(tensor.length())).mapToObj(tensor::get);
+    return Arrays.stream(RandomPermutation.of(tensor.length())).mapToObj(tensor::get);
   }
 }

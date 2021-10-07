@@ -12,8 +12,7 @@ import ch.alpine.tensor.ext.Integers;
  * {@link BSpline3CurveSubdivision}, and
  * {@link MSpline3CurveSubdivision} */
 public abstract class RefiningBSpline3CurveSubdivision extends AbstractBSpline3CurveSubdivision {
-  // TODO only called from string refinement -> reserve allocation, class structure
-  @Override
+  @Override // from AbstractBSpline3CurveSubdivision
   protected final Tensor refine(Tensor tensor) {
     int length = tensor.length();
     int capacity = 2 * length - 1;

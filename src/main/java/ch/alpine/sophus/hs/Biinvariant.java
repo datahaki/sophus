@@ -51,9 +51,8 @@ public interface Biinvariant {
    * @return operator that provides barycentric coordinates */
   default TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = weighting(vectorLogManifold, variogram, sequence);
-    // TODO inefficient, since levers are computed twice
     return point -> LagrangeCoordinates.of( //
-        Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog)), // levers
+        new HsDesign(vectorLogManifold).matrix(sequence, point), // TODO levers are computed twice
         tensorUnaryOperator.apply(point)); // target
   }
 }
