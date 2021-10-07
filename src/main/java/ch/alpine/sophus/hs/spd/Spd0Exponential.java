@@ -4,10 +4,10 @@ package ch.alpine.sophus.hs.spd;
 import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
-import ch.alpine.tensor.lie.MatrixSqrt;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.mat.ex.MatrixSqrt;
 import ch.alpine.tensor.mat.re.Inverse;
 
 /** Exponential map at IdentityMatrix in SPD

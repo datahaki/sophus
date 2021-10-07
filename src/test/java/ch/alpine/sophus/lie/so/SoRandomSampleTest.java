@@ -9,11 +9,11 @@ import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
-import ch.alpine.tensor.lie.MatrixLog;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
 import junit.framework.TestCase;
 

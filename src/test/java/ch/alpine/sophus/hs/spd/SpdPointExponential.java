@@ -2,10 +2,10 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
-import ch.alpine.tensor.lie.MatrixSqrt;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.mat.ex.MatrixSqrt;
 
 /** SPD == Symmetric positive definite == Sym+
  * 

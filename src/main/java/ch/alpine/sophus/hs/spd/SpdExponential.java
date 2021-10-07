@@ -11,10 +11,10 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
-import ch.alpine.tensor.lie.MatrixSqrt;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.mat.ex.MatrixSqrt;
 
 /** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
  * 

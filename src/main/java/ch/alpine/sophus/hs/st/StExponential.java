@@ -9,8 +9,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ArrayFlatten;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.lie.MatrixExp;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
+import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
 import ch.alpine.tensor.mat.qr.QRMathematica;
 

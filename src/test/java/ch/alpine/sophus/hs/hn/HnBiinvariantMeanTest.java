@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.lie.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;

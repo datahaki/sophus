@@ -4,8 +4,8 @@ package ch.alpine.sophus.lie.so;
 import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
 
 /** SO(n) group of orthogonal matrices with determinant +1 */
 public enum SoExponential implements Exponential {
