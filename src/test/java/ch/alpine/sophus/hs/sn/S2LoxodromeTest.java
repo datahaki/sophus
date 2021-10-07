@@ -1,10 +1,8 @@
 // code by jph
-package ch.alpine.sophus.hs.s2;
+package ch.alpine.sophus.hs.sn;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.hs.sn.S2Loxodrome;
-import ch.alpine.sophus.hs.sn.SnMemberQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

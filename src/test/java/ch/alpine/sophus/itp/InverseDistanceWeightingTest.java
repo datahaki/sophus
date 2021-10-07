@@ -8,6 +8,7 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.WeightingInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
+import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -67,5 +68,9 @@ public class InverseDistanceWeightingTest extends TestCase {
         Tensor weights2 = shw.apply(x);
         Chop._10.requireClose(weights1, weights2);
       }
+  }
+
+  public void testFail() {
+    AssertFail.of(() -> InverseDistanceWeighting.of(null));
   }
 }

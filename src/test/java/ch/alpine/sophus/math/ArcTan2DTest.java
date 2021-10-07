@@ -1,9 +1,8 @@
 // code by jph
-package ch.alpine.sophus.crv.d2;
+package ch.alpine.sophus.math;
 
 import java.util.Optional;
 
-import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RealScalar;

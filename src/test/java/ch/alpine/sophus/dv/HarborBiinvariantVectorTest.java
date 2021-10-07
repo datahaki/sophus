@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
-public class HarborDistanceVectorTest extends TestCase {
+public class HarborBiinvariantVectorTest extends TestCase {
   /** @param vectorLogManifold
    * @param sequence
    * @return */

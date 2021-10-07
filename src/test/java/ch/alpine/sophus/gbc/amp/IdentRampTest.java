@@ -1,7 +1,6 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.gbc.amp;
 
-import ch.alpine.sophus.gbc.amp.IdentRamp;
 import ch.alpine.tensor.RealScalar;
 import junit.framework.TestCase;
 

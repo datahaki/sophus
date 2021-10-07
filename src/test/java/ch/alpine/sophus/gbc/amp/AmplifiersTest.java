@@ -1,10 +1,9 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.gbc.amp;
 
 import java.util.Arrays;
 import java.util.List;
 
-import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
