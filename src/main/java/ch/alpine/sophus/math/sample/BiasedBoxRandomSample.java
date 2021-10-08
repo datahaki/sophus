@@ -14,6 +14,8 @@ public class BiasedBoxRandomSample implements RandomSampleInterface, Serializabl
   private final RandomSampleInterface randomSampleInterface;
   private final int draws;
 
+  /** @param box
+   * @param draws positive */
   public BiasedBoxRandomSample(Box box, int draws) {
     randomSampleInterface = BoxRandomSample.of(box);
     this.draws = Integers.requirePositive(draws);

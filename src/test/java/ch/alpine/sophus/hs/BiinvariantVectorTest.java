@@ -1,8 +1,6 @@
 // code by jph
-package ch.alpine.sophus.math;
+package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -31,7 +29,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Round;
 import junit.framework.TestCase;
 
-public class InfluenceMatrixQTest extends TestCase {
+public class BiinvariantVectorTest extends TestCase {
   public void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);

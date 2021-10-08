@@ -1,20 +1,26 @@
 // code by jph
-package ch.alpine.sophus.lie.se2c;
+package ch.alpine.sophus.lie;
 
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.SubdivideTransport;
 import ch.alpine.sophus.hs.SymmetrizeTransport;
-import ch.alpine.sophus.lie.LieTransport;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class LieTransportTest extends TestCase {
+  private static final Distribution DISTRIBUTION = UniformDistribution.of(-10, 10);
+
   public void testSimple() {
-    Tensor p = TestHelper.spawn_Se2C();
-    Tensor q = TestHelper.spawn_Se2C();
-    Tensor v = TestHelper.spawn_se2C();
+    Tensor p = RandomVariate.of(DISTRIBUTION, 3);
+    Tensor q = RandomVariate.of(DISTRIBUTION, 3);
+    Tensor v = RandomVariate.of(DISTRIBUTION, 3);
     Tensor r1 = LieTransport.INSTANCE.shift(p, q).apply(v);
     HsTransport hsTransport = PoleLadder.of(Se2CoveringManifold.INSTANCE);
     Tensor r2 = hsTransport.shift(p, q).apply(v);
@@ -26,9 +32,9 @@ public class LieTransportTest extends TestCase {
   }
 
   public void testSubdivide() {
-    Tensor p = TestHelper.spawn_Se2C();
-    Tensor q = TestHelper.spawn_Se2C();
-    Tensor v = TestHelper.spawn_se2C();
+    Tensor p = RandomVariate.of(DISTRIBUTION, 3);
+    Tensor q = RandomVariate.of(DISTRIBUTION, 3);
+    Tensor v = RandomVariate.of(DISTRIBUTION, 3);
     Tensor r1 = LieTransport.INSTANCE.shift(p, q).apply(v);
     HsTransport hsTransport = SubdivideTransport.of( //
         PoleLadder.of(Se2CoveringManifold.INSTANCE), //

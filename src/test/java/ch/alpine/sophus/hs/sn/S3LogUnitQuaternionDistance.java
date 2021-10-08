@@ -1,7 +1,6 @@
 // code by jph
-package ch.alpine.sophus.hs.s3;
+package ch.alpine.sophus.hs.sn;
 
-import ch.alpine.sophus.hs.sn.S3UnitQuaternionDistance;
 import ch.alpine.sophus.math.Metric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;
