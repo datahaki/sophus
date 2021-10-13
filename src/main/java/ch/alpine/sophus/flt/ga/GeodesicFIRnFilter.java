@@ -18,7 +18,8 @@ public enum GeodesicFIRnFilter {
    * @return
    * @throws Exception if either parameter is null */
   @SuppressWarnings("unchecked")
-  public static TensorUnaryOperator of(TensorUnaryOperator extrapolation, BinaryAverage binaryAverage, int radius, Scalar alpha) {
+  public static TensorUnaryOperator of( //
+      TensorUnaryOperator extrapolation, BinaryAverage binaryAverage, int radius, Scalar alpha) {
     return CausalFilter.of( //
         (Supplier<TensorUnaryOperator> & Serializable) //
         () -> GeodesicFIRn.of(extrapolation, binaryAverage, radius, alpha));
