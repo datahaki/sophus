@@ -14,6 +14,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.TrapezoidalDistribution;
+import ch.alpine.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class LBilinearFormTest extends TestCase {
@@ -35,6 +36,9 @@ public class LBilinearFormTest extends TestCase {
       HnMemberQ.INSTANCE.require(q);
       Scalar pq = LBilinearForm.between(p, q);
       assertTrue(Scalars.lessEquals(pq, RealScalar.ONE.negate()));
+      Tensor dif = p.subtract(q);
+      Scalar dd = LBilinearForm.normSquared(dif);
+      Sign.requirePositiveOrZero(dd);
     }
   }
 

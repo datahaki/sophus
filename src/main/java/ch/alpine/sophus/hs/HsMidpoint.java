@@ -17,7 +17,7 @@ public class HsMidpoint implements MidpointInterface, Serializable {
     return exponential.exp(exponential.log(q).multiply(RationalScalar.HALF));
   }
 
-  /***************************************************/
+  // ---
   private final HsManifold hsManifold;
 
   /** @param hsManifold */

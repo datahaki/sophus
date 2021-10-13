@@ -20,6 +20,6 @@ public enum GeodesicIIRnFilter {
   public static TensorUnaryOperator of(TensorUnaryOperator extrapolation, BinaryAverage binaryAverage, int radius, Scalar alpha) {
     return CausalFilter.of( //
         (Supplier<TensorUnaryOperator> & Serializable) //
-        () -> new GeodesicIIRn(extrapolation, binaryAverage, radius, alpha));
+        () -> GeodesicIIRn.of(extrapolation, binaryAverage, radius, alpha));
   }
 }

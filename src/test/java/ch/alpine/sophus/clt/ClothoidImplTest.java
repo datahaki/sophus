@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import ch.alpine.sophus.clt.par.ClothoidIntegral;
 import ch.alpine.sophus.clt.par.ClothoidIntegration;
 import ch.alpine.sophus.clt.par.ClothoidIntegrations;
+import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Scalar;
@@ -19,16 +20,7 @@ public class ClothoidImplTest extends TestCase {
     LagrangeQuadratic lagrangeQuadratic = LagrangeQuadratic.interp(Pi.HALF, Pi.TWO, Pi.VALUE);
     for (ClothoidIntegration clothoidIntegration : ClothoidIntegrations.values()) {
       ClothoidIntegral clothoidIntegral = clothoidIntegration.clothoidIntegral(lagrangeQuadratic);
-      try {
-        new ClothoidImpl( //
-            null, //
-            lagrangeQuadratic, //
-            clothoidIntegral, //
-            Tensors.vector(1, 2));
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+      AssertFail.of(() -> new ClothoidImpl(null, lagrangeQuadratic, clothoidIntegral, Tensors.vector(1, 2)));
     }
   }
 

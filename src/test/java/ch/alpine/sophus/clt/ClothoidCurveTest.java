@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import java.util.Random;
+
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -26,19 +28,18 @@ public class ClothoidCurveTest extends TestCase {
   }
 
   public void testComparison() {
+    Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 0.002);
-    int fails = 0;
     for (int count = 0; count < 100; ++count) {
-      Tensor p = RandomVariate.of(distribution, 3);
-      Tensor q = RandomVariate.of(distribution, 3);
-      Scalar lambda = RandomVariate.of(distribution);
+      Tensor p = RandomVariate.of(distribution, random, 3);
+      Tensor q = RandomVariate.of(distribution, random, 3);
+      Scalar lambda = RandomVariate.of(distribution, random);
       Tensor r1 = new ClothoidCurve1(p, q).apply(lambda);
       Tensor r2 = new ClothoidCurve2(p, q).apply(lambda);
       Tensor r3 = new ClothoidCurve3(p, q).apply(lambda);
-      if (!Chop._03.isClose(r1, r2) || !Chop._03.isClose(r1, r3))
-        ++fails;
+      Chop._03.requireClose(r1, r2);
+      Chop._03.requireClose(r1, r3);
     }
-    assertTrue(fails < 10);
   }
 
   public void testDistinct() {

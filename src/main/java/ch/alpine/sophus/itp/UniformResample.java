@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.hs.r2.Se2UniformResample;
 import ch.alpine.sophus.lie.rn.RnUniformResample;
-import ch.alpine.sophus.math.Distances;
+import ch.alpine.sophus.math.AdjacentDistances;
 import ch.alpine.sophus.math.TensorMetric;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Scalar;
@@ -35,13 +35,13 @@ public class UniformResample implements CurveSubdivision, Serializable {
         Sign.requirePositive(spacing));
   }
 
-  /***************************************************/
-  private final TensorMetric tensorMetric;
+  // ---
+  private final AdjacentDistances pairwiseDistances;
   private final BinaryAverage binaryAverage;
   private final Scalar spacing;
 
   private UniformResample(TensorMetric tensorMetric, BinaryAverage binaryAverage, Scalar spacing) {
-    this.tensorMetric = tensorMetric;
+    pairwiseDistances = new AdjacentDistances(tensorMetric);
     this.binaryAverage = binaryAverage;
     this.spacing = spacing;
   }
@@ -53,7 +53,7 @@ public class UniformResample implements CurveSubdivision, Serializable {
 
   @Override // from CurveSubdivision
   public Tensor string(Tensor tensor) {
-    Tensor distances = Distances.of(tensorMetric, tensor);
+    Tensor distances = pairwiseDistances.apply(tensor);
     ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, binaryAverage, tensor);
     Scalar length = Total.ofVector(distances);
     int n = Round.intValueExact(length.divide(spacing));

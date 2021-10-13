@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Mod;
     return MOD_TWO_PI.apply(angle);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar NUMERIC_ONE = RealScalar.of(1.0);
 
   /** @param scalar

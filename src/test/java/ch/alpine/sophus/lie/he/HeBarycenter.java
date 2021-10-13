@@ -8,7 +8,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.LinearSolve;
+import ch.alpine.tensor.mat.re.LinearSolve;
 
 /** HeBarycenter remains only for testing purpose. */
 /* package */ class HeBarycenter implements TensorUnaryOperator {

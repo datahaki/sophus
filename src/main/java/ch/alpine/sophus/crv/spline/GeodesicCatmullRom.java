@@ -10,6 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** CatmullRom denotes the function that is defined by control points over a sequence of knots.
@@ -30,7 +31,7 @@ public class GeodesicCatmullRom implements ScalarTensorFunction {
         control);
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
   private final Tensor control;
   private final Tensor knots;
@@ -43,8 +44,7 @@ public class GeodesicCatmullRom implements ScalarTensorFunction {
       navigableMap.put((Scalar) knot, ++index);
     this.knots = knots;
     this.control = control;
-    if (knots.length() != control.length())
-      throw TensorRuntimeException.of(knots, control);
+    Integers.requireEquals(knots.length(), control.length());
   }
 
   /** applying CRM to a chosen t in the complete knot sequence is [tn-2, tn-1, tn, tn+1] [tn-1, tn)

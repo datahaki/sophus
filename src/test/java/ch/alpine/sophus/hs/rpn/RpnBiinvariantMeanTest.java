@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.rpn;
 
+import java.util.Random;
+
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.math.d2.ArcTan2D;
+import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.AngleVector;
@@ -42,19 +44,15 @@ public class RpnBiinvariantMeanTest extends TestCase {
   }
 
   public void testRp1Linear() {
-    int fails = 0;
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(0, Math.PI / 4);
     for (int n = 2; n < 5; ++n)
-      for (int count = 0; count < 5; ++count)
-        try {
-          Tensor angles = RandomVariate.of(distribution, n);
-          Tensor sequence = angles.map(AngleVector::of);
-          Tensor weights = AveragingWeights.of(n);
-          Tensor point = RpnBiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
-        } catch (Exception exception) {
-          ++fails;
-        }
-    assertTrue(fails < 7);
+      for (int count = 0; count < 5; ++count) {
+        Tensor angles = RandomVariate.of(distribution, random, n);
+        Tensor sequence = angles.map(AngleVector::of);
+        Tensor weights = AveragingWeights.of(n);
+        Tensor point = RpnBiinvariantMean.INSTANCE.mean(sequence, weights);
+        Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
+      }
   }
 }

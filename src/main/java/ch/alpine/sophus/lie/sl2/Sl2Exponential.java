@@ -11,10 +11,10 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.lie.HodgeDual;
-import ch.alpine.tensor.lie.MatrixLog;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
@@ -54,7 +54,7 @@ public enum Sl2Exponential implements Exponential {
     Tensor log = MatrixLog.of(g);
     if (Scalars.lessEquals(Trace.of(g), TWO_NEGATE))
       throw TensorRuntimeException.of(g);
-    Chop._04.requireClose(g, exp(log)); // LONGTERM remove check
+    Chop._04.requireClose(g, exp(log)); // TODO remove check
     return log;
   }
 

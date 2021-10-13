@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 
 public class DoTest extends TestCase {
   public void testSimple() {
-    Supplier<Tensor> supplier = new Supplier<Tensor>() {
+    Supplier<Tensor> supplier = new Supplier<>() {
       int count = 0;
 
       @Override

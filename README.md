@@ -1,8 +1,8 @@
 ![alpine_877](https://user-images.githubusercontent.com/4012178/116814864-1b1a1580-ab5b-11eb-97e6-1441af4ececa.png)
 
-# ch.alpine.sophus <a href="https://travis-ci.com/datahaki/sophus"><img src="https://travis-ci.com/datahaki/sophus.svg?branch=master" alt="Build Status"></a>
+# ch.alpine.sophus
 
-Library for non-linear geometry computations in Java, version `0.0.4`
+Library for non-linear geometry computations in Java, version `0.0.5`
 
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
@@ -174,7 +174,7 @@ Specify `repository` and `dependency` of the tensor library in the `pom.xml` fil
   <dependency>
     <groupId>ch.alpine</groupId>
     <artifactId>sophus</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
   </dependency>
 </dependencies>
 ```

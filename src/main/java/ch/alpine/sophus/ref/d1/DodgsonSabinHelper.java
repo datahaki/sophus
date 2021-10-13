@@ -2,13 +2,13 @@
 package ch.alpine.sophus.ref.d1;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.math.d2.SignedCurvature2D;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.Cross;
+import ch.alpine.tensor.lie.r2.SignedCurvature2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.red.Times;
@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Sqrt;
    * @param d
    * @return point between b and c */
   static Tensor midpoint(Tensor b, Tensor c, Tensor d) {
-    Scalar r = SignedCurvature2D.of(d, c, b).get();
+    Scalar r = SignedCurvature2D.of(d, c, b).orElseThrow();
     return intersectCircleLine(b, c, r, RealScalar.ZERO);
   }
 
@@ -66,8 +66,8 @@ import ch.alpine.tensor.sca.Sqrt;
   static Scalar averageCurvature(Tensor a, Tensor b, Tensor c, Tensor d) {
     Scalar ac = Vector2Norm.between(a, c);
     Scalar bd = Vector2Norm.between(b, d);
-    return SignedCurvature2D.of(c, b, a).get().multiply(bd).add( //
-        SignedCurvature2D.of(d, c, b).get().multiply(ac)) //
+    return SignedCurvature2D.of(c, b, a).orElseThrow().multiply(bd).add( //
+        SignedCurvature2D.of(d, c, b).orElseThrow().multiply(ac)) //
         .divide(bd.add(ac));
   }
 }

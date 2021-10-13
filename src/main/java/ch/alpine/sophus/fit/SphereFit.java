@@ -9,15 +9,13 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.mat.LeastSquares;
-import ch.alpine.tensor.mat.MatrixRank;
+import ch.alpine.tensor.mat.pi.LeastSquares;
+import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.sca.Sqrt;
 
 /** reference: "Circle fitting by linear and non-linear least squares", by J. D. Coope */
 public class SphereFit implements Serializable {
-  private static final long serialVersionUID = -8481182039157613940L;
-
   /** @param points encoded as matrix
    * @return optional with instance of SphereFit containing the center and radius
    * of the fitted sphere, or empty if points are numerically co-linear
@@ -36,7 +34,7 @@ public class SphereFit implements Serializable {
         Sqrt.FUNCTION.apply(x.Get(cols - 1).add(Vector2NormSquared.of(center)))));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor center;
   private final Scalar radius;
 

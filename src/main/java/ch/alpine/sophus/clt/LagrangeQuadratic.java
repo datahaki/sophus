@@ -45,7 +45,7 @@ public class LagrangeQuadratic implements ScalarUnaryOperator {
         t2.add(t2));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar c0;
   private final Scalar c1;
   private final Scalar c2;

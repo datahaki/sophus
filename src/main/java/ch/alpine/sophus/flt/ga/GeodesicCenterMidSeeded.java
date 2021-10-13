@@ -18,6 +18,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.ext.PackageTestAccess;
 
 /** GeodesicCenterMidSeeded projects a sequence of points to their geodesic center
  * Difference to GeodesicCenter: starting to average in the center of the tree going outwards
@@ -42,8 +43,9 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     return new GeodesicCenterMidSeeded(splitInterface, UniformWindowSampler.of(windowFunction));
   }
 
-  /***************************************************/
-  /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
+  // ---
+  @PackageTestAccess
+  static class Splits implements Function<Integer, Tensor>, Serializable {
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {
@@ -58,12 +60,13 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     /** @param mask symmetric vector of odd length
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
-    /* package */ static Tensor of(Tensor mask) {
+    @PackageTestAccess
+    static Tensor of(Tensor mask) {
       if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);
       int radius = (mask.length() - 1) / 2;
-      Tensor halfmask = Tensors.vector(i -> i == radius //
+      Tensor halfmask = Tensors.vector(i -> i.equals(radius) //
           ? mask.Get(i).multiply(RationalScalar.HALF)
           : mask.Get(i), radius + 1);
       Scalar factor = halfmask.Get(radius);
@@ -77,7 +80,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     }
   }
 
-  /***************************************************/
+  // ---
   private final SplitInterface splitInterface;
   private final Function<Integer, Tensor> function;
 

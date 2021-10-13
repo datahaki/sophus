@@ -12,12 +12,14 @@ import ch.alpine.tensor.ext.Cache;
 
 /** samples a given window function uniformly in the interval [-1/2, 0] */
 public class HalfWindowSampler extends BaseWindowSampler {
+  private static final int CACHE_SIZE = 32;
+
   /** @param windowFunction for evaluation in the interval [-1/2, 0] */
   public static Function<Integer, Tensor> of(ScalarUnaryOperator windowFunction) {
-    return Cache.of(new HalfWindowSampler(windowFunction), 32);
+    return Cache.of(new HalfWindowSampler(windowFunction), CACHE_SIZE);
   }
 
-  /***************************************************/
+  // ---
   private HalfWindowSampler(ScalarUnaryOperator windowFunction) {
     super(windowFunction);
   }

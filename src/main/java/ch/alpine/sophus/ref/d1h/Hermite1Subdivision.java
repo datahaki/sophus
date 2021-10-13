@@ -2,18 +2,21 @@
 package ch.alpine.sophus.ref.d1h;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.Nocopy;
 import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
   private final HsManifold hsManifold;
@@ -97,18 +100,19 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
       @Override // from HermiteSubdivision
       public Tensor iterate() {
         int length = control.length();
-        Nocopy string = new Nocopy(2 * length - 1);
+        List<Tensor> list = new ArrayList<>(2 * length - 1);
         Tensor p = control.get(0);
         for (int index = 1; index < length; ++index) {
-          string.append(p);
+          list.add(p);
           Tensor q = control.get(index);
-          string.append(midpoint(p, q));
+          list.add(midpoint(p, q));
           p = q;
         }
-        string.append(p);
+        list.add(p);
         rgk = rgk.multiply(RationalScalar.HALF);
         rvk = rvk.add(rvk);
-        return control = string.tensor();
+        Integers.requireEquals(list.size(), 2 * length - 1);
+        return control = Unprotect.using(list);
       }
     }
 
@@ -116,17 +120,18 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
       @Override // from HermiteSubdivision
       public Tensor iterate() {
         int length = control.length();
-        Nocopy string = new Nocopy(2 * length);
+        List<Tensor> list = new ArrayList<>(2 * length);
         Tensor p = control.get(0);
         for (int index = 1; index <= length; ++index) {
-          string.append(p);
+          list.add(p);
           Tensor q = control.get(index % length);
-          string.append(midpoint(p, q));
+          list.add(midpoint(p, q));
           p = q;
         }
         rgk = rgk.multiply(RationalScalar.HALF);
         rvk = rvk.add(rvk);
-        return control = string.tensor();
+        Integers.requireEquals(list.size(), 2 * length);
+        return control = Unprotect.using(list);
       }
     }
   }

@@ -14,7 +14,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 public enum DtGeodesic implements Geodesic {
   INSTANCE;
 
-  @Override // from TensorGeodesic
+  @Override // from Geodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     DtGroupElement p_act = DtGroup.INSTANCE.element(p);
     Tensor delta = p_act.inverse().combine(q);

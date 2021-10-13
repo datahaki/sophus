@@ -25,7 +25,7 @@ public class GeodesicInterpolation extends AbstractInterpolation implements Seri
         Objects.requireNonNull(tensor));
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
   private final Tensor tensor;
 

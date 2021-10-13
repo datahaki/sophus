@@ -2,6 +2,7 @@
 package ch.alpine.sophus.fit;
 
 import java.io.IOException;
+import java.util.Random;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -10,11 +11,11 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.Cross;
-import ch.alpine.tensor.lie.MatrixExp;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.mat.Inverse;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
+import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.ExponentialDistribution;
@@ -41,30 +42,26 @@ public class RigidMotionFitTest extends TestCase {
     }
   }
 
-  public void testWeights() {
+  public void testWeights() throws ClassNotFoundException, IOException {
+    Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     Tensor skew3 = Cross.skew3(Tensors.vector(-.1, .2, .3));
     Tensor rotation = OrthogonalMatrixQ.require(MatrixExp.of(skew3));
-    int fails = 0;
-    for (int n = 5; n < 11; ++n)
-      try {
-        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.of(-0.1, 1), 10));
-        Tensor points = RandomVariate.of(distribution, 10, 3);
-        Tensor translation = RandomVariate.of(distribution, 3);
-        Tensor target = Tensor.of(points.stream().map(p -> rotation.dot(p).add(translation)));
-        RigidMotionFit rigidMotionFit = Serialization.copy(RigidMotionFit.of(points, target, weights));
-        Chop._08.requireClose(rotation, rigidMotionFit.rotation());
-        Chop._08.requireClose(translation, rigidMotionFit.translation());
-        Chop._08.requireClose(Det.of(rigidMotionFit.rotation()), RealScalar.ONE);
-        Chop._08.requireClose(target, Tensor.of(points.stream().map(rigidMotionFit)));
-        RigidMotionFit rigidMotionInv = Serialization.copy(RigidMotionFit.of(target, points, weights));
-        Tensor inv = Inverse.of(rotation);
-        Chop._08.requireClose(inv, rigidMotionInv.rotation());
-        Chop._08.requireClose(inv.dot(translation).negate(), rigidMotionInv.translation());
-      } catch (Exception exception) {
-        ++fails;
-      }
-    assertTrue(fails <= 2);
+    for (int n = 5; n < 11; ++n) {
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.of(-0.1, 1), random, 10));
+      Tensor points = RandomVariate.of(distribution, random, 10, 3);
+      Tensor translation = RandomVariate.of(distribution, random, 3);
+      Tensor target = Tensor.of(points.stream().map(p -> rotation.dot(p).add(translation)));
+      RigidMotionFit rigidMotionFit = Serialization.copy(RigidMotionFit.of(points, target, weights));
+      Chop._08.requireClose(rotation, rigidMotionFit.rotation());
+      Chop._08.requireClose(translation, rigidMotionFit.translation());
+      Chop._08.requireClose(Det.of(rigidMotionFit.rotation()), RealScalar.ONE);
+      Chop._08.requireClose(target, Tensor.of(points.stream().map(rigidMotionFit)));
+      RigidMotionFit rigidMotionInv = Serialization.copy(RigidMotionFit.of(target, points, weights));
+      Tensor inv = Inverse.of(rotation);
+      Chop._08.requireClose(inv, rigidMotionInv.rotation());
+      Chop._08.requireClose(inv.dot(translation).negate(), rigidMotionInv.translation());
+    }
   }
 
   public void testRandom() {

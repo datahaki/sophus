@@ -2,7 +2,10 @@
 package ch.alpine.sophus.math;
 
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.lie.Quaternion;
 
+/** Examples of type T are {@link Tensor} and {@link Quaternion} */
 @FunctionalInterface
 public interface Metric<T> {
   /** a metric satisfies the following conditions

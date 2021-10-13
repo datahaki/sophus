@@ -5,7 +5,7 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.mat.LeastSquares;
+import ch.alpine.tensor.mat.pi.LeastSquares;
 
 /** implementation of radial basis function for homogeneous spaces
  * 
@@ -37,7 +37,7 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
     return of(tensorUnaryOperator, sequence, IdentityMatrix.of(sequence.length()));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final Tensor weights;
 

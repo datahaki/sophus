@@ -9,7 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.num.Series;
+import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Sign;
 
 /** Reference:
@@ -34,7 +34,7 @@ public class SphericalVariogram implements ScalarUnaryOperator {
     return of(RealScalar.of(a), RealScalar.of(b));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar a;
   private final Scalar b;
   private final ScalarUnaryOperator series;
@@ -42,7 +42,7 @@ public class SphericalVariogram implements ScalarUnaryOperator {
   private SphericalVariogram(Scalar a, Scalar b) {
     this.a = a;
     this.b = b;
-    series = Series.of(Tensors.of( //
+    series = Polynomial.of(Tensors.of( //
         RealScalar.ZERO, //
         RationalScalar.of(+3, 2), //
         RealScalar.ZERO, //

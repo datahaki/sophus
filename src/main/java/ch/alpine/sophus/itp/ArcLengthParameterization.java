@@ -3,8 +3,8 @@ package ch.alpine.sophus.itp;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.pdf.EqualizingDistribution;
@@ -17,12 +17,11 @@ public class ArcLengthParameterization implements ScalarTensorFunction {
    * @param tensor with length one more than length of given differences
    * @return */
   public static ScalarTensorFunction of(Tensor distances, BinaryAverage binaryAverage, Tensor tensor) {
-    if (distances.length() + 1 == tensor.length())
-      return new ArcLengthParameterization(distances, binaryAverage, tensor);
-    throw TensorRuntimeException.of(distances, tensor);
+    Integers.requireEquals(distances.length() + 1, tensor.length());
+    return new ArcLengthParameterization(distances, binaryAverage, tensor);
   }
 
-  /***************************************************/
+  // ---
   private final InverseCDF inverseCDF;
   private final Interpolation interpolation;
 

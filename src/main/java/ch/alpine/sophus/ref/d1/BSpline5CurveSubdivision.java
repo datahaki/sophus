@@ -1,13 +1,17 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.math.Nocopy;
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.alpine.sophus.math.SplitInterface;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** quintic B-spline is implemented as an extension of
  * cubic B-spline refinement */
@@ -28,15 +32,16 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
     int length = tensor.length();
     if (length < 2)
       return tensor.copy();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     Tensor p = Last.of(tensor);
     Tensor q = tensor.get(0);
     Tensor r = tensor.get(1);
-    for (int index = 0; index < length; ++index)
-      curve //
-          .append(quinte(p, q, r)) //
-          .append(center(p, p = q, q = r, r = tensor.get((index + 2) % length)));
-    return curve.tensor();
+    for (int index = 0; index < length; ++index) {
+      list.add(quinte(p, q, r));
+      list.add(center(p, p = q, q = r, r = tensor.get((index + 2) % length)));
+    }
+    Integers.requireEquals(list.size(), 2 * length);
+    return Unprotect.using(list);
   }
 
   @Override // from CurveSubdivision
@@ -48,32 +53,34 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
 
   private Tensor private_refine(Tensor tensor) {
     int length = tensor.length();
-    Nocopy curve = new Nocopy(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     {
       Tensor q = tensor.get(0);
       Tensor r = tensor.get(1);
-      curve.append(q);
-      curve.append(midpoint(q, r));
+      list.add(q);
+      list.add(midpoint(q, r));
     }
     {
       Tensor p = tensor.get(0);
       Tensor q = tensor.get(1);
       Tensor r = tensor.get(2);
-      for (int index = 3; index < length; ++index)
-        curve //
-            .append(quinte(p, q, r)) //
-            .append(center(p, p = q, q = r, r = tensor.get(index)));
+      for (int index = 3; index < length; ++index) {
+        list.add(quinte(p, q, r));
+        list.add(center(p, p = q, q = r, r = tensor.get(index)));
+      }
     }
     {
       int last = length - 1;
       Tensor s = tensor.get(last - 2);
       Tensor r = tensor.get(last - 1);
       Tensor q = tensor.get(last);
-      curve.append(quinte(s, r, q));
-      curve.append(midpoint(r, q));
-      curve.append(q);
+      list.add(quinte(s, r, q));
+      list.add(midpoint(r, q));
+      list.add(q);
     }
-    return curve.tensor();
+    Integers.requireEquals(list.size(), capacity);
+    return Unprotect.using(list);
   }
 
   // reposition of point q

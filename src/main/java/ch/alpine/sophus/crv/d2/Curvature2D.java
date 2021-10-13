@@ -1,46 +1,44 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
-import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import ch.alpine.sophus.math.d2.SignedCurvature2D;
-import ch.alpine.tensor.RealScalar;
+import ch.alpine.sophus.math.TripleReduceExtrapolation;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
+import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.lie.r2.SignedCurvature2D;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.QuantityUnit;
+import ch.alpine.tensor.qty.Unit;
 
 /** @see CurvatureComb */
 public enum Curvature2D {
   ;
-  private static final InterpolatingPolynomial INTERPOLATING_POLYNOMIAL = //
-      InterpolatingPolynomial.of(Tensors.vector(1, 2, 3));
-  private static final Scalar LAST = RealScalar.of(4);
+  private static final TripleReduceExtrapolation TRIPLE_REDUCE_EXTRAPOLATION = //
+      new TripleReduceExtrapolation() {
+        @Override
+        protected Scalar reduce(Tensor p, Tensor q, Tensor r) {
+          return SignedCurvature2D.of(p, q, r).orElseGet(() -> fallback(p, q, r));
+        }
+
+        private Scalar fallback(Tensor p, Tensor q, Tensor r) {
+          List<Unit> list = Flatten.of(p, q, r).stream() //
+              .map(Scalar.class::cast) //
+              .map(QuantityUnit::of) //
+              .distinct() //
+              .limit(2) //
+              .collect(Collectors.toList());
+          Integers.requireEquals(list.size(), 1);
+          return Quantity.of(0, list.get(0).negate());
+        }
+      };
 
   /** @param points of the form {{p1x, p1y}, {p2x, p2y}, ..., {pNx, pNy}}
-   * @return vector */
+   * @return vector with same length as points */
   public static Tensor string(Tensor points) {
-    int length = points.length();
-    Tensor vector = Array.zeros(length);
-    if (2 < length) {
-      Iterator<Tensor> iterator = points.iterator();
-      Tensor p = iterator.next();
-      Tensor q = iterator.next();
-      int index = 0;
-      while (iterator.hasNext())
-        vector.set( //
-            SignedCurvature2D.of(p, p = q, q = iterator.next()).orElse(RealScalar.ZERO), //
-            ++index);
-      int last = length - 1;
-      if (4 < length) {
-        vector.set(INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(vector.extract(1, 4)).apply(RealScalar.ZERO), 0);
-        vector.set(INTERPOLATING_POLYNOMIAL.scalarUnaryOperator(vector.extract(length - 4, last)).apply(LAST), last);
-      } else {
-        vector.set(vector.Get(1), 0);
-        vector.set(vector.Get(length - 2), last);
-      }
-    }
-    return vector;
+    return TRIPLE_REDUCE_EXTRAPOLATION.apply(points);
   }
 }

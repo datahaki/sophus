@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.so;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.Inverse;
+import ch.alpine.tensor.mat.re.Inverse;
 
 /** Reference:
  * "Hermite subdivision on manifolds via parallel transport"

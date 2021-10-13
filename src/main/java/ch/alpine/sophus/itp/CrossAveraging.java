@@ -20,7 +20,7 @@ public class CrossAveraging implements TensorUnaryOperator {
         Objects.requireNonNull(values));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final BiinvariantMean biinvariantMean;
   private final Tensor values;

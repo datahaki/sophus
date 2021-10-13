@@ -4,9 +4,9 @@ package ch.alpine.sophus.hs.gr;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.sophus.math.MemberQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.lie.MatrixBracket;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.sca.Chop;
@@ -38,7 +38,7 @@ public class TGrMemberQ implements MemberQ, Serializable {
    * @param v
    * @return */
   public Tensor forceProject(Tensor v) {
-    // LONGTERM find projection that is idempotent
+    // FIXME find projection that is idempotent
     return MatrixBracket.of(p, TensorWedge.of(v));
   }
 }

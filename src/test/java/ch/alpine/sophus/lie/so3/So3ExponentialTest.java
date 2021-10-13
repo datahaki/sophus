@@ -12,8 +12,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
-import ch.alpine.tensor.mat.LinearSolve;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.re.LinearSolve;
 import junit.framework.TestCase;
 
 public class So3ExponentialTest extends TestCase {

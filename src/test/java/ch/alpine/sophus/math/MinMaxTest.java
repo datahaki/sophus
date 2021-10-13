@@ -23,6 +23,11 @@ public class MinMaxTest extends TestCase {
     AssertFail.of(() -> MinMax.of(tensor));
   }
 
+  public void testFailEmpty() {
+    AssertFail.of(() -> MinMax.of(Tensors.empty()));
+    AssertFail.of(() -> MinMax.box(Tensors.empty()));
+  }
+
   public void testFailScalar() {
     AssertFail.of(() -> MinMax.of(RealScalar.ZERO));
   }

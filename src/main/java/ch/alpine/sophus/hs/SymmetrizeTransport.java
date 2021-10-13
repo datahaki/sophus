@@ -19,7 +19,7 @@ public class SymmetrizeTransport implements HsTransport, Serializable {
     return new SymmetrizeTransport(Objects.requireNonNull(hsTransport));
   }
 
-  /***************************************************/
+  // ---
   private final HsTransport hsTransport;
 
   private SymmetrizeTransport(HsTransport hsTransport) {

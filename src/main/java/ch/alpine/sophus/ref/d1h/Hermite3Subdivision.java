@@ -2,13 +2,14 @@
 package ch.alpine.sophus.ref.d1h;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.Nocopy;
 import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -18,6 +19,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Integers;
 
 public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
   /** midpoint group element contribution from group elements
@@ -146,24 +148,25 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       @Override // from HermiteSubdivision
       public Tensor iterate() {
         int length = control.length();
-        Nocopy string = new Nocopy(2 * length - 1);
+        List<Tensor> list = new ArrayList<>(2 * length - 1);
         Tensor p = control.get(0);
-        string.append(p); // interpolation
+        list.add(p); // interpolation
         Tensor q = control.get(1);
-        string.append(midpoint(p, q));
+        list.add(midpoint(p, q));
         for (int index = 2; index < length; ++index) {
           Tensor r = control.get(index);
-          string.append(center(p, q, r));
+          list.add(center(p, q, r));
           p = q;
           q = r;
-          string.append(midpoint(p, q));
+          list.add(midpoint(p, q));
         }
-        string.append(q);
+        list.add(q);
         rgk = rgk.multiply(RationalScalar.HALF);
         rvk = rvk.add(rvk);
         cgk = cgk.multiply(RationalScalar.HALF);
         cvk = cvk.add(cvk);
-        return control = string.tensor();
+        Integers.requireEquals(list.size(), 2 * length - 1);
+        return control = Unprotect.using(list);
       }
     }
 
@@ -171,21 +174,22 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       @Override // from HermiteSubdivision
       public Tensor iterate() {
         int length = control.length();
-        Nocopy string = new Nocopy(2 * length);
+        List<Tensor> list = new ArrayList<>(2 * length);
         Tensor p = Last.of(control);
         Tensor q = control.get(0);
         for (int index = 1; index <= length; ++index) {
           Tensor r = control.get(index % length);
-          string.append(center(p, q, r));
+          list.add(center(p, q, r));
           p = q;
           q = r;
-          string.append(midpoint(p, q));
+          list.add(midpoint(p, q));
         }
         rgk = rgk.multiply(RationalScalar.HALF);
         rvk = rvk.add(rvk);
         cgk = cgk.multiply(RationalScalar.HALF);
         cvk = cvk.add(cvk);
-        return control = string.tensor();
+        Integers.requireEquals(list.size(), 2 * length);
+        return control = Unprotect.using(list);
       }
     }
   }

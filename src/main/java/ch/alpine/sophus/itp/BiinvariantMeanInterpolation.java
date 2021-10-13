@@ -2,6 +2,7 @@
 package ch.alpine.sophus.itp;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.itp.AbstractInterpolation;
 import ch.alpine.tensor.itp.Interpolation;
@@ -35,25 +35,25 @@ import ch.alpine.tensor.sca.Floor;
     return new BiinvariantMeanInterpolation(Objects.requireNonNull(biinvariantMean), tensor);
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
   private final Tensor tensor;
 
   private BiinvariantMeanInterpolation(BiinvariantMean biinvariantMean, Tensor tensor) {
     this.biinvariantMean = biinvariantMean;
-    this.tensor = Unprotect.references(tensor);
+    this.tensor = tensor;
   }
 
   @Override // from Interpolation
   public Tensor get(Tensor index) {
-    // LONGTERM implementation fails when any entry in index corresponds to exactly
+    // TODO implementation fails when any entry in index corresponds to exactly
     // the length of tensor in the respective dimensions
     int n = index.length();
     Tensor findex = Floor.of(index);
     Tensor weights = Flatten.of(index.subtract(findex).stream() //
         .map(scalar -> Tensors.of(RealScalar.ONE.subtract(scalar), scalar)) //
         .reduce(TensorProduct::of) //
-        .get(), n - 1);
+        .orElseThrow(), n - 1);
     List<Integer> fromIndex = findex.stream() //
         .map(Scalar.class::cast) //
         .map(Scalar::number) //
@@ -72,7 +72,7 @@ import ch.alpine.tensor.sca.Floor;
     if (Scalars.isZero(remain))
       return tensor.get(below);
     return biinvariantMean.mean( //
-        tensor.extract(below, below + 2), // sequence
+        tensor.block(Arrays.asList(below), Arrays.asList(2)), // sequence
         Tensors.of(RealScalar.ONE.subtract(remain), remain));
   }
 }

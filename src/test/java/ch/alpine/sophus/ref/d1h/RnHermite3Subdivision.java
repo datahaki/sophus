@@ -10,8 +10,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Last;
-import ch.alpine.tensor.lie.MatrixPower;
 import ch.alpine.tensor.mat.DiagonalMatrix;
+import ch.alpine.tensor.mat.ex.MatrixPower;
 import ch.alpine.tensor.sca.Chop;
 
 /** Merrien interpolatory Hermite subdivision scheme of order two

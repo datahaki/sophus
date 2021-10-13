@@ -28,7 +28,7 @@ public class ExponentialVariogram implements ScalarUnaryOperator {
     return of(RealScalar.of(a), RealScalar.of(b));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar a;
   private final Scalar b;
 

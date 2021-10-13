@@ -26,7 +26,7 @@ public class PoleLadder implements HsTransport, Serializable {
     return new PoleLadder(Objects.requireNonNull(hsManifold));
   }
 
-  /***************************************************/
+  // ---
   private final HsManifold hsManifold;
 
   private PoleLadder(HsManifold hsManifold) {

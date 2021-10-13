@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import ch.alpine.sophus.gbc.d2.Barycenter;
+import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.ply.d2.Barycenter;
-import ch.alpine.sophus.ply.d2.ThreePointCoordinate;
 import ch.alpine.tensor.DeterminateScalarQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

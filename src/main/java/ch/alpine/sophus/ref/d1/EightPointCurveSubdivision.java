@@ -1,12 +1,16 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.math.Nocopy;
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.alpine.sophus.math.SplitInterface;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.Integers;
 
 public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
   private static final Scalar PQ = RationalScalar.of(49, 44);
@@ -25,7 +29,7 @@ public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
   public Tensor cyclic(Tensor tensor) {
     ScalarQ.thenThrow(tensor);
     int length = tensor.length();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     for (int index = 0; index < length; ++index) {
       int first = Math.floorMod(index - 3, length);
       Tensor p = tensor.get((first + 0) % length);
@@ -36,9 +40,11 @@ public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
       Tensor u = tensor.get((first + 5) % length);
       Tensor v = tensor.get((first + 6) % length);
       Tensor w = tensor.get((first + 7) % length);
-      curve.append(s).append(center(p, q, r, s, t, u, v, w));
+      list.add(s);
+      list.add(center(p, q, r, s, t, u, v, w));
     }
-    return curve.tensor();
+    Integers.requireEquals(list.size(), 2 * length);
+    return Unprotect.using(list);
   }
 
   private Tensor center(Tensor p, Tensor q, Tensor r, Tensor s, Tensor t, Tensor u, Tensor v, Tensor w) {

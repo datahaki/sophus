@@ -43,7 +43,7 @@ public class IterativeBiinvariantMeanTest extends TestCase {
     double denom = 1 + Math.PI / 4 * (Math.sqrt(2) / (2 - Math.sqrt(2)));
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     IterativeBiinvariantMean bMI = IterativeBiinvariantMean.of(Se2Manifold.INSTANCE, Chop._12);
-    Tensor actual = bMI.apply(sequenceUnordered, weights).get();
+    Tensor actual = bMI.apply(sequenceUnordered, weights).orElseThrow();
     Tolerance.CHOP.requireClose(actual, expected);
   }
   // Tests form more groups however i think that e.g. HE1 could cause problems due to tensor of tensor structure.
@@ -59,7 +59,7 @@ public class IterativeBiinvariantMeanTest extends TestCase {
           Serialization.copy(IterativeBiinvariantMean.of(Se2CoveringManifold.INSTANCE, Chop._12));
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
-        Tolerance.CHOP.requireClose(actual, result.get());
+        Tolerance.CHOP.requireClose(actual, result.orElseThrow());
         ++success;
       }
     }

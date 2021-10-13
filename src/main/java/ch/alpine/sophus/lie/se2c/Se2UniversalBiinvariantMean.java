@@ -31,7 +31,7 @@ public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializabl
     return new Se2UniversalBiinvariantMean(Se2Group.INSTANCE, scalarBiinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   private static final Scalar ZERO = RealScalar.ZERO;
   // ---
   private final LieGroup lieGroup;
@@ -53,7 +53,7 @@ public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializabl
         .map(lieGroupElement.inverse()::combine) //
         .map(xya -> Se2Skew.of(xya, weights.Get(atomicInteger.getAndIncrement()))) //
         .reduce(Se2Skew::add) //
-        .get().solve();
+        .orElseThrow().solve();
     return lieGroupElement.combine(tmean.append(amean.zero()));
   }
 }

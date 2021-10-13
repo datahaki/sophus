@@ -4,8 +4,8 @@ package ch.alpine.sophus.lie.gl;
 import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
 
 /** Exp_e[X] and Log_e[M]
  * 

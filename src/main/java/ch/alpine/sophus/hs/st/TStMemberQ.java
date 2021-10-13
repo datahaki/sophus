@@ -5,8 +5,8 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.math.MemberQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixDotTranspose;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
+import ch.alpine.tensor.mat.MatrixDotTranspose;
 import ch.alpine.tensor.sca.Chop;
 
 /** Reference: geomstats */

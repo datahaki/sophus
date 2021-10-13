@@ -3,8 +3,8 @@ package ch.alpine.sophus.lie.so;
 
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.MatrixDotTranspose;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.mat.MatrixDotTranspose;
 
 /** Reference: http://ethaneade.com/lie.pdf */
 public class SoGroupElement implements LieGroupElement {
@@ -14,7 +14,7 @@ public class SoGroupElement implements LieGroupElement {
     return new SoGroupElement(SoMemberQ.INSTANCE.require(matrix));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor matrix;
 
   private SoGroupElement(Tensor matrix) {

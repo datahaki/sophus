@@ -29,7 +29,7 @@ public class ClothoidSolutions implements Serializable {
     return new ClothoidSolutions(Subdivide.increasing(clip, n));
   }
 
-  /***************************************************/
+  // ---
   /** -min == max for tests to pass */
   public final Tensor probes;
 

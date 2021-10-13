@@ -6,8 +6,8 @@ import java.io.Serializable;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.mat.Inverse;
 import ch.alpine.tensor.mat.SquareMatrixQ;
+import ch.alpine.tensor.mat.re.Inverse;
 
 /** Element of the Lie group GL(n) of invertible square matrices.
  * 
@@ -24,7 +24,7 @@ public class GlGroupElement implements LieGroupElement, Serializable {
     return new GlGroupElement(matrix, Inverse.of(matrix));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor matrix;
   private final Tensor inverse;
 

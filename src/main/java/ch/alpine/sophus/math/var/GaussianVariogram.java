@@ -21,7 +21,7 @@ public class GaussianVariogram implements ScalarUnaryOperator {
     return new GaussianVariogram(Sign.requirePositive(r0));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar r0;
 
   private GaussianVariogram(Scalar r0) {

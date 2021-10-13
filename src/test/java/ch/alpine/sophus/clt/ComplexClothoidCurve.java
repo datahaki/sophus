@@ -2,8 +2,8 @@
 package ch.alpine.sophus.clt;
 
 import ch.alpine.sophus.lie.so2.So2;
+import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.sophus.math.Geodesic;
-import ch.alpine.sophus.math.d2.ArcTan2D;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

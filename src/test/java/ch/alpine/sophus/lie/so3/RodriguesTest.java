@@ -1,6 +1,8 @@
 // code by jph / ob
 package ch.alpine.sophus.lie.so3;
 
+import java.util.function.BinaryOperator;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -10,7 +12,8 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.Cross;
-import ch.alpine.tensor.lie.MatrixExp;
+import ch.alpine.tensor.lie.LeviCivitaTensor;
+import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -19,10 +22,12 @@ import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Orthogonalize;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.UnitaryMatrixQ;
+import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
 import ch.alpine.tensor.mat.qr.QRSignOperator;
 import ch.alpine.tensor.mat.qr.QRSignOperators;
 import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.VectorInfinityNorm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
@@ -30,9 +35,28 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.N;
 import junit.framework.TestCase;
 
 public class RodriguesTest extends TestCase {
+  public void testConvergenceSo3() {
+    Tensor x = Tensors.vector(0.1, 0.2, 0.05);
+    Tensor y = Tensors.vector(0.02, -0.1, -0.04);
+    Tensor mX = Rodrigues.vectorExp(x);
+    Tensor mY = Rodrigues.vectorExp(y);
+    Tensor res = Rodrigues.INSTANCE.vectorLog(mX.dot(mY));
+    Tensor ad = N.DOUBLE.of(LeviCivitaTensor.of(3).negate());
+    Scalar cmp = RealScalar.ONE;
+    for (int degree = 1; degree < 6; ++degree) {
+      BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
+      Tensor z = binaryOperator.apply(x, y);
+      Scalar err = Vector2Norm.between(res, z);
+      assertTrue(Scalars.lessThan(err, cmp));
+      cmp = err;
+    }
+    Chop._08.requireZero(cmp);
+  }
+
   public void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor m1 = Rodrigues.vectorExp(vector);

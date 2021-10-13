@@ -5,11 +5,12 @@ import java.util.Objects;
 
 import ch.alpine.sophus.clt.par.ClothoidIntegral;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.math.d2.ArcTan2D;
+import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Abs;
@@ -76,7 +77,8 @@ import ch.alpine.tensor.sca.Real;
    * @param z
    * @param vector of length 2 with entries that may be {@link Quantity}
    * @return vector of length 2 with real entries corresponding to real and imag of result */
-  /* package */ static Tensor prod(Scalar z, Tensor vector) {
+  @PackageTestAccess
+  static Tensor prod(Scalar z, Tensor vector) {
     Scalar zr = Real.FUNCTION.apply(z);
     Scalar zi = Imag.FUNCTION.apply(z);
     Scalar v0 = vector.Get(0);

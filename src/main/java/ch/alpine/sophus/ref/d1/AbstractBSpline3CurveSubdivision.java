@@ -1,11 +1,15 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.math.Nocopy;
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** examples of extensions are
  * LaneRiesenfeld3CurveSubdivision
@@ -17,12 +21,15 @@ public abstract class AbstractBSpline3CurveSubdivision extends AbstractBSpline1C
     int length = tensor.length();
     if (length < 2)
       return tensor.copy();
-    Nocopy curve = new Nocopy(2 * length);
+    List<Tensor> list = new ArrayList<>(2 * length);
     Tensor p = Last.of(tensor);
     Tensor q = tensor.get(0);
-    for (int index = 1; index <= length; ++index)
-      curve.append(center(p, p = q, q = tensor.get(index % length))).append(midpoint(p, q));
-    return curve.tensor();
+    for (int index = 1; index <= length; ++index) {
+      list.add(center(p, p = q, q = tensor.get(index % length)));
+      list.add(midpoint(p, q));
+    }
+    Integers.requireEquals(list.size(), 2 * length);
+    return Unprotect.using(list);
   }
 
   @Override // from CurveSubdivision

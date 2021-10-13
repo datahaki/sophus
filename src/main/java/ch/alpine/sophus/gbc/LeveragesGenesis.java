@@ -32,7 +32,7 @@ public class LeveragesGenesis implements Genesis, Serializable {
     return new LeveragesGenesis(Objects.requireNonNull(variogram));
   }
 
-  /***************************************************/
+  // ---
   private final ScalarUnaryOperator variogram;
 
   private LeveragesGenesis(ScalarUnaryOperator variogram) {

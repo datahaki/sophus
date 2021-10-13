@@ -19,6 +19,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** GeodesicCenter projects a sequence of points to their geodesic center
@@ -29,7 +30,7 @@ import ch.alpine.tensor.itp.BinaryAverage;
  * 
  * @see CenterFilter */
 public class GeodesicCenter implements TensorUnaryOperator {
-  private static final int CACHE_MAX_SIZE = 24;
+  private static final int CACHE_SIZE = 24;
 
   /** @param binaryAverage
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
@@ -49,11 +50,12 @@ public class GeodesicCenter implements TensorUnaryOperator {
    * @return
    * @throws Exception if either input parameter is null */
   public static TensorUnaryOperator of(BinaryAverage binaryAverage, ScalarUnaryOperator windowFunction) {
-    return new GeodesicCenter(binaryAverage, UniformWindowSampler.of(windowFunction));
+    return of(binaryAverage, UniformWindowSampler.of(windowFunction));
   }
 
-  /***************************************************/
-  /* package */ static class Splits implements Function<Integer, Tensor>, Serializable {
+  // ---
+  @PackageTestAccess
+  static class Splits implements Function<Integer, Tensor>, Serializable {
     private final Function<Integer, Tensor> function;
 
     public Splits(Function<Integer, Tensor> function) {
@@ -68,7 +70,8 @@ public class GeodesicCenter implements TensorUnaryOperator {
     /** @param mask symmetric vector of odd length
      * @return weights of Kalman-style iterative moving average
      * @throws Exception if mask is not symmetric or has even number of elements */
-    /* package */ static Tensor of(Tensor mask) {
+    @PackageTestAccess
+    static Tensor of(Tensor mask) {
       if (Integers.isEven(mask.length()))
         throw TensorRuntimeException.of(mask);
       SymmetricVectorQ.require(mask);
@@ -87,13 +90,13 @@ public class GeodesicCenter implements TensorUnaryOperator {
     }
   }
 
-  /***************************************************/
+  // ---
   private final BinaryAverage binaryAverage;
   private final Function<Integer, Tensor> function;
 
   private GeodesicCenter(BinaryAverage binaryAverage, Function<Integer, Tensor> function) {
     this.binaryAverage = Objects.requireNonNull(binaryAverage);
-    this.function = Cache.of(new Splits(function), CACHE_MAX_SIZE);
+    this.function = Cache.of(new Splits(function), CACHE_SIZE);
   }
 
   @Override // from TensorUnaryOperator

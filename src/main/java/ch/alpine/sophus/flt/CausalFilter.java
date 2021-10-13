@@ -14,7 +14,7 @@ public class CausalFilter implements TensorUnaryOperator {
     return new CausalFilter(Objects.requireNonNull(supplier));
   }
 
-  /***************************************************/
+  // ---
   private final Supplier<TensorUnaryOperator> supplier;
 
   private CausalFilter(Supplier<TensorUnaryOperator> supplier) {

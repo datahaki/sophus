@@ -19,7 +19,7 @@ public class PriorityClothoid implements ClothoidBuilder, Serializable {
     return new PriorityClothoid(Objects.requireNonNull(comparator));
   }
 
-  /***************************************************/
+  // ---
   private final Comparator<Clothoid> comparator;
 
   private PriorityClothoid(Comparator<Clothoid> comparator) {
@@ -32,7 +32,7 @@ public class PriorityClothoid implements ClothoidBuilder, Serializable {
     Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
     return ClothoidEmit.stream(clothoidContext, search.lambdas()) //
         .min(comparator) //
-        .get();
+        .orElseThrow();
   }
 
   @Override

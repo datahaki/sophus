@@ -5,7 +5,7 @@ import ch.alpine.sophus.lie.so3.So3RandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.mat.Inverse;
+import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;

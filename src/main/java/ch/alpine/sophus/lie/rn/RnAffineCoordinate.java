@@ -7,7 +7,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.PseudoInverse;
+import ch.alpine.tensor.mat.pi.PseudoInverse;
 import ch.alpine.tensor.red.Mean;
 
 /** Affine coordinates created by n points in d-dimensional vector space

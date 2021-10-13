@@ -21,6 +21,8 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.QuantityUnit;
+import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -187,10 +189,12 @@ public class ClothoidTest extends TestCase {
   }
 
   public void testFixedLeftUnit() {
-    LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve( //
+    LagrangeQuadraticD lagrangeQuadraticD = CLOTHOID_BUILDER.curve( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
-    Chop._01.requireClose(headTailInterface.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
-    Chop._01.requireClose(headTailInterface.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
+    Chop._01.requireClose(lagrangeQuadraticD.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
+    Chop._01.requireClose(lagrangeQuadraticD.tail(), Quantity.of(-1.2149956565247715, "m^-1")); // cl3
+    Scalar integralAbs = lagrangeQuadraticD.integralAbs();
+    assertEquals(QuantityUnit.of(integralAbs), Unit.of("m^-1"));
   }
 
   public void testOfLeftUnit() {

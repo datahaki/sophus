@@ -21,7 +21,7 @@ import ch.alpine.tensor.nrm.Hypot;
  * @see Se2Parametric */
 public class Se2CoveringParametric implements TensorMetric, Serializable {
   public static final TensorMetric INSTANCE = new Se2CoveringParametric(Se2CoveringGroup.INSTANCE);
-  /***************************************************/
+  // ---
   private final LieGroup lieGroup;
 
   /* package */ Se2CoveringParametric(LieGroup lieGroup) {

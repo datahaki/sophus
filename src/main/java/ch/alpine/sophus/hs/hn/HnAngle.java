@@ -38,7 +38,7 @@ public class HnAngle implements TensorScalarFunction {
     return new Inner(y, _cosh_d(y)).log();
   }
 
-  /***************************************************/
+  // ---
   private class Inner {
     private final Tensor y;
     private final Scalar cosh_d;

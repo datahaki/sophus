@@ -42,37 +42,4 @@ public enum Se2Matrix {
     return Tensors.of(matrix.Get(0, 2), matrix.Get(1, 2), //
         ArcTan.of(matrix.Get(0, 0), matrix.Get(1, 0))); // arc tan is numerically stable
   }
-
-  /** @param vector of the form {px, py, ...}
-   * @return
-   * <pre>
-   * [1 0 px]
-   * [0 1 py]
-   * [0 0 1]
-   * </pre> */
-  public static Tensor translation(Tensor xy) {
-    return Tensors.matrix(new Scalar[][] { //
-        { RealScalar.ONE, RealScalar.ZERO, xy.Get(0) }, //
-        { RealScalar.ZERO, RealScalar.ONE, xy.Get(1) }, //
-        { RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE }, //
-    });
-  }
-
-  /** Hint: function is useful to construct a pixel2model matrix
-   * for an image of given height.
-   * 
-   * @param height
-   * @return matrix with determinant -1
-   * <pre>
-   * [1 0 0]
-   * [0 -1 height]
-   * [0 0 1]
-   * </pre> */
-  public static Tensor flipY(int height) {
-    return Tensors.matrix(new Scalar[][] { //
-        { RealScalar.ONE, RealScalar.ZERO, RealScalar.ZERO }, //
-        { RealScalar.ZERO, RealScalar.ONE.negate(), RealScalar.of(height) }, //
-        { RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE }, //
-    });
-  }
 }

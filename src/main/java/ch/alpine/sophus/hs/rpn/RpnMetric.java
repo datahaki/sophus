@@ -14,7 +14,7 @@ public enum RpnMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor x, Tensor y) {
-    Scalar d_xy = VectorAngle.of(x, y).get();
+    Scalar d_xy = VectorAngle.of(x, y).orElseThrow();
     return Min.of(d_xy, Pi.VALUE.subtract(d_xy));
   }
 }

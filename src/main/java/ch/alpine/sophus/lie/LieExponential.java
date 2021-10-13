@@ -21,7 +21,7 @@ public class LieExponential implements HsManifold, Serializable {
         Objects.requireNonNull(exponential));
   }
 
-  /***************************************************/
+  // ---
   private final LieGroup lieGroup;
   private final Exponential exponential;
 

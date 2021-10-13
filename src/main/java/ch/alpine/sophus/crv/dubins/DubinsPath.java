@@ -15,6 +15,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Accumulate;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Sign;
 
@@ -73,7 +74,8 @@ public class DubinsPath implements Serializable {
      * @param radius positive
      * @return vector with first and second entry unitless.
      * result is multiplied with length of segment */
-    /* package */ Tensor tangent(int index, Scalar radius) {
+    @PackageTestAccess
+    Tensor tangent(int index, Scalar radius) {
       return Tensors.of(RealScalar.ONE, RealScalar.ZERO, //
           signature.Get(index).divide(Sign.requirePositive(radius)));
     }
@@ -91,10 +93,10 @@ public class DubinsPath implements Serializable {
         segLength.stream() //
             .map(Scalar.class::cast) //
             .map(Sign::requirePositiveOrZero) //
-            .reduce(Scalar::add).get());
+            .reduce(Scalar::add).orElseThrow());
   }
 
-  /***************************************************/
+  // ---
   private final Type type;
   private final Scalar radius;
   private final Tensor segLength;

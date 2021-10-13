@@ -24,7 +24,7 @@ public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializab
     return new CatmullClarkRefinement(Objects.requireNonNull(biinvariantMean));
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
   private final SurfaceMeshRefinement surfaceMeshRefinement;
 

@@ -25,11 +25,11 @@ public abstract class Regularization2Step implements TensorUnaryOperator {
     return new Regularization2StepString(splitInterface, factor);
   }
 
-  /***************************************************/
+  // ---
   private final SplitInterface splitInterface;
   private final Scalar factor;
 
-  /* package */ Regularization2Step(SplitInterface splitInterface, Scalar factor) {
+  protected Regularization2Step(SplitInterface splitInterface, Scalar factor) {
     this.splitInterface = splitInterface;
     this.factor = factor;
   }

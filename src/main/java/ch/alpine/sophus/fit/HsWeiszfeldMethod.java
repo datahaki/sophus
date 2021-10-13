@@ -33,7 +33,7 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
         Objects.requireNonNull(chop));
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
   private final TensorUnaryOperator weightingInterface;
   private final Chop chop;

@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.se3;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.MatrixQ;
+import ch.alpine.tensor.mat.MatrixQ;
 import junit.framework.TestCase;
 
 public class Se3GeodesicTest extends TestCase {

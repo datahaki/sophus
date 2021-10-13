@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.sca.Chop;
 
 public class FindZero implements Serializable {
@@ -54,7 +55,8 @@ public class FindZero implements Serializable {
    * @param y0
    * @param y1
    * @return (x0 y1 - x1 y0) / (y1 - y0) */
-  /* package */ static Scalar linear(Scalar x0, Scalar x1, Scalar y0, Scalar y1) {
+  @PackageTestAccess
+  static Scalar linear(Scalar x0, Scalar x1, Scalar y0, Scalar y1) {
     return x0.multiply(y1).subtract(x1.multiply(y0)).divide(y1.subtract(y0));
   }
 }

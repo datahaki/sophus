@@ -30,7 +30,7 @@ public class MetricPointcloudDistance implements TensorScalarFunction {
         Objects.requireNonNull(tensorMetric));
   }
 
-  /***************************************************/
+  // ---
   private final Tensor points;
   private final TensorMetric tensorMetric;
 
@@ -43,6 +43,6 @@ public class MetricPointcloudDistance implements TensorScalarFunction {
   public Scalar apply(Tensor point) {
     return points.stream() //
         .map(vector -> tensorMetric.distance(point, vector)) //
-        .min(Scalars::compare).get();
+        .min(Scalars::compare).orElseThrow();
   }
 }

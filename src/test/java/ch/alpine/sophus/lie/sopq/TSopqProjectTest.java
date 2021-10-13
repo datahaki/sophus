@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
-import ch.alpine.tensor.lie.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import junit.framework.TestCase;

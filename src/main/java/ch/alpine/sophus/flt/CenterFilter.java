@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.flt;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.flt.bm.BiinvariantMeanCenter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ImageFilter;
@@ -47,7 +49,7 @@ public class CenterFilter implements TensorUnaryOperator {
         Integers.requirePositiveOrZero(radius));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
   private final int radius;
 
@@ -58,13 +60,14 @@ public class CenterFilter implements TensorUnaryOperator {
 
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
-    Tensor result = Tensors.reserve(tensor.length());
+    List<Tensor> list = new ArrayList<>(tensor.length());
     for (int index = 0; index < tensor.length(); ++index) {
       int lo = Math.max(0, index - radius);
       int hi = Math.min(index + radius, tensor.length() - 1);
       int delta = Math.min(index - lo, hi - index);
-      result.append(tensorUnaryOperator.apply(tensor.extract(index - delta, index + delta + 1)));
+      list.add(tensorUnaryOperator.apply(tensor.extract(index - delta, index + delta + 1)));
     }
-    return result;
+    Integers.requireEquals(list.size(), tensor.length());
+    return Unprotect.using(list);
   }
 }

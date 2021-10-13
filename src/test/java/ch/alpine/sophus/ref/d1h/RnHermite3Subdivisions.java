@@ -91,7 +91,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
     return A1;
   }
 
-  /***************************************************/
+  // ---
   private static final HermiteSubdivision A2 = //
       new RnHermite3Subdivision( //
           Tensors.fromString("{{1/2, +5/56}, {-7/12, -1/24}}"), //

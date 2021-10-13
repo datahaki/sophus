@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import java.util.Random;
+
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -24,12 +26,13 @@ public class Se2GeodesicTest extends TestCase {
   }
 
   public void testBiinvariantMean() {
+    Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(-10, 8);
     Distribution wd = UniformDistribution.unit();
     for (int count = 0; count < 10; ++count) {
-      Tensor p = RandomVariate.of(distribution, 3);
-      Tensor q = RandomVariate.of(distribution, 3);
-      Scalar w = RandomVariate.of(wd);
+      Tensor p = RandomVariate.of(distribution, random, 3);
+      Tensor q = RandomVariate.of(distribution, random, 3);
+      Scalar w = RandomVariate.of(wd, random);
       Tensor mean = Se2BiinvariantMeans.FILTER.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
       Tensor splt = Se2Geodesic.INSTANCE.split(p, q, w);
       splt.set(So2.MOD, 2);

@@ -29,7 +29,7 @@ import ch.alpine.tensor.io.Export;
   private Scalar function(int y, int x) {
     Tensor q = Tensors.of(RE.Get(x), IM.Get(y), angle);
     LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(q.map(Scalar::zero), q).curvature();
-    return headTailInterface.absMax().reciprocal();
+    return headTailInterface.maxAbs().reciprocal();
   }
 
   public static void main(String[] args) throws IOException {

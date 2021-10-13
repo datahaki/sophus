@@ -1,13 +1,16 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import ch.alpine.sophus.math.MidpointInterface;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.ext.Integers;
 
 /** linear B-spline
  * 
@@ -35,12 +38,16 @@ public abstract class AbstractBSpline1CurveSubdivision implements CurveSubdivisi
 
   private Tensor stringNonEmpty(Tensor tensor) {
     int length = tensor.length();
-    Tensor curve = Tensors.reserve(2 * length);
+    int capacity = 2 * length - 1;
+    List<Tensor> list = new ArrayList<>(capacity);
     Iterator<Tensor> iterator = tensor.iterator();
     Tensor p = iterator.next();
-    curve.append(p);
-    while (iterator.hasNext())
-      curve.append(midpoint(p, p = iterator.next())).append(p);
-    return curve;
+    list.add(p.copy());
+    while (iterator.hasNext()) {
+      list.add(midpoint(p, p = iterator.next()));
+      list.add(p.copy());
+    }
+    Integers.requireEquals(list.size(), capacity);
+    return Unprotect.using(list);
   }
 }

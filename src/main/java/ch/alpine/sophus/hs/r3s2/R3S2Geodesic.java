@@ -22,7 +22,7 @@ public enum R3S2Geodesic implements Geodesic {
 
   private static final Tensor ID3 = IdentityMatrix.of(3);
 
-  @Override // from TensorGeodesic
+  @Override // from Geodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor pt = p.get(0);
     Tensor pn = p.get(1);

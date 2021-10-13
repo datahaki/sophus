@@ -17,7 +17,7 @@ public class Split3Dual3PointCurveSubdivision extends Dual3PointCurveSubdivision
     return new Split3Dual3PointCurveSubdivision(binaryAverage, pq_f, qr_f, pqqr);
   }
 
-  /***************************************************/
+  // ---
   private final Scalar lo_pq;
   private final Scalar lo_qr;
   private final Scalar lo_pqqr;

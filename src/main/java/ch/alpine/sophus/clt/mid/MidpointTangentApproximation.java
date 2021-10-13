@@ -29,7 +29,7 @@ public class MidpointTangentApproximation implements BinaryOperator<Scalar> {
     return new MidpointTangentApproximation(Objects.requireNonNull(binaryOperator));
   }
 
-  /***************************************************/
+  // ---
   private final BinaryOperator<Scalar> binaryOperator;
 
   private MidpointTangentApproximation(BinaryOperator<Scalar> binaryOperator) {

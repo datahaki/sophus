@@ -7,7 +7,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.num.Series;
+import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Log;
 import ch.alpine.tensor.sca.Sinc;
@@ -20,7 +20,7 @@ public enum Logc implements ScalarUnaryOperator {
   FUNCTION;
 
   private static final ScalarUnaryOperator SERIES = //
-      Series.of(Tensors.vector(i -> RationalScalar.of(Integers.isEven(i) ? 1 : -1, i + 1), 10));
+      Polynomial.of(Tensors.vector(i -> RationalScalar.of(Integers.isEven(i) ? 1 : -1, i + 1), 10));
 
   @Override
   public Scalar apply(Scalar lambda) {

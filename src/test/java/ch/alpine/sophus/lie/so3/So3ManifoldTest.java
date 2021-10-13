@@ -40,20 +40,19 @@ public class So3ManifoldTest extends TestCase {
   }
 
   public void testLinearReproduction() {
-    Random random = new Random();
+    Random random = new Random(4);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    int fails = 0;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       int n = 4 + random.nextInt(2);
-      try {
-        Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
-        Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
+      {
+        Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(Rodrigues::vectorExp));
+        Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, random, 3));
         Tensor weights1 = barycentricCoordinate.weights(sequence, mean);
         Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
         Chop._08.requireClose(mean, o2);
         // ---
-        LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3());
+        LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3(random));
         Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
         Tensor weights2 = barycentricCoordinate.weights(seqlft, lieGroupElement.combine(mean));
         Chop._06.requireClose(weights1, weights2);
@@ -63,11 +62,8 @@ public class So3ManifoldTest extends TestCase {
           Chop._06.requireClose(weights1, //
               barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean)));
         }
-      } catch (Exception exception) {
-        ++fails;
       }
     }
-    assertTrue(fails <= 2);
   }
 
   public void testLagrange() {

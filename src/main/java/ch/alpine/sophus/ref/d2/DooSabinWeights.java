@@ -9,15 +9,18 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Cos;
 
 /* package */ enum DooSabinWeights implements Function<Integer, Tensor> {
   INSTANCE;
 
-  public static final Function<Integer, Tensor> CACHE = Cache.of(INSTANCE, 3 * 16);
+  private static final int CACHE_SIZE = 48;
+  public static final Function<Integer, Tensor> CACHE = Cache.of(INSTANCE, CACHE_SIZE);
 
-  /* package */ static Tensor numeric(int n) {
+  @PackageTestAccess
+  static Tensor numeric(int n) {
     Tensor w = Range.of(1, n).multiply(Pi.TWO).divide(RealScalar.of(n));
     Tensor p = Cos.of(w).multiply(RealScalar.TWO).map(s -> s.add(RealScalar.of(3)));
     return Join.of(Tensors.vector(n + 5), p).divide(RealScalar.of(4 * n));

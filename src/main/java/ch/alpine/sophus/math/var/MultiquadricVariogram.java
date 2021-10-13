@@ -33,7 +33,7 @@ public class MultiquadricVariogram implements ScalarUnaryOperator {
         : new MultiquadricVariogram(Sign.requirePositive(r0));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar r0;
   private final Scalar r0_squared;
 

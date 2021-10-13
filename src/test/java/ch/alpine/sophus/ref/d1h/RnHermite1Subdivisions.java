@@ -37,7 +37,7 @@ import ch.alpine.tensor.Tensors;
     return new RnHermite1Subdivision(AMP, AMQ);
   }
 
-  /***************************************************/
+  // ---
   /** Example 3.8, eq. 29, p. 572
    * "Construction of Hermite subdivision schemes reproducing polynomials", 2017
    * by Byeongseon Jeong, Jungho Yoon

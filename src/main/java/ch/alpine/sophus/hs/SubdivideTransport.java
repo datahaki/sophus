@@ -30,7 +30,7 @@ public class SubdivideTransport implements HsTransport, Serializable {
         n);
   }
 
-  /***************************************************/
+  // ---
   private final HsTransport hsTransport;
   private final Geodesic geodesicInterface;
   private final Tensor domain;

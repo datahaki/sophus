@@ -25,7 +25,7 @@ public class HsCoordinates implements BarycentricCoordinate, Serializable {
     return new HsCoordinates(vectorLogManifold, genesis);
   }
 
-  /***************************************************/
+  // ---
   private final HsDesign hsDesign;
   private final Genesis genesis;
 

@@ -49,7 +49,7 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
         Math.min(knots.length() - 1, Integers.requirePositiveOrZero(degree)));
   }
 
-  /***************************************************/
+  // ---
   private final Scalar[] knots;
   private final Scalar[] w;
 

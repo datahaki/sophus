@@ -23,10 +23,11 @@ import ch.alpine.tensor.num.Binomial;
  * 
  * RHS=[1 1 1 1]' */
 public class MonomialExtrapolationMask implements Function<Integer, Tensor>, Serializable {
+  private static final int CACHE_SIZE = 32;
   public static final Function<Integer, Tensor> INSTANCE = //
-      Cache.of(new MonomialExtrapolationMask(), 32);
+      Cache.of(new MonomialExtrapolationMask(), CACHE_SIZE);
 
-  /***************************************************/
+  // ---
   private MonomialExtrapolationMask() {
     // ---
   }

@@ -23,7 +23,7 @@ public class InverseMultiquadricVariogram extends MultiquadricVariogram {
     return of(RealScalar.of(r0));
   }
 
-  /***************************************************/
+  // ---
   private InverseMultiquadricVariogram(Scalar r0) {
     super(r0);
   }

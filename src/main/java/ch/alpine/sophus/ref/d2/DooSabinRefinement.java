@@ -22,7 +22,7 @@ public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
     return new DooSabinRefinement(Objects.requireNonNull(biinvariantMean));
   }
 
-  /***************************************************/
+  // ---
   private final BiinvariantMean biinvariantMean;
 
   private DooSabinRefinement(BiinvariantMean biinvariantMean) {

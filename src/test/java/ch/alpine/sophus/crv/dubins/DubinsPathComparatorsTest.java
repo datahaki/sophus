@@ -23,7 +23,7 @@ public class DubinsPathComparatorsTest extends TestCase {
     Tensor start = RandomVariate.of(distribution, 3);
     Tensor end = RandomVariate.of(distribution, 3);
     for (DubinsPathComparators dubinsPathComparator : DubinsPathComparators.values()) {
-      DubinsPath dubinsPath = FixedRadiusDubins.of(start, end, RealScalar.ONE).stream().min(dubinsPathComparator).get();
+      DubinsPath dubinsPath = FixedRadiusDubins.of(start, end, RealScalar.ONE).stream().min(dubinsPathComparator).orElseThrow();
       Scalar scalar = Vector2Norm.between(start.extract(0, 2), end.extract(0, 2));
       assertTrue(Scalars.lessThan(scalar, dubinsPath.length()));
       Tensor segments = dubinsPath.segments();

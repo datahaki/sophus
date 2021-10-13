@@ -27,7 +27,7 @@ public class MSpline4CurveSubdivision extends Dual3PointCurveSubdivision {
     return new MSpline4CurveSubdivision(binaryAverage, biinvariantMean);
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator lo;
   private final TensorUnaryOperator hi;
 

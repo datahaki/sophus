@@ -81,7 +81,7 @@ public class MetricCoordinate implements Genesis, Serializable {
     return AFFINE;
   }
 
-  /***************************************************/
+  // ---
   private final Genesis genesis;
 
   private MetricCoordinate(Genesis genesis) {

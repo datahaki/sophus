@@ -28,7 +28,7 @@ public class GardenDistanceVector implements TensorUnaryOperator {
     return new GardenDistanceVector(Objects.requireNonNull(vectorLogManifold), sequence);
   }
 
-  /***************************************************/
+  // ---
   private final List<TangentSpace> tangentSpaces;
   private final List<Mahalanobis> array;
 

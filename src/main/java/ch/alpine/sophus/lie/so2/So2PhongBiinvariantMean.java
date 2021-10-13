@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.so2;
 
 import ch.alpine.sophus.lie.ScalarBiinvariantMean;
-import ch.alpine.sophus.math.d2.ArcTan2D;
+import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.AngleVector;

@@ -26,13 +26,13 @@ public class GeodesicFIRn implements TensorUnaryOperator {
         Objects.requireNonNull(alpha));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator geodesicExtrapolation;
   private final BinaryAverage binaryAverage;
   private final Scalar alpha;
   private final BoundedLinkedList<Tensor> boundedLinkedList;
 
-  /* package */ GeodesicFIRn( //
+  private GeodesicFIRn( //
       TensorUnaryOperator geodesicExtrapolation, BinaryAverage binaryAverage, int radius, Scalar alpha) {
     this.geodesicExtrapolation = geodesicExtrapolation;
     this.binaryAverage = binaryAverage;

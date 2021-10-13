@@ -25,7 +25,7 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
         MetricBiinvariant.EUCLIDEAN.lagrainate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
   }
 
-  /***************************************************/
+  // ---
   private final TensorUnaryOperator tensorUnaryOperator;
 
   private BarycentricMetricInterpolation(TensorUnaryOperator tensorUnaryOperator) {

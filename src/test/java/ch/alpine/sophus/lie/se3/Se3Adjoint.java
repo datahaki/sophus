@@ -3,11 +3,11 @@ package ch.alpine.sophus.lie.se3;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.MatrixQ;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Cross;
-import ch.alpine.tensor.mat.Inverse;
+import ch.alpine.tensor.mat.MatrixQ;
+import ch.alpine.tensor.mat.re.Inverse;
 
 /** linear map that transforms tangent vector at the identity
  * to vector in tangent space of given group element

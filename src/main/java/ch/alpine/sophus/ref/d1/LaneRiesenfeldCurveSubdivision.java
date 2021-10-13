@@ -2,12 +2,14 @@
 package ch.alpine.sophus.ref.d1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import ch.alpine.sophus.math.MidpointInterface;
-import ch.alpine.sophus.math.Nocopy;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.ext.Integers;
 
@@ -23,7 +25,7 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
     return new LaneRiesenfeldCurveSubdivision(midpointInterface, Integers.requirePositive(degree));
   }
 
-  /***************************************************/
+  // ---
   /** linear curve subdivision */
   private final BSpline1CurveSubdivision bSpline1CurveSubdivision;
   private final int degree;
@@ -41,19 +43,20 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
       return tensor.copy();
     Tensor value = bSpline1CurveSubdivision.cyclic(tensor);
     for (int count = 2; count <= degree; ++count) {
-      Nocopy nocopy = new Nocopy(value.length());
+      List<Tensor> list = new ArrayList<>(value.length());
       if (Integers.isEven(count)) {
         Tensor p = value.get(0);
         for (int index = 1; index < value.length(); ++index)
-          nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
-        nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(0)));
+          list.add(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
+        list.add(bSpline1CurveSubdivision.midpoint(p, p = value.get(0)));
       } else {
         Tensor p = Last.of(value);
         for (int index = 0; index < value.length(); ++index)
-          nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
+          list.add(bSpline1CurveSubdivision.midpoint(p, p = value.get(index)));
       }
       tensor = value;
-      value = nocopy.tensor();
+      Integers.requireEquals(list.size(), value.length());
+      value = Unprotect.using(list);
     }
     return value;
   }
@@ -67,17 +70,19 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
     Tensor value = bSpline1CurveSubdivision.string(tensor);
     for (int count = 2; count <= degree; ++count) {
       boolean odd = !Integers.isEven(count);
-      Nocopy nocopy = new Nocopy(value.length() + 1);
+      int capacity = value.length() + (odd ? 1 : -1);
+      List<Tensor> list = new ArrayList<>(capacity);
       if (odd)
-        nocopy.append(tensor.get(0));
+        list.add(tensor.get(0));
       Iterator<Tensor> iterator = value.iterator();
       Tensor p = iterator.next();
       while (iterator.hasNext())
-        nocopy.append(bSpline1CurveSubdivision.midpoint(p, p = iterator.next()));
+        list.add(bSpline1CurveSubdivision.midpoint(p, p = iterator.next()));
       if (odd)
-        nocopy.append(Last.of(tensor));
+        list.add(Last.of(tensor));
       tensor = value;
-      value = nocopy.tensor();
+      Integers.requireEquals(list.size(), capacity);
+      value = Unprotect.using(list);
     }
     return value;
   }

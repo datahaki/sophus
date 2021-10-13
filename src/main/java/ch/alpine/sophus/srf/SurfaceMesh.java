@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -34,8 +34,9 @@ public class SurfaceMesh implements Serializable {
 
   /** @return vert to face index */
   public List<List<Integer>> vertToFace() {
-    List<List<Integer>> list = IntStream.range(0, vrt.length()) //
-        .mapToObj(i -> new ArrayList<Integer>()) //
+    @SuppressWarnings("unused")
+    List<List<Integer>> list = Stream.generate(() -> new ArrayList<Integer>()) //
+        .limit(vrt.length()) //
         .collect(Collectors.toList());
     // ---
     int index = 0;

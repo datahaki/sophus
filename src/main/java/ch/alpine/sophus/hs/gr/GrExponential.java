@@ -4,15 +4,15 @@ package ch.alpine.sophus.hs.gr;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.Vectorize;
+import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
+import ch.alpine.tensor.lie.MatrixBracket;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
 
 /** Reference:
  * Geomstats: A Python Package for Riemannian Geometry in Machine Learning
@@ -64,6 +64,6 @@ public class GrExponential implements Exponential, Serializable {
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
     // TODO k * (n - k) coefficients are sufficient according to theory
-    return Vectorize.of(log(q), 0); // n (n + 1) / 2
+    return LowerVectorize.of(log(q), 0); // n (n + 1) / 2
   }
 }

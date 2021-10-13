@@ -5,7 +5,7 @@ import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.mat.LinearSolve;
+import ch.alpine.tensor.mat.re.LinearSolve;
 
 /** Sym+(n) == GL+(n)/SO(n)
  * 

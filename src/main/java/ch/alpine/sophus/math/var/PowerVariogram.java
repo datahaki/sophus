@@ -44,6 +44,7 @@ public class PowerVariogram implements ScalarUnaryOperator {
    * @param exponent in the range [1, 2)
    * @return
    * @throws Exception if values is not a tensor of rank 1 */
+  // TODO fit function needs a demo
   public static PowerVariogram fit(TensorMetric tensorMetric, Tensor sequence, Tensor values, Scalar exponent) {
     Scalar[] y = ScalarArray.ofVector(values);
     final int n = sequence.length();
@@ -61,7 +62,7 @@ public class PowerVariogram implements ScalarUnaryOperator {
     return new PowerVariogram(num.divide(den), power);
   }
 
-  /***************************************************/
+  // ---
   private final Scalar alpha;
   private final ScalarUnaryOperator power;
 

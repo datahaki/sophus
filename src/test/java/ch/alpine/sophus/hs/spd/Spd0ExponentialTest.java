@@ -4,9 +4,9 @@ package ch.alpine.sophus.hs.spd;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.MatrixExp;
-import ch.alpine.tensor.lie.MatrixLog;
 import ch.alpine.tensor.mat.LowerTriangularize;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 

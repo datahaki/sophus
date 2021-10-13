@@ -16,17 +16,19 @@ import ch.alpine.tensor.ext.Cache;
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
  * with each point weighted as provided by an external function. */
 public class WindowSideExtrapolation implements Function<Integer, Tensor>, Serializable {
+  private static final int CACHE_SIZE = 32;
+
   /** @param windowFunction non-null
    * @return
    * @throws Exception if either input parameter is null */
   public static Function<Integer, Tensor> of(ScalarUnaryOperator windowFunction) {
-    return Cache.of(new WindowSideExtrapolation(windowFunction), 32);
+    return Cache.of(new WindowSideExtrapolation(windowFunction), CACHE_SIZE);
   }
 
-  /***************************************************/
+  // ---
   private final Function<Integer, Tensor> halfWindowSampler;
 
-  /* package */ WindowSideExtrapolation(ScalarUnaryOperator windowFunction) {
+  private WindowSideExtrapolation(ScalarUnaryOperator windowFunction) {
     halfWindowSampler = HalfWindowSampler.of(windowFunction);
   }
 

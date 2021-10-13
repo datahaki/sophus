@@ -4,13 +4,13 @@ package ch.alpine.sophus.math;
 import java.io.Serializable;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ArrayFlatten;
 import ch.alpine.tensor.alg.Join;
-import ch.alpine.tensor.mat.CholeskyDecomposition;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.ConjugateTranspose;
-import ch.alpine.tensor.mat.LeastSquares;
+import ch.alpine.tensor.mat.cd.CholeskyDecomposition;
+import ch.alpine.tensor.mat.pi.LeastSquares;
 
 /** Solves the following linear system
  * matrix=
@@ -20,8 +20,6 @@ import ch.alpine.tensor.mat.LeastSquares;
  * 
  * @see ArrayFlatten */
 public final class LagrangeMultiplier implements Serializable {
-  private static final long serialVersionUID = -867790329410465764L;
-  // ---
   private final int n;
   private final Tensor matrix;
   private final Tensor b;
@@ -32,12 +30,8 @@ public final class LagrangeMultiplier implements Serializable {
    * @param rhs vector of length d
    * @throws Exception if dimensions of input parameters do not match */
   public LagrangeMultiplier(Tensor eye, Tensor target, Tensor eqs, Tensor rhs) {
-    n = eye.length();
-    if (target.length() != n)
-      throw TensorRuntimeException.of(eye, target);
-    int d = eqs.length();
-    if (rhs.length() != d)
-      throw TensorRuntimeException.of(eqs, rhs);
+    n = Integers.requireEquals(target.length(), eye.length());
+    int d = Integers.requireEquals(rhs.length(), eqs.length());
     matrix = ArrayFlatten.of(new Tensor[][] { //
         { eye, ConjugateTranspose.of(eqs) }, //
         { eqs, Array.zeros(d, d) } });
