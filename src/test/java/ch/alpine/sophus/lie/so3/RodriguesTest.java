@@ -173,7 +173,7 @@ public class RodriguesTest extends TestCase {
     for (QRSignOperator qrSignOperator : QRSignOperators.values()) {
       qrDecomposition = QRDecomposition.of(A, qrSignOperator);
       Tensor Q = qrDecomposition.getQ();
-      Tensor Qi = qrDecomposition.getQTranspose();
+      Tensor Qi = qrDecomposition.getQConjugateTranspose();
       Tensor R = qrDecomposition.getR();
       Chop._10.requireClose(Q.dot(R), A);
       Chop._10.requireClose(Q.dot(Qi), IdentityMatrix.of(A.length()));

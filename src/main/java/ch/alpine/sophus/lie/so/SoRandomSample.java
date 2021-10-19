@@ -36,6 +36,6 @@ public class SoRandomSample implements RandomSampleInterface, Serializable {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    return QRDecomposition.of(RandomVariate.of(NormalDistribution.standard(), random, n, n)).getQTranspose();
+    return QRDecomposition.of(RandomVariate.of(NormalDistribution.standard(), random, n, n)).getQConjugateTranspose();
   }
 }
