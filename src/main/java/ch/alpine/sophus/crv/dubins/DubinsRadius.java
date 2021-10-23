@@ -19,6 +19,10 @@ import ch.alpine.tensor.sca.Sqrt;
 
 public enum DubinsRadius {
   ;
+  /** @param xya
+   * @param type
+   * @param clip
+   * @return may return NaN */
   public static Scalar getMax(Tensor xya, DubinsType type, Clip clip) {
     xya = type.isFirstTurnRight() ? Se2Flip.FUNCTION.apply(xya) : xya;
     Scalar hypot = Hypot.ofVector(xya.extract(0, 2));
