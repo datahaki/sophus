@@ -1,14 +1,13 @@
 // code by jph
 package ch.alpine.sophus.clt.mid;
 
-import java.util.function.BinaryOperator;
-
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.api.ScalarBinaryOperator;
 import ch.alpine.tensor.num.Pi;
 
-/* package */ enum MidpointTangentLayers implements BinaryOperator<Scalar> {
+/* package */ enum MidpointTangentLayers implements ScalarBinaryOperator {
   INSTANCE;
 
   @Override

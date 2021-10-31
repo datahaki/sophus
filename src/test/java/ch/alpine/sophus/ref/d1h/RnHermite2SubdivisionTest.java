@@ -15,7 +15,6 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.num.Derive;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -46,7 +45,7 @@ public class RnHermite2SubdivisionTest extends TestCase {
   public void testLinearReproduction() {
     Tensor coeffs = Tensors.vector(5, -3);
     ScalarUnaryOperator f0 = Polynomial.of(coeffs);
-    ScalarUnaryOperator f1 = Polynomial.of(Derive.of(coeffs));
+    ScalarUnaryOperator f1 = Polynomial.derivative(coeffs);
     Tensor domain = Range.of(0, 10);
     Tensor control = Transpose.of(Tensors.of(domain.map(f0), domain.map(f1)));
     for (HermiteSubdivision hermiteSubdivision : LIST) {

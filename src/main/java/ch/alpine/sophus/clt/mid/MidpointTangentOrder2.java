@@ -1,17 +1,16 @@
 // code by jph
 package ch.alpine.sophus.clt.mid;
 
-import java.util.function.BinaryOperator;
-
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.api.ScalarBinaryOperator;
 
 /** function is odd in s1
  * function is even in s2
  * 
  * bm == lambda + s1
  * lambda == bm - s1 */
-public enum MidpointTangentOrder2 implements BinaryOperator<Scalar> {
+public enum MidpointTangentOrder2 implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar F10 = RealScalar.of(-1.5);

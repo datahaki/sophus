@@ -17,7 +17,6 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.num.Derive;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
@@ -26,7 +25,7 @@ public class Hermite3FilterTest extends TestCase {
   public void testR1PolynomialReproduction() {
     Tensor coeffs = Tensors.vector(1, 3, -2, 3);
     ScalarUnaryOperator f0 = Polynomial.of(coeffs);
-    ScalarUnaryOperator f1 = Polynomial.of(Derive.of(coeffs));
+    ScalarUnaryOperator f1 = Polynomial.derivative(coeffs);
     Tensor domain = Range.of(0, 10);
     Tensor control = Transpose.of(Tensors.of(domain.map(f0), domain.map(f1)));
     HermiteFilter hermiteFilter = //
