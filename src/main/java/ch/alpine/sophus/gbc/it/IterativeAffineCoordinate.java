@@ -15,6 +15,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.red.Times;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
 public class IterativeAffineCoordinate implements GenesisDeque, Serializable {
@@ -34,14 +35,14 @@ public class IterativeAffineCoordinate implements GenesisDeque, Serializable {
     Tensor factors = ConstantArray.of(RealScalar.ONE, levers.length());
     for (int depth = 0; depth <= k; ++depth) {
       // should converge to uniform vector
-      Tensor uniform = GENESIS.origin(factors.pmul(levers));
-      Tensor weights = NormalizeTotal.FUNCTION.apply(factors.pmul(uniform));
+      Tensor uniform = GENESIS.origin(Times.of(factors, levers));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(Times.of(factors, uniform));
       if (!deque.isEmpty() && Tolerance.CHOP.isClose(weights, deque.peekLast().weights())) {
         deque.add(new Evaluation(weights, factors));
         break;
       }
       deque.add(new Evaluation(weights, factors));
-      factors = factors.pmul(amplifier.apply(uniform));
+      factors = Times.of(factors, amplifier.apply(uniform));
     }
     return deque;
   }

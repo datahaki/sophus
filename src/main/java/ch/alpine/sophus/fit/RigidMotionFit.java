@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Orthogonalize;
+import ch.alpine.tensor.red.Times;
 
 /** function computes the best-fitting rigid transformation that aligns
  * two sets of corresponding n elements from d-dimensional vector space.
@@ -39,7 +40,7 @@ public class RigidMotionFit implements TensorUnaryOperator {
     Tensor qm = weights.dot(target); // weighted mean of target coordinates
     Tensor xt = Tensor.of(origin.stream().map(pm.negate()::add)); // levers to origin coordinates
     Tensor yt = Tensor.of(target.stream().map(qm.negate()::add)); // levers to target coordinates
-    Tensor rotation = Orthogonalize.usingSvd(Transpose.of(yt).dot(weights.pmul(xt)));
+    Tensor rotation = Orthogonalize.usingSvd(Transpose.of(yt).dot(Times.of(weights,xt)));
     return new RigidMotionFit(rotation, qm.subtract(rotation.dot(pm)));
   }
 

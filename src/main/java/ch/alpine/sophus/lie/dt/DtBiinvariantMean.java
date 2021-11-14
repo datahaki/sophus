@@ -9,6 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.red.Times;
 
 /** @param sequence of (lambda_i, t_i) points in ST(n) and weights non-negative and normalized
  * @return associated biinvariant mean which is the solution to the barycentric equation
@@ -30,7 +31,7 @@ public enum DtBiinvariantMean implements BiinvariantMean {
     Tensor lambdas = sequence.get(Tensor.ALL, 0);
     // Reference 1, p.27 "weighted geometric mean of scalings"
     Scalar scmean = ScBiinvariantMean.INSTANCE.mean(lambdas.map(Tensors::of), weights).Get(0);
-    Tensor alphaw = NormalizeTotal.FUNCTION.apply(weights.pmul(lambdas.divide(scmean).map(Logc.FUNCTION)));
+    Tensor alphaw = NormalizeTotal.FUNCTION.apply(Times.of(weights, lambdas.divide(scmean).map(Logc.FUNCTION)));
     Tensor trmean = RnBiinvariantMean.INSTANCE.mean(sequence.get(Tensor.ALL, 1), alphaw);
     return Tensors.of(scmean, trmean); // "scalings reweighted arithmetic mean of translations"
   }

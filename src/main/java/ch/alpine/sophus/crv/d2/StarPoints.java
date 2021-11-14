@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.red.Times;
 
 public enum StarPoints {
   ;
@@ -18,7 +19,7 @@ public enum StarPoints {
    * @param lo
    * @return (n * 2) x 2 matrix */
   public static Tensor of(int n, Scalar hi, Scalar lo) {
-    return Flatten.of(ConstantArray.of(Tensors.of(hi, lo), n)).pmul(CirclePoints.of(n * 2));
+    return Times.of(Flatten.of(ConstantArray.of(Tensors.of(hi, lo), n)), CirclePoints.of(n * 2));
   }
 
   /** @param n

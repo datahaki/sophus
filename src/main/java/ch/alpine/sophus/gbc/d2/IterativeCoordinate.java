@@ -13,6 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.red.Times;
 
 /** References:
  * "Iterative coordinates"
@@ -46,7 +47,7 @@ public class IterativeCoordinate implements Genesis, Serializable {
     OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
     return optionalInt.isPresent() //
         ? UnitVector.of(levers.length(), optionalInt.getAsInt())
-        : NormalizeTotal.FUNCTION.apply(scaling.pmul(iterate(scaling.pmul(levers))));
+        : NormalizeTotal.FUNCTION.apply(Times.of(scaling, iterate(Times.of(scaling, levers))));
   }
 
   /** @param normalized points on circle
@@ -56,12 +57,12 @@ public class IterativeCoordinate implements Genesis, Serializable {
     for (int depth = 0; depth < k; ++depth) {
       Tensor midpoints = Adds.forward(normalized);
       Tensor scaling = InverseNorm.INSTANCE.origin(midpoints);
-      normalized = scaling.pmul(midpoints);
+      normalized = Times.of(scaling, midpoints);
       deque.push(scaling);
     }
     Tensor weights = genesis.origin(normalized);
     while (!deque.isEmpty())
-      weights = Adds.reverse(deque.pop().pmul(weights));
+      weights = Adds.reverse(Times.of(deque.pop(), weights));
     return weights;
   }
 }

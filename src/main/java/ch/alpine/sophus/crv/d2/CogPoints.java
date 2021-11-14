@@ -7,6 +7,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.red.Times;
 
 public enum CogPoints {
   ;
@@ -18,6 +19,6 @@ public enum CogPoints {
    * @param lo
    * @return (n * 4) x 2 matrix */
   public static Tensor of(int n, Scalar hi, Scalar lo) {
-    return Flatten.of(ConstantArray.of(Tensors.of(hi, hi, lo, lo), n)).pmul(CirclePoints.of(n * 4));
+    return Times.of(Flatten.of(ConstantArray.of(Tensors.of(hi, hi, lo, lo), n)), CirclePoints.of(n * 4));
   }
 }
