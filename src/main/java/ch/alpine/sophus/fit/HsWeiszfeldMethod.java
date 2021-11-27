@@ -11,6 +11,7 @@ import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 
 /** iterative method to find solution to Fermat-Weber Problem
@@ -51,7 +52,7 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
 
   @Override // from SpatialMedian
   public Optional<Tensor> weighted(Tensor sequence, Tensor weights) {
-    return minimum(sequence, weights::pmul);
+    return minimum(sequence, Times.operator(weights));
   }
 
   private Optional<Tensor> minimum(Tensor sequence, UnaryOperator<Tensor> unaryOperator) {

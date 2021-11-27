@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import ch.alpine.sophus.crv.dubins.DubinsPath.Type;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.Scalar;
@@ -33,6 +32,10 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
     return of(Se2CoveringGroup.INSTANCE.element(start).inverse().combine(end), radius);
   }
 
+  public static Optional<DubinsPath> of(Tensor xya, DubinsType type, Scalar radius) {
+    return new FixedRadiusDubins(xya, radius).create(type);
+  }
+
   // ---
   private final Tensor xya;
   private final Scalar radius;
@@ -46,10 +49,10 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
 
   @Override // from DubinsPathGenerator
   public Stream<DubinsPath> stream() {
-    return Stream.of(Type.values()).map(this::create).flatMap(Optional::stream);
+    return Stream.of(DubinsType.values()).map(this::create).flatMap(Optional::stream);
   }
 
-  private Optional<DubinsPath> create(Type type) {
+  private Optional<DubinsPath> create(DubinsType type) {
     Tensor center1 = Tensors.of(zero, radius, xya.Get(2).zero());
     Tensor h = Tensors.of(zero, type.isFirstEqualsLast() ? radius : radius.negate(), xya.Get(2).zero());
     Tensor gnorm = type.isFirstTurnRight() ? Se2Flip.FUNCTION.apply(xya) : xya;

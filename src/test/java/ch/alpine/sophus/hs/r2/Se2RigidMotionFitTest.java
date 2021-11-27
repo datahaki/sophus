@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import java.util.Random;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -30,10 +32,11 @@ public class Se2RigidMotionFitTest extends TestCase {
   }
 
   public void testExact2() {
+    Random random = new Random(7);
     Distribution distribution = NormalDistribution.standard();
     for (int n = 5; n < 11; ++n) {
-      Tensor points = RandomVariate.of(distribution, n, 2);
-      Tensor xya = RandomVariate.of(distribution, 3);
+      Tensor points = RandomVariate.of(distribution, random, n, 2);
+      Tensor xya = RandomVariate.of(distribution, random, 3);
       Se2ForwardAction se2ForwardAction = new Se2ForwardAction(xya);
       Tensor target = Tensor.of(points.stream().map(se2ForwardAction::apply));
       Tensor rigidMotionFit = Se2RigidMotionFit.of(points, target);

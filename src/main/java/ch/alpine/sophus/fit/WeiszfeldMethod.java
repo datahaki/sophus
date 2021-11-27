@@ -13,6 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.ArgMin;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
@@ -54,7 +55,7 @@ public class WeiszfeldMethod implements SpatialMedian, Serializable {
       if (Scalars.isZero(dist.Get(index)))
         return Optional.of(point);
       Tensor invdist = dist.map(Scalar::reciprocal);
-      if (chop.isClose(point, point = NormalizeTotal.FUNCTION.apply(weights.pmul(invdist)).dot(sequence)))
+      if (chop.isClose(point, point = NormalizeTotal.FUNCTION.apply(Times.of(weights, invdist)).dot(sequence)))
         return Optional.of(point);
     }
     return Optional.empty();

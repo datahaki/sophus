@@ -1,10 +1,9 @@
 // code by jph
 package ch.alpine.sophus.clt.mid;
 
-import java.util.function.BinaryOperator;
-
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.api.ScalarBinaryOperator;
 
 /** valid in
  * 0.0 <= s1 <= pi
@@ -12,7 +11,7 @@ import ch.alpine.tensor.Scalar;
  * 
  * function is odd in s1
  * function is even in s2 */
-/* package */ enum MidpointTangentLayer1 implements BinaryOperator<Scalar> {
+/* package */ enum MidpointTangentLayer1 implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar F00 = RealScalar.of(+6.380368118368151);

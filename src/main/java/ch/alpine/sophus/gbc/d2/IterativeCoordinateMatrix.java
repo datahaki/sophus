@@ -7,6 +7,7 @@ import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.DiagonalMatrix;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 
 /** for k == 0 the coordinates are identical to three-point coordinates with mean value as barycenter
@@ -37,13 +38,13 @@ public class IterativeCoordinateMatrix implements Genesis, Serializable {
   public Tensor origin(Tensor levers) {
     Tensor scaling = InverseNorm.INSTANCE.origin(levers);
     Tensor matrix = DiagonalMatrix.with(scaling);
-    Tensor normalized = scaling.pmul(levers);
+    Tensor normalized = Times.of(scaling, levers);
     Tensor midmat = Adds.matrix(levers.length());
     for (int depth = 0; depth < k; ++depth) {
       Tensor midpoints = Adds.forward(normalized);
       scaling = InverseNorm.INSTANCE.origin(midpoints);
-      matrix = scaling.pmul(midmat).dot(matrix);
-      normalized = scaling.pmul(midpoints);
+      matrix = Times.of(scaling, midmat).dot(matrix);
+      normalized = Times.of(scaling, midpoints);
     }
     Chop._10.requireClose(matrix.dot(levers), normalized);
     return matrix;

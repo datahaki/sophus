@@ -5,6 +5,7 @@ import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.red.Times;
 
 public class ScGroupElement implements LieGroupElement {
   /** @param value
@@ -32,7 +33,7 @@ public class ScGroupElement implements LieGroupElement {
 
   @Override
   public Tensor combine(Tensor tensor) {
-    return this.tensor.pmul(tensor);
+    return Times.of(this.tensor, tensor);
   }
 
   @Override

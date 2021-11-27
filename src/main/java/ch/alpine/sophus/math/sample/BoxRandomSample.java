@@ -7,16 +7,17 @@ import java.util.List;
 import java.util.Random;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.opt.nd.Box;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 
 public class BoxRandomSample implements RandomSampleInterface, Serializable {
-  /** @param box axis-aligned bounding box
+  /** @param coordinateBoundingBox axis-aligned bounding box
    * @return */
-  public static RandomSampleInterface of(Box box) {
-    return new BoxRandomSample(box);
+  public static RandomSampleInterface of(CoordinateBoundingBox coordinateBoundingBox) {
+    return new BoxRandomSample(coordinateBoundingBox);
   }
 
   /** the parameters define the coordinate bounds of the axis-aligned box
@@ -24,17 +25,17 @@ public class BoxRandomSample implements RandomSampleInterface, Serializable {
    * 
    * @param min lower-left
    * @param max upper-right
-   * @see Box */
+   * @see CoordinateBoundingBox */
   public static RandomSampleInterface of(Tensor min, Tensor max) {
-    return of(Box.of(min, max));
+    return of(CoordinateBounds.of(min, max));
   }
 
   // ---
   private final List<Distribution> distributions = new LinkedList<>();
 
-  private BoxRandomSample(Box box) {
-    for (int index = 0; index < box.dimensions(); ++index)
-      distributions.add(UniformDistribution.of(box.getClip(index)));
+  private BoxRandomSample(CoordinateBoundingBox coordinateBoundingBox) {
+    for (int index = 0; index < coordinateBoundingBox.dimensions(); ++index)
+      distributions.add(UniformDistribution.of(coordinateBoundingBox.getClip(index)));
   }
 
   @Override // from RandomSampleInterface

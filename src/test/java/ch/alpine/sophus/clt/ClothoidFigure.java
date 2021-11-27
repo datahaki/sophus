@@ -10,8 +10,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.img.ArrayPlot;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 
 /* package */ class ClothoidFigure {
@@ -35,7 +35,7 @@ import ch.alpine.tensor.io.Export;
   public static void main(String[] args) throws IOException {
     ClothoidFigure newtonDemo = new ClothoidFigure(RealScalar.of(2.6));
     Tensor matrix = Parallelize.matrix(newtonDemo::function, RES, RES);
-    Tensor image = ArrayPlot.of(matrix, ColorDataGradients.SUNSET);
+    Tensor image = Raster.of(matrix, ColorDataGradients.SUNSET);
     Export.of(HomeDirectory.Pictures(ClothoidFigure.class.getSimpleName() + ".png"), image);
   }
 }

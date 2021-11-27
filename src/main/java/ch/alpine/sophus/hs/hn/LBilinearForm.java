@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.hn;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.red.Total;
 
 /** indefinite non-degenerate symmetric bilinear form
@@ -23,7 +24,7 @@ import ch.alpine.tensor.red.Total;
    * @param q point or tangent vector
    * @return */
   public static Scalar between(Tensor p, Tensor q) {
-    Tensor pq = p.pmul(q);
+    Tensor pq = Times.of(p, q);
     pq.set(Scalar::negate, pq.length() - 1); // toggle sign in last entry
     return Total.ofVector(pq);
   }

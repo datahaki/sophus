@@ -11,6 +11,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -83,7 +84,7 @@ public class Kriging implements Serializable {
     Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
     SymmetricMatrixQ.require(vardst);
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
-    Scalar one = Quantity.of(RealScalar.ONE, StaticHelper.uniqueUnit(matrix));
+    Scalar one = Quantity.of(RealScalar.ONE, Unprotect.getUnitUnique(matrix));
     int n = matrix.length();
     Tensor rhs = Tensors.of(values.get(0).map(Scalar::zero));
     LagrangeMultiplier lagrangeMultiplier = //

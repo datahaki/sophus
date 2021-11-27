@@ -12,6 +12,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Exp;
 import junit.framework.TestCase;
@@ -51,7 +52,7 @@ public class AffineCoordinateTest extends TestCase {
           for (int i = 0; i < 3; ++i) {
             Tensor weights = AffineCoordinate.INSTANCE.origin(levers);
             weights = NormalizeTotal.FUNCTION.apply(weights.map(Exp.FUNCTION));
-            levers = weights.pmul(levers);
+            levers = Times.of(weights, levers);
           }
         }
       }

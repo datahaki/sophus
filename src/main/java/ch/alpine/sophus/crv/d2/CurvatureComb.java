@@ -18,6 +18,7 @@ import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.r2.SignedCurvature2D;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.red.Times;
 
 /** .
  * G0 - Position, tangent of curve is not continuous, example: polygons
@@ -51,7 +52,7 @@ public enum CurvatureComb {
    * @return normals of dimension n x 2 scaled according to {@link SignedCurvature2D} */
   @PackageTestAccess
   static Tensor string(Tensor tensor) {
-    return Curvature2D.string(tensor).pmul(Normal2D.string(tensor));
+    return Times.of(Curvature2D.string(tensor), Normal2D.string(tensor));
   }
 
   /** @param tensor of dimension n x 2

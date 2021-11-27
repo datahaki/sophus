@@ -7,6 +7,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.red.Times;
 
 public class HsLineProjection {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
@@ -35,7 +36,7 @@ public class HsLineProjection {
       // FIXME not generic: log not always vector, metric different
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);
       Tensor lr = exponential.log(r);
-      Tensor project = lr.dot(normal).pmul(normal);
+      Tensor project = Times.of(lr.dot(normal), normal);
       p = exponential.exp(project);
     }
     return p;

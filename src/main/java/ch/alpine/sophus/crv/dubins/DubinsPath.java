@@ -7,7 +7,6 @@ import java.util.Objects;
 import ch.alpine.sophus.itp.ArcLengthParameterization;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringIntegrator;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -15,8 +14,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Accumulate;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.ext.PackageTestAccess;
-import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Sign;
 
 /** compatible with the use of Quantity:
@@ -24,68 +21,11 @@ import ch.alpine.tensor.sca.Sign;
  * 
  * immutable */
 public class DubinsPath implements Serializable {
-  public static enum Type {
-    LSR(+1, +0, -1, Steer2TurnsDiffSide.INSTANCE), //
-    RSL(-1, +0, +1, Steer2TurnsDiffSide.INSTANCE), //
-    LSL(+1, +0, +1, Steer2TurnsSameSide.INSTANCE), //
-    RSR(-1, +0, -1, Steer2TurnsSameSide.INSTANCE), //
-    LRL(+1, -1, +1, Steer3Turns.INSTANCE), //
-    RLR(-1, +1, -1, Steer3Turns.INSTANCE);
-
-    private final Tensor signature;
-    private final Tensor signatureAbs;
-    private final boolean isFirstTurnRight;
-    private final boolean isFirstEqualsLast;
-    private final boolean containsStraight;
-    private final DubinsSteer dubinsSteer;
-
-    private Type(int s0s, int s1s, int s2s, DubinsSteer dubinsSteer) {
-      signature = Tensors.vector(s0s, s1s, s2s).unmodifiable();
-      signatureAbs = signature.map(Abs.FUNCTION).unmodifiable();
-      isFirstTurnRight = s0s == -1;
-      isFirstEqualsLast = s0s == s2s;
-      containsStraight = s1s == 0;
-      this.dubinsSteer = dubinsSteer;
-    }
-
-    /** @return true if type is RSL or RSR or RLR */
-    public boolean isFirstTurnRight() {
-      return isFirstTurnRight;
-    }
-
-    /** @return true if type is LSL or RSR or LRL or RLR */
-    public boolean isFirstEqualsLast() {
-      return isFirstEqualsLast;
-    }
-
-    public Tensor signatureAbs() {
-      return signatureAbs;
-    }
-
-    public boolean containsStraight() {
-      return containsStraight;
-    }
-
-    /* package */ DubinsSteer dubinsSteer() {
-      return dubinsSteer;
-    }
-
-    /** @param index 0, 1, or 2
-     * @param radius positive
-     * @return vector with first and second entry unitless.
-     * result is multiplied with length of segment */
-    @PackageTestAccess
-    Tensor tangent(int index, Scalar radius) {
-      return Tensors.of(RealScalar.ONE, RealScalar.ZERO, //
-          signature.Get(index).divide(Sign.requirePositive(radius)));
-    }
-  }
-
   /** @param type non-null
    * @param radius strictly positive
    * @param segLength {length1, length2, length3} each non-negative
    * @return */
-  public static DubinsPath of(Type type, Scalar radius, Tensor segLength) {
+  public static DubinsPath of(DubinsType type, Scalar radius, Tensor segLength) {
     return new DubinsPath( //
         Objects.requireNonNull(type), //
         Sign.requirePositive(radius), //
@@ -97,7 +37,7 @@ public class DubinsPath implements Serializable {
   }
 
   // ---
-  private final Type type;
+  private final DubinsType type;
   private final Scalar radius;
   private final Tensor segLength;
   private final Scalar length;
@@ -106,7 +46,7 @@ public class DubinsPath implements Serializable {
    * @param radius strictly positive
    * @param segLength {length1, length2, length3} each non-negative
    * @param length */
-  private DubinsPath(Type type, Scalar radius, Tensor segLength, Scalar length) {
+  private DubinsPath(DubinsType type, Scalar radius, Tensor segLength, Scalar length) {
     this.type = type;
     this.radius = radius;
     this.segLength = segLength;
@@ -114,7 +54,7 @@ public class DubinsPath implements Serializable {
   }
 
   /** @return dubins path type */
-  public Type type() {
+  public DubinsType type() {
     return type;
   }
 

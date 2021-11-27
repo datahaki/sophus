@@ -8,8 +8,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.img.ArrayPlot;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
@@ -35,6 +35,6 @@ enum R2NoisePlot {
   public static void main(String[] args) throws Exception {
     Tensor matrix = Tensors.matrix(R2NoisePlot::function, RES, RES);
     Export.of(HomeDirectory.Pictures("perlinnoise.png"), //
-        ArrayPlot.of(matrix, ColorDataGradients.COPPER));
+        Raster.of(matrix, ColorDataGradients.COPPER));
   }
 }

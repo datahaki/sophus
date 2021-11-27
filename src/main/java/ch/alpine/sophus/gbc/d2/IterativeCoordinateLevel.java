@@ -12,6 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
@@ -51,14 +52,14 @@ public class IterativeCoordinateLevel implements TensorScalarFunction {
       Tensor scaling = InverseNorm.INSTANCE.origin(levers);
       OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
       if (!optionalInt.isPresent()) {
-        Tensor normalized = scaling.pmul(levers);
+        Tensor normalized = Times.of(scaling, levers);
         int depth = 0;
         while (depth < max) {
           Tensor weights = genesis.origin(normalized);
           if (weights.stream().map(Scalar.class::cast).map(chop).allMatch(Sign::isPositiveOrZero))
             return RealScalar.of(depth);
           Tensor midpoints = Adds.forward(normalized);
-          normalized = InverseNorm.INSTANCE.origin(midpoints).pmul(midpoints);
+          normalized = Times.of(InverseNorm.INSTANCE.origin(midpoints), midpoints);
           ++depth;
         }
         return RealScalar.of(depth);

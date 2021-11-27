@@ -12,6 +12,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.red.Times;
 
 public class HsLineDistanceOld implements LineDistance, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
@@ -43,14 +44,14 @@ public class HsLineDistanceOld implements LineDistance, Serializable {
      * @return element of the lie algebra */
     public Tensor project(Tensor tensor) {
       Tensor vector = tangentSpace.vectorLog(tensor);
-      return vector.dot(normal).pmul(normal);
+      return Times.of(vector.dot(normal), normal);
     }
 
     /** @param tensor of the lie group
      * @return element of the lie algebra */
     public Tensor orthogonal(Tensor tensor) {
       Tensor vector = tangentSpace.vectorLog(tensor); // redundant to project
-      return vector.subtract(vector.dot(normal).pmul(normal)); // ... but vector has to be stored
+      return vector.subtract(Times.of(vector.dot(normal), normal)); // ... but vector has to be stored
     }
 
     @Override // from TensorNorm

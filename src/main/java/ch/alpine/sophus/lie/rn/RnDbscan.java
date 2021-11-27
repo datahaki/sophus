@@ -8,10 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import ch.alpine.sophus.math.MinMax;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCollectRadius;
 import ch.alpine.tensor.opt.nd.NdMap;
@@ -36,7 +36,7 @@ public enum RnDbscan {
    * @return array of labels for each point, or -1 to indicate that respective point is noise */
   public static Integer[] of(Tensor points, Function<Tensor, NdCenterInterface> function, Scalar radius, int minPts) {
     Integers.requirePositive(minPts);
-    NdMap<Integer> ndMap = NdTreeMap.of(MinMax.box(points));
+    NdMap<Integer> ndMap = NdTreeMap.of(CoordinateBounds.of(points));
     AtomicInteger atomicInteger = new AtomicInteger();
     points.stream().forEach(point -> ndMap.insert(point, atomicInteger.getAndIncrement()));
     // ---

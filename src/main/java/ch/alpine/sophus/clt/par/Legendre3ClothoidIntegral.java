@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Sqrt;
   private static final Tensor X = Tensors.vector(-1, 0, 1) //
       .multiply(Sqrt.FUNCTION.apply(RationalScalar.of(3, 5))) //
       .map(RealScalar.ONE::add) //
-      .divide(RealScalar.of(2));
+      .divide(RealScalar.TWO);
   private static final Scalar X0 = X.Get(0);
   private static final Scalar X1 = X.Get(1);
   private static final Scalar X2 = X.Get(2);

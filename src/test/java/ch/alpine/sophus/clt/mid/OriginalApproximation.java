@@ -1,10 +1,9 @@
 // code by ureif
 package ch.alpine.sophus.clt.mid;
 
-import java.util.function.BinaryOperator;
-
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.api.ScalarBinaryOperator;
 
 /** The input parameters b0, b1 are real numbers and represent angles.
  * The return value tilde f(b0, b1) is also a real number.
@@ -12,7 +11,7 @@ import ch.alpine.tensor.Scalar;
  * The approximation quality is very good for |b0|, |b1| <= pi/2
  * 
  * Reference: U. Reif slide 9/32 */
-public enum OriginalApproximation implements BinaryOperator<Scalar> {
+public enum OriginalApproximation implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar _68 = RealScalar.of(68.0);

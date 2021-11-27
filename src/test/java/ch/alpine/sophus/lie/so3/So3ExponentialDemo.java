@@ -9,8 +9,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.img.ArrayPlot;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.AnimationWriter;
 import ch.alpine.tensor.io.GifAnimationWriter;
 
@@ -33,7 +33,7 @@ import ch.alpine.tensor.io.GifAnimationWriter;
         System.out.println(_z);
         Z = (Scalar) _z;
         Tensor matrix = Parallelize.matrix(So3ExponentialDemo::function, RES, RES);
-        animationWriter.write(ArrayPlot.of(matrix, ColorDataGradients.CLASSIC));
+        animationWriter.write(Raster.of(matrix, ColorDataGradients.CLASSIC));
       }
       animationWriter.close();
     }
