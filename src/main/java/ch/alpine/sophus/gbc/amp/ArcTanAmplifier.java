@@ -20,7 +20,6 @@ public class ArcTanAmplifier implements ScalarUnaryOperator {
 
   @Override
   public Scalar apply(Scalar scalar) {
-    Scalar value = ArcTan.FUNCTION.apply(scalar.multiply(sigma));
-    return value.add(value).divide(Pi.VALUE).add(RealScalar.ONE);
+    return ArcTan.FUNCTION.apply(scalar.multiply(sigma)).divide(Pi.HALF).add(RealScalar.ONE);
   }
 }

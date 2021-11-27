@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Factorial;
 public enum Expc implements ScalarUnaryOperator {
   FUNCTION;
 
-  static final ScalarUnaryOperator SERIES = //
+  private static final ScalarUnaryOperator SERIES = //
       Polynomial.of(Tensors.vector(i -> Factorial.of(i + 1).reciprocal(), 10));
 
   @Override

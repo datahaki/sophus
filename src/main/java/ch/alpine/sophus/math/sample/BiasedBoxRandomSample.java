@@ -7,7 +7,7 @@ import java.util.Random;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.opt.nd.Box;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.ArgMin;
 
 public class BiasedBoxRandomSample implements RandomSampleInterface, Serializable {
@@ -16,7 +16,7 @@ public class BiasedBoxRandomSample implements RandomSampleInterface, Serializabl
 
   /** @param box
    * @param draws positive */
-  public BiasedBoxRandomSample(Box box, int draws) {
+  public BiasedBoxRandomSample(CoordinateBoundingBox box, int draws) {
     randomSampleInterface = BoxRandomSample.of(box);
     this.draws = Integers.requirePositive(draws);
   }
