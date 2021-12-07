@@ -48,7 +48,7 @@ public class PowerVariogram implements ScalarUnaryOperator {
   public static PowerVariogram fit(TensorMetric tensorMetric, Tensor sequence, Tensor values, Scalar exponent) {
     Scalar[] y = ScalarArray.ofVector(values);
     final int n = sequence.length();
-    Scalar num = y[0].zero();
+    Scalar num = null; // 0[|seq_0| * v[0] * v[0]]
     // TODO not very elegant generic
     Scalar den = RealScalar.ZERO;
     Scalar nugsq = RealScalar.ZERO;
@@ -56,7 +56,8 @@ public class PowerVariogram implements ScalarUnaryOperator {
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
         Scalar rb = power.apply(tensorMetric.distance(sequence.get(i), sequence.get(j)));
-        num = num.add(AbsSquared.between(y[i], y[j]).multiply(RationalScalar.HALF).subtract(nugsq).multiply(rb));
+        Scalar val = AbsSquared.between(y[i], y[j]).multiply(RationalScalar.HALF).subtract(nugsq).multiply(rb);
+        num = Objects.isNull(num) ? val : num.add(val);
         den = den.add(rb.multiply(rb));
       }
     return new PowerVariogram(num.divide(den), power);
