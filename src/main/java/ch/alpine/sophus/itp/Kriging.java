@@ -89,6 +89,7 @@ public class Kriging implements Serializable {
     Tensor rhs = Tensors.of(values.get(0).map(Scalar::zero));
     LagrangeMultiplier lagrangeMultiplier = //
         new LagrangeMultiplier(matrix, values, ConstantArray.of(one, 1, n), rhs);
+    // System.out.println(Pretty.of(lagrangeMultiplier.matrix().map(Round._1)));
     Tensor inverse = PseudoInverse.of(lagrangeMultiplier.matrix());
     Tensor weights = inverse.dot(lagrangeMultiplier.b());
     return new Kriging(tensorUnaryOperator, one, weights, inverse);

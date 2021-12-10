@@ -139,6 +139,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     Tensor sequence = Tensors.of(p, q, r, s);
     Tensor weights = Tensors.vector(3, 2, 1, 4).divide(RealScalar.of(10));
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
+      // System.out.println(biinvariantMean);
       Tensor solution = biinvariantMean.mean(sequence, weights);
       boolean close1 = Chop._12.isClose(solution, Tensors.fromString("{4.911144632104387[m], 5.064995814659804[m], 1.1}"));
       boolean close2 = Chop._12.isClose(solution, Tensors.fromString("{4.911658712738642[m], 5.064497410160735[m], 1.0998987355880372}"));

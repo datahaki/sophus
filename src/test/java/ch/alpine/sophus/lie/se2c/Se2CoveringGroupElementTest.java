@@ -76,7 +76,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Tensor oth = Tensors.fromString("{-.3[m], 0.8[m], -0.5}");
     Se2CoveringGroupElement se2GroupAction = new Se2CoveringGroupElement(xya);
-    Tensor inverse = se2GroupAction.inverse().combine(Array.zeros(3));
+    Tensor inverse = se2GroupAction.inverse().combine(xya.map(Scalar::zero));
     assertEquals(inverse, Tensors.fromString("{-1.6097288498099749[m], -1.552022238915878[m], -0.34}"));
     Tensor circ = se2GroupAction.combine(oth);
     assertEquals(circ, Tensors.fromString("{0.4503839266288446[m], 2.654157604780433[m], -0.15999999999999998}"));

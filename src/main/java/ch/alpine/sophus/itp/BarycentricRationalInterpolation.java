@@ -15,6 +15,7 @@ import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.ScalarArray;
 import ch.alpine.tensor.itp.InterpolatingPolynomial;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.sca.InvertUnlessZero;
 
 /** affine weights that satisfy the barycentric equation, i.e. reproduce linear functions
  * 
@@ -62,7 +63,8 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
           ? knots.length - degree - 1
           : k;
       Scalar temp = SIGNUM[imin & 1];
-      Scalar sum = RealScalar.ZERO;
+      Scalar sum = InvertUnlessZero.negateUnit(knots[0].zero());
+      // RealScalar.ZERO;
       Scalar knots_k = knots[k];
       for (int i = imin; i <= imax; ++i) {
         final int fk = k;

@@ -10,6 +10,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.io.ScalarArray;
+import ch.alpine.tensor.red.LenientAdd;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.Power;
 
@@ -56,9 +57,11 @@ public class PowerVariogram implements ScalarUnaryOperator {
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
         Scalar rb = power.apply(tensorMetric.distance(sequence.get(i), sequence.get(j)));
-        Scalar val = AbsSquared.between(y[i], y[j]).multiply(RationalScalar.HALF).subtract(nugsq).multiply(rb);
+        Scalar val = LenientAdd.of( //
+            AbsSquared.between(y[i], y[j]).multiply(RationalScalar.HALF), nugsq.negate()).multiply(rb);
         num = Objects.isNull(num) ? val : num.add(val);
-        den = den.add(rb.multiply(rb));
+        den = LenientAdd.of( //
+            den, rb.multiply(rb));
       }
     return new PowerVariogram(num.divide(den), power);
   }

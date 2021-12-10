@@ -10,10 +10,8 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.ScalarBiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 
 /** no restrictions on input points from Covering SE(2), albeit isolated singularities exists
  * 
@@ -32,8 +30,6 @@ public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializabl
   }
 
   // ---
-  private static final Scalar ZERO = RealScalar.ZERO;
-  // ---
   private final LieGroup lieGroup;
   private final ScalarBiinvariantMean scalarBiinvariantMean;
 
@@ -47,7 +43,8 @@ public class Se2UniversalBiinvariantMean implements BiinvariantMean, Serializabl
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Scalar amean = scalarBiinvariantMean.mean(sequence.get(Tensor.ALL, 2), weights);
-    LieGroupElement lieGroupElement = lieGroup.element(Tensors.of(ZERO, ZERO, amean));
+    Tensor _00a = sequence.get(0).extract(0, 2).map(Scalar::zero).append(amean);
+    LieGroupElement lieGroupElement = lieGroup.element(_00a);
     AtomicInteger atomicInteger = new AtomicInteger();
     Tensor tmean = sequence.stream() // transform elements in sequence so that angles average to 0
         .map(lieGroupElement.inverse()::combine) //
