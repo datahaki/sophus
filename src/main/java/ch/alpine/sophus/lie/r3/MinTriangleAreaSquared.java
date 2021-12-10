@@ -36,10 +36,11 @@ public enum MinTriangleAreaSquared implements Genesis {
    * @throws Exception if given polygon is empty */
   @Override
   public Tensor origin(Tensor polygon) {
+    Tensor[] x = normalize(polygon).stream().toArray(Tensor[]::new);
     int n = polygon.length();
+    // entries of Aeye and btar are unitless due to normalization
     Tensor Aeye = Array.zeros(n, n); // symmetric
     Tensor btar = Array.zeros(n);
-    Tensor[] x = normalize(polygon).stream().toArray(Tensor[]::new);
     for (int k = 0; k < n; ++k) {
       Tensor xkd = x[(k + 1) % n].subtract(x[k]);
       Tensor vk = Cross.of(x[k], xkd);
