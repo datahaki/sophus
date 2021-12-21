@@ -6,9 +6,9 @@ import java.util.Random;
 
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.red.ArgMin;
 
 public class BiasedBoxRandomSample implements RandomSampleInterface, Serializable {
   private final RandomSampleInterface randomSampleInterface;

@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 public class DistanceMatrixTest extends TestCase {
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "A")));
-    Tensor sequence = RandomVariate.of(distribution,10,3);
+    Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor tensor = DistanceMatrix.of(sequence, Vector2Norm::between);
     SquareMatrixQ.require(tensor);
     Unit unit = Unprotect.getUnitUnique(tensor);

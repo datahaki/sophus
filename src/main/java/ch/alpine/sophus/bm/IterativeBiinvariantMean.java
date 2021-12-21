@@ -9,7 +9,7 @@ import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.red.ArgMax;
+import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.sca.Chop;
 
 /** Barycentric Fixed Point Iteration
