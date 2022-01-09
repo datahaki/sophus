@@ -11,4 +11,5 @@ public interface LieGroup {
    * @param tensor
    * @return lie group element */
   LieGroupElement element(Tensor tensor);
+  // TODO should give LieAlgebra with ad (since this is implied from basis/group action)
 }

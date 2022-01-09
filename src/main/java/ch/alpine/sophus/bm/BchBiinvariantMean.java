@@ -18,6 +18,9 @@ import ch.alpine.tensor.sca.Chop;
 public class BchBiinvariantMean implements BiinvariantMean, Serializable {
   private static final int MAX_ITERATIONS = 100;
 
+  /** @param bch non-null
+   * @param chop non-null
+   * @return */
   public static BiinvariantMean of(BinaryOperator<Tensor> bch, Chop chop) {
     return new BchBiinvariantMean( //
         Objects.requireNonNull(bch), //
@@ -28,7 +31,6 @@ public class BchBiinvariantMean implements BiinvariantMean, Serializable {
   private final BinaryOperator<Tensor> bch;
   private final Chop chop;
 
-  /** @param bch non-null */
   private BchBiinvariantMean(BinaryOperator<Tensor> bch, Chop chop) {
     this.bch = bch;
     this.chop = chop;
