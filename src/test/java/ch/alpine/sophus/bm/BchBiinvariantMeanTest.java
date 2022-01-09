@@ -4,8 +4,6 @@ package ch.alpine.sophus.bm;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
@@ -20,17 +18,6 @@ import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class BchBiinvariantMeanTest extends TestCase {
-  public void testSe2ExpExpLog() {
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
-    Tensor x = Tensors.vector(0.1, 0.2, 0.05);
-    Tensor y = Tensors.vector(0.02, -0.1, -0.04);
-    Tensor mX = exponential.exp(x);
-    Tensor mY = exponential.exp(y);
-    Tensor res = exponential.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
-    Tensor z = Se2Algebra.INSTANCE.bch(6).apply(x, y);
-    Chop._06.requireClose(z, res);
-  }
-
   public void testSe2Mean4() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
@@ -61,16 +48,6 @@ public class BchBiinvariantMeanTest extends TestCase {
       Tensor meanb = biinvariantMean.mean(sequence, weights);
       Chop._09.requireClose(mean, meanb);
     }
-  }
-
-  public void testConvergenceSo3() {
-    Tensor x = Tensors.vector(0.1, 0.2, 0.05);
-    Tensor y = Tensors.vector(0.02, -0.1, -0.04);
-    Tensor mX = Rodrigues.vectorExp(x);
-    Tensor mY = Rodrigues.vectorExp(y);
-    Tensor res = Rodrigues.INSTANCE.vectorLog(mX.dot(mY));
-    Tensor z = So3Algebra.INSTANCE.bch(6).apply(x, y);
-    Chop._08.requireClose(z, res);
   }
 
   public void testSo3Mean4() {
