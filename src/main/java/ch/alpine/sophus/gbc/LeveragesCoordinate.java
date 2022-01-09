@@ -15,7 +15,7 @@ public enum LeveragesCoordinate {
    * two pseudo inverses but smaller matrix dot products then when building the influence matrix.
    * 
    * @param vectorLogManifold
-   * @param variogram
+   * @param variogram for instance InversePowerVariogram.of(2)
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return HsCoordinates.wrap(vectorLogManifold, LeveragesGenesis.of(variogram));

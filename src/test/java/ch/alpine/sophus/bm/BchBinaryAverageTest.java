@@ -4,6 +4,9 @@ package ch.alpine.sophus.bm;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.hs.HsGeodesic;
+import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.hs.sn.SnMemberQ;
+import ch.alpine.sophus.hs.sn.TSnMemberQ;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.lie.so3.So3Exponential;
@@ -13,8 +16,10 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
+import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 import junit.framework.TestCase;
@@ -48,5 +53,31 @@ public class BchBinaryAverageTest extends TestCase {
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
     Tensor cmp = BchBinaryAverage.of(BCH_SO3).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
+  }
+
+  public void testS2() {
+    Tensor x = Tensors.vector(0.30, +0.15, 0);
+    Tensor y = Tensors.vector(0.05, -0.35, 0);
+    Tensor n = UnitVector.of(3, 2);
+    Exponential exponential = SnManifold.INSTANCE.exponential(n);
+    Tensor mx = exponential.exp(x);
+    Tensor my = exponential.exp(y);
+    SnMemberQ.INSTANCE.require(mx);
+    SnMemberQ.INSTANCE.require(my);
+    TSnMemberQ tSnMemberQ = new TSnMemberQ(n);
+    tSnMemberQ.require(x);
+    tSnMemberQ.require(y);
+    Scalar lambda = RealScalar.of(0.3);
+    HsGeodesic hsGeodesic = new HsGeodesic(SnManifold.INSTANCE);
+    Tensor mz = exponential.log(hsGeodesic.split(mx, my, lambda));
+    for (int d = 1; d < 7; ++d) {
+      BinaryOperator<Tensor> bch = BakerCampbellHausdorff.of(N.DOUBLE.of(LeviCivitaTensor.of(3).negate()), d);
+      Tensor cmp = BchBinaryAverage.of(bch).split(x, y, lambda);
+      System.out.println(cmp);
+      System.out.println(mz);
+      System.out.println(Vector2Norm.between(cmp, mz));
+      System.out.println("---");
+    }
+    // Chop._08.requireClose(mz, cmp);
   }
 }
