@@ -53,6 +53,8 @@ public class Se2CoveringGroupTest extends TestCase {
     Tensor mY = Se2CoveringExponential.INSTANCE.exp(y);
     Tensor res = Se2CoveringExponential.INSTANCE.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
     Tensor ad = N.DOUBLE.of(se2());
+    Tensor alt = Tensors.fromString("{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}");
+    assertEquals(ad, alt);
     Scalar cmp = RealScalar.ONE;
     for (int degree = 1; degree < 6; ++degree) {
       BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
