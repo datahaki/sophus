@@ -1,32 +1,25 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
-import java.util.function.BinaryOperator;
-
+import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.Rodrigues;
+import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
 import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.lie.LeviCivitaTensor;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.N;
 import junit.framework.TestCase;
 
 public class BchBiinvariantMeanTest extends TestCase {
-  private static final BinaryOperator<Tensor> BCH_SE2 = BakerCampbellHausdorff.of(N.DOUBLE.of(Tensors.fromString( //
-      "{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}")), 6);
-  private static final BinaryOperator<Tensor> BCH_SO3 = BakerCampbellHausdorff.of(N.DOUBLE.of(LeviCivitaTensor.of(3).negate()), 6);
-
   public void testSe2ExpExpLog() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
@@ -34,7 +27,7 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor mX = exponential.exp(x);
     Tensor mY = exponential.exp(y);
     Tensor res = exponential.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
-    Tensor z = BCH_SE2.apply(x, y);
+    Tensor z = Se2Algebra.INSTANCE.bch(6).apply(x, y);
     Chop._06.requireClose(z, res);
   }
 
@@ -49,7 +42,7 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
     Tensor meanG = Se2CoveringBiinvariantMean.INSTANCE.mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
-    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SE2, Chop._10);
+    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(Se2Algebra.INSTANCE.bch(6), Chop._10);
     Tensor meanb = biinvariantMean.mean(sequence, weights);
     Chop._09.requireClose(mean, meanb);
   }
@@ -64,7 +57,7 @@ public class BchBiinvariantMeanTest extends TestCase {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, n));
       Tensor meanG = Se2CoveringBiinvariantMean.INSTANCE.mean(seqG, weights);
       Tensor mean = exponential.log(meanG);
-      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SE2, Chop._10);
+      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(Se2Algebra.INSTANCE.bch(6), Chop._10);
       Tensor meanb = biinvariantMean.mean(sequence, weights);
       Chop._09.requireClose(mean, meanb);
     }
@@ -76,7 +69,7 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor mX = Rodrigues.vectorExp(x);
     Tensor mY = Rodrigues.vectorExp(y);
     Tensor res = Rodrigues.INSTANCE.vectorLog(mX.dot(mY));
-    Tensor z = BCH_SO3.apply(x, y);
+    Tensor z = So3Algebra.INSTANCE.bch(6).apply(x, y);
     Chop._08.requireClose(z, res);
   }
 
@@ -91,7 +84,7 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
     Tensor meanG = So3BiinvariantMean.INSTANCE.mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
-    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SO3, Chop._10);
+    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6), Chop._10);
     Tensor meanb = biinvariantMean.mean(sequence, weights);
     Chop._09.requireClose(mean, meanb);
   }
@@ -106,7 +99,7 @@ public class BchBiinvariantMeanTest extends TestCase {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, n));
       Tensor meanG = So3BiinvariantMean.INSTANCE.mean(seqG, weights);
       Tensor mean = exponential.log(meanG);
-      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SO3, Chop._10);
+      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6), Chop._10);
       Tensor meanb = biinvariantMean.mean(sequence, weights);
       Chop._09.requireClose(mean, meanb);
     }

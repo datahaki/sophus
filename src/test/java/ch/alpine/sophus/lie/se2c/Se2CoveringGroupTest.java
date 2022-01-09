@@ -8,6 +8,7 @@ import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.gbc.HarborCoordinate;
 import ch.alpine.sophus.lie.LieGroupOps;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
@@ -15,12 +16,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Power;
 import junit.framework.TestCase;
 
@@ -33,31 +31,15 @@ public class Se2CoveringGroupTest extends TestCase {
     assertEquals(tensor, Tensors.vector(1, 2, 0));
   }
 
-  private static final Scalar P1 = RealScalar.ONE;
-  private static final Scalar N1 = RealScalar.ONE.negate();
-
-  /** @return ad tensor of 3-dimensional se(2) */
-  public static Tensor se2() {
-    Tensor ad = Array.zeros(3, 3, 3);
-    ad.set(N1, 1, 2, 0);
-    ad.set(P1, 1, 0, 2);
-    ad.set(N1, 0, 1, 2);
-    ad.set(P1, 0, 2, 1);
-    return ad;
-  }
-
   public void testConvergenceSe2() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = Se2CoveringExponential.INSTANCE.exp(x);
     Tensor mY = Se2CoveringExponential.INSTANCE.exp(y);
     Tensor res = Se2CoveringExponential.INSTANCE.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
-    Tensor ad = N.DOUBLE.of(se2());
-    Tensor alt = Tensors.fromString("{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}");
-    assertEquals(ad, alt);
     Scalar cmp = RealScalar.ONE;
     for (int degree = 1; degree < 6; ++degree) {
-      BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);
+      BinaryOperator<Tensor> binaryOperator = Se2Algebra.INSTANCE.bch(degree);
       Tensor z = binaryOperator.apply(x, y);
       Scalar err = Vector2Norm.between(res, z);
       assertTrue(Scalars.lessThan(err, cmp));
