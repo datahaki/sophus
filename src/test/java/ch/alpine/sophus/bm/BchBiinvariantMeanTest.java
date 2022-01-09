@@ -11,6 +11,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 import junit.framework.TestCase;
@@ -30,7 +33,7 @@ public class BchBiinvariantMeanTest extends TestCase {
     Chop._06.requireClose(z, res);
   }
 
-  public void testSe2Mean() {
+  public void testSe2Mean4() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
@@ -41,8 +44,24 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
     Tensor meanG = Se2CoveringBiinvariantMean.INSTANCE.mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
-    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SE2);
+    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SE2, Chop._10);
     Tensor meanb = biinvariantMean.mean(sequence, weights);
-    Chop._06.requireClose(mean, meanb);
+    Chop._09.requireClose(mean, meanb);
+  }
+
+  public void testSe2MeanRandom() {
+    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    Distribution dist_w = UniformDistribution.of(0.5, 1);
+    for (int n = 4; n < 7; ++n) {
+      Tensor sequence = RandomVariate.of(distribution, n, 3);
+      Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, n));
+      Tensor meanG = Se2CoveringBiinvariantMean.INSTANCE.mean(seqG, weights);
+      Tensor mean = exponential.log(meanG);
+      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(BCH_SE2, Chop._10);
+      Tensor meanb = biinvariantMean.mean(sequence, weights);
+      Chop._09.requireClose(mean, meanb);
+    }
   }
 }
