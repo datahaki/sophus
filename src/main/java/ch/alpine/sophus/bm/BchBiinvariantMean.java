@@ -36,7 +36,7 @@ public class BchBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override
   public Tensor mean(Tensor sequence, Tensor weights) {
-    // TODO building is queue is not strictly required
+    // TODO building of queue is not strictly required
     Tensor queue = Tensors.empty();
     // ---
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
