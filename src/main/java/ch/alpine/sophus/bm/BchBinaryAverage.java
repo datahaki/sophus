@@ -22,7 +22,7 @@ public class BchBinaryAverage implements BinaryAverage, Serializable {
     this.bch = bch;
   }
 
-  @Override
+  @Override // from BinaryAverage
   public Tensor split(Tensor p, Tensor q, Scalar scalar) {
     return bch.apply(p, bch.apply(p.negate(), q).multiply(scalar));
   }

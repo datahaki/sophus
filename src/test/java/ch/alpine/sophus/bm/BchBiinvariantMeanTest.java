@@ -8,6 +8,7 @@ import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
 import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -80,5 +81,10 @@ public class BchBiinvariantMeanTest extends TestCase {
       Tensor meanb = biinvariantMean.mean(sequence, weights);
       Chop._09.requireClose(mean, meanb);
     }
+  }
+
+  public void testNullFail() {
+    AssertFail.of(() -> BchBiinvariantMean.of(null, Chop._10));
+    AssertFail.of(() -> BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6), null));
   }
 }

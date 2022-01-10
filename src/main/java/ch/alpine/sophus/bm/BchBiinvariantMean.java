@@ -9,8 +9,6 @@ import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Fold;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
@@ -36,18 +34,15 @@ public class BchBiinvariantMean implements BiinvariantMean, Serializable {
     this.chop = chop;
   }
 
-  @Override
+  @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    // TODO building of queue is not strictly required
-    Tensor queue = Tensors.empty();
-    // ---
+    Tensor mean = sequence.get(0).map(Scalar::zero);
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      Tensor defect = RnBiinvariantMean.INSTANCE.mean(sequence, weights);
-      queue.append(defect);
+      Tensor defect = RnBiinvariantMean.INSTANCE.mean(sequence, weights).negate();
       if (chop.isZero(Vector2Norm.of(defect)))
-        return Fold.of(bch, queue.get(0).map(Scalar::zero), queue);
-      Tensor inv = defect.negate();
-      sequence = Tensor.of(sequence.stream().map(point -> bch.apply(inv, point)));
+        return mean.negate();
+      mean = bch.apply(defect, mean);
+      sequence = Tensor.of(sequence.stream().map(point -> bch.apply(defect, point)));
     }
     throw TensorRuntimeException.of(sequence, weights);
   }

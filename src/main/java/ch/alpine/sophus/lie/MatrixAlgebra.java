@@ -51,9 +51,9 @@ public class MatrixAlgebra implements LieAlgebra, Serializable {
   /** @param matrix linear combination of basis
    * @return */
   public Tensor toVector(Tensor matrix) {
-    Tensor rhs = Flatten.of(matrix);
-    Tensor x = LeastSquares.of(m, rhs);
-    Tolerance.CHOP.requireClose(m.dot(x), rhs);
+    Tensor b = Flatten.of(matrix);
+    Tensor x = LeastSquares.of(m, b);
+    Tolerance.CHOP.requireClose(m.dot(x), b);
     return x;
   }
 

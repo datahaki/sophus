@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.AveragingWeights;
+import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -24,7 +25,7 @@ public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
   private static final int MAX_ITERATIONS = 512;
 
   /** @param biinvariantMean
-   * @param weightingInterface for instance ShepardWeighting
+   * @param weightingInterface for instance {@link InverseDistanceWeighting}
    * @param chop
    * @return */
   public static SpatialMedian of(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) {
