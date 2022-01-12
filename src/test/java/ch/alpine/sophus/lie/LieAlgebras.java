@@ -37,6 +37,13 @@ public enum LieAlgebras {
     return ad;
   }
 
+  public static Tensor se2_basis() {
+    Tensor b1 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
+    Tensor b2 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
+    Tensor b3 = Tensors.fromString("{{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}");
+    return Tensors.of(b1, b2, b3);
+  }
+
   // ---
   public static Tensor sl2_basis() {
     Tensor b1 = Tensors.fromString("{{1, 0}, {0, -1}}");
@@ -57,5 +64,12 @@ public enum LieAlgebras {
     Tensor b2 = Tensors.fromString("{{0, 0}, {1, 0}}");
     Tensor b3 = Tensors.fromString("{{1, 0}, {0, -1}}");
     return Tensors.of(b1, b2, b3);
+  }
+
+  public static Tensor sl2_basis_mh() {
+    Tensor m0 = Tensors.fromString("{{0, 1}, {-1, 0}}");
+    Tensor m1 = Tensors.fromString("{{0, 1}, {1, 0}}");
+    Tensor h0 = Tensors.fromString("{{1, 0}, {0, -1}}");
+    return Tensors.of(m0, m1, h0);
   }
 }

@@ -3,13 +3,14 @@ package ch.alpine.sophus.lie.sl2;
 
 import java.util.Random;
 
+import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
@@ -67,7 +68,8 @@ public class Sl2GroupElementTest extends TestCase {
     Tensor gY = Sl2Exponential.INSTANCE.exp(my);
     Tensor gZ = Sl2Exponential.INSTANCE.log(gX.dot(gY));
     Tensor az = matrixAlgebra.toVector(gZ);
-    Tensor rs = matrixAlgebra.bch(6).apply(x, y);
+    LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(matrixAlgebra.ad());
+    Tensor rs = lieAlgebraImpl.bch(6).apply(x, y);
     Chop._06.requireClose(az, rs);
   }
 
