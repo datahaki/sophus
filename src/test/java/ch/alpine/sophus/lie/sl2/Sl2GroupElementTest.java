@@ -3,16 +3,13 @@ package ch.alpine.sophus.lie.sl2;
 
 import java.util.Random;
 
-import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class Sl2GroupElementTest extends TestCase {
@@ -49,28 +46,6 @@ public class Sl2GroupElementTest extends TestCase {
       Tensor Ad_b = adjoint(gb);
       assertEquals(matrix, Ad_b.dot(Ad_a));
     }
-  }
-
-  private static Tensor sl2_basisA() {
-    Tensor b0 = Tensors.fromString("{{0, 1}, {-1, 0}}");
-    Tensor b1 = Tensors.fromString("{{0, 1}, {+1, 0}}");
-    Tensor b2 = Tensors.fromString("{{1, 0}, {0, -1}}");
-    return Tensors.of(b0, b1, b2);
-  }
-
-  public void testBasisA() {
-    Tensor x = Tensors.vector(0.1, 0.2, 0.125);
-    Tensor y = Tensors.vector(0.15, -0.08, 0.025);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(sl2_basisA());
-    Tensor mx = matrixAlgebra.toMatrix(x);
-    Tensor my = matrixAlgebra.toMatrix(y);
-    Tensor gX = Sl2Exponential.INSTANCE.exp(mx);
-    Tensor gY = Sl2Exponential.INSTANCE.exp(my);
-    Tensor gZ = Sl2Exponential.INSTANCE.log(gX.dot(gY));
-    Tensor az = matrixAlgebra.toVector(gZ);
-    LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(matrixAlgebra.ad());
-    Tensor rs = lieAlgebraImpl.bch(6).apply(x, y);
-    Chop._06.requireClose(az, rs);
   }
 
   public void testFailZero() {

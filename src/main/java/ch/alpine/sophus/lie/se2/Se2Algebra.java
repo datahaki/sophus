@@ -21,6 +21,14 @@ public enum Se2Algebra implements LieAlgebra {
   }
 
   @Override // from LieAlgebra
+  public Tensor basis() {
+    return Tensors.of( //
+        Tensors.fromString("{{0,  0, 1}, {0, 0, 0}, {0, 0, 0}}"), //
+        Tensors.fromString("{{0,  0, 0}, {0, 0, 1}, {0, 0, 0}}"), //
+        Tensors.fromString("{{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}"));
+  }
+
+  @Override // from LieAlgebra
   public BinaryOperator<Tensor> bch(int degree) {
     return BakerCampbellHausdorff.of(N.DOUBLE.of(AD), degree);
   }

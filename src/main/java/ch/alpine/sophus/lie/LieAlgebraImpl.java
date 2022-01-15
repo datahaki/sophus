@@ -27,4 +27,9 @@ public class LieAlgebraImpl implements LieAlgebra {
   public BinaryOperator<Tensor> bch(int degree) {
     return BakerCampbellHausdorff.of(isNilpotent ? ad : N.DOUBLE.of(ad), degree);
   }
+
+  @Override
+  public Tensor basis() {
+    throw new UnsupportedOperationException();
+  }
 }

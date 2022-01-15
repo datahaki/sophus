@@ -23,4 +23,9 @@ public enum So3Algebra implements LieAlgebra {
   public BinaryOperator<Tensor> bch(int degree) {
     return BakerCampbellHausdorff.of(N.DOUBLE.of(AD), degree);
   }
+
+  @Override
+  public Tensor basis() {
+    return LeviCivitaTensor.of(3).negate();
+  }
 }

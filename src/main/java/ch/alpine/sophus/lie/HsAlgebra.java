@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 import ch.alpine.tensor.Scalar;
@@ -12,11 +13,16 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
-import ch.alpine.tensor.lie.ad.JacobiIdentity;
+import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
+import ch.alpine.tensor.lie.ad.NilpotentAlgebraQ;
+import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
 public class HsAlgebra implements Serializable {
@@ -24,14 +30,53 @@ public class HsAlgebra implements Serializable {
   private final int dim_m;
   private final int dim_g;
   private final int dim_h;
+  private final BinaryOperator<Tensor> bch;
+  private final Tensor pad;
 
-  public HsAlgebra(Tensor ad, int dim_m) {
-    this.ad = JacobiIdentity.require(ad);
+  public HsAlgebra(Tensor ad, int dim_m, int degree) {
+    this.ad = ad;
+    // ---
     this.dim_m = dim_m;
     dim_g = ad.length();
     dim_h = dim_g - dim_m;
+    pad = Array.zeros(dim_h);
+    boolean isNilpotent = NilpotentAlgebraQ.of(ad);
+    bch = BakerCampbellHausdorff.of(isNilpotent ? ad : N.DOUBLE.of(ad), degree);
     // ---
     consistencyCheck();
+  }
+
+  /** @param g vector with length dim_g
+   * @param m vector with length dim_m
+   * @return vector with length dim_m */
+  public Tensor action(Tensor g, Tensor m) {
+    Tensor z = bch.apply(g, Join.of(m, pad));
+    Tensor h = projection(z);
+    Tensor a = bch.apply(z, h);
+    // TODO remove check once tested
+    Chop._05.requireAllZero(a.extract(dim_m, dim_g));
+    return a.extract(0, dim_m);
+  }
+
+  /** @param g
+   * @return h so that bch(g, h) == [m 0] */
+  public Tensor projection(Tensor g) {
+    Tensor r = g.copy();
+    Tensor h = g.map(Scalar::zero);
+    while (!Tolerance.CHOP.allZero(r.extract(dim_m, dim_g))) {
+      Tensor s = r.copy();
+      for (int k = 0; k < dim_m; ++k)
+        s.set(Scalar::zero, k);
+      for (int k = dim_m; k < dim_g; ++k)
+        s.set(Scalar::negate, k);
+      r = bch.apply(r, s);
+      h = bch.apply(h, s);
+    }
+    { // check
+      // TODO remove check once tested
+      Chop._05.requireAllZero(bch.apply(g, h).extract(dim_m, dim_g));
+    }
+    return h;
   }
 
   public int dimG() {
