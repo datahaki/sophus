@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import java.util.Random;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.bm.BchBiinvariantMean;
@@ -19,10 +20,11 @@ import junit.framework.TestCase;
 public class BchBarycentricCoordinateTest extends TestCase {
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    Random random = new Random(1);
     BinaryOperator<Tensor> bch = Se2Algebra.INSTANCE.bch(6);
     for (int n = 4; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
-      Tensor x = RandomVariate.of(distribution, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
+      Tensor x = RandomVariate.of(distribution, random, 3);
       BarycentricCoordinate barycentricCoordinate = //
           BchBarycentricCoordinate.of(bch, InversePowerVariogram.of(2));
       Tensor weights = barycentricCoordinate.weights(sequence, x);
@@ -38,10 +40,11 @@ public class BchBarycentricCoordinateTest extends TestCase {
 
   public void testSo3MeanRandom() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    Random random = new Random(1);
     BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(6);
     for (int n = 4; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
-      Tensor x = RandomVariate.of(distribution, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
+      Tensor x = RandomVariate.of(distribution, random, 3);
       BarycentricCoordinate barycentricCoordinate = //
           BchBarycentricCoordinate.of(bch, InversePowerVariogram.of(2));
       Tensor weights = barycentricCoordinate.weights(sequence, x);

@@ -64,9 +64,11 @@ public class BchBinaryAverageTest extends TestCase {
     Scalar lambda = RealScalar.of(0.3);
     HsGeodesic hsGeodesic = new HsGeodesic(SnManifold.INSTANCE);
     Tensor mz = exponential.log(hsGeodesic.split(mx, my, lambda));
+    mz.map(Scalar::zero);
     for (int d = 1; d < 7; ++d) {
       BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(d);
       Tensor cmp = BchBinaryAverage.of(bch).split(x, y, lambda);
+      cmp.map(Scalar::zero);
       // System.out.println(cmp);
       // System.out.println(mz);
       // System.out.println(Vector2Norm.between(cmp, mz));

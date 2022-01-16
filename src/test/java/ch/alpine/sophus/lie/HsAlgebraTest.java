@@ -11,6 +11,7 @@ import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
@@ -138,6 +139,7 @@ public class HsAlgebraTest extends TestCase {
     Tensor snm = snExponential.exp(v);
     Tensor dot = rotation.dot(snm);
     Tensor bak = snExponential.log(dot);
+    bak.map(Scalar::zero);
     // Tolerance.CHOP.requireClose(bak, Tensors.vector(0.1, 0.2, 0));
   }
 
@@ -146,6 +148,7 @@ public class HsAlgebraTest extends TestCase {
     Tensor m = Tensors.vector(0.07, 0.08);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 7);
     Tensor res = hsAlgebra.action(g, m);
+    res.map(Scalar::zero);
     // System.out.println(res);
     Tensor p = UnitVector.of(3, 2);
     // SnManifold.INSTANCE.endomorphism(p, g);
@@ -156,6 +159,7 @@ public class HsAlgebraTest extends TestCase {
     Tensor dot = rotation.dot(snm);
     // System.out.println(dot);
     Tensor bak = snExponential.log(dot);
+    bak.map(Scalar::zero);
     // System.out.println(bak);
   }
 }

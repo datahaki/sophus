@@ -48,6 +48,7 @@ public class Se2AlgebraTest extends TestCase {
     Tensor x = RandomVariate.of(distribution, 3);
     Tensor y = RandomVariate.of(distribution, 3);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
+    matrixAlgebra.ad().dot(x).dot(y);
     // Tensor log = MatrixLog.of(matrixAlgebra.toMatrix(x));
     // System.out.println(x);
     // System.out.println(Pretty.of(log.map(Round._4)));

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -24,6 +25,7 @@ public class FullRankCorrelationMatrixTest extends TestCase {
       Tensor frc1 = FullRankCorrelationMatrix.fromSpd(TestHelper.generateSpd(n));
       Tensor frc2 = FullRankCorrelationMatrix.fromSpd(TestHelper.generateSpd(n));
       Tensor log = new SpdExponential(frc1).log(frc2);
+      log.map(Scalar::zero);
       // System.out.println(Pretty.of(log.map(Round._2)));
     }
   }
@@ -33,6 +35,7 @@ public class FullRankCorrelationMatrixTest extends TestCase {
       Tensor frc1 = IdentityMatrix.of(n);
       Tensor frc2 = FullRankCorrelationMatrix.fromSpd(TestHelper.generateSpd(n));
       Tensor log = new SpdExponential(frc1).log(frc2);
+      log.map(Scalar::zero);
       // System.out.println(Pretty.of(log.map(Round._2)));
     }
   }
