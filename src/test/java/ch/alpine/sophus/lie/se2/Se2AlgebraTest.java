@@ -42,4 +42,14 @@ public class Se2AlgebraTest extends TestCase {
     Tensor z = Se2Algebra.INSTANCE.bch(6).apply(x, y);
     Chop._06.requireClose(z, res);
   }
+
+  public void testSe2Log() {
+    Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    Tensor x = RandomVariate.of(distribution, 3);
+    Tensor y = RandomVariate.of(distribution, 3);
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
+    // Tensor log = MatrixLog.of(matrixAlgebra.toMatrix(x));
+    // System.out.println(x);
+    // System.out.println(Pretty.of(log.map(Round._4)));
+  }
 }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import java.util.Random;
+
 import ch.alpine.sophus.crv.d2.SutherlandHodgmanAlgorithm.PolyclipResult;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
@@ -32,9 +34,10 @@ public class SutherlandHodgmanAlgorithmTest extends TestCase {
   }
 
   public void testQuantity() {
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));
     for (int count = 0; count < 10; ++count) {
-      Tensor tensor = RandomVariate.of(distribution, 6, 2);
+      Tensor tensor = RandomVariate.of(distribution, random, 6, 2);
       PolyclipResult polyclipResult = //
           SutherlandHodgmanAlgorithm.of(CirclePoints.of(3 + count).map(s -> Quantity.of(s, "m"))) //
               .apply(tensor);

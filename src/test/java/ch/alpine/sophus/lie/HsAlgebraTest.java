@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import java.util.Random;
+
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -8,7 +10,6 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -16,6 +17,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
@@ -35,33 +37,41 @@ public class HsAlgebraTest extends TestCase {
       Tensor g = Tensors.vector(1, 0, 0);
       Tensor p = Tensors.vector(2, 4);
       Tensor q = hsAlgebra.action(g, p);
-      ExactTensorQ.require(q);
+      // ExactTensorQ.require(q);
       assertEquals(q, Tensors.vector(3, 4));
     }
     {
       Tensor g = Tensors.vector(0, 1, 0);
       Tensor p = Tensors.vector(2, 4);
       Tensor q = hsAlgebra.action(g, p);
-      ExactTensorQ.require(q);
+      // ExactTensorQ.require(q);
       assertEquals(q, Tensors.vector(2, 5));
     }
     {
-      double angle = Math.PI / 8;
+      double angle = Math.PI / 16;
       Tensor g = Tensors.vector(0, 0, angle);
-      Tensor p = Tensors.vector(1, 2);
+      Tensor p = Tensors.vector(.05, .02);
       Tensor q1 = hsAlgebra.action(g, p);
       Tensor q2 = RotationMatrix.of(angle).dot(p);
-      Chop._08.requireClose(q1, q2);
+      Tolerance.CHOP.requireClose(q1, q2);
     }
-    {
-      double angle = 0.1;
-      Tensor g = Tensors.vector(0.2, 0.3, angle);
-      Tensor p = Tensors.vector(-0.3, -0.1);
+  }
+
+  public void testSe2ActionsExp() {
+    HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
+    Random random = new Random(2);
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    for (int count = 0; count < 10; ++count) {
+      Tensor g = RandomVariate.of(distribution, random, 3);
+      Tensor p = RandomVariate.of(distribution, random, 2);
       Tensor q1 = hsAlgebra.action(g, p);
       Tensor xyz = Se2CoveringExponential.INSTANCE.exp(g);
       Tensor mat = Se2Matrix.of(xyz);
       Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
-      Chop._08.requireClose(q1, q2);
+      Tolerance.CHOP.requireClose(q1, q2);
+      Tensor exp = MatrixExp.of(g.dot(Se2Algebra.INSTANCE.basis()));
+      Tensor q3 = exp.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
+      Tolerance.CHOP.requireClose(q1, q3);
     }
   }
 
