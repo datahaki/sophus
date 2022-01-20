@@ -17,6 +17,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
@@ -27,6 +28,8 @@ import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
 public class HsAlgebra implements Serializable {
+  private static final int MAX_ITERATIONS = 100;
+  // ---
   private final Tensor ad;
   private final int dim_m;
   private final int dim_g;
@@ -69,22 +72,26 @@ public class HsAlgebra implements Serializable {
   /** @param g vector with length dim_g
    * @return h so that bch(g, h) == [m 0] */
   public Tensor projectingH(Tensor g) {
-    Tensor r = g.copy();
-    Tensor h = g.map(Scalar::zero);
-    while (!Tolerance.CHOP.allZero(r.extract(dim_m, dim_g))) {
-      Tensor s = r.copy();
-      for (int k = 0; k < dim_m; ++k)
-        s.set(Scalar::zero, k);
-      for (int k = dim_m; k < dim_g; ++k)
-        s.set(Scalar::negate, k);
-      r = bch.apply(r, s);
-      h = bch.apply(h, s);
+    Tensor r = g.copy(); // residual
+    Tensor h = Array.zeros(dim_g);
+    for (int count = 0; count < MAX_ITERATIONS; ++count) {
+      if (Tolerance.CHOP.allZero(r.extract(dim_m, dim_g))) {
+        // TODO remove check once tested
+        Chop._05.requireAllZero(bch.apply(g, h).extract(dim_m, dim_g)); // check
+        return h;
+      }
+      Tensor h_delta = approxHInv(r);
+      r = bch.apply(r, h_delta);
+      h = bch.apply(h, h_delta);
     }
-    { // check
-      // TODO remove check once tested
-      Chop._05.requireAllZero(bch.apply(g, h).extract(dim_m, dim_g));
-    }
-    return h;
+    throw TensorRuntimeException.of(g);
+  }
+
+  /** @param g
+   * @return */
+  @PackageTestAccess
+  /* package */ Tensor approxHInv(Tensor g) {
+    return Join.of(Array.zeros(dim_m), g.extract(dim_m, dim_g).negate());
   }
 
   public int dimG() {

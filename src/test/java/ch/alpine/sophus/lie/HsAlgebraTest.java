@@ -143,6 +143,13 @@ public class HsAlgebraTest extends TestCase {
     // Tolerance.CHOP.requireClose(bak, Tensors.vector(0.1, 0.2, 0));
   }
 
+  public void testApproxHInv() {
+    HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
+    Tensor g = Tensors.vector(1, 2, 3);
+    Tensor approxHInv = hsAlgebra.approxHInv(g);
+    assertEquals(approxHInv, Tensors.vector(0, 0, -3));
+  }
+
   public void testAlg() {
     Tensor g = Tensors.vector(0.06, 0.03, -0.05);
     Tensor m = Tensors.vector(0.07, 0.08);
