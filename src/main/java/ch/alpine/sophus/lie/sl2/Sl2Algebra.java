@@ -16,7 +16,7 @@ public enum Sl2Algebra implements LieAlgebra {
   @Override
   public Tensor ad() {
     return Tensors.fromString( //
-        "{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, -1}, {0, 0, 0}, {1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
+        "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
   }
 
   @Override
@@ -27,8 +27,8 @@ public enum Sl2Algebra implements LieAlgebra {
   @Override
   public Tensor basis() {
     return Tensors.of( //
-        Tensors.fromString("{{1, 0}, {0, -1}}"), //
         Tensors.fromString("{{0, 1}, {-1, 0}}"), //
-        Tensors.fromString("{{0, 1}, {+1, 0}}")).multiply(RationalScalar.HALF);
+        Tensors.fromString("{{0, 1}, {+1, 0}}"), //
+        Tensors.fromString("{{1, 0}, {0, -1}}")).multiply(RationalScalar.HALF);
   }
 }

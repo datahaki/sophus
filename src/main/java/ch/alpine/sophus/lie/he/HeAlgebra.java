@@ -33,7 +33,7 @@ public class HeAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public Tensor basis() {
-    Tensor tensor = Array.zeros(2 * n + 1, n + 2, n + 2);
+    Tensor tensor = Array.sparse(2 * n + 1, n + 2, n + 2);
     int index = -1;
     for (int i = 1; i <= n; ++i)
       tensor.set(RealScalar.ONE, ++index, 0, i);
