@@ -16,6 +16,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
@@ -48,19 +49,26 @@ public class HsAlgebra implements Serializable {
 
   /** @param g vector with length dim_g
    * @param m vector with length dim_m
-   * @return vector with length dim_m */
+   * @return projection( bch(g, [m 0]) ) */
   public Tensor action(Tensor g, Tensor m) {
-    Tensor z = bch.apply(g, Join.of(m, pad));
-    Tensor h = projection(z);
-    Tensor a = bch.apply(z, h);
-    // TODO remove check once tested
-    Chop._05.requireAllZero(a.extract(dim_m, dim_g));
-    return a.extract(0, dim_m);
+    return projection(bch.apply(g, lift(m)));
   }
 
-  /** @param g
-   * @return h so that bch(g, h) == [m 0] */
+  /** @param m
+   * @return [m 0] */
+  public Tensor lift(Tensor m) {
+    return Join.of(VectorQ.requireLength(m, dim_m), pad);
+  }
+
+  /** @param g vector with length dim_g
+   * @return m for which there is a h with bch(g, h) == [m 0] */
   public Tensor projection(Tensor g) {
+    return bch.apply(g, projectingH(g)).extract(0, dim_m);
+  }
+
+  /** @param g vector with length dim_g
+   * @return h so that bch(g, h) == [m 0] */
+  public Tensor projectingH(Tensor g) {
     Tensor r = g.copy();
     Tensor h = g.map(Scalar::zero);
     while (!Tolerance.CHOP.allZero(r.extract(dim_m, dim_g))) {

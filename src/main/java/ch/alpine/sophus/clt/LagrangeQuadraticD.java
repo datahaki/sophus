@@ -7,9 +7,8 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.itp.LinearInterpolation;
+import ch.alpine.tensor.itp.LinearBinaryAverage;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
@@ -70,7 +69,7 @@ public class LagrangeQuadraticD implements ScalarUnaryOperator {
     Scalar sum = abs_head.add(abs_tail);
     return Scalars.isZero(sum) //
         ? sum
-        : LinearInterpolation.of(Tensors.of(abs_head, abs_tail)).At(abs_tail.divide(sum)) //
+        : (Scalar) LinearBinaryAverage.INSTANCE.split(abs_head, abs_tail, abs_tail.divide(sum)) //
             .multiply(RationalScalar.HALF);
   }
 }

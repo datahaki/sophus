@@ -1,9 +1,8 @@
 // code by jph
 package ch.alpine.sophus.math;
 
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.mat.UpperEvaluation;
 
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/DistanceMatrix.html">DistanceMatrix</a> */
@@ -13,15 +12,7 @@ public enum DistanceMatrix {
    * @param tensorMetric
    * @return symmetric matrix of size n x n with zeros along the diagonal */
   public static Tensor of(Tensor sequence, TensorMetric tensorMetric) {
-    int n = sequence.length();
-    Scalar[][] matrix = new Scalar[n][n];
-    int i = -1;
-    for (Tensor p : sequence) {
-      for (int j = ++i; j < n; ++j)
-        matrix[i][j] = matrix[j][i] = tensorMetric.distance(p, sequence.get(j));
-      matrix[i][i] = tensorMetric.distance(p, p);
-    }
-    return Tensors.matrix(matrix);
+    return UpperEvaluation.of(sequence, sequence, tensorMetric::distance, s -> s);
   }
 
   /** @param x sequence of length n
