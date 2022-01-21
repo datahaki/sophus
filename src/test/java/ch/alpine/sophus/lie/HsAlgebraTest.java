@@ -149,24 +149,4 @@ public class HsAlgebraTest extends TestCase {
     Tensor approxHInv = hsAlgebra.approxHInv(g);
     assertEquals(approxHInv, Tensors.vector(0, 0, -3));
   }
-
-  public void testAlg() {
-    Tensor g = Tensors.vector(0.06, 0.03, -0.05);
-    Tensor m = Tensors.vector(0.07, 0.08);
-    HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 7);
-    Tensor res = hsAlgebra.action(g, m);
-    res.map(Scalar::zero);
-    // System.out.println(res);
-    Tensor p = UnitVector.of(3, 2);
-    // SnManifold.INSTANCE.endomorphism(p, g);
-    Tensor rotation = Rodrigues.vectorExp(g);
-    SnExponential snExponential = new SnExponential(p);
-    Tensor v = m.copy().append(RealScalar.ZERO);
-    Tensor snm = snExponential.exp(v);
-    Tensor dot = rotation.dot(snm);
-    // System.out.println(dot);
-    Tensor bak = snExponential.log(dot);
-    bak.map(Scalar::zero);
-    // System.out.println(bak);
-  }
 }
