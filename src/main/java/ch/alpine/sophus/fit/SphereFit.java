@@ -7,7 +7,6 @@ import java.util.Optional;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.mat.re.MatrixRank;
@@ -15,7 +14,7 @@ import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.sca.Sqrt;
 
 /** reference: "Circle fitting by linear and non-linear least squares", by J. D. Coope */
-public class SphereFit implements Serializable {
+public record SphereFit(Tensor center, Scalar radius) implements Serializable {
   /** @param points encoded as matrix
    * @return optional with instance of SphereFit containing the center and radius
    * of the fitted sphere, or empty if points are numerically co-linear
@@ -32,29 +31,5 @@ public class SphereFit implements Serializable {
     return Optional.of(new SphereFit( //
         center, //
         Sqrt.FUNCTION.apply(x.Get(cols - 1).add(Vector2NormSquared.of(center)))));
-  }
-
-  // ---
-  private final Tensor center;
-  private final Scalar radius;
-
-  private SphereFit(Tensor center, Scalar radius) {
-    this.center = center;
-    this.radius = radius;
-  }
-
-  /** @return center of fitted sphere */
-  public Tensor center() {
-    return center;
-  }
-
-  /** @return radius of fitted sphere */
-  public Scalar radius() {
-    return radius;
-  }
-
-  @Override // from Object
-  public String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), Tensors.message(center(), radius()));
   }
 }

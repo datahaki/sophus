@@ -426,27 +426,22 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
 
   @Override
   public Scalar apply(Tensor vector) {
-    switch (vector.length()) {
-    case 1:
-      return DoubleScalar.of(at( //
-          vector.Get(0).number().doubleValue()));
-    case 2:
-      return DoubleScalar.of(at( //
-          vector.Get(0).number().doubleValue(), //
-          vector.Get(1).number().doubleValue()));
-    case 3:
-      return DoubleScalar.of(at( //
-          vector.Get(0).number().doubleValue(), //
-          vector.Get(1).number().doubleValue(), //
-          vector.Get(2).number().doubleValue()));
-    case 4:
-      return DoubleScalar.of(at( //
-          vector.Get(0).number().doubleValue(), //
-          vector.Get(1).number().doubleValue(), //
-          vector.Get(2).number().doubleValue(), //
-          vector.Get(3).number().doubleValue()));
-    default:
-      throw TensorRuntimeException.of(vector);
-    }
+    return switch (vector.length()) {
+    case 1 -> DoubleScalar.of(at( //
+        vector.Get(0).number().doubleValue()));
+    case 2 -> DoubleScalar.of(at( //
+        vector.Get(0).number().doubleValue(), //
+        vector.Get(1).number().doubleValue()));
+    case 3 -> DoubleScalar.of(at( //
+        vector.Get(0).number().doubleValue(), //
+        vector.Get(1).number().doubleValue(), //
+        vector.Get(2).number().doubleValue()));
+    case 4 -> DoubleScalar.of(at( //
+        vector.Get(0).number().doubleValue(), //
+        vector.Get(1).number().doubleValue(), //
+        vector.Get(2).number().doubleValue(), //
+        vector.Get(3).number().doubleValue()));
+    default -> throw TensorRuntimeException.of(vector);
+    };
   }
 }
