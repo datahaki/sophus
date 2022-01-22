@@ -198,6 +198,16 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  public void testLiftProjection() {
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Random random = new Random();
+    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
+      Tensor m1 = RandomVariate.of(distribution, random, hsAlgebra.dimM());
+      Tensor m2 = hsAlgebra.projection(hsAlgebra.lift(m1));
+      Tolerance.CHOP.requireClose(m1, m2);
+    }
+  }
+
   public void testDecompCheat() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();

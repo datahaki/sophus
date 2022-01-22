@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -25,7 +26,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
-public class HsAlgebra implements Serializable {
+public class HsAlgebra implements HomogeneousSpace, Serializable {
   private static final int MAX_ITERATIONS = 100;
   // ---
   private final Tensor ad;
@@ -48,23 +49,26 @@ public class HsAlgebra implements Serializable {
     consistencyCheck();
   }
 
-  /** @param m
-   * @return [m 0] */
-  public Tensor lift(Tensor m) {
-    return Join.of(VectorQ.requireLength(m, dim_m), pad);
-  }
-
   /** @param g vector with length dim_g
    * @param m vector with length dim_m
    * @return projection( bch(g, [m 0]) ) */
+  @Override // from HomogeneousSpace
   public Tensor action(Tensor g, Tensor m) {
     return projection(bch.apply(g, lift(m)));
   }
 
   /** @param g vector with length dim_g
    * @return m for which there is a h with bch(g, h) == [m 0] */
+  @Override // from HomogeneousSpace
   public Tensor projection(Tensor g) {
     return new Decomp(g).m;
+  }
+
+  /** @param m
+   * @return [m 0] */
+  @Override // from HomogeneousSpace
+  public Tensor lift(Tensor m) {
+    return Join.of(VectorQ.requireLength(m, dim_m), pad);
   }
 
   /** achieves decomposition of g into m and h simultaneously with

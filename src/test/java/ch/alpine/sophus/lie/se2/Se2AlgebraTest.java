@@ -1,9 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import ch.alpine.sophus.lie.HsAlgebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -52,5 +54,9 @@ public class Se2AlgebraTest extends TestCase {
     // Tensor log = MatrixLog.of(matrixAlgebra.toMatrix(x));
     // System.out.println(x);
     // System.out.println(Pretty.of(log.map(Round._4)));
+  }
+
+  public void testHsFails() {
+    AssertFail.of(() -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 }
