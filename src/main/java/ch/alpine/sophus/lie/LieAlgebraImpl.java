@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie;
 
 import java.util.function.BinaryOperator;
 
+import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.JacobiIdentity;
@@ -14,6 +15,7 @@ public class LieAlgebraImpl implements LieAlgebra {
   private final boolean isNilpotent;
 
   public LieAlgebraImpl(Tensor ad) {
+    ExactTensorQ.require(ad);
     this.ad = JacobiIdentity.require(ad);
     isNilpotent = NilpotentAlgebraQ.of(ad);
   }

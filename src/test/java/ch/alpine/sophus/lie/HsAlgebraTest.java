@@ -2,11 +2,15 @@
 package ch.alpine.sophus.lie;
 
 import java.util.Random;
+import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.hs.sn.SnExponential;
+import ch.alpine.sophus.lie.HsAlgebra.Decomp;
+import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
@@ -142,11 +146,50 @@ public class HsAlgebraTest extends TestCase {
     bak.map(Scalar::zero);
     // Tolerance.CHOP.requireClose(bak, Tensors.vector(0.1, 0.2, 0));
   }
+  // public void testApproxHInv() {
+  // HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
+  // Tensor g = Tensors.vector(1, 2, 3);
+  // Tensor approxHInv = hsAlgebra.approxHInv(g);
+  // assertEquals(approxHInv, Tensors.vector(0, 0, -3));
+  // }
 
-  public void testApproxHInv() {
-    HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
-    Tensor g = Tensors.vector(1, 2, 3);
-    Tensor approxHInv = hsAlgebra.approxHInv(g);
-    assertEquals(approxHInv, Tensors.vector(0, 0, -3));
+  private static final HsAlgebra[] HS_ALGEBRAS = { //
+      new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6), //
+      new HsAlgebra(new HeAlgebra(1).ad(), 2, 6), //
+      new HsAlgebra(new HeAlgebra(2).ad(), 3, 6), //
+      new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6) };
+
+  public void testAction() {
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Random random = new Random();
+    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
+      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
+      for (int count = 0; count < 5; ++count) {
+        Scalar lambda = RandomVariate.of(distribution);
+        Tensor ga = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+        Tensor m1 = RandomVariate.of(distribution, random, hsAlgebra.dimM());
+        Tensor m2 = hsAlgebra.action(ga, m1);
+        Tensor delta = bch.apply(hsAlgebra.lift(m1).negate(), hsAlgebra.lift(m2)).multiply(lambda);
+        Tensor mi = hsAlgebra.projection(bch.apply(hsAlgebra.lift(m1), delta));
+        Tensor mj = hsAlgebra.projection(bch.apply(hsAlgebra.lift(m1), hsAlgebra.lift(hsAlgebra.projection(delta))));
+        Tensor mk = hsAlgebra.action(hsAlgebra.lift(m1), hsAlgebra.projection(delta));
+        Tolerance.CHOP.requireClose(mi, mj);
+        Tolerance.CHOP.requireClose(mk, mj);
+      }
+    }
+  }
+
+  public void testDecomp() {
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Random random = new Random(1);
+    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
+      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
+      for (int count = 0; count < 5; ++count) {
+        Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+        Decomp decomp = hsAlgebra.new Decomp(g);
+        Tolerance.CHOP.requireClose(bch.apply(g, decomp.h), hsAlgebra.lift(decomp.m));
+        Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp.m), decomp.h.negate()));
+      }
+    }
   }
 }

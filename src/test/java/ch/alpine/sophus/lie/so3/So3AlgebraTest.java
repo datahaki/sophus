@@ -33,24 +33,18 @@ public class So3AlgebraTest extends TestCase {
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
     Random random = new Random();
     for (int count = 0; count < 10; ++count) {
-      // Tensor ga = Tensors.vector(0.0, 0.0, 0.1);
       Tensor ga = RandomVariate.of(distribution, random, 3);
       Tensor m1 = RandomVariate.of(distribution, random, 2);
-      // System.out.println("m1=" + m1.map(Round._4));
       Tensor m2 = hsAlgebra.action(ga, m1);
-      // System.out.println("m2=" + m2.map(Round._4));
       Tensor p = UnitVector.of(3, 2);
       // TODO investigate where this "change of coordinates" comes from
-      Tensor g = Tensors.of(ga.Get(1).negate(), ga.Get(0), ga.Get(2));
-      Tensor rotation = So3Exponential.INSTANCE.exp(g);
       SnExponential snExponential = new SnExponential(p);
-      Tensor v1 = hsAlgebra.lift(m1);
-      Tensor p1 = snExponential.exp(v1);
-      // System.out.println("p1=" + p1.map(Round._4));
-      Tensor p2 = rotation.dot(p1);
-      // System.out.println("p2=" + p2.map(Round._4));
+      Tensor v1 = hsAlgebra.lift(m1); // attach 0
+      Tensor p1 = snExponential.exp(v1); // map to S^2
+      Tensor g = Tensors.of(ga.Get(1).negate(), ga.Get(0), ga.Get(2));
+      Tensor rot = So3Exponential.INSTANCE.exp(g);
+      Tensor p2 = rot.dot(p1); // apply action
       Tensor v2 = snExponential.log(p2);
-      // System.out.println("v2="+v2.map(Round._4));
       Chop._06.requireClose(hsAlgebra.lift(m2), v2);
     }
   }

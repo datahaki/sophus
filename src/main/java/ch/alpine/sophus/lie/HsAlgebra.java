@@ -17,13 +17,11 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.NilpotentAlgebraQ;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
@@ -66,32 +64,39 @@ public class HsAlgebra implements Serializable {
   /** @param g vector with length dim_g
    * @return m for which there is a h with bch(g, h) == [m 0] */
   public Tensor projection(Tensor g) {
-    return bch.apply(g, projectingH(g)).extract(0, dim_m);
+    return new Decomp(g).m;
   }
 
-  /** @param g vector with length dim_g
-   * @return h so that bch(g, h) == [m 0] */
-  public Tensor projectingH(Tensor g) {
-    Tensor r = g.copy(); // residual
-    Tensor h = Array.zeros(dim_g);
-    for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      if (Tolerance.CHOP.allZero(r.extract(dim_m, dim_g))) {
-        // TODO remove check once tested
-        Chop._05.requireAllZero(bch.apply(g, h).extract(dim_m, dim_g)); // check
-        return h;
+  /** achieves decomposition of g into m and h simultaneously with
+   * bch(g, h) == lift(m), or equivalently
+   * g == bch(lift(m), -h) */
+  public class Decomp implements Serializable {
+    /** vector of length dim_m */
+    public final Tensor m;
+    /** vector of length dim_g with first dim_m entries zero */
+    public final Tensor h;
+
+    public Decomp(Tensor g) {
+      Tensor mi = VectorQ.requireLength(g, dim_g); // residual
+      Tensor hi = Array.zeros(dim_g); // initial h estimate
+      for (int count = 0; count < MAX_ITERATIONS; ++count) {
+        if (Tolerance.CHOP.allZero(mi.extract(dim_m, dim_g))) {
+          m = mi.extract(0, dim_m);
+          h = hi;
+          return;
+        }
+        Tensor hd = approxHInv(mi); // delta
+        mi = bch.apply(mi, hd); // towards bch(lift(m), -h) == g
+        hi = bch.apply(hi, hd); // towards bch(g, h) == lift(m)
       }
-      Tensor h_delta = approxHInv(r);
-      r = bch.apply(r, h_delta);
-      h = bch.apply(h, h_delta);
+      throw TensorRuntimeException.of(g);
     }
-    throw TensorRuntimeException.of(g);
-  }
 
-  /** @param g
-   * @return */
-  @PackageTestAccess
-  /* package */ Tensor approxHInv(Tensor g) {
-    return Join.of(Array.zeros(dim_m), g.extract(dim_m, dim_g).negate());
+    /** @param g
+     * @return [0 -g|h] */
+    private Tensor approxHInv(Tensor g) {
+      return Join.of(Array.zeros(dim_m), g.extract(dim_m, dim_g).negate());
+    }
   }
 
   public int dimG() {
@@ -152,5 +157,9 @@ public class HsAlgebra implements Serializable {
       }
     }
     System.out.println(Pretty.of(array));
+  }
+
+  public LieAlgebra lieAlgebra() {
+    return new LieAlgebraImpl(ad);
   }
 }
