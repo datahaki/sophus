@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.he.HeAlgebra;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.tensor.ExactTensorQ;
@@ -39,20 +41,23 @@ public class LieAlgebraImplTest extends TestCase {
     assertEquals(z, Tensors.fromString("{5, -1, -21/2}"));
   }
 
-  private static final HsAlgebra[] HS_ALGEBRAS = { //
-      new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6), //
-      new HsAlgebra(new HeAlgebra(1).ad(), 2, 6), //
-      new HsAlgebra(new HeAlgebra(2).ad(), 3, 6), //
-      new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6) };
+  private static final LieAlgebra[] HS_ALGEBRAS = { //
+      So3Algebra.INSTANCE, //
+      Se2Algebra.INSTANCE, //
+      Se3Algebra.INSTANCE, //
+      new HeAlgebra(1), //
+      new HeAlgebra(2), //
+      Sl2Algebra.INSTANCE };
 
   public void testSign() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
-    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
-      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
+    for (LieAlgebra hsAlgebra : HS_ALGEBRAS) {
+      int dimG = hsAlgebra.ad().length();
+      BinaryOperator<Tensor> bch = hsAlgebra.bch(6);
       for (int count = 0; count < 5; ++count) {
-        Tensor a = RandomVariate.of(distribution, random, hsAlgebra.dimG());
-        Tensor b = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+        Tensor a = RandomVariate.of(distribution, random, dimG);
+        Tensor b = RandomVariate.of(distribution, random, dimG);
         // (a b)' == b' a'
         Tolerance.CHOP.requireClose(bch.apply(a, b).negate(), bch.apply(b.negate(), a.negate()));
         // (a' b)' == b' a

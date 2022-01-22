@@ -48,17 +48,17 @@ public class HsAlgebra implements Serializable {
     consistencyCheck();
   }
 
+  /** @param m
+   * @return [m 0] */
+  public Tensor lift(Tensor m) {
+    return Join.of(VectorQ.requireLength(m, dim_m), pad);
+  }
+
   /** @param g vector with length dim_g
    * @param m vector with length dim_m
    * @return projection( bch(g, [m 0]) ) */
   public Tensor action(Tensor g, Tensor m) {
     return projection(bch.apply(g, lift(m)));
-  }
-
-  /** @param m
-   * @return [m 0] */
-  public Tensor lift(Tensor m) {
-    return Join.of(VectorQ.requireLength(m, dim_m), pad);
   }
 
   /** @param g vector with length dim_g

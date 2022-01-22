@@ -10,6 +10,7 @@ import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
@@ -18,6 +19,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
@@ -64,20 +67,18 @@ public class HsAlgebraTest extends TestCase {
 
   public void testSe2ActionsExp() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
-    Random random = new Random(2);
+    Random random = new Random();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    for (int count = 0; count < 10; ++count) {
-      Tensor g = RandomVariate.of(distribution, random, 3);
-      Tensor p = RandomVariate.of(distribution, random, 2);
-      Tensor q1 = hsAlgebra.action(g, p);
-      Tensor xyz = Se2CoveringExponential.INSTANCE.exp(g);
-      Tensor mat = Se2Matrix.of(xyz);
-      Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
-      Tolerance.CHOP.requireClose(q1, q2);
-      Tensor exp = MatrixExp.of(g.dot(Se2Algebra.INSTANCE.basis()));
-      Tensor q3 = exp.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
-      Tolerance.CHOP.requireClose(q1, q3);
-    }
+    Tensor g = RandomVariate.of(distribution, random, 3);
+    Tensor p = RandomVariate.of(distribution, random, 2);
+    Tensor q1 = hsAlgebra.action(g, p);
+    Tensor xyz = Se2CoveringExponential.INSTANCE.exp(g);
+    Tensor mat = Se2Matrix.of(xyz);
+    Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
+    Tolerance.CHOP.requireClose(q1, q2);
+    Tensor exp = MatrixExp.of(g.dot(Se2Algebra.INSTANCE.basis()));
+    Tensor q3 = exp.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
+    Tolerance.CHOP.requireClose(q1, q3);
   }
 
   public void testSe2Fail() {
@@ -144,16 +145,11 @@ public class HsAlgebraTest extends TestCase {
     Tensor dot = rotation.dot(snm);
     Tensor bak = snExponential.log(dot);
     bak.map(Scalar::zero);
-    // Tolerance.CHOP.requireClose(bak, Tensors.vector(0.1, 0.2, 0));
   }
-  // public void testApproxHInv() {
-  // HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
-  // Tensor g = Tensors.vector(1, 2, 3);
-  // Tensor approxHInv = hsAlgebra.approxHInv(g);
-  // assertEquals(approxHInv, Tensors.vector(0, 0, -3));
-  // }
 
   private static final HsAlgebra[] HS_ALGEBRAS = { //
+      new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 6), //
+      new HsAlgebra(Se3Algebra.INSTANCE.ad(), 3, 6), //
       new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(1).ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(2).ad(), 3, 6), //
@@ -164,32 +160,56 @@ public class HsAlgebraTest extends TestCase {
     Random random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
-      for (int count = 0; count < 5; ++count) {
-        Scalar lambda = RandomVariate.of(distribution);
-        Tensor ga = RandomVariate.of(distribution, random, hsAlgebra.dimG());
-        Tensor m1 = RandomVariate.of(distribution, random, hsAlgebra.dimM());
-        Tensor m2 = hsAlgebra.action(ga, m1);
-        Tensor delta = bch.apply(hsAlgebra.lift(m1).negate(), hsAlgebra.lift(m2)).multiply(lambda);
-        Tensor mi = hsAlgebra.projection(bch.apply(hsAlgebra.lift(m1), delta));
-        Tensor mj = hsAlgebra.projection(bch.apply(hsAlgebra.lift(m1), hsAlgebra.lift(hsAlgebra.projection(delta))));
-        Tensor mk = hsAlgebra.action(hsAlgebra.lift(m1), hsAlgebra.projection(delta));
-        Tolerance.CHOP.requireClose(mi, mj);
-        Tolerance.CHOP.requireClose(mk, mj);
-      }
+      Scalar lambda = RandomVariate.of(distribution);
+      Tensor ga = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+      Tensor m1 = RandomVariate.of(distribution, random, hsAlgebra.dimM());
+      Tensor m2 = hsAlgebra.action(ga, m1);
+      Tensor delta = bch.apply(hsAlgebra.lift(m1).negate(), hsAlgebra.lift(m2)).multiply(lambda);
+      Tensor mi = hsAlgebra.projection(bch.apply(hsAlgebra.lift(m1), delta));
+      Tensor mj = hsAlgebra.projection(bch.apply(hsAlgebra.lift(m1), hsAlgebra.lift(hsAlgebra.projection(delta))));
+      Tensor mk = hsAlgebra.action(hsAlgebra.lift(m1), hsAlgebra.projection(delta));
+      Tolerance.CHOP.requireClose(mi, mj);
+      Tolerance.CHOP.requireClose(mk, mj);
+    }
+  }
+
+  public void testProj() {
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Random random = new Random();
+    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
+      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
+      Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+      Tensor h = Join.of(Array.zeros(hsAlgebra.dimM()), RandomVariate.of(distribution, random, hsAlgebra.dimH()));
+      Tensor p1 = hsAlgebra.projection(g);
+      Tensor p2 = hsAlgebra.projection(bch.apply(g, h));
+      Chop._11.requireClose(p1, p2);
     }
   }
 
   public void testDecomp() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random(1);
+    Random random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
-      for (int count = 0; count < 5; ++count) {
-        Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
-        Decomp decomp = hsAlgebra.new Decomp(g);
-        Tolerance.CHOP.requireClose(bch.apply(g, decomp.h), hsAlgebra.lift(decomp.m));
-        Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp.m), decomp.h.negate()));
-      }
+      Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+      Decomp decomp = hsAlgebra.new Decomp(g);
+      Tolerance.CHOP.requireClose(bch.apply(g, decomp.h), hsAlgebra.lift(decomp.m));
+      Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp.m), decomp.h.negate()));
+    }
+  }
+
+  public void testDecompCheat() {
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Random random = new Random();
+    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
+      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
+      Tensor m = RandomVariate.of(distribution, random, hsAlgebra.dimM());
+      Tensor ml = hsAlgebra.lift(m);
+      Tensor h = Join.of(m.map(Scalar::zero), RandomVariate.of(distribution, random, hsAlgebra.dimH()));
+      Tensor g = bch.apply(ml, h.negate()); // this is the equation
+      Decomp decomp = hsAlgebra.new Decomp(g);
+      Tolerance.CHOP.requireClose(m, decomp.m);
+      Tolerance.CHOP.requireClose(h, decomp.h);
     }
   }
 }
