@@ -33,7 +33,7 @@ public class PowerVariogramTest extends TestCase {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     {
-      ScalarUnaryOperator variogram = Serialization.copy(ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2)));
+      ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
       TensorUnaryOperator weightingInterface = //
           MetricBiinvariant.EUCLIDEAN.var_dist(RnManifold.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);

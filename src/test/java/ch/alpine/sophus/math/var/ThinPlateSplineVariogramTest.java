@@ -21,12 +21,12 @@ public class ThinPlateSplineVariogramTest extends TestCase {
   }
 
   public void testQuantity() throws ClassNotFoundException, IOException {
-    ScalarUnaryOperator scalarUnaryOperator = Serialization.copy(ThinPlateSplineVariogram.of(Quantity.of(1, "m")));
+    ScalarUnaryOperator scalarUnaryOperator = Serialization.copy(new ThinPlateSplineVariogram(Quantity.of(1, "m")));
     Tolerance.CHOP.requireClose(scalarUnaryOperator.apply(Quantity.of(0.2, "m")), Scalars.fromString("-0.06437751649736402[m^2]"));
     Tolerance.CHOP.requireClose(scalarUnaryOperator.apply(Quantity.of(0.0, "m")), Scalars.fromString("0[m^2]"));
   }
 
   public void testFailNonPositive() {
-    AssertFail.of(() -> ThinPlateSplineVariogram.of(RealScalar.ZERO));
+    AssertFail.of(() -> new ThinPlateSplineVariogram(RealScalar.ZERO));
   }
 }

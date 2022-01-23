@@ -15,18 +15,9 @@ import ch.alpine.tensor.io.Primitives;
 /** Reference:
  * "Behaviour of recursive division surfaces near extraordinary points"
  * by D. Doo, M. Sabin, Computer-Aided Design 10(6), 1978 */
-public class DooSabinRefinement implements SurfaceMeshRefinement, Serializable {
-  /** @param biinvariantMean non-null
-   * @return */
-  public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {
-    return new DooSabinRefinement(Objects.requireNonNull(biinvariantMean));
-  }
-
-  // ---
-  private final BiinvariantMean biinvariantMean;
-
-  private DooSabinRefinement(BiinvariantMean biinvariantMean) {
-    this.biinvariantMean = biinvariantMean;
+public record DooSabinRefinement(BiinvariantMean biinvariantMean) implements SurfaceMeshRefinement, Serializable {
+  public DooSabinRefinement {
+    Objects.requireNonNull(biinvariantMean);
   }
 
   @Override // from SurfaceMeshRefinement

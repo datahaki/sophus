@@ -14,18 +14,12 @@ import ch.alpine.tensor.sca.Sign;
  * <p>The input of the variogram has unit of r0.
  * The output of the variogram is unitless.
  * 
- * @see BinningMethod */
-public class GaussianVariogram implements ScalarUnaryOperator {
-  /** @param r0 positive */
-  public static ScalarUnaryOperator of(Scalar r0) {
-    return new GaussianVariogram(Sign.requirePositive(r0));
-  }
-
-  // ---
-  private final Scalar r0;
-
-  private GaussianVariogram(Scalar r0) {
-    this.r0 = r0;
+ * @see BinningMethod
+ * 
+ * @param r0 positive */
+public record GaussianVariogram(Scalar r0) implements ScalarUnaryOperator {
+  public GaussianVariogram {
+    Sign.requirePositive(r0);
   }
 
   @Override

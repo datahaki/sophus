@@ -35,7 +35,7 @@ public enum Variograms {
   GAUSSIAN {
     @Override
     public ScalarUnaryOperator of(Scalar param) {
-      return GaussianVariogram.of(param);
+      return new GaussianVariogram(param);
     }
   },
   // ---
@@ -43,7 +43,7 @@ public enum Variograms {
   EXPONENTIAL {
     @Override
     public ScalarUnaryOperator of(Scalar param) {
-      return ExponentialVariogram.of(param, RealScalar.ONE);
+      return new ExponentialVariogram(param, RealScalar.ONE);
     }
   },
   /** 0 -> 0, Infinity -> 1 */
@@ -65,7 +65,7 @@ public enum Variograms {
   THIN_PLATE_SPLINE {
     @Override
     public ScalarUnaryOperator of(Scalar param) {
-      return ThinPlateSplineVariogram.of(param);
+      return new ThinPlateSplineVariogram(param);
     }
   },
   // ---

@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Sign;
  * B-Spline Interpolation and Approximation
  * Hongxin Zhang and Jieqing Feng
  * http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf */
-public class KnotSpacing implements TensorUnaryOperator {
+public record KnotSpacing(TensorMetric tensorMetric, ScalarUnaryOperator variogram) implements TensorUnaryOperator {
   /** @param tensorMetric for instance Se2ParametricDistance.INSTANCE
    * @param exponent typically in the interval [0, 1] */
   public static TensorUnaryOperator centripetal(TensorMetric tensorMetric, Scalar exponent) {
@@ -51,12 +51,9 @@ public class KnotSpacing implements TensorUnaryOperator {
   }
 
   // ---
-  private final TensorMetric tensorMetric;
-  private final ScalarUnaryOperator variogram;
-
-  private KnotSpacing(TensorMetric tensorMetric, ScalarUnaryOperator variogram) {
-    this.tensorMetric = tensorMetric;
-    this.variogram = variogram;
+  public KnotSpacing {
+    Objects.requireNonNull(tensorMetric);
+    Objects.requireNonNull(variogram);
   }
 
   @Override // from TensorUnaryOperator

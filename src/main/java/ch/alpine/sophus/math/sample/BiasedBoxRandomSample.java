@@ -14,10 +14,10 @@ public class BiasedBoxRandomSample implements RandomSampleInterface, Serializabl
   private final RandomSampleInterface randomSampleInterface;
   private final int draws;
 
-  /** @param box
+  /** @param coordinateBoundingBox
    * @param draws positive */
-  public BiasedBoxRandomSample(CoordinateBoundingBox box, int draws) {
-    randomSampleInterface = BoxRandomSample.of(box);
+  public BiasedBoxRandomSample(CoordinateBoundingBox coordinateBoundingBox, int draws) {
+    randomSampleInterface = BoxRandomSample.of(coordinateBoundingBox);
     this.draws = Integers.requirePositive(draws);
   }
 

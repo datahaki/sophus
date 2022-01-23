@@ -127,7 +127,7 @@ public class KrigingTest extends TestCase {
 
   public void testQuantityAbsolute() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
-    ScalarUnaryOperator variogram = ExponentialVariogram.of(Quantity.of(3, "m"), RealScalar.of(2));
+    ScalarUnaryOperator variogram = new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2));
     int n = 10;
     int d = 3;
     Tensor sequence = RandomVariate.of(distributionX, n, d);

@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Power;
  * 
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
-public class PowerVariogram implements ScalarUnaryOperator {
+public record PowerVariogram(Scalar alpha, ScalarUnaryOperator power) implements ScalarUnaryOperator {
   /** Quote:
    * "A good general choice is exponent=3/2, but for functions with a strong linear trend,
    * you may want to experiment with values as large as 1.99."
@@ -66,22 +66,8 @@ public class PowerVariogram implements ScalarUnaryOperator {
     return new PowerVariogram(num.divide(den), power);
   }
 
-  // ---
-  private final Scalar alpha;
-  private final ScalarUnaryOperator power;
-
-  private PowerVariogram(Scalar alpha, ScalarUnaryOperator power) {
-    this.alpha = alpha;
-    this.power = power;
-  }
-
   @Override
   public Scalar apply(Scalar r) {
     return power.apply(r).multiply(alpha);
-  }
-
-  @Override // from Object
-  public final String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), alpha);
   }
 }

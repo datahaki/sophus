@@ -16,24 +16,19 @@ import ch.alpine.tensor.sca.Sign;
  * <p>The returned values have the unit of r0 squared.
  * For example if r0 has unit "m" then the returned unit is "m^2".
  * 
- * @see BinningMethod */
-public class ThinPlateSplineVariogram implements ScalarUnaryOperator {
-  /** @param r0 positive */
-  public static ScalarUnaryOperator of(Scalar r0) {
-    return new ThinPlateSplineVariogram(Sign.requirePositive(r0));
-  }
-
+ * @see BinningMethod
+ * 
+ * @param r0 positive */
+public record ThinPlateSplineVariogram(Scalar r0) implements ScalarUnaryOperator {
   /** @param r0 positive
    * @return */
   public static ScalarUnaryOperator of(Number r0) {
-    return of(RealScalar.of(r0));
+    return new ThinPlateSplineVariogram(RealScalar.of(r0));
   }
 
   // ---
-  private final Scalar r0;
-
-  private ThinPlateSplineVariogram(Scalar r0) {
-    this.r0 = r0;
+  public ThinPlateSplineVariogram {
+    Sign.requirePositive(r0);
   }
 
   @Override

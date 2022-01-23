@@ -20,7 +20,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.Sin;
 
-class Plot3DDesign {
+/* package */ class Plot3DDesign {
   private static final Scalar DT = RealScalar.of(0.01);
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(Vector2Norm::of);
   // ---

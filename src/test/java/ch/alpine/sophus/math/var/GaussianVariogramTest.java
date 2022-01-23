@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 public class GaussianVariogramTest extends TestCase {
   public void testQuantity() {
-    ScalarUnaryOperator variogram = GaussianVariogram.of(Quantity.of(2, "m"));
+    ScalarUnaryOperator variogram = new GaussianVariogram(Quantity.of(2, "m"));
     Scalar lo = variogram.apply(Quantity.of(1, "m"));
     Chop._05.requireClose(lo, RealScalar.of(0.7788007830714049));
     Scalar hi = variogram.apply(Quantity.of(5, "m"));
@@ -19,6 +19,6 @@ public class GaussianVariogramTest extends TestCase {
   }
 
   public void testZeroFail() {
-    AssertFail.of(() -> GaussianVariogram.of(RealScalar.ZERO));
+    AssertFail.of(() -> new GaussianVariogram(RealScalar.ZERO));
   }
 }
