@@ -34,7 +34,7 @@ import junit.framework.TestCase;
 public class TGrMemberQTest extends TestCase {
   public void testSerializable() throws ClassNotFoundException, IOException {
     int n = 5;
-    Tensor x = RandomSample.of(GrRandomSample.of(n, 3));
+    Tensor x = RandomSample.of(new GrRandomSample(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     GrMemberQ.INSTANCE.require(x);
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
@@ -55,7 +55,7 @@ public class TGrMemberQTest extends TestCase {
   public void testProject() {
     int n = 4;
     Distribution distribution = UniformDistribution.unit();
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2); // 4 dimensional
     for (int count = 0; count < 5; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
@@ -80,7 +80,7 @@ public class TGrMemberQTest extends TestCase {
     for (int n = 1; n < 6; ++n) {
       int fn = n;
       for (int k = 0; k <= n; ++k) {
-        Tensor x = RandomSample.of(GrRandomSample.of(n, k), random);
+        Tensor x = RandomSample.of(new GrRandomSample(n, k), random);
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 3) //

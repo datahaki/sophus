@@ -21,6 +21,7 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
  * use with {@link MetricBiinvariant#VECTORIZE0} */
 public class GrExponential implements Exponential, Serializable {
   private static final Scalar N1_4 = RationalScalar.of(-1, 4);
+  // ---
   private final Tensor p;
   private final TGrMemberQ tGrMemberQ;
   /** negative identity matrix */

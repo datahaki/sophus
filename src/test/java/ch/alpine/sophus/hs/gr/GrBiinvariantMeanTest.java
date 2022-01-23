@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 public class GrBiinvariantMeanTest extends TestCase {
   public void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
     Scalar maxDist = RealScalar.of(1.4);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor sequence = Tensors.of(p);
@@ -51,7 +51,7 @@ public class GrBiinvariantMeanTest extends TestCase {
 
   public void testGeodesic() {
     HsGeodesic hsGeodesic = new HsGeodesic(GrManifold.INSTANCE);
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);

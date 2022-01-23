@@ -45,7 +45,7 @@ public class HarborBiinvariantVectorTest extends TestCase {
     BiinvariantVector v2 = d2.biinvariantVector(point);
     BiinvariantVector v3 = d3.biinvariantVector(point);
     Chop._10.requireClose(v1.weighting(s -> s), v2.weighting(s -> s));
-    assertEquals(v1.distances().length(), v3.distances().length());
+    assertEquals(v1.vector().length(), v3.vector().length());
   }
 
   public void testSe2C() {
@@ -61,8 +61,8 @@ public class HarborBiinvariantVectorTest extends TestCase {
     BiinvariantVector v1 = d1.biinvariantVector(point);
     BiinvariantVector v2 = d2.biinvariantVector(point);
     BiinvariantVector v3 = d3.biinvariantVector(point);
-    assertEquals(v1.distances().length(), v2.distances().length());
-    assertEquals(v1.distances().length(), v3.distances().length());
+    assertEquals(v1.vector().length(), v2.vector().length());
+    assertEquals(v1.vector().length(), v3.vector().length());
   }
 
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);

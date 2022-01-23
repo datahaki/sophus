@@ -59,7 +59,7 @@ public class GrMetricTest extends TestCase {
   }
 
   public void testRandomSymmetry() {
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 3);
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Scalar d1 = GrMetric.INSTANCE.distance(p, q);
@@ -68,7 +68,7 @@ public class GrMetricTest extends TestCase {
   }
 
   public void testFrobenius() {
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(4, 3);
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Scalar d1 = GrMetric.INSTANCE.distance(p, q);

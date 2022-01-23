@@ -14,7 +14,7 @@ public class GrGeodesicTest extends TestCase {
   public void testMidpoint() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       GrExponential exp_p = new GrExponential(p);
@@ -32,7 +32,7 @@ public class GrGeodesicTest extends TestCase {
   public void testMirror() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       ScalarTensorFunction stf = GrGeodesic.INSTANCE.curve(p, q);

@@ -10,12 +10,10 @@ import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.sca.Chop;
 
 /** the pole ladder is exact in symmetric spaces */
-public class GrAction implements TensorUnaryOperator {
-  private final Tensor g;
-
+public record GrAction(Tensor g) implements TensorUnaryOperator {
   /** @param g from SO(n) */
-  public GrAction(Tensor g) {
-    this.g = OrthogonalMatrixQ.require(g);
+  public GrAction {
+    OrthogonalMatrixQ.require(g);
   }
 
   @Override
