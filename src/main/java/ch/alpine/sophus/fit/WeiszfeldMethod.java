@@ -22,22 +22,15 @@ import ch.alpine.tensor.sca.N;
  * 
  * <p>implementation based on
  * "Weiszfeld’s Method: Old and New Results"
- * by Amir Beck, Shoham Sabach */
-public class WeiszfeldMethod implements SpatialMedian, Serializable {
+ * by Amir Beck, Shoham Sabach
+ * 
+ * @param chop non null */
+public record WeiszfeldMethod(Chop chop) implements SpatialMedian, Serializable {
   private static final int MAX_ITERATIONS = 512;
 
-  /** @param chop non null
-   * @return */
-  public static SpatialMedian with(Chop chop) {
-    return new WeiszfeldMethod(Objects.requireNonNull(chop));
-  }
-
-  // ---
-  private final Chop chop;
-
   /** @param chop */
-  private WeiszfeldMethod(Chop chop) {
-    this.chop = chop;
+  public WeiszfeldMethod {
+    Objects.requireNonNull(chop);
   }
 
   @Override // from SpatialMedian

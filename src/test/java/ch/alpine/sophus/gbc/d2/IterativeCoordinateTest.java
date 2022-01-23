@@ -23,8 +23,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.itp.Interpolation;
-import ch.alpine.tensor.itp.LinearInterpolation;
+import ch.alpine.tensor.itp.LinearBinaryAverage;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
@@ -72,8 +71,10 @@ public class IterativeCoordinateTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor polygon = CirclePoints.of(n);
       int index = random.nextInt(polygon.length() - 1);
-      Interpolation interpolation = LinearInterpolation.of(polygon.extract(index, index + 2));
-      Tensor x = interpolation.at(RealScalar.of(random.nextDouble()));
+      Tensor x = LinearBinaryAverage.INSTANCE.split( //
+          polygon.get(index), //
+          polygon.get(index + 1), //
+          RealScalar.of(random.nextDouble()));
       Tensor levers = Tensor.of(polygon.stream().map(x::subtract));
       if (OriginEnclosureQ.INSTANCE.test(levers) && strict) {
         Tensor weights = genesis.origin(levers);

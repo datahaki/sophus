@@ -3,7 +3,6 @@ package ch.alpine.sophus.crv.d2;
 
 import java.util.Random;
 
-import ch.alpine.sophus.crv.d2.SutherlandHodgmanAlgorithm.PolyclipResult;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;

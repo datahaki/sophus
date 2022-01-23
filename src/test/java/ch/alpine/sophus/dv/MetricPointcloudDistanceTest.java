@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 public class MetricPointcloudDistanceTest extends TestCase {
   public void testSimple() {
-    TensorScalarFunction tensorScalarFunction = MetricPointcloudDistance.of(CirclePoints.of(20), RnMetric.INSTANCE);
+    TensorScalarFunction tensorScalarFunction = new MetricPointcloudDistance(CirclePoints.of(20), RnMetric.INSTANCE);
     Scalar distance = tensorScalarFunction.apply(Tensors.vector(1, 1));
     Clips.interval(0.4, 0.5).requireInside(distance);
   }

@@ -19,13 +19,13 @@ import junit.framework.TestCase;
 public class HsWeiszfeldMethodTest extends TestCase {
   public void testSimple() {
     Random random = new Random(3);
-    SpatialMedian sm2 = WeiszfeldMethod.with(Tolerance.CHOP);
+    SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
     for (int d = 2; d < 5; ++d)
       for (int n = 2; n < 20; n += 4) {
         Tensor sequence = RandomVariate.of(distribution, random, n, d);
         TensorUnaryOperator create = MetricBiinvariant.EUCLIDEAN.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence);
-        SpatialMedian sm1 = HsWeiszfeldMethod.of( //
+        SpatialMedian sm1 = new HsWeiszfeldMethod( //
             RnBiinvariantMean.INSTANCE, //
             create, //
             Tolerance.CHOP);

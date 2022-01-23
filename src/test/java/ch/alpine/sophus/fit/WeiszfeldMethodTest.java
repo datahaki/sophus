@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class WeiszfeldMethodTest extends TestCase {
-  public static final SpatialMedian DEFAULT = WeiszfeldMethod.with(Tolerance.CHOP);
+  public static final SpatialMedian DEFAULT = new WeiszfeldMethod(Tolerance.CHOP);
 
   public void testSimple() {
     Tensor tensor = Tensors.of( //
@@ -28,7 +28,7 @@ public class WeiszfeldMethodTest extends TestCase {
         Tensors.vector(0, 0), //
         Tensors.vector(2, 0) //
     );
-    Tensor sol = WeiszfeldMethod.with(Chop.NONE).uniform(tensor).get();
+    Tensor sol = new WeiszfeldMethod(Chop.NONE).uniform(tensor).get();
     assertEquals(sol, Tensors.vector(0, 0));
   }
 
@@ -42,7 +42,7 @@ public class WeiszfeldMethodTest extends TestCase {
   public void testMathematicaWeighted() {
     Tensor points = Tensors.fromString("{{1, 3, 5}, {-4, 1, 2}, {3, 3, 1}, {4, 5, 6}}");
     Tensor weights = Tensors.vector(1, 3, 4, 5);
-    Optional<Tensor> weighted = WeiszfeldMethod.with(Chop._10).weighted(points, weights.divide(Total.ofVector(weights)));
+    Optional<Tensor> weighted = new WeiszfeldMethod(Chop._10).weighted(points, weights.divide(Total.ofVector(weights)));
     Tensor solution = Tensors.vector(2.3866562926712105936, 3.5603713896189638861, 3.5379382804133292184);
     Chop._08.requireClose(weighted.get(), solution);
     Optional<Tensor> optional = DEFAULT.uniform(points);
@@ -56,7 +56,7 @@ public class WeiszfeldMethodTest extends TestCase {
         Tensors.vector(2, 10), //
         Tensors.vector(2, -10) //
     );
-    SpatialMedian spatialMedian = Serialization.copy(WeiszfeldMethod.with(Chop._02));
+    SpatialMedian spatialMedian = Serialization.copy(new WeiszfeldMethod(Chop._02));
     Tensor sol = spatialMedian.uniform(tensor).get();
     assertTrue(Vector2Norm.between(sol, tensor.get(1)).number().doubleValue() < 2e-2);
   }
@@ -68,7 +68,7 @@ public class WeiszfeldMethodTest extends TestCase {
         Tensors.vector(2, 10), //
         Tensors.vector(2, -10) //
     );
-    SpatialMedian spatialMedian = WeiszfeldMethod.with(Chop._10);
+    SpatialMedian spatialMedian = new WeiszfeldMethod(Chop._10);
     Tensor weights = Tensors.vector(10, 1, 1, 1);
     Tensor sol = spatialMedian.weighted(tensor, weights.divide(Total.ofVector(weights))).get();
     assertTrue(Vector2Norm.between(sol, tensor.get(0)).number().doubleValue() < 2e-2);
@@ -78,7 +78,7 @@ public class WeiszfeldMethodTest extends TestCase {
     int present = 0;
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = RandomVariate.of(UniformDistribution.unit(), 20, 2).map(value -> Quantity.of(value, "m"));
-      SpatialMedian spatialMedian = WeiszfeldMethod.with(Chop._10);
+      SpatialMedian spatialMedian = new WeiszfeldMethod(Chop._10);
       Optional<Tensor> optional = spatialMedian.uniform(tensor);
       if (optional.isPresent()) {
         ++present;
@@ -92,6 +92,6 @@ public class WeiszfeldMethodTest extends TestCase {
   }
 
   public void testNullFail() {
-    AssertFail.of(() -> WeiszfeldMethod.with(null));
+    AssertFail.of(() -> new WeiszfeldMethod(null));
   }
 }
