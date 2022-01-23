@@ -195,7 +195,7 @@ public class HsAlgebraTest extends TestCase {
       Decomp decomp1 = hsAlgebra.new Decomp(HsPair.seed(g));
       Tolerance.CHOP.requireClose(bch.apply(g, decomp1.h), hsAlgebra.lift(decomp1.m));
       Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp1.m), decomp1.h.negate()));
-      Decomp decomp2 = hsAlgebra.new Decomp(new HsPair(decomp1.h, bch.apply(g, decomp1.h)));
+      Decomp decomp2 = hsAlgebra.new Decomp(new HsPair(bch.apply(g, decomp1.h), decomp1.h));
       Tolerance.CHOP.requireClose(bch.apply(g, decomp2.h), hsAlgebra.lift(decomp2.m));
       Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp2.m), decomp2.h.negate()));
     }

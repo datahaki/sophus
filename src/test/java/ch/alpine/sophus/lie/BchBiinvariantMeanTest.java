@@ -1,6 +1,9 @@
 // code by jph
-package ch.alpine.sophus.bm;
+package ch.alpine.sophus.lie;
 
+import java.util.Random;
+
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
@@ -11,6 +14,7 @@ import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -30,24 +34,25 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
     Tensor meanG = Se2CoveringBiinvariantMean.INSTANCE.mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
-    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(Se2Algebra.INSTANCE.bch(6), Chop._10);
+    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(Se2Algebra.INSTANCE.bch(6));
     Tensor meanb = biinvariantMean.mean(sequence, weights);
-    Chop._09.requireClose(mean, meanb);
+    Tolerance.CHOP.requireClose(mean, meanb);
   }
 
   public void testSe2MeanRandom() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
+    Random random = new Random(1);
     for (int n = 4; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, n));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, random, n));
       Tensor meanG = Se2CoveringBiinvariantMean.INSTANCE.mean(seqG, weights);
       Tensor mean = exponential.log(meanG);
-      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(Se2Algebra.INSTANCE.bch(6), Chop._10);
+      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(Se2Algebra.INSTANCE.bch(6));
       Tensor meanb = biinvariantMean.mean(sequence, weights);
-      Chop._09.requireClose(mean, meanb);
+      Chop._11.requireClose(mean, meanb);
     }
   }
 
@@ -62,24 +67,25 @@ public class BchBiinvariantMeanTest extends TestCase {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
     Tensor meanG = So3BiinvariantMean.INSTANCE.mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
-    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6), Chop._10);
+    BiinvariantMean biinvariantMean = BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6));
     Tensor meanb = biinvariantMean.mean(sequence, weights);
-    Chop._09.requireClose(mean, meanb);
+    Chop._10.requireClose(mean, meanb);
   }
 
   public void testSo3MeanRandom() {
     Exponential exponential = So3Exponential.INSTANCE;
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
+    Random random = new Random(1);
     for (int n = 4; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, n));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, random, n));
       Tensor meanG = So3BiinvariantMean.INSTANCE.mean(seqG, weights);
       Tensor mean = exponential.log(meanG);
-      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6), Chop._10);
+      BiinvariantMean biinvariantMean = BchBiinvariantMean.of(So3Algebra.INSTANCE.bch(6));
       Tensor meanb = biinvariantMean.mean(sequence, weights);
-      Chop._09.requireClose(mean, meanb);
+      Chop._11.requireClose(mean, meanb);
     }
   }
 

@@ -18,6 +18,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
@@ -58,6 +59,12 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
   }
 
   /** @param g vector with length dim_g
+   * @return */
+  public TensorUnaryOperator action(Tensor g) {
+    return m -> action(g, m);
+  }
+
+  /** @param g vector with length dim_g
    * @return m for which there is a h with bch(g, h) == [m 0] */
   @Override // from HomogeneousSpace
   public Tensor projection(Tensor g) {
@@ -83,8 +90,8 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
     public Decomp(HsPair hsPair) {
       for (int count = 0; count < MAX_ITERATIONS; ++count) {
         if (Tolerance.CHOP.allZero(hsPair.g().extract(dim_m, dim_g))) {
-          h = hsPair.h();
           m = hsPair.g().extract(0, dim_m);
+          h = hsPair.h();
           return;
         }
         hsPair = hsPair.move(bch, approxHInv(hsPair.g()));

@@ -1,9 +1,8 @@
 // code by jph
-package ch.alpine.sophus.bm;
+package ch.alpine.sophus.hs;
 
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMemberQ;
 import ch.alpine.sophus.hs.sn.TSnMemberQ;
@@ -22,7 +21,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
-public class BchBinaryAverageTest extends TestCase {
+public class HsBinaryAverageTest extends TestCase {
   public void testSe2() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.1);
@@ -32,7 +31,7 @@ public class BchBinaryAverageTest extends TestCase {
     Scalar lambda = RealScalar.of(0.3);
     HsGeodesic hsGeodesic = new HsGeodesic(Se2CoveringManifold.INSTANCE);
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
-    Tensor cmp = BchBinaryAverage.of(Se2Algebra.INSTANCE.bch(6)).split(x, y, lambda);
+    Tensor cmp = HsBinaryAverage.of(Se2Algebra.INSTANCE.bch(6)).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
   }
 
@@ -45,7 +44,7 @@ public class BchBinaryAverageTest extends TestCase {
     Scalar lambda = RealScalar.of(0.3);
     HsGeodesic hsGeodesic = new HsGeodesic(So3Manifold.INSTANCE);
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
-    Tensor cmp = BchBinaryAverage.of(So3Algebra.INSTANCE.bch(6)).split(x, y, lambda);
+    Tensor cmp = HsBinaryAverage.of(So3Algebra.INSTANCE.bch(6)).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
   }
 
@@ -67,7 +66,7 @@ public class BchBinaryAverageTest extends TestCase {
     mz.map(Scalar::zero);
     for (int d = 1; d < 7; ++d) {
       BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(d);
-      Tensor cmp = BchBinaryAverage.of(bch).split(x, y, lambda);
+      Tensor cmp = HsBinaryAverage.of(bch).split(x, y, lambda);
       cmp.map(Scalar::zero);
       // System.out.println(cmp);
       // System.out.println(mz);
