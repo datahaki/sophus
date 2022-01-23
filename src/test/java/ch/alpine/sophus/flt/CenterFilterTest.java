@@ -72,7 +72,8 @@ public class CenterFilterTest extends TestCase {
 
   public void testNegativeRadiusFail() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
-    new CenterFilter(geodesicCenter, 0);
+    CenterFilter centerFilter = new CenterFilter(geodesicCenter, 0);
+    assertEquals(centerFilter.radius(), 0);
     AssertFail.of(() -> new CenterFilter(geodesicCenter, -1));
   }
 

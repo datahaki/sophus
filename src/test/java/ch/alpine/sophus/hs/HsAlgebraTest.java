@@ -188,7 +188,7 @@ public class HsAlgebraTest extends TestCase {
 
   public void testDecomp() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random();
+    Random random = new Random(2);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
       Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
