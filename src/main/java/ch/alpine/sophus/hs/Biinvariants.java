@@ -38,7 +38,7 @@ public enum Biinvariants implements Biinvariant {
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsGenesis.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
+      return HsGenesis.wrap(vectorLogManifold, new LeveragesGenesis(variogram), sequence);
     }
 
     @Override // from Biinvariant

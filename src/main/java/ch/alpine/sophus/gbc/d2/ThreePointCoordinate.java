@@ -26,7 +26,7 @@ public enum ThreePointCoordinate {
   /** @param biFunction
    * @return */
   public static Genesis of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    Genesis genesis = ThreePointWeighting.of(biFunction);
+    Genesis genesis = new ThreePointWeighting(biFunction);
     return (Genesis & Serializable) //
     levers -> NormalizeTotal.FUNCTION.apply(genesis.origin(levers));
   }

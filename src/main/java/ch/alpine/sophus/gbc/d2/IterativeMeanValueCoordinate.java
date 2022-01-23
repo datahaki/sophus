@@ -19,6 +19,6 @@ public enum IterativeMeanValueCoordinate {
   public static Genesis of(int k) {
     return k == 0 //
         ? ThreePointCoordinate.of(Barycenter.MEAN_VALUE)
-        : IterativeCoordinate.of(ThreePointWeighting.of(Barycenter.MEAN_VALUE), k);
+        : new IterativeCoordinate(new ThreePointWeighting(Barycenter.MEAN_VALUE), k);
   }
 }

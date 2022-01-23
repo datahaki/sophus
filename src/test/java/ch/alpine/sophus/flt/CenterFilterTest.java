@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 public class CenterFilterTest extends TestCase {
   public void testSimple() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
-    TensorUnaryOperator centerFilter = CenterFilter.of(geodesicCenter, 3);
+    TensorUnaryOperator centerFilter = new CenterFilter(geodesicCenter, 3);
     Tensor linear = Range.of(0, 10);
     Tensor result = centerFilter.apply(linear);
     assertEquals(result, linear);
@@ -36,7 +36,7 @@ public class CenterFilterTest extends TestCase {
 
   public void testKernel3() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
-    TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 3);
+    TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 3);
     Tensor signal = UnitVector.of(9, 4);
     Tensor result = geodesicCenterFilter.apply(signal);
     ExactTensorQ.require(result);
@@ -45,7 +45,7 @@ public class CenterFilterTest extends TestCase {
 
   public void testKernel1() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
-    TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 1);
+    TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Tensor signal = UnitVector.of(5, 2);
     Tensor result = geodesicCenterFilter.apply(signal);
     ExactTensorQ.require(result);
@@ -54,7 +54,7 @@ public class CenterFilterTest extends TestCase {
 
   public void testS2() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(SnGeodesic.INSTANCE, HannWindow.FUNCTION);
-    TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 1);
+    TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Distribution distribution = NormalDistribution.standard();
     Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(Vector2Norm.NORMALIZE));
     Tensor result = geodesicCenterFilter.apply(tensor);
@@ -63,7 +63,7 @@ public class CenterFilterTest extends TestCase {
 
   public void testSo3() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Geodesic.INSTANCE, HammingWindow.FUNCTION);
-    TensorUnaryOperator geodesicCenterFilter = CenterFilter.of(geodesicCenter, 1);
+    TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(Rodrigues::vectorExp));
     Tensor result = geodesicCenterFilter.apply(tensor);
@@ -72,11 +72,11 @@ public class CenterFilterTest extends TestCase {
 
   public void testNegativeRadiusFail() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
-    CenterFilter.of(geodesicCenter, 0);
-    AssertFail.of(() -> CenterFilter.of(geodesicCenter, -1));
+    new CenterFilter(geodesicCenter, 0);
+    AssertFail.of(() -> new CenterFilter(geodesicCenter, -1));
   }
 
   public void testFail() {
-    AssertFail.of(() -> CenterFilter.of(null, 1));
+    AssertFail.of(() -> new CenterFilter(null, 1));
   }
 }

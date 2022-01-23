@@ -23,27 +23,10 @@ import ch.alpine.tensor.sca.Sign;
  * Reference:
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
-public class IterativeCoordinateLevel implements TensorScalarFunction {
-  /** @param genesis
-   * @param chop
-   * @param max
-   * @return */
-  public static TensorScalarFunction of(Genesis genesis, Chop chop, int max) {
-    return new IterativeCoordinateLevel( //
-        Objects.requireNonNull(genesis), //
-        Objects.requireNonNull(chop), //
-        max);
-  }
-
-  // ---
-  private final Genesis genesis;
-  private final Chop chop;
-  private final int max;
-
-  private IterativeCoordinateLevel(Genesis genesis, Chop chop, int max) {
-    this.genesis = genesis;
-    this.chop = chop;
-    this.max = max;
+public record IterativeCoordinateLevel(Genesis genesis, Chop chop, int max) implements TensorScalarFunction {
+  public IterativeCoordinateLevel {
+    Objects.requireNonNull(genesis);
+    Objects.requireNonNull(chop);
   }
 
   @Override

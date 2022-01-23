@@ -18,15 +18,12 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.red.Times;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
-public class IterativeAffineCoordinate implements GenesisDeque, Serializable {
-  private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
-  // ---
-  private final TensorUnaryOperator amplifier;
-  private final int k;
+public record IterativeAffineCoordinate(TensorUnaryOperator amplifier, int k) implements GenesisDeque, Serializable {
 
-  public IterativeAffineCoordinate(TensorUnaryOperator amplifier, int k) {
-    this.amplifier = Objects.requireNonNull(amplifier);
-    this.k = Integers.requirePositiveOrZero(k);
+  private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
+  public IterativeAffineCoordinate {
+    Objects.requireNonNull(amplifier);
+    Integers.requirePositiveOrZero(k);
   }
 
   @Override

@@ -10,20 +10,12 @@ import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 
-/** @see InsideConvexHullCoordinate */
-public class InsidePolygonCoordinate implements Genesis, Serializable {
-  /** @param genesis
-   * @return */
-  public static Genesis of(Genesis genesis) {
-    return new InsidePolygonCoordinate(Objects.requireNonNull(genesis));
-  }
-
-  // ---
-  private final Genesis genesis;
-
-  /** @param genesis that evaluates polygon coordinates at zero (0, 0) */
-  private InsidePolygonCoordinate(Genesis genesis) {
-    this.genesis = genesis;
+/** @see InsideConvexHullCoordinate
+ * 
+ * @param genesis that evaluates polygon coordinates at zero (0, 0) */
+public record InsidePolygonCoordinate(Genesis genesis) implements Genesis, Serializable {
+  public InsidePolygonCoordinate {
+    Objects.requireNonNull(genesis);
   }
 
   @Override // from BarycentricCoordinate

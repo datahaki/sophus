@@ -47,21 +47,17 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
  * 
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public class MetricCoordinate implements Genesis, Serializable {
+public record MetricCoordinate(Genesis genesis) implements Genesis, Serializable {
   /** Careful:
    * Distance may depend on sequence! In that case only the correct sequence
    * should be passed to the function {@link #weights(Tensor, Tensor)}!
    * 
    * @param genesis operator with design matrix as input
    * @return */
-  public static Genesis of(Genesis genesis) {
-    return new MetricCoordinate(Objects.requireNonNull(genesis));
-  }
-
   /** @param variogram for example InversePowerVariogram.of(2)
    * @return */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return of(InverseDistanceWeighting.of(variogram));
+    return new MetricCoordinate(InverseDistanceWeighting.of(variogram));
   }
 
   private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);
@@ -81,11 +77,8 @@ public class MetricCoordinate implements Genesis, Serializable {
     return AFFINE;
   }
 
-  // ---
-  private final Genesis genesis;
-
-  private MetricCoordinate(Genesis genesis) {
-    this.genesis = genesis;
+  public MetricCoordinate {
+    Objects.requireNonNull(genesis);
   }
 
   @Override // from BarycentricCoordinate

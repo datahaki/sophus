@@ -25,7 +25,7 @@ public class BchBarycentricCoordinate implements BarycentricCoordinate, Serializ
 
   private BchBarycentricCoordinate(BinaryOperator<Tensor> bch, ScalarUnaryOperator variogram) {
     this.bch = bch;
-    genesis = LeveragesGenesis.of(variogram);
+    genesis = new LeveragesGenesis(variogram);
   }
 
   @Override // from BarycentricCoordinate

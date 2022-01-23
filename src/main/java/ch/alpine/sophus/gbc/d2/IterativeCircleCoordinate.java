@@ -20,6 +20,6 @@ public enum IterativeCircleCoordinate {
   /** @param k non-negative
    * @return iterative coordinates based on affine coordinates */
   public static Genesis of(int k) {
-    return IterativeCoordinate.of(AffineCoordinate.INSTANCE, k);
+    return new IterativeCoordinate(AffineCoordinate.INSTANCE, k);
   }
 }
