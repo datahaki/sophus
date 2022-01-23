@@ -3,9 +3,10 @@ package ch.alpine.sophus.math;
 
 import java.io.Serializable;
 
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ArrayFlatten;
+import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.ConjugateTranspose;
@@ -32,9 +33,10 @@ public final class LagrangeMultiplier implements Serializable {
   public LagrangeMultiplier(Tensor eye, Tensor target, Tensor eqs, Tensor rhs) {
     n = Integers.requireEquals(target.length(), eye.length());
     int d = Integers.requireEquals(rhs.length(), eqs.length());
+    Scalar zero = eye.Get(0, 0).zero();
     matrix = ArrayFlatten.of(new Tensor[][] { //
         { eye, ConjugateTranspose.of(eqs) }, //
-        { eqs, Array.zeros(d, d) } });
+        { eqs, ConstantArray.of(zero, d, d) } }); // Array.zeros(d, d)
     b = Join.of(target, rhs);
   }
 

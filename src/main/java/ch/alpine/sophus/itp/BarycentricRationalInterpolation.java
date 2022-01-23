@@ -8,6 +8,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -62,7 +63,7 @@ public class BarycentricRationalInterpolation implements ScalarTensorFunction {
           ? knots.length - degree - 1
           : k;
       Scalar temp = SIGNUM[imin & 1];
-      Scalar sum = RealScalar.ZERO;
+      Scalar sum = Unprotect.negateUnit(knots[0].zero());
       Scalar knots_k = knots[k];
       for (int i = imin; i <= imax; ++i) {
         final int fk = k;

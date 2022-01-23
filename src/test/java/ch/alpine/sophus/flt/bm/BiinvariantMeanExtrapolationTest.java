@@ -19,14 +19,14 @@ import junit.framework.TestCase;
 
 public class BiinvariantMeanExtrapolationTest extends TestCase {
   public void testSimple() {
-    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanExtrapolation.of( //
+    TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2));
     assertEquals(tensor, RealScalar.of(3));
   }
 
   public void testSeries() {
-    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanExtrapolation.of( //
+    TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     Distribution distribution = DiscreteUniformDistribution.of(3, 12);
     for (int deg = 1; deg < 6; ++deg) {

@@ -8,14 +8,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 
-public class Sqrt3Refinement implements SurfaceMeshRefinement {
+public record Sqrt3Refinement(BiinvariantMean biinvariantMean) implements SurfaceMeshRefinement {
   private static final Tensor WEIGHTS = ConstantArray.of(RationalScalar.of(1, 3), 3);
-  // ---
-  private final BiinvariantMean biinvariantMean;
-
-  public Sqrt3Refinement(BiinvariantMean biinvariantMean) {
-    this.biinvariantMean = biinvariantMean;
-  }
 
   @Override
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {

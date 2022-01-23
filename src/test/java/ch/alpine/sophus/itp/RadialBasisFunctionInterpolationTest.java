@@ -27,11 +27,11 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
   public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   public void testSimple() throws ClassNotFoundException, IOException {
-    Random random = new Random();
+    Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
-    Tensor sequence = RandomVariate.of(distribution, n, 3);
-    Tensor values = RandomVariate.of(distribution, n, 2);
+    Tensor sequence = RandomVariate.of(distribution, random, n, 3);
+    Tensor values = RandomVariate.of(distribution, random, n, 2);
     Variograms[] vars = { Variograms.POWER, Variograms.INVERSE_POWER, Variograms.GAUSSIAN, Variograms.INVERSE_MULTIQUADRIC };
     for (Biinvariant biinvariant : PDA)
       for (Variograms variograms : vars) {

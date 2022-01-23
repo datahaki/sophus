@@ -19,24 +19,11 @@ import ch.alpine.tensor.api.TensorScalarFunction;
  * The implementation is used in external libraries.
  * 
  * see RnPointcloudRegion which uses a nd-map */
-public class MetricPointcloudDistance implements TensorScalarFunction {
-  /** @param points
-   * @param tensorMetric
-   * @return */
-  // TODO use distance vectors instead
-  public static TensorScalarFunction of(Tensor points, TensorMetric tensorMetric) {
-    return new MetricPointcloudDistance( //
-        Objects.requireNonNull(points), //
-        Objects.requireNonNull(tensorMetric));
-  }
-
-  // ---
-  private final Tensor points;
-  private final TensorMetric tensorMetric;
-
-  private MetricPointcloudDistance(Tensor points, TensorMetric tensorMetric) {
-    this.points = points;
-    this.tensorMetric = tensorMetric;
+// TODO use distance vectors instead
+public record MetricPointcloudDistance(Tensor points, TensorMetric tensorMetric) implements TensorScalarFunction {
+  public MetricPointcloudDistance {
+    Objects.requireNonNull(points);
+    Objects.requireNonNull(tensorMetric);
   }
 
   @Override

@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 public class LinearMeshRefinementTest extends TestCase {
   public void testSe2CSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
-        Serialization.copy(LinearMeshRefinement.of(Se2CoveringBiinvariantMean.INSTANCE));
+        Serialization.copy(new LinearMeshRefinement(Se2CoveringBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.quads6());
     assertEquals(surfaceMesh.ind.length(), 24);
     assertEquals(surfaceMesh.vrt.length(), 35);
@@ -25,7 +25,7 @@ public class LinearMeshRefinementTest extends TestCase {
 
   public void testRnSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
-        Serialization.copy(LinearMeshRefinement.of(RnBiinvariantMean.INSTANCE));
+        Serialization.copy(new LinearMeshRefinement(RnBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.quads5());
     assertEquals(surfaceMesh.ind.length(), 20);
     assertEquals(surfaceMesh.vrt.length(), 31);
@@ -35,7 +35,7 @@ public class LinearMeshRefinementTest extends TestCase {
 
   public void testR3Simple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
-        Serialization.copy(LinearMeshRefinement.of(RnBiinvariantMean.INSTANCE));
+        Serialization.copy(new LinearMeshRefinement(RnBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.unitQuad());
     assertEquals(surfaceMesh.ind.length(), 4);
     assertEquals(surfaceMesh.vrt.length(), 9);
@@ -45,6 +45,6 @@ public class LinearMeshRefinementTest extends TestCase {
   }
 
   public void testFailNull() {
-    AssertFail.of(() -> LinearMeshRefinement.of(null));
+    AssertFail.of(() -> new LinearMeshRefinement(null));
   }
 }

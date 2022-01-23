@@ -32,8 +32,8 @@ public class LagrangeCoordinateTest extends TestCase {
 
   public void testReal() throws ClassNotFoundException, IOException {
     Genesis idw = InverseDistanceWeighting.of(InversePowerVariogram.of(2));
-    Genesis genesis = Serialization.copy(LagrangeCoordinate.of(idw));
-    Genesis idc = MetricCoordinate.of(idw);
+    Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
+    Genesis idc = new MetricCoordinate(idw);
     for (int d = 1; d < 4; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, d);
@@ -44,7 +44,7 @@ public class LagrangeCoordinateTest extends TestCase {
 
   public void testComplex() throws ClassNotFoundException, IOException {
     Genesis idw = InverseDistanceWeighting.of(InversePowerVariogram.of(2));
-    Genesis genesis = Serialization.copy(LagrangeCoordinate.of(idw));
+    Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
     for (int d = 1; d < 4; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor levers = Entrywise.with(ComplexScalar::of).apply( //
@@ -70,6 +70,6 @@ public class LagrangeCoordinateTest extends TestCase {
   }
 
   public void testNullFail() {
-    AssertFail.of(() -> LagrangeCoordinate.of(null));
+    AssertFail.of(() -> new LagrangeCoordinate(null));
   }
 }

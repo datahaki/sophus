@@ -23,11 +23,11 @@ import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class GrTransportTest extends TestCase {
-  public static final HsTransport POLE_LADDER = PoleLadder.of(GrManifold.INSTANCE);
+  public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
 
   public void testSimple() throws ClassNotFoundException, IOException {
     int n = 4;
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, 2);
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Distribution distribution = LogisticDistribution.of(1, 3);
@@ -55,7 +55,7 @@ public class GrTransportTest extends TestCase {
       TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(n, k);
       Tensor ov = tGr0MemberQ.project(RandomVariate.of(distribution, n, n));
       Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(o, p);
       Tensor pv = tensorUnaryOperator.apply(ov);
@@ -68,7 +68,7 @@ public class GrTransportTest extends TestCase {
     int n = 5;
     for (int k = 1; k < n; ++k) {
       Distribution distribution = UniformDistribution.unit();
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(p, q);

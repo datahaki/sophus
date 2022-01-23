@@ -20,18 +20,9 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:
  * weighting satisfies barycentric equation but do not necessarily sum up to one. */
-public class ThreePointWeighting implements Genesis, Serializable {
-  /** @param biFunction
-   * @return */
-  public static Genesis of(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    return new ThreePointWeighting(Objects.requireNonNull(biFunction));
-  }
-
-  // ---
-  private final BiFunction<Tensor, Scalar, Tensor> biFunction;
-
-  private ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction) {
-    this.biFunction = biFunction;
+public record ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction) implements Genesis, Serializable {
+  public ThreePointWeighting {
+    Objects.requireNonNull(biFunction);
   }
 
   @Override

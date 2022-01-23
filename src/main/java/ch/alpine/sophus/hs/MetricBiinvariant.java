@@ -34,7 +34,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * 
  * for alternative implementations
  * @see HnMetricBiinvariant */
-public class MetricBiinvariant implements Biinvariant, Serializable {
+public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) implements Biinvariant, Serializable {
   /** Careful: not suitable for {@link SpdExponential}, and {@link GrExponential}
    * because these implementations drop coefficients of the log in the vectorLog
    * implementation. that means the scalar product on the subspace would have to be
@@ -45,17 +45,9 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
   /** for {@link SpdExponential}, and {@link GrExponential} */
   public static final Biinvariant VECTORIZE0 = new MetricBiinvariant(LowerVectorize0_2Norm.INSTANCE::norm);
 
-  /** @param tensorScalarFunction norm
-   * @return */
-  public static Biinvariant of(TensorScalarFunction tensorScalarFunction) {
-    return new MetricBiinvariant(Objects.requireNonNull(tensorScalarFunction));
-  }
-
-  // ---
-  private final TensorScalarFunction tensorScalarFunction;
-
-  private MetricBiinvariant(TensorScalarFunction tensorScalarFunction) {
-    this.tensorScalarFunction = tensorScalarFunction;
+  /** @param tensorScalarFunction norm */
+  public MetricBiinvariant {
+    Objects.requireNonNull(tensorScalarFunction);
   }
 
   @Override // from Biinvariant
@@ -68,7 +60,7 @@ public class MetricBiinvariant implements Biinvariant, Serializable {
 
   @Override // from Biinvariant
   public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    Genesis genesis = MetricCoordinate.of(InverseDistanceWeighting.of(variogram, tensorScalarFunction));
+    Genesis genesis = new MetricCoordinate(InverseDistanceWeighting.of(variogram, tensorScalarFunction));
     return HsGenesis.wrap(vectorLogManifold, genesis, sequence);
   }
 

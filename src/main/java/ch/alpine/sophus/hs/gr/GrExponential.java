@@ -10,7 +10,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
-import ch.alpine.tensor.lie.MatrixBracket;
+import ch.alpine.tensor.lie.ad.MatrixBracket;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 
@@ -21,6 +21,7 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
  * use with {@link MetricBiinvariant#VECTORIZE0} */
 public class GrExponential implements Exponential, Serializable {
   private static final Scalar N1_4 = RationalScalar.of(-1, 4);
+  // ---
   private final Tensor p;
   private final TGrMemberQ tGrMemberQ;
   /** negative identity matrix */

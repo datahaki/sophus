@@ -6,5 +6,5 @@ import ch.alpine.sophus.hs.PoleLadder;
 
 public enum HnTransport {
   ;
-  public static final HsTransport INSTANCE = PoleLadder.of(HnManifold.INSTANCE);
+  public static final HsTransport INSTANCE = new PoleLadder(HnManifold.INSTANCE);
 }

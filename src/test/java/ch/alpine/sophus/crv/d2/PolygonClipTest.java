@@ -37,7 +37,7 @@ public class PolygonClipTest extends TestCase {
     Tensor b = Tensors.empty();
     Tensor result = PolygonClip.of(a).apply(b);
     assertTrue(Tensors.isEmpty(result));
-    result.append(RealScalar.ZERO);
+    AssertFail.of(() -> result.append(RealScalar.ZERO));
     assertTrue(Tensors.isEmpty(a));
     assertTrue(Tensors.isEmpty(b));
   }

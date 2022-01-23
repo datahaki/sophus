@@ -6,18 +6,18 @@ import java.util.Random;
 
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.red.ArgMin;
 
 public class BiasedBoxRandomSample implements RandomSampleInterface, Serializable {
   private final RandomSampleInterface randomSampleInterface;
   private final int draws;
 
-  /** @param box
+  /** @param coordinateBoundingBox
    * @param draws positive */
-  public BiasedBoxRandomSample(CoordinateBoundingBox box, int draws) {
-    randomSampleInterface = BoxRandomSample.of(box);
+  public BiasedBoxRandomSample(CoordinateBoundingBox coordinateBoundingBox, int draws) {
+    randomSampleInterface = BoxRandomSample.of(coordinateBoundingBox);
     this.draws = Integers.requirePositive(draws);
   }
 

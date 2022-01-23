@@ -19,18 +19,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020 p.14
  * 
  * @see SchildLadder */
-public class PoleLadder implements HsTransport, Serializable {
-  /** @param hsManifold
-   * @return */
-  public static HsTransport of(HsManifold hsManifold) {
-    return new PoleLadder(Objects.requireNonNull(hsManifold));
-  }
-
-  // ---
-  private final HsManifold hsManifold;
-
-  private PoleLadder(HsManifold hsManifold) {
-    this.hsManifold = hsManifold;
+public record PoleLadder(HsManifold hsManifold) implements HsTransport, Serializable {
+  public PoleLadder {
+    Objects.requireNonNull(hsManifold);
   }
 
   @Override // from HsTransport

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.clt.mid;
 
+import java.util.Random;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.mat.Tolerance;
@@ -15,9 +17,10 @@ public class MidpointTangentApproximationTest extends TestCase {
   }
 
   public void testRandom() {
+    Random random = new Random(1);
     for (int count = 0; count < 100; ++count) {
-      Scalar b0 = RandomVariate.of(NormalDistribution.standard());
-      Scalar b1 = RandomVariate.of(NormalDistribution.standard());
+      Scalar b0 = RandomVariate.of(NormalDistribution.standard(), random);
+      Scalar b1 = RandomVariate.of(NormalDistribution.standard(), random);
       Scalar f1 = OriginalApproximation.INSTANCE.apply(b0, b1);
       Scalar f2 = MidpointTangentApproximation.ORDER2.apply(b0, b1);
       Tolerance.CHOP.requireClose(f1, f2);

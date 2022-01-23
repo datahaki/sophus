@@ -20,21 +20,12 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 
-public class LinearMeshRefinement implements SurfaceMeshRefinement, Serializable {
+public record LinearMeshRefinement(BiinvariantMean biinvariantMean) implements SurfaceMeshRefinement, Serializable {
   private static final Tensor MIDPOINT = Tensors.of(RationalScalar.HALF, RationalScalar.HALF);
   private static final Function<Integer, Tensor> WEIGHTS = UniformWindowSampler.of(DirichletWindow.FUNCTION);
 
-  /** @param biinvariantMean non-null
-   * @return */
-  public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {
-    return new LinearMeshRefinement(Objects.requireNonNull(biinvariantMean));
-  }
-
-  // ---
-  private final BiinvariantMean biinvariantMean;
-
-  /* package */ LinearMeshRefinement(BiinvariantMean biinvariantMean) {
-    this.biinvariantMean = biinvariantMean;
+  public LinearMeshRefinement {
+    Objects.requireNonNull(biinvariantMean);
   }
 
   @Override // from SurfaceMeshRefinement

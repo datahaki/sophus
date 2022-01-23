@@ -38,7 +38,7 @@ public enum Biinvariants implements Biinvariant {
 
     @Override // from Biinvariant
     public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsGenesis.wrap(vectorLogManifold, LeveragesGenesis.of(variogram), sequence);
+      return HsGenesis.wrap(vectorLogManifold, new LeveragesGenesis(variogram), sequence);
     }
 
     @Override // from Biinvariant
@@ -73,7 +73,7 @@ public enum Biinvariants implements Biinvariant {
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       BiinvariantVectorFunction biinvariantVectorFunction = //
           HarborBiinvariantVector.of(vectorLogManifold, sequence);
-      return point -> biinvariantVectorFunction.biinvariantVector(point).distances();
+      return point -> biinvariantVectorFunction.biinvariantVector(point).vector();
     }
 
     @Override // from Biinvariant
@@ -88,7 +88,7 @@ public enum Biinvariants implements Biinvariant {
     public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
       BiinvariantVectorFunction biinvariantVectorFunction = //
           CupolaBiinvariantVector.of(vectorLogManifold, sequence);
-      return point -> biinvariantVectorFunction.biinvariantVector(point).distances();
+      return point -> biinvariantVectorFunction.biinvariantVector(point).vector();
     }
 
     @Override // from Biinvariant

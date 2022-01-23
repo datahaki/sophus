@@ -8,6 +8,7 @@ import java.util.function.Function;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 
 /** class does not have a public constructor
@@ -22,7 +23,7 @@ public class HilbertCurve {
   /** @param n non-negative
    * @return */
   public static Tensor of(int n) {
-    return CACHE.apply(n);
+    return CACHE.apply(Integers.requirePositiveOrZero(n));
   }
 
   private static Tensor build(int n) {

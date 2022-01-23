@@ -34,28 +34,14 @@ import ch.alpine.tensor.img.ImageFilter;
  * out[2] = f[0, 1, 2, 3, 4]
  * out[3] = f[1, 2, 3, 4, 5]
  * ...
- * </pre> */
-public class CenterFilter implements TensorUnaryOperator {
-  /** Hint: the following tensorUnaryOperator are typically used
-   * {@link GeodesicCenter}, and {@link BiinvariantMeanCenter}
-   * 
-   * @param tensorUnaryOperator
-   * @param radius non-negative
-   * @return
-   * @throws Exception if given tensorUnaryOperator is null */
-  public static TensorUnaryOperator of(TensorUnaryOperator tensorUnaryOperator, int radius) {
-    return new CenterFilter( //
-        Objects.requireNonNull(tensorUnaryOperator), //
-        Integers.requirePositiveOrZero(radius));
-  }
-
-  // ---
-  private final TensorUnaryOperator tensorUnaryOperator;
-  private final int radius;
-
-  private CenterFilter(TensorUnaryOperator tensorUnaryOperator, int radius) {
-    this.tensorUnaryOperator = tensorUnaryOperator;
-    this.radius = radius;
+ * </pre>
+ * 
+ * Hint: {@link GeodesicCenter}, and {@link BiinvariantMeanCenter} are typically used
+ * for the tensorUnaryOperator */
+public record CenterFilter(TensorUnaryOperator tensorUnaryOperator, int radius) implements TensorUnaryOperator {
+  public CenterFilter {
+    Objects.requireNonNull(tensorUnaryOperator);
+    Integers.requirePositiveOrZero(radius);
   }
 
   @Override // from TensorUnaryOperator

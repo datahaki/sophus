@@ -16,7 +16,7 @@ import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.ex.MatrixSqrt;
 
-/** if p == IdentityMatrix[n] then SpdExp(p) reduces to SpdExponential
+/** if p == IdentityMatrix[n] then SpdExponential(p) reduces to Spd0Exponential
  * 
  * SPD == Symmetric positive definite == Sym+
  * 

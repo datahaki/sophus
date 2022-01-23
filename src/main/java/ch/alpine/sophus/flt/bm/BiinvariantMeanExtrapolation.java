@@ -9,25 +9,16 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** BiinvariantMeanCenter projects a uniform sequence of points to their extrapolate
- * with each point weighted as provided by an external function. */
-public class BiinvariantMeanExtrapolation implements TensorUnaryOperator {
-  /** @param biinvariantMean non-null
-   * @param function non-null
-   * @return
-   * @throws Exception if either input parameter is null */
-  public static TensorUnaryOperator of(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) {
-    return new BiinvariantMeanExtrapolation( //
-        Objects.requireNonNull(biinvariantMean), //
-        Objects.requireNonNull(function));
-  }
-
-  // ---
-  private final BiinvariantMean biinvariantMean;
-  private final Function<Integer, Tensor> function;
-
-  private BiinvariantMeanExtrapolation(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) {
-    this.biinvariantMean = biinvariantMean;
-    this.function = function;
+ * with each point weighted as provided by an external function.
+ * 
+ * @param biinvariantMean non-null
+ * @param function non-null
+ * @return
+ * @throws Exception if either input parameter is null */
+public record BiinvariantMeanExtrapolation(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) implements TensorUnaryOperator {
+  public BiinvariantMeanExtrapolation {
+    Objects.requireNonNull(biinvariantMean);
+    Objects.requireNonNull(function);
   }
 
   @Override

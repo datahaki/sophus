@@ -23,8 +23,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.itp.Interpolation;
-import ch.alpine.tensor.itp.LinearInterpolation;
+import ch.alpine.tensor.itp.LinearBinaryAverage;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
@@ -40,10 +39,10 @@ public class IterativeCoordinateTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
       for (int k = 0; k < 5; ++k) {
-        Tensor weights = IterativeCoordinate.of(genesis, k).origin(levers);
+        Tensor weights = new IterativeCoordinate(genesis, k).origin(levers);
         Chop._10.requireAllZero(weights.dot(levers));
         {
-          Tensor matrix = IterativeCoordinateMatrix.of(k).origin(levers);
+          Tensor matrix = new IterativeCoordinateMatrix(k).origin(levers);
           Tensor circum = matrix.dot(levers);
           Tensor wn = NormalizeTotal.FUNCTION.apply(genesis.origin(circum).dot(matrix));
           Chop._10.requireClose(wn, weights);
@@ -72,8 +71,10 @@ public class IterativeCoordinateTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor polygon = CirclePoints.of(n);
       int index = random.nextInt(polygon.length() - 1);
-      Interpolation interpolation = LinearInterpolation.of(polygon.extract(index, index + 2));
-      Tensor x = interpolation.at(RealScalar.of(random.nextDouble()));
+      Tensor x = LinearBinaryAverage.INSTANCE.split( //
+          polygon.get(index), //
+          polygon.get(index + 1), //
+          RealScalar.of(random.nextDouble()));
       Tensor levers = Tensor.of(polygon.stream().map(x::subtract));
       if (OriginEnclosureQ.INSTANCE.test(levers) && strict) {
         Tensor weights = genesis.origin(levers);
@@ -97,7 +98,7 @@ public class IterativeCoordinateTest extends TestCase {
   }
 
   public void testIC() {
-    Genesis genesis = IterativeCoordinate.of(MetricCoordinate.affine(), 3);
+    Genesis genesis = new IterativeCoordinate(MetricCoordinate.affine(), 3);
     _checkCornering(genesis);
     _checkAlongedge(genesis, false);
   }
@@ -110,11 +111,11 @@ public class IterativeCoordinateTest extends TestCase {
         Tensor weights = ThreePointCoordinate.of(Barycenter.MEAN_VALUE).origin(levers);
         Chop._07.requireClose( //
             weights, //
-            IterativeCoordinate.of(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 0).origin(levers));
+            new IterativeCoordinate(new ThreePointWeighting(Barycenter.MEAN_VALUE), 0).origin(levers));
         if (weights.stream().map(Scalar.class::cast).anyMatch(Sign::isNegative)) {
           boolean result = Chop._10.isClose( //
               weights, //
-              IterativeCoordinate.of(ThreePointWeighting.of(Barycenter.MEAN_VALUE), 2).origin(levers));
+              new IterativeCoordinate(new ThreePointWeighting(Barycenter.MEAN_VALUE), 2).origin(levers));
           if (4 < n)
             assertFalse(result);
         }
@@ -129,7 +130,7 @@ public class IterativeCoordinateTest extends TestCase {
       Tensor levers = RandomVariate.of(distribution, n, 2);
       if (OriginEnclosureQ.INSTANCE.test(levers)) {
         for (int k = 0; k < 3; ++k) {
-          Genesis ic = IterativeCoordinate.of(genesis, k);
+          Genesis ic = new IterativeCoordinate(genesis, k);
           Tensor weights = ic.origin(levers);
           MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
           Tensor tangent = meanDefect.tangent();
@@ -145,7 +146,7 @@ public class IterativeCoordinateTest extends TestCase {
     for (int n = 3; n < 10; ++n) {
       Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
       for (int k = 0; k < 5; ++k) {
-        Tensor weights = IterativeCoordinate.of(genesis, k).origin(levers);
+        Tensor weights = new IterativeCoordinate(genesis, k).origin(levers);
         Chop._10.requireAllZero(weights.dot(levers));
         MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
         Tensor tangent = meanDefect.tangent();
@@ -157,7 +158,7 @@ public class IterativeCoordinateTest extends TestCase {
   private static final Genesis[] GENESIS = { //
       ThreePointCoordinate.of(Barycenter.MEAN_VALUE), //
       MetricCoordinate.affine(), //
-      LeveragesGenesis.of(InversePowerVariogram.of(2)), //
+      new LeveragesGenesis(InversePowerVariogram.of(2)), //
   };
 
   public void testS2() {
@@ -173,7 +174,7 @@ public class IterativeCoordinateTest extends TestCase {
         for (Genesis genesis : GENESIS)
           for (int k = 0; k < 3; ++k) {
             BarycentricCoordinate barycentricCoordinate = //
-                HsCoordinates.wrap(S2Manifold.INSTANCE, IterativeCoordinate.of(genesis, k));
+                HsCoordinates.wrap(S2Manifold.INSTANCE, new IterativeCoordinate(genesis, k));
             Tensor weights = barycentricCoordinate.weights(sequence, point);
             MeanDefect meanDefect = new MeanDefect(sequence, weights, new S2Exponential(point));
             Tensor tangent = meanDefect.tangent();

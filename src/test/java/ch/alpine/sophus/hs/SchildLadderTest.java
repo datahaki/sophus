@@ -36,7 +36,7 @@ public class SchildLadderTest extends TestCase {
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = SchildLadder.of(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
-    TensorUnaryOperator shift3 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift3 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);

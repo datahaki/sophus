@@ -18,7 +18,7 @@ public class IterativeCoordinateMatrixTest extends TestCase {
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     for (int k = 1; k < 5; ++k) {
-      Genesis genesis = IterativeCoordinate.of(MetricCoordinate.affine(), k);
+      Genesis genesis = new IterativeCoordinate(MetricCoordinate.affine(), k);
       for (int n = 3; n < 10; ++n) {
         Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
         Tensor weights = genesis.origin(levers);
@@ -33,7 +33,7 @@ public class IterativeCoordinateMatrixTest extends TestCase {
     Distribution distribution = UniformDistribution.of(-10, 10);
     int count = 0;
     for (int k = 1; k < 5; ++k) {
-      Genesis genesis = IterativeCoordinate.of(MetricCoordinate.affine(), k);
+      Genesis genesis = new IterativeCoordinate(MetricCoordinate.affine(), k);
       for (int n = 3; n < 10; ++n) {
         Tensor levers = RandomVariate.of(distribution, n, 2);
         if (OriginEnclosureQ.INSTANCE.test(levers)) {

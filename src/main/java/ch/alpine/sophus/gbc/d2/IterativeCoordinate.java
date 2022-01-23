@@ -19,26 +19,14 @@ import ch.alpine.tensor.red.Times;
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020
  * 
- * @see InsidePolygonCoordinate */
-public class IterativeCoordinate implements Genesis, Serializable {
-  /** genesis can be for instance {@link ThreePointCoordinate}, or {@link AffineCoordinate}
-   * 
-   * @param genesis
-   * @param k non-negative
-   * @return */
-  public static Genesis of(Genesis genesis, int k) {
-    return new IterativeCoordinate(Objects.requireNonNull(genesis), k);
-  }
-
-  // ---
-  private final Genesis genesis;
-  private final int k;
-
-  /** @param genesis
-   * @param k non-negative */
-  private IterativeCoordinate(Genesis genesis, int k) {
-    this.genesis = genesis;
-    this.k = Integers.requirePositiveOrZero(k);
+ * @see InsidePolygonCoordinate
+ * 
+ * @param genesis for instance {@link ThreePointCoordinate}, or {@link AffineCoordinate}
+ * @param k non-negative */
+public record IterativeCoordinate(Genesis genesis, int k) implements Genesis, Serializable {
+  public IterativeCoordinate {
+    Objects.requireNonNull(genesis);
+    Integers.requirePositiveOrZero(k);
   }
 
   @Override // from Genesis

@@ -39,13 +39,13 @@ import ch.alpine.tensor.sca.Sign;
   }
 
   @Override // from CurveDecimation
-  public Result evaluate(Tensor tensor) {
+  public DecimationResult evaluate(Tensor tensor) {
     return Tensors.isEmpty(tensor) //
-        ? EmptyResult.INSTANCE
-        : new SpaceResult(tensor);
+        ? DecimationResult.EMPTY
+        : new SpaceResult(tensor).getDecimationResult();
   }
 
-  private class SpaceResult implements Result, Serializable {
+  private class SpaceResult implements Serializable {
     private final Tensor[] tensors;
     private final Scalar[] scalars;
     private final List<Integer> list = new LinkedList<>();
@@ -84,14 +84,10 @@ import ch.alpine.tensor.sca.Sign;
       list.add(beg);
     }
 
-    @Override // from Result
-    public Tensor result() {
-      return Tensor.of(list.stream().map(i -> tensors[i]).map(Tensor::copy));
-    }
-
-    @Override // from Result
-    public Tensor errors() {
-      return Tensors.of(scalars);
+    public DecimationResult getDecimationResult() {
+      return new DecimationResult( //
+          Tensor.of(list.stream().map(i -> tensors[i]).map(Tensor::copy)), //
+          Tensors.of(scalars));
     }
   }
 }

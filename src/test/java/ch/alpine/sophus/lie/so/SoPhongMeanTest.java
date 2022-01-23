@@ -13,6 +13,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Det;
@@ -21,7 +22,6 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
-import ch.alpine.tensor.red.ArgMax;
 import junit.framework.TestCase;
 
 public class SoPhongMeanTest extends TestCase {

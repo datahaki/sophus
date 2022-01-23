@@ -12,18 +12,11 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020 p.13
  * 
  * @see SchildLadder */
-public class SymmetrizeTransport implements HsTransport, Serializable {
+public record SymmetrizeTransport(HsTransport hsTransport) implements HsTransport, Serializable {
   /** @param hsTransport typically instance of SchildLadder
    * @return */
-  public static HsTransport of(HsTransport hsTransport) {
-    return new SymmetrizeTransport(Objects.requireNonNull(hsTransport));
-  }
-
-  // ---
-  private final HsTransport hsTransport;
-
-  private SymmetrizeTransport(HsTransport hsTransport) {
-    this.hsTransport = hsTransport;
+  public SymmetrizeTransport {
+    Objects.requireNonNull(hsTransport);
   }
 
   @Override

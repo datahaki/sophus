@@ -34,14 +34,11 @@ public abstract class AbstractBSpline3CurveSubdivision extends AbstractBSpline1C
 
   @Override // from CurveSubdivision
   public Tensor string(Tensor tensor) {
-    switch (tensor.length()) {
-    case 0:
-      return Tensors.empty();
-    case 1:
-      return tensor.copy();
-    default:
-      return refine(tensor);
-    }
+    return switch (tensor.length()) {
+    case 0 -> Tensors.empty();
+    case 1 -> tensor.copy();
+    default -> refine(tensor);
+    };
   }
 
   /** @param tensor with at least 2 control points

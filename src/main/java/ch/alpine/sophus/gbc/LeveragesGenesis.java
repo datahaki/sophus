@@ -25,18 +25,9 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * 
  * @see LeveragesDistanceVector
  * @see LeveragesCoordinate */
-public class LeveragesGenesis implements Genesis, Serializable {
-  /** @param variogram
-   * @return */
-  public static Genesis of(ScalarUnaryOperator variogram) {
-    return new LeveragesGenesis(Objects.requireNonNull(variogram));
-  }
-
-  // ---
-  private final ScalarUnaryOperator variogram;
-
-  private LeveragesGenesis(ScalarUnaryOperator variogram) {
-    this.variogram = variogram;
+public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis, Serializable {
+  public LeveragesGenesis {
+    Objects.requireNonNull(variogram);
   }
 
   @Override // from Genesis

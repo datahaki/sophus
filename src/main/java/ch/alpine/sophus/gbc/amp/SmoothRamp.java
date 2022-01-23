@@ -7,11 +7,9 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Sign;
 
-public class SmoothRamp implements ScalarUnaryOperator {
-  private final Scalar sigma;
-
-  public SmoothRamp(Scalar sigma) {
-    this.sigma = Sign.requirePositive(sigma);
+public record SmoothRamp(Scalar sigma) implements ScalarUnaryOperator {
+  public SmoothRamp {
+    Sign.requirePositive(sigma);
   }
 
   @Override

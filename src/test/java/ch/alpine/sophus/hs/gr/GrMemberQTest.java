@@ -14,7 +14,7 @@ import junit.framework.TestCase;
 public class GrMemberQTest extends TestCase {
   public void testSimple() {
     int n = 5;
-    Tensor x = RandomSample.of(GrRandomSample.of(n, 3));
+    Tensor x = RandomSample.of(new GrRandomSample(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     GrMemberQ.INSTANCE.require(x);
   }

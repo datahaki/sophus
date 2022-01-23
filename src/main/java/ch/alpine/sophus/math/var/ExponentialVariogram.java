@@ -10,31 +10,22 @@ import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Sign;
 
 /** <p>The input of the variogram has unit of a.
- * The output of the variogram has unit of b. */
-public class ExponentialVariogram implements ScalarUnaryOperator {
-  /** @param a positive
-   * @param b
-   * @return */
-  public static ScalarUnaryOperator of(Scalar a, Scalar b) {
-    return new ExponentialVariogram( //
-        Sign.requirePositive(a), //
-        Objects.requireNonNull(b));
-  }
-
+ * The output of the variogram has unit of b.
+ * 
+ * @param a positive
+ * @param b */
+public record ExponentialVariogram(Scalar a, Scalar b) implements ScalarUnaryOperator {
   /** @param a positive
    * @param b
    * @return */
   public static ScalarUnaryOperator of(Number a, Number b) {
-    return of(RealScalar.of(a), RealScalar.of(b));
+    return new ExponentialVariogram(RealScalar.of(a), RealScalar.of(b));
   }
 
   // ---
-  private final Scalar a;
-  private final Scalar b;
-
-  private ExponentialVariogram(Scalar a, Scalar b) {
-    this.a = a;
-    this.b = b;
+  public ExponentialVariogram {
+    Sign.requirePositive(a);
+    Objects.requireNonNull(b);
   }
 
   @Override

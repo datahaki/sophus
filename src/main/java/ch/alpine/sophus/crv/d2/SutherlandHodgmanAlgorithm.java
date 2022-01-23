@@ -40,24 +40,12 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
     vertex = clip.stream().toArray(Tensor[]::new);
   }
 
-  public static class PolyclipResult {
-    private Tensor tensor = Tensors.empty();
-    private Tensor belong = Tensors.empty();
-
-    public Tensor tensor() {
-      return tensor;
-    }
-
-    public Tensor belong() {
-      return belong;
-    }
-  }
-
   public PolyclipResult apply(Tensor subject) {
     int length = vertex.length;
     if (length == 0)
-      return new PolyclipResult();
+      return PolyclipResult.EMPTY;
     Tensor tensor = subject;
+    // TODO probably not a good general choice if units are involved
     Tensor belong = Array.zeros(subject.length());
     for (int i = 0; i < length; ++i) {
       Tensor a = vertex[Math.floorMod(i - 1, length)];
@@ -86,10 +74,7 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
       }
       belong = belonh;
     }
-    PolyclipResult polyclipResult = new PolyclipResult();
-    polyclipResult.tensor = tensor;
-    polyclipResult.belong = belong;
-    return polyclipResult;
+    return new PolyclipResult(tensor, belong);
   }
 
   /** @param a

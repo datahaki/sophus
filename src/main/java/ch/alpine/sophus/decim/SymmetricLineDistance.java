@@ -22,15 +22,8 @@ public class SymmetricLineDistance implements LineDistance, Serializable {
         lineDistance.tensorNorm(end, beg));
   }
 
-  private class NormImpl implements TensorNorm, Serializable {
-    private final TensorNorm tensorNorm1;
-    private final TensorNorm tensorNorm2;
-
-    public NormImpl(TensorNorm tensorNorm1, TensorNorm tensorNorm2) {
-      this.tensorNorm1 = tensorNorm1;
-      this.tensorNorm2 = tensorNorm2;
-    }
-
+  private record NormImpl(TensorNorm tensorNorm1, TensorNorm tensorNorm2) //
+      implements TensorNorm, Serializable {
     @Override
     public Scalar norm(Tensor index) {
       return Max.of( //

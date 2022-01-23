@@ -20,6 +20,7 @@ public class HilbertCurveTest extends TestCase {
   }
 
   public void testNegativeFail() {
+    AssertFail.of(() -> HilbertCurve.of(-1));
     AssertFail.of(() -> HilbertPolygon.of(-1));
   }
 }

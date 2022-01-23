@@ -10,9 +10,9 @@ import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.red.ArgMin;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
@@ -22,22 +22,15 @@ import ch.alpine.tensor.sca.N;
  * 
  * <p>implementation based on
  * "Weiszfeld’s Method: Old and New Results"
- * by Amir Beck, Shoham Sabach */
-public class WeiszfeldMethod implements SpatialMedian, Serializable {
+ * by Amir Beck, Shoham Sabach
+ * 
+ * @param chop non null */
+public record WeiszfeldMethod(Chop chop) implements SpatialMedian, Serializable {
   private static final int MAX_ITERATIONS = 512;
 
-  /** @param chop non null
-   * @return */
-  public static SpatialMedian with(Chop chop) {
-    return new WeiszfeldMethod(Objects.requireNonNull(chop));
-  }
-
-  // ---
-  private final Chop chop;
-
   /** @param chop */
-  private WeiszfeldMethod(Chop chop) {
-    this.chop = chop;
+  public WeiszfeldMethod {
+    Objects.requireNonNull(chop);
   }
 
   @Override // from SpatialMedian

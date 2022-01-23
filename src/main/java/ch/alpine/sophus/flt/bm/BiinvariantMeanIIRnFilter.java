@@ -22,7 +22,7 @@ public enum BiinvariantMeanIIRnFilter {
       BiinvariantMean biinvariantMean, Function<Integer, Tensor> function, //
       BinaryAverage binaryAverage, int radius, Scalar alpha) {
     return GeodesicIIRnFilter.of( //
-        BiinvariantMeanExtrapolation.of(biinvariantMean, function), //
+        new BiinvariantMeanExtrapolation(biinvariantMean, function), //
         binaryAverage, radius, alpha);
   }
 }

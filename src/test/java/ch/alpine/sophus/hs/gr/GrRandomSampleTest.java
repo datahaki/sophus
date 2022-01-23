@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 public class GrRandomSampleTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int k = 1; k < 5; ++k) {
-      RandomSampleInterface grRandomSample = Serialization.copy(GrRandomSample.of(k + 3, k));
+      RandomSampleInterface grRandomSample = Serialization.copy(new GrRandomSample(k + 3, k));
       Tensor x = RandomSample.of(grRandomSample);
       GrMemberQ.INSTANCE.require(x);
     }
@@ -25,7 +25,7 @@ public class GrRandomSampleTest extends TestCase {
 
   public void testNN() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = Serialization.copy(GrRandomSample.of(n, n));
+      RandomSampleInterface randomSampleInterface = Serialization.copy(new GrRandomSample(n, n));
       Tensor x = RandomSample.of(randomSampleInterface);
       GrMemberQ.INSTANCE.require(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));
@@ -34,7 +34,7 @@ public class GrRandomSampleTest extends TestCase {
 
   public void testN0() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, 0);
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 0);
       for (int k = 0; k < 3; ++k) {
         Tensor x = RandomSample.of(randomSampleInterface);
         GrMemberQ.INSTANCE.require(x);
@@ -45,7 +45,7 @@ public class GrRandomSampleTest extends TestCase {
   }
 
   public void testFail() {
-    AssertFail.of(() -> GrRandomSample.of(-3, 2));
-    AssertFail.of(() -> GrRandomSample.of(3, 4));
+    AssertFail.of(() -> new GrRandomSample(-3, 2));
+    AssertFail.of(() -> new GrRandomSample(3, 4));
   }
 }

@@ -11,19 +11,12 @@ import ch.alpine.tensor.Tensor;
  * 
  * Technique of using Lagrange multipliers inspired by the following reference:
  * "Polygon Laplacian Made Simple"
- * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020 */
-public class LagrangeCoordinate implements Genesis, Serializable {
-  /** @param genesis for instance InverseDistanceWeighting.of(InversePowerVariogram.of(2))
-   * @return */
-  public static Genesis of(Genesis genesis) {
-    return new LagrangeCoordinate(Objects.requireNonNull(genesis));
-  }
-
-  // ---
-  private final Genesis genesis;
-
-  private LagrangeCoordinate(Genesis genesis) {
-    this.genesis = genesis;
+ * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020
+ * 
+ * @param genesis for instance InverseDistanceWeighting.of(InversePowerVariogram.of(2)) */
+public record LagrangeCoordinate(Genesis genesis) implements Genesis, Serializable {
+  public LagrangeCoordinate {
+    Objects.requireNonNull(genesis);
   }
 
   @Override // from Genesis

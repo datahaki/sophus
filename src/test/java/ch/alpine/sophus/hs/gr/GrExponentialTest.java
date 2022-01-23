@@ -55,7 +55,7 @@ public class GrExponentialTest extends TestCase {
   }
 
   public void testShift() {
-    Tensor x = RandomSample.of(GrRandomSample.of(2, 1));
+    Tensor x = RandomSample.of(new GrRandomSample(2, 1));
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
@@ -72,7 +72,7 @@ public class GrExponentialTest extends TestCase {
   public void testDesign() {
     int k = 3;
     for (int n = 4; n < 7; ++n) {
-      Tensor x = RandomSample.of(GrRandomSample.of(n, k));
+      Tensor x = RandomSample.of(new GrRandomSample(n, k));
       assertEquals(Dimensions.of(x), Arrays.asList(n, n));
       assertEquals(MatrixRank.of(x), k);
       InfluenceMatrixQ.require(x);

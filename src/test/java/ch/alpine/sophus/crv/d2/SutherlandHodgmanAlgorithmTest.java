@@ -1,14 +1,21 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
-import ch.alpine.sophus.crv.d2.SutherlandHodgmanAlgorithm.PolyclipResult;
+import java.util.Random;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.HilbertMatrix;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class SutherlandHodgmanAlgorithmTest extends TestCase {
@@ -23,6 +30,19 @@ public class SutherlandHodgmanAlgorithmTest extends TestCase {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(CirclePoints.of(4)).apply(clip);
     assertEquals(polyclipResult.tensor(), clip);
+  }
+
+  public void testQuantity() {
+    Random random = new Random(3);
+    Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));
+    for (int count = 0; count < 10; ++count) {
+      Tensor tensor = RandomVariate.of(distribution, random, 6, 2);
+      PolyclipResult polyclipResult = //
+          SutherlandHodgmanAlgorithm.of(CirclePoints.of(3 + count).map(s -> Quantity.of(s, "m"))) //
+              .apply(tensor);
+      Tensor tensor2 = polyclipResult.tensor();
+      Unprotect.getUnitUnique(tensor2);
+    }
   }
 
   public void testFail() {

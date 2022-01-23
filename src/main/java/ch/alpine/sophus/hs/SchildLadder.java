@@ -14,29 +14,15 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exact in R^n
  * 
  * @see PoleLadder */
-public class SchildLadder implements HsTransport, Serializable {
-  /** @param hsManifold
-   * @param midpointInterface
-   * @return */
-  public static HsTransport of(HsManifold hsManifold, MidpointInterface midpointInterface) {
-    return new SchildLadder( //
-        Objects.requireNonNull(hsManifold), //
-        Objects.requireNonNull(midpointInterface));
-  }
-
+public record SchildLadder(HsManifold hsManifold, MidpointInterface midpointInterface) implements HsTransport, Serializable {
   /** @param hsManifold
    * @return */
   public static HsTransport of(HsManifold hsManifold) {
     return new SchildLadder(Objects.requireNonNull(hsManifold), null);
   }
 
-  // ---
-  private final HsManifold hsManifold;
-  private final MidpointInterface midpointInterface;
-
-  private SchildLadder(HsManifold hsManifold, MidpointInterface midpointInterface) {
-    this.hsManifold = hsManifold;
-    this.midpointInterface = midpointInterface;
+  public SchildLadder {
+    Objects.requireNonNull(hsManifold);
   }
 
   @Override // from HsTransport

@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class HnTransportTest extends TestCase {
-  private static final HsTransport POLE_LADDER = PoleLadder.of(HnManifold.INSTANCE);
+  private static final HsTransport POLE_LADDER = new PoleLadder(HnManifold.INSTANCE);
 
   public void testSimple() {
     int d = 3;

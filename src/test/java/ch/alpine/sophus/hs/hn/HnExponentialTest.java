@@ -73,9 +73,10 @@ public class HnExponentialTest extends TestCase {
   }
 
   public void testLogZero() {
+    Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
-      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+      Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, d));
       HnExponential hnExponential = new HnExponential(x);
       Tensor v = hnExponential.log(x);
       new THnMemberQ(x).require(v);

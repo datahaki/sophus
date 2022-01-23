@@ -27,16 +27,12 @@ import ch.alpine.tensor.sca.Cos;
   }
 
   private static Tensor vector(int n) {
-    switch (n) {
-    case 3:
-      return Tensors.vector(4, 1, 1).divide(RealScalar.of(6));
-    case 4:
-      return Tensors.vector(9, 3, 1, 3).divide(RealScalar.of(16));
-    case 6:
-      return Tensors.vector(11, 4, 2, 1, 2, 4).divide(RealScalar.of(24));
-    default:
-      return numeric(n);
-    }
+    return switch (n) {
+    case 3 -> Tensors.vector(4, 1, 1).divide(RealScalar.of(6));
+    case 4 -> Tensors.vector(9, 3, 1, 3).divide(RealScalar.of(16));
+    case 6 -> Tensors.vector(11, 4, 2, 1, 2, 4).divide(RealScalar.of(24));
+    default -> numeric(n);
+    };
   }
 
   @Override

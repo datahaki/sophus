@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.MatrixBracket;
+import ch.alpine.tensor.lie.ad.MatrixBracket;
 
 /** Reference:
  * "Geometric mean and geodesic regression on Grassmannians"

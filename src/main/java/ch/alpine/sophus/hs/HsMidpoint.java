@@ -9,7 +9,7 @@ import ch.alpine.sophus.math.MidpointInterface;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 
-public class HsMidpoint implements MidpointInterface, Serializable {
+public record HsMidpoint(HsManifold hsManifold) implements MidpointInterface, Serializable {
   /** @param exponential
    * @param q
    * @return */
@@ -17,12 +17,8 @@ public class HsMidpoint implements MidpointInterface, Serializable {
     return exponential.exp(exponential.log(q).multiply(RationalScalar.HALF));
   }
 
-  // ---
-  private final HsManifold hsManifold;
-
-  /** @param hsManifold */
-  public HsMidpoint(HsManifold hsManifold) {
-    this.hsManifold = Objects.requireNonNull(hsManifold);
+  public HsMidpoint {
+    Objects.requireNonNull(hsManifold);
   }
 
   @Override // from MidpointInterface

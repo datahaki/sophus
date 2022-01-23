@@ -4,7 +4,6 @@ package ch.alpine.sophus.fit;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Orthogonalize;
@@ -15,8 +14,13 @@ import ch.alpine.tensor.red.Times;
  * 
  * Reference:
  * "Least-Squares Rigid Motion Using SVD"
- * Olga Sorkine-Hornung and Michael Rabinovich, 2016 */
-public class RigidMotionFit implements TensorUnaryOperator {
+ * Olga Sorkine-Hornung and Michael Rabinovich, 2016
+ * 
+ * rotation dot point plus translation == target
+ * 
+ * @param rotation orthogonal matrix with dimension d x d and determinant +1
+ * @param translation vector of length d */
+public record RigidMotionFit(Tensor rotation, Tensor translation) implements TensorUnaryOperator {
   /** @param origin matrix of dimension n x d
    * @param target matrix of dimension n x d
    * @param weights vector of length n with entries that sum up to 1
@@ -44,36 +48,8 @@ public class RigidMotionFit implements TensorUnaryOperator {
     return new RigidMotionFit(rotation, qm.subtract(rotation.dot(pm)));
   }
 
-  // ---
-  private final Tensor rotation;
-  private final Tensor translation;
-
-  private RigidMotionFit(Tensor rotation, Tensor translation) {
-    this.rotation = rotation;
-    this.translation = translation;
-  }
-
-  /** rotation dot point plus translation == target
-   * 
-   * @return orthogonal matrix with dimension d x d and determinant +1 */
-  public Tensor rotation() {
-    return rotation;
-  }
-
-  /** rotation dot point plus translation == target
-   * 
-   * @return vector of length d */
-  public Tensor translation() {
-    return translation;
-  }
-
   @Override
   public Tensor apply(Tensor point) {
     return rotation.dot(point).add(translation);
-  }
-
-  @Override // from Object
-  public String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), Tensors.message(rotation(), translation()));
   }
 }

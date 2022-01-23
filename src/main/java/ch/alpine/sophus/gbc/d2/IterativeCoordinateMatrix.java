@@ -16,22 +16,12 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * Reference:
  * "Iterative coordinates"
- * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
-public class IterativeCoordinateMatrix implements Genesis, Serializable {
-  /** @param genesis
-   * @param k non-negative
-   * @return */
-  public static Genesis of(int k) {
-    return new IterativeCoordinateMatrix(Integers.requirePositiveOrZero(k));
-  }
-
-  // ---
-  private final int k;
-
-  /** @param genesis
-   * @param k non-negative */
-  private IterativeCoordinateMatrix(int k) {
-    this.k = k;
+ * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020
+ * 
+ * @param k non-negative */
+public record IterativeCoordinateMatrix(int k) implements Genesis, Serializable {
+  public IterativeCoordinateMatrix {
+    Integers.requirePositiveOrZero(k);
   }
 
   @Override // from Genesis

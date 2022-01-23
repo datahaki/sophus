@@ -11,11 +11,9 @@ import ch.alpine.tensor.sca.Sign;
 /**
  * 
  */
-public class ArcTanAmplifier implements ScalarUnaryOperator {
-  private final Scalar sigma;
-
-  public ArcTanAmplifier(Scalar sigma) {
-    this.sigma = Sign.requirePositive(sigma);
+public record ArcTanAmplifier(Scalar sigma) implements ScalarUnaryOperator {
+  public ArcTanAmplifier {
+    Sign.requirePositive(sigma);
   }
 
   @Override

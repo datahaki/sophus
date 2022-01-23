@@ -18,22 +18,13 @@ import ch.alpine.tensor.pdf.RandomVariate;
  * geomstats
  * 
  * "Statistics on Special Manifolds"
- * by Yasuko Chikuse, 2003 */
-public class GrRandomSample implements RandomSampleInterface, Serializable {
-  /** @param n positive
-   * @param k no greater than n
-   * @return */
-  public static RandomSampleInterface of(int n, int k) {
-    return new GrRandomSample(n, k);
-  }
-
-  // ---
-  private final int n;
-  private final int k;
-
-  private GrRandomSample(int n, int k) {
-    this.n = Integers.requirePositive(n);
-    this.k = k;
+ * by Yasuko Chikuse, 2003
+ * 
+ * @param n positive
+ * @param k no greater than n */
+public record GrRandomSample(int n, int k) implements RandomSampleInterface, Serializable {
+  public GrRandomSample {
+    Integers.requirePositive(n);
     if (k < 0 || n < k)
       throw new IllegalArgumentException("k=" + k);
   }

@@ -13,12 +13,12 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.red.ArgMin;
 import ch.alpine.tensor.red.Min;
 
 /** used as logo of edelweis */

@@ -32,7 +32,7 @@ public class GrManifoldTest extends TestCase {
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
     VectorLogManifold vectorLogManifold = GrManifold.INSTANCE;
     int k = 1 + random.nextInt(n - 1);
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     int d = k * (n - k);
     Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
     Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
@@ -49,7 +49,7 @@ public class GrManifoldTest extends TestCase {
   public void testCommute() {
     int n = 5;
     int k = 2;
-    RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     // System.out.println(Pretty.of(p.dot(q).map(Round._3)));
@@ -61,8 +61,8 @@ public class GrManifoldTest extends TestCase {
 
   public void testMismatch() {
     int n = 5;
-    Tensor p1 = RandomSample.of(GrRandomSample.of(n, 1));
-    Tensor p2 = RandomSample.of(GrRandomSample.of(n, 2));
+    Tensor p1 = RandomSample.of(new GrRandomSample(n, 1));
+    Tensor p2 = RandomSample.of(new GrRandomSample(n, 2));
     Tensor q = ConstantArray.of(Pi.VALUE, n, n);
     AssertFail.of(() -> new GrExponential(p1).log(q));
     AssertFail.of(() -> new GrExponential(p2).log(q));

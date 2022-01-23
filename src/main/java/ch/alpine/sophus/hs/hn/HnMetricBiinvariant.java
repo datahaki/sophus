@@ -6,5 +6,5 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 
 public enum HnMetricBiinvariant {
   ;
-  public static final Biinvariant INSTANCE = MetricBiinvariant.of(HnVectorNorm::of);
+  public static final Biinvariant INSTANCE = new MetricBiinvariant(HnVectorNorm::of);
 }

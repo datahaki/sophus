@@ -11,7 +11,7 @@ public class GrActionTest extends TestCase {
   public void testDecomp() {
     int n = 5;
     for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = GrRandomSample.of(n, k);
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       Tensor so = GrAction.match(p, q);

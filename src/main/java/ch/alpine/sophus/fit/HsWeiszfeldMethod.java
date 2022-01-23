@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.AveragingWeights;
+import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -19,30 +20,23 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * <p>implementation based on
  * "Weiszfeld’s Method: Old and New Results"
- * by Amir Beck, Shoham Sabach */
-public class HsWeiszfeldMethod implements SpatialMedian, Serializable {
+ * by Amir Beck, Shoham Sabach
+ * 
+ * @param biinvariantMean
+ * @param weightingInterface for instance {@link InverseDistanceWeighting}
+ * @param chop */
+public record HsWeiszfeldMethod( //
+    BiinvariantMean biinvariantMean, //
+    TensorUnaryOperator weightingInterface, //
+    Chop chop) //
+    implements SpatialMedian, Serializable {
+
   private static final int MAX_ITERATIONS = 512;
-
-  /** @param biinvariantMean
-   * @param weightingInterface for instance ShepardWeighting
-   * @param chop
-   * @return */
-  public static SpatialMedian of(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) {
-    return new HsWeiszfeldMethod( //
-        Objects.requireNonNull(biinvariantMean), //
-        Objects.requireNonNull(weightingInterface), //
-        Objects.requireNonNull(chop));
-  }
-
   // ---
-  private final BiinvariantMean biinvariantMean;
-  private final TensorUnaryOperator weightingInterface;
-  private final Chop chop;
-
-  private HsWeiszfeldMethod(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) {
-    this.biinvariantMean = biinvariantMean;
-    this.weightingInterface = weightingInterface;
-    this.chop = chop;
+  public HsWeiszfeldMethod {
+    Objects.requireNonNull(biinvariantMean);
+    Objects.requireNonNull(weightingInterface);
+    Objects.requireNonNull(chop);
   }
 
   @Override // from SpatialMedian

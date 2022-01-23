@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.math.sca;
 
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -13,8 +12,9 @@ public enum SinhcInverse implements ScalarUnaryOperator {
 
   @Override
   public Scalar apply(Scalar z) {
+    Scalar value = Sinh.FUNCTION.apply(z);
     return Scalars.isZero(z) //
-        ? RealScalar.ONE
-        : z.divide(Sinh.FUNCTION.apply(z));
+        ? z.one()
+        : z.divide(value);
   }
 }

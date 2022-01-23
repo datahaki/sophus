@@ -13,6 +13,7 @@ import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class MinTriangleAreaSquaredTest extends TestCase {
@@ -37,6 +38,20 @@ public class MinTriangleAreaSquaredTest extends TestCase {
 
   public void testFive() {
     Distribution distribution = UniformDistribution.unit();
+    for (int count = 0; count < 10; ++count) {
+      Tensor polygon1 = RandomVariate.of(distribution, 5, 3);
+      Tensor polygon2 = polygon1.multiply(RealScalar.of(1000));
+      Tolerance.CHOP.requireClose( //
+          MinTriangleAreaSquared.normalize(polygon1), //
+          MinTriangleAreaSquared.normalize(polygon2));
+      Tolerance.CHOP.requireClose( //
+          MinTriangleAreaSquared.INSTANCE.origin(polygon1), //
+          MinTriangleAreaSquared.INSTANCE.origin(polygon2));
+    }
+  }
+
+  public void testFiveUnit() {
+    Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(1, "kg")));
     for (int count = 0; count < 10; ++count) {
       Tensor polygon1 = RandomVariate.of(distribution, 5, 3);
       Tensor polygon2 = polygon1.multiply(RealScalar.of(1000));
