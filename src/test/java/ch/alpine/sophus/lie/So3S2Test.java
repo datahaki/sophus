@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie;
 
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3Exponential;
 import ch.alpine.tensor.Tensor;

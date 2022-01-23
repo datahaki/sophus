@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie;
+package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
 import java.util.function.BinaryOperator;

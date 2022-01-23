@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.he;
 
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.lie.HsAlgebra;
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;

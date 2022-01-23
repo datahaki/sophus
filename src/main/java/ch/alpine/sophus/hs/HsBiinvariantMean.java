@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.lie.HsAlgebra;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;

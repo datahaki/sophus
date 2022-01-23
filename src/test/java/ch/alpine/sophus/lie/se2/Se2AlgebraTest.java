@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
-import ch.alpine.sophus.lie.HsAlgebra;
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.Exponential;

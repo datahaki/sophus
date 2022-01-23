@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
-import ch.alpine.sophus.lie.HsAlgebra;
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import junit.framework.TestCase;
 

@@ -1,11 +1,11 @@
 // code by jph
-package ch.alpine.sophus.lie;
+package ch.alpine.sophus.hs;
 
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.hs.HsAlgebra.Decomp;
 import ch.alpine.sophus.hs.sn.SnExponential;
-import ch.alpine.sophus.lie.HsAlgebra.Decomp;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
