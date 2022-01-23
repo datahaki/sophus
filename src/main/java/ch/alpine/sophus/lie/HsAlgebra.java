@@ -61,7 +61,7 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
    * @return m for which there is a h with bch(g, h) == [m 0] */
   @Override // from HomogeneousSpace
   public Tensor projection(Tensor g) {
-    return new Decomp(g).m;
+    return new Decomp(HsPair.seed(g)).m;
   }
 
   /** @param m
@@ -80,20 +80,16 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
     /** vector of length dim_g with first dim_m entries zero */
     public final Tensor h;
 
-    public Decomp(Tensor g) {
-      Tensor mi = VectorQ.requireLength(g, dim_g); // residual
-      Tensor hi = Array.zeros(dim_g); // initial h estimate
+    public Decomp(HsPair hsPair) {
       for (int count = 0; count < MAX_ITERATIONS; ++count) {
-        if (Tolerance.CHOP.allZero(mi.extract(dim_m, dim_g))) {
-          m = mi.extract(0, dim_m);
-          h = hi;
+        if (Tolerance.CHOP.allZero(hsPair.g().extract(dim_m, dim_g))) {
+          h = hsPair.h();
+          m = hsPair.g().extract(0, dim_m);
           return;
         }
-        Tensor hd = approxHInv(mi); // delta
-        mi = bch.apply(mi, hd); // towards bch(lift(m), -h) == g
-        hi = bch.apply(hi, hd); // towards bch(g, h) == lift(m)
+        hsPair = hsPair.move(bch, approxHInv(hsPair.g()));
       }
-      throw TensorRuntimeException.of(g);
+      throw new IllegalStateException();
     }
 
     /** @param g

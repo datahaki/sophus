@@ -35,7 +35,7 @@ public class HsBiinvariantMeanTest extends TestCase {
       Tensor pointsS2 = Tensor.of(sequence_m.stream().map(r -> r.copy().append(RealScalar.ZERO)).map(snExponential::exp));
       Tensor meanS2 = SnBiinvariantMean.INSTANCE.mean(pointsS2, weights);
       Tensor res = snExponential.log(meanS2).extract(0, 2);
-      Chop._08.requireClose(m_avg, res);
+      Chop._11.requireClose(m_avg, res);
     }
   }
 }

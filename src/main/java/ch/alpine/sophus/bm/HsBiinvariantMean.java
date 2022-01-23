@@ -36,12 +36,19 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    Tensor mean = Array.zeros(hsAlgebra.dimM());
+    Tensor meaninv = Array.zeros(hsAlgebra.dimM());
+    meaninv = meaninv(sequence, weights, meaninv);
+    return meaninv(sequence, weights, meaninv).negate();
+  }
+
+  private Tensor meaninv(Tensor sequence, Tensor weights, Tensor meaninv) {
+    Tensor lift = hsAlgebra.lift(meaninv);
+    sequence = Tensor.of(sequence.stream().map(point -> hsAlgebra.action(lift, point)));
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
       Tensor defect = RnBiinvariantMean.INSTANCE.mean(sequence, weights).negate();
       if (chop.isZero(Vector2Norm.of(defect)))
-        return mean.negate();
-      mean = hsAlgebra.action(hsAlgebra.lift(defect), mean);
+        return meaninv;
+      meaninv = hsAlgebra.action(hsAlgebra.lift(defect), meaninv);
       sequence = Tensor.of(sequence.stream().map(point -> hsAlgebra.action(hsAlgebra.lift(defect), point)));
     }
     throw TensorRuntimeException.of(sequence, weights);

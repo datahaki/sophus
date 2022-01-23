@@ -175,7 +175,7 @@ public class HsAlgebraTest extends TestCase {
 
   public void testProj() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random();
+    Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
       Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
@@ -192,9 +192,12 @@ public class HsAlgebraTest extends TestCase {
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
       Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
-      Decomp decomp = hsAlgebra.new Decomp(g);
-      Tolerance.CHOP.requireClose(bch.apply(g, decomp.h), hsAlgebra.lift(decomp.m));
-      Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp.m), decomp.h.negate()));
+      Decomp decomp1 = hsAlgebra.new Decomp(HsPair.seed(g));
+      Tolerance.CHOP.requireClose(bch.apply(g, decomp1.h), hsAlgebra.lift(decomp1.m));
+      Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp1.m), decomp1.h.negate()));
+      Decomp decomp2 = hsAlgebra.new Decomp(new HsPair(decomp1.h, bch.apply(g, decomp1.h)));
+      Tolerance.CHOP.requireClose(bch.apply(g, decomp2.h), hsAlgebra.lift(decomp2.m));
+      Tolerance.CHOP.requireClose(g, bch.apply(hsAlgebra.lift(decomp2.m), decomp2.h.negate()));
     }
   }
 
@@ -217,7 +220,7 @@ public class HsAlgebraTest extends TestCase {
       Tensor ml = hsAlgebra.lift(m);
       Tensor h = Join.of(m.map(Scalar::zero), RandomVariate.of(distribution, random, hsAlgebra.dimH()));
       Tensor g = bch.apply(ml, h.negate()); // this is the equation
-      Decomp decomp = hsAlgebra.new Decomp(g);
+      Decomp decomp = hsAlgebra.new Decomp(HsPair.seed(g));
       Tolerance.CHOP.requireClose(m, decomp.m);
       Tolerance.CHOP.requireClose(h, decomp.h);
     }
