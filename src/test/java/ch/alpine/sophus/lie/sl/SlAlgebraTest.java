@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.sl;
 
 import ch.alpine.sophus.hs.HsAlgebra;
+import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalars;
@@ -12,13 +13,13 @@ import junit.framework.TestCase;
 
 public class SlAlgebraTest extends TestCase {
   public void testSl2Match() {
-    SlAlgebra slAlgebra = new SlAlgebra(2);
+    LieAlgebra slAlgebra = SlAlgebra.of(2);
     assertEquals(slAlgebra.basis(), Sl2Algebra.INSTANCE.basis());
     assertEquals(slAlgebra.ad(), Sl2Algebra.INSTANCE.ad());
   }
 
   public void testSl3Klling() {
-    SlAlgebra slAlgebra = new SlAlgebra(3);
+    LieAlgebra slAlgebra = SlAlgebra.of(3);
     Tensor form = KillingForm.of(slAlgebra.ad());
     assertTrue(Scalars.nonZero(Det.of(form)));
     // System.out.println(Det.of(form));

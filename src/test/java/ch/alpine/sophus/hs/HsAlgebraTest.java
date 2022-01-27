@@ -159,7 +159,7 @@ public class HsAlgebraTest extends TestCase {
       new HsAlgebra(new HeAlgebra(1).ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(2).ad(), 3, 6), //
       new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6), //
-      new HsAlgebra(new SlAlgebra(3).ad(), 6, 6) };
+      new HsAlgebra(SlAlgebra.of(3).ad(), 6, 6) };
 
   public void testAction() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
@@ -233,7 +233,7 @@ public class HsAlgebraTest extends TestCase {
   }
 
   public void testHTrivial() {
-    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Distribution distribution = UniformDistribution.of(-0.5, 0.5);
     Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       if (hsAlgebra.isHTrivial()) {
@@ -253,8 +253,9 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
-  public void testTrivial() {
-    for (LieAlgebra lieAlgebra : new LieAlgebra[] { Se2Algebra.INSTANCE, So3Algebra.INSTANCE, new HeAlgebra(2) }) {
+  public void testLieAlgebra() {
+    for (LieAlgebra lieAlgebra : new LieAlgebra[] { // 
+        Se2Algebra.INSTANCE, So3Algebra.INSTANCE, new HeAlgebra(2), SlAlgebra.of(3) }) {
       Tensor ad = lieAlgebra.ad();
       HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
       assertFalse(hsAlgebra.isSymmetric());
