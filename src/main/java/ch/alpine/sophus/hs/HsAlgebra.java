@@ -51,6 +51,10 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
     consistencyCheck();
   }
 
+  public Tensor ad() {
+    return ad;
+  }
+
   /** @param g vector with length dim_g
    * @param m vector with length dim_m
    * @return projection( bch(g, [m 0]) ) */
@@ -144,6 +148,15 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
   /** @return whether [m, m] subset h, i.e. m cap [m, m] = {0} */
   public boolean isSymmetric() {
     return ad.block(Arrays.asList(0, 0, 0), Arrays.asList(dim_m, dim_m, dim_m)) //
+        .flatten(-1) //
+        .map(Scalar.class::cast) //
+        .allMatch(Scalars::isZero);
+  }
+
+  /** @return whether [m, g] subset m, in which case finding the element h that
+   * projects g to m is trivial */
+  public boolean isHTrivial() {
+    return ad.block(Arrays.asList(dim_m, 0, 0), Arrays.asList(dim_h, dim_g, dim_m)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero);

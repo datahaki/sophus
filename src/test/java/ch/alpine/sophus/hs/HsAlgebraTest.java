@@ -3,14 +3,17 @@ package ch.alpine.sophus.hs;
 
 import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.stream.IntStream;
 
 import ch.alpine.sophus.hs.HsAlgebra.Decomp;
 import ch.alpine.sophus.hs.sn.SnExponential;
+import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
+import ch.alpine.sophus.lie.sl.SlAlgebra;
 import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
@@ -22,6 +25,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.Tolerance;
@@ -30,6 +34,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.N;
 import junit.framework.TestCase;
 
 public class HsAlgebraTest extends TestCase {
@@ -153,7 +158,8 @@ public class HsAlgebraTest extends TestCase {
       new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(1).ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(2).ad(), 3, 6), //
-      new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6) };
+      new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6), //
+      new HsAlgebra(new SlAlgebra(3).ad(), 6, 6) };
 
   public void testAction() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
@@ -223,6 +229,36 @@ public class HsAlgebraTest extends TestCase {
       Decomp decomp = hsAlgebra.new Decomp(HsPair.seed(g));
       Tolerance.CHOP.requireClose(m, decomp.m);
       Tolerance.CHOP.requireClose(h, decomp.h);
+    }
+  }
+
+  public void testHTrivial() {
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Random random = new Random(1);
+    for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
+      if (hsAlgebra.isHTrivial()) {
+        // System.out.println("HERE");
+        // System.out.println(hsAlgebra.ad());
+        Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+        Tensor ghinv = g.negate();
+        IntStream.range(0, hsAlgebra.dimM()).forEach(i -> ghinv.set(Scalar::zero, i));
+        BakerCampbellHausdorff bch = //
+            (BakerCampbellHausdorff) BakerCampbellHausdorff.of(N.DOUBLE.of(hsAlgebra.ad()), 8);
+        Tensor prj = bch.apply(g, ghinv);
+        Tolerance.CHOP.requireAllZero(prj.extract(hsAlgebra.dimM(), hsAlgebra.dimG()));
+        // System.out.println(prj);
+        // Tensor res = bch.series(g, ghinv);
+        // System.out.println(Pretty.of(res));
+      }
+    }
+  }
+
+  public void testTrivial() {
+    for (LieAlgebra lieAlgebra : new LieAlgebra[] { Se2Algebra.INSTANCE, So3Algebra.INSTANCE, new HeAlgebra(2) }) {
+      Tensor ad = lieAlgebra.ad();
+      HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
+      assertFalse(hsAlgebra.isSymmetric());
+      assertTrue(hsAlgebra.isReductive());
     }
   }
 }
