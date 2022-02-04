@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.se2;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.pdf.ExponentialDistribution;
+import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import junit.framework.TestCase;
 
 public class Se2RandomSampleTest extends TestCase {

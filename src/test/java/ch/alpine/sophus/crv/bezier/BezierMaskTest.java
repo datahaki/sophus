@@ -17,9 +17,9 @@ import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.itp.BernsteinBasis;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.pdf.BinomialDistribution;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.PDF;
+import ch.alpine.tensor.pdf.d.BinomialDistribution;
 import ch.alpine.tensor.red.Total;
 import junit.framework.TestCase;
 

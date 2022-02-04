@@ -2,8 +2,8 @@
 package ch.alpine.sophus.hs.sn;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.pdf.CauchyDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.CauchyDistribution;
 import junit.framework.TestCase;
 
 public class SnEulerAngleTest extends TestCase {

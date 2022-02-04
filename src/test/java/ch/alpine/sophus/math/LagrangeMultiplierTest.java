@@ -8,10 +8,10 @@ import ch.alpine.tensor.mat.HermitianMatrixQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.ExponentialDistribution;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.TrapezoidalDistribution;
+import ch.alpine.tensor.pdf.c.ExponentialDistribution;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 

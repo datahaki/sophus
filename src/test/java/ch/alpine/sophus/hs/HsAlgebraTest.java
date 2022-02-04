@@ -32,9 +32,9 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.N;
 import junit.framework.TestCase;
 
 public class HsAlgebraTest extends TestCase {
@@ -233,28 +233,26 @@ public class HsAlgebraTest extends TestCase {
   }
 
   public void testHTrivial() {
-    Distribution distribution = UniformDistribution.of(-0.5, 0.5);
+    Distribution distribution = DiscreteUniformDistribution.of(-100, 100);
     Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       if (hsAlgebra.isHTrivial()) {
         // System.out.println("HERE");
         // System.out.println(hsAlgebra.ad());
-        Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
+        Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG()).divide(RealScalar.of(200));
         Tensor ghinv = g.negate();
         IntStream.range(0, hsAlgebra.dimM()).forEach(i -> ghinv.set(Scalar::zero, i));
         BakerCampbellHausdorff bch = //
-            (BakerCampbellHausdorff) BakerCampbellHausdorff.of(N.DOUBLE.of(hsAlgebra.ad()), 8);
+            (BakerCampbellHausdorff) BakerCampbellHausdorff.of(hsAlgebra.ad(), 8);
         Tensor prj = bch.apply(g, ghinv);
-        Tolerance.CHOP.requireAllZero(prj.extract(hsAlgebra.dimM(), hsAlgebra.dimG()));
-        // System.out.println(prj);
-        // Tensor res = bch.series(g, ghinv);
-        // System.out.println(Pretty.of(res));
+        Tensor rem = prj.extract(hsAlgebra.dimM(), hsAlgebra.dimG());
+        assertEquals(rem, Array.zeros(rem.length()));
       }
     }
   }
 
   public void testLieAlgebra() {
-    for (LieAlgebra lieAlgebra : new LieAlgebra[] { // 
+    for (LieAlgebra lieAlgebra : new LieAlgebra[] { //
         Se2Algebra.INSTANCE, So3Algebra.INSTANCE, new HeAlgebra(2), SlAlgebra.of(3) }) {
       Tensor ad = lieAlgebra.ad();
       HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);

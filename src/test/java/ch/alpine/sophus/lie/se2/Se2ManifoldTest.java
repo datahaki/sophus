@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
-import ch.alpine.tensor.pdf.LogNormalDistribution;
+import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 import junit.framework.TestCase;
 
 public class Se2ManifoldTest extends TestCase {

@@ -11,14 +11,12 @@ import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
 public class HsBiinvariantMean implements BiinvariantMean, Serializable {
-  private static final int MAX_ITERATIONS_OUTER = 10;
-  private static final int MAX_ITERATIONS_INNER = 100;
+  private static final int MAX_ITERATIONS = 15;
 
-  /** @param bch non-null
+  /** @param hsAlgebra non-null
    * @param chop non-null
    * @return */
   public static BiinvariantMean of(HsAlgebra hsAlgebra, Chop chop) {
@@ -46,7 +44,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
   public Tensor mean(final Tensor sequence, Tensor weights) {
     Tensor _sequence = sequence;
     Tensor prev = Array.zeros(hsAlgebra.dimM());
-    for (int count = 0; count < MAX_ITERATIONS_OUTER; ++count) {
+    for (int count = 0; count < MAX_ITERATIONS; ++count) {
       Tensor next = mean_negate(_sequence, weights, prev);
       if (chop.isClose(prev, next))
         return next.negate();
@@ -57,9 +55,9 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
   }
 
   private Tensor mean_negate(Tensor sequence, Tensor weights, Tensor mean_negate) {
-    for (int count = 0; count < MAX_ITERATIONS_INNER; ++count) {
+    for (int count = 0; count < MAX_ITERATIONS; ++count) {
       Tensor defect = RnBiinvariantMean.INSTANCE.mean(sequence, weights).negate();
-      if (chop.isZero(Vector2Norm.of(defect)))
+      if (chop.allZero(defect))
         return mean_negate;
       TensorUnaryOperator tuo = hsAlgebra.action(hsAlgebra.lift(defect));
       sequence = Tensor.of(sequence.stream().map(tuo));

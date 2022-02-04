@@ -23,7 +23,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -33,6 +33,7 @@ public class HsBiinvariantMeanTest extends TestCase {
     Distribution distributionW = UniformDistribution.of(0.2, 1);
     LieAlgebra lieAlgebra = So3Algebra.INSTANCE;
     HsAlgebra hsAlgebra = new HsAlgebra(lieAlgebra.ad(), 2, 8);
+    assertFalse(hsAlgebra.isHTrivial());
     Random random = new Random(1);
     for (int n = 3; n < 7; ++n) {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distributionW, random, n));

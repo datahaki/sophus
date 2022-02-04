@@ -6,8 +6,8 @@ import java.util.function.BinaryOperator;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.MatrixAlgebra;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import junit.framework.TestCase;
 
 public class RnAlgebraTest extends TestCase {

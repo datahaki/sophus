@@ -9,8 +9,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 /** uniform distribution on Gr(n, k)
  * 

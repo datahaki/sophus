@@ -12,11 +12,10 @@ import ch.alpine.tensor.alg.Differences;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.num.Polynomial;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -63,9 +62,8 @@ public class RnHermite3SubdivisionTest extends TestCase {
     HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of( //
         RationalScalar.of(+3, 157), //
         RationalScalar.of(-5, 43));
-    Tensor coeffs = Tensors.vector(2, -7, 4, -3);
-    ScalarUnaryOperator f0 = Polynomial.of(coeffs);
-    ScalarUnaryOperator f1 = Polynomial.derivative(coeffs);
+    Polynomial f0 = Polynomial.of(Tensors.vector(2, -7, 4, -3));
+    Polynomial f1 = f0.derivative();
     Tensor domain = Range.of(0, 10);
     Tensor control = Transpose.of(Tensors.of(domain.map(f0), domain.map(f1)));
     TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);

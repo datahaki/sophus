@@ -6,8 +6,8 @@ import java.io.IOException;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.ex.MatrixExp;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import junit.framework.TestCase;
 
 public class TSopqProjectTest extends TestCase {

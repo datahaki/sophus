@@ -18,8 +18,8 @@ import ch.alpine.tensor.io.Put;
 import ch.alpine.tensor.nrm.Normalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Sqrt;
 

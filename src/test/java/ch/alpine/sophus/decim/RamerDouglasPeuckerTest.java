@@ -11,8 +11,8 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import junit.framework.TestCase;
 
