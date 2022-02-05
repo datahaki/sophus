@@ -24,6 +24,7 @@ public class SoAlgebra implements LieAlgebra, Serializable {
     return CACHE.apply(n);
   }
 
+  // ---
   private final int n;
   private final MatrixAlgebra matrixAlgebra;
 

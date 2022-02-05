@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
+import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.Array;
@@ -42,6 +43,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override // from BiinvariantMean
   public Tensor mean(final Tensor sequence, Tensor weights) {
+    AffineQ.require(weights);
     Tensor _sequence = sequence;
     Tensor prev = Array.zeros(hsAlgebra.dimM());
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
