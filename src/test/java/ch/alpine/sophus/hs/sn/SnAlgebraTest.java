@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import java.util.Random;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.hs.HsBiinvariantMean;
@@ -20,17 +22,24 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import junit.framework.TestCase;
 
 public class SnAlgebraTest extends TestCase {
-  public void testSimple() {
-    Distribution distribution = UniformDistribution.of(-0.2, 1);
+  public void testProperty() {
     for (int d = 2; d < 5; ++d) {
       HsAlgebra hsAlgebra = SnAlgebra.of(d);
       assertFalse(hsAlgebra.isHTrivial());
       assertTrue(hsAlgebra.isReductive());
       assertTrue(hsAlgebra.isSymmetric());
+    }
+  }
+
+  public void testBiinvariantMean() {
+    Random random = new Random(3);
+    Distribution distribution = UniformDistribution.of(-0.2, 1);
+    for (int d = 2; d < 5; ++d) {
+      HsAlgebra hsAlgebra = SnAlgebra.of(d);
       RandomSampleInterface randomSampleInterface = BallRandomSample.of(Array.zeros(d), RealScalar.of(0.05));
       for (int n = d + 0; n < d + 4; ++n) {
-        Tensor sequence = RandomSample.of(randomSampleInterface, n);
-        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
+        Tensor sequence = RandomSample.of(randomSampleInterface, random, n);
+        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, n));
         BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
         final Tensor hsmean = biinvariantMean.mean(sequence, weights);
         SnExponential snExponential = new SnExponential(UnitVector.of(d + 1, 0));

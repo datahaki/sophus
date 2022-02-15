@@ -24,7 +24,9 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * by Jan Hakenberg, 2020
  * 
  * @see LeveragesDistanceVector
- * @see LeveragesCoordinate */
+ * @see LeveragesCoordinate
+ * 
+ * @param for instance InversePowerVariogram */
 public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis, Serializable {
   public LeveragesGenesis {
     Objects.requireNonNull(variogram);
