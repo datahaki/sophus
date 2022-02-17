@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.dv.LeveragesDistanceVector;
 import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
@@ -28,6 +29,8 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * 
  * @param for instance InversePowerVariogram */
 public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis, Serializable {
+  public static final Genesis DEFAULT = new LeveragesGenesis(InversePowerVariogram.of(2));
+
   public LeveragesGenesis {
     Objects.requireNonNull(variogram);
   }

@@ -1,11 +1,12 @@
 // code by jph
-package ch.alpine.sophus.lie.so;
+package ch.alpine.sophus.lie.se;
 
 import java.io.Serializable;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.lie.so3.So3Algebra;
+import ch.alpine.sophus.lie.se3.Se3Algebra;
+import ch.alpine.sophus.lie.so.SoAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
@@ -14,9 +15,11 @@ import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 
 /** Careful:
- * does not match {@link So3Algebra} in the special case when n == 3 */
-public class SoAlgebra implements LieAlgebra, Serializable {
-  private static final Cache<Integer, LieAlgebra> CACHE = Cache.of(SoAlgebra::new, 8);
+ * does not match {@link Se3Algebra} in the special case when n == 3
+ * 
+ * @see SoAlgebra */
+public class SeAlgebra implements LieAlgebra, Serializable {
+  private static final Cache<Integer, LieAlgebra> CACHE = Cache.of(SeAlgebra::new, 8);
 
   /** @param n greater or equals to 2
    * @return */
@@ -28,9 +31,7 @@ public class SoAlgebra implements LieAlgebra, Serializable {
   private final int n;
   private final MatrixAlgebra matrixAlgebra;
 
-  private SoAlgebra(int n) {
-    if (n < 2)
-      throw new IllegalArgumentException("n=" + n);
+  private SeAlgebra(int n) {
     this.n = n;
     matrixAlgebra = new MatrixAlgebra(basis());
   }
@@ -47,8 +48,12 @@ public class SoAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public Tensor basis() {
-    Tensor tensor = Array.sparse(n * (n - 1) / 2, n, n);
+    Tensor tensor = Array.sparse(n + n * (n - 1) / 2, n + 1, n + 1);
     int index = 0;
+    for (int i = 0; i < n; ++i) {
+      tensor.set(RealScalar.ONE, index, i, n);
+      ++index;
+    }
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
         tensor.set(RealScalar.ONE, index, i, j);

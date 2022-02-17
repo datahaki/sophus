@@ -221,7 +221,7 @@ public class HsAlgebraTest extends TestCase {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
-      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(8);
+      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(10);
       Tensor m = RandomVariate.of(distribution, random, hsAlgebra.dimM());
       Tensor ml = hsAlgebra.lift(m);
       Tensor h = Join.of(m.map(Scalar::zero), RandomVariate.of(distribution, random, hsAlgebra.dimH()));

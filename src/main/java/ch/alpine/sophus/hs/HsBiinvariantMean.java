@@ -11,7 +11,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 
 public class HsBiinvariantMean implements BiinvariantMean, Serializable {
@@ -29,7 +28,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
   /** @param hsAlgebra non-null
    * @return */
   public static BiinvariantMean of(HsAlgebra hsAlgebra) {
-    return of(hsAlgebra, Tolerance.CHOP);
+    return of(hsAlgebra, Chop._14);
   }
 
   // ---
