@@ -221,7 +221,7 @@ public class HsAlgebraTest extends TestCase {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
-      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
+      BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(8);
       Tensor m = RandomVariate.of(distribution, random, hsAlgebra.dimM());
       Tensor ml = hsAlgebra.lift(m);
       Tensor h = Join.of(m.map(Scalar::zero), RandomVariate.of(distribution, random, hsAlgebra.dimH()));
@@ -242,8 +242,7 @@ public class HsAlgebraTest extends TestCase {
         Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG()).divide(RealScalar.of(200));
         Tensor ghinv = g.negate();
         IntStream.range(0, hsAlgebra.dimM()).forEach(i -> ghinv.set(Scalar::zero, i));
-        BakerCampbellHausdorff bch = //
-            (BakerCampbellHausdorff) BakerCampbellHausdorff.of(hsAlgebra.ad(), 8);
+        BinaryOperator<Tensor> bch = BakerCampbellHausdorff.of(hsAlgebra.ad(), 8);
         Tensor prj = bch.apply(g, ghinv);
         Tensor rem = prj.extract(hsAlgebra.dimM(), hsAlgebra.dimG());
         assertEquals(rem, Array.zeros(rem.length()));

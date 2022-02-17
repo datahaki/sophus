@@ -6,15 +6,19 @@ import java.util.function.BinaryOperator;
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
+import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.lie.ad.KillingForm;
 import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -25,8 +29,9 @@ public class Sl2AlgebraTest extends TestCase {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
   public void testBasisA() {
-    Tensor x = RandomVariate.of(distribution, 3);
-    Tensor y = RandomVariate.of(distribution, 3);
+    Distribution local = UniformDistribution.of(-0.3, 0.3);
+    Tensor x = RandomVariate.of(local, 3);
+    Tensor y = RandomVariate.of(local, 3);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Sl2Algebra.INSTANCE.basis());
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     // System.out.println(Normal.of(matrixAlgebra.ad()));
@@ -40,11 +45,18 @@ public class Sl2AlgebraTest extends TestCase {
     Tensor gZ = Sl2Exponential.INSTANCE.log(gX.dot(gY));
     Tensor az = matrixAlgebra.toVector(gZ);
     LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(matrixAlgebra.ad());
-    Tensor rs = lieAlgebraImpl.bch(6).apply(x, y);
-    Chop._06.requireClose(az, rs);
+    Tensor rs6 = lieAlgebraImpl.bch(6).apply(x, y);
+    Tensor rs8 = lieAlgebraImpl.bch(8).apply(x, y);
+    Tensor rsA = lieAlgebraImpl.bch(10).apply(x, y);
+    Chop._06.requireClose(az, rs6);
     HsAlgebra hsAlgebra = new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6);
     assertTrue(hsAlgebra.isReductive());
     assertTrue(hsAlgebra.isSymmetric());
+    Scalar err1 = Vector2Norm.between(az, rs6);
+    Scalar err2 = Vector2Norm.between(az, rs8);
+    Scalar err3 = Vector2Norm.between(az, rsA);
+    Tensor improve = Tensors.of(err3, err2, err1);
+    OrderedQ.require(improve);
   }
 
   public void testH() {

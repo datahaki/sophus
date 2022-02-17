@@ -25,13 +25,14 @@ public class BchBarycentricCoordinateTest extends TestCase {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Random random = new Random(1);
     BinaryOperator<Tensor> bch = Se2Algebra.INSTANCE.bch(6);
+    // System.out.println(bch.getClass().getSimpleName());
     Tensor ad = Se2Algebra.INSTANCE.ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2.5);
     for (int n = 4; n < 7; ++n) {
       Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       Tensor x = RandomVariate.of(distribution, random, 3);
-      BarycentricCoordinate barycentricCoordinate = // 
+      BarycentricCoordinate barycentricCoordinate = //
           new BchBarycentricCoordinate(bch, new LeveragesGenesis(variogram));
       Tensor weights = barycentricCoordinate.weights(sequence, x);
       Tensor mean = HsBiinvariantMean.of(hsAlgebra).mean(sequence, weights);

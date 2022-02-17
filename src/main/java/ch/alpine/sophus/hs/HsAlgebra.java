@@ -24,7 +24,7 @@ import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.NilpotentAlgebraQ;
-import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
@@ -94,7 +94,7 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
 
     public Decomp(HsPair hsPair) {
       for (int count = 0; count < MAX_ITERATIONS; ++count) {
-        if (Tolerance.CHOP.allZero(hsPair.g().extract(dim_m, dim_g))) {
+        if (Chop._14.allZero(hsPair.g().extract(dim_m, dim_g))) {
           m = hsPair.g().extract(0, dim_m);
           h = hsPair.h();
           return;
