@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.hs.HsAlgebra;
-import ch.alpine.sophus.hs.HsBiinvariantMean;
+import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;

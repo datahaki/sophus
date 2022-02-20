@@ -1,11 +1,12 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.hs.ad;
 
 import java.util.Random;
 import java.util.function.BinaryOperator;
 import java.util.stream.IntStream;
 
-import ch.alpine.sophus.hs.HsAlgebra.Decomp;
+import ch.alpine.sophus.hs.HsPair;
+import ch.alpine.sophus.hs.ad.HsAlgebra.Decomp;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;

@@ -3,9 +3,9 @@ package ch.alpine.sophus.lie.se;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
-import ch.alpine.sophus.hs.HsAlgebra;
-import ch.alpine.sophus.hs.HsBarycentricCoordinate;
-import ch.alpine.sophus.hs.HsBiinvariantMean;
+import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.hs.ad.HsBarycentricCoordinate;
+import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;

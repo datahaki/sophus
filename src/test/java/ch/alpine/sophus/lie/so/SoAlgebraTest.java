@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import ch.alpine.sophus.hs.HsAlgebra;
+import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.tensor.Tensor;
 import junit.framework.TestCase;

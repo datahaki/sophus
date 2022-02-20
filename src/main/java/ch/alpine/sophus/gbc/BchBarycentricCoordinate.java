@@ -4,7 +4,7 @@ package ch.alpine.sophus.gbc;
 import java.io.Serializable;
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.hs.HsBarycentricCoordinate;
+import ch.alpine.sophus.hs.ad.HsBarycentricCoordinate;
 import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Tensor;
 

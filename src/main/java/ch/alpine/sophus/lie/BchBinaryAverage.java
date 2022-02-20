@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.lie;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,16 +9,16 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BinaryAverage;
 
-public class HsBinaryAverage implements BinaryAverage, Serializable {
+public class BchBinaryAverage implements BinaryAverage, Serializable {
   /** @param bch non-null */
   public static BinaryAverage of(BinaryOperator<Tensor> bch) {
-    return new HsBinaryAverage(Objects.requireNonNull(bch));
+    return new BchBinaryAverage(Objects.requireNonNull(bch));
   }
 
   // ---
   private final BinaryOperator<Tensor> bch;
 
-  private HsBinaryAverage(BinaryOperator<Tensor> bch) {
+  private BchBinaryAverage(BinaryOperator<Tensor> bch) {
     this.bch = bch;
   }
 

@@ -37,9 +37,8 @@ public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis
 
   @Override // from Genesis
   public Tensor origin(Tensor levers) {
-    // Mahalanobis is faster than InfluenceMatrix[...] for this computation
     InfluenceMatrix influenceMatrix = new Mahalanobis(levers);
     Tensor vector = NormalizeTotal.FUNCTION.apply(influenceMatrix.leverages_sqrt().map(variogram));
-    return NormalizeTotal.FUNCTION.apply(influenceMatrix.kernel(vector));
+    return StaticHelper.barycentric(influenceMatrix, vector);
   }
 }

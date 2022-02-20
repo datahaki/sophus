@@ -11,10 +11,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020 */
 public enum LeveragesCoordinate {
   ;
-  /** computes leverage coordinates via Mahalanobis distance which requires the computation of
-   * two pseudo inverses but smaller matrix dot products then when building the influence matrix.
-   * 
-   * @param vectorLogManifold
+  /** @param vectorLogManifold
    * @param variogram for instance InversePowerVariogram.of(2)
    * @return */
   public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {

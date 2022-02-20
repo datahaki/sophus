@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.so3;
 
 import java.util.Random;
 
-import ch.alpine.sophus.hs.HsAlgebra;
+import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

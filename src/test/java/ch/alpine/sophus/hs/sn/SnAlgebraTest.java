@@ -4,8 +4,8 @@ package ch.alpine.sophus.hs.sn;
 import java.util.Random;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.HsAlgebra;
-import ch.alpine.sophus.hs.HsBiinvariantMean;
+import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.math.sample.BallRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;

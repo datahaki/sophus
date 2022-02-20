@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.hs.ad;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.HsPair;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.tensor.Scalar;
