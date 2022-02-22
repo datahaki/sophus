@@ -11,7 +11,8 @@ import ch.alpine.tensor.Tensor;
 /** @see BchBarycentricCoordinate
  * 
  * @param hsAlgebra
- * @param genesis for instance new LeveragesGenesis(InversePowerVariogram.of(2)) */
+ * @param genesis for instance new LeveragesGenesis(InversePowerVariogram.of(2)), i.e.
+ * LeveragesGenesis.DEFAULT */
 public record HsBarycentricCoordinate(HsAlgebra hsAlgebra, Genesis genesis) //
     implements BarycentricCoordinate, Serializable {
   @Override // from BarycentricCoordinate
