@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.so;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.mat.Orthogonalize;
+import ch.alpine.tensor.mat.pd.Orthogonalize;
 
 /** created and tested by jph, 2021.FEB.20
  * 

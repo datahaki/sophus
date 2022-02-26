@@ -73,7 +73,7 @@ public class GrMetricTest extends TestCase {
     Tensor q = RandomSample.of(randomSampleInterface);
     Scalar d1 = GrMetric.INSTANCE.distance(p, q);
     Scalar d2 = FrobeniusNorm.of(new GrExponential(p).log(q));
-    Tolerance.CHOP.requireClose(d1, d2);
+    Chop._08.requireClose(d1, d2);
   }
 
   public void testAntipodal() {

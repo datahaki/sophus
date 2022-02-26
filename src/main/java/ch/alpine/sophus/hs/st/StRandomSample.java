@@ -8,7 +8,7 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
-import ch.alpine.tensor.mat.Orthogonalize;
+import ch.alpine.tensor.mat.pd.Orthogonalize;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 

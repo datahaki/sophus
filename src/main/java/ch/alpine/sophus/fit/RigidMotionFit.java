@@ -6,7 +6,7 @@ import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.Orthogonalize;
+import ch.alpine.tensor.mat.pd.Orthogonalize;
 import ch.alpine.tensor.red.Times;
 
 /** function computes the best-fitting rigid transformation that aligns
@@ -17,6 +17,10 @@ import ch.alpine.tensor.red.Times;
  * Olga Sorkine-Hornung and Michael Rabinovich, 2016
  * 
  * rotation dot point plus translation == target
+ * 
+ * Reference:
+ * "The Orthogonal Procrustes Problem"
+ * by Gilbert Strang, p.257
  * 
  * @param rotation orthogonal matrix with dimension d x d and determinant +1
  * @param translation vector of length d */
