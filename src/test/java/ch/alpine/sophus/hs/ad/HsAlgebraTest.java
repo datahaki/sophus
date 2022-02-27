@@ -220,7 +220,7 @@ public class HsAlgebraTest extends TestCase {
 
   public void testDecompCheat() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random();
+    Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(10);
       Tensor m = RandomVariate.of(distribution, random, hsAlgebra.dimM());
@@ -228,8 +228,8 @@ public class HsAlgebraTest extends TestCase {
       Tensor h = Join.of(m.map(Scalar::zero), RandomVariate.of(distribution, random, hsAlgebra.dimH()));
       Tensor g = bch.apply(ml, h.negate()); // this is the equation
       Decomp decomp = hsAlgebra.new Decomp(HsPair.seed(g));
-      Tolerance.CHOP.requireClose(m, decomp.m);
-      Tolerance.CHOP.requireClose(h, decomp.h);
+      Chop._10.requireClose(m, decomp.m);
+      Chop._10.requireClose(h, decomp.h);
     }
   }
 

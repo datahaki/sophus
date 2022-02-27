@@ -83,7 +83,7 @@ public class Sl2AlgebraTest extends TestCase {
     Tensor rotG1 = MatrixExp.of(matrixAlgebra.toMatrix(g1));
     Tensor rotG2 = MatrixExp.of(matrixAlgebra.toMatrix(g2));
     Tensor log = matrixAlgebra.toVector(MatrixLog.of(rotG1.dot(rotG2)));
-    Tolerance.CHOP.requireClose(expect, log);
+    Chop._10.requireClose(expect, log);
   }
 
   public void testHeOnRn() {
