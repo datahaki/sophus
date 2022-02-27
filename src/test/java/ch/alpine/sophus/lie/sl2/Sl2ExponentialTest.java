@@ -12,8 +12,8 @@ import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 

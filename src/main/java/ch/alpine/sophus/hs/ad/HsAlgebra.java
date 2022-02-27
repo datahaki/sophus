@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.hs.ad;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.HsPair;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.tensor.Scalar;
@@ -24,7 +26,7 @@ import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
 import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.ad.NilpotentAlgebraQ;
-import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
@@ -49,6 +51,10 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
     bch = BakerCampbellHausdorff.of(isNilpotent ? ad : N.DOUBLE.of(ad), degree);
     // ---
     consistencyCheck();
+  }
+
+  public Tensor ad() {
+    return ad;
   }
 
   /** @param g vector with length dim_g
@@ -90,7 +96,7 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
 
     public Decomp(HsPair hsPair) {
       for (int count = 0; count < MAX_ITERATIONS; ++count) {
-        if (Tolerance.CHOP.allZero(hsPair.g().extract(dim_m, dim_g))) {
+        if (Chop._14.allZero(hsPair.g().extract(dim_m, dim_g))) {
           m = hsPair.g().extract(0, dim_m);
           h = hsPair.h();
           return;
@@ -144,6 +150,15 @@ public class HsAlgebra implements HomogeneousSpace, Serializable {
   /** @return whether [m, m] subset h, i.e. m cap [m, m] = {0} */
   public boolean isSymmetric() {
     return ad.block(Arrays.asList(0, 0, 0), Arrays.asList(dim_m, dim_m, dim_m)) //
+        .flatten(-1) //
+        .map(Scalar.class::cast) //
+        .allMatch(Scalars::isZero);
+  }
+
+  /** @return whether [m, g] subset m, in which case finding the element h that
+   * projects g to m is trivial */
+  public boolean isHTrivial() {
+    return ad.block(Arrays.asList(dim_m, 0, 0), Arrays.asList(dim_h, dim_g, dim_m)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero);

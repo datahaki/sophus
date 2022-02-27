@@ -12,9 +12,9 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.num.Polynomial;
-import ch.alpine.tensor.pdf.DiscreteUniformDistribution;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import junit.framework.TestCase;
 
 public class BiinvariantMeanExtrapolationTest extends TestCase {

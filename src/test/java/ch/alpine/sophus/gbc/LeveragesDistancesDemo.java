@@ -6,8 +6,8 @@ import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Timing;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 /* package */ enum LeveragesDistancesDemo {
   ;

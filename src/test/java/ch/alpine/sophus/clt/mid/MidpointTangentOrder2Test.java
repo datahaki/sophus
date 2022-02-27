@@ -4,8 +4,8 @@ package ch.alpine.sophus.clt.mid;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import junit.framework.TestCase;
 
 public class MidpointTangentOrder2Test extends TestCase {

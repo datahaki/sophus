@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.he;
 
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.hs.HsAlgebra;
+import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import junit.framework.TestCase;
 
 public class HeAlgebraTest extends TestCase {

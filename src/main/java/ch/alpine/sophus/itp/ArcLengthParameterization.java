@@ -7,8 +7,8 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.itp.Interpolation;
-import ch.alpine.tensor.pdf.EqualizingDistribution;
 import ch.alpine.tensor.pdf.InverseCDF;
+import ch.alpine.tensor.pdf.c.EqualizingDistribution;
 
 /** function defined on the interval [0, 1] */
 public class ArcLengthParameterization implements ScalarTensorFunction {

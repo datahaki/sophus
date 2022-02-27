@@ -12,12 +12,11 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.num.Polynomial;
-import ch.alpine.tensor.pdf.DiscreteUniformDistribution;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import junit.framework.Assert;
 
@@ -60,8 +59,8 @@ import junit.framework.Assert;
   public static void checkP(int n, HermiteSubdivision hermiteSubdivision) {
     Distribution distribution = DiscreteUniformDistribution.of(-5, 6);
     Tensor coeffs = RandomVariate.of(distribution, n + 1);
-    ScalarUnaryOperator f0 = Polynomial.of(coeffs);
-    ScalarUnaryOperator f1 = Polynomial.derivative(coeffs);
+    Polynomial f0 = Polynomial.of(coeffs);
+    Polynomial f1 = f0.derivative();
     Tensor domain = Range.of(0, 10);
     Tensor control = Transpose.of(Tensors.of(domain.map(f0), domain.map(f1)));
     TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);

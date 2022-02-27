@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.sn;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.pdf.NormalDistribution;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import junit.framework.TestCase;
 
 public class SnPerturbationTest extends TestCase {

@@ -5,8 +5,8 @@ import ch.alpine.sophus.lie.sopq.TSopqProject;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.mat.ex.MatrixExp;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import junit.framework.TestCase;
 
 public class HnMemberQTest extends TestCase {

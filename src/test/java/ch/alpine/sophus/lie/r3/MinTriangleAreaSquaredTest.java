@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.r3;
 
+import java.util.Random;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -9,9 +11,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
@@ -37,9 +39,10 @@ public class MinTriangleAreaSquaredTest extends TestCase {
   }
 
   public void testFive() {
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();
     for (int count = 0; count < 10; ++count) {
-      Tensor polygon1 = RandomVariate.of(distribution, 5, 3);
+      Tensor polygon1 = RandomVariate.of(distribution, random, 5, 3);
       Tensor polygon2 = polygon1.multiply(RealScalar.of(1000));
       Tolerance.CHOP.requireClose( //
           MinTriangleAreaSquared.normalize(polygon1), //
@@ -51,9 +54,10 @@ public class MinTriangleAreaSquaredTest extends TestCase {
   }
 
   public void testFiveUnit() {
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(1, "kg")));
     for (int count = 0; count < 10; ++count) {
-      Tensor polygon1 = RandomVariate.of(distribution, 5, 3);
+      Tensor polygon1 = RandomVariate.of(distribution, random, 5, 3);
       Tensor polygon2 = polygon1.multiply(RealScalar.of(1000));
       Tolerance.CHOP.requireClose( //
           MinTriangleAreaSquared.normalize(polygon1), //

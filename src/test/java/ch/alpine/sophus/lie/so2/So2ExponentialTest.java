@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.so2;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import junit.framework.TestCase;
 
 public class So2ExponentialTest extends TestCase {

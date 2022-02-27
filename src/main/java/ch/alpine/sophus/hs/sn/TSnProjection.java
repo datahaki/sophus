@@ -6,7 +6,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.mat.Orthogonalize;
+import ch.alpine.tensor.mat.pd.Orthogonalize;
 
 public enum TSnProjection {
   ;

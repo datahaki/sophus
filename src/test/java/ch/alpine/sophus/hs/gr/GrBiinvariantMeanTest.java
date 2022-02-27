@@ -16,8 +16,8 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.ExponentialDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 

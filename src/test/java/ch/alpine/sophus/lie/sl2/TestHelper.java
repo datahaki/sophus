@@ -5,9 +5,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.pdf.DiscreteUniformDistribution;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 enum TestHelper {
   ;

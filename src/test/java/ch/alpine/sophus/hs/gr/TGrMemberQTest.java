@@ -23,11 +23,11 @@ import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.LogisticDistribution;
-import ch.alpine.tensor.pdf.NormalDistribution;
-import ch.alpine.tensor.pdf.PoissonDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.UniformDistribution;
+import ch.alpine.tensor.pdf.c.LogisticDistribution;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.pdf.d.PoissonDistribution;
 import ch.alpine.tensor.sca.Sign;
 import junit.framework.TestCase;
 

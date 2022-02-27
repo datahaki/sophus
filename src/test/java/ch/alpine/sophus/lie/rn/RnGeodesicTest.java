@@ -13,8 +13,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.NormalDistribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
