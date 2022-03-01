@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.su2;
+package ch.alpine.sophus.lie.su;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;

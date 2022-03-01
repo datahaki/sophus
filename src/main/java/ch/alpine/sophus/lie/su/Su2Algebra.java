@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.su2;
+package ch.alpine.sophus.lie.su;
 
 import java.util.function.BinaryOperator;
 
@@ -30,6 +30,7 @@ public enum Su2Algebra implements LieAlgebra {
 
   @Override
   public Tensor basis() {
+    // TODO state reference
     Tensor u1 = Tensors.fromString("{{0, I}, {I, 0}}");
     Tensor u2 = Tensors.fromString("{{0, -1}, {1, 0}}");
     Tensor u3 = Tensors.fromString("{{I, 0}, {0, -I}}");

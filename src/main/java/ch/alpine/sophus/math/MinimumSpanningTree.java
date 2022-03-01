@@ -77,6 +77,7 @@ public enum MinimumSpanningTree {
             edge = new Edge(i, j);
           }
         }
+      @SuppressWarnings("null")
       int index = edge.j;
       visited.add(index);
       unknown.remove(index);
