@@ -2,7 +2,7 @@
 
 # ch.alpine.sophus
 
-Library for non-linear geometry computations in Java, version `0.0.8`
+Library for non-linear geometry computations in Java 17, version `0.0.8`
 
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
