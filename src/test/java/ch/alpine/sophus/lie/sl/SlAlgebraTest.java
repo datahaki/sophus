@@ -3,11 +3,11 @@ package ch.alpine.sophus.lie.sl;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.ad.KillingForm;
 import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.ad.KillingForm;
 import ch.alpine.tensor.mat.re.Det;
 import junit.framework.TestCase;
 

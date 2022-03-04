@@ -3,14 +3,15 @@ package ch.alpine.sophus.lie.su;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
+import ch.alpine.sophus.lie.ad.KillingForm;
+import ch.alpine.sophus.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.OrderedQ;
-import ch.alpine.tensor.lie.ad.KillingForm;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
+import ch.alpine.tensor.mat.AntihermitianMatrixQ;
 import ch.alpine.tensor.mat.ConjugateTranspose;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -58,6 +59,14 @@ public class Su2AlgebraTest extends TestCase {
       ExactTensorQ.require(mat);
       assertEquals(ConjugateTranspose.of(mat), mat.negate());
       assertEquals(Trace.of(mat), RealScalar.ZERO);
+      AntihermitianMatrixQ.require(mat);
     }
+  }
+
+  public void testHermitian() {
+    // TODO !?
+    // Su2Algebra.INSTANCE.basis().stream().forEach(HermitianMatrixQ::require);
+    // Tensor tensor = Tensor.of(Su2Algebra.INSTANCE.basis().stream().map(Trace::of));
+    // Chop.NONE.requireAllZero(tensor);
   }
 }

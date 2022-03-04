@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.so3;
 
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,7 +14,6 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;

@@ -4,10 +4,10 @@ package ch.alpine.sophus.lie.se3;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
+import ch.alpine.sophus.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.sca.N;
 
 public enum Se3Algebra implements LieAlgebra {

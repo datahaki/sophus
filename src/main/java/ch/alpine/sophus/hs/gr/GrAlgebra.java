@@ -2,13 +2,13 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.lie.ad.MatrixAlgebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.so.SoAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.PackageTestAccess;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 
 /** Careful:
  * does not match {@link Se3Algebra} in the special case when n == 3
