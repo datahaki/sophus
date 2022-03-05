@@ -1,12 +1,11 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.math;
 
 import java.util.function.BinaryOperator;
 
 import ch.alpine.tensor.Tensor;
 
-// TODO filename too specific
-public interface BakerCampbellHausdorffSeries extends BinaryOperator<Tensor> {
+public interface SeriesInterface extends BinaryOperator<Tensor> {
   /** function allows to investigate the rate of convergence
    * 
    * @param x

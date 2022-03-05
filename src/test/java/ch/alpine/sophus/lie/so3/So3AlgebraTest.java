@@ -37,7 +37,7 @@ public class So3AlgebraTest extends TestCase {
       Tensor m1 = RandomVariate.of(distribution, random, 2);
       Tensor m2 = hsAlgebra.action(ga, m1);
       Tensor p = UnitVector.of(3, 2);
-      // TODO investigate where this "change of coordinates" comes from
+      // TODO SOPHUS SO3 investigate where this "change of coordinates" comes from
       SnExponential snExponential = new SnExponential(p);
       Tensor v1 = hsAlgebra.lift(m1); // attach 0
       Tensor p1 = snExponential.exp(v1); // map to S^2

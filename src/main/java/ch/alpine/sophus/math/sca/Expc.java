@@ -9,6 +9,7 @@ import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Factorial;
+import ch.alpine.tensor.sca.N;
 
 /** ( Exp [ Mu ] - 1 ) / Mu
  * 
@@ -16,11 +17,12 @@ import ch.alpine.tensor.sca.Factorial;
 public enum Expc implements ScalarUnaryOperator {
   FUNCTION;
 
-  private static final ScalarUnaryOperator SERIES = //
+  private final ScalarUnaryOperator SERIES = //
       Polynomial.of(Tensors.vector(i -> Factorial.of(i + 1).reciprocal(), 10));
 
   @Override
   public Scalar apply(Scalar mu) {
+    mu = N.DOUBLE.apply(mu);
     return Chop._10.isZero(mu) //
         ? SERIES.apply(mu)
         : evaluate(mu);

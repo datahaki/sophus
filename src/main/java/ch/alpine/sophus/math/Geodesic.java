@@ -5,7 +5,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** parameterized curve/geodesic in a space of tensors */
-// TODO perhaps rename to "GeodesicSpace" that "connect"s p and q?
+// TODO SOPHUS API perhaps rename to "GeodesicSpace" that "connect"s p and q?
 public interface Geodesic extends SplitInterface {
   /** @param p
    * @param q

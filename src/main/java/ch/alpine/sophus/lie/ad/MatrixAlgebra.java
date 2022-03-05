@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.spa.Nnz;
@@ -30,7 +31,7 @@ public class MatrixAlgebra implements Serializable {
     ad = SparseArray.of(RealScalar.ZERO, n, n, n);
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
-        Tensor x = LinearSolve.any(matrix, Flatten.of(MatrixBracket.of(basis.get(i), basis.get(j))));
+        Tensor x = LinearSolve.any(matrix, Flatten.of(MatrixBracket.of(basis.get(i), basis.get(j)))).map(Tolerance.CHOP);
         ad.set(x, Tensor.ALL, j, i);
         ad.set(x.negate(), Tensor.ALL, i, j);
       }

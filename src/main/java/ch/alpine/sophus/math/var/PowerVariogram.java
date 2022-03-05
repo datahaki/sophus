@@ -45,13 +45,13 @@ public record PowerVariogram(Scalar alpha, ScalarUnaryOperator power) implements
    * @param exponent in the range [1, 2)
    * @return
    * @throws Exception if values is not a tensor of rank 1 */
-  // TODO fit function needs a demo
+  // TODO SOPHUS DEMO fit function needs a demo
   @SuppressWarnings("null")
   public static PowerVariogram fit(TensorMetric tensorMetric, Tensor sequence, Tensor values, Scalar exponent) {
     Scalar[] y = ScalarArray.ofVector(values);
     final int n = sequence.length();
     Scalar num = null; // 0[|seq_0| * v[0] * v[0]]
-    // TODO not very elegant generic
+    // TODO SOPHUS ALG not very elegant generic
     Scalar den = RealScalar.ZERO;
     Scalar nugsq = RealScalar.ZERO;
     ScalarUnaryOperator power = Power.function(exponent);

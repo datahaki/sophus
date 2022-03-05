@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.math.SeriesInterface;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
@@ -27,7 +28,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
   private static void _check(Tensor ad, int degree) {
     BakerCampbellHausdorff bakerCampbellHausdorff = //
         new BakerCampbellHausdorff(ad, degree, Chop._14);
-    BakerCampbellHausdorffSeries appx = (BakerCampbellHausdorffSeries) BakerCampbellHausdorff.of(ad, degree);
+    SeriesInterface appx = (SeriesInterface) BakerCampbellHausdorff.of(ad, degree);
     int n = ad.length();
     Timing t_bch = Timing.stopped();
     Timing t_apx = Timing.stopped();

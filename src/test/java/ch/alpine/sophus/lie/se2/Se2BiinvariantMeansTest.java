@@ -51,7 +51,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = Serialization.copy(biinvariantMean).mean(sequence, weights);
-      // TODO this does not check anything... also below!
+      // TODO SOPHUS TEST this does not check anything... also below!
       new MeanDefect(sequenceUnordered, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
       Tensor actualUnordered = biinvariantMean.mean(sequenceUnordered, weights);
       // ---

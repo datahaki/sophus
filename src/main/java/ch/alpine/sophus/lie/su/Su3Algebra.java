@@ -10,7 +10,6 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Sqrt;
 
 /** Algebra
@@ -27,8 +26,7 @@ public enum Su3Algebra implements LieAlgebra {
   private final Tensor ad;
 
   private Su3Algebra() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis());
-    ad = matrixAlgebra.ad().map(Tolerance.CHOP);
+    ad = new MatrixAlgebra(basis()).ad();
   }
 
   @Override // from LieAlgebra

@@ -48,8 +48,8 @@ public enum SnManifold implements HsManifold {
   @SuppressWarnings("static-method")
   public Tensor endomorphism(Tensor p, Tensor q) {
     // Tensor w = TensorWedge.of(p, q).multiply(RealScalar.of(-2));
-    // TODO Eade suggests to treat the case q ~= -p separately!
-    // TODO why not extract this function to a standalone enum
+    // TODO SOPHUS ALG Eade suggests to treat the case q ~= -p separately!
+    // TODO SOPHUS API why not extract this function to a standalone enum
     Tensor pq = TensorProduct.of( //
         SnMemberQ.INSTANCE.require(p), //
         SnMemberQ.INSTANCE.require(q));

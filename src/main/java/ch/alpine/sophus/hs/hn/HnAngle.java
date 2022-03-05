@@ -24,7 +24,7 @@ public class HnAngle implements TensorScalarFunction {
     Scalar cosh_d = LBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, cosh_d))
       return cosh_d;
-    // TODO use taylor series
+    // TODO SOPHUS ALG use taylor series
     Chop._08.requireClose(cosh_d, RealScalar.ONE);
     return RealScalar.ONE;
   }

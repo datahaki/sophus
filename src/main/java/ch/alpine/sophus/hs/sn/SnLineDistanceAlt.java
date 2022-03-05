@@ -31,7 +31,7 @@ public enum SnLineDistanceAlt implements LineDistance {
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
       Tensor v_pr = exponential.log(r);
-      // TODO not correct
+      // TODO SOPHUS API not correct
       v_pr = v_pr.subtract(v_pq.multiply((Scalar) v_pq.dot(v_pr)));
       return Vector2Norm.of(v_pr);
     }

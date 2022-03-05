@@ -24,7 +24,7 @@ public class PolygonRegion implements Region<Tensor>, Serializable {
 
   @Override // from Region
   public boolean test(Tensor tensor) {
-    // TODO design strict: only valid input
+    // TODO SOPHUS ALG design strict: only valid input
     Tensor point = tensor.extract(0, 2);
     return coordinateBoundingBox.isInside(point) //
         && FranklinPnpoly.isInside(polygon, point);

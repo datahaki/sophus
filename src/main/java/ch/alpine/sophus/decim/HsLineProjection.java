@@ -19,11 +19,11 @@ public class HsLineProjection {
   }
 
   public Tensor onto(Tensor p, Tensor q, Tensor r) {
-    // TODO magic const
+    // TODO SOPHUS ALG magic const
     for (int count = 0; count < 6; ++count) {
       Exponential exponential = hsManifold.exponential(p);
       Tensor lq = exponential.log(q);
-      // FIXME not generic: log not always vector, metric different
+      // FIXME SOPHUS ALG not generic: log not always vector, metric different
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);
       Tensor lr = exponential.log(r);
       Tensor project = Times.of(lr.dot(normal), normal);

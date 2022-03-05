@@ -34,7 +34,7 @@ public class GeodesicCatmullClarkSubdivision {
     int cols = Unprotect.dimension1(grid);
     int outr = 2 * rows - 1;
     int outc = 2 * cols - 1;
-    // TODO units?
+    // TODO SOPHUS SUB works with units?
     Tensor array = Array.zeros(outr, outc);
     /** assign old points */
     for (int pix = 0; pix < rows; ++pix)

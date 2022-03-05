@@ -39,7 +39,7 @@ public class ResampleResult {
    * @param rate unitless
    * @return */
   public List<Tensor> getPointsSpin(Scalar relativeZero, Scalar rate) {
-    // TODO rescale introduces error because it assumes regular sampling along the circle
+    // TODO SOPHUS ALG rescale introduces error because it assumes regular sampling along the circle
     return list.stream() //
         .map(vector -> vector.map(param -> RotationMatrix.of(clip.rescale(param).subtract(relativeZero).multiply(rate)).dot(interpolation.at(param)))) //
         .collect(Collectors.toList());

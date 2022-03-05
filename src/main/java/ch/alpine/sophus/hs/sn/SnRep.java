@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.sn;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 
-// FIXME
+// FIXME SOPHUS API
 @Deprecated
 public class SnRep {
   private final Tensor neutral;
@@ -18,7 +18,7 @@ public class SnRep {
   }
 
   public Tensor toPoint(Tensor matrix) {
-    // TODO simplify using extraction
+    // TODO SOPHUS ALG simplify using extraction
     return matrix.dot(neutral);
   }
 }

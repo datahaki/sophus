@@ -12,7 +12,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 public enum Normal2D {
   ;
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // TODO probably not a good general choice if units are involved
+  // TODO SOPHUS ALG probably not a good general choice if units are involved
   private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param points of the form {{p1x, p1y}, {p2x, p2y}, ..., {pNx, pNy}}

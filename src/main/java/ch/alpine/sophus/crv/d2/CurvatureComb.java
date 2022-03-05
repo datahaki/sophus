@@ -33,7 +33,7 @@ import ch.alpine.tensor.red.Times;
 public enum CurvatureComb {
   ;
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // TODO probably not a good general choice if units are involved
+  // TODO SOPHUS ALG probably not a good general choice if units are involved
   private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param tensor with dimensions n x 2 with points of curve

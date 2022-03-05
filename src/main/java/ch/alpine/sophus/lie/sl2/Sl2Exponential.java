@@ -54,7 +54,7 @@ public enum Sl2Exponential implements Exponential {
     Tensor log = MatrixLog.of(g);
     if (Scalars.lessEquals(Trace.of(g), TWO_NEGATE))
       throw TensorRuntimeException.of(g);
-    Chop._04.requireClose(g, exp(log)); // TODO remove check
+    Chop._04.requireClose(g, exp(log)); // TODO SOPHUS ALG remove check
     return log;
   }
 

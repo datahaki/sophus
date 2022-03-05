@@ -38,7 +38,7 @@ public class TGrMemberQ implements MemberQ, Serializable {
    * @param v
    * @return */
   public Tensor forceProject(Tensor v) {
-    // FIXME find projection that is idempotent
+    // FIXME SOPHUS ALG find projection that is idempotent
     return MatrixBracket.of(p, TensorWedge.of(v));
   }
 }

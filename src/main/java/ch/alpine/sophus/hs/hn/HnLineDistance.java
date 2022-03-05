@@ -30,7 +30,7 @@ public enum HnLineDistance implements LineDistance {
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
       Tensor v_pr = exponential.log(r);
-      // TODO not correct
+      // TODO SOPHUS ALG not correct
       v_pr = v_pr.subtract(v_pq.multiply(LBilinearForm.between(v_pq, v_pr)));
       return HnVectorNorm.of(v_pr);
     }

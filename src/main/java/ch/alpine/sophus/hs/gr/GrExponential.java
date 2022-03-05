@@ -64,7 +64,7 @@ public class GrExponential implements Exponential, Serializable {
 
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor q) {
-    // TODO k * (n - k) coefficients are sufficient according to theory
+    // TODO SOPHUS GR (k x (n - k)) coefficients are sufficient according to theory
     return LowerVectorize.of(log(q), 0); // n (n + 1) / 2
   }
 }

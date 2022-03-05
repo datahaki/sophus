@@ -32,7 +32,7 @@ public record DooSabinRefinement(BiinvariantMean biinvariantMean) implements Sur
         out.addVert(biinvariantMean.mean(sequence, RotateLeft.of(weights, offset)));
       out.ind.append(Range.of(ofs, ofs + n));
     }
-    // TODO add quads at vertices and edges
+    // TODO SOPHUS SUB add quads at vertices and edges
     return out;
   }
 }

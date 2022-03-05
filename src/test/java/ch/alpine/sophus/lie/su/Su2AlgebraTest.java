@@ -64,7 +64,7 @@ public class Su2AlgebraTest extends TestCase {
   }
 
   public void testHermitian() {
-    // TODO !?
+    // TODO SOPHUS SU2 what was supposed to happen here
     // Su2Algebra.INSTANCE.basis().stream().forEach(HermitianMatrixQ::require);
     // Tensor tensor = Tensor.of(Su2Algebra.INSTANCE.basis().stream().map(Trace::of));
     // Chop.NONE.requireAllZero(tensor);

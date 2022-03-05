@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.ad;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.math.SeriesInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.red.Total;
 
@@ -13,7 +14,7 @@ import ch.alpine.tensor.red.Total;
  * 1) Neeb
  * 2) "Baker-Campbell-Hausdorff formula" Wikipedia */
 // CONSIDER MOVING LIE.AD to SOPHUS
-/* package */ abstract class BchSeries implements BakerCampbellHausdorffSeries, Serializable {
+/* package */ abstract class BchSeries implements SeriesInterface, Serializable {
   protected final Tensor ad;
 
   public BchSeries(Tensor ad) {

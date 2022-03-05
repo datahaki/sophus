@@ -29,7 +29,12 @@ public class SurfaceMesh implements Serializable {
   /** @return tensor of coordinates */
   public Tensor polygons() {
     return Tensor.of(ind.stream() //
-        .map(face -> Tensor.of(Arrays.stream(Primitives.toIntArray(face)).mapToObj(vrt::get))));
+        .map(Primitives::toIntArray) // deliberate: stream -> array -> stream
+        .map(this::face)); //
+  }
+
+  private Tensor face(int[] indices) {
+    return Tensor.of(Arrays.stream(indices).mapToObj(vrt::get));
   }
 
   /** @return vert to face index */

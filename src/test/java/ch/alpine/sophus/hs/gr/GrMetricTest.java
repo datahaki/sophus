@@ -85,7 +85,7 @@ public class GrMetricTest extends TestCase {
     d1.zero();
     Scalar d2 = LowerVectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
     Tolerance.CHOP.requireClose(d1, d2);
-    // TODO check distance of "antipodal" frames, why is this zero?
+    // TODO SOPHUS GR check distance of "antipodal" frames, why is this zero?
     // System.out.println(distance);
   }
 }
