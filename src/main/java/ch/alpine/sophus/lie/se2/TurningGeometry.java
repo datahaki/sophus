@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.bot.se2;
+package ch.alpine.sophus.lie.se2;
 
 import java.util.Optional;
 

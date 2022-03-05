@@ -11,7 +11,8 @@ import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
-public class HsMidpointLineDistance implements LineDistance, Serializable {
+public record HsMidpointLineDistance(HsLineDistance hsLineDistance, HsMidpoint hsMidpoint) //
+    implements LineDistance, Serializable {
   /** @param lieGroup
    * @param exponential
    * @return */
@@ -26,15 +27,6 @@ public class HsMidpointLineDistance implements LineDistance, Serializable {
     return new HsMidpointLineDistance( //
         new HsLineDistance(hsManifold), //
         new HsMidpoint(hsManifold));
-  }
-
-  // ---
-  private final HsLineDistance hsLineDistance;
-  private final HsMidpoint hsMidpoint;
-
-  private HsMidpointLineDistance(HsLineDistance hsLineDistance, HsMidpoint hsMidpoint) {
-    this.hsLineDistance = hsLineDistance;
-    this.hsMidpoint = hsMidpoint;
   }
 
   @Override // from LineDistance

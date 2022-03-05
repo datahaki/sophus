@@ -2,7 +2,6 @@
 package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorNorm;
@@ -14,14 +13,8 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public class HsLineDistance implements LineDistance, Serializable {
+public record HsLineDistance(HsManifold hsManifold) implements LineDistance, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // ---
-  private final HsManifold hsManifold;
-
-  public HsLineDistance(HsManifold hsManifold) {
-    this.hsManifold = Objects.requireNonNull(hsManifold);
-  }
 
   @Override // from LineDistance
   public NormImpl tensorNorm(Tensor p, Tensor q) {
@@ -31,15 +24,8 @@ public class HsLineDistance implements LineDistance, Serializable {
         NORMALIZE_UNLESS_ZERO.apply(exponential.vectorLog(q)));
   }
 
-  public class NormImpl implements TensorNorm, Serializable {
-    private final Exponential exponential;
-    private final Tensor normal;
-
-    public NormImpl(Exponential exponential, Tensor normal) {
-      this.exponential = exponential;
-      this.normal = normal;
-    }
-
+  // TODO SOPHUS API probably should extract?
+  public static record NormImpl(Exponential exponential, Tensor normal) implements TensorNorm, Serializable {
     /** @param tensor of the lie group
      * @return element of the lie algebra */
     public Tensor project(Tensor tensor) {

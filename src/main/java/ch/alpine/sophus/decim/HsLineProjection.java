@@ -9,14 +9,8 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public class HsLineProjection {
+public record HsLineProjection(HsManifold hsManifold) {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // ---
-  private final HsManifold hsManifold;
-
-  public HsLineProjection(HsManifold hsManifold) {
-    this.hsManifold = hsManifold;
-  }
 
   public Tensor onto(Tensor p, Tensor q, Tensor r) {
     // TODO SOPHUS ALG magic const
