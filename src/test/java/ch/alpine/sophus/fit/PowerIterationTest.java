@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math;
+package ch.alpine.sophus.fit;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.DoubleScalar;

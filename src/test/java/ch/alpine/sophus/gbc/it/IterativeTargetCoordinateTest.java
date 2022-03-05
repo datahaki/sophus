@@ -19,7 +19,7 @@ public class IterativeTargetCoordinateTest extends TestCase {
   public void testSimple() {
     int count = 0;
     IterativeTargetCoordinate genesis = //
-        new IterativeTargetCoordinate(InverseDistanceWeighting.of(InversePowerVariogram.of(2)), RealScalar.ONE, 100);
+        new IterativeTargetCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2)), RealScalar.ONE, 100);
     for (int n = 5; n < 20; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
       if (OriginEnclosureQ.isInsideConvexHull(levers)) {

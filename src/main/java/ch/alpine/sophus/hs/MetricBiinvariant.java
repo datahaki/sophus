@@ -60,7 +60,7 @@ public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) imple
 
   @Override // from Biinvariant
   public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    Genesis genesis = new MetricCoordinate(InverseDistanceWeighting.of(variogram, tensorScalarFunction));
+    Genesis genesis = new MetricCoordinate(new InverseDistanceWeighting(variogram, tensorScalarFunction));
     return HsGenesis.wrap(vectorLogManifold, genesis, sequence);
   }
 

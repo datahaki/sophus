@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 public enum Su3Algebra implements LieAlgebra {
   INSTANCE;
 
-  private static final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.of(1, 3));
+  private final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.of(1, 3));
   private final Tensor ad;
 
   private Su3Algebra() {

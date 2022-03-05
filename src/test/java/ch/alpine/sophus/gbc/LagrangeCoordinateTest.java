@@ -31,7 +31,7 @@ public class LagrangeCoordinateTest extends TestCase {
   }
 
   public void testReal() throws ClassNotFoundException, IOException {
-    Genesis idw = InverseDistanceWeighting.of(InversePowerVariogram.of(2));
+    Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2));
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
     Genesis idc = new MetricCoordinate(idw);
     for (int d = 1; d < 4; ++d)
@@ -43,7 +43,7 @@ public class LagrangeCoordinateTest extends TestCase {
   }
 
   public void testComplex() throws ClassNotFoundException, IOException {
-    Genesis idw = InverseDistanceWeighting.of(InversePowerVariogram.of(2));
+    Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2));
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
     for (int d = 1; d < 4; ++d)
       for (int n = 5; n < 10; ++n) {

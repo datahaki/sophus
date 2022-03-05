@@ -82,7 +82,7 @@ public class BiinvariantTest extends TestCase {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);
-      Tensor evaluate = CrossAveraging.of(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
+      Tensor evaluate = new CrossAveraging(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
       VectorQ.requireLength(evaluate, 5);
     }
   }

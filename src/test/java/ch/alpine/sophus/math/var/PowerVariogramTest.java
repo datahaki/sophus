@@ -3,6 +3,7 @@ package ch.alpine.sophus.math.var;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.fit.PowerVariogramFit;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -41,7 +42,7 @@ public class PowerVariogramTest extends TestCase {
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
-      PowerVariogram variogram = Serialization.copy(PowerVariogram.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
+      PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       TensorUnaryOperator weightingInterface = //
           MetricBiinvariant.EUCLIDEAN.var_dist(RnManifold.INSTANCE, variogram, sequence);
@@ -61,6 +62,6 @@ public class PowerVariogramTest extends TestCase {
   }
 
   public void testEmpty() {
-    AssertFail.of(() -> PowerVariogram.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
+    AssertFail.of(() -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
   }
 }
