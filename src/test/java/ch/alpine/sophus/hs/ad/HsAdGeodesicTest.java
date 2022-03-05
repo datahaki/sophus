@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.ad;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.sn.SnAlgebra;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

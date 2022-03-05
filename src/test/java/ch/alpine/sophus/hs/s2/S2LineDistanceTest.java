@@ -3,10 +3,10 @@ package ch.alpine.sophus.hs.s2;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnLineDistance;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.math.TensorNorm;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Scalar;

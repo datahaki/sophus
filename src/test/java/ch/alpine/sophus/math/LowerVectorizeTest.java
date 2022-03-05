@@ -6,6 +6,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.spa.Normal;
 import junit.framework.TestCase;
 
 public class LowerVectorizeTest extends TestCase {
@@ -31,7 +32,9 @@ public class LowerVectorizeTest extends TestCase {
     AssertFail.of(() -> LowerVectorize.of(Tensors.vector(1, 2, 3), -1));
   }
 
-  public void testRank3Fail() {
-    AssertFail.of(() -> LowerVectorize.of(LeviCivitaTensor.of(3), 0));
+  public void testRank3() {
+    // AssertFail.of(() -> LowerVectorize.of(LeviCivitaTensor.of(3), 0));
+    Tensor tensor = LowerVectorize.of(LeviCivitaTensor.of(3), 0);
+    Normal.of(tensor);
   }
 }

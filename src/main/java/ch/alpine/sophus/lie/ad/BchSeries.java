@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.ad;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.SeriesInterface;
+import ch.alpine.sophus.api.SeriesInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.red.Total;
 

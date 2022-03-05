@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;

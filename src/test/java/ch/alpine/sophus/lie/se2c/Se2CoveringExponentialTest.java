@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

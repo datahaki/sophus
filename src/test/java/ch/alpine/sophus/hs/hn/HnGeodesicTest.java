@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.hn;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.math.Geodesic;
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.tensor.NumberQ;
 import ch.alpine.tensor.Scalar;

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.so3;
 
 import java.util.Random;
+import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.sn.SnExponential;
@@ -64,5 +65,32 @@ public class So3AlgebraTest extends TestCase {
     // System.out.println(dot);
     Tensor v2 = snExponential.log(dot);
     Tolerance.CHOP.requireClose(hsAlgebra.lift(m2), v2);
+  }
+
+  public void testSo3H() {
+    Tensor so3 = So3Algebra.INSTANCE.ad();
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Tensor g = RandomVariate.of(distribution, 3);
+    Tensor h = UnitVector.of(3, 2).multiply(RandomVariate.of(distribution));
+    BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(6);
+    HsAlgebra hsAlgebra = new HsAlgebra(so3, 2, 8);
+    Tensor prj_g = hsAlgebra.projection(g);
+    Tensor res = bch.apply(g, h);
+    Tensor prj_gh = hsAlgebra.projection(res);
+    Chop._10.requireClose(prj_g, prj_gh);
+  }
+
+  public void testSo3S2() {
+    Tensor so3 = So3Algebra.INSTANCE.ad();
+    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
+    Tensor g = RandomVariate.of(distribution, 3);
+    Tensor m = RandomVariate.of(distribution, 2);
+    HsAlgebra hsAlgebra = new HsAlgebra(so3, 2, 8);
+    Tensor expect = hsAlgebra.action(g, m);
+    Tensor rotG = So3Exponential.INSTANCE.exp(g);
+    Tensor rotM = So3Exponential.INSTANCE.exp(hsAlgebra.lift(m));
+    Tensor log = So3Exponential.INSTANCE.log(rotG.dot(rotM));
+    Tensor prj = hsAlgebra.projection(log);
+    Tolerance.CHOP.requireClose(expect, prj);
   }
 }

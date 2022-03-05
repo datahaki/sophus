@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import ch.alpine.sophus.math.TensorIteration;
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;

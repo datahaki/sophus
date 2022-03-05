@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.ExactTensorQ;

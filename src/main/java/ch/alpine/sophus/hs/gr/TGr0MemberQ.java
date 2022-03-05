@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.MemberQ;
+import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

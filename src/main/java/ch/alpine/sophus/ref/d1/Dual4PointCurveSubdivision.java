@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.Geodesic;
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;

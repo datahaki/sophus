@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 

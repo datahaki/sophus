@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

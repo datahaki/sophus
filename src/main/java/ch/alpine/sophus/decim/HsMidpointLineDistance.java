@@ -3,12 +3,12 @@ package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Tensor;
 
 public class HsMidpointLineDistance implements LineDistance, Serializable {

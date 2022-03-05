@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
-import ch.alpine.sophus.math.SplitInterface;
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;

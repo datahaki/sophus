@@ -12,6 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 /** The algorithm is also known as the <em>Von Mises iteration</em>.
  * 
  * https://en.wikipedia.org/wiki/Power_iteration */
+// TODO SOPHUS API not used at all
 public enum PowerIteration {
   ;
   /** max iterations for each dimension */

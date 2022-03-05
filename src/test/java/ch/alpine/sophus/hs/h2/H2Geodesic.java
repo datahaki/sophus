@@ -1,8 +1,8 @@
 // code by ob
 package ch.alpine.sophus.hs.h2;
 
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.math.SplitInterface;
 import ch.alpine.tensor.NumberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

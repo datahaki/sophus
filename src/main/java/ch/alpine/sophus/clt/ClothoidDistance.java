@@ -1,8 +1,8 @@
 // code by gjoel
 package ch.alpine.sophus.clt;
 
-import ch.alpine.sophus.math.TensorMetric;
-import ch.alpine.sophus.math.TensorNorm;
+import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

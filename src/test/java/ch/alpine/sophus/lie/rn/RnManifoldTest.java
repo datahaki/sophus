@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.rn;
 
 import java.util.Random;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -10,7 +11,6 @@ import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;

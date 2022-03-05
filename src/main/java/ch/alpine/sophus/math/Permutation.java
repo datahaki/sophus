@@ -4,6 +4,7 @@ package ch.alpine.sophus.math;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.GroupElement;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.num.Cycles;
 

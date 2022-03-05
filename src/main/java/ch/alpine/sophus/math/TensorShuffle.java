@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.num.RandomPermutation;
 
+// TODO SOPHUS API not used in sophus
 public enum TensorShuffle {
   ;
   /** @param tensor

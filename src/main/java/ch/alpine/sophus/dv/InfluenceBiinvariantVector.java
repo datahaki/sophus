@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.BiinvariantVector;
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.VectorLogManifold;
-import ch.alpine.sophus.math.TensorMetric;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 

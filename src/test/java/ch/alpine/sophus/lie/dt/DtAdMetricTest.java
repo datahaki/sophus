@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.dt;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import junit.framework.TestCase;

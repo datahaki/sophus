@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.srf;
 
-import ch.alpine.sophus.lie.r3.NylanderPower;
+import ch.alpine.sophus.hs.r3.NylanderPower;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

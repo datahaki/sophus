@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 
 /** elements from the group SO(3) are 3x3 matrices

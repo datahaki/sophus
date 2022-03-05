@@ -3,7 +3,7 @@ package ch.alpine.sophus.math.var;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.math.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

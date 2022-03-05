@@ -1,7 +1,7 @@
 // code by ob
 package ch.alpine.sophus.lie.dt;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

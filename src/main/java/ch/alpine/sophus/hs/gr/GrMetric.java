@@ -1,8 +1,8 @@
 // code by jph 
 package ch.alpine.sophus.hs.gr;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
-import ch.alpine.sophus.math.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

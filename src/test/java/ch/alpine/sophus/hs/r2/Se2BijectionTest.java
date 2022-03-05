@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.r2;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.Bijection;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.math.Bijection;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;

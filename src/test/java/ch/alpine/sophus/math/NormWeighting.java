@@ -3,6 +3,8 @@ package ch.alpine.sophus.math;
 
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Genesis;
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.math.MemberQ;
+import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.mat.gr.InfluenceMatrixQ;

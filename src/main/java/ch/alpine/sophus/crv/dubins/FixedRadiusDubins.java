@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

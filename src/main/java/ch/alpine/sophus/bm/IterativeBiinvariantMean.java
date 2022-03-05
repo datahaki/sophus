@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.sca.Chop;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

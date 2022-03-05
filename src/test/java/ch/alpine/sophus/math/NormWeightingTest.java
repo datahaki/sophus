@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;

@@ -5,5 +5,5 @@ package ch.alpine.sophus.math.cls;
  * <a href="https://reference.wolfram.com/language/ref/Nearest.html">Nearest</a> */
 public enum Nearest {
   ;
-  // ---
+  // TODO SOPHUS API
 }

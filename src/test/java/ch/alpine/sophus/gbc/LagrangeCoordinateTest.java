@@ -3,11 +3,11 @@ package ch.alpine.sophus.gbc;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;

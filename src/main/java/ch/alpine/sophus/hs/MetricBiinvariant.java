@@ -4,13 +4,13 @@ package ch.alpine.sophus.hs;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.LagrangeCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.hs.gr.GrExponential;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.spd.SpdExponential;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;

@@ -4,11 +4,11 @@ package ch.alpine.sophus.lie.dt;
 import java.io.IOException;
 import java.util.Random;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;

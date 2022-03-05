@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.MidpointInterface;
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.tensor.Tensor;
 
 /** interface that extends the capabilities of vector log manifold

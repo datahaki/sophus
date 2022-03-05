@@ -4,6 +4,7 @@ package ch.alpine.sophus.itp;
 import java.io.IOException;
 import java.util.Random;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
@@ -12,7 +13,6 @@ import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.var.ExponentialVariogram;
 import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.tensor.RealScalar;

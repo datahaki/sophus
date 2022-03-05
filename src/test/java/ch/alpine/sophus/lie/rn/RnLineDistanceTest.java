@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.math.TensorNorm;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

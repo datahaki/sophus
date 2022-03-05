@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.UpperEvaluation;
 

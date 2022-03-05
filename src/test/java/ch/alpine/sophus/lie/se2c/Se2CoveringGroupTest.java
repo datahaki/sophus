@@ -4,12 +4,12 @@ package ch.alpine.sophus.lie.se2c;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.gbc.HarborCoordinate;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

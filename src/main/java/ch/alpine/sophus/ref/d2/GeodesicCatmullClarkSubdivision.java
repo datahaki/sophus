@@ -3,7 +3,7 @@ package ch.alpine.sophus.ref.d2;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.math.SplitInterface;
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;

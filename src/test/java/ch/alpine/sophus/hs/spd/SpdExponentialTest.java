@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;

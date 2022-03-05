@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.r3s2;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.lie.se3.Se3Geodesic;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

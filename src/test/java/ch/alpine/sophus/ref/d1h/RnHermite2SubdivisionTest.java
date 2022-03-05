@@ -4,8 +4,8 @@ package ch.alpine.sophus.ref.d1h;
 import java.util.Arrays;
 import java.util.List;
 
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

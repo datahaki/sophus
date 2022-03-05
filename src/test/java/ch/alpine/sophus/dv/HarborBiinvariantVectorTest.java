@@ -3,6 +3,7 @@ package ch.alpine.sophus.dv;
 
 import java.util.Random;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.BiinvariantVector;
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
@@ -12,7 +13,6 @@ import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.Distribution;

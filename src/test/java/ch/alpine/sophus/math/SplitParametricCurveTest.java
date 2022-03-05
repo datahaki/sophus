@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;

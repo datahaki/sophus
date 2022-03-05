@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.sn;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.MemberQ;
+import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;

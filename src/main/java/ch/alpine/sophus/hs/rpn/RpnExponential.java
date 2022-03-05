@@ -3,9 +3,9 @@ package ch.alpine.sophus.hs.rpn;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.sn.SnAngle;
 import ch.alpine.sophus.hs.sn.TSnMemberQ;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;

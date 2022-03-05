@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.ad;
 
 import java.util.Random;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnExponential;
@@ -13,7 +14,6 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

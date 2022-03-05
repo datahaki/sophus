@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.TensorMapping;
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.tensor.Tensor;
 
 /** utility class to perform simultaneous transformations */

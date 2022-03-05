@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d1;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.MidpointInterface;
+import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.tensor.Tensor;
 
 /** linear B-spline

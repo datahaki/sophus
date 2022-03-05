@@ -3,9 +3,9 @@ package ch.alpine.sophus.hs.s2;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.hs.sn.TSnProjection;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Tensor;
 
 /** 2-dimensional tangent space at given point of 2-dimensional sphere

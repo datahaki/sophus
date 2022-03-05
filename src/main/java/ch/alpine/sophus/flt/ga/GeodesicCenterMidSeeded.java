@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Function;
 
-import ch.alpine.sophus.math.SplitInterface;
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.math.SymmetricVectorQ;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.tensor.RationalScalar;

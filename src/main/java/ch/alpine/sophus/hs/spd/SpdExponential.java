@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;

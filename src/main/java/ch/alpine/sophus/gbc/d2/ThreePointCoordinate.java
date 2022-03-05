@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc.d2;
 import java.io.Serializable;
 import java.util.function.BiFunction;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.HsCoordinates;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.NormalizeTotal;

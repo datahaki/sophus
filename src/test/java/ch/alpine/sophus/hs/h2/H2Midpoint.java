@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.h2;
 
-import ch.alpine.sophus.math.MidpointInterface;
+import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;

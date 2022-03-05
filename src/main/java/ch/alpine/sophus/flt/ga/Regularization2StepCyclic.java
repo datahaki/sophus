@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ch.alpine.sophus.math.SplitInterface;
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;

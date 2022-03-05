@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.math.SeriesInterface;
+import ch.alpine.sophus.api.SeriesInterface;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;

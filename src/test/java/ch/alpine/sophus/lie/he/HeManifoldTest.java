@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.he;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -10,7 +11,6 @@ import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.NormWeighting;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.math.TensorMetric;
 
 /** Careful: Se2Parametric is <em>not<em> a metric!
  * 

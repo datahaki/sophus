@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.so;
 
 import java.util.Random;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;

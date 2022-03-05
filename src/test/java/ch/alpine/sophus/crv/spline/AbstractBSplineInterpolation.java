@@ -4,7 +4,7 @@ package ch.alpine.sophus.crv.spline;
 import java.io.Serializable;
 import java.util.stream.IntStream;
 
-import ch.alpine.sophus.math.SplitInterface;
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;

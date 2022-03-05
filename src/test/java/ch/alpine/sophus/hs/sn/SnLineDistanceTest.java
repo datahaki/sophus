@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.sn;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.math.TensorNorm;
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;

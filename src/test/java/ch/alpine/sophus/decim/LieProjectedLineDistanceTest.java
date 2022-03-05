@@ -3,9 +3,9 @@ package ch.alpine.sophus.decim;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.math.TensorNorm;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import junit.framework.TestCase;

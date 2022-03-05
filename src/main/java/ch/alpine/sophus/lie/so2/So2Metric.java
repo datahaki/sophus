@@ -1,8 +1,8 @@
 // code by gjoel
 package ch.alpine.sophus.lie.so2;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.sn.SnMetric;
-import ch.alpine.sophus.math.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Abs;

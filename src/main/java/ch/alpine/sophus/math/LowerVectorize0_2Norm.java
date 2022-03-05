@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

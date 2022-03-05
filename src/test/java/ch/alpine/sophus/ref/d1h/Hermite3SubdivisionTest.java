@@ -3,11 +3,11 @@ package ch.alpine.sophus.ref.d1h;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;

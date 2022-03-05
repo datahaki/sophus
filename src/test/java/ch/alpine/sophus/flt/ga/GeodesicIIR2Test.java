@@ -1,13 +1,13 @@
 // code by ob, jph
 package ch.alpine.sophus.flt.ga;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.CausalFilter;
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2.Se2Manifold;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

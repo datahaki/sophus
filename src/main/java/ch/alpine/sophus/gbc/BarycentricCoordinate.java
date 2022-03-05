@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import ch.alpine.sophus.api.WeightingInterface;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.WeightingInterface;
 
 /** The barycentric coordinate is the "INVERSE" of computing a weighted average.
  * 

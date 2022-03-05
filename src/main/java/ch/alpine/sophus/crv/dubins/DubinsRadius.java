@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
-import ch.alpine.sophus.math.ArcTan2D;
+import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

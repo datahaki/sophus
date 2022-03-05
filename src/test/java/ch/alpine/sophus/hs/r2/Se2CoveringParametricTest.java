@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.r2;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.math.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

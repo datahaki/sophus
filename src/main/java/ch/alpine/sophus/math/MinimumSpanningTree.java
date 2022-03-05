@@ -20,32 +20,13 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
  * <a href="https://reference.wolfram.com/language/ref/MinimumSpanningTree.html">MinimumSpanningTree</a> */
 public enum MinimumSpanningTree {
   ;
-  public static class Edge implements Serializable {
-    public final int i;
-    public final int j;
-
-    public Edge(int i, int j) {
-      this.i = i;
-      this.j = j;
-    }
-
+  public static record Edge(int i, int j) implements Serializable {
     public Scalar Get(Tensor tensor) {
       return tensor.Get(i, j);
     }
-
-    @Override
-    public String toString() {
-      return String.format("Edge[%d, %d]", i, j);
-    }
   }
 
-  public static class EdgeComparator implements Comparator<Edge> {
-    private final Tensor matrix;
-
-    public EdgeComparator(Tensor matrix) {
-      this.matrix = matrix;
-    }
-
+  public static record EdgeComparator(Tensor matrix) implements Comparator<Edge> {
     @Override
     public int compare(Edge edge1, Edge edge2) {
       return Scalars.compare(edge1.Get(matrix), edge2.Get(matrix));

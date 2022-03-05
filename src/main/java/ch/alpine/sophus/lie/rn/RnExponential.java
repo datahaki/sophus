@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieExponential;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Tensor;
 
 /** in Euclidean space

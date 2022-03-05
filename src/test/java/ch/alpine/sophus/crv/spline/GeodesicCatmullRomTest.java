@@ -3,10 +3,10 @@ package ch.alpine.sophus.crv.spline;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;

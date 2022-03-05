@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import ch.alpine.sophus.api.BijectionFamily;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.math.BijectionFamily;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -2,7 +2,7 @@
 // adapted from PNPOLY - Point Inclusion in Polygon Test W. Randolph Franklin (WRF)
 package ch.alpine.sophus.crv.d2;
 
-import ch.alpine.sophus.math.MemberQ;
+import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

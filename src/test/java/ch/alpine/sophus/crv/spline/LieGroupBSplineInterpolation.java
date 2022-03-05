@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.crv.spline;
 
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.math.SplitInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BSplineInterpolation;
 

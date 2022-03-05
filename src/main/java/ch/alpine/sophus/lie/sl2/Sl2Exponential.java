@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.sl2;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.sl.SlMemberQ;
 import ch.alpine.sophus.lie.sl.TSlMemberQ;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

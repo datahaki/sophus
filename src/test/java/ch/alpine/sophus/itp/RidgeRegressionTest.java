@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.itp.RidgeRegression.Form2;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.pdf.Distribution;

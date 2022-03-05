@@ -1,8 +1,8 @@
 // code by ob
 package ch.alpine.sophus.flt.ga;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

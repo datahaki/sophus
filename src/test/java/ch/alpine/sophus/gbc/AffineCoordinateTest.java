@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;

@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
