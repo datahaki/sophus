@@ -14,7 +14,7 @@ public class SnRep {
   }
 
   public Tensor toGroupElementMatrix(Tensor p) {
-    return SnManifold.INSTANCE.endomorphism(neutral, p);
+    return SnRotationMatrix.of(neutral, p);
   }
 
   public Tensor toPoint(Tensor matrix) {

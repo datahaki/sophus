@@ -16,6 +16,8 @@ import ch.alpine.tensor.sca.pow.Power;
 
 /** Does not work properly with units?
  * 
+ * Unbounded. Unbounded variograms occur when data has a global trend.
+ * 
  * <p>Reference:
  * "Interpolation on Scattered Data in Multidimensions" in NR, 2007 */
 public record PowerVariogram(Scalar alpha, ScalarUnaryOperator power) implements ScalarUnaryOperator {

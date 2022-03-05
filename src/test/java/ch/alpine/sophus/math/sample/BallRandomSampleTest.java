@@ -4,7 +4,7 @@ package ch.alpine.sophus.math.sample;
 import java.util.Random;
 
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
-import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -94,7 +94,7 @@ public class BallRandomSampleTest extends TestCase {
           BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
       Tensor p = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor q = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
-      Tensor tensor = SnManifold.INSTANCE.endomorphism(p, q);
+      Tensor tensor = SnRotationMatrix.of(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
       assertTrue(OrthogonalMatrixQ.of(tensor, Chop._10));
     }

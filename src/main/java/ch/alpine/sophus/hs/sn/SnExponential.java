@@ -71,7 +71,7 @@ public class SnExponential implements Exponential, Serializable {
   }
 
   public Tensor endomorphism(Tensor q) {
-    return SnManifold.INSTANCE.endomorphism(p, q);
+    return SnRotationMatrix.of(p, q);
   }
 
   @Override // from TangentSpace

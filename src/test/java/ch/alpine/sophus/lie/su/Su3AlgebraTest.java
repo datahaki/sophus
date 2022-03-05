@@ -6,7 +6,6 @@ import ch.alpine.sophus.math.PlausibleRational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.mat.HermitianMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Diagonal;
@@ -19,12 +18,12 @@ public class Su3AlgebraTest extends TestCase {
   public void testSimple() {
     Su3Algebra su3Algebra = Su3Algebra.INSTANCE;
     Tensor ad = su3Algebra.ad();
-    System.out.println(ad);
+    // System.out.println(ad);
     ad = ad.map(PlausibleRational.FUNCTION);
-    System.out.println(ad);
+    // System.out.println(ad);
     assertTrue(ad instanceof SparseArray);
     Tensor form = KillingForm.of(ad);
-    System.out.println(Pretty.of(form));
+    // System.out.println(Pretty.of(form));
     Tolerance.CHOP.requireClose(Diagonal.of(form), ConstantArray.of(RealScalar.of(3), 8));
   }
 
