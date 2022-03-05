@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
-import ch.alpine.sophus.math.sca.SinhcInverse;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.sca.ArcCosh;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.tri.ArcCosh;
+import ch.alpine.tensor.sca.tri.Sinhc;
 
 public class HnAngle implements TensorScalarFunction {
   private final Tensor x;
@@ -24,7 +24,6 @@ public class HnAngle implements TensorScalarFunction {
     Scalar cosh_d = LBilinearForm.between(x, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, cosh_d))
       return cosh_d;
-    // TODO SOPHUS ALG use taylor series
     Chop._08.requireClose(cosh_d, RealScalar.ONE);
     return RealScalar.ONE;
   }
@@ -55,7 +54,8 @@ public class HnAngle implements TensorScalarFunction {
     }
 
     public Tensor log() {
-      return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(angle));
+      return y.subtract(x.multiply(cosh_d)).divide(Sinhc.FUNCTION.apply(angle));
+      // return y.subtract(x.multiply(cosh_d)).multiply(SinhcInverse.FUNCTION.apply(angle));
     }
   }
 }

@@ -8,10 +8,10 @@ import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.nrm.Hypot;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
-import ch.alpine.tensor.sca.ArcTan;
-import ch.alpine.tensor.sca.Cos;
-import ch.alpine.tensor.sca.Power;
-import ch.alpine.tensor.sca.Sin;
+import ch.alpine.tensor.sca.pow.Power;
+import ch.alpine.tensor.sca.tri.ArcTan;
+import ch.alpine.tensor.sca.tri.Cos;
+import ch.alpine.tensor.sca.tri.Sin;
 
 /** generalization of complex power (x+y*I)^n in two
  * dimensions {x, y}^n to three dimensions {x, y, z}^n

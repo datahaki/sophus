@@ -5,8 +5,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.sca.Cosh;
-import ch.alpine.tensor.sca.Sinh;
+import ch.alpine.tensor.sca.tri.Cosh;
+import ch.alpine.tensor.sca.tri.Sinh;
 
 public class HnRay {
   private final Tensor x;

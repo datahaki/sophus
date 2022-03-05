@@ -10,8 +10,8 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Exp;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Exp;
+import ch.alpine.tensor.sca.exp.Log;
 import junit.framework.TestCase;
 
 public class S3UnitQuaternionDistanceTest extends TestCase {

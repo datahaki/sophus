@@ -12,7 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** 3-point Gauss Legendre quadrature on interval [0, 1] */
 /* package */ class Legendre3ClothoidIntegral implements ClothoidPartial, ClothoidIntegral, Serializable {

@@ -6,8 +6,8 @@ import java.util.Objects;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.exp.Exp;
 
 /** <p>The input of the variogram has unit of a.
  * The output of the variogram has unit of b.

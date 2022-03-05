@@ -13,7 +13,7 @@ import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Log;
 import junit.framework.TestCase;
 
 public class StaticHelperTest extends TestCase {

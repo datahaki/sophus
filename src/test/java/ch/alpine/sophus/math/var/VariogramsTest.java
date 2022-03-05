@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 public class VariogramsTest extends TestCase {
   public void testSimple() {
-    for (Variograms variograms : Variograms.values()) {
+    for (VariogramFunctions variograms : VariogramFunctions.values()) {
       ScalarUnaryOperator suo = variograms.of(RealScalar.ONE);
       suo.toString();
     }

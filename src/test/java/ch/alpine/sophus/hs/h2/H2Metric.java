@@ -6,8 +6,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
-import ch.alpine.tensor.sca.ArcCosh;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.tri.ArcCosh;
 
 /** Careful: H2Metric uses as coordinates the Klein model
  * whereas HnMetric uses as coordinates the hyperboloid model!

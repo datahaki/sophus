@@ -10,7 +10,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.sca.ArcCos;
+import ch.alpine.tensor.sca.tri.ArcCos;
 
 /* package */ enum Steer3Turns implements DubinsSteer {
   INSTANCE;

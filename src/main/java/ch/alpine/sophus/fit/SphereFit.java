@@ -11,7 +11,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** reference: "Circle fitting by linear and non-linear least squares", by J. D. Coope */
 public record SphereFit(Tensor center, Scalar radius) implements Serializable {

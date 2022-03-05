@@ -3,7 +3,7 @@ package ch.alpine.sophus.math;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.ArcTan;
+import ch.alpine.tensor.sca.tri.ArcTan;
 
 /** Hint: ArcTan2D[{0, 0}] == 0.0
  * 

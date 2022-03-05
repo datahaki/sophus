@@ -8,12 +8,12 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.AbsSquared;
-import ch.alpine.tensor.sca.ArcTanh;
-import ch.alpine.tensor.sca.Cosh;
-import ch.alpine.tensor.sca.Power;
 import ch.alpine.tensor.sca.Sign;
-import ch.alpine.tensor.sca.Sqrt;
-import ch.alpine.tensor.sca.Tanh;
+import ch.alpine.tensor.sca.pow.Power;
+import ch.alpine.tensor.sca.pow.Sqrt;
+import ch.alpine.tensor.sca.tri.ArcTanh;
+import ch.alpine.tensor.sca.tri.Cosh;
+import ch.alpine.tensor.sca.tri.Tanh;
 
 /** Careful: H2Geodesic uses different coordinates than HnGeodesic for n == 2!
  * 

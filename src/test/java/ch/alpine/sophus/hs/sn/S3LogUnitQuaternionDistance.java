@@ -5,7 +5,7 @@ import ch.alpine.sophus.math.Metric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Log;
 
 /** implementation for evaluation or {@link S3UnitQuaternionDistance}
  * 

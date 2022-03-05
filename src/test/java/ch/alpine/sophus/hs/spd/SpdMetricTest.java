@@ -12,7 +12,7 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 import junit.framework.TestCase;
 
 public class SpdMetricTest extends TestCase {

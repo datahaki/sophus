@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Exp;
+import ch.alpine.tensor.sca.exp.Exp;
 import junit.framework.TestCase;
 
 public class AffineCoordinateTest extends TestCase {

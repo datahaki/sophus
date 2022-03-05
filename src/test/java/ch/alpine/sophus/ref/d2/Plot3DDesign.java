@@ -18,7 +18,7 @@ import ch.alpine.tensor.nrm.Normalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.AbsSquared;
-import ch.alpine.tensor.sca.Sin;
+import ch.alpine.tensor.sca.tri.Sin;
 
 /* package */ class Plot3DDesign {
   private static final Scalar DT = RealScalar.of(0.01);

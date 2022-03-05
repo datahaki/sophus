@@ -7,7 +7,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.sca.Sinc;
+import ch.alpine.tensor.sca.tri.Sinc;
 
 /** length of geodesic between p and q in SE(2) when projected to R^2
  * the projection is a circle segment */

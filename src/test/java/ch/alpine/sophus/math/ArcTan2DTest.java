@@ -16,8 +16,8 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.ArcTan;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.tri.ArcTan;
 import junit.framework.TestCase;
 
 public class ArcTan2DTest extends TestCase {

@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.re.LinearSolve;
-import ch.alpine.tensor.sca.Tan;
+import ch.alpine.tensor.sca.tri.Tan;
 
 /** solve for biinvariant mean
  * 

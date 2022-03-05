@@ -13,11 +13,11 @@ import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.sca.ArcCos;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
-import ch.alpine.tensor.sca.Sinc;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
+import ch.alpine.tensor.sca.tri.ArcCos;
+import ch.alpine.tensor.sca.tri.Sinc;
 
 /** a group element SO(3) is represented as a 3x3 orthogonal matrix.
  * an element of the algebra so(3) is represented as a vector of length 3

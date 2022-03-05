@@ -10,8 +10,11 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
  * your function y(x) as a function of offset distance r, a so-called variogram
  * <pre>
  * v(r) == 1/2 E[ (y(x+r) - y(x)) ^ 2 ]
- * </pre> */
-public enum Variograms {
+ * </pre>
+ * 
+ * <p>inspired by
+ * <a href="https://reference.wolfram.com/language/ref/VariogramFunction.html">VariogramFunction</a> */
+public enum VariogramFunctions {
   INVERSE_POWER {
     @Override
     public ScalarUnaryOperator of(Scalar param) {

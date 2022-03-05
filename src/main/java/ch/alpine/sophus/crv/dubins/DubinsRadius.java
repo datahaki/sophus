@@ -12,10 +12,10 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Cos;
 import ch.alpine.tensor.sca.Mod;
-import ch.alpine.tensor.sca.Sin;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
+import ch.alpine.tensor.sca.tri.Cos;
+import ch.alpine.tensor.sca.tri.Sin;
 
 public enum DubinsRadius {
   ;

@@ -6,11 +6,11 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Imag;
 import ch.alpine.tensor.sca.Real;
-import ch.alpine.tensor.sca.Sqrt;
 import ch.alpine.tensor.sca.erf.Erf;
+import ch.alpine.tensor.sca.exp.Exp;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** for matching end point tangents the real part of the defect should be 0
  * and the imaginary part should be positive */

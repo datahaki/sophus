@@ -4,8 +4,8 @@ package ch.alpine.sophus.hs.sn;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.sca.ArcCos;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.tri.ArcCos;
 
 /** maps a point q to the (angular) distance from base point p */
 public class SnAngle implements TensorScalarFunction {

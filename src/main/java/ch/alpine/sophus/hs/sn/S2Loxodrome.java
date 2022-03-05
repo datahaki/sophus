@@ -6,7 +6,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.sca.ArcTan;
+import ch.alpine.tensor.sca.tri.ArcTan;
 
 /** curve on the 2-dimensional sphere
  * 

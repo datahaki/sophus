@@ -10,8 +10,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.TensorProduct;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.sca.ArcSin;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.tri.ArcSin;
 
 /** distance between line spanned by p and q on S^n and point r on S^n */
 public enum SnLineDistance implements LineDistance {

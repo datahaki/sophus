@@ -10,8 +10,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.sca.ArcTan;
-import ch.alpine.tensor.sca.Tan;
+import ch.alpine.tensor.sca.tri.ArcTan;
+import ch.alpine.tensor.sca.tri.Tan;
 
 /** formula to convert steering angle to (front-)wheel angle
  * so that no friction arises in the ideal/no-slip scenario.

@@ -9,8 +9,8 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.lie.Cross;
-import ch.alpine.tensor.sca.ArcCos;
-import ch.alpine.tensor.sca.Sin;
+import ch.alpine.tensor.sca.tri.ArcCos;
+import ch.alpine.tensor.sca.tri.Sin;
 
 /** geodesic on 2-dimensional sphere embedded in R^3
  * 

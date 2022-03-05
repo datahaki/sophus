@@ -7,9 +7,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.ArcSinh;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Log;
+import ch.alpine.tensor.sca.tri.ArcSinh;
 import junit.framework.TestCase;
 
 public class H2MetricTest extends TestCase {

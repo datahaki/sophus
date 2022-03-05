@@ -12,8 +12,8 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
-import ch.alpine.tensor.sca.ArcCos;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.tri.ArcCos;
 import junit.framework.TestCase;
 
 public class SnMetricTest extends TestCase {

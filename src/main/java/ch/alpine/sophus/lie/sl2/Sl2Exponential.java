@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie.sl2;
 import ch.alpine.sophus.lie.sl.SlMemberQ;
 import ch.alpine.sophus.lie.sl.TSlMemberQ;
 import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.sca.Sinhc;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -18,8 +17,9 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Cosh;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
+import ch.alpine.tensor.sca.tri.Cosh;
+import ch.alpine.tensor.sca.tri.Sinhc;
 
 /** References:
  * "Lie Group methods", p. 313, 334

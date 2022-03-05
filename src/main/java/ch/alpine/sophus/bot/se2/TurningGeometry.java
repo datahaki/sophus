@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Tan;
+import ch.alpine.tensor.sca.tri.Tan;
 
 public enum TurningGeometry {
   ;

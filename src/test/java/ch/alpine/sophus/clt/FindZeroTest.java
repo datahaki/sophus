@@ -6,8 +6,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Cos;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.tri.Cos;
 import junit.framework.TestCase;
 
 public class FindZeroTest extends TestCase {

@@ -4,12 +4,12 @@ package ch.alpine.sophus.lie.dt;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.sc.ScBiinvariantMean;
-import ch.alpine.sophus.math.sca.Logc;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.red.Times;
+import ch.alpine.tensor.sca.exp.Logc;
 
 /** @param sequence of (lambda_i, t_i) points in ST(n) and weights non-negative and normalized
  * @return associated biinvariant mean which is the solution to the barycentric equation

@@ -7,7 +7,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.sca.ArcTan;
+import ch.alpine.tensor.sca.tri.ArcTan;
 
 public enum Se2RigidMotionFit {
   ;
