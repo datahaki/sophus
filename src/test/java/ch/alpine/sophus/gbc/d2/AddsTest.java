@@ -24,6 +24,10 @@ public class AddsTest extends TestCase {
     }
   }
 
+  public void testMatrix() {
+    assertEquals(Adds.matrix(3), Tensors.fromString("{{1, 1, 0}, {0, 1, 1}, {1, 0, 1}}"));
+  }
+
   public void testNegFail() {
     AssertFail.of(() -> Adds.matrix(-1));
   }

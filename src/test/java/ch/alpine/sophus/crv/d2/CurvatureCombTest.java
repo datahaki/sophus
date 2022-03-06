@@ -10,6 +10,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -63,6 +64,18 @@ public class CurvatureCombTest extends TestCase {
     Tensor tensor = Array.zeros(10, 2);
     assertEquals(tensor, CurvatureComb.of(tensor, RealScalar.of(2), false));
     assertEquals(tensor, CurvatureComb.of(tensor, RealScalar.of(2), true));
+  }
+
+  public void testQuantity() {
+    Distribution distribution = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(1, "m"));
+    Tensor p = RandomVariate.of(distribution, 2);
+    Tensor q = RandomVariate.of(distribution, 2);
+    Tensor r = RandomVariate.of(distribution, 2);
+    Tensor tangent = p.subtract(r);
+    Tensor t1 = CurvatureComb.normal(p, q, r, tangent);
+    Tensor t2 = CurvatureComb.normal(p, p, p, tangent);
+    t1.add(t2);
+    assertEquals(t2, Tensors.fromString("{0[m^-1], 0[m^-1]}"));
   }
 
   public void testFail() {

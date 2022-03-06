@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.num.Boole;
+import ch.alpine.tensor.mat.IdentityMatrix;
 
 /* package */ enum Adds {
   ;
@@ -52,7 +52,9 @@ import ch.alpine.tensor.num.Boole;
   }
 
   private static Tensor build(int n) {
-    // TODO SOPHUS ALG implement as sparse matrix
-    return Tensors.matrix((i, j) -> Boole.of(Math.floorMod(j - i, n) < 2), n, n);
+    Tensor matrix = IdentityMatrix.sparse(n);
+    for (int index = 0; index < n; ++index)
+      matrix.set(RealScalar.ONE, index, (index + 1) % n);
+    return matrix;
   }
 }
