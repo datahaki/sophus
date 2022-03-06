@@ -15,6 +15,7 @@ import ch.alpine.tensor.alg.ArrayFlatten;
 import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.Timing;
@@ -82,7 +83,7 @@ public enum ImageMatcher {
     Timing timing = Timing.started();
     // if (!file.isFile())
     {
-      Tensor matrix = DistanceMatrix.of(b_src, b_dst, Vector2Norm::between);
+      Tensor matrix = Outer.of(Vector2Norm::between, b_src, b_dst);
       System.out.println(timing.seconds() / 60);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       System.out.println(timing.seconds() / 60);

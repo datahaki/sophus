@@ -1,21 +1,16 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import java.util.function.BiFunction;
-
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 
-/** BiFunction that takes as input 1) a non-zero vector "dif" and 2) the 2-norm of vector "dif".
- * The function returns a scaled version of "dif".
- * 
- * References:
+/** References:
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
  * by Kai Hormann, N. Sukumar, 2017
  * 
  * "Interpolation via Barycentric Coordinates"
  * by Pierre Alliez, 2017 */
-public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
+public enum Barycenter implements ThreePointScaling {
   /** C^infty, non-negative, for convex polygons
    * not well-defined for non-convex polygons
    * 
@@ -34,7 +29,7 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
    * "On the injectivity of Wachspress and mean value mappings between convex polygons" */
   WACHSPRESS {
     @Override
-    public Tensor apply(Tensor dif, Scalar nrm) {
+    public Tensor scale(Tensor dif, Scalar nrm) {
       return dif.divide(nrm.multiply(nrm));
     }
   },
@@ -48,7 +43,7 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
    * "On the injectivity of Wachspress and mean value mappings between convex polygons" */
   MEAN_VALUE {
     @Override
-    public Tensor apply(Tensor dif, Scalar nrm) {
+    public Tensor scale(Tensor dif, Scalar nrm) {
       return dif.divide(nrm);
     }
   },
@@ -65,7 +60,7 @@ public enum Barycenter implements BiFunction<Tensor, Scalar, Tensor> {
    * would not enforce." */
   DISCRETE_HARMONIC {
     @Override
-    public Tensor apply(Tensor dif, Scalar nrm) {
+    public Tensor scale(Tensor dif, Scalar nrm) {
       return dif;
     }
   };

@@ -45,13 +45,14 @@ import ch.alpine.tensor.num.Boole;
   private static final int CACHE_SIZE = 32;
   private static final Function<Integer, Tensor> CACHE = Cache.of(Adds::build, CACHE_SIZE);
 
-  /** @param n
+  /** @param n strictly positive
    * @return */
   public static Tensor matrix(int n) {
     return CACHE.apply(Integers.requirePositive(n));
   }
 
   private static Tensor build(int n) {
+    // TODO SOPHUS ALG implement as sparse matrix
     return Tensors.matrix((i, j) -> Boole.of(Math.floorMod(j - i, n) < 2), n, n);
   }
 }

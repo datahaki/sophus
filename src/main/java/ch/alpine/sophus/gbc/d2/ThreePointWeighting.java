@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiFunction;
 
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.tensor.RealScalar;
@@ -20,7 +19,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:
  * weighting satisfies barycentric equation but do not necessarily sum up to one. */
-public record ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction) implements Genesis, Serializable {
+public record ThreePointWeighting(ThreePointScaling biFunction) implements Genesis, Serializable {
   public ThreePointWeighting {
     Objects.requireNonNull(biFunction);
   }
@@ -35,7 +34,7 @@ public record ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction)
       Scalar den = Vector2Norm.of(dif); // use of metric
       if (Scalars.isZero(den))
         return UnitVector.of(length, ind);
-      auxs[ind] = biFunction.apply(dif, den);
+      auxs[ind] = biFunction.scale(dif, den);
       dens[ind] = den;
       ++ind;
     }
@@ -45,7 +44,7 @@ public record ThreePointWeighting(BiFunction<Tensor, Scalar, Tensor> biFunction)
       Tensor cntr = auxs[index];
       Tensor next = auxs[(index + 1) % length];
       Scalar diff = forward(cntr, next).subtract(forward(cntr, prev));
-      list.add(biFunction.apply(diff, dens[index]));
+      list.add(biFunction.scale(diff, dens[index]));
     }
     Integers.requireEquals(list.size(), length);
     return Unprotect.using(list);

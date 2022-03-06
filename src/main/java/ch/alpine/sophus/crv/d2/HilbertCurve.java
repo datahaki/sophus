@@ -15,7 +15,10 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
  * 
  * Reference:
  * "Hilbert curve - Representation as Lindenmayer system"
- * on Wikipedia, 2020 */
+ * on Wikipedia, 2020
+ * 
+ * <p>inspired by
+ * <a href="https://reference.wolfram.com/language/ref/HilbertCurve.html">HilbertCurve</a> */
 public class HilbertCurve {
   private static final int CACHE_SIZE = 6;
   private static final Function<Integer, Tensor> CACHE = Cache.of(HilbertCurve::build, CACHE_SIZE);
