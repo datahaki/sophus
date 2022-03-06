@@ -7,10 +7,12 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -21,6 +23,11 @@ public class CurvatureCombTest extends TestCase {
     String string = "{{-0.7071067811865474, 0.7071067811865474}, {1, 2}, {2.7071067811865475, 0.7071067811865474}}";
     Tensor result = Tensors.fromString(string);
     Chop._12.requireClose(tensor, result);
+  }
+
+  public void testCirclePoints() {
+    for (int n = 3; n < 10; ++n)
+      Tolerance.CHOP.requireAllZero(Total.of(CurvatureComb.cyclic(CirclePoints.of(n))));
   }
 
   public void testStringLength() {

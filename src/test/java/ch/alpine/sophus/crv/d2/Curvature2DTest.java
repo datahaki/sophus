@@ -10,8 +10,10 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityUnit;
+import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -52,6 +54,11 @@ public class Curvature2DTest extends TestCase {
     Tensor string = Curvature2D.string(points);
     VectorQ.requireLength(string, 4);
     assertEquals(string.stream().map(Scalar.class::cast).map(QuantityUnit::of).distinct().count(), 1);
+  }
+
+  public void testCirclePoints() {
+    for (int n = 3; n < 10; ++n)
+      Tolerance.CHOP.requireClose(Total.of(Curvature2D.string(CirclePoints.of(n))), RealScalar.of(n));
   }
 
   public void testQuantityFail() {

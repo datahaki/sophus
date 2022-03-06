@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.sn;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 
-// FIXME SOPHUS API
+// TODO SOPHUS API
 @Deprecated
 public class SnRep {
   private final Tensor neutral;

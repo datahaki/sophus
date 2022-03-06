@@ -5,5 +5,5 @@ package ch.alpine.sophus.math;
  * <a href="https://reference.wolfram.com/language/ref/RegionBounds.html">RegionBounds</a> */
 public enum RegionBounds {
   ;
-  // TODO SOPHUS ALG
+  // TODO SOPHUS ALG go through regions to provide CoordinateBounds
 }

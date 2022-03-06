@@ -17,7 +17,7 @@ public record HsLineProjection(HsManifold hsManifold) {
     for (int count = 0; count < 6; ++count) {
       Exponential exponential = hsManifold.exponential(p);
       Tensor lq = exponential.log(q);
-      // FIXME SOPHUS ALG not generic: log not always vector, metric different
+      // TODO SOPHUS ALG not generic: log not always vector, metric different
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);
       Tensor lr = exponential.log(r);
       Tensor project = Times.of(lr.dot(normal), normal);

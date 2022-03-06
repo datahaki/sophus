@@ -2,5 +2,5 @@
 package ch.alpine.sophus.lie.su;
 
 public class SuAlgebra {
-  // TODO SOPHUS ALG
+  // TODO SOPHUS ALG find definition of basis
 }

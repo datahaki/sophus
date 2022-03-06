@@ -43,9 +43,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     return of(hsManifold, chop, ArgMaxSelection.INSTANCE);
   }
 
-  /** uses ...
-   * 
-   * @param hsManifold
+  /** @param hsManifold
    * @param chop
    * @param geodesic
    * @return */
