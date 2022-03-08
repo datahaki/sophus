@@ -35,6 +35,7 @@ public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializab
 
   @Override // from SurfaceMeshRefinement
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
+    // TODO SOPHUS ALG big assumption: is decomposition sub=lin+avg still possible?
     SurfaceMesh out = surfaceMeshRefinement.refine(surfaceMesh);
     int vix = 0;
     Tensor cpy = out.vrt.copy();

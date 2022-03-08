@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
 public class SpdManifoldTest extends TestCase {
-  public static final BarycentricCoordinate[] list(Tensor sequence) {
+  public static final BarycentricCoordinate[] list() {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
         HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(1))), //
@@ -35,7 +35,7 @@ public class SpdManifoldTest extends TestCase {
     int fail = 0;
     int len = 5 + random.nextInt(3);
     Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
-    for (BarycentricCoordinate barycentricCoordinate : list(sequence))
+    for (BarycentricCoordinate barycentricCoordinate : list())
       try {
         Tensor point = TestHelper.generateSpd(d);
         Tensor weights = barycentricCoordinate.weights(sequence, point);
@@ -53,7 +53,7 @@ public class SpdManifoldTest extends TestCase {
     int d = 2;
     int len = 5 + random.nextInt(3);
     Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
-    for (BarycentricCoordinate barycentricCoordinate : list(sequence)) {
+    for (BarycentricCoordinate barycentricCoordinate : list()) {
       int index = random.nextInt(sequence.length());
       Tensor point = sequence.get(index);
       Tensor weights = barycentricCoordinate.weights(sequence, point);

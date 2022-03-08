@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
   public static Tensor generateSim(int n, Random random) {
     Integers.requirePositive(n);
     Distribution distribution = UniformDistribution.of(-1, 1);
-    Tensor matrix = RandomVariate.of(distribution, n, n);
+    Tensor matrix = RandomVariate.of(distribution, random, n, n);
     return Symmetrize.of(matrix);
   }
 

@@ -13,7 +13,6 @@ import java.util.function.Function;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.sophus.srf.SurfaceMesh;
-import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -21,7 +20,6 @@ import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 
 public record LinearMeshRefinement(BiinvariantMean biinvariantMean) implements SurfaceMeshRefinement, Serializable {
-  private static final Tensor MIDPOINT = Tensors.of(RationalScalar.HALF, RationalScalar.HALF);
   private static final Function<Integer, Tensor> WEIGHTS = UniformWindowSampler.of(DirichletWindow.FUNCTION);
 
   public LinearMeshRefinement {
@@ -51,7 +49,7 @@ public record LinearMeshRefinement(BiinvariantMean biinvariantMean) implements S
           Tensor sequence = Tensors.of( //
               surfaceMesh.vrt.get(p0.number().intValue()), //
               surfaceMesh.vrt.get(p1.number().intValue()));
-          Tensor mid = biinvariantMean.mean(sequence, MIDPOINT);
+          Tensor mid = biinvariantMean.mean(sequence, WEIGHTS.apply(sequence.length()));
           int index = out.addVert(mid);
           edges.put(Tensors.of(p1, p0), index);
           list.add(index);

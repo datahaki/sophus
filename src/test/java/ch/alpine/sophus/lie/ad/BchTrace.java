@@ -33,6 +33,7 @@ public class BchTrace implements Serializable {
 
   private void register(String string, Scalar factor) {
     // follows from XYZw + YXWz + ZWXy + WZYx == 0
+    // https://en.wikipedia.org/wiki/Jacobi_identity
     if (string.endsWith("YXXy"))
       string = string.substring(0, string.length() - 4) + "XYXy";
     navigableMap.merge(string, factor, Scalar::add);

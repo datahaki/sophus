@@ -31,9 +31,8 @@ public enum Su2Algebra implements LieAlgebra {
 
   @Override
   public Tensor basis() {
-    // TODO SOPHUS DOC state reference
-    Tensor u1 = Tensors.fromString("{{0, I}, {I, 0}}");
-    Tensor u2 = Tensors.fromString("{{0, -1}, {1, 0}}");
+    Tensor u1 = Tensors.fromString("{{0, 1}, {-1, 0}}");
+    Tensor u2 = Tensors.fromString("{{0, I}, {I, 0}}");
     Tensor u3 = Tensors.fromString("{{I, 0}, {0, -I}}");
     return Tensors.of(u1, u2, u3);
   }

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.su;
+package ch.alpine.sophus.lie.u;
 
 import java.io.Serializable;
 import java.util.function.BinaryOperator;
@@ -14,8 +14,8 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.sca.N;
 
-public class SuAlgebra implements LieAlgebra, Serializable {
-  private static final Cache<Integer, LieAlgebra> CACHE = Cache.of(SuAlgebra::new, 8);
+public class UAlgebra implements LieAlgebra, Serializable {
+  private static final Cache<Integer, LieAlgebra> CACHE = Cache.of(UAlgebra::new, 8);
 
   /** @param n greater or equals to 2
    * @return */
@@ -27,7 +27,7 @@ public class SuAlgebra implements LieAlgebra, Serializable {
   private final int n;
   private final Tensor ad;
 
-  private SuAlgebra(int n) {
+  private UAlgebra(int n) {
     this.n = n;
     ad = new MatrixAlgebra(basis()).ad();
   }
@@ -44,7 +44,7 @@ public class SuAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public Tensor basis() {
-    Tensor tensor = Array.sparse(n * n - 1, n, n);
+    Tensor tensor = Array.sparse(n * n, n, n);
     int index = 0;
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
@@ -55,10 +55,8 @@ public class SuAlgebra implements LieAlgebra, Serializable {
         tensor.set(ComplexScalar.I, index, j, i);
         ++index;
       }
-    for (int i = 1; i < n; ++i) {
-      int j = i - 1;
-      tensor.set(ComplexScalar.I, index, j, j);
-      tensor.set(ComplexScalar.I.negate(), index, i, i);
+    for (int i = 0; i < n; ++i) {
+      tensor.set(ComplexScalar.I, index, i, i);
       ++index;
     }
     return tensor;

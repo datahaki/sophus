@@ -32,7 +32,7 @@ public enum DubinsRadius {
       return type.isFirstEqualsLast() //
           ? getMax2turnsSameSide(hypot, turn1, angle, clip.max()) // .type == LSL || type == RSR
           : getMax2turnsDiffSide(hypot, turn1, angle, clip.max()); // type == LSR || type == RSL
-    return getMaxRadius3turns(hypot, turn1, angle, clip.min());
+    return getMaxRadius3turns(clip.min());
   }
 
   private static Scalar getMax2turnsDiffSide(Scalar hypot, Scalar turn1, Scalar angle, Scalar rMax) {
@@ -57,7 +57,7 @@ public enum DubinsRadius {
         : ds.divide(aux);
   }
 
-  private static Scalar getMaxRadius3turns(Scalar hypot, Scalar turn1, Scalar angle, Scalar rbnd) {
+  private static Scalar getMaxRadius3turns(Scalar rbnd) {
     return rbnd;
   }
 }

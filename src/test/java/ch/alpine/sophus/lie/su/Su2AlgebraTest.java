@@ -55,18 +55,15 @@ public class Su2AlgebraTest extends TestCase {
   }
 
   public void testBasis() {
-    for (Tensor mat : Su2Algebra.INSTANCE.basis()) {
-      ExactTensorQ.require(mat);
-      assertEquals(ConjugateTranspose.of(mat), mat.negate());
-      assertEquals(Trace.of(mat), RealScalar.ZERO);
-      AntihermitianMatrixQ.require(mat);
+    for (Tensor matrix : Su2Algebra.INSTANCE.basis()) {
+      ExactTensorQ.require(matrix);
+      assertEquals(ConjugateTranspose.of(matrix), matrix.negate());
+      assertEquals(Trace.of(matrix), RealScalar.ZERO);
+      AntihermitianMatrixQ.require(matrix);
     }
   }
 
-  public void testHermitian() {
-    // TODO SOPHUS SU2 what was supposed to happen here
-    // Su2Algebra.INSTANCE.basis().stream().forEach(HermitianMatrixQ::require);
-    // Tensor tensor = Tensor.of(Su2Algebra.INSTANCE.basis().stream().map(Trace::of));
-    // Chop.NONE.requireAllZero(tensor);
+  public void testBasis2() {
+    assertEquals(Su2Algebra.INSTANCE.basis(), SuAlgebra.of(2).basis());
   }
 }
