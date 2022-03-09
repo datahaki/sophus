@@ -18,7 +18,10 @@ public class SoAlgebraTest extends TestCase {
       if (2 < n)
         assertFalse(hsAlgebra.isHTrivial());
       lieAlgebra.basis().forEach(AntisymmetricMatrixQ::require);
-      HigherJacobiIdentity.of(lieAlgebra.ad());
+      HigherJacobiIdentity.of4(ad);
+      HigherJacobiIdentity.of4b(ad);
+      HigherJacobiIdentity.of5(ad);
+      HigherJacobiIdentity.of5b(ad);
     }
   }
 }

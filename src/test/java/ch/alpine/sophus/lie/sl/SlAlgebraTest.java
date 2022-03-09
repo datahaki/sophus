@@ -21,13 +21,17 @@ public class SlAlgebraTest extends TestCase {
 
   public void testSl3Klling() {
     LieAlgebra lieAlgebra = SlAlgebra.of(3);
-    Tensor form = KillingForm.of(lieAlgebra.ad());
+    Tensor ad = lieAlgebra.ad();
+    Tensor form = KillingForm.of(ad);
     assertTrue(Scalars.nonZero(Det.of(form)));
     // System.out.println(Det.of(form));
     // System.out.println(Pretty.of(form));
     HsAlgebra hsAlgebra = new HsAlgebra(lieAlgebra.ad(), 6, 6);
     assertEquals(hsAlgebra.dimH(), 2);
     AssertFail.of(() -> new HsAlgebra(lieAlgebra.ad(), 5, 6));
-    HigherJacobiIdentity.of(lieAlgebra.ad());
+    HigherJacobiIdentity.of4(ad);
+    HigherJacobiIdentity.of4b(ad);
+    HigherJacobiIdentity.of5(ad);
+    HigherJacobiIdentity.of5b(ad);
   }
 }

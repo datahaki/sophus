@@ -18,10 +18,14 @@ public class SuAlgebraTest extends TestCase {
       lieAlgebra.basis().forEach(AntihermitianMatrixQ::require);
       for (Tensor matrix : lieAlgebra.basis())
         Tolerance.CHOP.requireZero(Trace.of(matrix));
-      Tensor form = KillingForm.of(lieAlgebra.ad());
+      Tensor ad = lieAlgebra.ad();
+      Tensor form = KillingForm.of(ad);
       // System.out.println(Pretty.of(form));
       SquareMatrixQ.require(form);
-      HigherJacobiIdentity.of(lieAlgebra.ad());
+      HigherJacobiIdentity.of4(ad);
+      HigherJacobiIdentity.of4b(ad);
+      HigherJacobiIdentity.of5(ad);
+      HigherJacobiIdentity.of5b(ad);
     }
   }
 }
