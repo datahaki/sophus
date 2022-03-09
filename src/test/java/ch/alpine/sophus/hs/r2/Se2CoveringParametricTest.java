@@ -1,4 +1,4 @@
-// code by jph, ob 
+// code by jph, ob
 package ch.alpine.sophus.hs.r2;
 
 import java.io.IOException;

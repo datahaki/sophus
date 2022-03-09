@@ -25,11 +25,11 @@ public enum Normal2D {
       Tensor a = points.get(0);
       Tensor b = points.get(1);
       normal.append(process(b.subtract(a)));
-    } else //
-    if (0 < length) {
-      Integers.requireEquals(points.get(0).length(), 2);
-      normal.append(ZEROS);
-    }
+    } else
+      if (0 < length) {
+        Integers.requireEquals(points.get(0).length(), 2);
+        normal.append(ZEROS);
+      }
     for (int index = 1; index < length - 1; ++index) {
       Tensor a = points.get(index - 1);
       Tensor c = points.get(index + 1);
@@ -39,9 +39,9 @@ public enum Normal2D {
       Tensor b = points.get(length - 2);
       Tensor c = points.get(length - 1);
       normal.append(process(c.subtract(b)));
-    } else //
-    if (1 < length)
-      normal.append(ZEROS);
+    } else
+      if (1 < length)
+        normal.append(ZEROS);
     return normal;
   }
 

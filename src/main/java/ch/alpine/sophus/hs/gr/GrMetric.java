@@ -1,4 +1,4 @@
-// code by jph 
+// code by jph
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.api.TensorMetric;

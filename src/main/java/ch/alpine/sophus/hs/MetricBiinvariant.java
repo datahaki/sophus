@@ -33,6 +33,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * 3.7.3 Shepard Interpolation
  * 
  * for alternative implementations
+ * 
  * @see HnMetricBiinvariant */
 public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) implements Biinvariant, Serializable {
   /** Careful: not suitable for {@link SpdExponential}, and {@link GrExponential}
