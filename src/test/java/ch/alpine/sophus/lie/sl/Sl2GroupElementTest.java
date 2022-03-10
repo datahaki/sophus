@@ -4,12 +4,16 @@ package ch.alpine.sophus.lie.sl;
 import java.util.Random;
 
 import ch.alpine.sophus.lie.LieGroupElement;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import junit.framework.TestCase;
 
 public class Sl2GroupElementTest extends TestCase {
@@ -34,10 +38,14 @@ public class Sl2GroupElementTest extends TestCase {
 
   public void testAdjointCombine() {
     Random random = new Random(3);
+    RandomSampleInterface rsi = new Sl2RandomSample( //
+        DiscreteUniformDistribution.of(-10, 11), //
+        DiscreteUniformDistribution.of(1, 10));
     for (int count = 0; count < 10; ++count) {
-      Tensor a = TestHelper.spawn_Sl2(random);
+      Tensor a = RandomSample.of(rsi, random);
+      VectorQ.require(a);
       Sl2GroupElement ga = Sl2Group.INSTANCE.element(a);
-      Tensor b = TestHelper.spawn_Sl2(random);
+      Tensor b = RandomSample.of(rsi, random);
       Sl2GroupElement gb = Sl2Group.INSTANCE.element(b);
       Sl2GroupElement gab = Sl2Group.INSTANCE.element(ga.combine(b));
       Tensor matrix = adjoint(gab);
