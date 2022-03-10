@@ -2,13 +2,16 @@
 package ch.alpine.sophus.lie;
 
 import ch.alpine.sophus.lie.he.HeAlgebra;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import junit.framework.TestCase;
@@ -37,8 +40,13 @@ public class JacobiIdentityTest extends TestCase {
     AssertFail.of(() -> JacobiIdentity.require(ad));
   }
 
-  public void testSe3() {
-    Tensor ad = JacobiIdentity.require(Se3Algebra.INSTANCE.ad());
+  public void testSe2() {
+    Tensor ad = Se2Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
+  }
+
+  public void testSe3() {
+    Tensor ad = Se3Algebra.INSTANCE.ad();
+    assertEquals(JacobiIdentity.of(ad), ConstantArray.of(RealScalar.ZERO, 6, 6, 6, 6));
   }
 }
