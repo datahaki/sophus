@@ -8,11 +8,13 @@ import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesCoordinate;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -34,10 +36,11 @@ public class SpdManifoldTest extends TestCase {
     int d = 2;
     int fail = 0;
     int len = 5 + random.nextInt(3);
-    Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
+    RandomSampleInterface rsi = new SpdRandomSample(d, NormalDistribution.standard());
+    Tensor sequence = RandomSample.of(rsi, len);
     for (BarycentricCoordinate barycentricCoordinate : list())
       try {
-        Tensor point = TestHelper.generateSpd(d);
+        Tensor point = RandomSample.of(rsi);
         Tensor weights = barycentricCoordinate.weights(sequence, point);
         AffineQ.require(weights, Chop._08);
         Tensor spd = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -52,7 +55,8 @@ public class SpdManifoldTest extends TestCase {
     Random random = new Random();
     int d = 2;
     int len = 5 + random.nextInt(3);
-    Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
+    RandomSampleInterface rsi = new SpdRandomSample(d, NormalDistribution.standard());
+    Tensor sequence = RandomSample.of(rsi, len);
     for (BarycentricCoordinate barycentricCoordinate : list()) {
       int index = random.nextInt(sequence.length());
       Tensor point = sequence.get(index);
@@ -65,8 +69,9 @@ public class SpdManifoldTest extends TestCase {
   }
 
   public void testFlipMidpoint() {
-    Tensor p = TestHelper.generateSpd(3);
-    Tensor q = TestHelper.generateSpd(3);
+    RandomSampleInterface spd = new SpdRandomSample(3, NormalDistribution.standard());
+    Tensor p = RandomSample.of(spd);
+    Tensor q = RandomSample.of(spd);
     Tolerance.CHOP.requireClose(new SpdExponential(p).flip(q), SpdManifold.INSTANCE.flip(p, q));
     Tolerance.CHOP.requireClose(new SpdExponential(p).midpoint(q), SpdManifold.INSTANCE.midpoint(p, q));
   }

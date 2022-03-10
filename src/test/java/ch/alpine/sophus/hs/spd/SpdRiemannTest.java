@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -9,6 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -36,8 +39,10 @@ public class SpdRiemannTest extends TestCase {
   }
 
   public void testTransport3() {
-    Tensor p = IdentityMatrix.of(3);
-    Tensor q = TestHelper.generateSpd(3);
+    int n = 3;
+    Tensor p = IdentityMatrix.of(n);
+    RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+    Tensor q = RandomSample.of(rsi);
     SpdRiemann spdRiemann = new SpdRiemann(q);
     TensorUnaryOperator tuo = SpdTransport.INSTANCE.shift(p, q);
     Tensor e11 = tuo.apply(Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}"));
@@ -55,7 +60,8 @@ public class SpdRiemannTest extends TestCase {
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");
     Tensor p = IdentityMatrix.of(3);
     for (int c = 0; c < 5; ++c) {
-      Tensor q = TestHelper.generateSpd(3);
+      RandomSampleInterface rsi = new SpdRandomSample(3, TriangularDistribution.with(0, 1));
+      Tensor q = RandomSample.of(rsi);
       TensorUnaryOperator tuo = SpdTransport.INSTANCE.shift(p, q);
       e11 = tuo.apply(e11);
       e12 = tuo.apply(e12);

@@ -6,12 +6,13 @@ import java.util.Random;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 import junit.framework.TestCase;
 
@@ -20,8 +21,10 @@ public class SpdMemberQTest extends TestCase {
       Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
 
   public void testSimple() {
-    for (int n = 1; n < 10; ++n)
-      SpdMemberQ.INSTANCE.require(TestHelper.generateSpd(n));
+    for (int n = 1; n < 10; ++n) {
+      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      SpdMemberQ.INSTANCE.require(RandomSample.of(rsi));
+    }
   }
 
   public void testBiinvarianceSon() {
@@ -30,10 +33,10 @@ public class SpdMemberQTest extends TestCase {
     for (Biinvariants biinvariants : BIINVARIANTS)
       if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4) {
         int count = 1 + random.nextInt(3);
-        int fn = n;
         int len = n * (n + 1) / 2 + count;
-        Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn), len);
-        Tensor mL = TestHelper.generateSpd(fn);
+        RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+        Tensor sequence = RandomSample.of(rsi, len);
+        Tensor mL = RandomSample.of(rsi);
         Tensor weights1 = biinvariants.coordinate( //
             SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
         // ---
@@ -51,10 +54,10 @@ public class SpdMemberQTest extends TestCase {
     int n = 2 + random.nextInt(2);
     for (Biinvariants biinvariants : BIINVARIANTS) {
       int count = 1 + random.nextInt(3);
-      int fn = n;
       int len = n * (n + 1) / 2 + count;
-      Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(fn, random), len);
-      Tensor mL = TestHelper.generateSpd(fn, random);
+      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      Tensor sequence = RandomSample.of(rsi, random, len);
+      Tensor mL = RandomSample.of(rsi, random);
       Tensor weights1 = biinvariants.coordinate( //
           SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
       // ---

@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.IOException;
 
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
@@ -11,8 +13,10 @@ import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.mat.ex.MatrixSqrt;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class TestHelperTest extends TestCase {
@@ -25,7 +29,8 @@ public class TestHelperTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
-        Tensor g = TestHelper.generateSpd(n);
+        RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+        Tensor g = RandomSample.of(rsi);
         _check(g, Serialization.copy(MatrixSqrt.ofSymmetric(g)));
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(g));
       }
@@ -34,7 +39,8 @@ public class TestHelperTest extends TestCase {
   public void testSim() {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
-        Tensor matrix = TestHelper.generateSim(n);
+        RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+        Tensor matrix = RandomSample.of(rsi);
         _check(matrix, MatrixSqrt.ofSymmetric(matrix));
       }
   }
@@ -46,10 +52,5 @@ public class TestHelperTest extends TestCase {
 
   public void testNonSymmetricFail() {
     AssertFail.of(() -> MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4)));
-  }
-
-  public void testZeroFail() {
-    AssertFail.of(() -> TestHelper.generateSim(0));
-    AssertFail.of(() -> TestHelper.generateSim(-1));
   }
 }
