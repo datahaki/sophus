@@ -83,15 +83,14 @@ public class ReducingMeanTest extends TestCase {
   }
 
   public void testSimple() {
-    Random random = new Random();
+    Random random = new Random(1);
     BiinvariantMean bm = ReducingMean.of(SpdGeodesic.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
-      int fd = d;
-      RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
-      Tensor sequence = RandomSample.of(rsi, n);
+      RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.of(0, 0.3));
+      Tensor sequence = RandomSample.of(rsi, random, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
       Tensor m2 = bm.mean(sequence, weights);
