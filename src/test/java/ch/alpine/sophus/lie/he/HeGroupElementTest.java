@@ -4,6 +4,8 @@ package ch.alpine.sophus.lie.he;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
@@ -11,7 +13,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
 public class HeGroupElementTest extends TestCase {
@@ -63,8 +67,9 @@ public class HeGroupElementTest extends TestCase {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int n = 1; n < 10; ++n) {
-      Tensor g = TestHelper.spawn_He(n); // element
-      Tensor x = TestHelper.spawn_He(n); // vector
+      RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
+      Tensor g = RandomSample.of(rsi);
+      Tensor x = RandomSample.of(rsi);
       LieGroupElement ge = LIE_GROUP.element(g);
       Tensor lhs = ge.combine(LIE_EXPONENTIAL.exp(x)); // g.Exp[x]
       Tensor rhs = LIE_GROUP.element(LIE_EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
@@ -76,8 +81,9 @@ public class HeGroupElementTest extends TestCase {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     for (int n = 1; n < 10; ++n) {
-      Tensor g = TestHelper.spawn_He(n); // element
-      Tensor m = TestHelper.spawn_He(n); // element
+      RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
+      Tensor g = RandomSample.of(rsi);
+      Tensor m = RandomSample.of(rsi);
       LieGroupElement ge = LIE_GROUP.element(g);
       Tensor lhs = LIE_EXPONENTIAL.log( //
           LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
@@ -87,9 +93,10 @@ public class HeGroupElementTest extends TestCase {
   }
 
   public void testAdInverse() {
+    RandomSampleInterface rsi = new HeRandomSample(2, UniformDistribution.of(Clips.absolute(10)));
     for (int count = 0; count < 10; ++count) {
-      Tensor g = TestHelper.spawn_He(2);
-      Tensor lhs = TestHelper.spawn_he(2);
+      Tensor g = RandomSample.of(rsi);
+      Tensor lhs = RandomSample.of(rsi);
       Tensor rhs = HeGroup.INSTANCE.element(g).inverse().adjoint(HeGroup.INSTANCE.element(g).adjoint(lhs));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }
