@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
-import ch.alpine.sophus.lie.so2c.So2CoveringBiinvariantMean;
+import ch.alpine.sophus.lie.so2.So2CoveringBiinvariantMean;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensors;
 import junit.framework.TestCase;

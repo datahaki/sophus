@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.sl2;
+package ch.alpine.sophus.lie.sl;
 
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;

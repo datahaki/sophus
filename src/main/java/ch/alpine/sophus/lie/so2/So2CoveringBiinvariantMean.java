@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.so2c;
+package ch.alpine.sophus.lie.so2;
 
 import ch.alpine.sophus.lie.ScalarBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;

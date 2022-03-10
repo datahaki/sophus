@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.so2c;
+package ch.alpine.sophus.lie.so2;
 
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.usr.AssertFail;

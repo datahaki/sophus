@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.se2c;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.lie.so2c.So2CoveringBiinvariantMean;
+import ch.alpine.sophus.lie.so2.So2CoveringBiinvariantMean;
 
 public enum Se2CoveringBiinvariantMean {
   ;
