@@ -2,6 +2,8 @@
 package ch.alpine.sophus.lie.dt;
 
 import ch.alpine.sophus.lie.LieGroupOps;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -9,7 +11,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import junit.framework.TestCase;
 
 public class DtExponentialTest extends TestCase {
@@ -97,7 +101,8 @@ public class DtExponentialTest extends TestCase {
   }
 
   public void testLogInv() {
-    Tensor lambda_t = TestHelper.spawn_St(2);
+    RandomSampleInterface rsi = new DtRandomSample(2, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
+    Tensor lambda_t = RandomSample.of(rsi);
     DtGroupElement stGroupElement = DtGroup.INSTANCE.element(lambda_t);
     Tensor inv = stGroupElement.inverse().toCoordinate();
     Tensor neutral = stGroupElement.combine(inv);
@@ -109,8 +114,9 @@ public class DtExponentialTest extends TestCase {
 
   public void testAdLog() {
     for (int count = 0; count < 10; ++count) {
-      Tensor g = TestHelper.spawn_St(2);
-      Tensor m = TestHelper.spawn_St(2);
+      RandomSampleInterface rsi = new DtRandomSample(2, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
+      Tensor g = RandomSample.of(rsi);
+      Tensor m = RandomSample.of(rsi);
       Tensor lhs = DtExponential.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).apply(m));
       Tensor rhs = DtGroup.INSTANCE.element(g).adjoint(DtExponential.INSTANCE.log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);

@@ -2,7 +2,6 @@
 package ch.alpine.sophus.lie.se3;
 
 import java.io.Serializable;
-import java.security.SecureRandom;
 import java.util.Random;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -10,7 +9,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 public class TSe3RandomSample implements RandomSampleInterface, Serializable {
   private final Distribution p;
