@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
   ;
   /** @param n
    * @return symmetric matrix */
-  static Tensor generateSim(int n) {
+  public static Tensor generateSim(int n) {
     Integers.requirePositive(n);
     Distribution distribution = UniformDistribution.of(-1, 1);
     Tensor matrix = RandomVariate.of(distribution, n, n);
@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
   /** @param n
    * @return symmetric positive definite */
-  static Tensor generateSpd(int n) {
+  public static Tensor generateSpd(int n) {
     return Spd0Exponential.INSTANCE.exp(generateSim(n));
   }
 }

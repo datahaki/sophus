@@ -10,6 +10,8 @@ import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.gbc.HarborCoordinate;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -18,12 +20,16 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Power;
 import junit.framework.TestCase;
 
 public class Se2CoveringGroupTest extends TestCase {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
+  private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
+      Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
   public void testSimple() {
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(Tensors.vector(1, 2, 3));
@@ -51,9 +57,9 @@ public class Se2CoveringGroupTest extends TestCase {
   public void testAdInv() {
     Random random = new Random();
     int n = 5 + random.nextInt(3);
-    Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
-    Tensor point = TestHelper.spawn_Se2C();
-    Tensor shift = TestHelper.spawn_Se2C();
+    Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
+    Tensor point = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
+    Tensor shift = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
       Tensor all = tensorMapping.slash(sequence);
       Tensor one = tensorMapping.apply(point);
@@ -80,9 +86,9 @@ public class Se2CoveringGroupTest extends TestCase {
   public void testLinearReproduction() {
     Random random = new Random();
     int n = 5 + random.nextInt(5);
-    Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
+    Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
     TensorUnaryOperator grCoordinate = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
-    Tensor point = TestHelper.spawn_Se2C();
+    Tensor point = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Tensor weights = grCoordinate.apply(point);
     Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._05.requireClose(point, mean);

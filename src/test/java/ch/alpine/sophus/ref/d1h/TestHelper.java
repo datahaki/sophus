@@ -20,6 +20,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import junit.framework.Assert;
 
+// TODO SOPHUS use jet scalar for good measure
 /* package */ enum TestHelper {
   ;
   private static void checkString(HermiteSubdivision hs1, HermiteSubdivision hs2) {

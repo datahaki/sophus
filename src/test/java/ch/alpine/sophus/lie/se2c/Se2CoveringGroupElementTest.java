@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.se2c;
 
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -15,11 +17,16 @@ import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
 import junit.framework.TestCase;
 
 public class Se2CoveringGroupElementTest extends TestCase {
+  private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
+      Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
+
   private static Tensor adjoint(LieGroupElement lieGroupElement) {
     return Tensor.of(IdentityMatrix.of(3).stream().map(lieGroupElement::adjoint));
   }
@@ -112,9 +119,9 @@ public class Se2CoveringGroupElementTest extends TestCase {
 
   public void testAdjointCombine() {
     for (int count = 0; count < 10; ++count) {
-      Tensor a = TestHelper.spawn_Se2C();
+      Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
       LieGroupElement ga = Se2CoveringGroup.INSTANCE.element(a);
-      Tensor b = TestHelper.spawn_Se2C();
+      Tensor b = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
       LieGroupElement gb = Se2CoveringGroup.INSTANCE.element(b);
       LieGroupElement gab = Se2CoveringGroup.INSTANCE.element(ga.combine(b));
       Tensor matrix = adjoint(gab);
@@ -125,8 +132,8 @@ public class Se2CoveringGroupElementTest extends TestCase {
   }
 
   public void testDLNumeric() {
-    Tensor g = TestHelper.spawn_Se2C();
-    Tensor x = TestHelper.spawn_se2C();
+    Tensor g = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
+    Tensor x = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Scalar h = RealScalar.of(1e-6);
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(g);
     // Tensor gexphx =
@@ -138,7 +145,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
   }
 
   public void testDRDL_ad() {
-    Tensor a = TestHelper.spawn_Se2C();
+    Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     // LieGroupElement ga =
     Se2CoveringGroup.INSTANCE.element(a);
     // Tensor uvw = TestHelper.spawn_se2C();
