@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 public class SpdExponentialTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface spd = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
       Tensor q = RandomSample.of(spd);
       SpdExponential spdExp = Serialization.copy(new SpdExponential(p));
@@ -42,7 +42,7 @@ public class SpdExponentialTest extends TestCase {
 
   public void testSpdToSym() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface spd = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
       SymmetricMatrixQ.require(MatrixLog.of(p), Chop._07);
     }
@@ -50,7 +50,7 @@ public class SpdExponentialTest extends TestCase {
 
   public void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface spd = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
       Tensor q = RandomSample.of(spd);
       SpdExponential spdExpP = new SpdExponential(p);
@@ -71,7 +71,7 @@ public class SpdExponentialTest extends TestCase {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor x = RandomSample.of(rsi);
       Chop._08.requireClose(exponential.exp(x), Spd0Exponential.INSTANCE.exp(x));
-      RandomSampleInterface spd = new SpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+      RandomSampleInterface spd = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor q = RandomSample.of(spd);
       Chop._08.requireClose(exponential.log(q), Spd0Exponential.INSTANCE.log(q));
       Chop._08.requireClose(exponential.vectorLog(q), Spd0Exponential.INSTANCE.vectorLog(q));

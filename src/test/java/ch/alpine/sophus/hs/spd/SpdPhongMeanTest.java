@@ -30,7 +30,7 @@ public class SpdPhongMeanTest extends TestCase {
     Random random = new Random();
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
-      RandomSampleInterface rsi = new SpdRandomSample(d, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(d, TriangularDistribution.with(0, 1));
       Tensor sequence = RandomSample.of(rsi, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
@@ -46,7 +46,7 @@ public class SpdPhongMeanTest extends TestCase {
 
   public void testMidpoint() {
     int n = 2;
-    RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+    RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
     Tensor m1 = SpdGeodesic.INSTANCE.midpoint(p, q);

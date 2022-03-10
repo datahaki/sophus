@@ -8,12 +8,12 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.Distribution;
 
-public class SpdRandomSample implements RandomSampleInterface, Serializable {
+public class Spd0RandomSample implements RandomSampleInterface, Serializable {
   private final TSpdRandomSample tSpdRandomSample;
 
   /** @param n strictly positive
    * @param distribution */
-  public SpdRandomSample(int n, Distribution distribution) {
+  public Spd0RandomSample(int n, Distribution distribution) {
     tSpdRandomSample = new TSpdRandomSample(n, distribution);
   }
 

@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 public class FullRankCorrelationMatrixTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {
-      SpdRandomSample spdRandomSample = new SpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+      Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor spd = RandomSample.of(spdRandomSample);
       Tensor frc = FullRankCorrelationMatrix.fromSpd(spd);
       Tensor diag = Diagonal.of(frc);
@@ -26,7 +26,7 @@ public class FullRankCorrelationMatrixTest extends TestCase {
 
   public void testExp() {
     for (int n = 1; n < 6; ++n) {
-      SpdRandomSample spdRandomSample = new SpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+      Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor frc1 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
       Tensor frc2 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
       Tensor log = new SpdExponential(frc1).log(frc2);
@@ -38,7 +38,7 @@ public class FullRankCorrelationMatrixTest extends TestCase {
   public void testExp0() {
     for (int n = 1; n < 6; ++n) {
       Tensor frc1 = IdentityMatrix.of(n);
-      SpdRandomSample spdRandomSample = new SpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+      Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor frc2 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
       Tensor log = new SpdExponential(frc1).log(frc2);
       log.map(Scalar::zero);

@@ -25,7 +25,7 @@ public class StaticHelperTest extends TestCase {
   }
 
   public void testTrace() {
-    RandomSampleInterface rsi = new SpdRandomSample(3, TriangularDistribution.with(0, 1));
+    RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
     Tensor q = RandomSample.of(rsi);
     Tensor diag = Tensor.of(Eigensystem.ofSymmetric(q).values().stream() //
         .map(Scalar.class::cast)) //

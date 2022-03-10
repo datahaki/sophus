@@ -15,7 +15,7 @@ import junit.framework.TestCase;
 public class SpdGeodesicTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface spd = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
       Tensor q = RandomSample.of(spd);
       Scalar t = RandomVariate.of(UniformDistribution.unit());
@@ -27,7 +27,7 @@ public class SpdGeodesicTest extends TestCase {
 
   public void testIdentity() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface spd = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
       Scalar t = RandomVariate.of(UniformDistribution.unit());
       Tensor m = SpdGeodesic.INSTANCE.split(p, p, t);

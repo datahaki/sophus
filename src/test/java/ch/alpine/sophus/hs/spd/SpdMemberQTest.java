@@ -22,7 +22,7 @@ public class SpdMemberQTest extends TestCase {
 
   public void testSimple() {
     for (int n = 1; n < 10; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       SpdMemberQ.INSTANCE.require(RandomSample.of(rsi));
     }
   }
@@ -34,7 +34,7 @@ public class SpdMemberQTest extends TestCase {
       if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4) {
         int count = 1 + random.nextInt(3);
         int len = n * (n + 1) / 2 + count;
-        RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+        RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
         Tensor sequence = RandomSample.of(rsi, len);
         Tensor mL = RandomSample.of(rsi);
         Tensor weights1 = biinvariants.coordinate( //
@@ -55,7 +55,7 @@ public class SpdMemberQTest extends TestCase {
     for (Biinvariants biinvariants : BIINVARIANTS) {
       int count = 1 + random.nextInt(3);
       int len = n * (n + 1) / 2 + count;
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor sequence = RandomSample.of(rsi, random, len);
       Tensor mL = RandomSample.of(rsi, random);
       Tensor weights1 = biinvariants.coordinate( //

@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 public class SpdTransportTest extends TestCase {
   public void testLadder() throws ClassNotFoundException, IOException {
     Tensor p = IdentityMatrix.of(3);
-    RandomSampleInterface rsi = new SpdRandomSample(3, TriangularDistribution.with(0, 1));
+    RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
     Tensor q = RandomSample.of(rsi);
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
@@ -38,7 +38,7 @@ public class SpdTransportTest extends TestCase {
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");
     Tensor p = IdentityMatrix.of(3);
     for (int c = 0; c < 5; ++c) {
-      RandomSampleInterface rsi = new SpdRandomSample(3, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
       Tensor q = RandomSample.of(rsi);
       TensorUnaryOperator tu1 = SpdTransport.INSTANCE.shift(p, q);
       TensorUnaryOperator tu2 = new PoleLadder(SpdManifold.INSTANCE).shift(p, q);

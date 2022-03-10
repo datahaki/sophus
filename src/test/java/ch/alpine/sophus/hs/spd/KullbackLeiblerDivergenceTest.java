@@ -14,7 +14,7 @@ import junit.framework.TestCase;
 public class KullbackLeiblerDivergenceTest extends TestCase {
   @SuppressWarnings("unused")
   public void testSimple() {
-    SpdRandomSample spdRandomSample = new SpdRandomSample(3, UniformDistribution.of(Clips.absolute(1)));
+    Spd0RandomSample spdRandomSample = new Spd0RandomSample(3, UniformDistribution.of(Clips.absolute(1)));
     Tensor p = RandomSample.of(spdRandomSample);
     Tensor q = RandomSample.of(spdRandomSample);
     Chop._06.requireClose( //

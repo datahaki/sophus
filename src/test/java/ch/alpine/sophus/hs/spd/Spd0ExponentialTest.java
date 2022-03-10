@@ -41,7 +41,7 @@ public class Spd0ExponentialTest extends TestCase {
   }
 
   public void testMatrixLog() {
-    SpdRandomSample spdRandomSample = new SpdRandomSample(2, UniformDistribution.of(Clips.absolute(1)));
+    Spd0RandomSample spdRandomSample = new Spd0RandomSample(2, UniformDistribution.of(Clips.absolute(1)));
     for (int count = 0; count < 10; ++count) {
       Tensor x = RandomSample.of(spdRandomSample);
       Tensor exp1 = Spd0Exponential.INSTANCE.log(x);
@@ -57,7 +57,7 @@ public class Spd0ExponentialTest extends TestCase {
   }
 
   public void testLogNonSymmetricFail() {
-    SpdRandomSample spdRandomSample = new SpdRandomSample(4, UniformDistribution.of(Clips.absolute(1)));
+    Spd0RandomSample spdRandomSample = new Spd0RandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor g = LowerTriangularize.of(RandomSample.of(spdRandomSample));
     AssertFail.of(() -> Spd0Exponential.INSTANCE.log(g));
   }

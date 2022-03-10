@@ -36,7 +36,7 @@ public class SpdManifoldTest extends TestCase {
     int d = 2;
     int fail = 0;
     int len = 5 + random.nextInt(3);
-    RandomSampleInterface rsi = new SpdRandomSample(d, NormalDistribution.standard());
+    RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
     Tensor sequence = RandomSample.of(rsi, len);
     for (BarycentricCoordinate barycentricCoordinate : list())
       try {
@@ -55,7 +55,7 @@ public class SpdManifoldTest extends TestCase {
     Random random = new Random();
     int d = 2;
     int len = 5 + random.nextInt(3);
-    RandomSampleInterface rsi = new SpdRandomSample(d, NormalDistribution.standard());
+    RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
     Tensor sequence = RandomSample.of(rsi, len);
     for (BarycentricCoordinate barycentricCoordinate : list()) {
       int index = random.nextInt(sequence.length());
@@ -69,7 +69,7 @@ public class SpdManifoldTest extends TestCase {
   }
 
   public void testFlipMidpoint() {
-    RandomSampleInterface spd = new SpdRandomSample(3, NormalDistribution.standard());
+    RandomSampleInterface spd = new Spd0RandomSample(3, NormalDistribution.standard());
     Tensor p = RandomSample.of(spd);
     Tensor q = RandomSample.of(spd);
     Tolerance.CHOP.requireClose(new SpdExponential(p).flip(q), SpdManifold.INSTANCE.flip(p, q));

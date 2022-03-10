@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 public class SpdMetricTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor g = RandomSample.of(rsi);
       Scalar dP = StaticHelper.norm(g);
       Tensor ginv = Symmetrize.of(Inverse.of(g));
@@ -32,7 +32,7 @@ public class SpdMetricTest extends TestCase {
 
   public void testSymmetryAndInvariance() {
     for (int n = 1; n < 6; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
       Scalar pq = SpdMetric.INSTANCE.distance(p, q);
@@ -51,7 +51,7 @@ public class SpdMetricTest extends TestCase {
 
   public void testLogExp() {
     for (int n = 1; n < 4; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
       Exponential exponential = new SpdExponential(p);
@@ -62,7 +62,7 @@ public class SpdMetricTest extends TestCase {
 
   public void testScalarProd() {
     for (int n = 1; n < 6; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
       Exponential exponential = new SpdExponential(p);

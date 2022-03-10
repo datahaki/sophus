@@ -41,7 +41,7 @@ public class SpdRiemannTest extends TestCase {
   public void testTransport3() {
     int n = 3;
     Tensor p = IdentityMatrix.of(n);
-    RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+    RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor q = RandomSample.of(rsi);
     SpdRiemann spdRiemann = new SpdRiemann(q);
     TensorUnaryOperator tuo = SpdTransport.INSTANCE.shift(p, q);
@@ -60,7 +60,7 @@ public class SpdRiemannTest extends TestCase {
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");
     Tensor p = IdentityMatrix.of(3);
     for (int c = 0; c < 5; ++c) {
-      RandomSampleInterface rsi = new SpdRandomSample(3, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
       Tensor q = RandomSample.of(rsi);
       TensorUnaryOperator tuo = SpdTransport.INSTANCE.shift(p, q);
       e11 = tuo.apply(e11);

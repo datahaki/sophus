@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 public class SpdPointExponentialTest extends TestCase {
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
       Tensor w = SpdPointExponential.log(p, q);
@@ -23,7 +23,7 @@ public class SpdPointExponentialTest extends TestCase {
 
   public void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
       Tensor pqw = SpdPointExponential.log(p, q);

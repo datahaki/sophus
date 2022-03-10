@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import junit.framework.TestCase;
 
-public class TestHelperTest extends TestCase {
+public class Spd0RandomSampleTest extends TestCase {
   private static void _check(Tensor g, MatrixSqrt matrixSqrt) {
     Chop._06.requireClose(Inverse.of(matrixSqrt.sqrt()), matrixSqrt.sqrt_inverse());
     Chop._06.requireClose(matrixSqrt.sqrt().dot(matrixSqrt.sqrt()), g);
@@ -29,7 +29,7 @@ public class TestHelperTest extends TestCase {
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
-        RandomSampleInterface rsi = new SpdRandomSample(n, TriangularDistribution.with(0, 1));
+        RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
         Tensor g = RandomSample.of(rsi);
         _check(g, Serialization.copy(MatrixSqrt.ofSymmetric(g)));
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(g));
