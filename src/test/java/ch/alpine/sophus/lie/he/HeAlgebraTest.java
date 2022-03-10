@@ -5,7 +5,7 @@ import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.lie;
 
 import java.util.stream.IntStream;
 

@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

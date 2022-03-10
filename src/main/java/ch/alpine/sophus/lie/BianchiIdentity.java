@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.lie;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;

@@ -4,8 +4,8 @@ package ch.alpine.sophus.lie.su;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

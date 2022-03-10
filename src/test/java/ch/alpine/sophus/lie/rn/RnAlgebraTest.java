@@ -3,8 +3,8 @@ package ch.alpine.sophus.lie.rn;
 
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;

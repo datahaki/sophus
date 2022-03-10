@@ -3,7 +3,6 @@ package ch.alpine.sophus.lie;
 
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.lie.ad.JacobiIdentity;
 import ch.alpine.tensor.Tensor;
 
 public interface LieAlgebra {

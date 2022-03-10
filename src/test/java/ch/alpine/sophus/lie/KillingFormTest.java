@@ -1,6 +1,10 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.lie;
 
+import ch.alpine.sophus.lie.he.HeAlgebra;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.lie.sl.Sl2Algebra;
+import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -12,7 +16,7 @@ import junit.framework.TestCase;
 
 public class KillingFormTest extends TestCase {
   public void testSe2() {
-    Tensor ad = TestHelper.se2().unmodifiable();
+    Tensor ad = Se2Algebra.INSTANCE.ad().unmodifiable();
     JacobiIdentity.require(ad);
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     assertEquals(ad.dot(UnitVector.of(3, 0)).dot(UnitVector.of(3, 1)), Array.zeros(3));
@@ -22,14 +26,14 @@ public class KillingFormTest extends TestCase {
   }
 
   public void testSo3() {
-    Tensor ad = TestHelper.so3();
+    Tensor ad = So3Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     Tensor kil = KillingForm.of(ad);
     assertEquals(kil, DiagonalMatrix.of(-2, -2, -2));
   }
 
   public void testSl2() {
-    Tensor ad = TestHelper.sl2();
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     Tensor kil = KillingForm.of(ad);
     // killing form is non-degenerate
@@ -37,7 +41,7 @@ public class KillingFormTest extends TestCase {
   }
 
   public void testHe3() {
-    Tensor ad = TestHelper.he1();
+    Tensor ad = new HeAlgebra(1).ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     Tensor kil = KillingForm.of(ad);
     assertTrue(Scalars.isZero(Det.of(kil)));

@@ -4,10 +4,10 @@ package ch.alpine.sophus.lie.sl;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
-import ch.alpine.sophus.lie.ad.KillingForm;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

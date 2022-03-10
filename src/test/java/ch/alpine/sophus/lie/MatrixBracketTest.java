@@ -1,8 +1,11 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.lie;
 
 import java.util.Arrays;
 
+import ch.alpine.sophus.lie.he.HeAlgebra;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -31,13 +34,13 @@ public class MatrixBracketTest extends TestCase {
     Tensor b0 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(0, 1)), 3, 3);
     Tensor b1 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(1, 2)), 3, 3);
     Tensor b2 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(0, 2)), 3, 3);
-    Tensor basis = Tensors.of(b0, b1, b2);
-    _check(TestHelper.he1(), basis);
+    Tensor basis = Tensors.of(b0, b2, b1);
+    _check(new HeAlgebra(1).ad(), basis);
   }
 
   public void testSo3Basis() {
     Tensor basis = LeviCivitaTensor.of(3).negate();
-    _check(TestHelper.so3(), basis);
+    _check(So3Algebra.INSTANCE.ad(), basis);
   }
 
   public void testSe2Basis() {
@@ -45,7 +48,7 @@ public class MatrixBracketTest extends TestCase {
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
     Tensor basis = Tensors.of(b0, b1, b2);
-    _check(TestHelper.se2(), basis);
+    _check(Se2Algebra.INSTANCE.ad(), basis);
   }
 
   public void testSe2Matrix() {
@@ -86,12 +89,6 @@ public class MatrixBracketTest extends TestCase {
   }
 
   public void testMatrixAlg() {
-    assertEquals(TestHelper.so3(), LeviCivitaTensor.of(3).negate());
-  }
-
-  public void testSl2() {
-    Tensor ad = Tensors.fromString( //
-        "{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, -1}, {0, 0, 0}, {1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
-    assertEquals(TestHelper.sl2(), ad);
+    assertEquals(So3Algebra.INSTANCE.ad(), LeviCivitaTensor.of(3).negate());
   }
 }

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.lie.ad.MatrixBracket;
+import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.tensor.Tensor;
 
 /** Reference:

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.lie;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensors;
@@ -21,6 +21,6 @@ public class BianchiIdentityTest extends TestCase {
   }
 
   public void testRank3Fail() {
-    AssertFail.of(() -> BianchiIdentity.of(TestHelper.he1()));
+    AssertFail.of(() -> BianchiIdentity.of(Array.zeros(3, 3, 3)));
   }
 }

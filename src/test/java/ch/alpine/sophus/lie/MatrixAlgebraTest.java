@@ -1,8 +1,14 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.lie;
 
+import java.util.Random;
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
+import ch.alpine.sophus.lie.he.HeAlgebra;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.lie.sl.Sl2Algebra;
+import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -13,6 +19,11 @@ import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.N;
@@ -28,7 +39,7 @@ public class MatrixAlgebraTest extends TestCase {
     assertTrue(b2 instanceof SparseArray);
     Tensor basis = Tensors.of(b0, b1, b2);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    assertEquals(matrixAlgebra.ad(), TestHelper.se2());
+    assertEquals(matrixAlgebra.ad(), Se2Algebra.INSTANCE.ad());
     assertEquals(matrixAlgebra.toVector(b1.add(b2)), Tensors.vector(0, 1, 1));
     assertEquals(matrixAlgebra.toVector(b0.subtract(b2)), Tensors.vector(1, 0, -1));
     Tensor matrix = matrixAlgebra.toMatrix(Tensors.vector(2, 3, 4));
@@ -44,10 +55,9 @@ public class MatrixAlgebraTest extends TestCase {
   }
 
   public void testSl2() {
-    Tensor ad = new MatrixAlgebra(TestHelper.sl2_basis()).ad();
-    assertEquals(ad, TestHelper.sl2());
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
     Tensor form = KillingForm.of(ad);
-    assertEquals(form, DiagonalMatrix.of(2, -2, 2));
+    assertEquals(form, DiagonalMatrix.of(-2, 2, 2));
   }
 
   public void testSo3() {
@@ -102,7 +112,7 @@ public class MatrixAlgebraTest extends TestCase {
   }
 
   public void testNumericFail() {
-    AssertFail.of(() -> new MatrixAlgebra(TestHelper.he1().map(N.DOUBLE)));
+    AssertFail.of(() -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
   }
 
   public void testZeroFail() {
@@ -112,5 +122,33 @@ public class MatrixAlgebraTest extends TestCase {
   public void testRedundantFail() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     AssertFail.of(() -> new MatrixAlgebra(Tensors.of(b0, b0)));
+  }
+
+  private static void check(MatrixAlgebra matrixAlgebra, int degree) {
+    Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    Tensor ad = matrixAlgebra.ad();
+    int n = ad.length();
+    BinaryOperator<Tensor> bch = BakerCampbellHausdorff.of(ad.map(N.DOUBLE), degree);
+    Random random = new Random(10);
+    for (int count = 0; count < 5; ++count) {
+      Tensor x = RandomVariate.of(distribution, random, n);
+      Tensor y = RandomVariate.of(distribution, random, n);
+      Tensor z = bch.apply(x, y);
+      Tensor mX = MatrixExp.of(matrixAlgebra.toMatrix(x));
+      Tensor mY = MatrixExp.of(matrixAlgebra.toMatrix(y));
+      Tensor mZ = MatrixLog.of(mX.dot(mY));
+      Tensor z_cmp = matrixAlgebra.toVector(mZ);
+      Tolerance.CHOP.requireClose(z, z_cmp);
+    }
+  }
+
+  public void testMatrixLogExpExpSe2() {
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
+    check(matrixAlgebra, 8);
+  }
+
+  public void testMatrixLogExpExpSo3() {
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Algebra.INSTANCE.basis());
+    check(matrixAlgebra, 8);
   }
 }

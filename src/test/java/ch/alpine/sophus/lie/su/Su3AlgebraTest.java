@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.su;
 
-import ch.alpine.sophus.lie.ad.KillingForm;
+import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.math.PlausibleRational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

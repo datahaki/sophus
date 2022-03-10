@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.su;
 
+import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
-import ch.alpine.sophus.lie.ad.KillingForm;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

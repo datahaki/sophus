@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.u;
 
+import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.lie.ad.KillingForm;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;

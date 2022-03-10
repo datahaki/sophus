@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

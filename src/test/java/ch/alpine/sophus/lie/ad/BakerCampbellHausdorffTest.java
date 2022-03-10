@@ -6,6 +6,12 @@ import java.util.Random;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.api.SeriesInterface;
+import ch.alpine.sophus.lie.CliffordAlgebra;
+import ch.alpine.sophus.lie.KillingForm;
+import ch.alpine.sophus.lie.he.HeAlgebra;
+import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.lie.sl.Sl2Algebra;
+import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
@@ -85,12 +91,12 @@ public class BakerCampbellHausdorffTest extends TestCase {
 
   public void testHe1() {
     for (int d : DEGREES)
-      _check(TestHelper.he1(), d);
+      _check(new HeAlgebra(2).ad(), d);
   }
 
   public void testSl2() {
     for (int d : DEGREES)
-      _check(TestHelper.sl2(), d);
+      _check(Sl2Algebra.INSTANCE.ad(), d);
   }
 
   public void testSl2Sophus() {
@@ -103,16 +109,16 @@ public class BakerCampbellHausdorffTest extends TestCase {
 
   public void testSe2() {
     for (int d : new int[] { 6, 8, 10 })
-      _check(TestHelper.se2(), d);
+      _check(Se2Algebra.INSTANCE.ad(), d);
   }
 
   public void testSo3() {
     for (int d : DEGREES)
-      _check(TestHelper.so3(), d);
+      _check(So3Algebra.INSTANCE.ad(), d);
   }
 
   public void testOptimized() {
-    Tensor ad = TestHelper.sl2();
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertTrue(BakerCampbellHausdorff.of(ad, 6) instanceof BchSeries6);
     assertTrue(BakerCampbellHausdorff.of(ad, 8) instanceof BchSeries8);
     assertTrue(BakerCampbellHausdorff.of(ad, 10) instanceof BchSeriesA);
@@ -136,7 +142,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
   }
 
   public void testJacobiFail() throws ClassNotFoundException, IOException {
-    Tensor ad = TestHelper.sl2();
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
     Serialization.copy(BakerCampbellHausdorff.of(ad, 2));
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
     AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 2));
@@ -150,17 +156,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
   }
 
   public void testChopNullFail() {
-    Tensor ad = TestHelper.sl2();
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
     AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 6, null));
-  }
-
-  public void testMatrixLogExpExpSe2() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(TestHelper.se2_basis());
-    TestHelper.check(matrixAlgebra, 8);
-  }
-
-  public void testMatrixLogExpExpSo3() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(TestHelper.so3_basis());
-    TestHelper.check(matrixAlgebra, 8);
   }
 }

@@ -4,8 +4,6 @@ package ch.alpine.sophus.lie;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.sophus.lie.ad.JacobiIdentity;
-import ch.alpine.sophus.lie.ad.NilpotentAlgebraQ;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.N;

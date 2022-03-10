@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
-import ch.alpine.sophus.lie.ad.MatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.so.SoAlgebra;
 import ch.alpine.tensor.RealScalar;

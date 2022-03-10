@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.su;
 
+import ch.alpine.sophus.lie.HigherJacobiIdentity;
+import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.lie.ad.HigherJacobiIdentity;
-import ch.alpine.sophus.lie.ad.KillingForm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.AntihermitianMatrixQ;
 import ch.alpine.tensor.mat.SquareMatrixQ;
