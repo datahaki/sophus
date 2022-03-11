@@ -4,11 +4,11 @@ package ch.alpine.sophus.lie;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
-import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.math.bch;
 
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;

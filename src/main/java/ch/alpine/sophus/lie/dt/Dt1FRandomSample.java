@@ -10,7 +10,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 
-// TODO SOPHUS DtRandomSample
 public class Dt1FRandomSample implements RandomSampleInterface, Serializable {
   private final Distribution l;
   private final Distribution t;
@@ -19,21 +18,6 @@ public class Dt1FRandomSample implements RandomSampleInterface, Serializable {
     this.l = l;
     this.t = t;
   }
-  // static Tensor spawn_St(Random random, int n) {
-  // return Tensors.of(RandomVariate.of(DISTRIBUTION_L, random), RandomVariate.of(DISTRIBUTION_T, random, n));
-  // }
-  //
-  // static Tensor spawn_st(int n) {
-  // return Tensors.of(RandomVariate.of(DISTRIBUTION_T), RandomVariate.of(DISTRIBUTION_T, n));
-  // }
-  //
-  // static Tensor spawn_St1() {
-  // return Tensors.of(RandomVariate.of(DISTRIBUTION_L), RandomVariate.of(DISTRIBUTION_T));
-  // }
-  //
-  // static Tensor spawn_st1() {
-  // return Tensors.of(RandomVariate.of(DISTRIBUTION_T), RandomVariate.of(DISTRIBUTION_T));
-  // }
 
   @Override
   public Tensor randomSample(Random random) {

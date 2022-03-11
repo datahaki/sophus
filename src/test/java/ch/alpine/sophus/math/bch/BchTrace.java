@@ -1,6 +1,6 @@
 // code by jph
 // adapted from code by jph 2006
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.math.bch;
 
 import java.io.Serializable;
 import java.util.Map;

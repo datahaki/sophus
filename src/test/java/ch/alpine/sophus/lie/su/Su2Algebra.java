@@ -5,7 +5,7 @@ import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 

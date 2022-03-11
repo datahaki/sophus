@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.math.bch;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;

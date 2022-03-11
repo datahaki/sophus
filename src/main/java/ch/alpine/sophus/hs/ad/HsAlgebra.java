@@ -13,7 +13,7 @@ import ch.alpine.sophus.hs.HsPair;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.NilpotentAlgebraQ;
-import ch.alpine.sophus.lie.ad.BakerCampbellHausdorff;
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;

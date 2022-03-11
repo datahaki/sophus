@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.ad;
+package ch.alpine.sophus.math.bch;
 
 import java.io.IOException;
 import java.util.Random;
