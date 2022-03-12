@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.math.DirectedEdge;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Tensor;
@@ -34,20 +35,20 @@ public record LinearSurfaceMeshRefinement(BiinvariantMean biinvariantMean) imple
       Tensor midpoint = biinvariantMean.mean(sequence, WEIGHTS.apply(sequence.length()));
       out.addVert(midpoint);
     }
-    Map<Edge, Integer> edges = new HashMap<>();
+    Map<DirectedEdge, Integer> directedEdges = new HashMap<>();
     for (int[] face : surfaceMesh.faces()) {
       List<Integer> list = new ArrayList<>(); // index of edge midpoints
       for (int index = 0; index < face.length; ++index) {
-        Edge edge = new Edge( //
+        DirectedEdge directedEdge = new DirectedEdge( //
             face[index], //
             face[(index + 1) % face.length]);
-        if (edges.containsKey(edge)) // edge already was subdivided
-          list.add(edges.get(edge));
+        if (directedEdges.containsKey(directedEdge)) // edge already was subdivided
+          list.add(directedEdges.get(directedEdge));
         else {
-          Tensor sequence = surfaceMesh.polygon_face(edge.array());
+          Tensor sequence = surfaceMesh.polygon_face(directedEdge.array());
           Tensor midpoint = biinvariantMean.mean(sequence, WEIGHTS.apply(sequence.length()));
           int v_index = out.addVert(midpoint);
-          edges.put(edge.reverse(), v_index);
+          directedEdges.put(directedEdge.reverse(), v_index);
           list.add(v_index);
         }
       }

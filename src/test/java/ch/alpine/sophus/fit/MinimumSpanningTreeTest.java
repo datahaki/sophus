@@ -3,7 +3,7 @@ package ch.alpine.sophus.fit;
 
 import java.util.List;
 
-import ch.alpine.sophus.ref.d2.Edge;
+import ch.alpine.sophus.math.UndirectedEdge;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -14,20 +14,20 @@ import junit.framework.TestCase;
 
 public class MinimumSpanningTreeTest extends TestCase {
   public void testSimple() {
-    List<Edge> list = MinimumSpanningTree.of(Tensors.fromString("{{0, 1}, {1, 0}}"));
+    List<UndirectedEdge> list = MinimumSpanningTree.of(Tensors.fromString("{{0, 1}, {1, 0}}"));
     assertEquals(list.size(), 1);
   }
 
   public void testHilbert() {
     Tensor tensor = HilbertMatrix.of(10);
-    List<Edge> list = MinimumSpanningTree.of(tensor);
+    List<UndirectedEdge> list = MinimumSpanningTree.of(tensor);
     assertEquals(list.size(), 9);
     Scalar scalar = list.stream().map(edge -> edge.Get(tensor)).reduce(Scalar::add).get();
     assertEquals(scalar, RationalScalar.of(1632341, 2450448));
   }
 
   public void testHilbertQuantity() {
-    List<Edge> list = MinimumSpanningTree.of(HilbertMatrix.of(10).map(s -> Quantity.of(s, "m")));
+    List<UndirectedEdge> list = MinimumSpanningTree.of(HilbertMatrix.of(10).map(s -> Quantity.of(s, "m")));
     assertEquals(list.size(), 9);
   }
 }
