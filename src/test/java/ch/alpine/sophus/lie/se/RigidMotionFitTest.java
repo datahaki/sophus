@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.fit;
+package ch.alpine.sophus.lie.se;
 
 import java.io.IOException;
 import java.util.Random;

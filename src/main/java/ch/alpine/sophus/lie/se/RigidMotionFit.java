@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.fit;
+package ch.alpine.sophus.lie.se;
 
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.math.AffineQ;
