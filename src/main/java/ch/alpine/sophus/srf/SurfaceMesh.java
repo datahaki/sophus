@@ -10,33 +10,43 @@ import java.util.stream.Stream;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.io.Primitives;
 
 public class SurfaceMesh implements Serializable {
-  public final Tensor ind = Tensors.empty();
   public Tensor vrt = Tensors.empty();
+  private final List<int[]> faces = new ArrayList<>();
 
-  public int addVert(Tensor vector) {
+  /** @param tensor
+   * @return index of tensor in list of vertices */
+  public int addVert(Tensor tensor) {
     int index = vrt.length();
-    vrt.append(vector);
+    vrt.append(tensor);
     return index;
   }
 
+  // ---
   public void addFace(int... values) {
-    ind.append(Tensors.vectorInt(values));
+    faces.add(values);
   }
 
+  public List<int[]> faces() {
+    return faces;
+  }
+
+  public int[] face(int index) {
+    return faces.get(index);
+  }
+
+  // ---
   /** @return tensor of coordinates */
   public Tensor polygons() {
-    return Tensor.of(ind.stream() //
-        .map(Primitives::toIntArray) // deliberate: stream -> array -> stream
-        .map(this::face)); //
+    return Tensor.of(faces.stream().map(this::polygon_face));
   }
 
-  private Tensor face(int[] indices) {
+  public Tensor polygon_face(int... indices) {
     return Tensor.of(Arrays.stream(indices).mapToObj(vrt::get));
   }
 
+  // ---
   /** @return vert to face index */
   public List<List<Integer>> vertToFace() {
     @SuppressWarnings("unused")
@@ -45,8 +55,8 @@ public class SurfaceMesh implements Serializable {
         .collect(Collectors.toList());
     // ---
     int index = 0;
-    for (Tensor face : ind) {
-      for (int value : Primitives.toIntArray(face))
+    for (int[] face : faces) {
+      for (int value : face)
         list.get(value).add(index);
       ++index;
     }

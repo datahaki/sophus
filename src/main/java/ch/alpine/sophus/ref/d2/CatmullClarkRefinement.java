@@ -30,7 +30,7 @@ public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializab
 
   private CatmullClarkRefinement(BiinvariantMean biinvariantMean) {
     this.biinvariantMean = biinvariantMean;
-    surfaceMeshRefinement = new LinearMeshRefinement(biinvariantMean);
+    surfaceMeshRefinement = new LinearSurfaceMeshRefinement(biinvariantMean);
   }
 
   @Override // from SurfaceMeshRefinement
@@ -50,9 +50,9 @@ public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializab
         Scalar be = RationalScalar.of(1, 2 * n);
         Scalar elem = RealScalar.of(vix);
         for (int fix : list) { // edges from vertex ring (unordered)
-          int pos = FirstPosition.of(out.ind.get(fix), elem).getAsInt();
-          int p1 = out.ind.Get(fix, (pos + 1) % 4).number().intValue();
-          int p2 = out.ind.Get(fix, (pos + 2) % 4).number().intValue();
+          int pos = FirstPosition.of(Tensors.vectorInt(out.face(fix)), elem).getAsInt();
+          int p1 = out.face(fix)[(pos + 1) % 4];
+          int p2 = out.face(fix)[(pos + 2) % 4];
           sequence.append(out.vrt.get(p1));
           sequence.append(out.vrt.get(p2));
           weights.append(be);

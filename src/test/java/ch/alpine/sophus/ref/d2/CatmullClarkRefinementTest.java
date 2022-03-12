@@ -15,9 +15,8 @@ public class CatmullClarkRefinementTest extends TestCase {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         Serialization.copy(CatmullClarkRefinement.of(Se2CoveringBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.quads6());
-    assertEquals(surfaceMesh.ind.length(), 24);
+    assertEquals(surfaceMesh.faces().size(), 24);
     assertEquals(surfaceMesh.vrt.length(), 35);
-    ExactTensorQ.require(surfaceMesh.ind);
   }
 
   public void testFailNull() {

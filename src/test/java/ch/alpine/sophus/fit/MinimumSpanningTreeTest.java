@@ -3,7 +3,7 @@ package ch.alpine.sophus.fit;
 
 import java.util.List;
 
-import ch.alpine.sophus.fit.MinimumSpanningTree.Edge;
+import ch.alpine.sophus.ref.d2.Edge;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

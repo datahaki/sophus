@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.fit;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import ch.alpine.sophus.ref.d2.Edge;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -20,16 +20,12 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
  * <a href="https://reference.wolfram.com/language/ref/MinimumSpanningTree.html">MinimumSpanningTree</a> */
 public enum MinimumSpanningTree {
   ;
-  public static record Edge(int i, int j) implements Serializable {
-    public Scalar Get(Tensor tensor) {
-      return tensor.Get(i, j);
-    }
-  }
-
   public static record EdgeComparator(Tensor matrix) implements Comparator<Edge> {
     @Override
     public int compare(Edge edge1, Edge edge2) {
-      return Scalars.compare(edge1.Get(matrix), edge2.Get(matrix));
+      return Scalars.compare( //
+          edge1.Get(matrix), //
+          edge2.Get(matrix));
     }
   }
 
@@ -59,7 +55,7 @@ public enum MinimumSpanningTree {
           }
         }
       @SuppressWarnings("null")
-      int index = edge.j;
+      int index = edge.j();
       visited.add(index);
       unknown.remove(index);
       list.add(edge);

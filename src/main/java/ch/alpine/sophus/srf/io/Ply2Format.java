@@ -23,7 +23,10 @@ public enum Ply2Format {
     int ofs = 2 + vn;
     for (int count = 0; count < fn; ++count) {
       String line = list.get(ofs + count);
-      surfaceMesh.ind.append(Tensor.of(Stream.of(line.split(" ")).skip(1).map(Scalars::fromString)));
+      surfaceMesh.addFace(Stream.of(line.split(" ")) //
+          .skip(1) //
+          .mapToInt(Integer::parseInt) //
+          .toArray());
     }
     return surfaceMesh;
   }

@@ -14,11 +14,11 @@ public record Sqrt3Refinement(BiinvariantMean biinvariantMean) implements Surfac
   @Override
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
     SurfaceMesh out = new SurfaceMesh();
-    for (Tensor tri : surfaceMesh.ind) {
+    for (int[] face : surfaceMesh.faces()) {
       Tensor sequence = Tensors.of( //
-          surfaceMesh.vrt.get(tri.Get(0).number().intValue()), //
-          surfaceMesh.vrt.get(tri.Get(1).number().intValue()), //
-          surfaceMesh.vrt.get(tri.Get(2).number().intValue()));
+          surfaceMesh.vrt.get(face[0]), //
+          surfaceMesh.vrt.get(face[1]), //
+          surfaceMesh.vrt.get(face[2]));
       Tensor mean = biinvariantMean.mean(sequence, WEIGHTS);
       out.addVert(mean);
     }
