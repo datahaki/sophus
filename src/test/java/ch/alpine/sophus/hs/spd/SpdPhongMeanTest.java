@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 
 public class SpdPhongMeanTest extends TestCase {
   public void testSimple() {
-    Random random = new Random();
+    Random random = new Random(1);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, TriangularDistribution.with(0, 1));

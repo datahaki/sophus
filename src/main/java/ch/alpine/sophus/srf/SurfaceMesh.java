@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.ext.Integers;
 
 public class SurfaceMesh implements Serializable {
   public Tensor vrt = Tensors.empty();
@@ -25,6 +27,10 @@ public class SurfaceMesh implements Serializable {
 
   // ---
   public void addFace(int... values) {
+    long count = IntStream.of(values).distinct().count();
+    Integers.requireEquals(values.length, (int) count);
+    // if (values.length != count)
+    // System.err.println(Tensors.vectorInt(values));
     faces.add(values);
   }
 
