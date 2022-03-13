@@ -11,6 +11,8 @@ import java.util.Objects;
 import ch.alpine.sophus.math.DirectedEdge;
 
 public class MeshStructure {
+  private static final int MAX_ITERATIONS = 50;
+// ---
   private final SurfaceMesh surfaceMesh;
   private final Map<DirectedEdge, DirectedEdge> edge_face = new HashMap<>();
 
@@ -31,9 +33,9 @@ public class MeshStructure {
   public List<DirectedEdge> ring(DirectedEdge seed) {
     List<DirectedEdge> list = new LinkedList<>();
     list.add(seed);
-    int count = 0;
+    int iteration = 0;
     DirectedEdge next = seed;
-    while (count < 10) {
+    while (iteration < MAX_ITERATIONS) {
       DirectedEdge nfac = edge_face.get(next);
       if (Objects.isNull(nfac))
         return Arrays.asList();
@@ -42,7 +44,7 @@ public class MeshStructure {
       if (next.equals(seed))
         return list;
       list.add(next);
-      ++count;
+      ++iteration;
     }
     return Arrays.asList();
   }

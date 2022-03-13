@@ -55,7 +55,6 @@ public record DooSabinRefinement(BiinvariantMean biinvariantMean) implements Sur
           DirectedEdge res2 = edge_outVrt.get(edge2);
           if (Objects.nonNull(res2)) {
             DirectedEdge res1 = entry.getValue();
-            // FIXME can be bad bad
             out.addFace(new int[] { res1.j(), res1.i(), res2.j(), res2.i() });
             set.add(edge2);
           }

@@ -7,7 +7,9 @@ import java.util.stream.IntStream;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 
-/** inspired by
+/** not final API since DirectedEdge<T> would be more in the spirit of Mathematica
+ * 
+ * inspired by
  * <a href="https://reference.wolfram.com/language/ref/DirectedEdge.html">DirectedEdge</a> */
 public record DirectedEdge(int i, int j) implements Serializable {
   /** @param tensor
