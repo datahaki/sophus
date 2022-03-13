@@ -6,7 +6,6 @@ import java.io.IOException;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.srf.SurfaceMesh;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Serialization;

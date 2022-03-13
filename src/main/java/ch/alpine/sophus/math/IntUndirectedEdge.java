@@ -8,8 +8,8 @@ import ch.alpine.tensor.Tensor;
 
 /** inspired by
  * <a href="https://reference.wolfram.com/language/ref/UndirectedEdge.html">UndirectedEdge</a> */
-public record UndirectedEdge(int i, int j) implements Serializable {
-  public UndirectedEdge {
+public record IntUndirectedEdge(int i, int j) implements Serializable {
+  public IntUndirectedEdge {
     if (j < i) {
       int k = i;
       i = j;

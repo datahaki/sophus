@@ -8,14 +8,14 @@ import junit.framework.TestCase;
 
 public class UndirectedEdgeTest extends TestCase {
   public void testSimple() {
-    UndirectedEdge undirectedEdge = new UndirectedEdge(2, 3);
+    IntUndirectedEdge undirectedEdge = new IntUndirectedEdge(2, 3);
     assertEquals(undirectedEdge.i(), 2);
     assertEquals(undirectedEdge.j(), 3);
-    assertEquals(undirectedEdge, new UndirectedEdge(3, 2));
+    assertEquals(undirectedEdge, new IntUndirectedEdge(3, 2));
   }
 
   public void testCorrect() throws ClassNotFoundException, IOException {
-    UndirectedEdge undirectedEdge = Serialization.copy(new UndirectedEdge(3, 2));
+    IntUndirectedEdge undirectedEdge = Serialization.copy(new IntUndirectedEdge(3, 2));
     assertEquals(undirectedEdge.i(), 2);
     assertEquals(undirectedEdge.j(), 3);
   }

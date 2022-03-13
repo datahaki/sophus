@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.DirectedEdge;
+import ch.alpine.sophus.math.IntDirectedEdge;
 
 public class MeshStructure {
   private static final int MAX_ITERATIONS = 50;
 // ---
   private final SurfaceMesh surfaceMesh;
-  private final Map<DirectedEdge, DirectedEdge> edge_face = new HashMap<>();
+  private final Map<IntDirectedEdge, IntDirectedEdge> edge_face = new HashMap<>();
 
   public MeshStructure(SurfaceMesh surfaceMesh) {
     this.surfaceMesh = surfaceMesh;
@@ -24,23 +24,23 @@ public class MeshStructure {
       int n = face.length;
       for (int index = 0; index < n; ++index)
         edge_face.put( //
-            new DirectedEdge(face[index], face[(index + 1) % n]), //
-            new DirectedEdge(find, index));
+            new IntDirectedEdge(face[index], face[(index + 1) % n]), //
+            new IntDirectedEdge(find, index));
       ++find;
     }
   }
 
-  public List<DirectedEdge> ring(DirectedEdge seed) {
-    List<DirectedEdge> list = new LinkedList<>();
+  public List<IntDirectedEdge> ring(IntDirectedEdge seed) {
+    List<IntDirectedEdge> list = new LinkedList<>();
     list.add(seed);
     int iteration = 0;
-    DirectedEdge next = seed;
+    IntDirectedEdge next = seed;
     while (iteration < MAX_ITERATIONS) {
-      DirectedEdge nfac = edge_face.get(next);
+      IntDirectedEdge nfac = edge_face.get(next);
       if (Objects.isNull(nfac))
         return Arrays.asList();
       int[] fce = surfaceMesh.face(nfac.i());
-      next = new DirectedEdge(fce[nfac.j()], fce[(nfac.j() + fce.length - 1) % fce.length]);
+      next = new IntDirectedEdge(fce[nfac.j()], fce[(nfac.j() + fce.length - 1) % fce.length]);
       if (next.equals(seed))
         return list;
       list.add(next);

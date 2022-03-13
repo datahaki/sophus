@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.DirectedEdge;
+import ch.alpine.sophus.math.IntDirectedEdge;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Tensor;
@@ -30,11 +30,11 @@ public record LinearSurfaceMeshRefinement(BiinvariantMean biinvariantMean) imple
       Tensor midpoint = biinvariantMean.mean(sequence, WEIGHTS.apply(sequence.length()));
       out.addVert(midpoint);
     }
-    Map<DirectedEdge, Integer> directedEdges = new HashMap<>();
+    Map<IntDirectedEdge, Integer> directedEdges = new HashMap<>();
     for (int[] face : surfaceMesh.faces()) {
       List<Integer> list = new ArrayList<>(); // index of edge midpoints
       for (int index = 0; index < face.length; ++index) {
-        DirectedEdge directedEdge = new DirectedEdge( //
+        IntDirectedEdge directedEdge = new IntDirectedEdge( //
             face[index], //
             face[(index + 1) % face.length]);
         if (directedEdges.containsKey(directedEdge)) // edge already was subdivided

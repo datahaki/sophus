@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.DirectedEdge;
+import ch.alpine.sophus.math.IntDirectedEdge;
 import ch.alpine.sophus.srf.MeshStructure;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Tensor;
@@ -32,7 +32,7 @@ public record DooSabinRefinement(BiinvariantMean biinvariantMean) //
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
     SurfaceMesh out = new SurfaceMesh();
     MeshStructure meshStructure = new MeshStructure(surfaceMesh);
-    Map<DirectedEdge, DirectedEdge> edge_outVrt = new HashMap<>();
+    Map<IntDirectedEdge, IntDirectedEdge> edge_outVrt = new HashMap<>();
     for (int[] face : surfaceMesh.faces()) {
       int n = face.length;
       Tensor sequence = Tensor.of(Arrays.stream(face).mapToObj(surfaceMesh.vrt::get));
@@ -40,22 +40,22 @@ public record DooSabinRefinement(BiinvariantMean biinvariantMean) //
       int ofs = out.vrt.length();
       for (int index = 0; index < n; ++index) {
         out.addVert(biinvariantMean.mean(sequence, RotateRight.of(weights, index)));
-        DirectedEdge directedEdge = new DirectedEdge(face[index], face[(index + 1) % n]);
-        edge_outVrt.put(directedEdge, new DirectedEdge(ofs + index, ofs + ((index + 1) % n)));
+        IntDirectedEdge directedEdge = new IntDirectedEdge(face[index], face[(index + 1) % n]);
+        edge_outVrt.put(directedEdge, new IntDirectedEdge(ofs + index, ofs + ((index + 1) % n)));
       }
       out.addFace(IntStream.range(ofs, ofs + n).toArray());
     }
     // at this point out.vrt is complete
     // for each edge in given surface mesh we add a quad
     {
-      Set<DirectedEdge> set = new HashSet<>();
-      for (Entry<DirectedEdge, DirectedEdge> entry : edge_outVrt.entrySet()) {
-        DirectedEdge edge1 = entry.getKey();
+      Set<IntDirectedEdge> set = new HashSet<>();
+      for (Entry<IntDirectedEdge, IntDirectedEdge> entry : edge_outVrt.entrySet()) {
+        IntDirectedEdge edge1 = entry.getKey();
         if (!set.contains(edge1)) {
-          DirectedEdge edge2 = edge1.reverse();
-          DirectedEdge res2 = edge_outVrt.get(edge2);
+          IntDirectedEdge edge2 = edge1.reverse();
+          IntDirectedEdge res2 = edge_outVrt.get(edge2);
           if (Objects.nonNull(res2)) {
-            DirectedEdge res1 = entry.getValue();
+            IntDirectedEdge res1 = entry.getValue();
             out.addFace(new int[] { res1.j(), res1.i(), res2.j(), res2.i() });
             set.add(edge2);
           }
@@ -72,8 +72,8 @@ public record DooSabinRefinement(BiinvariantMean biinvariantMean) //
           if (!set.contains(i)) {
             set.add(i);
             // ---
-            final DirectedEdge seed = new DirectedEdge(face[index], face[(index + 1) % n]);
-            List<DirectedEdge> ring = meshStructure.ring(seed);
+            final IntDirectedEdge seed = new IntDirectedEdge(face[index], face[(index + 1) % n]);
+            List<IntDirectedEdge> ring = meshStructure.ring(seed);
             if (!ring.isEmpty()) {
               int[] frng = new int[ring.size()];
               for (int in = 0; in < frng.length; ++in)
