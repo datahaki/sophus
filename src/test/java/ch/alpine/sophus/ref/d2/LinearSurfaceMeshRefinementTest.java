@@ -40,8 +40,4 @@ public class LinearSurfaceMeshRefinementTest extends TestCase {
     assertTrue(FirstPosition.of(surfaceMesh.vrt, Array.zeros(3)).isPresent());
     ExactTensorQ.require(surfaceMesh.vrt);
   }
-
-  public void testFailNull() {
-    AssertFail.of(() -> new LinearSurfaceMeshRefinement(null));
-  }
 }

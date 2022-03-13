@@ -11,7 +11,7 @@ import ch.alpine.tensor.red.Mean;
 import junit.framework.TestCase;
 
 public class DooSabinRefinementTest extends TestCase {
-  public void testSimple() {
+  public void testCube() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     SurfaceMeshRefinement surfaceMeshRefinement = new DooSabinRefinement(RnBiinvariantMean.INSTANCE);
     SurfaceMesh refine1 = surfaceMeshRefinement.refine(surfaceMesh);

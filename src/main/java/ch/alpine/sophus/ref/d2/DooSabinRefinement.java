@@ -22,7 +22,8 @@ import ch.alpine.tensor.alg.RotateRight;
 /** Reference:
  * "Behaviour of recursive division surfaces near extraordinary points"
  * by D. Doo, M. Sabin, Computer-Aided Design 10(6), 1978 */
-public record DooSabinRefinement(BiinvariantMean biinvariantMean) implements SurfaceMeshRefinement, Serializable {
+public record DooSabinRefinement(BiinvariantMean biinvariantMean) //
+    implements SurfaceMeshRefinement, Serializable {
   public DooSabinRefinement {
     Objects.requireNonNull(biinvariantMean);
   }

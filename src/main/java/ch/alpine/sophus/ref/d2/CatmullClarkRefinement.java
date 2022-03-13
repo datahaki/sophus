@@ -3,7 +3,6 @@ package ch.alpine.sophus.ref.d2;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.srf.SurfaceMesh;
@@ -17,26 +16,13 @@ import ch.alpine.tensor.red.FirstPosition;
 /** Reference:
  * "Recursively generated B-spline surfaces on arbitrary topological meshes"
  * by Catmull, Clark; Computer-Aided Design 16(6), 1978 */
-public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializable {
-  /** @param biinvariantMean non-null
-   * @return */
-  public static SurfaceMeshRefinement of(BiinvariantMean biinvariantMean) {
-    return new CatmullClarkRefinement(Objects.requireNonNull(biinvariantMean));
-  }
-
-  // ---
-  private final BiinvariantMean biinvariantMean;
-  private final SurfaceMeshRefinement surfaceMeshRefinement;
-
-  private CatmullClarkRefinement(BiinvariantMean biinvariantMean) {
-    this.biinvariantMean = biinvariantMean;
-    surfaceMeshRefinement = new LinearSurfaceMeshRefinement(biinvariantMean);
-  }
-
+public record CatmullClarkRefinement(BiinvariantMean biinvariantMean) //
+    implements SurfaceMeshRefinement, Serializable {
   @Override // from SurfaceMeshRefinement
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
+    LinearSurfaceMeshRefinement linearSurfaceMeshRefinement = new LinearSurfaceMeshRefinement(biinvariantMean);
     // TODO SOPHUS ALG big assumption: is decomposition sub=lin+avg still possible?
-    SurfaceMesh out = surfaceMeshRefinement.refine(surfaceMesh);
+    SurfaceMesh out = linearSurfaceMeshRefinement.refine(surfaceMesh);
     int vix = 0;
     Tensor cpy = out.vrt.copy();
     for (List<Integer> list : out.vertToFace()) {
@@ -65,6 +51,7 @@ public class CatmullClarkRefinement implements SurfaceMeshRefinement, Serializab
       }
       ++vix;
     }
+    // TODO SOPHUS SUB zipping?
     out.vrt = cpy;
     return out;
   }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -18,10 +17,6 @@ import ch.alpine.tensor.sca.win.DirichletWindow;
 
 public record LinearSurfaceMeshRefinement(BiinvariantMean biinvariantMean) implements SurfaceMeshRefinement, Serializable {
   private static final Function<Integer, Tensor> WEIGHTS = UniformWindowSampler.of(DirichletWindow.FUNCTION);
-
-  public LinearSurfaceMeshRefinement {
-    Objects.requireNonNull(biinvariantMean);
-  }
 
   @Override // from SurfaceMeshRefinement
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
