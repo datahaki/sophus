@@ -3,6 +3,7 @@ package ch.alpine.sophus.ref.d2;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.math.IntDirectedEdge;
@@ -13,6 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 /** implementation using linear averaging and smoothing
+ * but without correcting term, i.e. without zipping
  * 
  * References:
  * "Recursively generated B-spline surfaces on arbitrary topological meshes"
@@ -26,30 +28,31 @@ public record CatmullClarkRefinement(BiinvariantMean biinvariantMean) //
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
     LinearSurfaceMeshRefinement linearSurfaceMeshRefinement = new LinearSurfaceMeshRefinement(biinvariantMean);
     SurfaceMesh out = linearSurfaceMeshRefinement.refine(surfaceMesh);
-    int vix = 0;
+    int index = 0;
     Tensor cpy = Tensors.reserve(out.vrt.length());
+    Set<Integer> boundary = out.boundary();
     for (List<IntDirectedEdge> list : out.vertToFace()) {
       int n = list.size();
-      // FIXME SOPHUS SUB identify boundary criteria 2<n leads to mixed behaviour along boundary
-      if (2 < n) {
+      if (boundary.contains(index))
+        cpy.append(out.vrt.get(index));
+      else {
         Tensor sequence = Tensors.reserve(2 * n + 1);
         Tensor weights = Tensors.reserve(2 * n + 1);
         // weights are from "Figure 7" in Warren/Schaefer
         Scalar ga = RationalScalar.of(1, 4);
         Scalar al = RationalScalar.of(1, 4 * n);
         Scalar be = RationalScalar.of(1, 2 * n);
-        for (IntDirectedEdge fix : list) {
-          sequence.append(out.vrt.get(out.face(fix.i())[(fix.j() + 1) % 4]));
-          sequence.append(out.vrt.get(out.face(fix.i())[(fix.j() + 2) % 4]));
+        for (IntDirectedEdge intDirectedEdge : list) {
+          sequence.append(out.vrt.get(out.face(intDirectedEdge.i())[(intDirectedEdge.j() + 1) % 4]));
+          sequence.append(out.vrt.get(out.face(intDirectedEdge.i())[(intDirectedEdge.j() + 2) % 4]));
           weights.append(be);
           weights.append(al);
         }
-        sequence.append(out.vrt.get(vix));
+        sequence.append(out.vrt.get(index));
         weights.append(ga);
         cpy.append(biinvariantMean.mean(sequence, weights));
-      } else
-        cpy.append(out.vrt.get(vix));
-      ++vix;
+      }
+      ++index;
     }
     out.vrt = cpy;
     return out;

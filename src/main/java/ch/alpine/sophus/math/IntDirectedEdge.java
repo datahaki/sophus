@@ -2,7 +2,7 @@
 package ch.alpine.sophus.math;
 
 import java.io.Serializable;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -19,9 +19,12 @@ public record IntDirectedEdge(int i, int j) implements Serializable {
   public IntDirectedEdge reverse() {
     return new IntDirectedEdge(j, i);
   }
+  // public IntStream intStream() {
+  // return IntStream.of(i, j);
+  // }
 
-  public IntStream stream() {
-    return IntStream.of(i, j);
+  public Stream<Integer> stream() {
+    return Stream.of(i, j);
   }
 
   public int[] array() {

@@ -25,6 +25,7 @@ public class CatmullClarkRefinementTest extends TestCase {
 
   public void testCube() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
+    assertTrue(surfaceMesh.boundary().isEmpty());
     SurfaceMeshRefinement surfaceMeshRefinement = new CatmullClarkRefinement(RnBiinvariantMean.INSTANCE);
     SurfaceMesh refine1 = surfaceMeshRefinement.refine(surfaceMesh);
     assertEquals(refine1.vrt.flatten(-1).distinct().count(), 7);

@@ -4,7 +4,9 @@ package ch.alpine.sophus.srf;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -67,5 +69,21 @@ public class SurfaceMesh implements Serializable {
         list.get(face[vindex]).add(new IntDirectedEdge(findex, vindex));
     }
     return list;
+  }
+
+  public Set<Integer> boundary() {
+    Set<IntDirectedEdge> set = new HashSet<>();
+    for (int[] face : faces) {
+      for (int index = 0; index < face.length; ++index) {
+        IntDirectedEdge intDirectedEdge = new IntDirectedEdge(face[index], face[(index + 1) % face.length]);
+        if (set.contains(intDirectedEdge))
+          set.remove(intDirectedEdge);
+        else
+          set.add(intDirectedEdge.reverse());
+      }
+    }
+    return set.stream() //
+        .flatMap(IntDirectedEdge::stream) //
+        .collect(Collectors.toSet());
   }
 }
