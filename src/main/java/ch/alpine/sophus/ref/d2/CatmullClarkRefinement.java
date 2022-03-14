@@ -5,53 +5,52 @@ import java.io.Serializable;
 import java.util.List;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.math.IntDirectedEdge;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.RationalScalar;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.red.FirstPosition;
 
-/** Reference:
+/** implementation using linear averaging and smoothing
+ * 
+ * References:
  * "Recursively generated B-spline surfaces on arbitrary topological meshes"
- * by Catmull, Clark; Computer-Aided Design 16(6), 1978 */
+ * by Catmull, Clark; Computer-Aided Design 16(6), 1978
+ * 
+ * "A Factored Approach to Subdivision Surfaces"
+ * by Joe Warren, Scott Schaefer, 2003 */
 public record CatmullClarkRefinement(BiinvariantMean biinvariantMean) //
     implements SurfaceMeshRefinement, Serializable {
   @Override // from SurfaceMeshRefinement
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
     LinearSurfaceMeshRefinement linearSurfaceMeshRefinement = new LinearSurfaceMeshRefinement(biinvariantMean);
-    // TODO SOPHUS ALG big assumption: is decomposition sub=lin+avg still possible?
     SurfaceMesh out = linearSurfaceMeshRefinement.refine(surfaceMesh);
     int vix = 0;
-    Tensor cpy = out.vrt.copy();
-    for (List<Integer> list : out.vertToFace()) {
+    Tensor cpy = Tensors.reserve(out.vrt.length());
+    for (List<IntDirectedEdge> list : out.vertToFace()) {
       int n = list.size();
+      // FIXME SOPHUS SUB identify boundary criteria 2<n leads to mixed behaviour along boundary
       if (2 < n) {
-        // TODO SOPHUS SUB identify boundary
         Tensor sequence = Tensors.reserve(2 * n + 1);
         Tensor weights = Tensors.reserve(2 * n + 1);
+        // weights are from "Figure 7" in Warren/Schaefer
         Scalar ga = RationalScalar.of(1, 4);
         Scalar al = RationalScalar.of(1, 4 * n);
         Scalar be = RationalScalar.of(1, 2 * n);
-        Scalar elem = RealScalar.of(vix);
-        for (int fix : list) { // edges from vertex ring (unordered)
-          int pos = FirstPosition.of(Tensors.vectorInt(out.face(fix)), elem).getAsInt();
-          int p1 = out.face(fix)[(pos + 1) % 4];
-          int p2 = out.face(fix)[(pos + 2) % 4];
-          sequence.append(out.vrt.get(p1));
-          sequence.append(out.vrt.get(p2));
+        for (IntDirectedEdge fix : list) {
+          sequence.append(out.vrt.get(out.face(fix.i())[(fix.j() + 1) % 4]));
+          sequence.append(out.vrt.get(out.face(fix.i())[(fix.j() + 2) % 4]));
           weights.append(be);
           weights.append(al);
         }
-        Tensor interp = out.vrt.get(vix);
-        sequence.append(interp);
+        sequence.append(out.vrt.get(vix));
         weights.append(ga);
-        cpy.set(biinvariantMean.mean(sequence, weights), vix);
-      }
+        cpy.append(biinvariantMean.mean(sequence, weights));
+      } else
+        cpy.append(out.vrt.get(vix));
       ++vix;
     }
-    // TODO SOPHUS SUB zipping?
     out.vrt = cpy;
     return out;
   }

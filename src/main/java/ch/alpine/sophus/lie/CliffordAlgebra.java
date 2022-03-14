@@ -118,7 +118,7 @@ public class CliffordAlgebra implements Serializable {
   /** @return geometric product as tensor of rank 3
    * @see SparseArray */
   public Tensor gp() {
-    return gp.copy();
+    return gp;
   }
 
   /** @return commutator product tensor of rank 3 that satisfies {@link JacobiIdentity}

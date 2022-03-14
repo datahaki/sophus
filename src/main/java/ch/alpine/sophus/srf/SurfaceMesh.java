@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import ch.alpine.sophus.math.IntDirectedEdge;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
@@ -54,17 +55,16 @@ public class SurfaceMesh implements Serializable {
 
   // ---
   /** @return vert to face index */
-  public List<List<Integer>> vertToFace() {
+  public List<List<IntDirectedEdge>> vertToFace() {
     @SuppressWarnings("unused")
-    List<List<Integer>> list = Stream.generate(() -> new ArrayList<Integer>()) //
+    List<List<IntDirectedEdge>> list = Stream.generate(() -> new ArrayList<IntDirectedEdge>()) //
         .limit(vrt.length()) //
         .collect(Collectors.toList());
     // ---
-    int index = 0;
-    for (int[] face : faces) {
-      for (int value : face)
-        list.get(value).add(index);
-      ++index;
+    for (int findex = 0; findex < faces.size(); ++findex) {
+      int[] face = faces.get(findex);
+      for (int vindex = 0; vindex < face.length; ++vindex)
+        list.get(face[vindex]).add(new IntDirectedEdge(findex, vindex));
     }
     return list;
   }
