@@ -26,8 +26,8 @@ public record CatmullClarkRefinement(BiinvariantMean biinvariantMean) //
     implements SurfaceMeshRefinement, Serializable {
   @Override // from SurfaceMeshRefinement
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
-    LinearSurfaceMeshRefinement linearSurfaceMeshRefinement = new LinearSurfaceMeshRefinement(biinvariantMean);
-    SurfaceMesh out = linearSurfaceMeshRefinement.refine(surfaceMesh);
+    SurfaceMeshRefinement surfaceMeshRefinement = new QuadLinearRefinement(biinvariantMean);
+    SurfaceMesh out = surfaceMeshRefinement.refine(surfaceMesh);
     int index = 0;
     Tensor cpy = Tensors.reserve(out.vrt.length());
     Set<Integer> boundary = out.boundary();
