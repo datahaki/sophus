@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.fit;
 
 import java.util.Objects;

@@ -1,14 +1,18 @@
 // code by jph
 package ch.alpine.sophus.srf;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.IntDirectedEdge;
 import ch.alpine.sophus.srf.io.PlyFormat;
 import ch.alpine.tensor.io.ResourceData;
-import junit.framework.TestCase;
 
-public class MeshStructureTest extends TestCase {
+public class MeshStructureTest {
+  @Test
   public void testSimple() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     MeshStructure meshStructure = new MeshStructure(surfaceMesh);

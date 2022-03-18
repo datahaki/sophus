@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.math.win;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.function.Function;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.usr.AssertFail;
@@ -13,9 +18,9 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.BartlettWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
-import junit.framework.TestCase;
 
-public class HalfWindowSamplerTest extends TestCase {
+public class HalfWindowSamplerTest {
+  @Test
   public void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel.get());
@@ -27,6 +32,7 @@ public class HalfWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testSpecific() {
     Function<Integer, Tensor> function = HalfWindowSampler.of(BartlettWindow.FUNCTION);
     assertEquals(function.apply(1), Tensors.fromString("{1}"));
@@ -34,6 +40,7 @@ public class HalfWindowSamplerTest extends TestCase {
     assertEquals(function.apply(3), Tensors.fromString("{1/6, 1/3, 1/2}"));
   }
 
+  @Test
   public void testExact() {
     Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(HannWindow.FUNCTION);
     Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(HannWindow.FUNCTION);
@@ -44,6 +51,7 @@ public class HalfWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testNumeric() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(smoothingKernel.get());
@@ -56,6 +64,7 @@ public class HalfWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testMemo() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel.get());
@@ -68,6 +77,7 @@ public class HalfWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testZeroFail() {
     Function<Integer, Tensor> function = HalfWindowSampler.of(HannWindow.FUNCTION);
     AssertFail.of(() -> function.apply(0));

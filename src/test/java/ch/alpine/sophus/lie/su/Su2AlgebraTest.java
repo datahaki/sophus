@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.su;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
@@ -21,15 +25,16 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Trace;
-import junit.framework.TestCase;
 
-public class Su2AlgebraTest extends TestCase {
+public class Su2AlgebraTest {
+  @Test
   public void testKillingForm() {
     LieAlgebra lieAlgebra = Su2Algebra.INSTANCE;
     Tensor form = KillingForm.of(lieAlgebra.ad());
     assertEquals(form, DiagonalMatrix.of(-8, -8, -8));
   }
 
+  @Test
   public void testBch() {
     Distribution local = UniformDistribution.of(-0.2, 0.2);
     Tensor x = RandomVariate.of(local, 3);
@@ -54,6 +59,7 @@ public class Su2AlgebraTest extends TestCase {
     OrderedQ.require(improve);
   }
 
+  @Test
   public void testBasis() {
     for (Tensor matrix : Su2Algebra.INSTANCE.basis()) {
       ExactTensorQ.require(matrix);
@@ -63,6 +69,7 @@ public class Su2AlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testBasis2() {
     assertEquals(Su2Algebra.INSTANCE.basis(), SuAlgebra.of(2).basis());
   }

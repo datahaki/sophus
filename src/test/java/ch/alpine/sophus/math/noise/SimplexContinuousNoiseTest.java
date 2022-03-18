@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.math.noise;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,9 +18,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class SimplexContinuousNoiseTest extends TestCase {
+public class SimplexContinuousNoiseTest {
+  @Test
   public void testSimple() {
     Tensor noise = Tensors.vector(i -> DoubleScalar.of(10 * (1 + SimplexContinuousNoise.FUNCTION.at(0.1 * i, 0.1 + i))), 1000);
     Tensor bins = BinCounts.of(noise);
@@ -27,11 +32,13 @@ public class SimplexContinuousNoiseTest extends TestCase {
     assertTrue(10 < len);
   }
 
+  @Test
   public void testExample() {
     double value = SimplexContinuousNoise.FUNCTION.at(0.3, 300.3, -600.5);
     assertEquals(value, -0.12579872366423636);
   }
 
+  @Test
   public void testMulti1() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Clip clip = Clips.absoluteOne();
@@ -42,6 +49,7 @@ public class SimplexContinuousNoiseTest extends TestCase {
     }
   }
 
+  @Test
   public void testMulti3() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Clip clip = Clips.absoluteOne();
@@ -54,6 +62,7 @@ public class SimplexContinuousNoiseTest extends TestCase {
     }
   }
 
+  @Test
   public void testMulti4() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Clip clip = Clips.absoluteOne();

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.math.StochasticMatrixQ;
@@ -13,9 +15,8 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BiinvariantMeanTest extends TestCase {
+public class BiinvariantMeanTest {
   private static final Distribution DISTRIBUTION = UniformDistribution.unit();
 
   /** @param n
@@ -27,6 +28,7 @@ public class BiinvariantMeanTest extends TestCase {
     return matrix;
   }
 
+  @Test
   public void testRnSimple() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 7; ++n) {
@@ -41,6 +43,7 @@ public class BiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2CSimple() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 7; ++n) {

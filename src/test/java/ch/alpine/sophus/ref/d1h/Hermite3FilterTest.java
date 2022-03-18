@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnExponential;
@@ -18,9 +22,9 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Hermite3FilterTest extends TestCase {
+public class Hermite3FilterTest {
+  @Test
   public void testR1PolynomialReproduction() {
     Tensor coeffs = Tensors.vector(1, 3, -2, 3);
     Polynomial f0 = Polynomial.of(coeffs);
@@ -35,6 +39,7 @@ public class Hermite3FilterTest extends TestCase {
     assertEquals(control, iterate);
   }
 
+  @Test
   public void testSe2ConstantReproduction() {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     HermiteFilter hermiteFilter = //
@@ -44,6 +49,7 @@ public class Hermite3FilterTest extends TestCase {
     Chop._14.requireClose(control, iterate);
   }
 
+  @Test
   public void testSe2LinearReproduction() {
     Tensor pg = Tensors.vector(1, 2, 3);
     Tensor pv = Tensors.vector(0.3, -0.2, -0.1);

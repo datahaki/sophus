@@ -1,10 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import ch.alpine.sophus.usr.AssertFail;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class StRandomSampleTest extends TestCase {
+import ch.alpine.sophus.usr.AssertFail;
+
+public class StRandomSampleTest {
+  @Test
   public void testFail() {
     AssertFail.of(() -> StRandomSample.of(3, -1));
     AssertFail.of(() -> StRandomSample.of(3, 4));

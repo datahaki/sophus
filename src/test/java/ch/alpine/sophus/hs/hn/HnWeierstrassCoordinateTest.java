@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -11,9 +15,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class HnWeierstrassCoordinateTest extends TestCase {
+public class HnWeierstrassCoordinateTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -28,12 +32,14 @@ public class HnWeierstrassCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testBn() {
     Tensor x = Tensors.vector(-0.3, 0.5);
     Tensor hn = BnCoordinate.bnToHn(x);
     HnMemberQ.INSTANCE.require(hn);
   }
 
+  @Test
   public void testMore() {
     Tensor x = Tensors.vector(0.2, 0);
     Tensor hn = BnCoordinate.bnToHn(x);
@@ -41,6 +47,7 @@ public class HnWeierstrassCoordinateTest extends TestCase {
     Tolerance.CHOP.requireClose(hn, Tensors.vector(0.41666666666666674, 0, 1.0833333333333335));
   }
 
+  @Test
   public void testRandom() {
     Distribution distribution = UniformDistribution.of(-0.5, 0.5);
     for (int count = 0; count < 10; ++count) {

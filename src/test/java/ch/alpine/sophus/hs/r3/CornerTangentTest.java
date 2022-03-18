@@ -1,12 +1,16 @@
 // code by jph
 package ch.alpine.sophus.hs.r3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;
-import junit.framework.TestCase;
 
-public class CornerTangentTest extends TestCase {
+public class CornerTangentTest {
+  @Test
   public void testSimple() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
@@ -19,6 +23,7 @@ public class CornerTangentTest extends TestCase {
     assertEquals(cr, add);
   }
 
+  @Test
   public void testImFail1() {
     Quaternion qi = Quaternion.of(1, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
@@ -26,6 +31,7 @@ public class CornerTangentTest extends TestCase {
     AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
   }
 
+  @Test
   public void testImFail2() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(1, 1, 8, 2);
@@ -33,6 +39,7 @@ public class CornerTangentTest extends TestCase {
     AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
   }
 
+  @Test
   public void testImFail3() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);

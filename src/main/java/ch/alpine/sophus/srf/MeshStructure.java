@@ -12,7 +12,7 @@ import ch.alpine.sophus.math.IntDirectedEdge;
 
 public class MeshStructure {
   private static final int MAX_ITERATIONS = 50;
-// ---
+  // ---
   private final SurfaceMesh surfaceMesh;
   private final Map<IntDirectedEdge, IntDirectedEdge> edge_face = new HashMap<>();
 

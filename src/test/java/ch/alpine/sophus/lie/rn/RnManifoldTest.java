@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -25,11 +29,11 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RnManifoldTest extends TestCase {
+public class RnManifoldTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(RnGroup.INSTANCE);
 
+  @Test
   public void testSimple() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -45,6 +49,7 @@ public class RnManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandom() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
@@ -66,6 +71,7 @@ public class RnManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
@@ -81,6 +87,7 @@ public class RnManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testLagrangeProperty() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
@@ -93,6 +100,7 @@ public class RnManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
@@ -108,6 +116,7 @@ public class RnManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testAffineSimple() {
     Random random = new Random(1);
     BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
@@ -122,11 +131,13 @@ public class RnManifoldTest extends TestCase {
       }
   }
 
+  @Test
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
       AssertFail.of(() -> barycentricCoordinate.weights(null, null));
   }
 
+  @Test
   public void testColinear() {
     int d = 2;
     int n = 5;

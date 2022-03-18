@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
@@ -18,11 +22,11 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class ClothoidBuilderImplTest extends TestCase {
+public class ClothoidBuilderImplTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(-8, 8);
     ClothoidBuilder clothoidInterface = Serialization.copy(CLOTHOID_BUILDER);
@@ -35,12 +39,14 @@ public class ClothoidBuilderImplTest extends TestCase {
     }
   }
 
+  @Test
   public void testErf() {
     ScalarTensorFunction scalarTensorFunction = CLOTHOID_BUILDER.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertTrue(scalarTensorFunction instanceof Clothoid);
   }
 
   @SuppressWarnings("unused")
+  @Test
   public void testSimple2() {
     Tensor q = Tensors.vector(-2.05, 0, 0);
     CurveSubdivision lrL = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);

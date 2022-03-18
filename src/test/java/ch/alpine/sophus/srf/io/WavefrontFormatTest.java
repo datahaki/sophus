@@ -1,11 +1,16 @@
 // code by jph
 package ch.alpine.sophus.srf.io;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Scalar;
@@ -15,9 +20,9 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.ext.ReadLine;
 import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.red.Max;
-import junit.framework.TestCase;
 
-public class WavefrontFormatTest extends TestCase {
+public class WavefrontFormatTest {
+  @Test
   public void testBlender0() throws IOException {
     try (InputStream inputStream = getClass().getResource("/io/obj/blender0.obj").openStream()) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));
@@ -56,6 +61,7 @@ public class WavefrontFormatTest extends TestCase {
     }
   }
 
+  @Test
   public void testMathematica0() throws IOException {
     try (InputStream inputStream = getClass().getResource("/io/obj/meshregionex2d.obj").openStream()) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));

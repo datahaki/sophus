@@ -1,12 +1,16 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class Se2FlipTest extends TestCase {
+public class Se2FlipTest {
+  @Test
   public void testSimple() {
     Tensor tensor = Se2Flip.FUNCTION.apply(Tensors.vector(1, 2, 3));
     ExactTensorQ.require(tensor);

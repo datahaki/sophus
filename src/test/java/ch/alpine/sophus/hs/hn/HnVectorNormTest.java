@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -11,9 +15,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnVectorNormTest extends TestCase {
+public class HnVectorNormTest {
+  @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 2; d < 5; ++d) {
@@ -34,6 +38,7 @@ public class HnVectorNormTest extends TestCase {
     }
   }
 
+  @Test
   public void testNormalizeExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {

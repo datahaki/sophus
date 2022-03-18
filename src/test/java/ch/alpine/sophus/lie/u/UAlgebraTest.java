@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.u;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.tensor.ComplexScalar;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class UAlgebraTest extends TestCase {
+public class UAlgebraTest {
+  @Test
   public void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = UAlgebra.of(n);
@@ -27,6 +31,7 @@ public class UAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testEigensystem() {
     LieAlgebra lieAlgebra = UAlgebra.of(3);
     Tensor basis = lieAlgebra.basis();

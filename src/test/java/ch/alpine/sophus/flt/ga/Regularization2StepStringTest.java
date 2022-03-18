@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.usr.AssertFail;
@@ -12,12 +16,12 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
-import junit.framework.TestCase;
 
-public class Regularization2StepStringTest extends TestCase {
+public class Regularization2StepStringTest {
   private static final TensorUnaryOperator STRING = //
       Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.of(1, 4));
 
+  @Test
   public void testLo() throws ClassNotFoundException, IOException {
     Tensor signal = Tensors.vector(1, 0, 0, 0, 0);
     Tensor tensor = Serialization.copy(STRING).apply(signal);
@@ -27,6 +31,7 @@ public class Regularization2StepStringTest extends TestCase {
     assertEquals(tensor, tensorUnaryOperator.apply(signal));
   }
 
+  @Test
   public void testHi() {
     Tensor signal = Tensors.vector(0, 0, 0, 0, 1);
     Tensor tensor = STRING.apply(signal);
@@ -36,18 +41,22 @@ public class Regularization2StepStringTest extends TestCase {
     assertEquals(tensor, tensorUnaryOperator.apply(signal));
   }
 
+  @Test
   public void testEmpty() {
     assertEquals(STRING.apply(Tensors.empty()), Tensors.empty());
   }
 
+  @Test
   public void testSingle() {
     assertEquals(STRING.apply(Tensors.vector(2)), Tensors.vector(2));
   }
 
+  @Test
   public void testTuple() {
     assertEquals(STRING.apply(Tensors.vector(3, 2)), Tensors.vector(3, 2));
   }
 
+  @Test
   public void testSimple() {
     TensorUnaryOperator STRING = //
         Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.of(1, 2));
@@ -57,6 +66,7 @@ public class Regularization2StepStringTest extends TestCase {
     assertEquals(tensor, Tensors.fromString("{1, 1, 5/4, 3/2, 5/4, 1, 1, 1, 1, 1}"));
   }
 
+  @Test
   public void testMatrix() {
     TensorUnaryOperator STRING = //
         Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.of(1, 2));
@@ -66,6 +76,7 @@ public class Regularization2StepStringTest extends TestCase {
     assertEquals(tensor, Tensors.fromString("{{1, 2}, {2, 2}, {3, 2}, {7/2, 9/4}, {3, 3}}"));
   }
 
+  @Test
   public void testZero() {
     Tensor signal = Tensors.vector(1, 1, 1, 2, 1, 1, 3, 1, 1, 1);
     Tensor tensor = Regularization2Step.string(RnGeodesic.INSTANCE, RealScalar.ZERO).apply(signal);
@@ -73,6 +84,7 @@ public class Regularization2StepStringTest extends TestCase {
     assertEquals(tensor, signal);
   }
 
+  @Test
   public void testScalarFail() {
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.HALF);
     AssertFail.of(() -> tensorUnaryOperator.apply(RealScalar.ZERO));

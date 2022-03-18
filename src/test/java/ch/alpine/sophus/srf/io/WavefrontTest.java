@@ -1,11 +1,15 @@
 // code by jph
 package ch.alpine.sophus.srf.io;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -17,9 +21,8 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class WavefrontTest extends TestCase {
+public class WavefrontTest {
   private static void check3d(File file) throws IOException {
     try (InputStream inputStream = new FileInputStream(file)) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));
@@ -47,6 +50,7 @@ public class WavefrontTest extends TestCase {
     }
   }
 
+  @Test
   public void testLoad() throws IOException {
     File directory = HomeDirectory.file("Projects/gym-duckietown/gym_duckietown/meshes");
     if (directory.isDirectory())

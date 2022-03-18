@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.lang.reflect.Modifier;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -17,13 +22,14 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Log;
-import junit.framework.TestCase;
 
-public class StaticHelperTest extends TestCase {
+public class StaticHelperTest {
+  @Test
   public void testSimple() {
     assertEquals(StaticHelper.norm(IdentityMatrix.of(3)), RealScalar.ZERO);
   }
 
+  @Test
   public void testTrace() {
     RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
     Tensor q = RandomSample.of(rsi);
@@ -36,6 +42,7 @@ public class StaticHelperTest extends TestCase {
     Chop._07.requireClose(Vector2NormSquared.of(diag), Trace.of(log2));
   }
 
+  @Test
   public void testPackageVisibility() {
     assertFalse(Modifier.isPublic(StaticHelper.class.getModifiers()));
   }

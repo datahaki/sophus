@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.ref.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
@@ -12,9 +17,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.io.ResourceData;
 import ch.alpine.tensor.red.Mean;
-import junit.framework.TestCase;
 
-public class CatmullClarkRefinementTest extends TestCase {
+public class CatmullClarkRefinementTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         Serialization.copy(new CatmullClarkRefinement(Se2CoveringBiinvariantMean.INSTANCE));
@@ -23,6 +28,7 @@ public class CatmullClarkRefinementTest extends TestCase {
     assertEquals(surfaceMesh.vrt.length(), 35);
   }
 
+  @Test
   public void testCube() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     assertTrue(surfaceMesh.boundary().isEmpty());

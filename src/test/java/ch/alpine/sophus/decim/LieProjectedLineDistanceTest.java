@@ -3,14 +3,16 @@ package ch.alpine.sophus.decim;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
-import junit.framework.TestCase;
 
-public class LieProjectedLineDistanceTest extends TestCase {
+public class LieProjectedLineDistanceTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     LieProjectedLineDistance lieProjectedLineDistance = //
         new LieProjectedLineDistance(Se2CoveringGroup.INSTANCE, Se2CoveringExponential.INSTANCE);

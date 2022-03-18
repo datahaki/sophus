@@ -1,9 +1,13 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.function.Function;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicCenter.Splits;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
@@ -24,13 +28,13 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
-import junit.framework.TestCase;
 
-public class GeodesicCenterTest extends TestCase {
+public class GeodesicCenterTest {
   @SuppressWarnings("unchecked")
   private static final Function<Integer, Tensor> CONSTANT = (Function<Integer, Tensor> & Serializable) //
   i -> Array.of(k -> RationalScalar.of(1, i), i);
 
+  @Test
   public void testSimple() {
     // function generates window to compute mean: all points in window have same weight
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, CONSTANT);
@@ -40,6 +44,7 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testDirichlet() {
     // function generates window to compute mean: all points in window have same weight
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
@@ -49,6 +54,7 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2Geodesic.INSTANCE, smoothingKernel.get());
@@ -59,6 +65,7 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testEvenFail() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, CONSTANT);
     for (int index = 0; index < 9; ++index) {
@@ -67,12 +74,14 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));
     AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (ScalarUnaryOperator) null));
     AssertFail.of(() -> GeodesicCenter.of(null, CONSTANT));
   }
 
+  @Test
   public void testSplitsMean() {
     Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(DirichletWindow.FUNCTION);
     {
@@ -89,6 +98,7 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testSplitsBinomial() {
     {
       Tensor tensor = GeodesicCenter.Splits.of(BinomialWeights.INSTANCE.apply(1 * 2 + 1));
@@ -104,20 +114,24 @@ public class GeodesicCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testFailEven() {
     AssertFail.of(() -> GeodesicCenter.Splits.of(Tensors.vector(1, 2)));
   }
 
+  @Test
   public void testNonSymmetric() {
     AssertFail.of(() -> GeodesicCenter.Splits.of(Tensors.vector(1, 2, 2)));
   }
 
+  @Test
   public void testSplitsEvenFail() {
     Splits splits = new GeodesicCenter.Splits(UniformWindowSampler.of(GaussianWindow.FUNCTION));
     splits.apply(5);
     AssertFail.of(() -> splits.apply(4));
   }
 
+  @Test
   public void testSplitsNullFail() {
     AssertFail.of(() -> new GeodesicCenter.Splits(null));
   }

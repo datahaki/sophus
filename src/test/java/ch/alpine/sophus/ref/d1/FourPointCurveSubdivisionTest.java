@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.usr.AssertFail;
@@ -18,9 +22,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
-import junit.framework.TestCase;
 
-public class FourPointCurveSubdivisionTest extends TestCase {
+public class FourPointCurveSubdivisionTest {
+  @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
@@ -30,6 +34,7 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     assertEquals(actual, Tensors.fromString("{{1, 0}, {5/8, 5/8}, {0, 1}, {-5/8, 5/8}, {-1, 0}, {-5/8, -5/8}, {0, -1}, {5/8, -5/8}}"));
   }
 
+  @Test
   public void testString() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
     Tensor vector = Tensors.vector(0, 1, 2, 3);
@@ -38,6 +43,7 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testStringTwo() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
     Tensor vector = Tensors.vector(0, 1);
@@ -46,6 +52,7 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testStringOne() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
     Tensor vector = Tensors.vector(3);
@@ -54,6 +61,7 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testSimple1() {
     Tensor curve = Tensors.fromString("{{0, 0}, {1, 0}, {0, 1}}");
     TensorUnaryOperator curveSubdivision = //
@@ -65,6 +73,7 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     assertEquals(n1.get(3), Tensors.fromString("{9/16, 9/16}"));
   }
 
+  @Test
   public void testCyclic() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
     for (int n = 3; n < 10; ++n) {
@@ -76,12 +85,14 @@ public class FourPointCurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = new FourPointCurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new FourPointCurveSubdivision(null));
   }

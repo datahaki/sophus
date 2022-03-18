@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -14,13 +18,13 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
-import junit.framework.TestCase;
 
-public class Sl2GroupElementTest extends TestCase {
+public class Sl2GroupElementTest {
   private static Tensor adjoint(LieGroupElement lieGroupElement) {
     return Tensor.of(IdentityMatrix.of(3).stream().map(lieGroupElement::adjoint));
   }
 
+  @Test
   public void testSimple() {
     Tensor vector = Tensors.vector(-2, 7, 3);
     Sl2GroupElement sl2GroupElement = Sl2Group.INSTANCE.element(vector);
@@ -29,6 +33,7 @@ public class Sl2GroupElementTest extends TestCase {
     assertEquals(inverse.combine(vector), UnitVector.of(3, 2));
   }
 
+  @Test
   public void testAdjointId() {
     Sl2GroupElement sl2GroupElement = Sl2Group.INSTANCE.element(Tensors.vector(0, 0, 1));
     Tensor matrix = adjoint(sl2GroupElement);
@@ -36,6 +41,7 @@ public class Sl2GroupElementTest extends TestCase {
     assertEquals(matrix, IdentityMatrix.of(3));
   }
 
+  @Test
   public void testAdjointCombine() {
     Random random = new Random(3);
     RandomSampleInterface rsi = new Sl2RandomSample( //
@@ -56,6 +62,7 @@ public class Sl2GroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testFailZero() {
     AssertFail.of(() -> Sl2Group.INSTANCE.element(Tensors.vector(1, 2, 0)));
   }

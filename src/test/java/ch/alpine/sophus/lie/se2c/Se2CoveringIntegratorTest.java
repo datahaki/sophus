@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,9 +18,9 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2CoveringIntegratorTest extends TestCase {
+public class Se2CoveringIntegratorTest {
+  @Test
   public void testFullRotation() {
     Tensor g = Tensors.vector(10, 0, 0).unmodifiable();
     for (Tensor _x : Subdivide.of(-2, 10, 72)) {
@@ -38,6 +43,7 @@ public class Se2CoveringIntegratorTest extends TestCase {
     return exp_of(RealScalar.of(x), RealScalar.of(y), RealScalar.of(theta));
   }
 
+  @Test
   public void testExpSubstitute() {
     Tensor mat = exp_of(1, 2, .3);
     Tensor vec = Se2CoveringIntegrator.INSTANCE.spin(Array.zeros(3), Tensors.vector(1, 2, .3));
@@ -47,6 +53,7 @@ public class Se2CoveringIntegratorTest extends TestCase {
     Chop._13.requireClose(mat, alt);
   }
 
+  @Test
   public void testExpSubstitute2() {
     for (int index = 0; index < 20; ++index) {
       Tensor rnd = RandomVariate.of(NormalDistribution.standard(), 3);
@@ -64,6 +71,7 @@ public class Se2CoveringIntegratorTest extends TestCase {
     }
   }
 
+  @Test
   public void testUnits() {
     Tensor spin = Se2CoveringIntegrator.INSTANCE.spin( //
         Tensors.fromString("{1[m], 2[m], 3}"), //

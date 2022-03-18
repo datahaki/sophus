@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.so.SoPhongMean;
 import ch.alpine.tensor.Tensor;
@@ -13,9 +15,9 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class So3FastMeanTest extends TestCase {
+public class So3FastMeanTest {
+  @Test
   public void testSimple() {
     int n = 7;
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);

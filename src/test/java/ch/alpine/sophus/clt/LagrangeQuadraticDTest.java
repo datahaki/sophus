@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
@@ -13,9 +18,8 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class LagrangeQuadraticDTest extends TestCase {
+public class LagrangeQuadraticDTest {
   private static final Scalar _3 = RealScalar.of(+3);
   private static final Scalar _4 = RealScalar.of(+4);
 
@@ -31,6 +35,7 @@ public class LagrangeQuadraticDTest extends TestCase {
         b0.add(b1).subtract(bm.add(bm)).multiply(_4));
   }
 
+  @Test
   public void testSimple() {
     Scalar b0 = RealScalar.of(0.7);
     Scalar bm = RealScalar.of(0.3);
@@ -42,11 +47,13 @@ public class LagrangeQuadraticDTest extends TestCase {
     Tolerance.CHOP.requireClose(domain.map(lqd1), domain.map(lqd2));
   }
 
+  @Test
   public void testZero() throws ClassNotFoundException, IOException {
     LagrangeQuadraticD lagrangeQuadraticD = Serialization.copy(new LagrangeQuadraticD(1e-9, 1e-10));
     assertTrue(lagrangeQuadraticD.isZero(Chop._08));
   }
 
+  @Test
   public void testIntegralAbs() {
     assertEquals(new LagrangeQuadraticD(+2, +2).integralAbs(), RealScalar.of(3));
     assertEquals(new LagrangeQuadraticD(-2, -2).integralAbs(), RealScalar.of(3));
@@ -57,6 +64,7 @@ public class LagrangeQuadraticDTest extends TestCase {
     assertEquals(new LagrangeQuadraticD(-2, +4).integralAbs(), RationalScalar.of(6, 6));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new LagrangeQuadraticD(null, RealScalar.ONE));
     AssertFail.of(() -> new LagrangeQuadraticD(RealScalar.ONE, null));

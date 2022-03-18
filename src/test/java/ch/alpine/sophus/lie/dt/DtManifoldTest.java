@@ -4,6 +4,8 @@ package ch.alpine.sophus.lie.dt;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
@@ -17,9 +19,8 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class DtManifoldTest extends TestCase {
+public class DtManifoldTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtManifold.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
@@ -27,6 +28,7 @@ public class DtManifoldTest extends TestCase {
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AFFINE };
 
+  @Test
   public void testSimple() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
@@ -47,6 +49,7 @@ public class DtManifoldTest extends TestCase {
         }
   }
 
+  @Test
   public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
@@ -67,6 +70,7 @@ public class DtManifoldTest extends TestCase {
         }
   }
 
+  @Test
   public void testAffineCenter() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)

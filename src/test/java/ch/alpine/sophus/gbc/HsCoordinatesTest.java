@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -12,9 +17,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HsCoordinatesTest extends TestCase {
+public class HsCoordinatesTest {
+  @Test
   public void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(RnManifold.INSTANCE, ThreePointCoordinate.of(barycenter));

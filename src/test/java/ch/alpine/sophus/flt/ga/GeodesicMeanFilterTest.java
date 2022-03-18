@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
@@ -11,9 +15,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.MeanFilter;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Unitize;
-import junit.framework.TestCase;
 
-public class GeodesicMeanFilterTest extends TestCase {
+public class GeodesicMeanFilterTest {
+  @Test
   public void testSimple() {
     for (int radius = 0; radius < 4; ++radius) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
@@ -23,6 +27,7 @@ public class GeodesicMeanFilterTest extends TestCase {
     }
   }
 
+  @Test
   public void testRadiusOne() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, 1);
     Tensor tensor = UnitVector.of(10, 5);
@@ -32,6 +37,7 @@ public class GeodesicMeanFilterTest extends TestCase {
     assertEquals(Unitize.of(result), expect);
   }
 
+  @Test
   public void testMultiRadius() {
     for (int radius = 0; radius < 5; ++radius) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
@@ -43,6 +49,7 @@ public class GeodesicMeanFilterTest extends TestCase {
     }
   }
 
+  @Test
   public void testBiUnits() {
     int radius = 2;
     TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);

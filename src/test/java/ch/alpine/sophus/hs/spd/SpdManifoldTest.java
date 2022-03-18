@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
@@ -16,9 +20,8 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdManifoldTest extends TestCase {
+public class SpdManifoldTest {
   public static final BarycentricCoordinate[] list() {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
@@ -31,6 +34,7 @@ public class SpdManifoldTest extends TestCase {
     };
   }
 
+  @Test
   public void testSimple() {
     Random random = new Random();
     int d = 2;
@@ -51,6 +55,7 @@ public class SpdManifoldTest extends TestCase {
     assertTrue(fail < 4);
   }
 
+  @Test
   public void testLagrangeProperty() {
     Random random = new Random();
     int d = 2;
@@ -68,6 +73,7 @@ public class SpdManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testFlipMidpoint() {
     RandomSampleInterface spd = new Spd0RandomSample(3, NormalDistribution.standard());
     Tensor p = RandomSample.of(spd);

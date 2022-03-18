@@ -3,6 +3,8 @@ package ch.alpine.sophus.fit;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -14,9 +16,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HsWeiszfeldMethodTest extends TestCase {
+public class HsWeiszfeldMethodTest {
+  @Test
   public void testSimple() {
     Random random = new Random(3);
     SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);

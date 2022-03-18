@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -26,9 +30,8 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class Se3ManifoldTest extends TestCase {
+public class Se3ManifoldTest {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(Se3Manifold.INSTANCE, Chop._12);
   private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Manifold.INSTANCE);
@@ -39,6 +42,7 @@ public class Se3ManifoldTest extends TestCase {
       UniformDistribution.of(Clips.absolute(5)), //
       TriangularDistribution.with(0, 0.25));
 
+  @Test
   public void testRandom() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES) {
@@ -60,6 +64,7 @@ public class Se3ManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testMeanRandom() {
     Distribution distribution = NormalDistribution.of(4, 1);
     for (int n = 7; n < 13; ++n) {
@@ -73,6 +78,7 @@ public class Se3ManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testRelativeRandom() {
     Random random = new Random(3);
     BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;

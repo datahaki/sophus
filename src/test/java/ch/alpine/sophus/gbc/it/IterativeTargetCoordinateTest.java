@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.gbc.it;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Deque;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
@@ -13,9 +18,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Ramp;
-import junit.framework.TestCase;
 
-public class IterativeTargetCoordinateTest extends TestCase {
+public class IterativeTargetCoordinateTest {
+  @Test
   public void testSimple() {
     int count = 0;
     IterativeTargetCoordinate genesis = //

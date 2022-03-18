@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
@@ -23,9 +27,9 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.GeometricMean;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdPhongMeanTest extends TestCase {
+public class SpdPhongMeanTest {
+  @Test
   public void testSimple() {
     Random random = new Random(1);
     for (int d = 2; d < 4; ++d) {
@@ -44,6 +48,7 @@ public class SpdPhongMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testMidpoint() {
     int n = 2;
     RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -60,6 +65,7 @@ public class SpdPhongMeanTest extends TestCase {
     m1.add(m3);
   }
 
+  @Test
   public void testMidpointDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
     SpdMemberQ.INSTANCE.require(p);
@@ -70,6 +76,7 @@ public class SpdPhongMeanTest extends TestCase {
     Tolerance.CHOP.requireClose(m, s);
   }
 
+  @Test
   public void testWeightedDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
     SpdMemberQ.INSTANCE.require(p);

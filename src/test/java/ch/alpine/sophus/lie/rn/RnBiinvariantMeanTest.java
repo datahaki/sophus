@@ -4,6 +4,8 @@ package ch.alpine.sophus.lie.rn;
 import java.util.Optional;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -20,9 +22,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class RnBiinvariantMeanTest extends TestCase {
+public class RnBiinvariantMeanTest {
+  @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(3));
     int length = 10;
@@ -32,6 +34,7 @@ public class RnBiinvariantMeanTest extends TestCase {
     Chop._14.requireClose(mean, weights.dot(sequence));
   }
 
+  @Test
   public void testExact() {
     Distribution distribution = DiscreteUniformDistribution.of(10, 100);
     int length = 10;
@@ -42,6 +45,7 @@ public class RnBiinvariantMeanTest extends TestCase {
     ExactTensorQ.require(mean);
   }
 
+  @Test
   public void testEmpty() {
     AssertFail.of(() -> RnBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
@@ -49,6 +53,7 @@ public class RnBiinvariantMeanTest extends TestCase {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.of(RnManifold.INSTANCE, Chop._12);
 
+  @Test
   public void testSimple2() {
     Tensor sequence = Tensors.of( //
         RnExponential.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
@@ -60,6 +65,7 @@ public class RnBiinvariantMeanTest extends TestCase {
     Chop._10.requireAllZero(log);
   }
 
+  @Test
   public void testConvergence() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     final int d = 3;
@@ -75,6 +81,7 @@ public class RnBiinvariantMeanTest extends TestCase {
       }
   }
 
+  @Test
   public void testConvergenceExact() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);

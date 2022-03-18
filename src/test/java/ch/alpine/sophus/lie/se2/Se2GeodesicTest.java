@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.se2;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -12,19 +14,21 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2GeodesicTest extends TestCase {
+public class Se2GeodesicTest {
+  @Test
   public void testSimple() {
     Tensor split = Se2Geodesic.INSTANCE.split(Tensors.vector(0, 0, 0), Tensors.vector(10, 0, 1), RealScalar.of(0.7));
     Chop._13.requireClose(split, Tensors.fromString("{7.071951896570488, -1.0688209919859546, 0.7}"));
   }
 
+  @Test
   public void testModPi() {
     Tensor split = Se2Geodesic.INSTANCE.split(Tensors.vector(0, 0, 10), Tensors.vector(0, 0, 10), RealScalar.of(0.738));
     Chop._13.requireClose(split, Tensors.of(RealScalar.ZERO, RealScalar.ZERO, So2.MOD.apply(RealScalar.of(10))));
   }
 
+  @Test
   public void testBiinvariantMean() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(-10, 8);

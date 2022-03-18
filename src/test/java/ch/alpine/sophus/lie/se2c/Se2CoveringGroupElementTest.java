@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -21,9 +26,8 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class Se2CoveringGroupElementTest extends TestCase {
+public class Se2CoveringGroupElementTest {
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
       Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
@@ -31,6 +35,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     return Tensor.of(IdentityMatrix.of(3).stream().map(lieGroupElement::adjoint));
   }
 
+  @Test
   public void testCirc() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -44,6 +49,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testInverse() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -55,6 +61,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testInverseCirc() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -66,6 +73,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testIntegrator() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int index = 0; index < 10; ++index) {
@@ -79,6 +87,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Tensor oth = Tensors.fromString("{-.3[m], 0.8[m], -0.5}");
@@ -89,6 +98,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     assertEquals(circ, Tensors.fromString("{0.4503839266288446[m], 2.654157604780433[m], -0.15999999999999998}"));
   }
 
+  @Test
   public void testMatrixAction() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int index = 0; index < 10; ++index) {
@@ -100,12 +110,14 @@ public class Se2CoveringGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testNoWrap() {
     Se2CoveringGroupElement element = new Se2CoveringGroupElement(Tensors.vector(1, 2, 3));
     Tensor tensor = element.combine(Tensors.vector(6, 7, 8));
     assertTrue(Sign.isPositive(tensor.Get(2)));
   }
 
+  @Test
   public void testInverseTensor() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Se2CoveringGroupElement element = new Se2CoveringGroupElement(xya);
@@ -117,6 +129,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     ExactTensorQ.require(dR);
   }
 
+  @Test
   public void testAdjointCombine() {
     for (int count = 0; count < 10; ++count) {
       Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
@@ -131,6 +144,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testDLNumeric() {
     Tensor g = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Tensor x = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
@@ -144,6 +158,7 @@ public class Se2CoveringGroupElementTest extends TestCase {
     // System.out.println(dL);
   }
 
+  @Test
   public void testDRDL_ad() {
     Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     // LieGroupElement ga =

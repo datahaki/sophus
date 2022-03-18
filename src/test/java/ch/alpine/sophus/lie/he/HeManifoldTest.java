@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.he;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
@@ -22,9 +24,8 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class HeManifoldTest extends TestCase {
+public class HeManifoldTest {
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, new MetricCoordinate( //
       NormWeighting.of( //
@@ -38,6 +39,7 @@ public class HeManifoldTest extends TestCase {
   };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(HeGroup.INSTANCE);
 
+  @Test
   public void testSimple() {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)
@@ -56,6 +58,7 @@ public class HeManifoldTest extends TestCase {
         }
   }
 
+  @Test
   public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
@@ -74,6 +77,7 @@ public class HeManifoldTest extends TestCase {
       }
   }
 
+  @Test
   public void testAffineCenter() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)

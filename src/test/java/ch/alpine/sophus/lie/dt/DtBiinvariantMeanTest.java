@@ -1,6 +1,10 @@
 // code by ob, jph
 package ch.alpine.sophus.lie.dt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.tensor.Tensor;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class DtBiinvariantMeanTest extends TestCase {
+public class DtBiinvariantMeanTest {
+  @Test
   public void testTrivial() {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));
     Tensor weights = Tensors.vector(1);
@@ -21,6 +25,7 @@ public class DtBiinvariantMeanTest extends TestCase {
     assertEquals(Tensors.vector(2, 2), actual);
   }
 
+  @Test
   public void testSimple() {
     Tensor p = Tensors.vector(1, 2);
     Tensor q = Tensors.vector(2, 3);
@@ -32,6 +37,7 @@ public class DtBiinvariantMeanTest extends TestCase {
     Chop._12.requireClose(expected, actual);
   }
 
+  @Test
   public void testReorder() {
     Tensor p = Tensors.vector(1, 2);
     Tensor q = Tensors.vector(2, 3);
@@ -50,6 +56,7 @@ public class DtBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testReorderNegative() {
     Tensor p = Tensors.vector(1, 2);
     Tensor q = Tensors.vector(2, 3);
@@ -69,6 +76,7 @@ public class DtBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testReorderNegativeVector() {
     Tensor p = Tensors.fromString("{1, {2, 3}}");
     Tensor q = Tensors.fromString("{2, {3, 1}}");

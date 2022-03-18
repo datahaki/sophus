@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.sophus.hs.sn.SnMetric;
@@ -11,9 +13,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class S2ManifoldTest extends TestCase {
+public class S2ManifoldTest {
+  @Test
   public void testTangentSpace() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     for (int count = 0; count < 10; ++count) {
@@ -26,6 +28,7 @@ public class S2ManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testExp() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     for (int count = 0; count < 10; ++count) {

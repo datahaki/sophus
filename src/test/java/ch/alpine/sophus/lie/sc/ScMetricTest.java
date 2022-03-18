@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.sc;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -9,9 +11,8 @@ import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class ScMetricTest extends TestCase {
+public class ScMetricTest {
   private static void _check(Tensor p, Tensor q, Tensor r) {
     Scalar pq = ScMetric.INSTANCE.distance(p, q);
     Sign.requirePositive(pq);
@@ -28,6 +29,7 @@ public class ScMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple() {
     _check(Tensors.of(RealScalar.of(2)), Tensors.of(RealScalar.of(3)), Tensors.of(RealScalar.of(5)));
     _check(Tensors.of(RealScalar.of(2)), Tensors.of(Pi.VALUE), Tensors.of(RealScalar.of(0.1)));

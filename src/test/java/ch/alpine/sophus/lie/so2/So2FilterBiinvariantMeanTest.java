@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So2FilterBiinvariantMeanTest extends TestCase {
+public class So2FilterBiinvariantMeanTest {
+  @Test
   public void testLength2Permutations() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Distribution wd = UniformDistribution.of(-3, 3);

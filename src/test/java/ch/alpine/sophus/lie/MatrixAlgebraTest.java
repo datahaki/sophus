@@ -1,8 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
 import java.util.function.BinaryOperator;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
@@ -29,9 +34,9 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.spa.Normal;
 import ch.alpine.tensor.spa.SparseArray;
-import junit.framework.TestCase;
 
-public class MatrixAlgebraTest extends TestCase {
+public class MatrixAlgebraTest {
+  @Test
   public void testSe2() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
@@ -54,12 +59,14 @@ public class MatrixAlgebraTest extends TestCase {
     assertTrue(rank4 instanceof SparseArray);
   }
 
+  @Test
   public void testSl2() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     Tensor form = KillingForm.of(ad);
     assertEquals(form, DiagonalMatrix.of(-2, 2, 2));
   }
 
+  @Test
   public void testSo3() {
     Tensor basis = LeviCivitaTensor.of(3).negate();
     Tensor ad = new MatrixAlgebra(basis).ad();
@@ -67,6 +74,7 @@ public class MatrixAlgebraTest extends TestCase {
     assertEquals(form, DiagonalMatrix.of(-2, -2, -2));
   }
 
+  @Test
   public void testB0B2() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1[m]}, {0, 0, 0[m]}, {0, 0, 0}}");
     b0.set(Quantity.of(0, "m^-1"), 2, 0);
@@ -79,6 +87,7 @@ public class MatrixAlgebraTest extends TestCase {
     b2.dot(b0);
   }
 
+  @Test
   public void testSe2Units() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1[m]}, {0, 0, 0[m]}, {0[m^-1], 0[m^-1], 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0[m]}, {0, 0, 1[m]}, {0[m^-1], 0[m^-1], 0}}");
@@ -103,6 +112,7 @@ public class MatrixAlgebraTest extends TestCase {
     // Tolerance.CHOP.requireClose(approx, BakerCampbellHausdorff.of(ad, BchApprox.DEGREE).apply(x, y));
   }
 
+  @Test
   public void testUnivariate() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Tensors.of(IdentityMatrix.of(5)));
     assertEquals(matrixAlgebra.toVector(IdentityMatrix.of(5)), UnitVector.of(1, 0));
@@ -111,14 +121,17 @@ public class MatrixAlgebraTest extends TestCase {
     assertTrue(string.startsWith("MatrixAlgebra["));
   }
 
+  @Test
   public void testNumericFail() {
     AssertFail.of(() -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
   }
 
+  @Test
   public void testZeroFail() {
     AssertFail.of(() -> new MatrixAlgebra(Array.zeros(1, 2, 2)));
   }
 
+  @Test
   public void testRedundantFail() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     AssertFail.of(() -> new MatrixAlgebra(Tensors.of(b0, b0)));
@@ -142,11 +155,13 @@ public class MatrixAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testMatrixLogExpExpSe2() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
     check(matrixAlgebra, 8);
   }
 
+  @Test
   public void testMatrixLogExpExpSo3() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Algebra.INSTANCE.basis());
     check(matrixAlgebra, 8);

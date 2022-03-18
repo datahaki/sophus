@@ -1,14 +1,16 @@
 // code by jph
 package ch.alpine.sophus.clt.mid;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
-import junit.framework.TestCase;
 
-public class MidpointTangentOrder2Test extends TestCase {
+public class MidpointTangentOrder2Test {
+  @Test
   public void testSymmetry() {
     for (int count = 0; count < 100; ++count) {
       Scalar s1 = RandomVariate.of(NormalDistribution.standard());
@@ -24,6 +26,7 @@ public class MidpointTangentOrder2Test extends TestCase {
     }
   }
 
+  @Test
   public void testMathematicaSync() {
     Scalar scalar = MidpointTangentOrder2.INSTANCE.apply(RealScalar.of(1), RealScalar.of(2));
     Tolerance.CHOP.requireClose(scalar, RealScalar.of(-1.0754475703324808));

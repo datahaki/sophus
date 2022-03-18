@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.usr.AssertFail;
@@ -19,9 +23,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BarycentricRationalInterpolationTest extends TestCase {
+public class BarycentricRationalInterpolationTest {
+  @Test
   public void testSimple() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 4), 1);
@@ -34,6 +38,7 @@ public class BarycentricRationalInterpolationTest extends TestCase {
     Chop._03.requireClose(w2, UnitVector.of(3, 1));
   }
 
+  @Test
   public void testDegrees() {
     for (int d = 0; d < 5; ++d) {
       ScalarTensorFunction scalarTensorFunction = //
@@ -47,6 +52,7 @@ public class BarycentricRationalInterpolationTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricRationalInterpolation.of(Tensors.fromString("{1[m], 2[m], 4[m]}"), 1);
@@ -59,6 +65,7 @@ public class BarycentricRationalInterpolationTest extends TestCase {
     Chop._03.requireClose(w2, UnitVector.of(3, 1));
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
@@ -72,10 +79,12 @@ public class BarycentricRationalInterpolationTest extends TestCase {
     }
   }
 
+  @Test
   public void testUnorderedFail() {
     AssertFail.of(() -> BarycentricRationalInterpolation.of(Tensors.vector(2, 1, 3), 1));
   }
 
+  @Test
   public void testNegativeFail() {
     BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), 10);
     AssertFail.of(() -> BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), -2));

@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.crv.bezier;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
@@ -18,9 +22,9 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BezierFunctionTest extends TestCase {
+public class BezierFunctionTest {
+  @Test
   public void testSimple() {
     Tensor control = Tensors.fromString("{{0, 1}, {1, 0}, {2, 1}}");
     ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGeodesic.INSTANCE, control);
@@ -29,6 +33,7 @@ public class BezierFunctionTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testRn() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}, {3, 1}}");
     ScalarTensorFunction stf1 = BezierFunction.of(RnGeodesic.INSTANCE, control);
@@ -41,6 +46,7 @@ public class BezierFunctionTest extends TestCase {
     assertEquals(domain.map(stf1), domain.map(stf2));
   }
 
+  @Test
   public void testSe2Covering() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 1/2}, {2, 0.4, 2/5}}");
     ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, control);
@@ -50,6 +56,7 @@ public class BezierFunctionTest extends TestCase {
     ExactScalarQ.require(tensor.Get(2));
   }
 
+  @Test
   public void testOutsideFail() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 1/2}, {2, 0.4, 2/5}}");
     ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, control);
@@ -59,6 +66,7 @@ public class BezierFunctionTest extends TestCase {
     ExactScalarQ.require(tensor.Get(2));
   }
 
+  @Test
   public void testSingleton() {
     ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Array.zeros(1, 3));
     for (Tensor _x : Subdivide.of(-1, 2, 3 * 3)) {
@@ -68,15 +76,18 @@ public class BezierFunctionTest extends TestCase {
     }
   }
 
+  @Test
   public void testFailEmpty() {
     AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty()));
     AssertFail.of(() -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
   }
 
+  @Test
   public void testFailScalar() {
     AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO));
   }
 
+  @Test
   public void testFailNull() {
     AssertFail.of(() -> BezierFunction.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
     AssertFail.of(() -> BezierFunction.of((BinaryAverage) null, Tensors.vector(1, 2, 3)));

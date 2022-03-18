@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -10,9 +15,9 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.UnitSystem;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class AckermannSteeringTest extends TestCase {
+public class AckermannSteeringTest {
+  @Test
   public void testSimple() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0.4, "m"));
     AckermannSteering asR = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(-0.4, "m"));
@@ -23,12 +28,14 @@ public class AckermannSteeringTest extends TestCase {
     assertTrue(Scalars.lessThan(aR, delta));
   }
 
+  @Test
   public void testId() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0, "m"));
     Scalar delta = RealScalar.of(0.2);
     assertEquals(asL.angle(delta), delta);
   }
 
+  @Test
   public void testPair() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0.4, "m"));
     Scalar delta = RealScalar.of(0.2);
@@ -38,6 +45,7 @@ public class AckermannSteeringTest extends TestCase {
     assertEquals(pair.Get(1), asR.angle(delta));
   }
 
+  @Test
   public void testUnits() {
     ScalarUnaryOperator suo = UnitSystem.SI();
     AckermannSteering asL = new AckermannSteering(suo.apply(Quantity.of(1, "m")), suo.apply(Quantity.of(+40, "cm")));

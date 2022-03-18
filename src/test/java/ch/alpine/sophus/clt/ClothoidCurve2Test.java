@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -9,9 +11,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class ClothoidCurve2Test extends TestCase {
+public class ClothoidCurve2Test {
+  @Test
   public void testQuantity() {
     Tensor p1 = Tensors.fromString("{2[m], 3[m], 1}");
     Tensor q1 = Tensors.fromString("{4[m], 7[m], 2}");
@@ -22,6 +24,7 @@ public class ClothoidCurve2Test extends TestCase {
     Chop._02.requireClose(r1, ClothoidCurveTest.metric(r2));
   }
 
+  @Test
   public void testPreserve() {
     Distribution distribution = NormalDistribution.of(0, 0.001);
     for (int count = 0; count < 100; ++count) {

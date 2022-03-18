@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.itp.RidgeRegression.Form2;
@@ -12,11 +16,11 @@ import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class RidgeRegressionTest extends TestCase {
+public class RidgeRegressionTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
 
+  @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;

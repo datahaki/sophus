@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -19,9 +21,9 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RnAffineCoordinateTest extends TestCase {
+public class RnAffineCoordinateTest {
+  @Test
   public void testMean() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 3; n < 10; ++n) {
@@ -32,6 +34,7 @@ public class RnAffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testExact() {
     Distribution distribution = DiscreteUniformDistribution.of(-1000, 1000);
     for (int n = 3; n < 10; ++n) {
@@ -43,6 +46,7 @@ public class RnAffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testUnity() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 3; n < 10; ++n) {
@@ -54,6 +58,7 @@ public class RnAffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 5; n < 10; ++n) {
@@ -64,6 +69,7 @@ public class RnAffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testWeights() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
@@ -80,6 +86,7 @@ public class RnAffineCoordinateTest extends TestCase {
       }
   }
 
+  @Test
   public void testZeros() {
     Distribution distribution = UniformDistribution.unit();
     for (int d = 2; d < 5; ++d)
@@ -93,6 +100,7 @@ public class RnAffineCoordinateTest extends TestCase {
       }
   }
 
+  @Test
   public void testSmallN() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 3; ++n) {
@@ -103,6 +111,7 @@ public class RnAffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testSinglePoint() {
     Tensor sequence = Tensors.fromString("{{1, 2, 3}}");
     TensorUnaryOperator tensorUnaryOperator = RnAffineCoordinate.of(sequence);
@@ -110,10 +119,12 @@ public class RnAffineCoordinateTest extends TestCase {
     Chop._10.requireClose(Tensors.vector(1), tensor);
   }
 
+  @Test
   public void testVectorFail() {
     AssertFail.of(() -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
   }
 
+  @Test
   public void testEmptyFail() {
     AssertFail.of(() -> RnAffineCoordinate.of(Tensors.empty()));
   }

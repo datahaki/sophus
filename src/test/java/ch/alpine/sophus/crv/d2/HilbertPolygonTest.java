@@ -1,10 +1,12 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
-import ch.alpine.sophus.usr.AssertFail;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class HilbertPolygonTest extends TestCase {
+import ch.alpine.sophus.usr.AssertFail;
+
+public class HilbertPolygonTest {
+  @Test
   public void testZeroClosedFail() {
     AssertFail.of(() -> HilbertPolygon.of(0));
   }

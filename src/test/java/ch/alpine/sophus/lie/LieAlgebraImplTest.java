@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
 import java.util.function.BinaryOperator;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
@@ -19,9 +23,8 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class LieAlgebraImplTest extends TestCase {
+public class LieAlgebraImplTest {
   private static final Scalar P1 = RealScalar.ONE;
   private static final Scalar N1 = RealScalar.ONE.negate();
 
@@ -33,6 +36,7 @@ public class LieAlgebraImplTest extends TestCase {
     return ad;
   }
 
+  @Test
   public void testSimple() {
     LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(he1());
     BinaryOperator<Tensor> bch = lieAlgebraImpl.bch(20);
@@ -49,6 +53,7 @@ public class LieAlgebraImplTest extends TestCase {
       new HeAlgebra(2), //
       Sl2Algebra.INSTANCE };
 
+  @Test
   public void testSign() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();

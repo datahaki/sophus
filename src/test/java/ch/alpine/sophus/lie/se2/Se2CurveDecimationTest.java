@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.tensor.RealScalar;
@@ -10,9 +15,9 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class Se2CurveDecimationTest extends TestCase {
+public class Se2CurveDecimationTest {
+  @Test
   public void testRandom() {
     CurveDecimation curveDecimation = Se2CurveDecimation.of(RealScalar.ONE);
     Tensor tensor = RandomVariate.of(UniformDistribution.of(-1, 1), 100, 3);
@@ -22,6 +27,7 @@ public class Se2CurveDecimationTest extends TestCase {
     assertEquals(list.get(1).intValue(), 3);
   }
 
+  @Test
   public void testSymmetric() {
     CurveDecimation curveDecimation = CurveDecimation.symmetric(Se2Manifold.INSTANCE, RealScalar.ONE);
     Tensor tensor = RandomVariate.of(UniformDistribution.of(-1, 1), 100, 3);

@@ -1,9 +1,12 @@
 // code by jph
 package ch.alpine.sophus.srf.io;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StaticHelperTest extends TestCase {
+import org.junit.jupiter.api.Test;
+
+public class StaticHelperTest {
+  @Test
   public void testSingle() {
     String[] strings = StaticHelper.slash("12//");
     assertEquals(strings[0], "12");
@@ -11,6 +14,7 @@ public class StaticHelperTest extends TestCase {
     assertEquals(strings[2], "");
   }
 
+  @Test
   public void testDual() {
     String[] strings = StaticHelper.slash("12//34");
     assertEquals(strings[0], "12");

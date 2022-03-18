@@ -1,6 +1,10 @@
 // code by ob, jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.CausalFilter;
@@ -19,9 +23,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GeodesicIIR2Test extends TestCase {
+public class GeodesicIIR2Test {
+  @Test
   public void testSimple() {
     Geodesic geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
@@ -34,6 +38,7 @@ public class GeodesicIIR2Test extends TestCase {
     Chop._10.requireClose(res1, Tensors.vector(2.593872261349412, 3.406127738650588, 0.375));
   }
 
+  @Test
   public void testLinear() {
     Geodesic geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
@@ -53,6 +58,7 @@ public class GeodesicIIR2Test extends TestCase {
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(20.)), RealScalar.of(19.375));
   }
 
+  @Test
   public void testId2() {
     Scalar alpha = RealScalar.ONE;
     TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGeodesic.INSTANCE, alpha));
@@ -62,6 +68,7 @@ public class GeodesicIIR2Test extends TestCase {
     }
   }
 
+  @Test
   public void testId() {
     Scalar alpha = RealScalar.ONE;
     TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGeodesic.INSTANCE, alpha));

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
 import ch.alpine.sophus.api.TensorIteration;
@@ -18,9 +20,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
-import junit.framework.Assert;
 
-// TODO SOPHUS use jet scalar for good measure
 /* package */ enum TestHelper {
   ;
   private static void checkString(HermiteSubdivision hs1, HermiteSubdivision hs2) {
@@ -31,7 +31,7 @@ import junit.framework.Assert;
     for (int count = 0; count < 6; ++count) {
       Tensor it1 = tensorIteration1.iterate();
       Tensor it2 = tensorIteration2.iterate();
-      Assert.assertEquals(it1, it2);
+      assertEquals(it1, it2);
       ExactTensorQ.require(it1);
       ExactTensorQ.require(it2);
     }
@@ -45,7 +45,7 @@ import junit.framework.Assert;
     for (int count = 0; count < 6; ++count) {
       Tensor it1 = tensorIteration1.iterate();
       Tensor it2 = tensorIteration2.iterate();
-      Assert.assertEquals(it1, it2);
+      assertEquals(it1, it2);
       ExactTensorQ.require(it1);
       ExactTensorQ.require(it2);
     }
@@ -69,9 +69,9 @@ import junit.framework.Assert;
     ExactTensorQ.require(iterate);
     Tensor idm = Range.of(0, 19).multiply(RationalScalar.HALF);
     Tensor if0 = iterate.get(Tensor.ALL, 0);
-    Assert.assertEquals(if0, idm.map(f0));
+    assertEquals(if0, idm.map(f0));
     Tensor if1 = iterate.get(Tensor.ALL, 1);
-    Assert.assertEquals(if1, idm.map(f1));
+    assertEquals(if1, idm.map(f1));
   }
 
   public static void checkQuantity(HermiteSubdivision hermiteSubdivision) throws ClassNotFoundException, IOException {

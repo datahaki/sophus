@@ -1,15 +1,17 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdPointExponentialTest extends TestCase {
+public class SpdPointExponentialTest {
+  @Test
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -21,6 +23,7 @@ public class SpdPointExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));

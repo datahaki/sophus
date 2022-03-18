@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
@@ -12,9 +17,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.spa.SparseArray;
-import junit.framework.TestCase;
 
-public class GrAlgebraTest extends TestCase {
+public class GrAlgebraTest {
+  @Test
   public void testSimple() {
     HsAlgebra hsAlgebra = GrAlgebra.of(5, 2, 6);
     assertTrue(hsAlgebra.ad() instanceof SparseArray);
@@ -31,11 +36,13 @@ public class GrAlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(x, mean);
   }
 
+  @Test
   public void testLarge() {
     HsAlgebra hsAlgebra = GrAlgebra.of(7, 3, 6);
     assertEquals(hsAlgebra.dimG(), 7 * 6 / 2);
   }
 
+  @Test
   public void testBasis() {
     assertTrue(GrAlgebra.basis(5, 2) instanceof SparseArray);
   }

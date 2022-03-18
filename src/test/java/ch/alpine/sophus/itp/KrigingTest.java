@@ -4,6 +4,8 @@ package ch.alpine.sophus.itp;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
@@ -32,13 +34,13 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class KrigingTest extends TestCase {
+public class KrigingTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final Biinvariant[] BIINV = { Biinvariants.HARBOR };
   private static final Biinvariant[] SYMME = { MetricBiinvariant.EUCLIDEAN, Biinvariants.HARBOR };
 
+  @Test
   public void testSimple2() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -68,6 +70,7 @@ public class KrigingTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -85,6 +88,7 @@ public class KrigingTest extends TestCase {
     }
   }
 
+  @Test
   public void testScalarValued() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -102,6 +106,7 @@ public class KrigingTest extends TestCase {
     }
   }
 
+  @Test
   public void testBarycentric() throws ClassNotFoundException, IOException {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -125,6 +130,7 @@ public class KrigingTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantityAbsolute() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2));
@@ -140,6 +146,7 @@ public class KrigingTest extends TestCase {
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
 
+  @Test
   public void testQuantityBiinvariant() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = ExponentialVariogram.of(3, 2);

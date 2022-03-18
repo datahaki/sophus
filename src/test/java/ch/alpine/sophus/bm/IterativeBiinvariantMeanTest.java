@@ -1,8 +1,12 @@
 // code by ob, jph
 package ch.alpine.sophus.bm;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2.Se2Manifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
@@ -21,9 +25,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.pow.Sqrt;
-import junit.framework.TestCase;
 
-public class IterativeBiinvariantMeanTest extends TestCase {
+public class IterativeBiinvariantMeanTest {
+  @Test
   public void testSE2() {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
@@ -48,6 +52,7 @@ public class IterativeBiinvariantMeanTest extends TestCase {
   }
   // Tests form more groups however i think that e.g. HE1 could cause problems due to tensor of tensor structure.
 
+  @Test
   public void testSome() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;

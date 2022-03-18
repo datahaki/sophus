@@ -1,7 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.usr.AssertFail;
@@ -19,9 +25,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrExponentialTest extends TestCase {
+public class GrExponentialTest {
+  @Test
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
     GrExponential grExponential = new GrExponential(x);
@@ -40,6 +46,7 @@ public class GrExponentialTest extends TestCase {
     Tolerance.CHOP.requireAllZero(vectorLog);
   }
 
+  @Test
   public void testSimple() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 0}}");
     GrExponential grExponential = new GrExponential(x);
@@ -54,6 +61,7 @@ public class GrExponentialTest extends TestCase {
     Tolerance.CHOP.requireClose(v, log);
   }
 
+  @Test
   public void testShift() {
     Tensor x = RandomSample.of(new GrRandomSample(2, 1));
     GrExponential grExponential = new GrExponential(x);
@@ -69,6 +77,7 @@ public class GrExponentialTest extends TestCase {
     grExponential.vectorLog(exp);
   }
 
+  @Test
   public void testDesign() {
     int k = 3;
     for (int n = 4; n < 7; ++n) {
@@ -90,6 +99,7 @@ public class GrExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testGrFail() {
     Tensor x = Tensors.fromString("{{1, 1}, {0, 1}}");
     AssertFail.of(() -> new GrExponential(x));

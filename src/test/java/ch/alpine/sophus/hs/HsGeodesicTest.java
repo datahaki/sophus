@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.usr.AssertFail;
@@ -8,9 +12,9 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class HsGeodesicTest extends TestCase {
+public class HsGeodesicTest {
+  @Test
   public void testSe2() {
     HsGeodesic lieGroupGeodesic = new HsGeodesic(Se2CoveringManifold.INSTANCE);
     Tensor p = Tensors.vector(1, 2, 3);
@@ -21,6 +25,7 @@ public class HsGeodesicTest extends TestCase {
     assertEquals(tensor, split);
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new HsGeodesic(null));
   }

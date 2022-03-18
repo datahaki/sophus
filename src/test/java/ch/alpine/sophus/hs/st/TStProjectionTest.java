@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
-import junit.framework.TestCase;
 
-public class TStProjectionTest extends TestCase {
+public class TStProjectionTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(7);
     for (int n = 3; n < 6; ++n)

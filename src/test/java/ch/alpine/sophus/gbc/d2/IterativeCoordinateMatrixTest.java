@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
@@ -12,9 +16,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class IterativeCoordinateMatrixTest extends TestCase {
+public class IterativeCoordinateMatrixTest {
+  @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     for (int k = 1; k < 5; ++k) {
@@ -29,6 +33,7 @@ public class IterativeCoordinateMatrixTest extends TestCase {
     }
   }
 
+  @Test
   public void testInside() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     int count = 0;

@@ -1,15 +1,19 @@
 // code by jph
 package ch.alpine.sophus.crv.spline;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.crv.spline.AbstractBSplineInterpolation.Iteration;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class AbstractBSplineInterpolationTest extends TestCase {
+public class AbstractBSplineInterpolationTest {
+  @Test
   public void testS2() {
     Tensor target = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {-1, 0, 0}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
@@ -24,6 +28,7 @@ public class AbstractBSplineInterpolationTest extends TestCase {
     Chop._06.requireClose(target, Range.of(0, 4).map(geodesicBSplineFunction));
   }
 
+  @Test
   public void testS2Jacobi() {
     Tensor target = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {-1, 0, 0}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.usr.AssertFail;
@@ -10,11 +12,11 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnTransportTest extends TestCase {
+public class HnTransportTest {
   private static final HsTransport POLE_LADDER = new PoleLadder(HnManifold.INSTANCE);
 
+  @Test
   public void testSimple() {
     int d = 3;
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
@@ -31,6 +33,7 @@ public class HnTransportTest extends TestCase {
     Chop._08.requireClose(s1.apply(pv), s2.apply(pv));
   }
 
+  @Test
   public void testNonMemberFail() {
     int d = 3;
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);

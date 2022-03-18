@@ -3,6 +3,8 @@ package ch.alpine.sophus.gbc;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
@@ -22,14 +24,14 @@ import ch.alpine.tensor.red.Entrywise;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Imag;
-import junit.framework.TestCase;
 
-public class LagrangeCoordinateTest extends TestCase {
+public class LagrangeCoordinateTest {
   private static void _check(Tensor levers, Tensor weights) {
     AffineQ.require(weights, Chop._10);
     Chop._08.requireAllZero(weights.dot(levers));
   }
 
+  @Test
   public void testReal() throws ClassNotFoundException, IOException {
     Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2));
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
@@ -42,6 +44,7 @@ public class LagrangeCoordinateTest extends TestCase {
       }
   }
 
+  @Test
   public void testComplex() throws ClassNotFoundException, IOException {
     Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2));
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
@@ -61,6 +64,7 @@ public class LagrangeCoordinateTest extends TestCase {
       }
   }
 
+  @Test
   public void testLagrange() {
     Tensor sequence = RandomVariate.of(NegativeBinomialDistribution.of(3, 0.6), 10, 3);
     Tensor point = Mean.of(sequence);
@@ -69,6 +73,7 @@ public class LagrangeCoordinateTest extends TestCase {
     MetricBiinvariant.EUCLIDEAN.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new LagrangeCoordinate(null));
   }

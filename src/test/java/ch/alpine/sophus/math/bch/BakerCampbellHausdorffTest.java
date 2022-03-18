@@ -1,9 +1,14 @@
 // code by jph
 package ch.alpine.sophus.math.bch;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Random;
 import java.util.function.BinaryOperator;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.SeriesInterface;
 import ch.alpine.sophus.lie.CliffordAlgebra;
@@ -28,9 +33,8 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.SparseArray;
-import junit.framework.TestCase;
 
-public class BakerCampbellHausdorffTest extends TestCase {
+public class BakerCampbellHausdorffTest {
   private static void _check(Tensor ad, int degree) {
     BakerCampbellHausdorff bakerCampbellHausdorff = //
         new BakerCampbellHausdorff(ad, degree, Chop._14);
@@ -89,16 +93,19 @@ public class BakerCampbellHausdorffTest extends TestCase {
 
   private static final int[] DEGREES = new int[] { 6, 8 };
 
+  @Test
   public void testHe1() {
     for (int d : DEGREES)
       _check(new HeAlgebra(2).ad(), d);
   }
 
+  @Test
   public void testSl2() {
     for (int d : DEGREES)
       _check(Sl2Algebra.INSTANCE.ad(), d);
   }
 
+  @Test
   public void testSl2Sophus() {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
@@ -107,16 +114,19 @@ public class BakerCampbellHausdorffTest extends TestCase {
     assertEquals(Det.of(KillingForm.of(ad)), RealScalar.of(-8));
   }
 
+  @Test
   public void testSe2() {
     for (int d : new int[] { 6, 8, 10 })
       _check(Se2Algebra.INSTANCE.ad(), d);
   }
 
+  @Test
   public void testSo3() {
     for (int d : DEGREES)
       _check(So3Algebra.INSTANCE.ad(), d);
   }
 
+  @Test
   public void testOptimized() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertTrue(BakerCampbellHausdorff.of(ad, 6) instanceof BchSeries6);
@@ -127,6 +137,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
     assertTrue(BakerCampbellHausdorff.of(ad, 10, Chop._02) instanceof BchSeriesA);
   }
 
+  @Test
   public void testSparse() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.of(1, 2);
     Tensor cp = cliffordAlgebra.cp();
@@ -141,6 +152,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
     ExactTensorQ.require(apply);
   }
 
+  @Test
   public void testJacobiFail() throws ClassNotFoundException, IOException {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     Serialization.copy(BakerCampbellHausdorff.of(ad, 2));
@@ -148,6 +160,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
     AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 2));
   }
 
+  @Test
   public void testDegreeFail() {
     Tensor ad = Array.sparse(2, 2, 2);
     BakerCampbellHausdorff.of(ad, 1);
@@ -155,6 +168,7 @@ public class BakerCampbellHausdorffTest extends TestCase {
     AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 0));
   }
 
+  @Test
   public void testChopNullFail() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 6, null));

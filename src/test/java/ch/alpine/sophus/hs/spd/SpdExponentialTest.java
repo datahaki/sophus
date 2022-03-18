@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -19,9 +21,9 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class SpdExponentialTest extends TestCase {
+public class SpdExponentialTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -40,6 +42,7 @@ public class SpdExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testSpdToSym() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -48,6 +51,7 @@ public class SpdExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -65,6 +69,7 @@ public class SpdExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testIdentity() {
     for (int n = 1; n < 4; ++n) {
       Exponential exponential = new SpdExponential(IdentityMatrix.of(n));
@@ -78,10 +83,12 @@ public class SpdExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testNonSymmetricFail() {
     AssertFail.of(() -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new SpdExponential(null));
   }

@@ -1,15 +1,19 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2CoveringDifferencesTest extends TestCase {
+public class Se2CoveringDifferencesTest {
+  @Test
   public void testSimple() {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);

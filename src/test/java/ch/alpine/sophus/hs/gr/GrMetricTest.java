@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -16,9 +20,8 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrMetricTest extends TestCase {
+public class GrMetricTest {
   /** @param vector
    * @return matrix that projects points to line spanned by vector */
   private static Tensor projection1(Tensor vector) {
@@ -31,17 +34,20 @@ public class GrMetricTest extends TestCase {
     return InfluenceMatrix.of(design).matrix();
   }
 
+  @Test
   public void testSimple() {
     Tensor log = MatrixLog.of(IdentityMatrix.of(3));
     assertEquals(log, Array.zeros(3, 3));
   }
 
+  @Test
   public void testLog() {
     Tensor log = MatrixLog.of(Tensors.fromString("{{1, 0.1}, {0.2, 1}}"));
     Chop._10.requireClose(log, //
         Tensors.fromString("{{-0.01010135365876013, 0.10067478275975056}, {0.20134956551950084, -0.01010135365875986}}"));
   }
 
+  @Test
   public void testDistance2d() {
     Tensor p = projection1(Tensors.vector(0.2, 0.5));
     Tensor q = projection1(Tensors.vector(0.3, -0.1));
@@ -49,6 +55,7 @@ public class GrMetricTest extends TestCase {
     Chop._10.requireClose(distance, RealScalar.of(2.138348187726219));
   }
 
+  @Test
   public void testDistance3d() {
     Tensor x = Tensors.vector(0.2, 0.5, 0.1);
     Tensor y = Tensors.vector(0.3, -0.1, 1.4);
@@ -58,6 +65,7 @@ public class GrMetricTest extends TestCase {
     Chop._10.requireClose(distance, RealScalar.of(1.9499331103710236));
   }
 
+  @Test
   public void testRandomSymmetry() {
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
@@ -67,6 +75,7 @@ public class GrMetricTest extends TestCase {
     Tolerance.CHOP.requireClose(d1, d2);
   }
 
+  @Test
   public void testFrobenius() {
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
@@ -76,6 +85,7 @@ public class GrMetricTest extends TestCase {
     Chop._08.requireClose(d1, d2);
   }
 
+  @Test
   public void testAntipodal() {
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);

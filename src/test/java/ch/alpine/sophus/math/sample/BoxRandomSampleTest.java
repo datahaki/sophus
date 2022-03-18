@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.math.sample;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Mean;
-import junit.framework.TestCase;
 
-public class BoxRandomSampleTest extends TestCase {
+public class BoxRandomSampleTest {
+  @Test
   public void testSimple3D() {
     Tensor offset = Tensors.vector(2, 2, 3);
     Tensor width = Tensors.vector(1, 1, 1);
@@ -26,6 +30,7 @@ public class BoxRandomSampleTest extends TestCase {
     assertEquals(Dimensions.of(samples), Arrays.asList(100, 3));
   }
 
+  @Test
   public void testSingle() {
     Tensor offset = Tensors.vector(2, 2, 3);
     Tensor width = Tensors.vector(1, 1, 1);
@@ -34,6 +39,7 @@ public class BoxRandomSampleTest extends TestCase {
     assertEquals(Dimensions.of(rand), Arrays.asList(3));
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Tensors.vector(1, 2, 3), Tensors.vector(3, 4, 8));
     RandomSampleInterface copy = Serialization.copy(randomSampleInterface);
@@ -41,10 +47,12 @@ public class BoxRandomSampleTest extends TestCase {
     VectorQ.requireLength(tensor, 3);
   }
 
+  @Test
   public void testDimensionFail() {
     AssertFail.of(() -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3)));
   }
 
+  @Test
   public void testSignFail() {
     AssertFail.of(() -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1)));
   }

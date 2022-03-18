@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -15,9 +17,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Sl2ExponentialTest extends TestCase {
+public class Sl2ExponentialTest {
+  @Test
   public void testSimple() {
     Tensor x = Tensors.fromString("{{2, 3}, {4, -2}}");
     Tensor exp = Sl2Exponential.INSTANCE.exp(x);
@@ -27,6 +29,7 @@ public class Sl2ExponentialTest extends TestCase {
     Chop._10.requireClose(x, log);
   }
 
+  @Test
   public void testNegativeDelta() {
     Tensor x = Tensors.fromString("{{2, -3}, {4, -2}}");
     Tensor exp = Sl2Exponential.INSTANCE.exp(x);
@@ -36,12 +39,14 @@ public class Sl2ExponentialTest extends TestCase {
     Chop._10.requireClose(x, log);
   }
 
+  @Test
   public void testId() {
     Tensor g = IdentityMatrix.of(2).negate();
     Tensor log = Sl2Exponential.INSTANCE.log(g);
     Tolerance.CHOP.requireClose(log, HodgeDual.of(Pi.VALUE, 2));
   }
 
+  @Test
   public void testRandom() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {

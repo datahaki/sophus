@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Bijection;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -11,9 +15,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2BijectionTest extends TestCase {
+public class Se2BijectionTest {
+  @Test
   public void testSimple() {
     Bijection bijection = new Se2Bijection(Tensors.vector(2, 3, .3));
     Tensor vector = Tensors.vector(0.32, -0.98);
@@ -21,6 +25,7 @@ public class Se2BijectionTest extends TestCase {
     Chop._14.requireClose(vector, sameor);
   }
 
+  @Test
   public void testInverse() {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     Tensor matrix = se2Bijection.forward_se2();
@@ -33,6 +38,7 @@ public class Se2BijectionTest extends TestCase {
     Chop._14.requireClose(se2Inverse.forward().apply(imaged), vector);
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     Se2Bijection copy = Serialization.copy(se2Bijection);

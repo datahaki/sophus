@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.dt;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -8,11 +10,11 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class DtAdMetricTest extends TestCase {
+public class DtAdMetricTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
 
+  @Test
   public void testSimple() {
     RandomSampleInterface rsi = new Dt1FRandomSample(ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
     Tensor m = RandomSample.of(rsi);

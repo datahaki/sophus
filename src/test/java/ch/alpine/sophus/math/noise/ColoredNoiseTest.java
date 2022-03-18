@@ -4,11 +4,13 @@ package ch.alpine.sophus.math.noise;
 import java.util.DoubleSummaryStatistics;
 import java.util.stream.DoubleStream;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class ColoredNoiseTest extends TestCase {
+public class ColoredNoiseTest {
+  @Test
   public void testSimple() {
     ColoredNoise coloredNoise = new ColoredNoise(1.2);
     DoubleSummaryStatistics doubleSummaryStatistics = //

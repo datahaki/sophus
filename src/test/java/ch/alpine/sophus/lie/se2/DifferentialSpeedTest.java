@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,9 +18,9 @@ import ch.alpine.tensor.qty.QuantityUnit;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Cos;
-import junit.framework.TestCase;
 
-public class DifferentialSpeedTest extends TestCase {
+public class DifferentialSpeedTest {
+  @Test
   public void testSimple() {
     DifferentialSpeed ds = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(0.5));
     Scalar speed = RealScalar.of(+4.0);
@@ -26,6 +31,7 @@ public class DifferentialSpeedTest extends TestCase {
     Chop._10.requireClose(ds.get(speed.divide(Cos.FUNCTION.apply(angle)), angle.negate()), RealScalar.of(4.515560416016039));
   }
 
+  @Test
   public void testQuantityForward() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
@@ -45,6 +51,7 @@ public class DifferentialSpeedTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantityPair() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
@@ -68,6 +75,7 @@ public class DifferentialSpeedTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantityPairRadians() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
@@ -93,6 +101,7 @@ public class DifferentialSpeedTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantityReverse() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
@@ -112,6 +121,7 @@ public class DifferentialSpeedTest extends TestCase {
     }
   }
 
+  @Test
   public void testStraight() {
     DifferentialSpeed dsL = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(+.5));
     DifferentialSpeed dsR = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(-.5));
@@ -123,6 +133,7 @@ public class DifferentialSpeedTest extends TestCase {
     assertEquals(rR, v);
   }
 
+  @Test
   public void testOrthogonal() {
     DifferentialSpeed dsL = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(+.5));
     DifferentialSpeed dsR = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(-.5));
@@ -133,6 +144,7 @@ public class DifferentialSpeedTest extends TestCase {
     Chop._12.requireClose(rL, rR.negate());
   }
 
+  @Test
   public void testInverted() {
     DifferentialSpeed ds = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(-.5));
     Scalar v = RealScalar.of(4);
@@ -143,6 +155,7 @@ public class DifferentialSpeedTest extends TestCase {
     Chop._10.requireClose(ds.get(v.divide(Cos.FUNCTION.apply(beta)), beta.negate()), RealScalar.of(3.4844395839839613));
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> DifferentialSpeed.fromSI(RealScalar.of(0.0), RealScalar.of(0.5)));
   }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.so3.So3RandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SoTransportTest extends TestCase {
+public class SoTransportTest {
+  @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     Tensor m = RandomVariate.of(distribution, 3, 3);

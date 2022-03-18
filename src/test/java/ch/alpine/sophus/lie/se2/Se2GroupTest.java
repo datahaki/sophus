@@ -1,17 +1,22 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class Se2GroupTest extends TestCase {
+public class Se2GroupTest {
+  @Test
   public void testSimple() {
     Se2GroupElement se2GroupElement = Se2Group.INSTANCE.element(Tensors.vector(1, 2, 2 * Math.PI + 3));
     Tensor tensor = se2GroupElement.combine(Tensors.vector(0, 0, 0));
     assertEquals(tensor, Tensors.vector(1, 2, 3));
   }
 
+  @Test
   public void testUnits() {
     Tensor p = Tensors.fromString("{4.9[m], 4.9[m], 0.9}");
     Tensor q = Tensors.fromString("{5.0[m], 5.0[m], 1.0}");

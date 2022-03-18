@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.hs.s2.S2Geodesic;
@@ -25,9 +30,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnGeodesicTest extends TestCase {
+public class SnGeodesicTest {
+  @Test
   public void testSimple() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
@@ -37,6 +42,7 @@ public class SnGeodesicTest extends TestCase {
     assertTrue(Scalars.isZero(split.Get(2)));
   }
 
+  @Test
   public void test2D() {
     ScalarTensorFunction scalarTensorFunction = //
         SnGeodesic.INSTANCE.curve(UnitVector.of(2, 0), UnitVector.of(2, 1));
@@ -47,6 +53,7 @@ public class SnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void test4D() {
     ScalarTensorFunction scalarTensorFunction = //
         SnGeodesic.INSTANCE.curve(UnitVector.of(4, 0), UnitVector.of(4, 1));
@@ -58,6 +65,7 @@ public class SnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testRatio() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
@@ -66,6 +74,7 @@ public class SnGeodesicTest extends TestCase {
     Chop._12.requireClose(split2, splitn);
   }
 
+  @Test
   public void testSame() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2);
@@ -74,6 +83,7 @@ public class SnGeodesicTest extends TestCase {
     assertEquals(split, p);
   }
 
+  @Test
   public void testOpposite() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
@@ -81,6 +91,7 @@ public class SnGeodesicTest extends TestCase {
     AssertFail.of(() -> SnGeodesic.INSTANCE.split(p, q, scalar));
   }
 
+  @Test
   public void testComparison() {
     Distribution distribution = NormalDistribution.standard();
     HsGeodesic hsGeodesic = new HsGeodesic(SnManifold.INSTANCE);
@@ -96,6 +107,7 @@ public class SnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -108,6 +120,7 @@ public class SnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testArticle() {
     Tensor p = Tensors.vector(1, 0, 0);
     Tensor q = Tensors.vector(0, 1 / Math.sqrt(5), 2 / Math.sqrt(5));
@@ -117,6 +130,7 @@ public class SnGeodesicTest extends TestCase {
     Chop._12.requireClose(tensor, expect);
   }
 
+  @Test
   public void testMidpoint() {
     HsMidpoint hsMidpoint = new HsMidpoint(SnManifold.INSTANCE);
     for (int dimension = 2; dimension <= 5; ++dimension) {
@@ -129,14 +143,17 @@ public class SnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testDimensionsFail() {
     AssertFail.of(() -> SnGeodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
   }
 
+  @Test
   public void testNormFail() {
     AssertFail.of(() -> SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
   }
 
+  @Test
   public void testMidpointAntipodesFail() {
     AssertFail.of(() -> SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate()));
   }

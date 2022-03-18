@@ -1,14 +1,18 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SoExponentialTest extends TestCase {
+public class SoExponentialTest {
+  @Test
   public void testSimple() {
     Random random = new Random(1);
     for (int n = 2; n < 10; ++n) {

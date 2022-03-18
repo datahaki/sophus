@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.ad;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.sn.SnAlgebra;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
@@ -13,9 +15,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HsAdGeodesicTest extends TestCase {
+public class HsAdGeodesicTest {
+  @Test
   public void testSimple() {
     Distribution distribution = TriangularDistribution.with(0, 0.2);
     for (int n = 2; n < 5; ++n) {

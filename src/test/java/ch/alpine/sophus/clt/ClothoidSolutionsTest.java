@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.clt.ClothoidSolutions.Search;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -14,12 +18,12 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Mod;
-import junit.framework.TestCase;
 
-public class ClothoidSolutionsTest extends TestCase {
+public class ClothoidSolutionsTest {
   private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(15.0));
   private static final int ATTEMPTS = 3;
 
+  @Test
   public void testS1Odd() {
     Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1), RealScalar.of(0.3));
     Search cs2 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(-0.1), RealScalar.of(0.3));
@@ -28,6 +32,7 @@ public class ClothoidSolutionsTest extends TestCase {
     Chop._04.requireClose(sol1, sol2);
   }
 
+  @Test
   public void testS2Even() {
     // Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1),
     // RealScalar.of(+0.3));
@@ -40,6 +45,7 @@ public class ClothoidSolutionsTest extends TestCase {
     // Chop._04.requireClose(sol1, sol2);
   }
 
+  @Test
   public void testRandomS1Odd() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
@@ -55,6 +61,7 @@ public class ClothoidSolutionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandomS2Even() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
@@ -70,6 +77,7 @@ public class ClothoidSolutionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testS1Period2Pi() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
@@ -85,6 +93,7 @@ public class ClothoidSolutionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testS1Period2PiMod() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
@@ -101,6 +110,7 @@ public class ClothoidSolutionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testS1Period2PiMirror() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {

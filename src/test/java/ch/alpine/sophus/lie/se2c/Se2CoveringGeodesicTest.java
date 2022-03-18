@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -9,15 +13,16 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2CoveringGeodesicTest extends TestCase {
+public class Se2CoveringGeodesicTest {
+  @Test
   public void testArticle() {
     Tensor tensor = Se2CoveringGeodesic.INSTANCE.split( //
         Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RealScalar.of(0.7));
     Chop._14.requireClose(tensor, Tensors.fromString("{4.483830852817113, 3.2143505344919467, 5.1}"));
   }
 
+  @Test
   public void testCenter() {
     // mathematica gives: {2.26033, -0.00147288, 0.981748}
     Tensor p = Tensors.vector(2.017191762967754, -0.08474511292102775, 0.9817477042468103);
@@ -37,6 +42,7 @@ public class Se2CoveringGeodesicTest extends TestCase {
         Tensors.fromString("{2.260334367029097, -0.0014728825470118057, 0.9817477042468103}"));
   }
 
+  @Test
   public void testBiinvariantMean() {
     Distribution distribution = UniformDistribution.of(-3, 8);
     Distribution wd = UniformDistribution.unit();

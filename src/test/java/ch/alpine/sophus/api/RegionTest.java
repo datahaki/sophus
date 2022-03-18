@@ -1,17 +1,20 @@
 // code by jph
 package ch.alpine.sophus.api;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class RegionTest extends TestCase {
+public class RegionTest {
   @FunctionalInterface
   public static interface Some {
     public boolean single(Object s);
   }
 
+  @Test
   public void testSimple() {
     Some some = new Some() {
       @Override

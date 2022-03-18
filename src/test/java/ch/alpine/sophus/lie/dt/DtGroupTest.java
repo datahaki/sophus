@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.dt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
@@ -11,12 +15,12 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class DtGroupTest extends TestCase {
+public class DtGroupTest {
   private static final Exponential LIE_EXPONENTIAL = DtExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = DtGroup.INSTANCE;
 
+  @Test
   public void testSt1Inverse() {
     Tensor p = Tensors.fromString("{3, {6, 3}}");
     Tensor id = Tensors.fromString("{1, {0, 0}}");
@@ -26,6 +30,7 @@ public class DtGroupTest extends TestCase {
     assertEquals(inv.combine(p), id);
   }
 
+  @Test
   public void testSt1Combine() {
     Tensor p = Tensors.fromString("{3, {6, 1}}");
     DtGroupElement pE = DtGroup.INSTANCE.element(p);
@@ -33,6 +38,7 @@ public class DtGroupTest extends TestCase {
     assertEquals(pE.combine(q), Tensors.fromString("{6, {30, 16}}"));
   }
 
+  @Test
   public void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
@@ -48,6 +54,7 @@ public class DtGroupTest extends TestCase {
     }
   }
 
+  @Test
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]

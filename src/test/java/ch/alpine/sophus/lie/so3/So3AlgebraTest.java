@@ -4,6 +4,8 @@ package ch.alpine.sophus.lie.so3;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.tensor.Tensor;
@@ -16,9 +18,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So3AlgebraTest extends TestCase {
+public class So3AlgebraTest {
+  @Test
   public void testSimple() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
@@ -29,6 +31,7 @@ public class So3AlgebraTest extends TestCase {
     Chop._08.requireClose(z, res);
   }
 
+  @Test
   public void testAlg() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
@@ -50,6 +53,7 @@ public class So3AlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testActionH() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
@@ -67,6 +71,7 @@ public class So3AlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(hsAlgebra.lift(m2), v2);
   }
 
+  @Test
   public void testSo3H() {
     Tensor so3 = So3Algebra.INSTANCE.ad();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
@@ -80,6 +85,7 @@ public class So3AlgebraTest extends TestCase {
     Chop._10.requireClose(prj_g, prj_gh);
   }
 
+  @Test
   public void testSo3S2() {
     Tensor so3 = So3Algebra.INSTANCE.ad();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);

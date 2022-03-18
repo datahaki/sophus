@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.LieTransport;
@@ -20,9 +24,9 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.jet.JetScalar;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.qty.Quantity;
-import junit.framework.TestCase;
 
-public class Hermite1SubdivisionTest extends TestCase {
+public class Hermite1SubdivisionTest {
+  @Test
   public void testJetScalar() {
     HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE);
     Polynomial polynomial = Polynomial.of(Tensors.vector(2, 1, 3, 4));
@@ -44,6 +48,7 @@ public class Hermite1SubdivisionTest extends TestCase {
         lifted.extract(2, lifted.length() - 3));
   }
 
+  @Test
   public void testJetQuantity() {
     ScalarUnaryOperator lift = s -> Quantity.of(s, "s");
     HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE);
@@ -66,10 +71,12 @@ public class Hermite1SubdivisionTest extends TestCase {
         lifted.extract(2, lifted.length() - 3));
   }
 
+  @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
     TestHelper.checkQuantity(Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> Hermite1Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
     AssertFail.of(() -> Hermite1Subdivisions.standard(null, LieTransport.INSTANCE));

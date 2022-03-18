@@ -4,6 +4,8 @@ package ch.alpine.sophus.itp;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -21,11 +23,11 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RadialBasisFunctionInterpolationTest extends TestCase {
+public class RadialBasisFunctionInterpolationTest {
   public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
@@ -45,6 +47,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
       }
   }
 
+  @Test
   public void testNormalized() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -62,6 +65,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     }
   }
 
+  @Test
   public void testBarycentric() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -80,6 +84,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> RadialBasisFunctionInterpolation.of(null, Tensors.empty(), Tensors.empty()));
   }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -11,9 +13,9 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class FullRankCorrelationMatrixTest extends TestCase {
+public class FullRankCorrelationMatrixTest {
+  @Test
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
@@ -24,6 +26,7 @@ public class FullRankCorrelationMatrixTest extends TestCase {
     }
   }
 
+  @Test
   public void testExp() {
     for (int n = 1; n < 6; ++n) {
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
@@ -35,6 +38,7 @@ public class FullRankCorrelationMatrixTest extends TestCase {
     }
   }
 
+  @Test
   public void testExp0() {
     for (int n = 1; n < 6; ++n) {
       Tensor frc1 = IdentityMatrix.of(n);

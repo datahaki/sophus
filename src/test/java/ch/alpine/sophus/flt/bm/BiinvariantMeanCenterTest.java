@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.flt.bm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.BinomialWeights;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
-import junit.framework.TestCase;
 
-public class BiinvariantMeanCenterTest extends TestCase {
+public class BiinvariantMeanCenterTest {
+  @Test
   public void testSe2() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       TensorUnaryOperator tensorUnaryOperator = //
@@ -30,11 +34,13 @@ public class BiinvariantMeanCenterTest extends TestCase {
     }
   }
 
+  @Test
   public void testOfFunction() {
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, BinomialWeights.INSTANCE);
     tensorUnaryOperator.apply(RandomVariate.of(UniformDistribution.unit(), 5, 3));
   }
 
+  @Test
   public void testFailNull() {
     AssertFail.of(() -> BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null));
   }

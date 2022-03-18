@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -11,9 +16,9 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Imag;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
-import junit.framework.TestCase;
 
-public class HnMetricTest extends TestCase {
+public class HnMetricTest {
+  @Test
   public void testZero() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -24,6 +29,7 @@ public class HnMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testPositive() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -34,6 +40,7 @@ public class HnMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
@@ -45,6 +52,7 @@ public class HnMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testConsistent() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {

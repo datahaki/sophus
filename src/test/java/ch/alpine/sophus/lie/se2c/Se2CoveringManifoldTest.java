@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -44,9 +48,8 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Unitize;
-import junit.framework.TestCase;
 
-public class Se2CoveringManifoldTest extends TestCase {
+public class Se2CoveringManifoldTest {
   private static final BarycentricCoordinate[] ALL_COORDINATES = //
       GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
@@ -61,6 +64,7 @@ public class Se2CoveringManifoldTest extends TestCase {
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
       Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
+  @Test
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();
     final int n = 4;
@@ -77,6 +81,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -93,6 +98,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandom() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -119,11 +125,13 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
       AssertFail.of(() -> barycentricCoordinate.weights(null, null));
   }
 
+  @Test
   public void testLagrange() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -145,6 +153,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         xya.Get(2));
   }
 
+  @Test
   public void testQuantity() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -162,6 +171,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testProjection() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -195,6 +205,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testProjectionIntoAdInvariant() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -232,6 +243,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       // LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
+  @Test
   public void testA4Exact() {
     // Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
@@ -248,6 +260,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testALinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -264,6 +277,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testARandom() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -290,6 +304,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testDiagonalNorm() {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor _beta : betas) {
@@ -307,6 +322,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testANullFail() {
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
       AssertFail.of(() -> barycentricCoordinate.weights(null, null));

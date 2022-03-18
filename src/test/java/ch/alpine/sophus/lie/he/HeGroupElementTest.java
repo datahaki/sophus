@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
@@ -16,12 +20,12 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class HeGroupElementTest extends TestCase {
+public class HeGroupElementTest {
   private static final Exponential LIE_EXPONENTIAL = HeExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = HeGroup.INSTANCE;
 
+  @Test
   public void testInverse() {
     Tensor et = Tensors.fromString("{{0, 0}, {0, 0}, 0}");
     Tensor at = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
@@ -31,6 +35,7 @@ public class HeGroupElementTest extends TestCase {
     assertEquals(result, et);
   }
 
+  @Test
   public void testCombine() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
@@ -45,6 +50,7 @@ public class HeGroupElementTest extends TestCase {
     assertEquals(b_t, b_r);
   }
 
+  @Test
   public void testAdjoint1() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     Tensor b_t = Tensors.fromString("{{6, 7}, {0, 0}, 10}");
@@ -54,6 +60,7 @@ public class HeGroupElementTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testAdjoint2() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     Tensor b_t = Tensors.fromString("{{0, 0}, {6, 7}, 9}");
@@ -63,6 +70,7 @@ public class HeGroupElementTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
@@ -77,6 +85,7 @@ public class HeGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
@@ -92,6 +101,7 @@ public class HeGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testAdInverse() {
     RandomSampleInterface rsi = new HeRandomSample(2, UniformDistribution.of(Clips.absolute(10)));
     for (int count = 0; count < 10; ++count) {
@@ -102,11 +112,13 @@ public class HeGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> new HeGroupElement(Tensors.of(HilbertMatrix.of(3), Tensors.vector(1, 2, 3), RealScalar.ONE)));
     AssertFail.of(() -> new HeGroupElement(Tensors.of(Tensors.vector(1, 2, 3), HilbertMatrix.of(3), RealScalar.ONE)));
   }
 
+  @Test
   public void testDlNullFail() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(a_t);

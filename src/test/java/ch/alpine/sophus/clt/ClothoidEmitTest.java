@@ -3,10 +3,12 @@ package ch.alpine.sophus.clt;
 
 import java.io.IOException;
 
-import ch.alpine.tensor.ext.Serialization;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class ClothoidEmitTest extends TestCase {
+import ch.alpine.tensor.ext.Serialization;
+
+public class ClothoidEmitTest {
+  @Test
   public void testAngles() throws ClassNotFoundException, IOException {
     Serialization.copy(ClothoidBuilders.SE2_COVERING);
   }

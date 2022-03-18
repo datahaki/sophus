@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.crv.spline;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.usr.AssertFail;
@@ -23,9 +27,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GeodesicBSplineFunctionTest extends TestCase {
+public class GeodesicBSplineFunctionTest {
+  @Test
   public void testLetsSee() {
     Distribution distribution = DiscreteUniformDistribution.of(-5, 5);
     for (int n = 1; n < 10; ++n)
@@ -40,6 +44,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
       }
   }
 
+  @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     int n = 20;
@@ -58,6 +63,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     }
   }
 
+  @Test
   public void testBasisWeights1a() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, UnitVector.of(3, 1));
     Tensor limitMask = Range.of(1, 2).map(func);
@@ -65,6 +71,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1}"));
   }
 
+  @Test
   public void testBasisWeights2() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 2, UnitVector.of(5, 2));
     Tensor limitMask = Range.of(1, 4).map(func);
@@ -72,6 +79,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/8, 3/4, 1/8}"));
   }
 
+  @Test
   public void testBasisWeights3a() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, UnitVector.of(7, 3));
     Tensor limitMask = Range.of(2, 5).map(func);
@@ -79,6 +87,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/6, 2/3, 1/6}"));
   }
 
+  @Test
   public void testBasisWeights3b() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, UnitVector.of(5, 2));
     Tensor limitMask = Range.of(1, 4).map(func);
@@ -86,6 +95,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/6, 2/3, 1/6}"));
   }
 
+  @Test
   public void testBasisWeights4() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 4, UnitVector.of(9, 4));
     Tensor limitMask = Range.of(2, 7).map(func);
@@ -94,6 +104,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/384, 19/96, 115/192, 19/96, 1/384}"));
   }
 
+  @Test
   public void testBasisWeights5a() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 5, UnitVector.of(11, 5));
     Tensor limitMask = Range.of(3, 8).map(func);
@@ -102,6 +113,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/120, 13/60, 11/20, 13/60, 1/120}"));
   }
 
+  @Test
   public void testBasisWeights5b() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 5, UnitVector.of(9, 4));
     Tensor limitMask = Range.of(2, 7).map(func);
@@ -110,6 +122,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/120, 13/60, 11/20, 13/60, 1/120}"));
   }
 
+  @Test
   public void testBasisWeights5c() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 5, UnitVector.of(7, 3));
     Tensor limitMask = Range.of(1, 6).map(func);
@@ -118,6 +131,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     assertEquals(limitMask, Tensors.fromString("{1/120, 13/60, 11/20, 13/60, 1/120}"));
   }
 
+  @Test
   public void testNonUniformKnots() {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(2, 102), 10, 4);
     Tensor domain = RandomVariate.of(UniformDistribution.of(0, 9), 100);
@@ -138,6 +152,7 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     }
   }
 
+  @Test
   public void testSasdlkjh() {
     {
       Tensor knots = Tensors.vector(1, 2, 3, 4, 5);
@@ -147,14 +162,17 @@ public class GeodesicBSplineFunctionTest extends TestCase {
     AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots));
   }
 
+  @Test
   public void testDegreeFail() {
     AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, -1, UnitVector.of(7, 3)));
   }
 
+  @Test
   public void testKnotsFail() {
     AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Range.of(0, 10), Range.of(0, 11)));
   }
 
+  @Test
   public void testKnotsUnsortedFail() {
     AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Tensors.vector(3, 2, 1), Tensors.vector(1, 2, 3)));
   }

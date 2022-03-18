@@ -1,13 +1,17 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se3NumericsTest extends TestCase {
+public class Se3NumericsTest {
+  @Test
   public void testSimple() {
     Se3Numerics se3Numerics1 = new Se3Numerics(RealScalar.of(1e-2));
     Se3Numerics se3Numerics2 = new Se3Numerics(RealScalar.of(0.9e-2));

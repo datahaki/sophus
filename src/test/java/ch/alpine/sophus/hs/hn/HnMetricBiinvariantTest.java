@@ -4,6 +4,8 @@ package ch.alpine.sophus.hs.hn;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.lie.sopq.TSopqProject;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -19,9 +21,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnMetricBiinvariantTest extends TestCase {
+public class HnMetricBiinvariantTest {
+  @Test
   public void testCoordinateBiinvariant() throws ClassNotFoundException, IOException {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
@@ -49,6 +51,7 @@ public class HnMetricBiinvariantTest extends TestCase {
     }
   }
 
+  @Test
   public void testLagrangeBiinvariant() {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);

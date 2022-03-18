@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -16,11 +20,11 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnRotationMatrixTest extends TestCase {
+public class SnRotationMatrixTest {
   private static final Distribution UNIFORM = NormalDistribution.standard();
 
+  @Test
   public void testMatch3D() {
     for (int count = 0; count < 20; ++count) {
       Tensor a = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
@@ -37,6 +41,7 @@ public class SnRotationMatrixTest extends TestCase {
     }
   }
 
+  @Test
   public void testTargetNDim() {
     for (int d = 2; d < 6; ++d)
       for (int count = 0; count < 10; ++count) {
@@ -51,6 +56,7 @@ public class SnRotationMatrixTest extends TestCase {
       }
   }
 
+  @Test
   public void testTargetSn() {
     for (int d = 1; d < 6; ++d) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(d);

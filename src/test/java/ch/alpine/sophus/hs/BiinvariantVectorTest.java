@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -27,9 +31,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Round;
-import junit.framework.TestCase;
 
-public class BiinvariantVectorTest extends TestCase {
+public class BiinvariantVectorTest {
+  @Test
   public void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
@@ -73,6 +77,7 @@ public class BiinvariantVectorTest extends TestCase {
     return sigma_inverse;
   }
 
+  @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
@@ -84,6 +89,7 @@ public class BiinvariantVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2AnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2Manifold.INSTANCE;
@@ -95,6 +101,7 @@ public class BiinvariantVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSnCAnchorIsTarget() {
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 4; ++dimension) {

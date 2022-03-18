@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class HnFastMeanTest extends TestCase {
+public class HnFastMeanTest {
+  @Test
   public void testAffineFail() {
     BiinvariantMean biinvariantMean = HnFastMean.INSTANCE;
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));

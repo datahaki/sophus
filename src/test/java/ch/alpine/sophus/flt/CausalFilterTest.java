@@ -1,9 +1,13 @@
 // code by jph
 package ch.alpine.sophus.flt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.function.Supplier;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicFIR2;
@@ -20,9 +24,9 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.win.DirichletWindow;
-import junit.framework.TestCase;
 
-public class CausalFilterTest extends TestCase {
+public class CausalFilterTest {
+  @Test
   public void testIIR1() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")
     TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of( //
@@ -40,6 +44,7 @@ public class CausalFilterTest extends TestCase {
     }
   }
 
+  @Test
   public void testIIR2a() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")
     TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of(//
@@ -49,6 +54,7 @@ public class CausalFilterTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testIIR2b() {
     TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
     TensorUnaryOperator causalFilter = GeodesicIIRnFilter.of(geodesicExtrapolation, RnGeodesic.INSTANCE, 2, RationalScalar.HALF);
@@ -56,6 +62,7 @@ public class CausalFilterTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testFIR2() {
     TensorUnaryOperator causalFilter = CausalFilter.of(() -> GeodesicFIR2.of(RnGeodesic.INSTANCE, RationalScalar.HALF));
     {
@@ -70,6 +77,7 @@ public class CausalFilterTest extends TestCase {
     }
   }
 
+  @Test
   public void testFailNull() {
     AssertFail.of(() -> CausalFilter.of(null));
   }

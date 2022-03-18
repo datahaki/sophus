@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;
@@ -12,9 +14,9 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class Spd0ExponentialTest extends TestCase {
+public class Spd0ExponentialTest {
+  @Test
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
@@ -30,6 +32,7 @@ public class Spd0ExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testMatrixExp() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
@@ -40,6 +43,7 @@ public class Spd0ExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testMatrixLog() {
     Spd0RandomSample spdRandomSample = new Spd0RandomSample(2, UniformDistribution.of(Clips.absolute(1)));
     for (int count = 0; count < 10; ++count) {
@@ -50,12 +54,14 @@ public class Spd0ExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testExpNonSymmetricFail() {
     RandomSampleInterface rsi = new TSpdRandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor x = LowerTriangularize.of(RandomSample.of(rsi));
     AssertFail.of(() -> Spd0Exponential.INSTANCE.exp(x));
   }
 
+  @Test
   public void testLogNonSymmetricFail() {
     Spd0RandomSample spdRandomSample = new Spd0RandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor g = LowerTriangularize.of(RandomSample.of(spdRandomSample));

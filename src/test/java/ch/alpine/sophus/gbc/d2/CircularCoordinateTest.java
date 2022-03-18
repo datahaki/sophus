@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.rn.RnExponential;
 import ch.alpine.tensor.Tensor;
@@ -9,9 +11,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class CircularCoordinateTest extends TestCase {
+public class CircularCoordinateTest {
+  @Test
   public void testSimple() {
     int n = 5;
     Tensor circle = CirclePoints.of(n);
@@ -21,6 +23,7 @@ public class CircularCoordinateTest extends TestCase {
     Chop._10.requireClose(solve.dot(p), circle);
   }
 
+  @Test
   public void testHello() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     for (int n = 3; n < 10; ++n) {

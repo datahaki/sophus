@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -17,9 +22,8 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.tri.ArcTan;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
-import junit.framework.TestCase;
 
-public class S2LoxodromeTest extends TestCase {
+public class S2LoxodromeTest {
   private static Tensor prev(Scalar angle, Scalar scalar) {
     Scalar f = ArcTan.FUNCTION.apply(scalar.multiply(angle));
     Scalar cf = Cos.FUNCTION.apply(f);
@@ -29,17 +33,20 @@ public class S2LoxodromeTest extends TestCase {
         Sin.FUNCTION.apply(f));
   }
 
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(S2Loxodrome.of(RealScalar.of(0.1)));
     Tensor tensor = Subdivide.of(-1, 100, 60).map(scalarTensorFunction);
     assertTrue(tensor.stream().allMatch(SnMemberQ.INSTANCE::test));
   }
 
+  @Test
   public void testParamZeo() {
     Tensor first = S2Loxodrome.of(0.3).apply(RealScalar.ZERO);
     assertEquals(first, UnitVector.of(3, 0));
   }
 
+  @Test
   public void testPrevious() {
     Scalar angle = RandomVariate.of(NormalDistribution.standard());
     Scalar scalar = RandomVariate.of(NormalDistribution.standard());

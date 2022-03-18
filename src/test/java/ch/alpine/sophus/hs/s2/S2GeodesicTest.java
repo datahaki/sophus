@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.NumberQ;
@@ -15,9 +20,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class S2GeodesicTest extends TestCase {
+public class S2GeodesicTest {
+  @Test
   public void testSimple() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
@@ -27,6 +32,7 @@ public class S2GeodesicTest extends TestCase {
     assertTrue(Scalars.isZero(split.Get(2)));
   }
 
+  @Test
   public void testSame() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2);
@@ -35,6 +41,7 @@ public class S2GeodesicTest extends TestCase {
     assertEquals(split, p);
   }
 
+  @Test
   public void testOpposite() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
@@ -42,6 +49,7 @@ public class S2GeodesicTest extends TestCase {
     assertTrue(NumberQ.all(split));
   }
 
+  @Test
   public void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -54,6 +62,7 @@ public class S2GeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testArticle() {
     Tensor p = Tensors.vector(1, 0, 0);
     Tensor q = Tensors.vector(0, 1 / Math.sqrt(5), 2 / Math.sqrt(5));
@@ -63,6 +72,7 @@ public class S2GeodesicTest extends TestCase {
     Chop._12.requireClose(tensor, expect);
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> S2Geodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
     S2Geodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF);

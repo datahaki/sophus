@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
@@ -15,9 +17,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Exp;
-import junit.framework.TestCase;
 
-public class AffineCoordinateTest extends TestCase {
+public class AffineCoordinateTest {
+  @Test
   public void testS1() {
     Genesis genesis = MetricCoordinate.affine();
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(1);
@@ -29,6 +31,7 @@ public class AffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testRn() {
     Genesis genesis = MetricCoordinate.affine();
     Distribution distribution = NormalDistribution.standard();
@@ -42,6 +45,7 @@ public class AffineCoordinateTest extends TestCase {
       }
   }
 
+  @Test
   public void testIterateR2() {
     Distribution distribution = UniformDistribution.of(-1, 5);
     int d = 2;

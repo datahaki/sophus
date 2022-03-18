@@ -1,15 +1,17 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnActionTest extends TestCase {
+public class SnActionTest {
+  @Test
   public void testSimple() {
     Scalar scalar = RealScalar.of(0.5);
     Tensor tensor = R3S2Geodesic.INSTANCE.split( //

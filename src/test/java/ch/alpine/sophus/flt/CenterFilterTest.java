@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.flt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.flt.ga.BinomialWeights;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
@@ -22,9 +26,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.win.HammingWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
-import junit.framework.TestCase;
 
-public class CenterFilterTest extends TestCase {
+public class CenterFilterTest {
+  @Test
   public void testSimple() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator centerFilter = new CenterFilter(geodesicCenter, 3);
@@ -34,6 +38,7 @@ public class CenterFilterTest extends TestCase {
     ExactTensorQ.require(result);
   }
 
+  @Test
   public void testKernel3() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 3);
@@ -43,6 +48,7 @@ public class CenterFilterTest extends TestCase {
     assertEquals(result, Tensors.fromString("{0, 0, 1/16, 15/64, 5/16, 15/64, 1/16, 0, 0}"));
   }
 
+  @Test
   public void testKernel1() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
@@ -52,6 +58,7 @@ public class CenterFilterTest extends TestCase {
     assertEquals(result, Tensors.fromString("{0, 1/4, 1/2, 1/4, 0}"));
   }
 
+  @Test
   public void testS2() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(SnGeodesic.INSTANCE, HannWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
@@ -61,6 +68,7 @@ public class CenterFilterTest extends TestCase {
     assertEquals(Dimensions.of(tensor), Dimensions.of(result));
   }
 
+  @Test
   public void testSo3() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Geodesic.INSTANCE, HammingWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
@@ -70,6 +78,7 @@ public class CenterFilterTest extends TestCase {
     assertEquals(Dimensions.of(tensor), Dimensions.of(result));
   }
 
+  @Test
   public void testNegativeRadiusFail() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
     CenterFilter centerFilter = new CenterFilter(geodesicCenter, 0);
@@ -77,6 +86,7 @@ public class CenterFilterTest extends TestCase {
     AssertFail.of(() -> new CenterFilter(geodesicCenter, -1));
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> new CenterFilter(null, 1));
   }

@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
@@ -8,9 +12,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Mean;
-import junit.framework.TestCase;
 
-public class GeodesicFIRnTest extends TestCase {
+public class GeodesicFIRnTest {
+  @Test
   public void testSimple() {
     Tensor s0 = Tensors.vector(1, 2, 3);
     Tensor s1 = Tensors.vector(2, 2, 0);

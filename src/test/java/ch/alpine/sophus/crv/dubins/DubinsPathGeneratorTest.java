@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
@@ -13,9 +17,9 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class DubinsPathGeneratorTest extends TestCase {
+public class DubinsPathGeneratorTest {
+  @Test
   public void testSimple() {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{" + Math.PI / 2 + "[m], 10[m], " + Math.PI / 2 + "[m]}"));
     Tensor g0 = Tensors.fromString("{0[m], 0[m], 0}").unmodifiable();
@@ -35,6 +39,7 @@ public class DubinsPathGeneratorTest extends TestCase {
     }
   }
 
+  @Test
   public void testZeroLength() {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{0[m], 0[m], 0[m]}"));
     Tensor g0 = Tensors.fromString("{1[m], 2[m], 3}").unmodifiable();
@@ -43,6 +48,7 @@ public class DubinsPathGeneratorTest extends TestCase {
     Subdivide.of(0, 1, 10).map(dubinsPath.unit(g0));
   }
 
+  @Test
   public void testFail() throws ClassNotFoundException, IOException {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{" + Math.PI / 2 + "[m], 10[m], " + Math.PI / 2 + "[m]}"));
     Tensor g0 = Tensors.fromString("{0[m], 0[m], 0}").unmodifiable();

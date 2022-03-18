@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.r3;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -16,9 +18,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class MinTriangleAreaSquaredTest extends TestCase {
+public class MinTriangleAreaSquaredTest {
+  @Test
   public void testSimple() {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
@@ -28,6 +30,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimpleUnit() {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
@@ -38,6 +41,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testFive() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();
@@ -53,6 +57,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testFiveUnit() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(1, "kg")));
@@ -68,6 +73,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testThree() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -77,6 +83,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testTwo() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -86,6 +93,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testOne() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -95,6 +103,7 @@ public class MinTriangleAreaSquaredTest extends TestCase {
     }
   }
 
+  @Test
   public void testEmptyFail() {
     AssertFail.of(() -> MinTriangleAreaSquared.INSTANCE.origin(Tensors.empty()));
   }

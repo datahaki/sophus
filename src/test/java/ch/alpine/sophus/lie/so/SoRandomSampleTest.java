@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.so;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;
@@ -15,9 +17,9 @@ import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
-import junit.framework.TestCase;
 
-public class SoRandomSampleTest extends TestCase {
+public class SoRandomSampleTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(SoRandomSample.of(n));
@@ -32,6 +34,7 @@ public class SoRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testZeroFail() {
     AssertFail.of(() -> SoRandomSample.of(0));
   }

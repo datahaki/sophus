@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -14,12 +16,12 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdMemberQTest extends TestCase {
+public class SpdMemberQTest {
   private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { //
       Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
 
+  @Test
   public void testSimple() {
     for (int n = 1; n < 10; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -27,6 +29,7 @@ public class SpdMemberQTest extends TestCase {
     }
   }
 
+  @Test
   public void testBiinvarianceSon() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(3);
@@ -49,6 +52,7 @@ public class SpdMemberQTest extends TestCase {
       }
   }
 
+  @Test
   public void testBiinvarianceGln() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(2);

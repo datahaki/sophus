@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.HigherJacobiIdentity;
 import ch.alpine.sophus.lie.KillingForm;
@@ -9,15 +14,16 @@ import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Det;
-import junit.framework.TestCase;
 
-public class SlAlgebraTest extends TestCase {
+public class SlAlgebraTest {
+  @Test
   public void testSl2Match() {
     LieAlgebra slAlgebra = SlAlgebra.of(2);
     assertEquals(slAlgebra.basis(), Sl2Algebra.INSTANCE.basis());
     assertEquals(slAlgebra.ad(), Sl2Algebra.INSTANCE.ad());
   }
 
+  @Test
   public void testSl3Klling() {
     LieAlgebra lieAlgebra = SlAlgebra.of(3);
     Tensor ad = lieAlgebra.ad();

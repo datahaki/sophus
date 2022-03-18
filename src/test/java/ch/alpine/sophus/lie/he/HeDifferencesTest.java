@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
-import junit.framework.TestCase;
 
-public class HeDifferencesTest extends TestCase {
+public class HeDifferencesTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;

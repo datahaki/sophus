@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.sn;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -18,11 +20,11 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class SnLineDistanceTest extends TestCase {
+public class SnLineDistanceTest {
   private static final Clip CLIP = Clips.positive(Pi.HALF);
 
+  @Test
   public void testBounded() throws ClassNotFoundException, IOException {
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
@@ -37,6 +39,7 @@ public class SnLineDistanceTest extends TestCase {
     }
   }
 
+  @Test
   public void testMidpoint() {
     Distribution distribution = UniformDistribution.unit();
     for (int dimension = 2; dimension < 6; ++dimension) {
@@ -50,6 +53,7 @@ public class SnLineDistanceTest extends TestCase {
     }
   }
 
+  @Test
   public void testPointFail() {
     AssertFail.of(() -> SnLineDistance.INSTANCE.tensorNorm(UnitVector.of(3, 1), UnitVector.of(3, 1)));
   }

@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -24,9 +28,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
-import junit.framework.TestCase;
 
-public class RigidMotionFitTest extends TestCase {
+public class RigidMotionFitTest {
+  @Test
   public void testExact() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     Tensor skew3 = Cross.skew3(Tensors.vector(-.1, .2, .3));
@@ -42,6 +46,7 @@ public class RigidMotionFitTest extends TestCase {
     }
   }
 
+  @Test
   public void testWeights() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
@@ -64,6 +69,7 @@ public class RigidMotionFitTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandom() {
     Distribution distribution = NormalDistribution.standard();
     Distribution dist_weights = ExponentialDistribution.of(1);
@@ -78,6 +84,7 @@ public class RigidMotionFitTest extends TestCase {
     }
   }
 
+  @Test
   public void testIdentityFail() {
     Distribution dist_weights = ExponentialDistribution.of(2);
     for (int d = 2; d < 6; ++d) {
@@ -92,6 +99,7 @@ public class RigidMotionFitTest extends TestCase {
     }
   }
 
+  @Test
   public void testSingle() {
     Tensor points = Tensors.of(Tensors.vector(1, 2, 3));
     RigidMotionFit rigidMotionFit = RigidMotionFit.of(points, points);
@@ -99,6 +107,7 @@ public class RigidMotionFitTest extends TestCase {
     Chop._10.requireAllZero(rigidMotionFit.translation());
   }
 
+  @Test
   public void testFormatFail() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
@@ -107,6 +116,7 @@ public class RigidMotionFitTest extends TestCase {
     AssertFail.of(() -> RigidMotionFit.of(points, target, Tensors.vector(1, 2, 3, 4, 5, 6, 7)));
   }
 
+  @Test
   public void testZeroFail() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
@@ -115,6 +125,7 @@ public class RigidMotionFitTest extends TestCase {
     AssertFail.of(() -> RigidMotionFit.of(points, target, Array.zeros(6).map(N.DOUBLE)));
   }
 
+  @Test
   public void testNegativeOk() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);

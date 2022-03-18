@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -16,9 +18,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.pow.Sqrt;
-import junit.framework.TestCase;
 
-public class SpdMetricTest extends TestCase {
+public class SpdMetricTest {
+  @Test
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -30,6 +32,7 @@ public class SpdMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testSymmetryAndInvariance() {
     for (int n = 1; n < 6; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -49,6 +52,7 @@ public class SpdMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testLogExp() {
     for (int n = 1; n < 4; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -60,6 +64,7 @@ public class SpdMetricTest extends TestCase {
     }
   }
 
+  @Test
   public void testScalarProd() {
     for (int n = 1; n < 6; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));

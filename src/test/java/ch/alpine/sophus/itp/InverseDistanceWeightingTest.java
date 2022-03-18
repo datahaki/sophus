@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
@@ -23,9 +27,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class InverseDistanceWeightingTest extends TestCase {
+public class InverseDistanceWeightingTest {
+  @Test
   public void testSimple() {
     BarycentricCoordinate barycentricCoordinate = //
         HsCoordinates.wrap(RnManifold.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
@@ -33,6 +37,7 @@ public class InverseDistanceWeightingTest extends TestCase {
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
 
+  @Test
   public void testExact() {
     BarycentricCoordinate barycentricCoordinate = //
         HsCoordinates.wrap(RnManifold.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
@@ -41,6 +46,7 @@ public class InverseDistanceWeightingTest extends TestCase {
     assertEquals(weights, UnitVector.of(2, 1));
   }
 
+  @Test
   public void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = //
@@ -54,6 +60,7 @@ public class InverseDistanceWeightingTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     BarycentricCoordinate barycentricCoordinate = //
@@ -70,6 +77,7 @@ public class InverseDistanceWeightingTest extends TestCase {
       }
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> new InverseDistanceWeighting(null));
   }

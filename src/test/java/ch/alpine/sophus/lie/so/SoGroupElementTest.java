@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.so;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.so3.Rodrigues;
@@ -15,11 +17,11 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SoGroupElementTest extends TestCase {
+public class SoGroupElementTest {
   private static final LieGroup LIE_GROUP = SoGroup.INSTANCE;
 
+  @Test
   public void testBlub() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
@@ -27,6 +29,7 @@ public class SoGroupElementTest extends TestCase {
     AssertFail.of(() -> SoGroupElement.of(orth).combine(matr.add(matr)));
   }
 
+  @Test
   public void testAdjoint() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     SoGroupElement so3GroupElement = SoGroupElement.of(orth);
@@ -35,6 +38,7 @@ public class SoGroupElementTest extends TestCase {
     AntisymmetricMatrixQ.require(adjoint);
   }
 
+  @Test
   public void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
@@ -48,6 +52,7 @@ public class SoGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
@@ -63,31 +68,37 @@ public class SoGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testCombine() {
     LieGroupElement lieGroupElement = LIE_GROUP.element(So3TestHelper.spawn_So3());
     for (int count = 0; count < 100; ++count)
       lieGroupElement = LIE_GROUP.element(lieGroupElement.combine(So3TestHelper.spawn_So3()));
   }
 
+  @Test
   public void testSimple() {
     SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     so3GroupElement.inverse();
     AssertFail.of(() -> so3GroupElement.combine(HilbertMatrix.of(3)));
   }
 
+  @Test
   public void testDetNegFail() {
     AssertFail.of(() -> SoGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
   }
 
+  @Test
   public void testDetNegCombineFail() {
     SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     AssertFail.of(() -> so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1)));
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> SoGroupElement.of(HilbertMatrix.of(3)));
   }
 
+  @Test
   public void testSize4Ok() {
     SoGroupElement.of(IdentityMatrix.of(4));
   }

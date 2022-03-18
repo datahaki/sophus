@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.hs.h2.H2Midpoint;
@@ -10,11 +14,11 @@ import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
-import junit.framework.TestCase;
 
-public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
+public class LaneRiesenfeldCurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
+  @Test
   public void testDeg1() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 1);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
@@ -22,6 +26,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testDeg2() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 2);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
@@ -29,6 +34,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testDeg3() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 3);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
@@ -36,6 +42,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testDeg4() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 4);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
@@ -43,6 +50,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testDeg5() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 5);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
@@ -50,6 +58,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testCyc2() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 2);
     Tensor cyclic = curveSubdivision.cyclic(Tensors.vector(1, 2, 3, 4));
@@ -57,6 +66,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(cyclic);
   }
 
+  @Test
   public void testCyc3() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 3);
     CurveSubdivision curveSubdivisiom = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
@@ -67,6 +77,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(cyclic);
   }
 
+  @Test
   public void testEmpty() {
     for (int degree = 1; degree < 4; ++degree) {
       CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(CLOTHOID_BUILDER, degree);
@@ -75,6 +86,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     for (int degree = 1; degree < 4; ++degree) {
@@ -84,6 +96,7 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testDegMatrix() {
     for (int degree = 1; degree < 6; ++degree) {
       CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, degree);
@@ -95,10 +108,12 @@ public class LaneRiesenfeldCurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> LaneRiesenfeldCurveSubdivision.of(null, 3));
   }
 
+  @Test
   public void testDegreeFail() {
     AssertFail.of(() -> LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0));
   }

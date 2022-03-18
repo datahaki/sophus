@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.function.BinaryOperator;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.KillingForm;
@@ -23,11 +28,11 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Sl2AlgebraTest extends TestCase {
+public class Sl2AlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
+  @Test
   public void testBasisA() {
     Distribution local = UniformDistribution.of(-0.3, 0.3);
     Tensor x = RandomVariate.of(local, 3);
@@ -59,6 +64,7 @@ public class Sl2AlgebraTest extends TestCase {
     OrderedQ.require(improve);
   }
 
+  @Test
   public void testH() {
     LieAlgebra lieAlgebra = Sl2Algebra.INSTANCE;
     Tensor ad = lieAlgebra.ad();
@@ -72,6 +78,7 @@ public class Sl2AlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(prj_g, prj_gh);
   }
 
+  @Test
   public void testHe() {
     LieAlgebra lieAlgebra = Sl2Algebra.INSTANCE;
     Tensor ad = lieAlgebra.ad();
@@ -86,6 +93,7 @@ public class Sl2AlgebraTest extends TestCase {
     Chop._10.requireClose(expect, log);
   }
 
+  @Test
   public void testHeOnRn() {
     LieAlgebra lieAlgebra = Sl2Algebra.INSTANCE;
     Tensor ad = lieAlgebra.ad();

@@ -1,8 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Random;
 import java.util.function.BinaryOperator;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -24,19 +30,20 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Power;
-import junit.framework.TestCase;
 
-public class Se2CoveringGroupTest extends TestCase {
+public class Se2CoveringGroupTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
       Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
+  @Test
   public void testSimple() {
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(Tensors.vector(1, 2, 3));
     Tensor tensor = se2CoveringGroupElement.combine(Tensors.vector(0, 0, -3));
     assertEquals(tensor, Tensors.vector(1, 2, 0));
   }
 
+  @Test
   public void testConvergenceSe2() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
@@ -54,6 +61,7 @@ public class Se2CoveringGroupTest extends TestCase {
     Chop._08.requireZero(cmp);
   }
 
+  @Test
   public void testAdInv() {
     Random random = new Random();
     int n = 5 + random.nextInt(3);
@@ -83,6 +91,7 @@ public class Se2CoveringGroupTest extends TestCase {
     }
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random();
     int n = 5 + random.nextInt(5);

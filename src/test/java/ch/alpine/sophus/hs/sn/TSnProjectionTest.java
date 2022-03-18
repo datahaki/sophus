@@ -1,16 +1,20 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
-import junit.framework.TestCase;
 
-public class TSnProjectionTest extends TestCase {
+public class TSnProjectionTest {
+  @Test
   public void testSimple() {
     for (int d = 1; d < 6; ++d) {
       Tensor x = RandomSample.of(SnRandomSample.of(d));

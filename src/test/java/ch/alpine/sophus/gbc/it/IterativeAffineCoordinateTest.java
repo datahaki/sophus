@@ -1,9 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc.it;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.AffineCoordinate;
@@ -14,14 +18,14 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class IterativeAffineCoordinateTest extends TestCase {
+public class IterativeAffineCoordinateTest {
   private static void _check(Tensor levers, Tensor weights) {
     Chop._10.requireAllZero(weights.dot(levers));
     Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
   }
 
+  @Test
   public void testAmplifiers() {
     for (Amplifiers amplifiers : Amplifiers.values()) {
       for (int k : new int[] { 0, 1, 5, 10 }) {
@@ -40,6 +44,7 @@ public class IterativeAffineCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testArraysList() {
     List<Object> list = Arrays.asList();
     assertEquals(list.size(), 0);

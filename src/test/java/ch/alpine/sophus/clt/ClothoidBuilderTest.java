@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
@@ -13,11 +17,11 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class ClothoidBuilderTest extends TestCase {
+public class ClothoidBuilderTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
+  @Test
   public void testReverse() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
@@ -37,6 +41,7 @@ public class ClothoidBuilderTest extends TestCase {
     }
   }
 
+  @Test
   public void testAction() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
@@ -55,6 +60,7 @@ public class ClothoidBuilderTest extends TestCase {
     }
   }
 
+  @Test
   public void testTwoPi() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
@@ -71,6 +77,7 @@ public class ClothoidBuilderTest extends TestCase {
     }
   }
 
+  @Test
   public void testStraightSide() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(3, 0, 0);
@@ -80,6 +87,7 @@ public class ClothoidBuilderTest extends TestCase {
     assertNotNull(lagrangeQuadraticD.toString());
   }
 
+  @Test
   public void testStraightUp() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(0, 3, +Math.PI / 2);
@@ -88,6 +96,7 @@ public class ClothoidBuilderTest extends TestCase {
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ZERO);
   }
 
+  @Test
   public void testCircle() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(-2, 0, -Math.PI / 2);

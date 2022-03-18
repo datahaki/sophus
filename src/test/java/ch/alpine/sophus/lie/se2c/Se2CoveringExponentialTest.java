@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
@@ -12,12 +16,12 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class Se2CoveringExponentialTest extends TestCase {
+public class Se2CoveringExponentialTest {
   private static final Exponential LIE_EXPONENTIAL = Se2CoveringExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se2CoveringGroup.INSTANCE;
 
+  @Test
   public void testSimpleXY() {
     Tensor x = Tensors.vector(3, 2, 0).unmodifiable();
     Tensor g = LIE_EXPONENTIAL.exp(x);
@@ -28,6 +32,7 @@ public class Se2CoveringExponentialTest extends TestCase {
     assertEquals(y, x);
   }
 
+  @Test
   public void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
@@ -42,6 +47,7 @@ public class Se2CoveringExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
@@ -57,6 +63,7 @@ public class Se2CoveringExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimpleLinearSubspace() {
     for (int theta = -10; theta <= 10; ++theta) {
       Tensor x = Tensors.vector(0, 0, theta).unmodifiable();
@@ -67,6 +74,7 @@ public class Se2CoveringExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.3}");
     Tensor log = LIE_EXPONENTIAL.log(xya);

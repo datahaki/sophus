@@ -4,6 +4,8 @@ package ch.alpine.sophus.hs.spd;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.so.SoRandomSample;
@@ -18,9 +20,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdBiinvariantMeanTest extends TestCase {
+public class SpdBiinvariantMeanTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     BiinvariantMean biinvariantMean = Serialization.copy(SpdBiinvariantMean.INSTANCE);
@@ -36,6 +38,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testTransformSon() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
@@ -53,6 +56,7 @@ public class SpdBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testTransformGln() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();

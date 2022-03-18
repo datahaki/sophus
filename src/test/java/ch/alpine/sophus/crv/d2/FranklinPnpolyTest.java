@@ -1,9 +1,12 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FranklinPnpolyTest extends TestCase {
+import org.junit.jupiter.api.Test;
+
+public class FranklinPnpolyTest {
+  @Test
   public void testVisibility() {
     assertEquals(FranklinPnpoly.class.getModifiers() & 1, 0);
   }

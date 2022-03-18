@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.su;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.HigherJacobiIdentity;
 import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
@@ -9,9 +11,9 @@ import ch.alpine.tensor.mat.AntihermitianMatrixQ;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Trace;
-import junit.framework.TestCase;
 
-public class SuAlgebraTest extends TestCase {
+public class SuAlgebraTest {
+  @Test
   public void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = SuAlgebra.of(n);

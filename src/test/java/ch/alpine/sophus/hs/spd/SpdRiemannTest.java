@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.ExactScalarQ;
@@ -13,9 +17,9 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdRiemannTest extends TestCase {
+public class SpdRiemannTest {
+  @Test
   public void testSimple2() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(2));
     Tensor e11 = Tensors.fromString("{{1, 0}, {0, 0}}");
@@ -25,6 +29,7 @@ public class SpdRiemannTest extends TestCase {
     assertEquals(s1112, RationalScalar.of(-1, 4));
   }
 
+  @Test
   public void testSimple3() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(3));
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
@@ -38,6 +43,7 @@ public class SpdRiemannTest extends TestCase {
     assertEquals(s1213, RationalScalar.of(-1, 8));
   }
 
+  @Test
   public void testTransport3() {
     int n = 3;
     Tensor p = IdentityMatrix.of(n);
@@ -54,6 +60,7 @@ public class SpdRiemannTest extends TestCase {
     Chop._10.requireClose(s1213, RationalScalar.of(-1, 8));
   }
 
+  @Test
   public void testMultiT() {
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");

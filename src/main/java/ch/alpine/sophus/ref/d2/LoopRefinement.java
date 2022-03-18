@@ -14,15 +14,16 @@ public record LoopRefinement(BiinvariantMean biinvariantMean) //
     implements SurfaceMeshRefinement, Serializable {
   @Override
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
-    // TODO SOPHUS to linear subdivision
     {
       surfaceMesh.faces().stream().forEach(a -> Integers.requireEquals(a.length, 3));
     }
-    MeshStructure meshStructure = new MeshStructure(surfaceMesh);
+    SurfaceMeshRefinement surfaceMeshRefinement = new TriQuadLinearRefinement(biinvariantMean);
+    SurfaceMesh out = surfaceMeshRefinement.refine(surfaceMesh);
+    MeshStructure meshStructure = new MeshStructure(out);
     for (int index = 0; index < surfaceMesh.vrt.length(); ++index) {
+      // TODO SOPHUS ALG complete
       // meshStructure.ring(null)
     }
-    SurfaceMesh out = new SurfaceMesh();
     return out;
   }
 

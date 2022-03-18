@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2UniformResampleTest extends TestCase {
+public class Se2UniformResampleTest {
+  @Test
   public void testSimple() {
     Tensor tensor = Tensors.of(Tensors.vector(5, 0, Math.PI / 2), Tensors.vector(5, 9, Math.PI / 2), Tensors.vector(5, 12, Math.PI / 2));
     CurveSubdivision curveSubdivision = Se2UniformResample.of(RealScalar.of(2));
@@ -22,6 +24,7 @@ public class Se2UniformResampleTest extends TestCase {
     Chop._12.requireClose(uniform.get(Tensor.ALL, 2), ConstantArray.of(Pi.HALF, 6));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> Se2UniformResample.of(null));
   }

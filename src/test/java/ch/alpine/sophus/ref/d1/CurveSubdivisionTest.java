@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.h2.H2Midpoint;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
@@ -13,15 +15,15 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class CurveSubdivisionTest extends TestCase {
+public class CurveSubdivisionTest {
   private static void _checkSym(CurveSubdivision cs, Tensor tensor) {
     Tensor forward = cs.string(tensor);
     Tensor reverse = cs.string(Reverse.of(tensor));
     Chop._12.requireClose(Reverse.of(forward), reverse);
   }
 
+  @Test
   public void testSymmetric() {
     Distribution distribution = UniformDistribution.of(-2, 3);
     for (int length = 0; length < 10; ++length) {
@@ -57,6 +59,7 @@ public class CurveSubdivisionTest extends TestCase {
       LaneRiesenfeld3CurveSubdivision.of(Se2Geodesic.INSTANCE), //
   };
 
+  @Test
   public void testNullFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
       AssertFail.of(() -> curveSubdivision.string(null));
@@ -64,6 +67,7 @@ public class CurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testScalarFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
       AssertFail.of(() -> curveSubdivision.string(Pi.HALF));

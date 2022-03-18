@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -18,9 +20,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class So2CoveringBiinvariantMeanTest extends TestCase {
+public class So2CoveringBiinvariantMeanTest {
+  @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
     Distribution shifted = UniformDistribution.of(Clips.absolute(10));
@@ -41,21 +43,25 @@ public class So2CoveringBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testSpecific() {
     Scalar scalar = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.vector(3, 4), Tensors.vector(0.5, 0.5));
     Chop._12.requireClose(scalar, RealScalar.of(3.5));
   }
 
+  @Test
   public void testAntipodal() {
     Scalar mean = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(mean, RealScalar.of(0.3141592653589793));
   }
 
+  @Test
   public void testFailFar() {
     Scalar mean = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.VALUE, Pi.VALUE.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(mean, RealScalar.of(0.6283185307179586));
   }
 
+  @Test
   public void testFailTensor() {
     AssertFail.of(() -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1))));
   }

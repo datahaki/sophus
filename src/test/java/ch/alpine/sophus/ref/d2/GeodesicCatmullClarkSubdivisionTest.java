@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.ref.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
@@ -12,9 +16,9 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
+public class GeodesicCatmullClarkSubdivisionTest {
+  @Test
   public void testQuad() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
         new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
@@ -23,6 +27,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     Chop._10.requireAllZero(center);
   }
 
+  @Test
   public void testEdgeCorner() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor quad = Tensors.vector(1, 0, 0, 0, 0, 0);
@@ -34,6 +39,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     assertEquals(edge, RationalScalar.of(1, 16));
   }
 
+  @Test
   public void testEdgeCentral1() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor quad = Tensors.vector(0, 0, 1, 0, 0, 0);
@@ -45,6 +51,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     assertEquals(edge, RationalScalar.of(3, 8));
   }
 
+  @Test
   public void testEdgeCentral2() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor quad = Tensors.vector(0, 0, 0, 1, 0, 0);
@@ -56,6 +63,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     assertEquals(edge, RationalScalar.of(3, 8));
   }
 
+  @Test
   public void testCenterCorner() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor quad = Tensors.vector(1, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -73,6 +81,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     assertEquals(edg1, RationalScalar.of(1, 16));
   }
 
+  @Test
   public void testRefine() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor grid = Tensors.fromString("{{0, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 0, 1}}");
@@ -81,6 +90,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     assertEquals(refine, Tensors.fromString(string));
   }
 
+  @Test
   public void testRefineX() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor grid = Tensors.fromString("{{0, 1}, {0, 1}, {0, 1}}");
@@ -89,6 +99,7 @@ public class GeodesicCatmullClarkSubdivisionTest extends TestCase {
     ExactTensorQ.require(refine);
   }
 
+  @Test
   public void testRefineY() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
     Tensor grid = Tensors.fromString("{{0, 0}, {1, 1}, {2, 2}}");

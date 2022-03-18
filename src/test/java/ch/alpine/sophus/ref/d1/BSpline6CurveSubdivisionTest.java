@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
@@ -9,11 +13,11 @@ import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
-import junit.framework.TestCase;
 
-public class BSpline6CurveSubdivisionTest extends TestCase {
+public class BSpline6CurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
+  @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = //
         BSpline6CurveSubdivision.of(RnGeodesic.INSTANCE);
@@ -23,18 +27,21 @@ public class BSpline6CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(RnGeodesic.INSTANCE);
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
 
+  @Test
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(CLOTHOID_BUILDER);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> BSpline6CurveSubdivision.of(null));
   }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -13,9 +15,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class So2PhongBiinvariantMeanTest extends TestCase {
+public class So2PhongBiinvariantMeanTest {
+  @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Math.PI));
     for (int length = 1; length < 6; ++length) {

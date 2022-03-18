@@ -1,8 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
@@ -35,24 +40,27 @@ import ch.alpine.tensor.sca.Real;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.spa.Nnz;
 import ch.alpine.tensor.spa.SparseArray;
-import junit.framework.TestCase;
 
-public class CliffordAlgebraTest extends TestCase {
+public class CliffordAlgebraTest {
+  @Test
   public void testD0() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = Serialization.copy(CliffordAlgebraCache.positive(0));
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1}}}"));
   }
 
+  @Test
   public void testDnegativeFail() {
     AssertFail.of(() -> CliffordAlgebraCache.positive(-1));
   }
 
+  @Test
   public void testD1() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, 1}}, {{0, 1}, {1, 0}}}"));
     assertEquals(cliffordAlgebra.gp(), CliffordAlgebraCache.of(1, 0).gp());
   }
 
+  @Test
   public void testD1Complex() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, -1}}, {{0, 1}, {1, 0}}}"));
@@ -77,6 +85,7 @@ public class CliffordAlgebraTest extends TestCase {
     assertEquals(Imag.of(cr), xr.Get(1));
   }
 
+  @Test
   public void testD2() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
     Tensor gp = cliffordAlgebra.gp();
@@ -113,6 +122,7 @@ public class CliffordAlgebraTest extends TestCase {
     return sum;
   }
 
+  @Test
   public void testD2Quaternions() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(2);
     Tensor x = Tensors.vector(2, 5, -3, -4);
@@ -136,6 +146,7 @@ public class CliffordAlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(qr.w(), xr.Get(0));
   }
 
+  @Test
   public void testD3() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(3);
     Tensor gp = cliffordAlgebra.gp();
@@ -150,6 +161,7 @@ public class CliffordAlgebraTest extends TestCase {
     AssertFail.of(() -> cliffordAlgebra.grade(x, 4));
   }
 
+  @Test
   public void testD3Quaternions() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(3);
     Tensor x = Tensors.vector(2, 0, 0, 0, 5, -3, -4, 0);
@@ -173,6 +185,7 @@ public class CliffordAlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(qr.w(), xr.Get(0));
   }
 
+  @Test
   public void testD4() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(4);
     Tensor x = Array.zeros(16);
@@ -186,6 +199,7 @@ public class CliffordAlgebraTest extends TestCase {
     Chop.NONE.requireAllZero(tensor.extract(1 + 4 + 6, 15));
   }
 
+  @Test
   public void testExp() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(3);
     Tensor a = RandomVariate.of(UniformDistribution.unit(), 8);
@@ -194,6 +208,7 @@ public class CliffordAlgebraTest extends TestCase {
     Chop._08.requireClose(exp1, exp2);
   }
 
+  @Test
   public void testReverse() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
     assertEquals(cliffordAlgebra.gp().length(), 4);
@@ -201,12 +216,14 @@ public class CliffordAlgebraTest extends TestCase {
     assertEquals(result, DiagonalMatrix.of(1, 1, 1, -1));
   }
 
+  @Test
   public void testReverseFail() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
     AssertFail.of(() -> cliffordAlgebra.reverse(Pi.VALUE));
     AssertFail.of(() -> cliffordAlgebra.reverse(HilbertMatrix.of(4)));
   }
 
+  @Test
   public void testCommutator() {
     for (int p = 0; p <= 2; ++p)
       for (int q = 0; q < 2; ++q) {
@@ -220,6 +237,7 @@ public class CliffordAlgebraTest extends TestCase {
       }
   }
 
+  @Test
   public void testCommutatorNegative() {
     for (int n = 1; n <= 3; ++n) {
       CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(n);
@@ -227,6 +245,7 @@ public class CliffordAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testEvenGradeSubalgebra() {
     // vectors of even grade form subalgebra
     for (int i = 0; i <= 4; ++i) {

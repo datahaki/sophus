@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
@@ -15,9 +19,9 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.red.Total;
-import junit.framework.TestCase;
 
-public class Normal2DTest extends TestCase {
+public class Normal2DTest {
+  @Test
   public void testStringLength() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -27,6 +31,7 @@ public class Normal2DTest extends TestCase {
     }
   }
 
+  @Test
   public void testStringUnit() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     for (int count = 0; count < 10; ++count) {
@@ -38,6 +43,7 @@ public class Normal2DTest extends TestCase {
     }
   }
 
+  @Test
   public void testStringZerosLength() {
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = Array.zeros(count, 2);
@@ -47,6 +53,7 @@ public class Normal2DTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() {
     Distribution distribution = TriangularDistribution.with(Quantity.of(0, "m"), Quantity.of(1, "m"));
     {
@@ -62,6 +69,7 @@ public class Normal2DTest extends TestCase {
     }
   }
 
+  @Test
   public void testTriple() {
     Distribution distribution = TriangularDistribution.with(Quantity.of(0, "m"), Quantity.of(1, "m"));
     AssertFail.of(() -> Normal2D.string(RandomVariate.of(distribution, 1, 3)));

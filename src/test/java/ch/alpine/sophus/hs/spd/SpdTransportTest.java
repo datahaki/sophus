@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -14,10 +16,10 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
 /** SpdTransport is also tested in {@link SpdRiemannTest} */
-public class SpdTransportTest extends TestCase {
+public class SpdTransportTest {
+  @Test
   public void testLadder() throws ClassNotFoundException, IOException {
     Tensor p = IdentityMatrix.of(3);
     RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
@@ -32,6 +34,7 @@ public class SpdTransportTest extends TestCase {
     Chop._08.requireClose(tu1.apply(e13), tu2.apply(e13));
   }
 
+  @Test
   public void testMultiT() {
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");

@@ -1,9 +1,10 @@
 // code by jph
 package ch.alpine.sophus.math;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class PlausibleRationalTest extends TestCase {
+public class PlausibleRationalTest {
+  @Test
   public void testSimple() {
     // Scalar v = PlausibleRational.FUNCTION.apply(RealScalar.of(-0.8660254037844389));
     // System.out.println(v);

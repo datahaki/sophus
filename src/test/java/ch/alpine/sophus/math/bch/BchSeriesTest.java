@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.math.bch;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.sl.SlAlgebra;
@@ -13,15 +17,15 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BchSeriesTest extends TestCase {
+public class BchSeriesTest {
   private static final Distribution DISTRIBUTION = DiscreteUniformDistribution.of(-10, 11);
   private static final LieAlgebra[] LIE_ALGEBRAS = new LieAlgebra[] { //
       SlAlgebra.of(3), //
       SoAlgebra.of(4), //
       SoAlgebra.of(5) };
 
+  @Test
   public void test6() throws ClassNotFoundException, IOException {
     for (LieAlgebra lieAlgebra : LIE_ALGEBRAS) {
       Tensor ad = lieAlgebra.ad();
@@ -34,6 +38,7 @@ public class BchSeriesTest extends TestCase {
     }
   }
 
+  @Test
   public void test8() {
     for (LieAlgebra lieAlgebra : LIE_ALGEBRAS) {
       Tensor ad = lieAlgebra.ad();
@@ -46,6 +51,7 @@ public class BchSeriesTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuad() {
     for (LieAlgebra lieAlgebra : LIE_ALGEBRAS) {
       Tensor ad = lieAlgebra.ad();

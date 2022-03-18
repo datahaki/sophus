@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.gr;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -20,11 +22,11 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogisticDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrTransportTest extends TestCase {
+public class GrTransportTest {
   public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
 
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     int n = 4;
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2);
@@ -47,6 +49,7 @@ public class GrTransportTest extends TestCase {
     Chop._08.isClose(qv1, ofForm); // this is not correct
   }
 
+  @Test
   public void testFromOToP() {
     int n = 5;
     for (int k = 0; k <= n; ++k) {
@@ -64,6 +67,7 @@ public class GrTransportTest extends TestCase {
     }
   }
 
+  @Test
   public void testNonMemberFail() {
     int n = 5;
     for (int k = 1; k < n; ++k) {

@@ -1,12 +1,16 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class ControlLr2Test extends TestCase {
+public class ControlLr2Test {
+  @Test
   public void testSimple() {
     Tensor result = ControlLr2.INSTANCE.cyclic(Tensors.vector(1, 0, 0, 0));
     ExactTensorQ.require(result);

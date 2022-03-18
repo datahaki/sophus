@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import junit.framework.TestCase;
 
-public class JacobiIdentityTest extends TestCase {
+public class JacobiIdentityTest {
+  @Test
   public void testHeisenberg() {
     Tensor ad = new HeAlgebra(1).ad();
     Tensor eye = IdentityMatrix.of(3);
@@ -25,6 +29,7 @@ public class JacobiIdentityTest extends TestCase {
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
   }
 
+  @Test
   public void testSo3() {
     Tensor so3 = So3Algebra.INSTANCE.ad();
     Tensor eye = IdentityMatrix.of(3);
@@ -33,6 +38,7 @@ public class JacobiIdentityTest extends TestCase {
     assertEquals(JacobiIdentity.of(so3), Array.zeros(3, 3, 3, 3));
   }
 
+  @Test
   public void testSl2() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
@@ -40,11 +46,13 @@ public class JacobiIdentityTest extends TestCase {
     AssertFail.of(() -> JacobiIdentity.require(ad));
   }
 
+  @Test
   public void testSe2() {
     Tensor ad = Se2Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
   }
 
+  @Test
   public void testSe3() {
     Tensor ad = Se3Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), ConstantArray.of(RealScalar.ZERO, 6, 6, 6, 6));

@@ -1,10 +1,14 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
-import ch.alpine.tensor.num.Pi;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LinearVariogramTest extends TestCase {
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.tensor.num.Pi;
+
+public class LinearVariogramTest {
+  @Test
   public void testSimple() {
     assertEquals(new LinearVariogram(Pi.VALUE).a(), Pi.VALUE);
   }

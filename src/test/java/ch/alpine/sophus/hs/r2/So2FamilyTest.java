@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.api.BijectionFamily;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -12,9 +17,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So2FamilyTest extends TestCase {
+public class So2FamilyTest {
+  @Test
   public void testSimple() {
     BijectionFamily bijectionFamily = new So2Family(s -> RealScalar.of(5).subtract(s));
     Distribution distribution = NormalDistribution.standard();
@@ -26,6 +31,7 @@ public class So2FamilyTest extends TestCase {
     }
   }
 
+  @Test
   public void testReverse() {
     BijectionFamily bijectionFamily = new So2Family(s -> RealScalar.of(1.2).multiply(s));
     Distribution distribution = NormalDistribution.standard();
@@ -37,6 +43,7 @@ public class So2FamilyTest extends TestCase {
     }
   }
 
+  @Test
   public void testForwardSe2() {
     R2RigidFamily rigidFamily = new So2Family(s -> s);
     Tensor matrix = rigidFamily.forward_se2(RealScalar.ONE);

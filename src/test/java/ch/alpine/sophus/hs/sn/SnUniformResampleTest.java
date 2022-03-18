@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.AdjacentDistances;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Variance;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnUniformResampleTest extends TestCase {
+public class SnUniformResampleTest {
+  @Test
   public void testSimple() {
     Scalar spacing = Pi.VALUE.divide(RealScalar.of(10));
     CurveSubdivision curveSubdivision = SnUniformResample.of(spacing);

@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.fit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.DistanceMatrix;
 import ch.alpine.tensor.Tensor;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class DistanceMatrixToPointsTest extends TestCase {
+public class DistanceMatrixToPointsTest {
+  @Test
   public void testRankEuclidean() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(2));
@@ -30,6 +34,7 @@ public class DistanceMatrixToPointsTest extends TestCase {
     }
   }
 
+  @Test
   public void testUnit() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(2));
