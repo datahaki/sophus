@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -17,9 +21,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2ForwardActionTest extends TestCase {
+public class Se2ForwardActionTest {
+  @Test
   public void testSimple() {
     Tensor xya = Tensors.vector(1, 2, 3);
     TensorUnaryOperator tuo = new Se2ForwardAction(xya);
@@ -30,6 +34,7 @@ public class Se2ForwardActionTest extends TestCase {
     Chop._12.requireClose(q1, q2);
   }
 
+  @Test
   public void testSome() {
     Tensor u = Tensors.vector(1.2, 0, 0.75);
     Tensor m = Se2Matrix.of(Se2CoveringExponential.INSTANCE.exp(u));
@@ -41,6 +46,7 @@ public class Se2ForwardActionTest extends TestCase {
     assertEquals(se2ForwardAction.apply(p), v.extract(0, 2));
   }
 
+  @Test
   public void testPureSe2() {
     Distribution distribution = NormalDistribution.standard();
     Tensor p = RandomVariate.of(distribution, 3);
@@ -50,6 +56,7 @@ public class Se2ForwardActionTest extends TestCase {
         new Se2ForwardAction(p).apply(q.extract(0, 2)));
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     TensorUnaryOperator forward = se2Bijection.forward();

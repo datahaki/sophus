@@ -1,8 +1,14 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -14,9 +20,9 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.qty.Unit;
-import junit.framework.TestCase;
 
-public class OriginEnclosureQTest extends TestCase {
+public class OriginEnclosureQTest {
+  @Test
   public void testInsidePlain() {
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
@@ -31,6 +37,7 @@ public class OriginEnclosureQTest extends TestCase {
     }
   }
 
+  @Test
   public void testInsidePlainQuantity() {
     ScalarUnaryOperator suo = Scalars.attach(Unit.of("km"));
     Tensor polygon = Tensors.matrix(new Number[][] { //
@@ -46,6 +53,7 @@ public class OriginEnclosureQTest extends TestCase {
     }
   }
 
+  @Test
   public void testSome() {
     Tensor asd = Tensors.vector(2, 3, 4, 5);
     asd.set(RealScalar.of(8), 1);
@@ -58,10 +66,12 @@ public class OriginEnclosureQTest extends TestCase {
     list.get(1).longValue();
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> OriginEnclosureQ.INSTANCE.test(IdentityMatrix.of(4)));
   }
 
+  @Test
   public void testCPointers() {
     {
       String wer = "asdf";
@@ -77,6 +87,7 @@ public class OriginEnclosureQTest extends TestCase {
     }
   }
 
+  @Test
   public void testScalarFail() {
     AssertFail.of(() -> FranklinPnpoly.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
   }

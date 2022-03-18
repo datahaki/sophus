@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.so3;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
@@ -14,12 +16,12 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So3BiinvariantMeanTest extends TestCase {
+public class So3BiinvariantMeanTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(So3Manifold.INSTANCE);
 
+  @Test
   public void testSimple() {
     Tensor sequence = Tensors.of( //
         Rodrigues.vectorExp(Tensors.vector(+1 + 0.3, 0, 0)), //
@@ -31,6 +33,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     Chop._10.requireAllZero(log);
   }
 
+  @Test
   public void testConvergence() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
@@ -45,6 +48,7 @@ public class So3BiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testConvergenceExact() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;

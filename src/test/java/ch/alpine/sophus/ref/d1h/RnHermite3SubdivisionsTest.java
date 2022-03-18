@@ -1,10 +1,14 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 
-import ch.alpine.sophus.math.TensorIteration;
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -13,13 +17,13 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RnHermite3SubdivisionsTest extends TestCase {
+public class RnHermite3SubdivisionsTest {
   static final List<HermiteSubdivision> LIST = Arrays.asList( //
       RnHermite3Subdivisions.a1(), //
       RnHermite3Subdivisions.a2());
 
+  @Test
   public void testString() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     for (HermiteSubdivision hermiteSubdivision : LIST) {
@@ -30,6 +34,7 @@ public class RnHermite3SubdivisionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testStringReverse() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
@@ -46,6 +51,7 @@ public class RnHermite3SubdivisionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testCyclic() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     for (HermiteSubdivision hermiteSubdivision : LIST) {
@@ -56,6 +62,7 @@ public class RnHermite3SubdivisionsTest extends TestCase {
     }
   }
 
+  @Test
   public void testPolynomialReproduction() {
     for (HermiteSubdivision hermiteSubdivision : LIST)
       TestHelper.checkP(1, hermiteSubdivision);

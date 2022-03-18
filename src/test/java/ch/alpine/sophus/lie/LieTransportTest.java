@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.SubdivideTransport;
@@ -12,11 +14,11 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class LieTransportTest extends TestCase {
+public class LieTransportTest {
   private static final Distribution DISTRIBUTION = UniformDistribution.of(-10, 10);
 
+  @Test
   public void testSimple() {
     Tensor p = RandomVariate.of(DISTRIBUTION, 3);
     Tensor q = RandomVariate.of(DISTRIBUTION, 3);
@@ -31,6 +33,7 @@ public class LieTransportTest extends TestCase {
     Chop._10.requireClose(r2, r3);
   }
 
+  @Test
   public void testSubdivide() {
     Tensor p = RandomVariate.of(DISTRIBUTION, 3);
     Tensor q = RandomVariate.of(DISTRIBUTION, 3);

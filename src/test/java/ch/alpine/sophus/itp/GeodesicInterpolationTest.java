@@ -3,6 +3,8 @@ package ch.alpine.sophus.itp;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -11,9 +13,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GeodesicInterpolationTest extends TestCase {
+public class GeodesicInterpolationTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor sequence = Tensors.fromString("{{1, 2, 3}, {4, 3, 2}, {5, -1, 2.5}}");
     Interpolation interpolation = //

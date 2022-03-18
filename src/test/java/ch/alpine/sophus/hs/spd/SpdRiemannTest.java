@@ -1,6 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -9,10 +15,11 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdRiemannTest extends TestCase {
+public class SpdRiemannTest {
+  @Test
   public void testSimple2() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(2));
     Tensor e11 = Tensors.fromString("{{1, 0}, {0, 0}}");
@@ -22,6 +29,7 @@ public class SpdRiemannTest extends TestCase {
     assertEquals(s1112, RationalScalar.of(-1, 4));
   }
 
+  @Test
   public void testSimple3() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(3));
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
@@ -35,9 +43,12 @@ public class SpdRiemannTest extends TestCase {
     assertEquals(s1213, RationalScalar.of(-1, 8));
   }
 
+  @Test
   public void testTransport3() {
-    Tensor p = IdentityMatrix.of(3);
-    Tensor q = TestHelper.generateSpd(3);
+    int n = 3;
+    Tensor p = IdentityMatrix.of(n);
+    RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
+    Tensor q = RandomSample.of(rsi);
     SpdRiemann spdRiemann = new SpdRiemann(q);
     TensorUnaryOperator tuo = SpdTransport.INSTANCE.shift(p, q);
     Tensor e11 = tuo.apply(Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}"));
@@ -49,13 +60,15 @@ public class SpdRiemannTest extends TestCase {
     Chop._10.requireClose(s1213, RationalScalar.of(-1, 8));
   }
 
+  @Test
   public void testMultiT() {
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");
     Tensor p = IdentityMatrix.of(3);
     for (int c = 0; c < 5; ++c) {
-      Tensor q = TestHelper.generateSpd(3);
+      RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
+      Tensor q = RandomSample.of(rsi);
       TensorUnaryOperator tuo = SpdTransport.INSTANCE.shift(p, q);
       e11 = tuo.apply(e11);
       e12 = tuo.apply(e12);

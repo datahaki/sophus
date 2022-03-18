@@ -1,23 +1,28 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesCoordinate;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SpdManifoldTest extends TestCase {
-  public static final BarycentricCoordinate[] list(Tensor sequence) {
+public class SpdManifoldTest {
+  public static final BarycentricCoordinate[] list() {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
         HsCoordinates.wrap(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(1))), //
@@ -29,15 +34,17 @@ public class SpdManifoldTest extends TestCase {
     };
   }
 
+  @Test
   public void testSimple() {
     Random random = new Random();
     int d = 2;
     int fail = 0;
     int len = 5 + random.nextInt(3);
-    Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
-    for (BarycentricCoordinate barycentricCoordinate : list(sequence))
+    RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
+    Tensor sequence = RandomSample.of(rsi, len);
+    for (BarycentricCoordinate barycentricCoordinate : list())
       try {
-        Tensor point = TestHelper.generateSpd(d);
+        Tensor point = RandomSample.of(rsi);
         Tensor weights = barycentricCoordinate.weights(sequence, point);
         AffineQ.require(weights, Chop._08);
         Tensor spd = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -48,12 +55,14 @@ public class SpdManifoldTest extends TestCase {
     assertTrue(fail < 4);
   }
 
+  @Test
   public void testLagrangeProperty() {
     Random random = new Random();
     int d = 2;
     int len = 5 + random.nextInt(3);
-    Tensor sequence = Tensors.vector(i -> TestHelper.generateSpd(d), len);
-    for (BarycentricCoordinate barycentricCoordinate : list(sequence)) {
+    RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
+    Tensor sequence = RandomSample.of(rsi, len);
+    for (BarycentricCoordinate barycentricCoordinate : list()) {
       int index = random.nextInt(sequence.length());
       Tensor point = sequence.get(index);
       Tensor weights = barycentricCoordinate.weights(sequence, point);
@@ -64,9 +73,11 @@ public class SpdManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testFlipMidpoint() {
-    Tensor p = TestHelper.generateSpd(3);
-    Tensor q = TestHelper.generateSpd(3);
+    RandomSampleInterface spd = new Spd0RandomSample(3, NormalDistribution.standard());
+    Tensor p = RandomSample.of(spd);
+    Tensor q = RandomSample.of(spd);
     Tolerance.CHOP.requireClose(new SpdExponential(p).flip(q), SpdManifold.INSTANCE.flip(p, q));
     Tolerance.CHOP.requireClose(new SpdExponential(p).midpoint(q), SpdManifold.INSTANCE.midpoint(p, q));
   }

@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -12,9 +16,9 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrRandomSampleTest extends TestCase {
+public class GrRandomSampleTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int k = 1; k < 5; ++k) {
       RandomSampleInterface grRandomSample = Serialization.copy(new GrRandomSample(k + 3, k));
@@ -23,6 +27,7 @@ public class GrRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testNN() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(new GrRandomSample(n, n));
@@ -32,6 +37,7 @@ public class GrRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testN0() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 0);
@@ -44,6 +50,7 @@ public class GrRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> new GrRandomSample(-3, 2));
     AssertFail.of(() -> new GrRandomSample(3, 4));

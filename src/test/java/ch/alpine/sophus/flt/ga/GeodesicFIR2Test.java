@@ -1,8 +1,13 @@
 // code by ob
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.CausalFilter;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
@@ -18,9 +23,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GeodesicFIR2Test extends TestCase {
+public class GeodesicFIR2Test {
+  @Test
   public void testTranslation() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(1, 1, 0);
@@ -34,6 +39,7 @@ public class GeodesicFIR2Test extends TestCase {
     Chop._12.requireClose(refined.get(2), Tensors.vector(1.5, 2.127670960610518, 0.5));
   }
 
+  @Test
   public void testRotation() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(0, 0, 2);
@@ -44,6 +50,7 @@ public class GeodesicFIR2Test extends TestCase {
     assertEquals(refined.get(1), Tensors.vector(0, 0, 2));
   }
 
+  @Test
   public void testCombined() {
     Scalar alpha = RealScalar.of(0.5);
     TensorUnaryOperator causalFilter = //

@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
@@ -19,9 +23,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class DistanceMatrixTest extends TestCase {
+public class DistanceMatrixTest {
+  @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "A")));
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
@@ -32,6 +36,7 @@ public class DistanceMatrixTest extends TestCase {
     SymmetricMatrixQ.require(tensor);
   }
 
+  @Test
   public void testRankEuclidean() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));

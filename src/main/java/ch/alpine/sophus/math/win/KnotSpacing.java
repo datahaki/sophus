@@ -3,7 +3,7 @@ package ch.alpine.sophus.math.win;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.math.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -12,8 +12,8 @@ import ch.alpine.tensor.alg.Accumulate;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.sca.Power;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.pow.Power;
 
 /** Reference:
  * B-Spline Interpolation and Approximation

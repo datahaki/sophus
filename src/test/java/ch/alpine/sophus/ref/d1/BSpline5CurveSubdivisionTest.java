@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
@@ -13,11 +17,11 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class BSpline5CurveSubdivisionTest extends TestCase {
+public class BSpline5CurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
+  @Test
   public void testCyclicMask() {
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
     Tensor tensor = curveSubdivision.cyclic(Tensors.vector(1, 0, 0, 0, 0, 0, 0));
@@ -25,6 +29,7 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
         "{5/8, 15/32, 3/16, 1/32, 0, 0, 0, 0, 0, 0, 0, 1/32, 3/16, 15/32}"));
   }
 
+  @Test
   public void testString() {
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
     for (int length = 3; length < 7; ++length) {
@@ -34,6 +39,7 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
@@ -41,6 +47,7 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
 
+  @Test
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(CLOTHOID_BUILDER);
@@ -48,6 +55,7 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
     assertEquals(curveSubdivision.string(singleton), singleton);
   }
 
+  @Test
   public void testTerminal() {
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
     Clip clip = Clips.interval(1, 2);
@@ -58,6 +66,7 @@ public class BSpline5CurveSubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new BSpline5CurveSubdivision(null));
   }

@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.math.noise;
 
 /* package */ enum StaticHelper {

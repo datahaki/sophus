@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.sn;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnFastMeanTest extends TestCase {
+public class SnFastMeanTest {
+  @Test
   public void testSnNormalized() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(1, 0.2);

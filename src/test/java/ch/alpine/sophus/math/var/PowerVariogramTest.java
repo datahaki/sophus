@@ -3,6 +3,9 @@ package ch.alpine.sophus.math.var;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.fit.PowerVariogramFit;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -22,9 +25,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.qty.Unit;
-import junit.framework.TestCase;
 
-public class PowerVariogramTest extends TestCase {
+public class PowerVariogramTest {
+  @Test
   public void testFitQuantity() throws ClassNotFoundException, IOException {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     int n = 10;
@@ -41,7 +44,7 @@ public class PowerVariogramTest extends TestCase {
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
-      PowerVariogram variogram = Serialization.copy(PowerVariogram.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
+      PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       TensorUnaryOperator weightingInterface = //
           MetricBiinvariant.EUCLIDEAN.var_dist(RnManifold.INSTANCE, variogram, sequence);
@@ -51,6 +54,7 @@ public class PowerVariogramTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple() {
     try {
       PowerVariogram.of(1, 2);
@@ -60,7 +64,8 @@ public class PowerVariogramTest extends TestCase {
     }
   }
 
+  @Test
   public void testEmpty() {
-    AssertFail.of(() -> PowerVariogram.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
+    AssertFail.of(() -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
   }
 }

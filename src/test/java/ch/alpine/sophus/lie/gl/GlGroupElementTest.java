@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -18,9 +22,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GlGroupElementTest extends TestCase {
+public class GlGroupElementTest {
+  @Test
   public void testSimple() {
     int n = 5;
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), n, n);
@@ -29,6 +33,7 @@ public class GlGroupElementTest extends TestCase {
     Chop._10.requireClose(result, IdentityMatrix.of(n));
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     Tensor tensor = DiagonalMatrix.of(1, 2, 3);
     GlGroupElement linearGroupElement = GlGroupElement.of(tensor);
@@ -37,6 +42,7 @@ public class GlGroupElementTest extends TestCase {
     assertEquals(result, IdentityMatrix.of(3));
   }
 
+  @Test
   public void testLinearGroupSe2() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -55,6 +61,7 @@ public class GlGroupElementTest extends TestCase {
     }
   }
 
+  @Test
   public void testAdjoint() {
     Tensor xya = Tensors.vector(1, 2, 3);
     Se2GroupElement se2GroupElement = new Se2GroupElement(xya);
@@ -66,21 +73,25 @@ public class GlGroupElementTest extends TestCase {
     Chop._12.requireClose(adjointGl.get(1, 0), adjointSe.get(2));
   }
 
+  @Test
   public void testAdjointFail() {
     GlGroupElement linearGroupElement = GlGroupElement.of(IdentityMatrix.of(5));
     AssertFail.of(() -> linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5)));
   }
 
+  @Test
   public void testNonSquareFail() {
     AssertFail.of(() -> GlGroupElement.of(HilbertMatrix.of(2, 3)));
   }
 
+  @Test
   public void testCombineNonSquareFail() {
     GlGroupElement linearGroupElement = GlGroupElement.of(DiagonalMatrix.of(1, 2));
     AssertFail.of(() -> linearGroupElement.combine(HilbertMatrix.of(2, 3)));
     AssertFail.of(() -> linearGroupElement.combine(Tensors.vector(1, 2)));
   }
 
+  @Test
   public void testNonInvertibleFail() {
     AssertFail.of(() -> GlGroupElement.of(DiagonalMatrix.of(1, 0, 2)));
   }

@@ -1,9 +1,14 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
@@ -13,23 +18,26 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.qty.Quantity;
-import junit.framework.TestCase;
 
-public class PolygonRegionTest extends TestCase {
+public class PolygonRegionTest {
+  @Test
   public void testEmpty() throws ClassNotFoundException, IOException {
     PolygonRegion polygonRegion = Serialization.copy(new PolygonRegion(Tensors.of(Tensors.vector(1, 2))));
     polygonRegion.test(Tensors.vector(1, 2));
   }
 
+  @Test
   public void testFilter() {
     Optional<Tensor> optional = Stream.of(Array.zeros(2)).filter(new PolygonRegion(CirclePoints.of(3))).findAny();
     assertTrue(optional.isPresent());
   }
 
+  @Test
   public void testDimensionsFail() {
     AssertFail.of(() -> new PolygonRegion(Tensors.fromString("{{1,2,3}}")));
   }
 
+  @Test
   public void testInside() {
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0, 0 }, //
@@ -44,6 +52,7 @@ public class PolygonRegionTest extends TestCase {
     assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(1, 1.1)));
   }
 
+  @Test
   public void testInsideQuantity() {
     ScalarUnaryOperator suo = s -> Quantity.of(s, "km");
     Tensor polygon = Tensors.matrix(new Number[][] { //
@@ -59,6 +68,7 @@ public class PolygonRegionTest extends TestCase {
     assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(1, 1.1).map(suo)));
   }
 
+  @Test
   public void testInsideEmpty() {
     Tensor polygon = Tensors.empty();
     assertFalse(OriginEnclosureQ.INSTANCE.test(polygon));

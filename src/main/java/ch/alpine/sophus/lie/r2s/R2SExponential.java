@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.r2s;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.so2.So2;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

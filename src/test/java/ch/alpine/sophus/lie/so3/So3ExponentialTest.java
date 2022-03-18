@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.so3;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.lie.gl.GlGroupElement;
 import ch.alpine.sophus.lie.so.SoGroup;
@@ -14,13 +16,14 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.LinearSolve;
-import junit.framework.TestCase;
 
-public class So3ExponentialTest extends TestCase {
+public class So3ExponentialTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(So3Exponential.INSTANCE);
   }
 
+  @Test
   public void testAdjoint() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
@@ -32,6 +35,7 @@ public class So3ExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testLinearGroup() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
@@ -47,6 +51,7 @@ public class So3ExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testFailOrthogonal() {
     AssertFail.of(() -> So3Exponential.INSTANCE.log(So3TestHelper.spawn_so3()));
   }

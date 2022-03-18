@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.ad;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
@@ -15,9 +17,9 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.mat.Tolerance;
-import junit.framework.TestCase;
 
-public class HsBarycentricCoordinateTest extends TestCase {
+public class HsBarycentricCoordinateTest {
+  @Test
   public void testSimple() {
     Random random = new Random(3);
     for (int d = 2; d < 5; ++d) {

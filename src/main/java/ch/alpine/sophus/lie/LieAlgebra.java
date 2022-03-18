@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.ad.JacobiIdentity;
 
 public interface LieAlgebra {
   /** @return tensor of rank 3 satisfying {@link JacobiIdentity} */

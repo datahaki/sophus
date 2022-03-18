@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.clt.mid.MidpointTangentOrder2;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class ClothoidTangentDefectTest extends TestCase {
+public class ClothoidTangentDefectTest {
+  @Test
   public void testSimple() {
     Tolerance.CHOP.requireClose( //
         ClothoidTangentDefect.of(+1.2, 0.5).defect(RealScalar.of(0.2)), //
@@ -25,6 +27,7 @@ public class ClothoidTangentDefectTest extends TestCase {
         RealScalar.of(-0.6251498036834668));
   }
 
+  @Test
   public void testZeroApx() {
     Distribution distribution = UniformDistribution.of(-0.5, 0.5);
     for (int count = 0; count < 100; ++count) {

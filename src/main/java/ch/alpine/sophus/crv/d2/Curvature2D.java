@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
-import ch.alpine.sophus.math.TripleReduceExtrapolation;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;

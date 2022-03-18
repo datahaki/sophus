@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -16,39 +20,44 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2AdjointTest extends TestCase {
+public class Se2AdjointTest {
+  @Test
   public void testRotationFixpointSideLeft() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.inverse(Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = se2Adjoint.apply(Tensors.vector(1, 0, 1)); // more forward and turn left
     Chop._13.requireClose(tensor, UnitVector.of(3, 2)); // only rotation
   }
 
+  @Test
   public void testRotationSideLeft() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.forward(Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = se2Adjoint.apply(Tensors.vector(1, 0, -1)); // more forward and turn right
     Chop._13.requireClose(tensor, UnitVector.of(3, 2).negate()); // only rotation
   }
 
+  @Test
   public void testRotationFixpointSideRight() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.forward(Tensors.vector(0, -1, 0)); // "right rear wheel"
     Tensor tensor = se2Adjoint.apply(Tensors.vector(1, 0, -1)); // more forward and turn right
     Chop._13.requireClose(tensor, Tensors.vector(2, 0, -1)); // rotate and translate
   }
 
+  @Test
   public void testRotationId() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.forward(Tensors.vector(0, 0, 2));
     Tensor tensor = se2Adjoint.apply(Tensors.vector(0, 0, 1));
     Chop._13.requireClose(tensor, UnitVector.of(3, 2)); // same rotation
   }
 
+  @Test
   public void testRotationTranslation() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.forward(Tensors.vector(1, 0, Math.PI / 2));
     Tensor tensor = se2Adjoint.apply(Tensors.vector(0, 0, 1));
     Chop._13.requireClose(tensor, Tensors.vector(0, -1, 1));
   }
 
+  @Test
   public void testTranslate() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
@@ -59,6 +68,7 @@ public class Se2AdjointTest extends TestCase {
     }
   }
 
+  @Test
   public void testComparison() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -70,6 +80,7 @@ public class Se2AdjointTest extends TestCase {
     }
   }
 
+  @Test
   public void testFwdInv() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -82,6 +93,7 @@ public class Se2AdjointTest extends TestCase {
     }
   }
 
+  @Test
   public void testNonCovering() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -96,6 +108,7 @@ public class Se2AdjointTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
@@ -111,6 +124,7 @@ public class Se2AdjointTest extends TestCase {
     }
   }
 
+  @Test
   public void testUnits() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.forward(Tensors.fromString("{2[m], 3[m], 4}"));
     Tensor tensor = se2Adjoint.apply(Tensors.fromString("{7[m*s^-1], -5[m*s^-1], 1[s^-1]}"));
@@ -118,6 +132,7 @@ public class Se2AdjointTest extends TestCase {
         Tensors.fromString("{-5.359517822584925[m*s^-1], -4.029399362837438[m*s^-1], 1[s^-1]}"));
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> Se2Adjoint.forward(RealScalar.ONE));
     AssertFail.of(() -> Se2Adjoint.forward(HilbertMatrix.of(3)));

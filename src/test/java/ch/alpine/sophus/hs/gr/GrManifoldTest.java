@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.gr;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
@@ -19,9 +21,9 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrManifoldTest extends TestCase {
+public class GrManifoldTest {
+  @Test
   public void testBiinvariance() {
     Biinvariant[] biinvariants = new Biinvariant[] { //
         MetricBiinvariant.VECTORIZE0, //
@@ -46,6 +48,7 @@ public class GrManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testCommute() {
     int n = 5;
     int k = 2;
@@ -59,6 +62,7 @@ public class GrManifoldTest extends TestCase {
     Tolerance.CHOP.requireClose(q, q.dot(q));
   }
 
+  @Test
   public void testMismatch() {
     int n = 5;
     Tensor p1 = RandomSample.of(new GrRandomSample(n, 1));

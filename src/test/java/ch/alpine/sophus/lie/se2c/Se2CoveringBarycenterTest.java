@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -12,9 +14,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2CoveringBarycenterTest extends TestCase {
+public class Se2CoveringBarycenterTest {
+  @Test
   public void testZeros() {
     Tensor sequence = Tensors.fromString("{{2, 3, 4}, {1, 2, 3}, {-2, 1, 1}, {2, -1, -7}}");
     TensorUnaryOperator se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
@@ -25,6 +27,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tolerance.CHOP.requireClose(result, mean);
   }
 
+  @Test
   public void testXY() {
     Tensor sequence = Tensors.fromString("{{2, 3, 4}, {1, 2, 3}, {-2, 1, 1}, {2, -1, -7}}");
     TensorUnaryOperator se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
@@ -35,6 +38,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tolerance.CHOP.requireClose(result, mean);
   }
 
+  @Test
   public void testXYA() {
     Tensor sequence = Tensors.fromString("{{2, 3, 4}, {1, 2, 3}, {-2, 1, 1}, {2, -1, -7}}");
     TensorUnaryOperator se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
@@ -45,6 +49,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Tolerance.CHOP.requireClose(result, mean);
   }
 
+  @Test
   public void testRank() {
     Tensor sequence = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1}}");
     Se2CoveringBarycenter se2CoveringBarycenter = new Se2CoveringBarycenter(sequence);
@@ -58,6 +63,7 @@ public class Se2CoveringBarycenterTest extends TestCase {
     Se2CoveringBiinvariantMean.INSTANCE.mean(sequence.extract(0, 2), Tensors.of(RealScalar.ONE.subtract(w), w));
   }
 
+  @Test
   public void testLengthFail() {
     AssertFail.of(() -> new Se2CoveringBarycenter(HilbertMatrix.of(5, 3)));
   }

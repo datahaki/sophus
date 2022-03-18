@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -14,9 +18,8 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class ClothoidCurveTest extends TestCase {
+public class ClothoidCurveTest {
   private static final Unit METER = Unit.of("m");
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
@@ -27,6 +30,7 @@ public class ClothoidCurveTest extends TestCase {
         vector.Get(2));
   }
 
+  @Test
   public void testComparison() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 0.002);
@@ -42,6 +46,7 @@ public class ClothoidCurveTest extends TestCase {
     }
   }
 
+  @Test
   public void testDistinct() {
     Tensor p = Array.zeros(3);
     Tensor q = Tensors.vector(-3.7, 0.3, 3.142);

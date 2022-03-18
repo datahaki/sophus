@@ -1,15 +1,17 @@
 // code by jph
 package ch.alpine.sophus.crv.spline;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.StochasticMatrixQ;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BSplineLimitMatrixTest extends TestCase {
+public class BSplineLimitMatrixTest {
+  @Test
   public void testSimple() {
     for (int degree = 0; degree < 5; ++degree)
       for (int n = 1; n < 10; ++n) {
@@ -22,6 +24,7 @@ public class BSplineLimitMatrixTest extends TestCase {
       }
   }
 
+  @Test
   public void testNonPositiveFail() {
     AssertFail.of(() -> BSplineLimitMatrix.string(0, 2));
     AssertFail.of(() -> BSplineLimitMatrix.string(-1, 2));

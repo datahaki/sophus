@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -23,18 +23,12 @@ import ch.alpine.tensor.sca.Abs;
  * 
  * tests have shown empirically for the SPD manifold, that the reducing
  * mean is closed to the exact mean than the {@link SpdPhongMean} */
-/* package */ class ReducingMean implements BiinvariantMean, Serializable {
+/* package */ record ReducingMean(Geodesic geodesic) implements BiinvariantMean, Serializable {
+
   /** @param geodesic
    * @return */
   public static BiinvariantMean of(Geodesic geodesic) {
     return new ReducingMean(Objects.requireNonNull(geodesic));
-  }
-
-  // ---
-  private final Geodesic geodesic;
-
-  private ReducingMean(Geodesic geodesic) {
-    this.geodesic = geodesic;
   }
 
   @Override // from BiinvariantMean
@@ -69,7 +63,6 @@ import ch.alpine.tensor.sca.Abs;
     }
     return priorityQueue.poll().point;
   }
-
   private class WPoint implements Comparable<WPoint> {
     private final Scalar weight;
     private final Tensor point;

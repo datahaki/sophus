@@ -1,15 +1,19 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Mean;
-import junit.framework.TestCase;
 
-public class GeodesicMeanTest extends TestCase {
+public class GeodesicMeanTest {
+  @Test
   public void testSimple() {
     for (int radius = 0; radius <= 5; ++radius) {
       TensorUnaryOperator geodesicMean = GeodesicMean.of(RnGeodesic.INSTANCE);
@@ -19,6 +23,7 @@ public class GeodesicMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testMultiRadius() {
     for (int radius = 0; radius < 5; ++radius) {
       TensorUnaryOperator geodesicMean = GeodesicMean.of(RnGeodesic.INSTANCE);

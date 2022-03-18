@@ -2,12 +2,11 @@
 package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
-import java.util.Objects;
 
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -15,22 +14,15 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public class LieProjectedLineDistance implements LineDistance, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // ---
-  private final LieGroup lieGroup;
-  private final Exponential exponential;
+public record LieProjectedLineDistance(LieGroup lieGroup, Exponential exponential) //
+    implements LineDistance, Serializable {
 
-  public LieProjectedLineDistance(LieGroup lieGroup, Exponential exponential) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.exponential = Objects.requireNonNull(exponential);
-  }
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
 
   @Override // from LineDistance
   public TensorNorm tensorNorm(Tensor beg, Tensor end) {
     return new NormImpl(beg, end);
   }
-
   private class NormImpl implements TensorNorm, Serializable {
     private final LieGroupElement lieBeg;
     private final LieGroupElement lieInv;

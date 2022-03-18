@@ -3,14 +3,16 @@ package ch.alpine.sophus.clt.par;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
-import junit.framework.TestCase;
 
-public class AnalyticClothoidPartialTest extends TestCase {
+public class AnalyticClothoidPartialTest {
+  @Test
   public void testSimple1() throws ClassNotFoundException, IOException {
     ClothoidPartial clothoidPartial = Serialization.copy(AnalyticClothoidPartial.of(RealScalar.of(1.3), RealScalar.of(-0.7), RealScalar.of(0.2)));
     Scalar result = clothoidPartial.il(RealScalar.of(0.3));
@@ -18,6 +20,7 @@ public class AnalyticClothoidPartialTest extends TestCase {
     Tolerance.CHOP.requireClose(result, expect);
   }
 
+  @Test
   public void testSimple2() {
     ClothoidPartial clothoidPartial = AnalyticClothoidPartial.of(1.5, 0.3, -0.4);
     Scalar result = clothoidPartial.il(RealScalar.of(0.4));
@@ -25,6 +28,7 @@ public class AnalyticClothoidPartialTest extends TestCase {
     Tolerance.CHOP.requireClose(result, expect);
   }
 
+  @Test
   public void testCircle() throws ClassNotFoundException, IOException {
     ClothoidPartial clothoidPartial = Serialization.copy(AnalyticClothoidPartial.of(1.3, -0.7, 0));
     Scalar result = clothoidPartial.il(RealScalar.of(0.3));
@@ -32,6 +36,7 @@ public class AnalyticClothoidPartialTest extends TestCase {
     Tolerance.CHOP.requireClose(result, expect);
   }
 
+  @Test
   public void testLine() throws ClassNotFoundException, IOException {
     ClothoidPartial clothoidPartial = Serialization.copy(AnalyticClothoidPartial.of(1.3, 0, 0));
     Scalar result = clothoidPartial.il(RealScalar.of(0.3));

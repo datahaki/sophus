@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.so2;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.lie.ScalarBiinvariantMean;
 import ch.alpine.sophus.usr.AssertFail;
@@ -21,14 +23,14 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class So2LinearBiinvariantMeanTest extends TestCase {
+public class So2LinearBiinvariantMeanTest {
   private static final Clip CLIP = Clips.absolute(Pi.VALUE);
   private static final ScalarBiinvariantMean[] SCALAR_BIINVARIANT_MEANS = { //
       So2PhongBiinvariantMean.INSTANCE, //
       So2LinearBiinvariantMean.INSTANCE };
 
+  @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
     for (int length = 1; length < 6; ++length) {
@@ -51,16 +53,19 @@ public class So2LinearBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testSpecific() {
     Scalar scalar = So2LinearBiinvariantMean.INSTANCE.mean(Tensors.vector(3, 4), Tensors.vector(0.5, 0.5));
     Chop._12.requireClose(scalar, RealScalar.of(-2.7831853071795862));
   }
 
+  @Test
   public void testSame() {
     Scalar mean = So2LinearBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.VALUE, Pi.VALUE.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(So2.MOD.apply(mean.subtract(Pi.VALUE)), RealScalar.ZERO);
   }
 
+  @Test
   public void testComparison() {
     Random random = new Random(123);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
@@ -77,6 +82,7 @@ public class So2LinearBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testFailAntipodal() {
     AssertFail.of(() -> So2LinearBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4)));
   }

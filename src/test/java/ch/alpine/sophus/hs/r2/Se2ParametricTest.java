@@ -1,9 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
-import ch.alpine.sophus.math.TensorMetric;
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -15,9 +19,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2ParametricTest extends TestCase {
+public class Se2ParametricTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(1 + 3, 2 + 4, 3);
@@ -27,6 +31,7 @@ public class Se2ParametricTest extends TestCase {
     Chop._10.requireClose(scalar, tensorMetric.distance(p, q));
   }
 
+  @Test
   public void testHalf() {
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(1, 2 + 2 * 3, 3 + Math.PI);
@@ -36,6 +41,7 @@ public class Se2ParametricTest extends TestCase {
         Se2Parametric.INSTANCE.distance(p, q));
   }
 
+  @Test
   public void testSimpleUnits() {
     Tensor p = Tensors.fromString("{1[m], 2[m], 3}");
     Tensor q = Tensors.fromString("{4[m], 6[m], 3}");
@@ -45,6 +51,7 @@ public class Se2ParametricTest extends TestCase {
         Se2Parametric.INSTANCE.distance(p, q));
   }
 
+  @Test
   public void testOtherUnits() {
     Tensor p = Tensors.fromString("{1[m], 2[m], 3}");
     Tensor q = Tensors.fromString("{4[m], 6[m], 3.3}");
@@ -54,10 +61,12 @@ public class Se2ParametricTest extends TestCase {
         Se2Parametric.INSTANCE.distance(p, q));
   }
 
+  @Test
   public void testOrigin() {
     assertEquals(Se2ParametricDeprecate.INSTANCE.distance(Tensors.vector(0, 0, 0), Tensors.vector(0, 0, 0)), RealScalar.of(0));
   }
 
+  @Test
   public void testOrderInvariant() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
@@ -73,6 +82,7 @@ public class Se2ParametricTest extends TestCase {
     }
   }
 
+  @Test
   public void testSymmetrize() {
     Distribution distribution = NormalDistribution.standard();
     Tensor p = RandomVariate.of(distribution, 3);

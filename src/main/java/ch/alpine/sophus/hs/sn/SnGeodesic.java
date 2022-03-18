@@ -12,7 +12,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.sca.Sin;
+import ch.alpine.tensor.sca.tri.Sin;
 
 /** geodesic on n-dimensional sphere embedded in R^(n+1)
  * 

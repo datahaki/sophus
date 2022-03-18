@@ -9,15 +9,13 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariateInterface;
 
-/*
- * Adapted version of 'PinkNoise.java' to 'ColoredNoise.java'
+/* Adapted version of 'PinkNoise.java' to 'ColoredNoise.java'
  *
  * Copyright (c) 2008, Sampo Niskanen <sampo.niskanen@iki.fi>
  * All rights reserved.
- * Source:  http://www.iki.fi/sampo.niskanen/PinkNoise/
+ * Source: http://www.iki.fi/sampo.niskanen/PinkNoise/
  *
- * https://github.com/cr/PolynApp/blob/master/src/org/codelove/polynapp/PinkNoise.java
- */
+ * https://github.com/cr/PolynApp/blob/master/src/org/codelove/polynapp/PinkNoise.java */
 /** A class that provides a source of pink noise with a power spectrum density
  * (PSD) proportional to 1/f^alpha. "Regular" pink noise has a PSD proportional
  * to 1/f, i.e. alpha=1. However, many natural systems may require a different

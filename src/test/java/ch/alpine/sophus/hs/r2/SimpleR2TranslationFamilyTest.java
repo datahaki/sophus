@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
-import ch.alpine.sophus.math.BijectionFamily;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.BijectionFamily;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -9,9 +13,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
-import junit.framework.TestCase;
 
-public class SimpleR2TranslationFamilyTest extends TestCase {
+public class SimpleR2TranslationFamilyTest {
+  @Test
   public void testSimple() {
     BijectionFamily bijectionFamily = new SimpleR2TranslationFamily(s -> Tensors.of(RealScalar.of(3), RealScalar.of(100).add(s)));
     Distribution distribution = DiscreteUniformDistribution.of(-15, 16);

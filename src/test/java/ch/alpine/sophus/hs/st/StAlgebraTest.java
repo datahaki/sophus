@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
 import ch.alpine.sophus.hs.ad.HsAdGeodesic;
@@ -14,9 +19,9 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
-import junit.framework.TestCase;
 
-public class StAlgebraTest extends TestCase {
+public class StAlgebraTest {
+  @Test
   public void test5x3() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 3, 8);
     assertFalse(hsAlgebra.isHTrivial());
@@ -24,6 +29,7 @@ public class StAlgebraTest extends TestCase {
     assertEquals(hsAlgebra.dimG(), 10);
   }
 
+  @Test
   public void test5x2Geodesic() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 2, 8);
     assertFalse(hsAlgebra.isHTrivial());
@@ -36,6 +42,7 @@ public class StAlgebraTest extends TestCase {
     hsAdGeodesic.split(x, y, RationalScalar.of(1, 3));
   }
 
+  @Test
   public void test5x2Bary() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 2, 8);
     assertFalse(hsAlgebra.isHTrivial());
@@ -52,11 +59,13 @@ public class StAlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(point, mean);
   }
 
+  @Test
   public void testInteresting() {
     StAlgebra.of(5, 5, 8);
     AssertFail.of(() -> StAlgebra.of(5, 6, 8));
   }
 
+  @Test
   public void testFails() {
     AssertFail.of(() -> StAlgebra.of(5, -1, 8));
   }

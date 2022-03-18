@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -12,9 +16,9 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class LagrangeQuadraticTest extends TestCase {
+public class LagrangeQuadraticTest {
+  @Test
   public void testSimple() {
     LagrangeQuadratic lagrangeQuadratic = //
         LagrangeQuadratic.interp(RealScalar.of(2), RealScalar.of(-3), RealScalar.of(7));
@@ -26,6 +30,7 @@ public class LagrangeQuadraticTest extends TestCase {
     assertEquals(p1, RealScalar.of(7));
   }
 
+  @Test
   public void testExamples() {
     LagrangeQuadratic lagrangeQuadratic = //
         LagrangeQuadratic.interp(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
@@ -39,6 +44,7 @@ public class LagrangeQuadraticTest extends TestCase {
     assertEquals(p1, RealScalar.of(13));
   }
 
+  @Test
   public void testNeville() {
     ScalarUnaryOperator scalarUnaryOperator = InterpolatingPolynomial.of( //
         Tensors.vector(0, 0.5, 1)).scalarUnaryOperator(Tensors.vector(5, 7, 13));

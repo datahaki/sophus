@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.r3s2;
 
-import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.lie.se3.Se3Geodesic;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -28,7 +28,7 @@ public enum R3S2Geodesic implements Geodesic {
     Tensor pn = p.get(1);
     Tensor qt = q.get(0);
     Tensor qn = q.get(1);
-    Tensor rotation = SnManifold.INSTANCE.endomorphism(pn, qn);
+    Tensor rotation = SnRotationMatrix.of(pn, qn);
     Tensor pSe3 = Se3Matrix.of(ID3, pt);
     Tensor qSe3 = Se3Matrix.of(rotation, qt);
     return scalar -> {

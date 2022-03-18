@@ -1,13 +1,18 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.ExactTensorQ;
@@ -26,9 +31,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class HsDesignTest extends TestCase {
+public class HsDesignTest {
+  @Test
   public void testRn() {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
@@ -44,6 +49,7 @@ public class HsDesignTest extends TestCase {
     }
   }
 
+  @Test
   public void testRnExact() {
     Distribution distribution = DiscreteUniformDistribution.of(-1000, 1000);
     Tensor design = RandomVariate.of(distribution, 6, 3);
@@ -54,6 +60,7 @@ public class HsDesignTest extends TestCase {
     assertEquals(mahalanobis.leverages(), influenceMatrix.leverages());
   }
 
+  @Test
   public void testSn() {
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
@@ -70,6 +77,7 @@ public class HsDesignTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
@@ -88,6 +96,7 @@ public class HsDesignTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
@@ -110,6 +119,7 @@ public class HsDesignTest extends TestCase {
 
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
 
+  @Test
   public void testSe2CadInvariant() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;

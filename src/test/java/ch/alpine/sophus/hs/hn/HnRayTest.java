@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -9,9 +11,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class HnRayTest extends TestCase {
+public class HnRayTest {
+  @Test
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {

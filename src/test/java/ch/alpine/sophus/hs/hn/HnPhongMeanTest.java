@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -8,9 +10,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnPhongMeanTest extends TestCase {
+public class HnPhongMeanTest {
+  @Test
   public void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 6; ++d) {
@@ -26,6 +28,7 @@ public class HnPhongMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testAffineFail() {
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));

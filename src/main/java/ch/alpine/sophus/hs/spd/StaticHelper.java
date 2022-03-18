@@ -5,7 +5,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Log;
 
 /* package */ enum StaticHelper {
   ;

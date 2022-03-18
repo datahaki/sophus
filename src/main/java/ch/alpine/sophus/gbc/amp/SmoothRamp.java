@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc.amp;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.exp.Exp;
 
 public record SmoothRamp(Scalar sigma) implements ScalarUnaryOperator {
   public SmoothRamp {

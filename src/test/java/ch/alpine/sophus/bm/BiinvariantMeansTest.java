@@ -1,16 +1,19 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
-import ch.alpine.sophus.lie.so2c.So2CoveringBiinvariantMean;
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.lie.so2.So2CoveringBiinvariantMean;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class BiinvariantMeansTest extends TestCase {
+public class BiinvariantMeansTest {
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> BiinvariantMeans.of(null, Tensors.vector(1)));
   }
 
+  @Test
   public void testNonAffineFail() {
     AssertFail.of(() -> BiinvariantMeans.of(So2CoveringBiinvariantMean.INSTANCE, Tensors.vector(1, 1, 1)));
   }

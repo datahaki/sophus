@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
@@ -29,11 +33,11 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BSpline3CurveSubdivisionTest extends TestCase {
+public class BSpline3CurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
+  @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
@@ -44,6 +48,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     assertEquals(expected, actual);
   }
 
+  @Test
   public void testString() {
     Tensor curve = Tensors.vector(0, 1, 2, 3);
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
@@ -52,6 +57,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(refined);
   }
 
+  @Test
   public void testStringTwo() {
     Tensor curve = Tensors.vector(0, 1);
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
@@ -60,6 +66,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(refined);
   }
 
+  @Test
   public void testStringOne() {
     Tensor curve = Tensors.vector(1);
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
@@ -68,6 +75,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(refined);
   }
 
+  @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
@@ -75,6 +83,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
 
+  @Test
   public void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(CLOTHOID_BUILDER);
@@ -82,12 +91,14 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     assertEquals(curveSubdivision.string(singleton), singleton);
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
 
+  @Test
   public void testR3S2() {
     Tensor tensor = Subdivide.of(-0.5, 0.8, 6) //
         .map(scalar -> Tensors.of(scalar, RealScalar.of(0.3), RealScalar.ONE));
@@ -99,6 +110,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     assertEquals(Dimensions.of(apply), Arrays.asList(13, 2, 3));
   }
 
+  @Test
   public void testLaneRiesenfeldRn() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 3);
@@ -122,6 +134,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     Chop._10.requireClose(bs, lr);
   }
 
+  @Test
   public void testLaneRiesenfeldSe2Covering() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 3);
@@ -146,6 +159,7 @@ public class BSpline3CurveSubdivisionTest extends TestCase {
     // System.out.println(bs.subtract(lr).map(Scalar::abs).flatten(-1).reduce(Max::of).get());
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new BSpline3CurveSubdivision(null));
   }

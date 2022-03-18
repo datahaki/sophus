@@ -1,8 +1,13 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.BiinvariantVector;
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
@@ -12,7 +17,6 @@ import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.Distribution;
@@ -21,9 +25,8 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class HarborBiinvariantVectorTest extends TestCase {
+public class HarborBiinvariantVectorTest {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
@@ -31,6 +34,7 @@ public class HarborBiinvariantVectorTest extends TestCase {
     return new InfluenceBiinvariantVector(vectorLogManifold, sequence, (x, y) -> Matrix2Norm.of(x.subtract(y)));
   }
 
+  @Test
   public void testRn() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
@@ -48,6 +52,7 @@ public class HarborBiinvariantVectorTest extends TestCase {
     assertEquals(v1.vector().length(), v3.vector().length());
   }
 
+  @Test
   public void testSe2C() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
@@ -69,6 +74,7 @@ public class HarborBiinvariantVectorTest extends TestCase {
   private static final Biinvariant[] BIINVARIANT = //
       { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
+  @Test
   public void testRandom() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     Distribution distributiox = NormalDistribution.standard();

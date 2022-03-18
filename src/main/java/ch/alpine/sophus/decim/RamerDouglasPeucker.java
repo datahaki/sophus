@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import ch.alpine.sophus.math.TensorNorm;
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -22,15 +22,9 @@ import ch.alpine.tensor.sca.Sign;
  * worst-case complexity is O(n^2)."
  * 
  * https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm */
-/* package */ class RamerDouglasPeucker implements CurveDecimation {
-  private final LineDistance lineDistance;
-  private final Scalar epsilon;
-
-  /** @param lineDistance
-   * @param epsilon non-negative */
-  public RamerDouglasPeucker(LineDistance lineDistance, Scalar epsilon) {
-    this.lineDistance = lineDistance;
-    this.epsilon = Sign.requirePositiveOrZero(epsilon);
+/* package */ record RamerDouglasPeucker(LineDistance lineDistance, Scalar epsilon) implements CurveDecimation {
+  public RamerDouglasPeucker {
+    Sign.requirePositiveOrZero(epsilon);
   }
 
   @Override

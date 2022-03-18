@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
@@ -13,9 +15,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnPhongMeanTest extends TestCase {
+public class SnPhongMeanTest {
+  @Test
   public void testSnNormalized() {
     Distribution distribution = NormalDistribution.of(1, 0.2);
     for (int d = 2; d < 6; ++d)
@@ -27,6 +29,7 @@ public class SnPhongMeanTest extends TestCase {
       }
   }
 
+  @Test
   public void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 2; d < 4; ++d)
@@ -43,6 +46,7 @@ public class SnPhongMeanTest extends TestCase {
       }
   }
 
+  @Test
   public void testAffineFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = UnitVector.of(3, 1);
@@ -50,6 +54,7 @@ public class SnPhongMeanTest extends TestCase {
     // AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
   }
 
+  @Test
   public void testAntipodalFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = x.negate();

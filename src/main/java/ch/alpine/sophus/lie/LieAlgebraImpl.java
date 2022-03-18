@@ -3,11 +3,9 @@ package ch.alpine.sophus.lie;
 
 import java.util.function.BinaryOperator;
 
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.tensor.lie.ad.JacobiIdentity;
-import ch.alpine.tensor.lie.ad.NilpotentAlgebraQ;
 import ch.alpine.tensor.sca.N;
 
 public class LieAlgebraImpl implements LieAlgebra {

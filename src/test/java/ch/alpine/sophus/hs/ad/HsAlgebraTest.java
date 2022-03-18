@@ -1,23 +1,31 @@
 // code by jph
 package ch.alpine.sophus.hs.ad;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
 import java.util.function.BinaryOperator;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsPair;
 import ch.alpine.sophus.hs.ad.HsAlgebra.Decomp;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
+import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.sl.SlAlgebra;
-import ch.alpine.sophus.lie.sl2.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -26,8 +34,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -36,15 +42,16 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HsAlgebraTest extends TestCase {
+public class HsAlgebraTest {
+  @Test
   public void testSe2() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 6);
     assertTrue(hsAlgebra.isReductive());
     assertTrue(hsAlgebra.isSymmetric());
   }
 
+  @Test
   public void testSe2Actions() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
     {
@@ -71,6 +78,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2ActionsExp() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
     Random random = new Random();
@@ -87,10 +95,12 @@ public class HsAlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(q1, q3);
   }
 
+  @Test
   public void testSe2Fail() {
     AssertFail.of(() -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 
+  @Test
   public void testSo3() {
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
     assertTrue(hsAlgebra.isReductive());
@@ -107,6 +117,7 @@ public class HsAlgebraTest extends TestCase {
     return Tensors.of(m0, m1, h0);
   }
 
+  @Test
   public void testSl2() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(sl2_basis_mh());
     HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
@@ -120,6 +131,7 @@ public class HsAlgebraTest extends TestCase {
     // hsAlgebra.printTable();
   }
 
+  @Test
   public void testSo3Simple() {
     Tensor g = Tensors.vector(0.0, 0.0, Math.PI / 2);
     Tensor m = Tensors.vector(0.1, 0.0);
@@ -136,6 +148,7 @@ public class HsAlgebraTest extends TestCase {
     Tolerance.CHOP.requireClose(bak, Tensors.vector(0, 0.1, 0));
   }
 
+  @Test
   public void testSo3ZeroMap() {
     Tensor g = Tensors.vector(0.1, 0.2, 0);
     Tensor m = Tensors.vector(0.0, 0.0);
@@ -162,6 +175,7 @@ public class HsAlgebraTest extends TestCase {
       new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6), //
       new HsAlgebra(SlAlgebra.of(3).ad(), 6, 6) };
 
+  @Test
   public void testAction() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
@@ -180,6 +194,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testProj() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random(1);
@@ -193,6 +208,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testDecomp() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random(2);
@@ -208,6 +224,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testLiftProjection() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
@@ -218,6 +235,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testDecompCheat() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random(1);
@@ -233,6 +251,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testHTrivial() {
     Distribution distribution = DiscreteUniformDistribution.of(-100, 100);
     Random random = new Random(1);
@@ -251,6 +270,7 @@ public class HsAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testLieAlgebra() {
     for (LieAlgebra lieAlgebra : new LieAlgebra[] { //
         Se2Algebra.INSTANCE, So3Algebra.INSTANCE, new HeAlgebra(2), SlAlgebra.of(3) }) {

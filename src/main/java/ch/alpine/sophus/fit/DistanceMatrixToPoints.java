@@ -14,7 +14,8 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.red.Mean;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** Reference:
  * IV Distance Matrices
@@ -24,15 +25,23 @@ public class DistanceMatrixToPoints {
   /** @param matrix symmetric of squared distances
    * @return list of n points of minimal dimension centered around origin
    * @see SymmetricMatrixQ */
-  public static Tensor points(Tensor matrix) {
-    SymmetricMatrixQ.require(matrix);
+  public static Tensor of(Tensor matrix) {
+    return of(matrix, Tolerance.CHOP);
+  }
+
+  /** @param matrix symmetric of squared distances
+   * @param chop
+   * @return list of n points of minimal dimension centered around origin
+   * @see SymmetricMatrixQ */
+  public static Tensor of(Tensor matrix, Chop chop) {
+    SymmetricMatrixQ.require(matrix, chop);
     int n = matrix.length();
     Tensor d0 = matrix.get(0);
     Tensor ones = ConstantArray.of(RealScalar.ONE, n);
     Tensor g = TensorProduct.of(ones, d0).add(TensorProduct.of(d0, ones)) //
         .subtract(matrix).multiply(RationalScalar.HALF);
     Eigensystem eigensystem = Eigensystem.ofSymmetric(g);
-    Tensor sqrt = eigensystem.values().map(Tolerance.CHOP).map(Sqrt.FUNCTION);
+    Tensor sqrt = eigensystem.values().map(chop).map(Sqrt.FUNCTION);
     Tensor vectors = eigensystem.vectors();
     Tensor x = Transpose.of(Tensor.of(IntStream.range(0, n) //
         .filter(i -> Scalars.nonZero(sqrt.Get(i))) //

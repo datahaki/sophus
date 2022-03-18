@@ -1,15 +1,15 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.sca.Cos;
-import ch.alpine.tensor.sca.Sin;
-import ch.alpine.tensor.sca.Tan;
+import ch.alpine.tensor.sca.tri.Cos;
+import ch.alpine.tensor.sca.tri.Sin;
+import ch.alpine.tensor.sca.tri.Tan;
 
 /** References:
  * http://vixra.org/abs/1807.0463

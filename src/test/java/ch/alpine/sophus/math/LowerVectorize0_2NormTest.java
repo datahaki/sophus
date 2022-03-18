@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -11,9 +13,9 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class LowerVectorize0_2NormTest extends TestCase {
+public class LowerVectorize0_2NormTest {
+  @Test
   public void testSimple() {
     for (int n = 1; n < 10; ++n) {
       Tensor matrix = Symmetrize.of(RandomVariate.of(UniformDistribution.unit(), n, n));
@@ -23,6 +25,7 @@ public class LowerVectorize0_2NormTest extends TestCase {
     }
   }
 
+  @Test
   public void testLengthFail() {
     AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Pi.VALUE));
     AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector()));
@@ -30,6 +33,7 @@ public class LowerVectorize0_2NormTest extends TestCase {
     AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2, 3, 4)));
   }
 
+  @Test
   public void testRequireTriangleNumber() {
     LowerVectorize0_2Norm.requireTriangleNumber(1);
     LowerVectorize0_2Norm.requireTriangleNumber(3);

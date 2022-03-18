@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,9 +17,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnExponentialTest extends TestCase {
+public class HnExponentialTest {
+  @Test
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
@@ -31,6 +35,7 @@ public class HnExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testExpZero() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
@@ -48,6 +53,7 @@ public class HnExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testLog() {
     Random random = new Random(1);
     Distribution distribution = NormalDistribution.of(0, 5);
@@ -72,6 +78,7 @@ public class HnExponentialTest extends TestCase {
       }
   }
 
+  @Test
   public void testLogZero() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 10);
@@ -86,6 +93,7 @@ public class HnExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testSpecific() {
     Tensor x = Tensors.vector(2, Math.sqrt(5));
     Tensor y = Tensors.vector(3, Math.sqrt(10));

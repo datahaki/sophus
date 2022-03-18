@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
-import ch.alpine.sophus.math.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

@@ -3,9 +3,9 @@ package ch.alpine.sophus.hs.ad;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.BchBarycentricCoordinate;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Tensor;
 
 /** @see BchBarycentricCoordinate

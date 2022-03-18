@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.sophus.math.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,7 +13,7 @@ import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Log;
 
 /** References:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020

@@ -1,12 +1,16 @@
 // code by ob
 package ch.alpine.sophus.crv.spline;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -17,9 +21,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GeodesicCatmullRomTest extends TestCase {
+public class GeodesicCatmullRomTest {
+  @Test
   public void testUniformInterpolatory() throws ClassNotFoundException, IOException {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 3);
     TensorUnaryOperator centripedalKnotSpacing = KnotSpacing.uniform();
@@ -38,6 +42,7 @@ public class GeodesicCatmullRomTest extends TestCase {
     assertEquals(geodesicCatmullRom.control(), control);
   }
 
+  @Test
   public void testCentripetalInterpolatory() {
     Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
     Tensor control = Tensors.empty();
@@ -52,12 +57,14 @@ public class GeodesicCatmullRomTest extends TestCase {
     Chop._10.requireClose(geodesicCatmullRom.apply(geodesicCatmullRom.knots().Get(2)), control.get(2));
   }
 
+  @Test
   public void testLengthFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 3, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
     AssertFail.of(() -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control));
   }
 
+  @Test
   public void testKnotsInconsistentFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);

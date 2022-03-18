@@ -8,8 +8,8 @@ import java.util.Optional;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.sca.ArcSin;
-import ch.alpine.tensor.sca.Cos;
+import ch.alpine.tensor.sca.tri.ArcSin;
+import ch.alpine.tensor.sca.tri.Cos;
 
 /* package */ enum Steer2TurnsDiffSide implements DubinsSteer {
   INSTANCE;

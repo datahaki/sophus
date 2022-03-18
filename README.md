@@ -2,7 +2,7 @@
 
 # ch.alpine.sophus
 
-Library for non-linear geometry computations in Java, version `0.0.8`
+Library for non-linear geometry computations in Java 17, version `0.0.9`
 
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
@@ -174,7 +174,7 @@ Specify `repository` and `dependency` of the tensor library in the `pom.xml` fil
   <dependency>
     <groupId>ch.alpine</groupId>
     <artifactId>sophus</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
   </dependency>
 </dependencies>
 ```

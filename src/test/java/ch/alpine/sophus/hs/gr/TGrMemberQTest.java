@@ -1,10 +1,15 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -29,9 +34,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.PoissonDistribution;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class TGrMemberQTest extends TestCase {
+public class TGrMemberQTest {
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     int n = 5;
     Tensor x = RandomSample.of(new GrRandomSample(n, 3));
@@ -52,6 +57,7 @@ public class TGrMemberQTest extends TestCase {
     // tGrMemberQ.require(s);
   }
 
+  @Test
   public void testProject() {
     int n = 4;
     Distribution distribution = UniformDistribution.unit();
@@ -74,6 +80,7 @@ public class TGrMemberQTest extends TestCase {
     }
   }
 
+  @Test
   public void testDimensionsX() {
     Random random = new Random(3);
     Distribution distribution = LogisticDistribution.of(0, 3);
@@ -91,6 +98,7 @@ public class TGrMemberQTest extends TestCase {
     }
   }
 
+  @Test
   public void testDimensionsExact() {
     Distribution distribution = PoissonDistribution.of(10);
     for (int n = 1; n < 6; ++n) {
@@ -109,6 +117,7 @@ public class TGrMemberQTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new TGrMemberQ(null));
   }

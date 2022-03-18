@@ -1,8 +1,13 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
@@ -21,9 +26,8 @@ import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class PolygonClipTest extends TestCase {
+public class PolygonClipTest {
   public static boolean equalsCycle(Tensor cycle1, Tensor cycle2) {
     if (cycle1.length() == cycle2.length())
       for (int index = 0; index < cycle2.length(); ++index)
@@ -32,6 +36,7 @@ public class PolygonClipTest extends TestCase {
     return false;
   }
 
+  @Test
   public void testEmpty() {
     Tensor a = Tensors.empty();
     Tensor b = Tensors.empty();
@@ -42,6 +47,7 @@ public class PolygonClipTest extends TestCase {
     assertTrue(Tensors.isEmpty(b));
   }
 
+  @Test
   public void testEmptyNonEmpty() {
     Tensor a = Tensors.empty();
     Tensor b = RandomVariate.of(UniformDistribution.unit(), 10, 2);
@@ -49,6 +55,7 @@ public class PolygonClipTest extends TestCase {
     assertTrue(Tensors.isEmpty(result));
   }
 
+  @Test
   public void testSimple() {
     // {{2.0, 1.0}, {1.0, 1.0}, {1.0, 2.0}}
     // {{2.0, 1.0}, {1.0, 1.0}, {1.0, 1.5}, {1.3333333333333333, 1.6666666666666667}}
@@ -66,12 +73,14 @@ public class PolygonClipTest extends TestCase {
     }
   }
 
+  @Test
   public void testSingle() {
     Tensor subject = Tensors.of(Tensors.vector(0.5, 0));
     Tensor result = PolygonClip.of(CirclePoints.of(6)).apply(subject);
     assertEquals(result, subject);
   }
 
+  @Test
   public void testMore() {
     Tensor clipper = Tensors.fromString("{{0, 0}, {1, 0}, {1, 1}, {0, 1}}");
     Tensor subject = Tensors.fromString("{{0, 0}, {1, 0}, {1/2, 1/2}}");
@@ -81,6 +90,7 @@ public class PolygonClipTest extends TestCase {
     assertTrue(ExactScalarQ.of(area));
   }
 
+  @Test
   public void testMore2() {
     Tensor clip = Tensors.fromString("{{0, 0}, {1, 0}, {1, 1}, {0, 1}}");
     Tensor subj = Tensors.fromString("{{0, 0}, {2, 0}, {1/2, 1/2}}");
@@ -91,6 +101,7 @@ public class PolygonClipTest extends TestCase {
     assertEquals(area, RationalScalar.of(1, 3));
   }
 
+  @Test
   public void testMore3() throws ClassNotFoundException, IOException {
     Tensor clip = Tensors.fromString("{{0, 0}, {1, 0}, {1, 1}, {0, 1}}");
     Tensor subj = Tensors.fromString("{{0, 0}, {2, 0}, {1/2, 1/2}}");
@@ -101,6 +112,7 @@ public class PolygonClipTest extends TestCase {
     assertEquals(area, RationalScalar.of(1, 3));
   }
 
+  @Test
   public void testSome() {
     Tensor circ = CirclePoints.of(7).multiply(RealScalar.of(4));
     Tensor poly = Tensors.fromString(
@@ -110,6 +122,7 @@ public class PolygonClipTest extends TestCase {
     assertEquals(Dimensions.of(result), Arrays.asList(9, 2));
   }
 
+  @Test
   public void testRandom() {
     Tensor circ = CirclePoints.of(7);
     TensorUnaryOperator tensorUnaryOperator = PolygonClip.of(circ);
@@ -123,6 +136,7 @@ public class PolygonClipTest extends TestCase {
     }
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> PolygonClip.of(HilbertMatrix.of(2, 3)));
   }

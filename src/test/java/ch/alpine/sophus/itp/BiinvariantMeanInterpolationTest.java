@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
@@ -22,9 +26,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BiinvariantMeanInterpolationTest extends TestCase {
+public class BiinvariantMeanInterpolationTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor vector = RandomVariate.of(UniformDistribution.unit(), 12);
     Interpolation bi = Serialization.copy(BiinvariantMeanInterpolation.of(RnBiinvariantMean.INSTANCE, vector));
@@ -36,6 +40,7 @@ public class BiinvariantMeanInterpolationTest extends TestCase {
     Chop._12.requireClose(bv, lv);
   }
 
+  @Test
   public void testExact() {
     Tensor vector = RandomVariate.of(DiscreteUniformDistribution.of(10, 20), 12);
     Interpolation interpolation = BiinvariantMeanInterpolation.of(RnBiinvariantMean.INSTANCE, vector);
@@ -44,6 +49,7 @@ public class BiinvariantMeanInterpolationTest extends TestCase {
     ExactTensorQ.require(result);
   }
 
+  @Test
   public void testMultiRn() {
     Tensor tensor = Array.of(Tensors::vector, 3, 2, 4);
     Interpolation interp1 = BiinvariantMeanInterpolation.of(RnBiinvariantMean.INSTANCE, tensor);
@@ -54,6 +60,7 @@ public class BiinvariantMeanInterpolationTest extends TestCase {
     Chop._10.requireClose(res1, res2);
   }
 
+  @Test
   public void testMultiSe2() {
     Distribution distribution = NormalDistribution.standard();
     Tensor tensor = RandomVariate.of(distribution, 4, 4, 3);

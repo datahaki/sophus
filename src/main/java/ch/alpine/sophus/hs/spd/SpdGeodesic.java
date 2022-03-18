@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.HsGeodesic;
-import ch.alpine.sophus.math.Geodesic;
 
 /** References:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020

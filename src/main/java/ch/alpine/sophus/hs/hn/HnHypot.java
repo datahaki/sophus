@@ -8,7 +8,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.nrm.Hypot;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** @see Hypot */
 public enum HnHypot {

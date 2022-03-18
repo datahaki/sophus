@@ -4,8 +4,8 @@ package ch.alpine.sophus.math.var;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.pdf.BinningMethod;
-import ch.alpine.tensor.sca.Exp;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.exp.Exp;
 
 /** Reference:
  * "Radial Basis Functions in General Use", eq (3.7.8)

@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So3GeodesicTest extends TestCase {
+public class So3GeodesicTest {
+  @Test
   public void testSimple() {
     Tensor p = Rodrigues.vectorExp(Tensors.vector(1, 2, 3));
     Tensor q = Rodrigues.vectorExp(Tensors.vector(2, -1, 2));
@@ -20,6 +24,7 @@ public class So3GeodesicTest extends TestCase {
     assertTrue(OrthogonalMatrixQ.of(split, Chop._14));
   }
 
+  @Test
   public void testEndPoints() {
     Distribution distribution = NormalDistribution.of(0, .3);
     for (int index = 0; index < 10; ++index) {

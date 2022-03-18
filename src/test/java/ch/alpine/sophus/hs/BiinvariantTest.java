@@ -4,6 +4,8 @@ package ch.alpine.sophus.hs;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.sn.SnPhongMean;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.itp.CrossAveraging;
@@ -25,9 +27,9 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BiinvariantTest extends TestCase {
+public class BiinvariantTest {
+  @Test
   public void testAbsolute() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
@@ -39,6 +41,7 @@ public class BiinvariantTest extends TestCase {
     weights.map(QuantityMagnitude.singleton("m"));
   }
 
+  @Test
   public void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     for (Biinvariant biinvariant : Biinvariants.values()) {
@@ -49,6 +52,7 @@ public class BiinvariantTest extends TestCase {
     }
   }
 
+  @Test
   public void testWeighting() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     for (Biinvariant biinvariant : Biinvariants.values()) {
@@ -60,6 +64,7 @@ public class BiinvariantTest extends TestCase {
     }
   }
 
+  @Test
   public void testCoordinate() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     for (Biinvariant biinvariant : Biinvariants.values()) {
@@ -71,6 +76,7 @@ public class BiinvariantTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimplePD() throws ClassNotFoundException, IOException {
     Random random = new Random();
     for (Biinvariant biinvariant : Biinvariants.values()) {
@@ -82,7 +88,7 @@ public class BiinvariantTest extends TestCase {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);
-      Tensor evaluate = CrossAveraging.of(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
+      Tensor evaluate = new CrossAveraging(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
       VectorQ.requireLength(evaluate, 5);
     }
   }

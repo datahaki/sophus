@@ -6,7 +6,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.TensorProduct;
 import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.red.Times;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** Reference:
  * geomstats */

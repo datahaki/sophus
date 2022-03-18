@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
-import junit.framework.TestCase;
 
-public class MSpline3CurveSubdivisionTest extends TestCase {
+public class MSpline3CurveSubdivisionTest {
+  @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
@@ -23,6 +27,7 @@ public class MSpline3CurveSubdivisionTest extends TestCase {
     assertEquals(expected, actual);
   }
 
+  @Test
   public void testString() {
     Tensor curve = Tensors.vector(0, 1, 2, 3);
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
@@ -31,6 +36,7 @@ public class MSpline3CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(refined);
   }
 
+  @Test
   public void testStringTwo() {
     Tensor curve = Tensors.vector(0, 1);
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
@@ -39,6 +45,7 @@ public class MSpline3CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(refined);
   }
 
+  @Test
   public void testStringOne() {
     Tensor curve = Tensors.vector(1);
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
@@ -47,6 +54,7 @@ public class MSpline3CurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(refined);
   }
 
+  @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
@@ -54,6 +62,7 @@ public class MSpline3CurveSubdivisionTest extends TestCase {
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new MSpline3CurveSubdivision(null));
   }

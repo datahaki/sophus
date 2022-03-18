@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -8,9 +10,9 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrGeodesicTest extends TestCase {
+public class GrGeodesicTest {
+  @Test
   public void testMidpoint() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
@@ -29,6 +31,7 @@ public class GrGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testMirror() {
     int n = 4;
     for (int k = 1; k < n; ++k) {

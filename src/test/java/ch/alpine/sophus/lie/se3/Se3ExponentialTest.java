@@ -1,9 +1,15 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -12,13 +18,22 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.Clips;
 
-public class Se3ExponentialTest extends TestCase {
+public class Se3ExponentialTest {
   private static final Exponential LIE_EXPONENTIAL = Se3Exponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se3Group.INSTANCE;
+  private static final RandomSampleInterface RSI_TSe3 = new TSe3RandomSample( //
+      UniformDistribution.of(Clips.absolute(10)), //
+      TriangularDistribution.with(0, 0.2));
+  private static final RandomSampleInterface RSI_Se3 = new Se3RandomSample( //
+      UniformDistribution.of(Clips.absolute(10)), //
+      TriangularDistribution.with(0, 0.2));
 
+  @Test
   public void testSimple() {
     Tensor translation = Tensors.vector(1, 2, 3);
     Tensor input = Tensors.of( //
@@ -33,6 +48,7 @@ public class Se3ExponentialTest extends TestCase {
     Chop._12.requireClose(g, exp);
   }
 
+  @Test
   public void testUnits() {
     Tensor input = Tensors.of( //
         Tensors.fromString("{1[m*s^-1], 2[m*s^-1], 3[m*s^-1]}"), //
@@ -50,6 +66,7 @@ public class Se3ExponentialTest extends TestCase {
   // Chop._12.requireClose(input, u_w);
   // }
 
+  @Test
   public void testRandom() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (int index = 0; index < 100; ++index) {
@@ -60,6 +77,7 @@ public class Se3ExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testZero() {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
@@ -70,6 +88,7 @@ public class Se3ExponentialTest extends TestCase {
     Chop._12.requireClose(input, u_w);
   }
 
+  @Test
   public void testAlmostZero() {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
@@ -79,13 +98,14 @@ public class Se3ExponentialTest extends TestCase {
     Chop._12.requireClose(input, u_w);
   }
 
+  @Test
   public void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int n = 1; n < 4; ++n)
       for (int count = 0; count < 10; ++count) {
-        Tensor g = TestHelper.spawn_Se3(); // element
-        Tensor x = TestHelper.spawn_se3(); // vector
+        Tensor g = RandomSample.of(RSI_Se3); // element
+        Tensor x = RandomSample.of(RSI_TSe3); // vector
         LieGroupElement ge = LIE_GROUP.element(g);
         Tensor lhs = ge.combine(LIE_EXPONENTIAL.exp(x)); // g.Exp[x]
         Tensor rhs = LIE_GROUP.element(LIE_EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
@@ -93,13 +113,14 @@ public class Se3ExponentialTest extends TestCase {
       }
   }
 
+  @Test
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     for (int n = 1; n < 4; ++n)
       for (int count = 0; count < 10; ++count) {
-        Tensor g = TestHelper.spawn_Se3(); // element
-        Tensor m = TestHelper.spawn_Se3(); // element
+        Tensor g = RandomSample.of(RSI_Se3); // element
+        Tensor m = RandomSample.of(RSI_Se3); // element
         LieGroupElement ge = LIE_GROUP.element(g);
         Tensor lhs = LIE_EXPONENTIAL.log( //
             LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]

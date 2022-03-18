@@ -15,7 +15,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * @param function non-null
  * @return
  * @throws Exception if either input parameter is null */
-public record BiinvariantMeanExtrapolation(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) implements TensorUnaryOperator {
+public record BiinvariantMeanExtrapolation(BiinvariantMean biinvariantMean, Function<Integer, Tensor> function) //
+    implements TensorUnaryOperator {
   public BiinvariantMeanExtrapolation {
     Objects.requireNonNull(biinvariantMean);
     Objects.requireNonNull(function);

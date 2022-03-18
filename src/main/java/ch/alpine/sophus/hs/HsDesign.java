@@ -13,12 +13,9 @@ import ch.alpine.tensor.Tensor;
  * 
  * "Projection matrix"
  * on Wikipedia, 2020 */
-public final class HsDesign implements Serializable {
-  private final VectorLogManifold vectorLogManifold;
-
-  /** @param vectorLogManifold non-null */
-  public HsDesign(VectorLogManifold vectorLogManifold) {
-    this.vectorLogManifold = Objects.requireNonNull(vectorLogManifold);
+public record HsDesign(VectorLogManifold vectorLogManifold) implements Serializable {
+  public HsDesign {
+    Objects.requireNonNull(vectorLogManifold);
   }
 
   /** @param sequence

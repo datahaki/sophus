@@ -3,6 +3,9 @@ package ch.alpine.sophus.lie;
 
 import java.util.function.BinaryOperator;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMemberQ;
@@ -13,16 +16,15 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3Exponential;
 import ch.alpine.sophus.lie.so3.So3Manifold;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BchBinaryAverageTest extends TestCase {
+public class BchBinaryAverageTest {
+  @Test
   public void testSe2() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.1);
@@ -36,6 +38,7 @@ public class BchBinaryAverageTest extends TestCase {
     Chop._08.requireClose(res, cmp);
   }
 
+  @Test
   public void testSo3() {
     Exponential exponential = So3Exponential.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
@@ -49,8 +52,9 @@ public class BchBinaryAverageTest extends TestCase {
     Chop._08.requireClose(res, cmp);
   }
 
+  @Test
   public void testS2() {
-    // TODO this does not belong here
+    // TODO SOPHUS BCH test seems to be deactivated
     Tensor x = Tensors.vector(0.30, +0.15, 0);
     Tensor y = Tensors.vector(0.05, -0.35, 0);
     Tensor n = UnitVector.of(3, 2);

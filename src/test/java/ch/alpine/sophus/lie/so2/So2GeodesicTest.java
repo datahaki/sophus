@@ -1,6 +1,10 @@
 // code by ob, jph
 package ch.alpine.sophus.lie.so2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So2GeodesicTest extends TestCase {
+public class So2GeodesicTest {
+  @Test
   public void testSimple() {
     Tensor p = So2Exponential.INSTANCE.exp(RealScalar.ONE);
     Tensor q = So2Exponential.INSTANCE.exp(RealScalar.of(2));
@@ -21,6 +25,7 @@ public class So2GeodesicTest extends TestCase {
     ExactScalarQ.require(split);
   }
 
+  @Test
   public void testEndPoints() {
     Distribution distribution = UniformDistribution.unit();
     for (int index = 0; index < 10; ++index) {

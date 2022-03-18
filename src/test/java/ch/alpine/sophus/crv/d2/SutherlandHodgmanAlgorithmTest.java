@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
@@ -16,22 +20,24 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class SutherlandHodgmanAlgorithmTest extends TestCase {
+public class SutherlandHodgmanAlgorithmTest {
   // the examples show that the algo is not symmetric A cap B != B cap A
+  @Test
   public void testSingle() {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(clip).apply(CirclePoints.of(4));
     assertEquals(polyclipResult.tensor(), Tensors.empty());
   }
 
+  @Test
   public void testSingle2() {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(CirclePoints.of(4)).apply(clip);
     assertEquals(polyclipResult.tensor(), clip);
   }
 
+  @Test
   public void testQuantity() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));
@@ -45,10 +51,12 @@ public class SutherlandHodgmanAlgorithmTest extends TestCase {
     }
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> SutherlandHodgmanAlgorithm.of(HilbertMatrix.of(2, 3)));
   }
 
+  @Test
   public void testLine() {
     Tensor tensor = SutherlandHodgmanAlgorithm.intersection( //
         Tensors.vector(1, 0), //
@@ -59,6 +67,7 @@ public class SutherlandHodgmanAlgorithmTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testSingular() {
     AssertFail.of(() -> SutherlandHodgmanAlgorithm.intersection( //
         Tensors.vector(1, 0), //

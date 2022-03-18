@@ -3,9 +3,9 @@ package ch.alpine.sophus.hs.rpn;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.sn.SnAngle;
 import ch.alpine.sophus.hs.sn.TSnMemberQ;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -14,8 +14,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Projection;
-import ch.alpine.tensor.sca.Cos;
-import ch.alpine.tensor.sca.Sinc;
+import ch.alpine.tensor.sca.tri.Cos;
+import ch.alpine.tensor.sca.tri.Sinc;
 
 /** real projective plane */
 public class RpnExponential implements Exponential, Serializable {

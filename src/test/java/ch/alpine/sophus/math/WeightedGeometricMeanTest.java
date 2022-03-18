@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
@@ -8,9 +10,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.GeometricMean;
-import junit.framework.TestCase;
 
-public class WeightedGeometricMeanTest extends TestCase {
+public class WeightedGeometricMeanTest {
+  @Test
   public void testSimple() {
     int n = 5;
     Distribution distribution = UniformDistribution.of(0.4, 10);

@@ -4,13 +4,15 @@ package ch.alpine.sophus.gbc.amp;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class AmplifiersTest extends TestCase {
+public class AmplifiersTest {
+  @Test
   public void testSimple() {
     List<TensorUnaryOperator> list = Arrays.asList( //
         Amplifiers.EXP.supply(3), Amplifiers.EXP.supply(5), //

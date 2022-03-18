@@ -1,8 +1,15 @@
 // code by jph / ob
 package ch.alpine.sophus.lie.so3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.function.BinaryOperator;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,7 +20,6 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -36,9 +42,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
-import junit.framework.TestCase;
 
-public class RodriguesTest extends TestCase {
+public class RodriguesTest {
+  @Test
   public void testConvergenceSo3() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
@@ -57,6 +63,7 @@ public class RodriguesTest extends TestCase {
     Chop._08.requireZero(cmp);
   }
 
+  @Test
   public void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor m1 = Rodrigues.vectorExp(vector);
@@ -65,6 +72,7 @@ public class RodriguesTest extends TestCase {
     Chop._12.requireClose(m1.dot(m2), IdentityMatrix.of(3));
   }
 
+  @Test
   public void testLog() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor matrix = Rodrigues.vectorExp(vector);
@@ -72,6 +80,7 @@ public class RodriguesTest extends TestCase {
     assertEquals(result, vector);
   }
 
+  @Test
   public void testTranspose() {
     Tensor vector = Tensors.vector(Math.random(), Math.random(), -Math.random());
     Tensor m1 = Rodrigues.vectorExp(vector);
@@ -85,6 +94,7 @@ public class RodriguesTest extends TestCase {
     Chop._14.requireClose(e.dot(c), c);
   }
 
+  @Test
   public void testXY() {
     Tensor m22 = RotationMatrix.of(RealScalar.ONE);
     Tensor mat = Rodrigues.vectorExp(Tensors.vector(0, 0, 1));
@@ -94,6 +104,7 @@ public class RodriguesTest extends TestCase {
     assertEquals(blu, m22);
   }
 
+  @Test
   public void testFormula() {
     checkDiff(Tensors.vector(-0.2, 0.1, 0.3));
     checkDiff(Tensors.vector(-0.5, -0.1, 0.03));
@@ -101,6 +112,7 @@ public class RodriguesTest extends TestCase {
     checkDiff(Tensors.vector(-0.3, -0.2, -0.3));
   }
 
+  @Test
   public void testRotZ() {
     Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, 1));
     assertEquals(matrix.get(2, 0), RealScalar.ZERO);
@@ -110,24 +122,28 @@ public class RodriguesTest extends TestCase {
     assertEquals(matrix.get(2, 2), RealScalar.ONE);
   }
 
+  @Test
   public void testPi() {
     Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, Math.PI));
     Tensor expected = DiagonalMatrix.of(-1, -1, 1);
     Chop._14.requireClose(matrix, expected);
   }
 
+  @Test
   public void testTwoPi() {
     Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, 2 * Math.PI));
     Tensor expected = DiagonalMatrix.of(1, 1, 1);
     Chop._14.requireClose(matrix, expected);
   }
 
+  @Test
   public void testLogEye() {
     Tensor matrix = IdentityMatrix.of(3);
     Tensor log = Rodrigues.INSTANCE.log(matrix);
     Chop.NONE.requireAllZero(log);
   }
 
+  @Test
   public void testLog1() {
     Tensor vec = Tensors.vector(.3, .5, -0.4);
     Tensor matrix = Rodrigues.vectorExp(vec);
@@ -137,6 +153,7 @@ public class RodriguesTest extends TestCase {
     Chop._14.requireClose(lom, Cross.skew3(vec));
   }
 
+  @Test
   public void testLogEps() {
     double v = 0.25;
     Tensor log;
@@ -152,6 +169,7 @@ public class RodriguesTest extends TestCase {
     } while (!Chop._20.allZero(log));
   }
 
+  @Test
   public void testLogEps2() {
     double eps = Double.MIN_VALUE; // 4.9e-324
     Tensor vec = Tensors.vector(eps, 0, 0);
@@ -160,6 +178,7 @@ public class RodriguesTest extends TestCase {
     Chop._50.requireAllZero(log);
   }
 
+  @Test
   public void testRodriques() {
     for (int count = 0; count < 20; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3();
@@ -186,6 +205,7 @@ public class RodriguesTest extends TestCase {
     return qrDecomposition;
   }
 
+  @Test
   public void testRandomOrthogonal() {
     for (int count = 0; count < 5; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3();
@@ -196,6 +216,7 @@ public class RodriguesTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandomOrthogonal2() {
     Distribution noise = UniformDistribution.of(-0.03, 0.03);
     for (int count = 0; count < 5; ++count) {
@@ -207,12 +228,14 @@ public class RodriguesTest extends TestCase {
     }
   }
 
+  @Test
   public void testRodriguez() {
     Tensor vector = RandomVariate.of(NormalDistribution.standard(), 3);
     Tensor wedge = Cross.skew3(vector);
     Chop._13.requireClose(MatrixExp.of(wedge), Rodrigues.vectorExp(vector));
   }
 
+  @Test
   public void testRodriques2() {
     for (int c = 0; c < 20; ++c) {
       Tensor matrix = So3TestHelper.spawn_So3();
@@ -220,12 +243,14 @@ public class RodriguesTest extends TestCase {
     }
   }
 
+  @Test
   public void testOrthPassFormatFailEye() {
     Scalar one = RealScalar.ONE;
     Tensor eyestr = Tensors.matrix((i, j) -> i.equals(j) ? one : one.zero(), 3, 4);
     AssertFail.of(() -> Rodrigues.INSTANCE.log(eyestr));
   }
 
+  @Test
   public void testOrthPassFormatFail2() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 5);
     Tensor orthog = Orthogonalize.of(matrix);
@@ -233,6 +258,7 @@ public class RodriguesTest extends TestCase {
     AssertFail.of(() -> Rodrigues.INSTANCE.log(orthog));
   }
 
+  @Test
   public void testOrthogonalize() {
     Tensor matrix = So3TestHelper.spawn_So3();
     Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
@@ -240,17 +266,20 @@ public class RodriguesTest extends TestCase {
     Tolerance.CHOP.requireClose(Orthogonalize.usingPD(matrix), matrix);
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> Rodrigues.INSTANCE.exp(RealScalar.ZERO));
     AssertFail.of(() -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0)));
     AssertFail.of(() -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0)));
   }
 
+  @Test
   public void testLogTrash() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 3);
     AssertFail.of(() -> Rodrigues.INSTANCE.log(matrix));
   }
 
+  @Test
   public void testLogFail() {
     AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3)));
     AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3, 4)));

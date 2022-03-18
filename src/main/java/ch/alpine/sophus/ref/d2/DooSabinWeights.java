@@ -11,7 +11,7 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.sca.Cos;
+import ch.alpine.tensor.sca.tri.Cos;
 
 /* package */ enum DooSabinWeights implements Function<Integer, Tensor> {
   INSTANCE;

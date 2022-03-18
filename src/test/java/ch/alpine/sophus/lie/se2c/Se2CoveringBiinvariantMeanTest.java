@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.LieGroupOps;
@@ -24,9 +28,9 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class Se2CoveringBiinvariantMeanTest extends TestCase {
+public class Se2CoveringBiinvariantMeanTest {
+  @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
@@ -43,6 +47,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testEquation() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
@@ -55,6 +60,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testEquationQuantity() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
@@ -72,6 +78,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testIdentityXY() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(8));
     for (int length = 1; length < 6; ++length) {
@@ -91,6 +98,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandom() {
     Distribution distribution = UniformDistribution.unit();
     LieGroupOps lieGroupOps = new LieGroupOps(Se2CoveringGroup.INSTANCE);
@@ -105,6 +113,7 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testBiinvariantMeanNotTangentSpace() {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor vectors = RandomVariate.of(distribution, 3, 3);
@@ -119,10 +128,12 @@ public class Se2CoveringBiinvariantMeanTest extends TestCase {
     assertFalse(Chop._08.isClose(exp, mean));
   }
 
+  @Test
   public void testEmpty() {
     AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
+  @Test
   public void testNonAffineFail() {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);

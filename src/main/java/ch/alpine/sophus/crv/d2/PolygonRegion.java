@@ -3,7 +3,7 @@ package ch.alpine.sophus.crv.d2;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.Region;
+import ch.alpine.sophus.api.Region;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.ext.Integers;
@@ -24,7 +24,7 @@ public class PolygonRegion implements Region<Tensor>, Serializable {
 
   @Override // from Region
   public boolean test(Tensor tensor) {
-    // TODO design strict: only valid input
+    // TODO SOPHUS ALG design strict: only valid input
     Tensor point = tensor.extract(0, 2);
     return coordinateBoundingBox.isInside(point) //
         && FranklinPnpoly.isInside(polygon, point);

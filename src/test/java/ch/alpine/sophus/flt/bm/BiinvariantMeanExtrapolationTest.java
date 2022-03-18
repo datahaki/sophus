@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.flt.bm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.tensor.ExactTensorQ;
@@ -15,9 +19,9 @@ import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
-import junit.framework.TestCase;
 
-public class BiinvariantMeanExtrapolationTest extends TestCase {
+public class BiinvariantMeanExtrapolationTest {
+  @Test
   public void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
@@ -25,6 +29,7 @@ public class BiinvariantMeanExtrapolationTest extends TestCase {
     assertEquals(tensor, RealScalar.of(3));
   }
 
+  @Test
   public void testSeries() {
     TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);

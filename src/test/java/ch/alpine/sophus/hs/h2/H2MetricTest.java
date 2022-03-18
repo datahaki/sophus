@@ -1,24 +1,29 @@
 // code by ob
 package ch.alpine.sophus.hs.h2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.ArcSinh;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Log;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.exp.Log;
+import ch.alpine.tensor.sca.tri.ArcSinh;
 
-public class H2MetricTest extends TestCase {
+public class H2MetricTest {
+  @Test
   public void testTrivial() {
     Tensor p = Tensors.vector(-Math.random(), Math.random());
     Scalar actual = H2Metric.INSTANCE.distance(p, p);
     assertEquals(RealScalar.ZERO, actual);
   }
 
+  @Test
   public void testYAxis() {
     Tensor p = Tensors.vector(2, 1 + Math.random());
     Tensor q = Tensors.vector(2, 7 + Math.random());
@@ -28,6 +33,7 @@ public class H2MetricTest extends TestCase {
     Chop._12.requireClose(actual, expected);
   }
 
+  @Test
   public void testXAxis() {
     Tensor p = Tensors.vector(1 + Math.random(), 3);
     Tensor q = Tensors.vector(7 + Math.random(), 3);
@@ -38,6 +44,7 @@ public class H2MetricTest extends TestCase {
     Chop._12.requireClose(actual, expected);
   }
 
+  @Test
   public void testNegativeY() {
     Tensor p = Tensors.vector(1, 3);
     Tensor q = Tensors.vector(2, -Math.random());

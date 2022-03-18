@@ -6,7 +6,6 @@ import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
@@ -39,7 +38,8 @@ public enum GbcHelper {
     };
   }
 
-  public static BarycentricCoordinate inversCoordinate_of(Biinvariant biinvariant, VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate inversCoordinate_of( //
+      Biinvariant biinvariant, VectorLogManifold vectorLogManifold) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
@@ -50,7 +50,8 @@ public enum GbcHelper {
     };
   }
 
-  public static BarycentricCoordinate kriginCoordinate_of(Biinvariant biinvariant, VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate kriginCoordinate_of( //
+      Biinvariant biinvariant, VectorLogManifold vectorLogManifold) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
@@ -76,14 +77,14 @@ public enum GbcHelper {
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
+        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
+        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
+        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
+        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
+        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
     };
   }
 
@@ -99,8 +100,8 @@ public enum GbcHelper {
         harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
         LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
         LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
+        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
     };
   }
 

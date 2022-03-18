@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -18,9 +22,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SchildLadderTest extends TestCase {
+public class SchildLadderTest {
+  @Test
   public void testRn() {
     HsTransport hsTransport = SchildLadder.of(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
@@ -31,6 +35,7 @@ public class SchildLadderTest extends TestCase {
     ExactTensorQ.require(u);
   }
 
+  @Test
   public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
@@ -68,6 +73,7 @@ public class SchildLadderTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> SchildLadder.of(null));
   }

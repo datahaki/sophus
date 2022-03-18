@@ -1,7 +1,13 @@
 // code by jph
 package ch.alpine.sophus.math.win;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.function.Function;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.SymmetricVectorQ;
 import ch.alpine.sophus.usr.AssertFail;
@@ -21,15 +27,15 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
-import junit.framework.TestCase;
 
-public class BaseWindowSamplerTest extends TestCase {
+public class BaseWindowSamplerTest {
   private static Tensor constant(int i) {
     int width = 2 * i + 1;
     Scalar weight = RationalScalar.of(1, width);
     return Tensors.vector(k -> weight, width);
   }
 
+  @Test
   public void testConstant() {
     Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(DirichletWindow.FUNCTION);
     for (int radius = 0; radius < 5; ++radius) {
@@ -40,12 +46,14 @@ public class BaseWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testHann() {
     Function<Integer, Tensor> centerWindowSampler = UniformWindowSampler.of(HannWindow.FUNCTION);
     ExactTensorQ.require(centerWindowSampler.apply(1));
     assertEquals(centerWindowSampler.apply(2), Tensors.vector(0.5, 0.5));
   }
 
+  @Test
   public void testAll() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
@@ -60,6 +68,7 @@ public class BaseWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testSymmetric() {
     for (int size = 0; size < 5; ++size) {
       Tensor tensor = RandomVariate.of(NormalDistribution.standard(), 2, 3, 4);
@@ -71,6 +80,7 @@ public class BaseWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testContinuity() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Scalar scalar = smoothingKernel.get().apply(RationalScalar.HALF);
@@ -83,6 +93,7 @@ public class BaseWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testZeroFail() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
@@ -90,6 +101,7 @@ public class BaseWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testAllFail() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> centerWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
@@ -97,6 +109,7 @@ public class BaseWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testAllFailQuantity() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values())
       AssertFail.of(() -> smoothingKernel.get().apply(Quantity.of(1, "s")));

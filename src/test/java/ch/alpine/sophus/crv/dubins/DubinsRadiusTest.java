@@ -1,14 +1,16 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class DubinsRadiusTest extends TestCase {
+public class DubinsRadiusTest {
+  @Test
   public void testSimple() {
     Clip clip = Clips.interval(0.3, 1.3);
     for (DubinsType dubinsType : DubinsType.values()) {
@@ -17,6 +19,7 @@ public class DubinsRadiusTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() {
     Clip clip = Clips.interval( //
         Quantity.of(0.3, "m"), //

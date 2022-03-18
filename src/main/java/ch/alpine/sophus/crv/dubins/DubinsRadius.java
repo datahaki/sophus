@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
-import ch.alpine.sophus.math.ArcTan2D;
+import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -12,10 +12,10 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Cos;
 import ch.alpine.tensor.sca.Mod;
-import ch.alpine.tensor.sca.Sin;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
+import ch.alpine.tensor.sca.tri.Cos;
+import ch.alpine.tensor.sca.tri.Sin;
 
 public enum DubinsRadius {
   ;
@@ -32,7 +32,7 @@ public enum DubinsRadius {
       return type.isFirstEqualsLast() //
           ? getMax2turnsSameSide(hypot, turn1, angle, clip.max()) // .type == LSL || type == RSR
           : getMax2turnsDiffSide(hypot, turn1, angle, clip.max()); // type == LSR || type == RSL
-    return getMaxRadius3turns(hypot, turn1, angle, clip.min());
+    return getMaxRadius3turns(clip.min());
   }
 
   private static Scalar getMax2turnsDiffSide(Scalar hypot, Scalar turn1, Scalar angle, Scalar rMax) {
@@ -57,7 +57,7 @@ public enum DubinsRadius {
         : ds.divide(aux);
   }
 
-  private static Scalar getMaxRadius3turns(Scalar hypot, Scalar turn1, Scalar angle, Scalar rbnd) {
+  private static Scalar getMaxRadius3turns(Scalar rbnd) {
     return rbnd;
   }
 }

@@ -4,6 +4,8 @@ package ch.alpine.sophus.hs.h2;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.fit.SphereFit;
 import ch.alpine.sophus.math.sample.BallRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -18,9 +20,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class H2MidpointTest extends TestCase {
+public class H2MidpointTest {
+  @Test
   public void testSymmetric() {
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(Array.zeros(2), RealScalar.ONE);
     for (int count = 0; count < 10; ++count) {
@@ -30,11 +32,13 @@ public class H2MidpointTest extends TestCase {
     }
   }
 
+  @Test
   public void testLine() {
     Tensor midpoint = H2Midpoint.INSTANCE.midpoint(Tensors.vector(0.5, 0.5), Tensors.vector(0.25, 0.25));
     Chop._12.requireClose(midpoint.Get(0), midpoint.Get(1));
   }
 
+  @Test
   public void testCircle() throws IOException, ClassNotFoundException {
     CurveSubdivision curveSubdivision = //
         Serialization.copy(LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1));

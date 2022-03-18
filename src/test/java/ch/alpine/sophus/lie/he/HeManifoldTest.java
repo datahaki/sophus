@@ -3,6 +3,9 @@ package ch.alpine.sophus.lie.he;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -10,18 +13,19 @@ import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.NormWeighting;
-import ch.alpine.sophus.math.TensorMapping;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.Clips;
 
-public class HeManifoldTest extends TestCase {
+public class HeManifoldTest {
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, new MetricCoordinate( //
       NormWeighting.of( //
@@ -35,48 +39,51 @@ public class HeManifoldTest extends TestCase {
   };
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(HeGroup.INSTANCE);
 
+  @Test
   public void testSimple() {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)
         for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
-          int fn = n;
-          Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
-          Tensor mean1 = TestHelper.spawn_He(n);
+          RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
+          Tensor sequence = RandomSample.of(rsi, length);
+          Tensor mean1 = RandomSample.of(rsi);
           Tensor weights = barycentricCoordinate.weights(sequence, mean1);
           Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._05.requireClose(mean1, mean2);
           // ---
-          Tensor shift = TestHelper.spawn_He(n);
+          Tensor shift = RandomSample.of(rsi);
           for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
             Chop._05.requireClose(weights, //
                 barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
         }
   }
 
+  @Test
   public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
-        int fn = n;
-        Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
-        Tensor mean1 = TestHelper.spawn_He(n);
+        RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
+        Tensor sequence = RandomSample.of(rsi, length);
+        Tensor mean1 = RandomSample.of(rsi);
         Tensor weights = barycentricCoordinate.weights(sequence, mean1);
         Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
         Chop._08.requireClose(mean1, mean2);
         // ---
-        Tensor shift = TestHelper.spawn_He(n);
+        Tensor shift = RandomSample.of(rsi);
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
           Chop._04.requireClose(weights, //
               barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
       }
   }
 
+  @Test
   public void testAffineCenter() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
-        int fn = n;
-        Tensor sequence = Tensors.vector(i -> TestHelper.spawn_He(fn), length);
+        RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
+        Tensor sequence = RandomSample.of(rsi, length);
         Tensor constant = AveragingWeights.of(length);
         Tensor center = HeBiinvariantMean.INSTANCE.mean(sequence, constant);
         Tensor weights = barycentricCoordinate.weights(sequence, center);

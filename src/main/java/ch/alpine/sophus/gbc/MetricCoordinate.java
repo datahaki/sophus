@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
@@ -57,7 +57,7 @@ public record MetricCoordinate(Genesis genesis) implements Genesis, Serializable
   /** @param variogram for example InversePowerVariogram.of(2)
    * @return */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return new MetricCoordinate(InverseDistanceWeighting.of(variogram));
+    return new MetricCoordinate(new InverseDistanceWeighting(variogram));
   }
 
   private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);

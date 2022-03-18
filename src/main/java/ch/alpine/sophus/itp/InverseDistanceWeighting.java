@@ -4,7 +4,7 @@ package ch.alpine.sophus.itp;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -19,30 +19,14 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * <p>Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
-public class InverseDistanceWeighting implements Genesis, Serializable {
+public record InverseDistanceWeighting( //
+    ScalarUnaryOperator variogram, //
+    TensorScalarFunction tensorScalarFunction) implements Genesis, Serializable {
   /** @param variogram
    * @return
    * @see InversePowerVariogram */
-  public static Genesis of(ScalarUnaryOperator variogram) {
-    return of(variogram, Vector2Norm::of);
-  }
-
-  /** @param variogram
-   * @param tensorScalarFunction norm
-   * @return */
-  public static Genesis of(ScalarUnaryOperator variogram, TensorScalarFunction tensorScalarFunction) {
-    return new InverseDistanceWeighting( //
-        Objects.requireNonNull(variogram), //
-        Objects.requireNonNull(tensorScalarFunction));
-  }
-
-  // ---
-  private final ScalarUnaryOperator variogram;
-  private final TensorScalarFunction tensorScalarFunction;
-
-  private InverseDistanceWeighting(ScalarUnaryOperator variogram, TensorScalarFunction tensorScalarFunction) {
-    this.variogram = variogram;
-    this.tensorScalarFunction = tensorScalarFunction;
+  public InverseDistanceWeighting(ScalarUnaryOperator variogram) {
+    this(Objects.requireNonNull(variogram), Vector2Norm::of);
   }
 
   @Override // from Genesis

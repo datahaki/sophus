@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
@@ -16,15 +21,16 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RnGeodesicTest extends TestCase {
+public class RnGeodesicTest {
+  @Test
   public void testSimple() {
     Tensor actual = RnGeodesic.INSTANCE.split(Tensors.vector(10, 1), Tensors.vector(11, 0), RealScalar.of(-1));
     ExactTensorQ.require(actual);
     assertEquals(Tensors.vector(9, 2), actual);
   }
 
+  @Test
   public void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
@@ -35,6 +41,7 @@ public class RnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testDeBoor() {
     Tensor knots = Tensors.vector(1, 2, 3, 4);
     Tensor control = Tensors.vector(9, 3, 4);
@@ -42,6 +49,7 @@ public class RnGeodesicTest extends TestCase {
     AssertFail.of(() -> DeBoor.of(null, knots, control));
   }
 
+  @Test
   public void testSymmetric() {
     int d = 2;
     int n = 5;

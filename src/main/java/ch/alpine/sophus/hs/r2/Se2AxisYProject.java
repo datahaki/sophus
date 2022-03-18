@@ -11,8 +11,8 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityUnit;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.ArcTan;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.tri.ArcTan;
 
 public class Se2AxisYProject implements TensorScalarFunction {
   private static class MapSingular implements TensorScalarFunction {

@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.lie.so3.Rodrigues;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.Serialization;
-import junit.framework.TestCase;
 
-public class Se3CurveDecimationTest extends TestCase {
+public class Se3CurveDecimationTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     CurveDecimation curveDecimation = Serialization.copy(Se3CurveDecimation.of(RealScalar.of(0.3)));
     Tensor p = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.1, -.2, -.3)), Tensors.vector(4, 3, 7));

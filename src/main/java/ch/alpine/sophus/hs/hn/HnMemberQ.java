@@ -1,8 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
-import ch.alpine.sophus.math.MemberQ;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -20,7 +19,7 @@ public enum HnMemberQ implements MemberQ {
   public boolean test(Tensor p) {
     Scalar xn = Last.of(p);
     return Sign.isPositive(xn) //
-        && Chop._08.isClose(ratio(p), RationalScalar.ONE);
+        && Chop._08.isClose(ratio(p), RealScalar.ONE);
   }
 
   public static Scalar ratio(Tensor x) {

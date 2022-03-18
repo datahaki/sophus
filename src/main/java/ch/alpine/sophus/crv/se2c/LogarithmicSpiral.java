@@ -8,8 +8,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.lie.r2.AngleVector;
-import ch.alpine.tensor.sca.ArcTan;
-import ch.alpine.tensor.sca.Exp;
+import ch.alpine.tensor.sca.exp.Exp;
+import ch.alpine.tensor.sca.tri.ArcTan;
 
 /** https://en.wikipedia.org/wiki/Logarithmic_spiral */
 public class LogarithmicSpiral implements ScalarTensorFunction {

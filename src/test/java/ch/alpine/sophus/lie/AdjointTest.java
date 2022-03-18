@@ -1,14 +1,16 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class AdjointTest extends TestCase {
+public class AdjointTest {
+  @Test
   public void testSe2() {
     Se2Group lieGroup = Se2Group.INSTANCE;
     Adjoint adjoint = new Adjoint(lieGroup, IdentityMatrix.of(3));

@@ -4,8 +4,8 @@ package ch.alpine.sophus.decim;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.math.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;

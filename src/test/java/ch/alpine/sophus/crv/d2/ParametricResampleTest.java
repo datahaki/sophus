@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class ParametricResampleTest extends TestCase {
+public class ParametricResampleTest {
+  @Test
   public void testSimple() {
     Scalar threshold = RealScalar.of(33);
     Scalar ds = RealScalar.of(.3);
@@ -35,6 +39,7 @@ public class ParametricResampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testDistances() {
     Scalar threshold = RealScalar.of(33);
     Scalar ds = RealScalar.of(.3);
@@ -49,6 +54,7 @@ public class ParametricResampleTest extends TestCase {
     norm.stream().map(Scalar.class::cast).forEach(clip::requireInside);
   }
 
+  @Test
   public void testMore() {
     Scalar threshold = RealScalar.of(33);
     Scalar ds = RealScalar.of(.3);

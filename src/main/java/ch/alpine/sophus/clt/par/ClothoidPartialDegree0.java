@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.sca.Exp;
+import ch.alpine.tensor.sca.exp.Exp;
 
 /* package */ class ClothoidPartialDegree0 implements ClothoidPartial, Serializable {
   private final Scalar factor;

@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.h2;
 
-import ch.alpine.sophus.math.MidpointInterface;
+import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** Careful: H2Midpoint uses different coordinates than HnGeodesic for n == 2!
  * 

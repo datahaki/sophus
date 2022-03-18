@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BarycentricMetricInterpolationTest extends TestCase {
+public class BarycentricMetricInterpolationTest {
+  @Test
   public void testSimpleBa() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricMetricInterpolation.of(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));
@@ -25,6 +29,7 @@ public class BarycentricMetricInterpolationTest extends TestCase {
     Chop._03.requireClose(w2, UnitVector.of(3, 1));
   }
 
+  @Test
   public void testSimpleLa() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricMetricInterpolation.la(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));

@@ -9,7 +9,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
@@ -19,6 +18,7 @@ import ch.alpine.tensor.lie.r2.SignedCurvature2D;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
+import ch.alpine.tensor.sca.InvertUnlessZero;
 
 /** .
  * G0 - Position, tangent of curve is not continuous, example: polygons
@@ -33,8 +33,6 @@ import ch.alpine.tensor.red.Times;
 public enum CurvatureComb {
   ;
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // TODO probably not a good general choice if units are involved
-  private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param tensor with dimensions n x 2 with points of curve
    * @param scaling
@@ -76,10 +74,18 @@ public enum CurvatureComb {
     return Unprotect.using(list);
   }
 
-  private static Tensor normal(Tensor a, Tensor b, Tensor c, Tensor tangent) {
-    Optional<Scalar> optional = SignedCurvature2D.of(a, b, c);
+  /** all parameters must have the same unit
+   * 
+   * @param p
+   * @param q
+   * @param r
+   * @param tangent typically r - p
+   * @return */
+  @PackageTestAccess
+  static Tensor normal(Tensor p, Tensor q, Tensor r, Tensor tangent) {
+    Optional<Scalar> optional = SignedCurvature2D.of(p, q, r);
     return optional.isPresent() //
         ? NORMALIZE_UNLESS_ZERO.apply(Cross.of(tangent)).multiply(optional.orElseThrow())
-        : ZEROS;
+        : tangent.map(Scalar::zero).map(InvertUnlessZero.FUNCTION);
   }
 }

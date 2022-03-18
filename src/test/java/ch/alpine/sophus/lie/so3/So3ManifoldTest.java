@@ -3,6 +3,9 @@ package ch.alpine.sophus.lie.so3;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -10,7 +13,6 @@ import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.so.SoGroup;
-import ch.alpine.sophus.math.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
@@ -18,13 +20,13 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class So3ManifoldTest extends TestCase {
+public class So3ManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(So3Manifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(SoGroup.INSTANCE);
 
+  @Test
   public void testSimple() {
     Tensor g1 = Rodrigues.vectorExp(Tensors.vector(0.2, 0.3, 0.4));
     Tensor g2 = Rodrigues.vectorExp(Tensors.vector(0.1, 0.0, 0.5));
@@ -39,6 +41,7 @@ public class So3ManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random(4);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
@@ -66,6 +69,7 @@ public class So3ManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testLagrange() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.1);
@@ -83,6 +87,7 @@ public class So3ManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testAffineLinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.3);

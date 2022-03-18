@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
@@ -9,9 +14,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
-import junit.framework.TestCase;
 
-public class THnMemberQTest extends TestCase {
+public class THnMemberQTest {
+  @Test
   public void testProject() throws ClassNotFoundException, IOException {
     Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(NormalDistribution.standard(), 3));
     HnMemberQ.INSTANCE.require(x);
@@ -27,6 +32,7 @@ public class THnMemberQTest extends TestCase {
     Tolerance.CHOP.requireClose(nv, nw);
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new THnMemberQ(null));
   }

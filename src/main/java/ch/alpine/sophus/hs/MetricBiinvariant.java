@@ -4,13 +4,13 @@ package ch.alpine.sophus.hs;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.LagrangeCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.hs.gr.GrExponential;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.spd.SpdExponential;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -33,6 +33,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * 3.7.3 Shepard Interpolation
  * 
  * for alternative implementations
+ * 
  * @see HnMetricBiinvariant */
 public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) implements Biinvariant, Serializable {
   /** Careful: not suitable for {@link SpdExponential}, and {@link GrExponential}
@@ -60,7 +61,7 @@ public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) imple
 
   @Override // from Biinvariant
   public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    Genesis genesis = new MetricCoordinate(InverseDistanceWeighting.of(variogram, tensorScalarFunction));
+    Genesis genesis = new MetricCoordinate(new InverseDistanceWeighting(variogram, tensorScalarFunction));
     return HsGenesis.wrap(vectorLogManifold, genesis, sequence);
   }
 

@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
-import ch.alpine.sophus.fit.RigidMotionFit;
+import ch.alpine.sophus.lie.se.RigidMotionFit;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.sca.ArcTan;
+import ch.alpine.tensor.sca.tri.ArcTan;
 
 public enum Se2RigidMotionFit {
   ;

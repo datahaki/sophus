@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2.Se2Differences;
@@ -23,9 +27,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class LieDifferencesTest extends TestCase {
+public class LieDifferencesTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
@@ -34,6 +38,7 @@ public class LieDifferencesTest extends TestCase {
     assertEquals(lieDifferences.apply(tensor), Differences.of(tensor));
   }
 
+  @Test
   public void testPairFunction() {
     Distribution distribution = UniformDistribution.unit();
     RandomSampleInterface randomSampleInterface = Se2RandomSample.of(distribution);
@@ -47,6 +52,7 @@ public class LieDifferencesTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe3() {
     Distribution distribution = NormalDistribution.of(0, .1);
     Tensor tensor = Tensors.empty();
@@ -57,6 +63,7 @@ public class LieDifferencesTest extends TestCase {
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 2, 3));
   }
 
+  @Test
   public void testLieGroupNullFail() {
     AssertFail.of(() -> new LieDifferences(null));
   }

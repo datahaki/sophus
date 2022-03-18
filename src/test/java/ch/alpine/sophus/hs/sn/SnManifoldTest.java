@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.sn;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
@@ -18,9 +20,8 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnManifoldTest extends TestCase {
+public class SnManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(SnManifold.INSTANCE);
 
@@ -29,6 +30,7 @@ public class SnManifoldTest extends TestCase {
     return Tensor.of(RandomVariate.of(distribution, random, n, mean.length()).stream().map(mean::add).map(Vector2Norm.NORMALIZE));
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
@@ -45,6 +47,7 @@ public class SnManifoldTest extends TestCase {
       }
   }
 
+  @Test
   public void testLagrangeProperty() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
@@ -63,6 +66,7 @@ public class SnManifoldTest extends TestCase {
       }
   }
 
+  @Test
   public void testBiinvariance() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)

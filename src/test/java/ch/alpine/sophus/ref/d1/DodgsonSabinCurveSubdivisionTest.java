@@ -1,16 +1,20 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class DodgsonSabinCurveSubdivisionTest extends TestCase {
+public class DodgsonSabinCurveSubdivisionTest {
+  @Test
   public void testThree() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2.2, 0.5);
@@ -23,6 +27,7 @@ public class DodgsonSabinCurveSubdivisionTest extends TestCase {
     assertEquals(string.get(4), c);
   }
 
+  @Test
   public void testFour() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2.2, 0.5);
@@ -39,6 +44,7 @@ public class DodgsonSabinCurveSubdivisionTest extends TestCase {
         Tensors.fromString("{2.64619661516195, 0.8388990046231528}"));
   }
 
+  @Test
   public void testCyclic() {
     for (int n = 3; n < 10; ++n)
       Chop._13.requireClose( //

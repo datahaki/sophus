@@ -1,9 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -16,7 +21,8 @@ import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.NormWeighting;
-import ch.alpine.sophus.math.TensorMapping;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -40,10 +46,10 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Unitize;
-import junit.framework.TestCase;
 
-public class Se2CoveringManifoldTest extends TestCase {
+public class Se2CoveringManifoldTest {
   private static final BarycentricCoordinate[] ALL_COORDINATES = //
       GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
@@ -55,7 +61,10 @@ public class Se2CoveringManifoldTest extends TestCase {
       Se2CoveringManifold.INSTANCE, //
       new MetricCoordinate( //
           NormWeighting.of(new Se2CoveringTarget(Vector2NormSquared::of, RealScalar.ONE), InversePowerVariogram.of(1))));
+  private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
+      Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
+  @Test
   public void test4Exact() {
     Distribution distribution = UniformDistribution.unit();
     final int n = 4;
@@ -72,6 +81,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -88,6 +98,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandom() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -104,7 +115,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       Chop._06.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(xya, x_recreated);
-      Tensor shift = TestHelper.spawn_Se2C();
+      Tensor shift = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
       for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
         Tensor all = tensorMapping.slash(points);
         Tensor one = tensorMapping.apply(xya);
@@ -114,11 +125,13 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
       AssertFail.of(() -> barycentricCoordinate.weights(null, null));
   }
 
+  @Test
   public void testLagrange() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -140,6 +153,7 @@ public class Se2CoveringManifoldTest extends TestCase {
         xya.Get(2));
   }
 
+  @Test
   public void testQuantity() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -157,6 +171,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testProjection() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -178,7 +193,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(xya, x_recreated);
-      Tensor shift = TestHelper.spawn_Se2C();
+      Tensor shift = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
       for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
         Tensor all = tensorMapping.slash(points);
         Tensor one = tensorMapping.apply(xya);
@@ -190,6 +205,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testProjectionIntoAdInvariant() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -227,6 +243,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       // LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2)), //
       AD_INVAR };
 
+  @Test
   public void testA4Exact() {
     // Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
@@ -243,6 +260,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testALinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
@@ -259,6 +277,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testARandom() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
@@ -275,7 +294,7 @@ public class Se2CoveringManifoldTest extends TestCase {
       Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor x_recreated = biinvariantMean.mean(points, weights);
       Chop._06.requireClose(xya, x_recreated);
-      Tensor shift = TestHelper.spawn_Se2C();
+      Tensor shift = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
       for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
         Tensor all = tensorMapping.slash(points);
         Tensor one = tensorMapping.apply(xya);
@@ -285,6 +304,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testDiagonalNorm() {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor _beta : betas) {
@@ -292,8 +312,8 @@ public class Se2CoveringManifoldTest extends TestCase {
       // BarycentricCoordinate bc0 = LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       BarycentricCoordinate bc1 = LeveragesCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
-        Tensor sequence = Tensors.vector(i -> TestHelper.spawn_Se2C(), n);
-        Tensor mean = TestHelper.spawn_Se2C();
+        Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
+        Tensor mean = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
         // Tensor w0 = bc0.weights(sequence, mean);
         // Tensor w1 =
         bc1.weights(sequence, mean);
@@ -302,6 +322,7 @@ public class Se2CoveringManifoldTest extends TestCase {
     }
   }
 
+  @Test
   public void testANullFail() {
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
       AssertFail.of(() -> barycentricCoordinate.weights(null, null));

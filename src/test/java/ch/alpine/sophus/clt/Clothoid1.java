@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
-import ch.alpine.sophus.math.Geodesic;
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

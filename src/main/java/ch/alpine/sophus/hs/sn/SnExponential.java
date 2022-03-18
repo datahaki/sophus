@@ -3,15 +3,15 @@ package ch.alpine.sophus.hs.sn;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Projection;
-import ch.alpine.tensor.sca.Cos;
-import ch.alpine.tensor.sca.Sinc;
+import ch.alpine.tensor.sca.tri.Cos;
+import ch.alpine.tensor.sca.tri.Sinc;
 
 /** Exponential map of S^n manifold at given point
  * 
@@ -71,7 +71,7 @@ public class SnExponential implements Exponential, Serializable {
   }
 
   public Tensor endomorphism(Tensor q) {
-    return SnManifold.INSTANCE.endomorphism(p, q);
+    return SnRotationMatrix.of(p, q);
   }
 
   @Override // from TangentSpace

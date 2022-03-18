@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

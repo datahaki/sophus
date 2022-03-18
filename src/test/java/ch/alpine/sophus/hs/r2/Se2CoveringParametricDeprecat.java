@@ -1,14 +1,14 @@
 // code by ob
 package ch.alpine.sophus.hs.r2;
 
-import ch.alpine.sophus.math.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.Sin;
+import ch.alpine.tensor.sca.tri.Sin;
 
 /** @see Se2Parametric */
 /* package */ enum Se2CoveringParametricDeprecat implements TensorMetric {

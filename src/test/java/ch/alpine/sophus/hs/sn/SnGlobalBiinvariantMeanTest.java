@@ -1,15 +1,17 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class SnGlobalBiinvariantMeanTest extends TestCase {
+public class SnGlobalBiinvariantMeanTest {
+  @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int dim = 2; dim < 5; ++dim)

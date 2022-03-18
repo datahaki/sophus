@@ -1,21 +1,24 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Tolerance;
-import junit.framework.TestCase;
 
-public class SnTransportTest extends TestCase {
+public class SnTransportTest {
+  @Test
   public void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = SnTransport.INSTANCE.shift(UnitVector.of(3, 0), UnitVector.of(3, 1));
     Tolerance.CHOP.requireClose(tensorUnaryOperator.apply(UnitVector.of(3, 1)), UnitVector.of(3, 0).negate());
     Tolerance.CHOP.requireClose(tensorUnaryOperator.apply(UnitVector.of(3, 2)), UnitVector.of(3, 2));
   }
 
+  @Test
   public void testFlip() {
     Tensor p = RandomSample.of(SnRandomSample.of(3));
     Tensor q = RandomSample.of(SnRandomSample.of(3));
@@ -25,6 +28,7 @@ public class SnTransportTest extends TestCase {
     Tolerance.CHOP.requireClose(f1, f2);
   }
 
+  @Test
   public void testTangentFail() {
     TensorUnaryOperator tensorUnaryOperator = SnTransport.INSTANCE.shift(UnitVector.of(3, 0), UnitVector.of(3, 1));
     AssertFail.of(() -> tensorUnaryOperator.apply(UnitVector.of(3, 0)));

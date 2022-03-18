@@ -1,8 +1,13 @@
 // code by jph
 package ch.alpine.sophus.fit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
@@ -17,11 +22,11 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class WeiszfeldMethodTest extends TestCase {
+public class WeiszfeldMethodTest {
   public static final SpatialMedian DEFAULT = new WeiszfeldMethod(Tolerance.CHOP);
 
+  @Test
   public void testSimple() {
     Tensor tensor = Tensors.of( //
         Tensors.vector(-1, 0), //
@@ -32,6 +37,7 @@ public class WeiszfeldMethodTest extends TestCase {
     assertEquals(sol, Tensors.vector(0, 0));
   }
 
+  @Test
   public void testMathematica() {
     Tensor points = Tensors.fromString("{{1, 3, 5}, {7, 1, 2}, {9, 3, 1}, {4, 5, 6}}");
     Tensor solution = Tensors.vector(5.6583732018553249826, 2.7448562522811917613, 3.2509991568890024191);
@@ -39,6 +45,7 @@ public class WeiszfeldMethodTest extends TestCase {
     Chop._08.requireClose(uniform.get(), solution);
   }
 
+  @Test
   public void testMathematicaWeighted() {
     Tensor points = Tensors.fromString("{{1, 3, 5}, {-4, 1, 2}, {3, 3, 1}, {4, 5, 6}}");
     Tensor weights = Tensors.vector(1, 3, 4, 5);
@@ -49,6 +56,7 @@ public class WeiszfeldMethodTest extends TestCase {
     assertTrue(optional.isPresent());
   }
 
+  @Test
   public void testPoles() throws ClassNotFoundException, IOException {
     Tensor tensor = Tensors.of( //
         Tensors.vector(-1, 0), //
@@ -61,6 +69,7 @@ public class WeiszfeldMethodTest extends TestCase {
     assertTrue(Vector2Norm.between(sol, tensor.get(1)).number().doubleValue() < 2e-2);
   }
 
+  @Test
   public void testWeighted() {
     Tensor tensor = Tensors.of( //
         Tensors.vector(-1, 0), //
@@ -74,6 +83,7 @@ public class WeiszfeldMethodTest extends TestCase {
     assertTrue(Vector2Norm.between(sol, tensor.get(0)).number().doubleValue() < 2e-2);
   }
 
+  @Test
   public void testQuantity() {
     int present = 0;
     for (int count = 0; count < 10; ++count) {
@@ -91,6 +101,7 @@ public class WeiszfeldMethodTest extends TestCase {
     assertTrue(5 < present);
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new WeiszfeldMethod(null));
   }

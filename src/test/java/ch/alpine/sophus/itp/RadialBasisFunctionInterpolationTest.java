@@ -4,12 +4,14 @@ package ch.alpine.sophus.itp;
 import java.io.IOException;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.PowerVariogram;
-import ch.alpine.sophus.math.var.Variograms;
+import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -21,20 +23,21 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RadialBasisFunctionInterpolationTest extends TestCase {
+public class RadialBasisFunctionInterpolationTest {
   public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, random, n, 3);
     Tensor values = RandomVariate.of(distribution, random, n, 2);
-    Variograms[] vars = { Variograms.POWER, Variograms.INVERSE_POWER, Variograms.GAUSSIAN, Variograms.INVERSE_MULTIQUADRIC };
+    VariogramFunctions[] vars = { VariogramFunctions.POWER, VariogramFunctions.INVERSE_POWER, VariogramFunctions.GAUSSIAN,
+        VariogramFunctions.INVERSE_MULTIQUADRIC };
     for (Biinvariant biinvariant : PDA)
-      for (Variograms variograms : vars) {
+      for (VariogramFunctions variograms : vars) {
         TensorUnaryOperator weightingInterface = biinvariant.weighting(RnManifold.INSTANCE, variograms.of(RealScalar.TWO), sequence);
         TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
             RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values));
@@ -44,6 +47,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
       }
   }
 
+  @Test
   public void testNormalized() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -61,6 +65,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     }
   }
 
+  @Test
   public void testBarycentric() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -79,6 +84,7 @@ public class RadialBasisFunctionInterpolationTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> RadialBasisFunctionInterpolation.of(null, Tensors.empty(), Tensors.empty()));
   }

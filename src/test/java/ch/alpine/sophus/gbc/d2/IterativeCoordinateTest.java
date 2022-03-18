@@ -1,8 +1,14 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -15,7 +21,6 @@ import ch.alpine.sophus.hs.s2.S2Manifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnExponential;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -31,9 +36,8 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
-import junit.framework.TestCase;
 
-public class IterativeCoordinateTest extends TestCase {
+public class IterativeCoordinateTest {
   private static void _checkIterative(Genesis genesis) {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     for (int n = 3; n < 10; ++n) {
@@ -83,6 +87,7 @@ public class IterativeCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testMV() {
     Genesis genesis = ThreePointCoordinate.of(Barycenter.MEAN_VALUE);
     _checkIterative(genesis);
@@ -90,6 +95,7 @@ public class IterativeCoordinateTest extends TestCase {
     _checkAlongedge(genesis, false);
   }
 
+  @Test
   public void testID() {
     Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
     _checkIterative(genesis);
@@ -97,12 +103,14 @@ public class IterativeCoordinateTest extends TestCase {
     _checkAlongedge(genesis, true);
   }
 
+  @Test
   public void testIC() {
     Genesis genesis = new IterativeCoordinate(MetricCoordinate.affine(), 3);
     _checkCornering(genesis);
     _checkAlongedge(genesis, false);
   }
 
+  @Test
   public void testKis0() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     for (int n = 3; n < 10; ++n) {
@@ -123,6 +131,7 @@ public class IterativeCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testBiinv() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
@@ -140,6 +149,7 @@ public class IterativeCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple123() {
     Genesis genesis = MetricCoordinate.affine();
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
@@ -161,6 +171,7 @@ public class IterativeCoordinateTest extends TestCase {
       new LeveragesGenesis(InversePowerVariogram.of(2)), //
   };
 
+  @Test
   public void testS2() {
     Random random = new Random(2);
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);

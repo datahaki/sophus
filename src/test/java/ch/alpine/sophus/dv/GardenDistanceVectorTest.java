@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -21,9 +25,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class GardenDistanceVectorTest extends TestCase {
+public class GardenDistanceVectorTest {
+  @Test
   public void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
@@ -35,6 +39,7 @@ public class GardenDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSn1() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
@@ -46,6 +51,7 @@ public class GardenDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
@@ -57,6 +63,7 @@ public class GardenDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testEmpty() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.empty());
@@ -64,6 +71,7 @@ public class GardenDistanceVectorTest extends TestCase {
     assertEquals(result, Tensors.empty());
   }
 
+  @Test
   public void testSingleton() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.fromString("{{2,3,4}}"));
@@ -71,6 +79,7 @@ public class GardenDistanceVectorTest extends TestCase {
     assertEquals(result, Tensors.vector(0));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> GardenDistanceVector.of(null, Tensors.empty()));
   }

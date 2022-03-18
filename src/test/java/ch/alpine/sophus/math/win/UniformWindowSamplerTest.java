@@ -1,21 +1,29 @@
 // code by jph
 package ch.alpine.sophus.math.win;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.function.Function;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.SymmetricVectorQ;
 import ch.alpine.sophus.usr.AssertFail;
+import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
-import junit.framework.TestCase;
 
-public class UniformWindowSamplerTest extends TestCase {
+public class UniformWindowSamplerTest {
+  @Test
   public void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel.get());
@@ -28,6 +36,7 @@ public class UniformWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
   public void testGaussian() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(GaussianWindow.FUNCTION);
     Tensor apply = function.apply(5);
@@ -39,6 +48,7 @@ public class UniformWindowSamplerTest extends TestCase {
         0.08562916395501292));
   }
 
+  @Test
   public void testMemoUnmodifiable() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel.get());
@@ -51,11 +61,21 @@ public class UniformWindowSamplerTest extends TestCase {
     }
   }
 
+  @Test
+  public void testDirichlet() {
+    Function<Integer, Tensor> function = UniformWindowSampler.of(DirichletWindow.FUNCTION);
+    Tensor MIDPOINT = Tensors.of(RationalScalar.HALF, RationalScalar.HALF);
+    assertEquals(function.apply(2), MIDPOINT);
+    ExactTensorQ.require(function.apply(2));
+  }
+
+  @Test
   public void testZeroFail() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(HannWindow.FUNCTION);
     AssertFail.of(() -> function.apply(0));
   }
 
+  @Test
   public void testFailNull() {
     AssertFail.of(() -> UniformWindowSampler.of(null));
   }

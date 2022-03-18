@@ -45,7 +45,7 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
     if (length == 0)
       return PolyclipResult.EMPTY;
     Tensor tensor = subject;
-    // TODO probably not a good general choice if units are involved
+    // TODO SOPHUS UNIT probably not a good general choice if units are involved
     Tensor belong = Array.zeros(subject.length());
     for (int i = 0; i < length; ++i) {
       Tensor a = vertex[Math.floorMod(i - 1, length)];
@@ -66,11 +66,11 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
             tensor.append(q);
             belonh.append(belong.get(j));
           }
-        } else //
-        if (isInside(a, b, p)) {
-          tensor.append(intersection(a, b, p, q));
-          belonh.append(RealScalar.ONE);
-        }
+        } else
+          if (isInside(a, b, p)) {
+            tensor.append(intersection(a, b, p, q));
+            belonh.append(RealScalar.ONE);
+          }
       }
       belong = belonh;
     }

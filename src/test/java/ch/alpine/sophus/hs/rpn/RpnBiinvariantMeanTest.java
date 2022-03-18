@@ -3,12 +3,14 @@ package ch.alpine.sophus.hs.rpn;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
+import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.AngleVector;
@@ -21,11 +23,11 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RpnBiinvariantMeanTest extends TestCase {
+public class RpnBiinvariantMeanTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
 
+  @Test
   public void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
@@ -43,6 +45,7 @@ public class RpnBiinvariantMeanTest extends TestCase {
       }
   }
 
+  @Test
   public void testRp1Linear() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(0, Math.PI / 4);

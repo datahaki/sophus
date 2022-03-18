@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.math.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.mat.ex.MatrixExp;

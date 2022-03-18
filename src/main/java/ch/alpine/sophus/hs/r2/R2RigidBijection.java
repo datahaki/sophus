@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
-import ch.alpine.sophus.math.Bijection;
+import ch.alpine.sophus.api.Bijection;
 import ch.alpine.tensor.Tensor;
 
 /** every rigid transformation is a bijective mapping */

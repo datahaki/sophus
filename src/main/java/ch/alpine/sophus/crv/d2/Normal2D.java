@@ -5,6 +5,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -12,7 +13,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 public enum Normal2D {
   ;
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  // TODO probably not a good general choice if units are involved
+  /** generic since normals are unitless */
   private static final Tensor ZEROS = Array.zeros(2);
 
   /** @param points of the form {{p1x, p1y}, {p2x, p2y}, ..., {pNx, pNy}}
@@ -24,9 +25,11 @@ public enum Normal2D {
       Tensor a = points.get(0);
       Tensor b = points.get(1);
       normal.append(process(b.subtract(a)));
-    } else //
-    if (0 < length)
-      normal.append(ZEROS);
+    } else
+      if (0 < length) {
+        Integers.requireEquals(points.get(0).length(), 2);
+        normal.append(ZEROS);
+      }
     for (int index = 1; index < length - 1; ++index) {
       Tensor a = points.get(index - 1);
       Tensor c = points.get(index + 1);
@@ -36,9 +39,9 @@ public enum Normal2D {
       Tensor b = points.get(length - 2);
       Tensor c = points.get(length - 1);
       normal.append(process(c.subtract(b)));
-    } else //
-    if (1 < length)
-      normal.append(ZEROS);
+    } else
+      if (1 < length)
+        normal.append(ZEROS);
     return normal;
   }
 

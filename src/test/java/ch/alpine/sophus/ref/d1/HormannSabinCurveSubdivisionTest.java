@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.ExactTensorQ;
@@ -14,9 +18,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
-import junit.framework.TestCase;
 
-public class HormannSabinCurveSubdivisionTest extends TestCase {
+public class HormannSabinCurveSubdivisionTest {
+  @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
@@ -31,18 +35,21 @@ public class HormannSabinCurveSubdivisionTest extends TestCase {
     assertEquals(weights.dot(Tensors.of(r, q, p)), actual.get(1));
   }
 
+  @Test
   public void testDefault() {
     CurveSubdivision cs0 = HormannSabinCurveSubdivision.of(RnGeodesic.INSTANCE);
     CurveSubdivision cs1 = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE);
     assertEquals(cs0.string(UnitVector.of(10, 5)), cs1.string(UnitVector.of(10, 5)));
   }
 
+  @Test
   public void testSplit2Hi() {
     CurveSubdivision cs0 = HormannSabinCurveSubdivision.of(RnGeodesic.INSTANCE);
     CurveSubdivision cs1 = HormannSabinCurveSubdivision.split2(RnGeodesic.INSTANCE);
     assertEquals(cs0.string(UnitVector.of(10, 5)), cs1.string(UnitVector.of(10, 5)));
   }
 
+  @Test
   public void testString() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE);
     Tensor vector = Tensors.vector(0, 1, 2, 3);
@@ -51,6 +58,7 @@ public class HormannSabinCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testStringTwo() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE);
     Tensor vector = Tensors.vector(0, 1);
@@ -59,6 +67,7 @@ public class HormannSabinCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testStringOne() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE);
     Tensor vector = Tensors.vector(3);
@@ -67,6 +76,7 @@ public class HormannSabinCurveSubdivisionTest extends TestCase {
     ExactTensorQ.require(string);
   }
 
+  @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);

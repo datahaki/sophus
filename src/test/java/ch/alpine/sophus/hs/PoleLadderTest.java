@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -16,9 +20,9 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class PoleLadderTest extends TestCase {
+public class PoleLadderTest {
+  @Test
   public void testRn() {
     HsTransport hsTransport = new PoleLadder(RnManifold.INSTANCE);
     TensorUnaryOperator shift = //
@@ -29,6 +33,7 @@ public class PoleLadderTest extends TestCase {
     ExactTensorQ.require(u);
   }
 
+  @Test
   public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
@@ -64,6 +69,7 @@ public class PoleLadderTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new PoleLadder(null));
   }

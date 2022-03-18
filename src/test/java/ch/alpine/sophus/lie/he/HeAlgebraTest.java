@@ -3,24 +3,26 @@ package ch.alpine.sophus.lie.he;
 
 import java.util.function.BinaryOperator;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class HeAlgebraTest extends TestCase {
+public class HeAlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
+  @Test
   public void testHeH() {
     for (int n = 1; n <= 3; ++n) {
       LieAlgebra lieAlgebra = new HeAlgebra(n);
@@ -36,6 +38,7 @@ public class HeAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testHe() {
     for (int n = 1; n <= 3; ++n) {
       LieAlgebra lieAlgebra = new HeAlgebra(n);
@@ -52,6 +55,7 @@ public class HeAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testHeOnRn() {
     for (int n = 1; n <= 3; ++n) {
       LieAlgebra lieAlgebra = new HeAlgebra(n);
@@ -69,6 +73,7 @@ public class HeAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testZeroFail() {
     AssertFail.of(() -> new HeAlgebra(0));
   }

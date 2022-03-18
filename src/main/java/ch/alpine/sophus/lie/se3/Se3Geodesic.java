@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.gl.GlGroup;
-import ch.alpine.sophus.math.Geodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;

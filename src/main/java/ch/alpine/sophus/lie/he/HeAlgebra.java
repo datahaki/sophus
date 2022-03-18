@@ -5,12 +5,12 @@ import java.io.Serializable;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
+import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.lie.ad.BakerCampbellHausdorff;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 
 public class HeAlgebra implements LieAlgebra, Serializable {
   private final int n;

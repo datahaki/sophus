@@ -1,23 +1,27 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.lie.ad.MatrixAlgebra;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.Normal;
-import junit.framework.TestCase;
 
-public class Se2AlgebraTest extends TestCase {
+public class Se2AlgebraTest {
+  @Test
   public void testFromMatrices() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
     Tensor ad = Se2Algebra.INSTANCE.ad();
@@ -26,6 +30,7 @@ public class Se2AlgebraTest extends TestCase {
     assertEquals(ad, Se2Algebra.INSTANCE.ad());
   }
 
+  @Test
   public void testSimple() {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}");
@@ -33,6 +38,7 @@ public class Se2AlgebraTest extends TestCase {
     assertEquals(Se2Algebra.INSTANCE.ad(), ad);
   }
 
+  @Test
   public void testSe2ExpExpLog() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
@@ -45,6 +51,7 @@ public class Se2AlgebraTest extends TestCase {
     Chop._06.requireClose(z, res);
   }
 
+  @Test
   public void testSe2Log() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
@@ -56,6 +63,7 @@ public class Se2AlgebraTest extends TestCase {
     // System.out.println(Pretty.of(log.map(Round._4)));
   }
 
+  @Test
   public void testHsFails() {
     AssertFail.of(() -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }

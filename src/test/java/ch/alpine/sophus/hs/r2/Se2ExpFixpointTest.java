@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.tensor.Scalar;
@@ -10,9 +14,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2ExpFixpointTest extends TestCase {
+public class Se2ExpFixpointTest {
+  @Test
   public void testSimple() {
     Tensor velocity = Tensors.fromString("{3[m*s^-1], .2[m*s^-1], 0.3[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
@@ -22,6 +26,7 @@ public class Se2ExpFixpointTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple2() {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0.3[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
@@ -31,12 +36,14 @@ public class Se2ExpFixpointTest extends TestCase {
     }
   }
 
+  @Test
   public void testEmpty() {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
     assertFalse(optional.isPresent());
   }
 
+  @Test
   public void testEmptyChop() {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0.00003[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity, Chop._03);

@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -8,9 +12,9 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
-import junit.framework.TestCase;
 
-public class HeBarycenterTest extends TestCase {
+public class HeBarycenterTest {
+  @Test
   public void test3dim() {
     Tensor p = Tensors.fromString("{{1}, {4}, 5}");
     Tensor q = Tensors.fromString("{{-3}, {6}, -9}");
@@ -23,6 +27,7 @@ public class HeBarycenterTest extends TestCase {
     assertEquals(heBarycenter.apply(s), UnitVector.of(4, 3));
   }
 
+  @Test
   public void test5dim() {
     Distribution distribution = DiscreteUniformDistribution.of(-20000, 20000);
     Tensor sequence = Tensors.vector(l -> Tensors.of(RandomVariate.of(distribution, 2), RandomVariate.of(distribution, 2), RandomVariate.of(distribution)), 6);

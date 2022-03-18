@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.r2;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
@@ -15,9 +17,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2RigidMotionFitTest extends TestCase {
+public class Se2RigidMotionFitTest {
+  @Test
   public void testExact() {
     Distribution distribution = NormalDistribution.standard();
     Scalar angle = RealScalar.of(2);
@@ -31,6 +33,7 @@ public class Se2RigidMotionFitTest extends TestCase {
     }
   }
 
+  @Test
   public void testExact2() {
     Random random = new Random(7);
     Distribution distribution = NormalDistribution.standard();
@@ -46,6 +49,7 @@ public class Se2RigidMotionFitTest extends TestCase {
     }
   }
 
+  @Test
   public void testWeights() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 10, 3);
@@ -55,6 +59,7 @@ public class Se2RigidMotionFitTest extends TestCase {
     AssertFail.of(() -> Se2RigidMotionFit.of(target, points, weights));
   }
 
+  @Test
   public void testEmptyFail() {
     AssertFail.of(() -> Se2RigidMotionFit.of(Tensors.empty(), Tensors.empty()));
     AssertFail.of(() -> Se2RigidMotionFit.of(Tensors.empty(), Tensors.empty(), Tensors.empty()));

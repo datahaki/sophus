@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import ch.alpine.sophus.math.TensorIteration;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -17,9 +21,9 @@ import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class RnHermite3SubdivisionTest extends TestCase {
+public class RnHermite3SubdivisionTest {
+  @Test
   public void testString() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration = RnHermite3Subdivisions.standard().string(RealScalar.ONE, control);
@@ -28,6 +32,7 @@ public class RnHermite3SubdivisionTest extends TestCase {
     assertEquals(tensor.length(), 7);
   }
 
+  @Test
   public void testStringReverse() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
@@ -42,6 +47,7 @@ public class RnHermite3SubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testCyclic() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration = RnHermite3Subdivisions.standard().cyclic(RealScalar.ONE, control);
@@ -50,6 +56,7 @@ public class RnHermite3SubdivisionTest extends TestCase {
     assertEquals(tensor.length(), 8);
   }
 
+  @Test
   public void testPolynomialReproduction() {
     TestHelper.checkP(3, RnHermite3Subdivisions.standard());
     HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of( //
@@ -58,6 +65,7 @@ public class RnHermite3SubdivisionTest extends TestCase {
     TestHelper.checkP(3, hermiteSubdivision);
   }
 
+  @Test
   public void testPolynomialReproductionMore() {
     HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of( //
         RationalScalar.of(+3, 157), //
@@ -81,6 +89,7 @@ public class RnHermite3SubdivisionTest extends TestCase {
     Chop.NONE.requireAllZero(id4);
   }
 
+  @Test
   public void testMatrices() {
     Tensor ARP = Tensors.fromString("{{1/128, +1/256}, {-3/32, -1/32}}");
     Tensor ARQ = Tensors.fromString("{{63/64, 0}, {0, 3/8}}");
@@ -91,6 +100,7 @@ public class RnHermite3SubdivisionTest extends TestCase {
     assertEquals(ARR, ExactTensorQ.require(rnHermite3Subdivision.ARR));
   }
 
+  @Test
   public void testSpecialCase() {
     RnHermite3Subdivision rnHermite3Subdivision = //
         RnHermite3Subdivisions.of(RealScalar.ZERO, RealScalar.ZERO);

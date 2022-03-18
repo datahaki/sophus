@@ -1,8 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.ad;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnExponential;
@@ -13,7 +18,6 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
-import ch.alpine.sophus.math.Exponential;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -25,9 +29,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HsBiinvariantMeanTest extends TestCase {
+public class HsBiinvariantMeanTest {
+  @Test
   public void testMean() {
     Distribution distributionX = UniformDistribution.of(-0.05, 0.05);
     Distribution distributionW = UniformDistribution.of(0.2, 1);
@@ -48,6 +52,7 @@ public class HsBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2Mean4() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
@@ -66,6 +71,7 @@ public class HsBiinvariantMeanTest extends TestCase {
     Tolerance.CHOP.requireClose(mean, meanb);
   }
 
+  @Test
   public void testSe2MeanRandom() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
@@ -85,6 +91,7 @@ public class HsBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testSo3Mean4() {
     Exponential exponential = So3Exponential.INSTANCE;
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
@@ -103,6 +110,7 @@ public class HsBiinvariantMeanTest extends TestCase {
     Chop._10.requireClose(mean, meanb);
   }
 
+  @Test
   public void testSo3MeanRandom() {
     Exponential exponential = So3Exponential.INSTANCE;
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
@@ -122,6 +130,7 @@ public class HsBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> HsBiinvariantMean.of(null));
     AssertFail.of(() -> HsBiinvariantMean.of(null, Chop._10));

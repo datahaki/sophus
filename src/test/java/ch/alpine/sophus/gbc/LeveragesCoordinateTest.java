@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.VectorLogManifold;
@@ -20,9 +22,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class LeveragesCoordinateTest extends TestCase {
+public class LeveragesCoordinateTest {
+  @Test
   public void testR1equiv() {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.
@@ -38,6 +40,7 @@ public class LeveragesCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testDiagonalNorm() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
@@ -56,6 +59,7 @@ public class LeveragesCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.lie.so.SoRandomSample;
@@ -19,9 +21,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrBiinvariantMeanTest extends TestCase {
+public class GrBiinvariantMeanTest {
+  @Test
   public void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
@@ -49,6 +51,7 @@ public class GrBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testGeodesic() {
     HsGeodesic hsGeodesic = new HsGeodesic(GrManifold.INSTANCE);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional

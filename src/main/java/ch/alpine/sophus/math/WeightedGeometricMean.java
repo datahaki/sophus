@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.red.Times;
-import ch.alpine.tensor.sca.Power;
+import ch.alpine.tensor.sca.pow.Power;
 
 public enum WeightedGeometricMean implements BiinvariantMean {
   INSTANCE;

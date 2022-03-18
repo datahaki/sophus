@@ -1,6 +1,12 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -10,14 +16,15 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class DubinsPathComparatorsTest extends TestCase {
+public class DubinsPathComparatorsTest {
+  @Test
   public void testSimple() {
     assertNotNull(DubinsPathComparators.LENGTH);
     assertNotNull(DubinsPathComparators.TOTAL_CURVATURE);
   }
 
+  @Test
   public void testValid() {
     Distribution distribution = UniformDistribution.of(-3, 3);
     Tensor start = RandomVariate.of(distribution, 3);

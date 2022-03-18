@@ -1,10 +1,15 @@
 // code by jph
 package ch.alpine.sophus.math.sample;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
-import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -21,9 +26,9 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class BallRandomSampleTest extends TestCase {
+public class BallRandomSampleTest {
+  @Test
   public void testSimple() {
     Tensor center = Tensors.vector(10, 20, 30, 40);
     Scalar radius = RealScalar.of(2);
@@ -32,6 +37,7 @@ public class BallRandomSampleTest extends TestCase {
     assertTrue(Scalars.lessEquals(Vector2Norm.of(vector), radius));
   }
 
+  @Test
   public void test1D() {
     Tensor center = Tensors.vector(15);
     Scalar radius = RealScalar.of(3);
@@ -43,6 +49,7 @@ public class BallRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple2D() {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.ONE);
     for (int count = 0; count < 100; ++count) {
@@ -52,6 +59,7 @@ public class BallRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity2D() {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.fromString("{10[m], 20[m]}"), Quantity.of(2, "m"));
     Tensor tensor = RandomSample.of(diskRandomSample);
@@ -59,6 +67,7 @@ public class BallRandomSampleTest extends TestCase {
     tensor.map(scalarUnaryOperator);
   }
 
+  @Test
   public void test3DZeroRadius() {
     Tensor center = Tensors.vector(10, 20, 3);
     Scalar radius = RealScalar.of(0.0);
@@ -66,6 +75,7 @@ public class BallRandomSampleTest extends TestCase {
     assertEquals(RandomSample.of(randomSampleInterface), center);
   }
 
+  @Test
   public void testQuantity() {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.fromString("{10[m], 20[m], -5[m]}"), Quantity.of(2, "m"));
@@ -74,6 +84,7 @@ public class BallRandomSampleTest extends TestCase {
     tensor.map(scalarUnaryOperator);
   }
 
+  @Test
   public void testR3S2Geodesic() {
     Random random = new Random(7);
     RandomSampleInterface randomSampleInterface = //
@@ -88,40 +99,47 @@ public class BallRandomSampleTest extends TestCase {
     }
   }
 
+  @Test
   public void testRotationMatrix3D() {
     for (int index = 0; index < 50; ++index) {
       RandomSampleInterface randomSampleInterface = //
           BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
       Tensor p = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor q = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
-      Tensor tensor = SnManifold.INSTANCE.endomorphism(p, q);
+      Tensor tensor = SnRotationMatrix.of(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
       assertTrue(OrthogonalMatrixQ.of(tensor, Chop._10));
     }
   }
 
+  @Test
   public void testLarge() {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Array.zeros(10), RealScalar.ONE);
     RandomSample.of(randomSampleInterface);
   }
 
+  @Test
   public void testCenterEmptyFail() {
     AssertFail.of(() -> BallRandomSample.of(Tensors.empty(), Quantity.of(2, "m")));
   }
 
+  @Test
   public void testRadiusNegative2Fail() {
     AssertFail.of(() -> BallRandomSample.of(Tensors.vector(1, 2), RealScalar.of(-1)));
   }
 
+  @Test
   public void testRadiusNegative3Fail() {
     AssertFail.of(() -> BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.of(-1)));
   }
 
+  @Test
   public void testCenterScalarFail() {
     AssertFail.of(() -> BallRandomSample.of(RealScalar.ONE, RealScalar.ONE));
   }
 
+  @Test
   public void testCenterScalarZeroFail() {
     AssertFail.of(() -> BallRandomSample.of(RealScalar.ONE, RealScalar.ZERO));
   }

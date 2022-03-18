@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.sc;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.Exp;
-import ch.alpine.tensor.sca.Log;
+import ch.alpine.tensor.sca.exp.Exp;
+import ch.alpine.tensor.sca.exp.Log;
 
 public enum ScExponential implements Exponential {
   INSTANCE;

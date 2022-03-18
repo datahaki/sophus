@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.ref.d2;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class DooSabinWeightsTest extends TestCase {
+public class DooSabinWeightsTest {
+  @Test
   public void testSimple() {
     for (int n = 3; n <= 12; ++n) {
       Tensor w = DooSabinWeights.INSTANCE.apply(n);

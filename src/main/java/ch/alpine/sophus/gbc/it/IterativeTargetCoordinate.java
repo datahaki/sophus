@@ -6,10 +6,11 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.amp.IdentRamp;
-import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
@@ -41,15 +42,15 @@ public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
     Tensor m = InfluenceMatrix.of(levers).residualMaker();
     Tensor n = NormalizeTotal.FUNCTION.apply(m.dot(w)); // coordinates
     deque.add(new Evaluation(n, n.map(Scalar::zero)));
-    // TODO also target values above 1
+    // TODO SOPHUS ALG also target values above 1
     Tensor b = n.map(IdentRamp.FUNCTION);
     // Tensor b = n.map(Abs.FUNCTION);
     if (!CHOP.allZero(b))
     // if (!n.stream().map(Scalar.class::cast).allMatch(Sign::isPositiveOrZero))
     {
-      SingularValueDecomposition svd = SingularValueDecomposition.of(m);
+      TensorUnaryOperator tuo = LeastSquares.operator(SingularValueDecomposition.of(m));
       for (int count = 0; count < k; ++count) {
-        Tensor sol = LeastSquares.of(svd, b);
+        Tensor sol = tuo.apply(b);
         w = w.add(sol);
         n = NormalizeTotal.FUNCTION.apply(m.dot(w));
         deque.add(new Evaluation(n, n.map(Scalar::zero)));

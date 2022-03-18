@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.ad.MatrixBracket;
 
 /** Reference:
  * "Geometric mean and geodesic regression on Grassmannians"

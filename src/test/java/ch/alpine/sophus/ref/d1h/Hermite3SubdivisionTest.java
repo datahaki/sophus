@@ -1,13 +1,17 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.math.TensorIteration;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
@@ -17,9 +21,9 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Hermite3SubdivisionTest extends TestCase {
+public class Hermite3SubdivisionTest {
+  @Test
   public void testStringLength2() {
     Tensor control = Tensors.fromString("{{3, 4}, {1, -3}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().string(RealScalar.ONE, control);
@@ -35,6 +39,7 @@ public class Hermite3SubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testStringReverseRn() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
@@ -53,6 +58,7 @@ public class Hermite3SubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testCyclic() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().cyclic(RealScalar.ONE, control);
@@ -68,10 +74,12 @@ public class Hermite3SubdivisionTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
     TestHelper.checkQuantity(Hermite3Subdivisions.of(RnManifold.INSTANCE, LieTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, null, RnBiinvariantMean.INSTANCE));
     AssertFail.of(() -> Hermite3Subdivisions.of(null, LieTransport.INSTANCE, RnBiinvariantMean.INSTANCE));

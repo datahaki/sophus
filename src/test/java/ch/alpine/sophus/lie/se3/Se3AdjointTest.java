@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.usr.AssertFail;
@@ -16,9 +20,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se3AdjointTest extends TestCase {
+public class Se3AdjointTest {
+  @Test
   public void testForwardInverse() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
@@ -33,6 +37,7 @@ public class Se3AdjointTest extends TestCase {
     }
   }
 
+  @Test
   public void testForwardInsteadInverse() {
     TensorUnaryOperator se3Adjoint = new Se3Adjoint(IdentityMatrix.of(3), Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = se3Adjoint.apply(Tensors.of(Tensors.vector(1, 0, 1), Tensors.vector(1, 0, 1))); // more forward and turn left
@@ -40,6 +45,7 @@ public class Se3AdjointTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testRotationSideLeft() {
     TensorUnaryOperator se3Adjoint = new Se3Adjoint(IdentityMatrix.of(3), Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = se3Adjoint.apply(Tensors.of(Tensors.vector(1, 0, 0), Tensors.vector(0, 0, -1))); // more forward and turn right
@@ -47,6 +53,7 @@ public class Se3AdjointTest extends TestCase {
     ExactTensorQ.require(tensor);
   }
 
+  @Test
   public void testFail() {
     AssertFail.of(() -> Se3Adjoint.forward(Tensors.vector(1, 2, 3, 4)));
     AssertFail.of(() -> Se3Adjoint.forward(HilbertMatrix.of(4, 3)));

@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.DoubleExponential.DoubleExponentialPoint;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnTransport;
@@ -12,9 +14,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
-import junit.framework.TestCase;
 
-public class DoubleExponentialTest extends TestCase {
+public class DoubleExponentialTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     DoubleExponential doubleExponential = //
         Serialization.copy(new DoubleExponential(SnManifold.INSTANCE, SnTransport.INSTANCE));

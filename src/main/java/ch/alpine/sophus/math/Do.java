@@ -3,10 +3,15 @@ package ch.alpine.sophus.math;
 
 import java.util.function.Supplier;
 
+import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.tensor.ext.Integers;
 
-/** inspired by
- * <a href="https://reference.wolfram.com/language/ref/Do.html">Do</a> */
+/** used to perform n-number of iterations
+ * 
+ * <p>inspired by
+ * <a href="https://reference.wolfram.com/language/ref/Do.html">Do</a>
+ * 
+ * @see TensorIteration */
 public enum Do {
   ;
   /** @param supplier

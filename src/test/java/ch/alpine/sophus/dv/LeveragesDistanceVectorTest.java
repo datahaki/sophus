@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.hs.Biinvariants;
@@ -18,10 +20,10 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
 /** anchor == target */
-public class LeveragesDistanceVectorTest extends TestCase {
+public class LeveragesDistanceVectorTest {
+  @Test
   public void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
@@ -32,6 +34,7 @@ public class LeveragesDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSn() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
@@ -43,6 +46,7 @@ public class LeveragesDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
@@ -54,6 +58,7 @@ public class LeveragesDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
@@ -65,6 +70,7 @@ public class LeveragesDistanceVectorTest extends TestCase {
     }
   }
 
+  @Test
   public void testSimple() {
     VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));

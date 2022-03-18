@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;
@@ -10,11 +14,11 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Exp;
-import ch.alpine.tensor.sca.Log;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.exp.Exp;
+import ch.alpine.tensor.sca.exp.Log;
 
-public class S3UnitQuaternionDistanceTest extends TestCase {
+public class S3UnitQuaternionDistanceTest {
+  @Test
   public void testSimple() {
     Quaternion p = Quaternion.of(3, 1, 2, 3);
     p = p.divide(Abs.FUNCTION.apply(p));
@@ -33,6 +37,7 @@ public class S3UnitQuaternionDistanceTest extends TestCase {
     Chop._14.requireClose(dq, distance);
   }
 
+  @Test
   public void testEichen() {
     Quaternion p0 = Quaternion.of(1, 0, 0, 0);
     Quaternion p1 = Quaternion.of(0, 1, 0, 0);
@@ -51,6 +56,7 @@ public class S3UnitQuaternionDistanceTest extends TestCase {
     assertEquals(Abs.FUNCTION.apply(p3), RealScalar.ONE);
   }
 
+  @Test
   public void testQuaternionLogExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 30; ++index) {
@@ -61,6 +67,7 @@ public class S3UnitQuaternionDistanceTest extends TestCase {
     }
   }
 
+  @Test
   public void testQuaternionExpLog() {
     Distribution distribution = NormalDistribution.of(0, .3);
     for (int index = 0; index < 30; ++index) {

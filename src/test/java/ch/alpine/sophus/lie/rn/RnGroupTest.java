@@ -1,10 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
-import ch.alpine.sophus.usr.AssertFail;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class RnGroupTest extends TestCase {
+import ch.alpine.sophus.usr.AssertFail;
+
+public class RnGroupTest {
+  @Test
   public void testFailNull() {
     AssertFail.of(() -> RnGroup.INSTANCE.element(null));
   }

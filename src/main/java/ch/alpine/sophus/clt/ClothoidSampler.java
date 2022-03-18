@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.EqualizingDistribution;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Sign;
-import ch.alpine.tensor.sca.Sqrt;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** suitable for drawing */
 public enum ClothoidSampler {

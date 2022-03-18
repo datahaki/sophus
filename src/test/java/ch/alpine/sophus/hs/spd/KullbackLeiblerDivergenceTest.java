@@ -1,18 +1,24 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.Clips;
 
-public class KullbackLeiblerDivergenceTest extends TestCase {
+public class KullbackLeiblerDivergenceTest {
   @SuppressWarnings("unused")
+  @Test
   public void testSimple() {
-    Tensor p = TestHelper.generateSpd(3);
-    Tensor q = TestHelper.generateSpd(3);
+    Spd0RandomSample spdRandomSample = new Spd0RandomSample(3, UniformDistribution.of(Clips.absolute(1)));
+    Tensor p = RandomSample.of(spdRandomSample);
+    Tensor q = RandomSample.of(spdRandomSample);
     Chop._06.requireClose( //
         Det.of(p).divide(Det.of(q)), //
         Det.of(LinearSolve.of(q, p)));

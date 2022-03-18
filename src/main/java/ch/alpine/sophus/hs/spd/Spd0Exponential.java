@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.sophus.math.Exponential;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Symmetrize;

@@ -1,14 +1,18 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class TensorShuffleTest extends TestCase {
+public class TensorShuffleTest {
+  @Test
   public void testPermutations() {
     Tensor vector = Tensors.vector(1, 2, 3).unmodifiable();
     Set<Tensor> set = new HashSet<>();

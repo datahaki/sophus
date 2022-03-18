@@ -1,13 +1,17 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
-import junit.framework.TestCase;
 
-public class BiinvariantsTest extends TestCase {
+public class BiinvariantsTest {
+  @Test
   public void testDistanceSequenceNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {
@@ -19,6 +23,7 @@ public class BiinvariantsTest extends TestCase {
       }
   }
 
+  @Test
   public void testVarDistVariogramNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {
@@ -30,6 +35,7 @@ public class BiinvariantsTest extends TestCase {
       }
   }
 
+  @Test
   public void testWeightingVariogramNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {
@@ -41,6 +47,7 @@ public class BiinvariantsTest extends TestCase {
       }
   }
 
+  @Test
   public void testCoordinateVariogramNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {
@@ -52,6 +59,7 @@ public class BiinvariantsTest extends TestCase {
       }
   }
 
+  @Test
   public void testCoordinateSequenceNullFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {
@@ -63,6 +71,7 @@ public class BiinvariantsTest extends TestCase {
       }
   }
 
+  @Test
   public void testSerializationFail() {
     for (Biinvariant biinvariant : Biinvariants.values())
       try {

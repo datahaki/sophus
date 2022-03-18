@@ -1,7 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
-import ch.alpine.sophus.math.BijectionFamily;
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.BijectionFamily;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -10,9 +12,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2FamilyTest extends TestCase {
+public class Se2FamilyTest {
+  @Test
   public void testSimple() {
     BijectionFamily bijectionFamily = new Se2Family(s -> Tensors.of( //
         RealScalar.of(2).add(s), //
@@ -27,6 +29,7 @@ public class Se2FamilyTest extends TestCase {
     }
   }
 
+  @Test
   public void testReverse() {
     BijectionFamily bijectionFamily = new Se2Family(s -> Tensors.of( //
         RealScalar.of(2).add(s), //

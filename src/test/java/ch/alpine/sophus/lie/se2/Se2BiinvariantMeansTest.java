@@ -1,7 +1,11 @@
 // code by ob
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
@@ -25,12 +29,12 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import ch.alpine.tensor.sca.Sqrt;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class Se2BiinvariantMeansTest extends TestCase {
+public class Se2BiinvariantMeansTest {
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
+  @Test
   public void testArsignyPennec() throws ClassNotFoundException, IOException {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
@@ -51,7 +55,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = Serialization.copy(biinvariantMean).mean(sequence, weights);
-      // TODO this does not check anything... also below!
+      // TODO SOPHUS TEST this does not check anything... also below!
       new MeanDefect(sequenceUnordered, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
       Tensor actualUnordered = biinvariantMean.mean(sequenceUnordered, weights);
       // ---
@@ -60,6 +64,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testTrivial() {
     Tensor p = Tensors.of(Tensors.vector(1, 9, -1));
     Tensor weights = Tensors.vector(1);
@@ -70,6 +75,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testTranslation() {
     Tensor sequence = Tensors.empty();
     Tensor p = Tensors.vector(1, 1, 0);
@@ -83,6 +89,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testRotation() {
     Tensor sequence = Tensors.empty();
     Tensor p = Tensors.vector(0, 0, 0.2);
@@ -96,6 +103,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testOrderInvariance() {
     Tensor p = Tensors.vector(4.9, 4.9, 0.9);
     Tensor q = Tensors.vector(5.0, 5.0, 1.0);
@@ -113,6 +121,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testOrderInvariance2() {
     Tensor p = Tensors.vector(4.9, 4.9, 0.9);
     Tensor q = Tensors.vector(5.0, 5.0, 1.0);
@@ -131,6 +140,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testOrderInvariance3() {
     Tensor p = Tensors.fromString("{4.9[m], 4.9[m], 0.9}");
     Tensor q = Tensors.fromString("{5.0[m], 5.0[m], 1.0}");
@@ -153,6 +163,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testOrderInvarianceNegative() {
     Tensor p = Tensors.vector(14.9, -4.9, 10.9);
     Tensor q = Tensors.vector(15.0, -5.0, 11.0);
@@ -172,6 +183,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testPermutations() {
     RandomSampleInterface randomSampleInterface = Se2RandomSample.of(ExponentialDistribution.standard());
     for (int length = 1; length < 6; ++length) {
@@ -188,6 +200,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testGlobalHomogeneous() {
     RandomSampleInterface randomSampleInterface = Se2RandomSample.of(ExponentialDistribution.standard());
     for (int length = 1; length < 6; ++length) {
@@ -201,6 +214,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testPermutationsPiHalf() {
     for (int length = 1; length < 6; ++length) {
       Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
@@ -219,6 +233,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     }
   }
 
+  @Test
   public void testCombined() {
     Tensor sequence = Tensors.empty();
     Tensor p = Tensors.vector(1, 1, 0.1);
@@ -230,6 +245,7 @@ public class Se2BiinvariantMeansTest extends TestCase {
     Chop._14.requireClose(expected, actual);
   }
 
+  @Test
   public void testEmpty() {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
       AssertFail.of(() -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));

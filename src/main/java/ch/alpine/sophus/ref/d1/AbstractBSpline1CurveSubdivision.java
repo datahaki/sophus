@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ch.alpine.sophus.math.MidpointInterface;
+import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;

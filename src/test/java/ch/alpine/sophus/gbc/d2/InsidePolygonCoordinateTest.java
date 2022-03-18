@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
@@ -13,9 +17,9 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class InsidePolygonCoordinateTest extends TestCase {
+public class InsidePolygonCoordinateTest {
+  @Test
   public void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = //

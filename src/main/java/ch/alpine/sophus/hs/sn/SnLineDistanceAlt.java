@@ -3,9 +3,9 @@ package ch.alpine.sophus.hs.sn;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.math.Exponential;
-import ch.alpine.sophus.math.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -31,7 +31,7 @@ public enum SnLineDistanceAlt implements LineDistance {
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
       Tensor v_pr = exponential.log(r);
-      // TODO not correct
+      // TODO SOPHUS API not correct
       v_pr = v_pr.subtract(v_pq.multiply((Scalar) v_pq.dot(v_pr)));
       return Vector2Norm.of(v_pr);
     }

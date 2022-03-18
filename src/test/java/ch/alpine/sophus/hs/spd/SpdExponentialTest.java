@@ -3,7 +3,11 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.math.Exponential;
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
@@ -13,15 +17,18 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
+import ch.alpine.tensor.sca.Clips;
 
-public class SpdExponentialTest extends TestCase {
+public class SpdExponentialTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
-      Tensor p = TestHelper.generateSpd(n);
-      Tensor q = TestHelper.generateSpd(n);
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
+      Tensor p = RandomSample.of(spd);
+      Tensor q = RandomSample.of(spd);
       SpdExponential spdExp = Serialization.copy(new SpdExponential(p));
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);
@@ -35,17 +42,21 @@ public class SpdExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testSpdToSym() {
     for (int n = 1; n < 5; ++n) {
-      Tensor p = TestHelper.generateSpd(n);
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
+      Tensor p = RandomSample.of(spd);
       SymmetricMatrixQ.require(MatrixLog.of(p), Chop._07);
     }
   }
 
+  @Test
   public void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
-      Tensor p = TestHelper.generateSpd(n);
-      Tensor q = TestHelper.generateSpd(n);
+      RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
+      Tensor p = RandomSample.of(spd);
+      Tensor q = RandomSample.of(spd);
       SpdExponential spdExpP = new SpdExponential(p);
       SpdExponential spdExpQ = new SpdExponential(q);
       Tensor pqw = spdExpP.log(q);
@@ -58,21 +69,26 @@ public class SpdExponentialTest extends TestCase {
     }
   }
 
+  @Test
   public void testIdentity() {
     for (int n = 1; n < 4; ++n) {
       Exponential exponential = new SpdExponential(IdentityMatrix.of(n));
-      Tensor x = TestHelper.generateSim(n);
+      RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+      Tensor x = RandomSample.of(rsi);
       Chop._08.requireClose(exponential.exp(x), Spd0Exponential.INSTANCE.exp(x));
-      Tensor q = TestHelper.generateSpd(n);
+      RandomSampleInterface spd = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+      Tensor q = RandomSample.of(spd);
       Chop._08.requireClose(exponential.log(q), Spd0Exponential.INSTANCE.log(q));
       Chop._08.requireClose(exponential.vectorLog(q), Spd0Exponential.INSTANCE.vectorLog(q));
     }
   }
 
+  @Test
   public void testNonSymmetricFail() {
     AssertFail.of(() -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> new SpdExponential(null));
   }

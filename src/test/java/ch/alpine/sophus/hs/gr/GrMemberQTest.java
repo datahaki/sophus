@@ -1,7 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -9,9 +13,9 @@ import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.lie.TensorProduct;
-import junit.framework.TestCase;
 
-public class GrMemberQTest extends TestCase {
+public class GrMemberQTest {
+  @Test
   public void testSimple() {
     int n = 5;
     Tensor x = RandomSample.of(new GrRandomSample(n, 3));
@@ -19,6 +23,7 @@ public class GrMemberQTest extends TestCase {
     GrMemberQ.INSTANCE.require(x);
   }
 
+  @Test
   public void testVectorProject() {
     for (int n = 1; n < 6; ++n) {
       Tensor normal = RandomSample.of(SnRandomSample.of(n));
@@ -27,6 +32,7 @@ public class GrMemberQTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> GrMemberQ.INSTANCE.test(null));
   }

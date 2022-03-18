@@ -1,13 +1,17 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.function.Supplier;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import junit.framework.TestCase;
 
-public class DoTest extends TestCase {
+public class DoTest {
+  @Test
   public void testSimple() {
     Supplier<Tensor> supplier = new Supplier<>() {
       int count = 0;

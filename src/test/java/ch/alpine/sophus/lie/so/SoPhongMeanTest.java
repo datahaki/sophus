@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
@@ -22,9 +26,9 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class SoPhongMeanTest extends TestCase {
+public class SoPhongMeanTest {
+  @Test
   public void testSimple() {
     int n = 7;
     Distribution distribution = UniformDistribution.of(-0.4, 0.4);
@@ -52,6 +56,7 @@ public class SoPhongMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testSingle() {
     int n = 1;
     Distribution distribution = UniformDistribution.of(-0.4, 0.4);
@@ -86,6 +91,7 @@ public class SoPhongMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testTwoExactMidpoint() {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
     Tensor p = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
@@ -95,6 +101,7 @@ public class SoPhongMeanTest extends TestCase {
     Tolerance.CHOP.requireClose(m1, m2);
   }
 
+  @Test
   public void testTwoMidpoint() {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
     Tensor p = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));

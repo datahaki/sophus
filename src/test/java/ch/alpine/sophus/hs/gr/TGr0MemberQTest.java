@@ -1,6 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.DiagonalMatrix;
@@ -8,9 +13,9 @@ import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class TGr0MemberQTest extends TestCase {
+public class TGr0MemberQTest {
+  @Test
   public void testSimple21() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(2, 1);
     assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 1}, {1, 0}}")));
@@ -19,12 +24,14 @@ public class TGr0MemberQTest extends TestCase {
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 1}, {-1, 0}}")));
   }
 
+  @Test
   public void testSimple31() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(3, 1);
     assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
   }
 
+  @Test
   public void testSimple32() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(3, 2);
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 1}, {1, 0}}")));
@@ -32,6 +39,7 @@ public class TGr0MemberQTest extends TestCase {
     assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
   }
 
+  @Test
   public void testRandom32() {
     int n = 3;
     Distribution distribution = UniformDistribution.unit();
@@ -45,6 +53,7 @@ public class TGr0MemberQTest extends TestCase {
     }
   }
 
+  @Test
   public void testRandom52() {
     int n = 5;
     Distribution distribution = UniformDistribution.unit();

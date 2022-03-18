@@ -1,13 +1,17 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import junit.framework.TestCase;
 
-public class ClothoidQuadraticExTest extends TestCase {
+public class ClothoidQuadraticExTest {
+  @Test
   public void testSimple() {
     ClothoidQuadraticEx clothoidQuadratic = //
         new ClothoidQuadraticEx(RealScalar.of(2), RealScalar.of(-3), RealScalar.of(7));
@@ -19,6 +23,7 @@ public class ClothoidQuadraticExTest extends TestCase {
     assertEquals(p1, RealScalar.of(7));
   }
 
+  @Test
   public void testExamples() {
     ClothoidQuadraticEx clothoidQuadratic = //
         new ClothoidQuadraticEx(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));

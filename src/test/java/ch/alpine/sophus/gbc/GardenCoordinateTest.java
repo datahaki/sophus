@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -14,9 +16,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
-import junit.framework.TestCase;
 
-public class GardenCoordinateTest extends TestCase {
+public class GardenCoordinateTest {
+  @Test
   public void testR1equiv() {
     // in R^d we have w^H = w^G
     // but not in R2 etc.
@@ -33,6 +35,7 @@ public class GardenCoordinateTest extends TestCase {
       }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> GardenCoordinate.of(RnManifold.INSTANCE, null, HilbertMatrix.of(10, 3)));
   }

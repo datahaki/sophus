@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.math.SplitInterface;
+import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

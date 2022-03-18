@@ -1,9 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 
-import ch.alpine.sophus.math.Geodesic;
+import org.junit.jupiter.api.Test;
+
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.tensor.NumberQ;
 import ch.alpine.tensor.Scalar;
@@ -15,9 +19,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnGeodesicTest extends TestCase {
+public class HnGeodesicTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Geodesic geodesicInterface = Serialization.copy(HnGeodesic.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
@@ -29,6 +33,7 @@ public class HnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testSubdiv() {
     BSpline2CurveSubdivision bSpline2CurveSubdivision = new BSpline2CurveSubdivision(HnGeodesic.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
@@ -41,6 +46,7 @@ public class HnGeodesicTest extends TestCase {
     }
   }
 
+  @Test
   public void testFlip() {
     Distribution distribution = NormalDistribution.of(0, 1);
     for (int d = 1; d < 4; ++d) {

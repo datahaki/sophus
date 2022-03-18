@@ -3,7 +3,7 @@ package ch.alpine.sophus.gbc;
 
 import ch.alpine.sophus.hs.VectorLogManifold;
 
-/** biinvariant generalized barycentric coordinates that do not satisfy the lagrange property
+/** biinvariant generalized barycentric coordinates that do not satisfy the Lagrange property
  * 
  * Reference:
  * "Affine generalised barycentric coordinates"

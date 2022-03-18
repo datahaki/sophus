@@ -1,13 +1,15 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class GrActionTest extends TestCase {
+public class GrActionTest {
+  @Test
   public void testDecomp() {
     int n = 5;
     for (int k = 1; k < n; ++k) {

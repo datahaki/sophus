@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;

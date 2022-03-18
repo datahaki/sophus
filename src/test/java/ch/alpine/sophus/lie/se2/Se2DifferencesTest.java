@@ -1,8 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -13,9 +17,9 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class Se2DifferencesTest extends TestCase {
+public class Se2DifferencesTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);
@@ -24,6 +28,7 @@ public class Se2DifferencesTest extends TestCase {
     Chop._14.requireClose(tensor.get(0), Tensors.vector(0, 0, 0));
   }
 
+  @Test
   public void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomSample.of(Se2RandomSample.of(distribution), 10);

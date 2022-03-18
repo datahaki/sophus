@@ -3,10 +3,12 @@ package ch.alpine.sophus.hs;
 
 import java.io.IOException;
 
-import ch.alpine.tensor.ext.Serialization;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class MetricBiinvariantTest extends TestCase {
+import ch.alpine.tensor.ext.Serialization;
+
+public class MetricBiinvariantTest {
+  @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(MetricBiinvariant.EUCLIDEAN);
   }

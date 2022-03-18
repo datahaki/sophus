@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
@@ -19,9 +24,9 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import junit.framework.TestCase;
 
-public class SnAlgebraTest extends TestCase {
+public class SnAlgebraTest {
+  @Test
   public void testProperty() {
     for (int d = 2; d < 5; ++d) {
       HsAlgebra hsAlgebra = SnAlgebra.of(d);
@@ -31,6 +36,7 @@ public class SnAlgebraTest extends TestCase {
     }
   }
 
+  @Test
   public void testBiinvariantMean() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(-0.2, 1);

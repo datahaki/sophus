@@ -1,7 +1,12 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Random;
+
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
@@ -13,9 +18,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class PolygonCentroidTest extends TestCase {
+public class PolygonCentroidTest {
+  @Test
   public void testSimple() {
     for (int n = 2; n < 10; ++n) {
       Tensor centroid = PolygonCentroid.of(CirclePoints.of(n));
@@ -23,11 +28,13 @@ public class PolygonCentroidTest extends TestCase {
     }
   }
 
+  @Test
   public void testSingle() {
     Tensor centroid = PolygonCentroid.of(Tensors.fromString("{{2, 3}}"));
     assertEquals(centroid, Tensors.vector(2, 3));
   }
 
+  @Test
   public void testRandom() {
     Random random = new Random();
     for (int count = 0; count < 100; ++count) {
@@ -46,6 +53,7 @@ public class PolygonCentroidTest extends TestCase {
     }
   }
 
+  @Test
   public void testTranslated() {
     for (int n = 3; n < 10; ++n) {
       Tensor shift = RandomVariate.of(UniformDistribution.unit(), 2);
@@ -54,6 +62,7 @@ public class PolygonCentroidTest extends TestCase {
     }
   }
 
+  @Test
   public void testSingleFail() {
     AssertFail.of(() -> PolygonCentroid.of(Tensors.fromString("{{2, 3, 4}}")));
   }

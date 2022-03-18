@@ -21,7 +21,7 @@ public class BiasedBoxRandomSample implements RandomSampleInterface, Serializabl
     this.draws = Integers.requirePositive(draws);
   }
 
-  @Override
+  @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
     Tensor tensor = RandomSample.of(randomSampleInterface, draws);
     Tensor result = Tensor.of(tensor.stream().map(SimplexContinuousNoise.FUNCTION));

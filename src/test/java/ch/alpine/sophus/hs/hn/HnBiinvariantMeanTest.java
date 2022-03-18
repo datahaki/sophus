@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.hn;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
@@ -19,9 +21,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class HnBiinvariantMeanTest extends TestCase {
+public class HnBiinvariantMeanTest {
+  @Test
   public void testAffineFail() {
     BiinvariantMean biinvariantMean = HnBiinvariantMean.of(Chop._12);
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
@@ -31,6 +33,7 @@ public class HnBiinvariantMeanTest extends TestCase {
     AssertFail.of(() -> biinvariantMean.mean(Tensors.of(x, y), Tensors.vector(0.6, 0.5)));
   }
 
+  @Test
   public void testBiinvariant() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
@@ -62,6 +65,7 @@ public class HnBiinvariantMeanTest extends TestCase {
     }
   }
 
+  @Test
   public void testNullFail() {
     AssertFail.of(() -> HnBiinvariantMean.of(null));
   }

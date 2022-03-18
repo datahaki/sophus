@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie.sopq;
 
-import ch.alpine.sophus.math.ScalarProductForm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.MatrixDotTranspose;
@@ -16,6 +15,7 @@ public class TSopqProject implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor x) {
+    // TODO SOPHUS ALG work with form as vector {1,1,1,...,-1,-1}
     return x.subtract(MatrixDotTranspose.of(form, x).dot(form));
   }
 }

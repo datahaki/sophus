@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.AffineCoordinate;
-import ch.alpine.sophus.math.Genesis;
 
 /** iterative affine coordinates generally produce non-negative weights after fewer
  * iterations than when using iterative mean value coordinates.

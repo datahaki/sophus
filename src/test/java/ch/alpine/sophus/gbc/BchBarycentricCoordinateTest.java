@@ -4,6 +4,8 @@ package ch.alpine.sophus.gbc;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
+import org.junit.jupiter.api.Test;
+
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
@@ -18,9 +20,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import junit.framework.TestCase;
 
-public class BchBarycentricCoordinateTest extends TestCase {
+public class BchBarycentricCoordinateTest {
+  @Test
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Random random = new Random(1);
@@ -45,6 +47,7 @@ public class BchBarycentricCoordinateTest extends TestCase {
     }
   }
 
+  @Test
   public void testSo3MeanRandom() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Random random = new Random(1);
