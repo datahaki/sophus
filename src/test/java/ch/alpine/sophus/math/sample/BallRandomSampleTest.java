@@ -2,6 +2,7 @@
 package ch.alpine.sophus.math.sample;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -121,26 +121,26 @@ public class BallRandomSampleTest {
 
   @Test
   public void testCenterEmptyFail() {
-    AssertFail.of(() -> BallRandomSample.of(Tensors.empty(), Quantity.of(2, "m")));
+    assertThrows(Exception.class, () -> BallRandomSample.of(Tensors.empty(), Quantity.of(2, "m")));
   }
 
   @Test
   public void testRadiusNegative2Fail() {
-    AssertFail.of(() -> BallRandomSample.of(Tensors.vector(1, 2), RealScalar.of(-1)));
+    assertThrows(Exception.class, () -> BallRandomSample.of(Tensors.vector(1, 2), RealScalar.of(-1)));
   }
 
   @Test
   public void testRadiusNegative3Fail() {
-    AssertFail.of(() -> BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.of(-1)));
+    assertThrows(Exception.class, () -> BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.of(-1)));
   }
 
   @Test
   public void testCenterScalarFail() {
-    AssertFail.of(() -> BallRandomSample.of(RealScalar.ONE, RealScalar.ONE));
+    assertThrows(Exception.class, () -> BallRandomSample.of(RealScalar.ONE, RealScalar.ONE));
   }
 
   @Test
   public void testCenterScalarZeroFail() {
-    AssertFail.of(() -> BallRandomSample.of(RealScalar.ONE, RealScalar.ZERO));
+    assertThrows(Exception.class, () -> BallRandomSample.of(RealScalar.ONE, RealScalar.ZERO));
   }
 }

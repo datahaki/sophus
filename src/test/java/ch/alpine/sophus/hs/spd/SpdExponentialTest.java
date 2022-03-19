@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
@@ -85,11 +86,11 @@ public class SpdExponentialTest {
 
   @Test
   public void testNonSymmetricFail() {
-    AssertFail.of(() -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
+    assertThrows(Exception.class, () -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new SpdExponential(null));
+    assertThrows(Exception.class, () -> new SpdExponential(null));
   }
 }

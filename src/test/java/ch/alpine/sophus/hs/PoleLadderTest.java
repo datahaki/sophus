@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -11,7 +12,6 @@ import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -71,6 +71,6 @@ public class PoleLadderTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new PoleLadder(null));
+    assertThrows(Exception.class, () -> new PoleLadder(null));
   }
 }

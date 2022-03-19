@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2c;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -130,7 +130,7 @@ public class Se2CoveringBiinvariantMeanTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
   @Test
@@ -138,6 +138,6 @@ public class Se2CoveringBiinvariantMeanTest {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor weights = RandomVariate.of(distribution, 3);
-    AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights));
+    assertThrows(Exception.class, () -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights));
   }
 }

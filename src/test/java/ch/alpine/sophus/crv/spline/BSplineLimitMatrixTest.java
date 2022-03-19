@@ -1,10 +1,11 @@
 // code by jph
 package ch.alpine.sophus.crv.spline;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.StochasticMatrixQ;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Inverse;
@@ -26,7 +27,7 @@ public class BSplineLimitMatrixTest {
 
   @Test
   public void testNonPositiveFail() {
-    AssertFail.of(() -> BSplineLimitMatrix.string(0, 2));
-    AssertFail.of(() -> BSplineLimitMatrix.string(-1, 2));
+    assertThrows(Exception.class, () -> BSplineLimitMatrix.string(0, 2));
+    assertThrows(Exception.class, () -> BSplineLimitMatrix.string(-1, 2));
   }
 }

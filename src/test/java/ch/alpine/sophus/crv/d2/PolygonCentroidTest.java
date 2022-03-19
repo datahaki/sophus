@@ -2,13 +2,13 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.CirclePoints;
@@ -64,6 +64,6 @@ public class PolygonCentroidTest {
 
   @Test
   public void testSingleFail() {
-    AssertFail.of(() -> PolygonCentroid.of(Tensors.fromString("{{2, 3, 4}}")));
+    assertThrows(Exception.class, () -> PolygonCentroid.of(Tensors.fromString("{{2, 3, 4}}")));
   }
 }

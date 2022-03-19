@@ -2,13 +2,13 @@
 package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -25,6 +25,6 @@ public class HsMidpointTest {
 
   @Test
   public void testFailNull1() {
-    AssertFail.of(() -> new HsMidpoint(null));
+    assertThrows(Exception.class, () -> new HsMidpoint(null));
   }
 }

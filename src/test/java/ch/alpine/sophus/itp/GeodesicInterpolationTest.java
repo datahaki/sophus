@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -29,9 +30,9 @@ public class GeodesicInterpolationTest {
     Chop._12.requireClose( //
         interpolation.at(RealScalar.of(2)), //
         sequence.get(2));
-    AssertFail.of(() -> interpolation.at(RealScalar.of(-0.01)));
-    AssertFail.of(() -> interpolation.at(RealScalar.of(2.01)));
-    AssertFail.of(() -> interpolation.get(RealScalar.of(0)));
-    AssertFail.of(() -> interpolation.get(Tensors.vector(0)));
+    assertThrows(Exception.class, () -> interpolation.at(RealScalar.of(-0.01)));
+    assertThrows(Exception.class, () -> interpolation.at(RealScalar.of(2.01)));
+    assertThrows(Exception.class, () -> interpolation.get(RealScalar.of(0)));
+    assertThrows(Exception.class, () -> interpolation.get(Tensors.vector(0)));
   }
 }

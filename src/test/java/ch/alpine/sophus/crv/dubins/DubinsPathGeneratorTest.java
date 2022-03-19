@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.crv.dubins;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -53,8 +53,8 @@ public class DubinsPathGeneratorTest {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{" + Math.PI / 2 + "[m], 10[m], " + Math.PI / 2 + "[m]}"));
     Tensor g0 = Tensors.fromString("{0[m], 0[m], 0}").unmodifiable();
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(dubinsPath.sampler(g0));
-    AssertFail.of(() -> scalarTensorFunction.apply(Quantity.of(-0.1, "m")));
+    assertThrows(Exception.class, () -> scalarTensorFunction.apply(Quantity.of(-0.1, "m")));
     Scalar exceed = Quantity.of(0.1, "m").add(dubinsPath.length());
-    AssertFail.of(() -> scalarTensorFunction.apply(exceed));
+    assertThrows(Exception.class, () -> scalarTensorFunction.apply(exceed));
   }
 }

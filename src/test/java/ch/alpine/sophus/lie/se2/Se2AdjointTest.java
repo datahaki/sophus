@@ -2,12 +2,12 @@
 package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -134,9 +134,9 @@ public class Se2AdjointTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> Se2Adjoint.forward(RealScalar.ONE));
-    AssertFail.of(() -> Se2Adjoint.forward(HilbertMatrix.of(3)));
-    AssertFail.of(() -> Se2Adjoint.inverse(RealScalar.ONE));
-    AssertFail.of(() -> Se2Adjoint.inverse(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> Se2Adjoint.forward(RealScalar.ONE));
+    assertThrows(Exception.class, () -> Se2Adjoint.forward(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> Se2Adjoint.inverse(RealScalar.ONE));
+    assertThrows(Exception.class, () -> Se2Adjoint.inverse(HilbertMatrix.of(3)));
   }
 }

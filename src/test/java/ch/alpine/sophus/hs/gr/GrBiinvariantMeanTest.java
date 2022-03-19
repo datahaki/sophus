@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.AveragingWeights;
@@ -8,7 +10,6 @@ import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -38,7 +39,7 @@ public class GrBiinvariantMeanTest {
     }
     int n = sequence.length();
     Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
-    AssertFail.of(() -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
+    assertThrows(Exception.class, () -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
     Tensor point = GrBiinvariantMean.INSTANCE.mean(sequence, weights);
     GrMemberQ.INSTANCE.require(point);
     GrMetric.INSTANCE.distance(p, point);

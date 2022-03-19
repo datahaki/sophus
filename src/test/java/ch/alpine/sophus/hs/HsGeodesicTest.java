@@ -2,12 +2,12 @@
 package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -27,6 +27,6 @@ public class HsGeodesicTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new HsGeodesic(null));
+    assertThrows(Exception.class, () -> new HsGeodesic(null));
   }
 }

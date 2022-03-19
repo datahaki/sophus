@@ -2,12 +2,12 @@
 package ch.alpine.sophus.crv.spline;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -27,7 +27,7 @@ public class BSplineLimitMaskTest {
   public void testEvenFail() {
     for (int i = 0; i < 10; ++i) {
       int fi = i;
-      AssertFail.of(() -> BSplineLimitMask.FUNCTION.apply(fi * 2));
+      assertThrows(Exception.class, () -> BSplineLimitMask.FUNCTION.apply(fi * 2));
     }
   }
 
@@ -35,7 +35,7 @@ public class BSplineLimitMaskTest {
   public void testNegativeFail() {
     for (int i = 1; i < 4; ++i) {
       int fi = i;
-      AssertFail.of(() -> BSplineLimitMask.FUNCTION.apply(-fi));
+      assertThrows(Exception.class, () -> BSplineLimitMask.FUNCTION.apply(-fi));
     }
   }
 
@@ -62,11 +62,11 @@ public class BSplineLimitMaskTest {
 
   @Test
   public void testEvenVectorFail() {
-    AssertFail.of(() -> TENSOR_UNARY_OPERATOR.apply(Tensors.vector(1, 2, 3, 4)));
+    assertThrows(Exception.class, () -> TENSOR_UNARY_OPERATOR.apply(Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
   public void testScalarFail() {
-    AssertFail.of(() -> TENSOR_UNARY_OPERATOR.apply(RealScalar.ONE));
+    assertThrows(Exception.class, () -> TENSOR_UNARY_OPERATOR.apply(RealScalar.ONE));
   }
 }

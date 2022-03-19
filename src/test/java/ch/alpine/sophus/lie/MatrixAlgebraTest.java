@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -14,7 +15,6 @@ import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -123,18 +123,18 @@ public class MatrixAlgebraTest {
 
   @Test
   public void testNumericFail() {
-    AssertFail.of(() -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
+    assertThrows(Exception.class, () -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
   }
 
   @Test
   public void testZeroFail() {
-    AssertFail.of(() -> new MatrixAlgebra(Array.zeros(1, 2, 2)));
+    assertThrows(Exception.class, () -> new MatrixAlgebra(Array.zeros(1, 2, 2)));
   }
 
   @Test
   public void testRedundantFail() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
-    AssertFail.of(() -> new MatrixAlgebra(Tensors.of(b0, b0)));
+    assertThrows(Exception.class, () -> new MatrixAlgebra(Tensors.of(b0, b0)));
   }
 
   private static void check(MatrixAlgebra matrixAlgebra, int degree) {

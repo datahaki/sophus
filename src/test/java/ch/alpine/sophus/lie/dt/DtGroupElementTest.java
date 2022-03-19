@@ -2,10 +2,10 @@
 package ch.alpine.sophus.lie.dt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -65,20 +65,20 @@ public class DtGroupElementTest {
   // checks that lambda is required to be positive
   @Test
   public void testLambdaNonPositiveFail() {
-    AssertFail.of(() -> DtGroup.INSTANCE.element(Tensors.vector(0, 5)));
-    AssertFail.of(() -> DtGroup.INSTANCE.element(Tensors.vector(-1, 5)));
+    assertThrows(Exception.class, () -> DtGroup.INSTANCE.element(Tensors.vector(0, 5)));
+    assertThrows(Exception.class, () -> DtGroup.INSTANCE.element(Tensors.vector(-1, 5)));
   }
 
   @Test
   public void testCombineFail() {
     DtGroupElement pE = DtGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
-    AssertFail.of(() -> pE.combine(Tensors.fromString("{0, {1, 2, 3}}")));
-    AssertFail.of(() -> pE.combine(Tensors.fromString("{1, {1, 2, 3, 4}}")));
+    assertThrows(Exception.class, () -> pE.combine(Tensors.fromString("{0, {1, 2, 3}}")));
+    assertThrows(Exception.class, () -> pE.combine(Tensors.fromString("{1, {1, 2, 3, 4}}")));
   }
 
   @Test
   public void testDlNullFail() {
     DtGroupElement pE = DtGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
-    AssertFail.of(() -> pE.dL(null));
+    assertThrows(Exception.class, () -> pE.dL(null));
   }
 }

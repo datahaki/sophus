@@ -2,13 +2,13 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -68,6 +68,6 @@ public class BSpline5CurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new BSpline5CurveSubdivision(null));
+    assertThrows(Exception.class, () -> new BSpline5CurveSubdivision(null));
   }
 }

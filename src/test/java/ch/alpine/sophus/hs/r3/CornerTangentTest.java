@@ -2,10 +2,10 @@
 package ch.alpine.sophus.hs.r3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;
 
@@ -28,7 +28,7 @@ public class CornerTangentTest {
     Quaternion qi = Quaternion.of(1, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
-    AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
+    assertThrows(Exception.class, () -> CornerTangent.of(qi, qj, qk));
   }
 
   @Test
@@ -36,7 +36,7 @@ public class CornerTangentTest {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(1, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
-    AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
+    assertThrows(Exception.class, () -> CornerTangent.of(qi, qj, qk));
   }
 
   @Test
@@ -44,6 +44,6 @@ public class CornerTangentTest {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(1, 5, -2, 0);
-    AssertFail.of(() -> CornerTangent.of(qi, qj, qk));
+    assertThrows(Exception.class, () -> CornerTangent.of(qi, qj, qk));
   }
 }

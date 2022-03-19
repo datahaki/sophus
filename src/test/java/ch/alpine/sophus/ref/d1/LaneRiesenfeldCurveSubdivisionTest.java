@@ -2,6 +2,7 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,6 @@ import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.hs.h2.H2Midpoint;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -110,11 +110,11 @@ public class LaneRiesenfeldCurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> LaneRiesenfeldCurveSubdivision.of(null, 3));
+    assertThrows(Exception.class, () -> LaneRiesenfeldCurveSubdivision.of(null, 3));
   }
 
   @Test
   public void testDegreeFail() {
-    AssertFail.of(() -> LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0));
+    assertThrows(Exception.class, () -> LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0));
   }
 }

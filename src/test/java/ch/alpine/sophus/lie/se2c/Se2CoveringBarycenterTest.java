@@ -1,10 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -65,6 +66,6 @@ public class Se2CoveringBarycenterTest {
 
   @Test
   public void testLengthFail() {
-    AssertFail.of(() -> new Se2CoveringBarycenter(HilbertMatrix.of(5, 3)));
+    assertThrows(Exception.class, () -> new Se2CoveringBarycenter(HilbertMatrix.of(5, 3)));
   }
 }

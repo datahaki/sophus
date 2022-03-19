@@ -3,6 +3,7 @@ package ch.alpine.sophus.math.win;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.Function;
@@ -10,7 +11,6 @@ import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.SymmetricVectorQ;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -97,7 +97,7 @@ public class BaseWindowSamplerTest {
   public void testZeroFail() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
-      AssertFail.of(() -> uniformWindowSampler.apply(0));
+      assertThrows(Exception.class, () -> uniformWindowSampler.apply(0));
     }
   }
 
@@ -105,13 +105,13 @@ public class BaseWindowSamplerTest {
   public void testAllFail() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> centerWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
-      AssertFail.of(() -> centerWindowSampler.apply(-1));
+      assertThrows(Exception.class, () -> centerWindowSampler.apply(-1));
     }
   }
 
   @Test
   public void testAllFailQuantity() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values())
-      AssertFail.of(() -> smoothingKernel.get().apply(Quantity.of(1, "s")));
+      assertThrows(Exception.class, () -> smoothingKernel.get().apply(Quantity.of(1, "s")));
   }
 }

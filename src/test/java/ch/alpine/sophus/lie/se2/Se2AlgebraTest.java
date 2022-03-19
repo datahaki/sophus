@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,6 @@ import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -65,6 +65,6 @@ public class Se2AlgebraTest {
 
   @Test
   public void testHsFails() {
-    AssertFail.of(() -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
+    assertThrows(Exception.class, () -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 }

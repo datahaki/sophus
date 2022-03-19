@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.h2.H2Midpoint;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.num.Pi;
@@ -62,16 +63,16 @@ public class CurveSubdivisionTest {
   @Test
   public void testNullFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
-      AssertFail.of(() -> curveSubdivision.string(null));
-      AssertFail.of(() -> curveSubdivision.cyclic(null));
+      assertThrows(Exception.class, () -> curveSubdivision.string(null));
+      assertThrows(Exception.class, () -> curveSubdivision.cyclic(null));
     }
   }
 
   @Test
   public void testScalarFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
-      AssertFail.of(() -> curveSubdivision.string(Pi.HALF));
-      AssertFail.of(() -> curveSubdivision.cyclic(Pi.VALUE));
+      assertThrows(Exception.class, () -> curveSubdivision.string(Pi.HALF));
+      assertThrows(Exception.class, () -> curveSubdivision.cyclic(Pi.VALUE));
     }
   }
 }

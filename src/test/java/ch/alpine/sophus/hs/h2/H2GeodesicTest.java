@@ -2,11 +2,11 @@
 package ch.alpine.sophus.hs.h2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -46,11 +46,11 @@ public class H2GeodesicTest {
 
   @Test
   public void testSingularityExact() {
-    AssertFail.of(() -> H2Geodesic.INSTANCE.split(Tensors.vector(1, 0), Tensors.vector(1, 3), RationalScalar.HALF));
+    assertThrows(Exception.class, () -> H2Geodesic.INSTANCE.split(Tensors.vector(1, 0), Tensors.vector(1, 3), RationalScalar.HALF));
   }
 
   @Test
   public void testSingularityNumeric() {
-    AssertFail.of(() -> H2Geodesic.INSTANCE.split(Tensors.vector(1, 0.0), Tensors.vector(1, 3), RationalScalar.HALF));
+    assertThrows(Exception.class, () -> H2Geodesic.INSTANCE.split(Tensors.vector(1, 0.0), Tensors.vector(1, 3), RationalScalar.HALF));
   }
 }

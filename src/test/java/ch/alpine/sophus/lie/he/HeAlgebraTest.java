@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
@@ -75,6 +76,6 @@ public class HeAlgebraTest {
 
   @Test
   public void testZeroFail() {
-    AssertFail.of(() -> new HeAlgebra(0));
+    assertThrows(Exception.class, () -> new HeAlgebra(0));
   }
 }

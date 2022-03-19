@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.sn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
@@ -34,6 +34,6 @@ public class SnRandomSampleTest {
 
   @Test
   public void testSNegFail() {
-    AssertFail.of(() -> SnRandomSample.of(-1));
+    assertThrows(Exception.class, () -> SnRandomSample.of(-1));
   }
 }

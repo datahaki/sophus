@@ -2,12 +2,12 @@
 package ch.alpine.sophus.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
@@ -25,6 +25,6 @@ public class SplitParametricCurveTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> SplitParametricCurve.of(null));
+    assertThrows(Exception.class, () -> SplitParametricCurve.of(null));
   }
 }

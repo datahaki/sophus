@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.lie.ScalarBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -84,6 +85,6 @@ public class So2LinearBiinvariantMeanTest {
 
   @Test
   public void testFailAntipodal() {
-    AssertFail.of(() -> So2LinearBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4)));
+    assertThrows(Exception.class, () -> So2LinearBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4)));
   }
 }

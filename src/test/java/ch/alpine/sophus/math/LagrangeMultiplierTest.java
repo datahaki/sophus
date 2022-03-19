@@ -2,10 +2,10 @@
 package ch.alpine.sophus.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.mat.HermitianMatrixQ;
@@ -50,7 +50,7 @@ public class LagrangeMultiplierTest {
     LagrangeMultiplier lagrangeMultiplier = new LagrangeMultiplier(IdentityMatrix.of(n), target, eqs, rhs);
     HermitianMatrixQ.require(lagrangeMultiplier.matrix());
     VectorQ.require(lagrangeMultiplier.b());
-    AssertFail.of(() -> lagrangeMultiplier.usingCholesky());
+    assertThrows(Exception.class, () -> lagrangeMultiplier.usingCholesky());
     Tensor sol2 = lagrangeMultiplier.usingSvd();
     Tensor sol3 = lagrangeMultiplier.solve();
     Tolerance.CHOP.requireClose(sol2, sol3);
@@ -62,7 +62,7 @@ public class LagrangeMultiplierTest {
     Tensor eqs = RandomVariate.of(NormalDistribution.standard(), 3, 10);
     Tensor target = RandomVariate.of(NormalDistribution.standard(), 9);
     Tensor rhs = RandomVariate.of(NormalDistribution.standard(), 3);
-    AssertFail.of(() -> new LagrangeMultiplier(IdentityMatrix.of(10), target, eqs, rhs));
+    assertThrows(Exception.class, () -> new LagrangeMultiplier(IdentityMatrix.of(10), target, eqs, rhs));
   }
 
   @Test
@@ -70,6 +70,6 @@ public class LagrangeMultiplierTest {
     Tensor eqs = RandomVariate.of(NormalDistribution.standard(), 3, 10);
     Tensor target = RandomVariate.of(NormalDistribution.standard(), 10);
     Tensor rhs = RandomVariate.of(NormalDistribution.standard(), 2);
-    AssertFail.of(() -> new LagrangeMultiplier(IdentityMatrix.of(10), target, eqs, rhs));
+    assertThrows(Exception.class, () -> new LagrangeMultiplier(IdentityMatrix.of(10), target, eqs, rhs));
   }
 }

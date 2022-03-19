@@ -1,9 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -51,14 +52,14 @@ public class SnPhongMeanTest {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = UnitVector.of(3, 1);
     SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
-    // AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
+    // assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
   }
 
   @Test
   public void testAntipodalFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = x.negate();
-    AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5)));
-    // AssertFail.of(() -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
+    assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5)));
+    // assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
   }
 }

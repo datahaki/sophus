@@ -2,6 +2,7 @@
 package ch.alpine.sophus.math.win;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.Function;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.SymmetricVectorQ;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -56,7 +56,7 @@ public class UniformWindowSamplerTest {
         Tensor val1 = function.apply(count);
         Tensor val2 = function.apply(count);
         assertTrue(val1 == val2); // equal by reference
-        AssertFail.of(() -> val1.set(RealScalar.ZERO, 0));
+        assertThrows(Exception.class, () -> val1.set(RealScalar.ZERO, 0));
       }
     }
   }
@@ -72,11 +72,11 @@ public class UniformWindowSamplerTest {
   @Test
   public void testZeroFail() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(HannWindow.FUNCTION);
-    AssertFail.of(() -> function.apply(0));
+    assertThrows(Exception.class, () -> function.apply(0));
   }
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> UniformWindowSampler.of(null));
+    assertThrows(Exception.class, () -> UniformWindowSampler.of(null));
   }
 }

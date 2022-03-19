@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.srf;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
@@ -22,6 +22,6 @@ public class SurfaceMeshTest {
   @Test
   public void testNullFail() {
     SurfaceMesh surfaceMesh = new SurfaceMesh();
-    AssertFail.of(() -> surfaceMesh.addVert(null));
+    assertThrows(Exception.class, () -> surfaceMesh.addVert(null));
   }
 }

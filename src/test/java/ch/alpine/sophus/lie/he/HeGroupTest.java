@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ch.alpine.sophus.usr.AssertFail;
+import org.junit.jupiter.api.Test;
 
 public class HeGroupTest {
   @Test
   public void testSimple() {
-    AssertFail.of(() -> HeGroup.INSTANCE.element(null));
+    assertThrows(Exception.class, () -> HeGroup.INSTANCE.element(null));
   }
 }

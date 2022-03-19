@@ -2,13 +2,13 @@
 package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -176,15 +176,15 @@ public class Se2GroupElementTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> Se2Adjoint.forward(RealScalar.ONE));
-    AssertFail.of(() -> Se2Adjoint.forward(HilbertMatrix.of(3)));
-    AssertFail.of(() -> Se2Adjoint.inverse(RealScalar.ONE));
-    AssertFail.of(() -> Se2Adjoint.inverse(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> Se2Adjoint.forward(RealScalar.ONE));
+    assertThrows(Exception.class, () -> Se2Adjoint.forward(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> Se2Adjoint.inverse(RealScalar.ONE));
+    assertThrows(Exception.class, () -> Se2Adjoint.inverse(HilbertMatrix.of(3)));
   }
 
   @Test
   public void testDlNullFail() {
     Se2GroupElement se2GroupElement = new Se2GroupElement(Tensors.vector(0, 0, Math.PI / 2));
-    AssertFail.of(() -> se2GroupElement.dL(null));
+    assertThrows(Exception.class, () -> se2GroupElement.dL(null));
   }
 }

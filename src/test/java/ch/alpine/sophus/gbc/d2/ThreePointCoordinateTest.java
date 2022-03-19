@@ -2,6 +2,7 @@
 package ch.alpine.sophus.gbc.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -14,7 +15,6 @@ import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -150,7 +150,7 @@ public class ThreePointCoordinateTest {
     Distribution distribution = UniformDistribution.unit();
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
-      AssertFail.of(() -> barycentricCoordinate.weights(RandomVariate.of(distribution, 10, 3), Tensors.vector(1, 1, 1)));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(RandomVariate.of(distribution, 10, 3), Tensors.vector(1, 1, 1)));
     }
   }
 
@@ -158,12 +158,12 @@ public class ThreePointCoordinateTest {
   public void testFailEmpty() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
-      AssertFail.of(() -> barycentricCoordinate.weights(Tensors.empty(), Tensors.empty()));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(Tensors.empty(), Tensors.empty()));
     }
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> ThreePointCoordinateTest.r2(null));
+    assertThrows(Exception.class, () -> ThreePointCoordinateTest.r2(null));
   }
 }

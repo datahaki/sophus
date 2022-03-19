@@ -2,13 +2,13 @@
 package ch.alpine.sophus.hs.hn;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
@@ -34,6 +34,6 @@ public class THnMemberQTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new THnMemberQ(null));
+    assertThrows(Exception.class, () -> new THnMemberQ(null));
   }
 }

@@ -2,12 +2,12 @@
 package ch.alpine.sophus.decim;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnCurveDecimation;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -95,13 +95,13 @@ public class RamerDouglasPeuckerTest {
 
   @Test
   public void testEpsilonFail() {
-    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(-.1)));
+    assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(-.1)));
   }
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Tensors.fromString("{{{1}, 2}, {{1}, 2}, {{1}, 2}}")));
-    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 3, 3)));
-    AssertFail.of(() -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 2, 4)));
+    assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Tensors.fromString("{{{1}, 2}, {{1}, 2}, {{1}, 2}}")));
+    assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 3, 3)));
+    assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 2, 4)));
   }
 }

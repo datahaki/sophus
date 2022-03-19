@@ -2,6 +2,7 @@
 package ch.alpine.sophus.crv.bezier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
@@ -78,18 +78,18 @@ public class BezierFunctionTest {
 
   @Test
   public void testFailEmpty() {
-    AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty()));
-    AssertFail.of(() -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
+    assertThrows(Exception.class, () -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty()));
+    assertThrows(Exception.class, () -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
   }
 
   @Test
   public void testFailScalar() {
-    AssertFail.of(() -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO));
+    assertThrows(Exception.class, () -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO));
   }
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> BezierFunction.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
-    AssertFail.of(() -> BezierFunction.of((BinaryAverage) null, Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> BezierFunction.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> BezierFunction.of((BinaryAverage) null, Tensors.vector(1, 2, 3)));
   }
 }

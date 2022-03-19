@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2c;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -24,7 +25,6 @@ import ch.alpine.sophus.math.NormWeighting;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -128,7 +128,7 @@ public class Se2CoveringManifoldTest {
   @Test
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
-      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 
   @Test
@@ -325,6 +325,6 @@ public class Se2CoveringManifoldTest {
   @Test
   public void testANullFail() {
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
-      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 }

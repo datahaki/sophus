@@ -2,6 +2,7 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -13,7 +14,6 @@ import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -161,6 +161,6 @@ public class BSpline3CurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new BSpline3CurveSubdivision(null));
+    assertThrows(Exception.class, () -> new BSpline3CurveSubdivision(null));
   }
 }

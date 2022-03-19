@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.ad;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -26,7 +27,6 @@ import ch.alpine.sophus.lie.sl.SlAlgebra;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -97,7 +97,7 @@ public class HsAlgebraTest {
 
   @Test
   public void testSe2Fail() {
-    AssertFail.of(() -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
+    assertThrows(Exception.class, () -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 
   @Test

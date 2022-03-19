@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ch.alpine.sophus.usr.AssertFail;
+import org.junit.jupiter.api.Test;
 
 public class RnGroupTest {
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> RnGroup.INSTANCE.element(null));
+    assertThrows(Exception.class, () -> RnGroup.INSTANCE.element(null));
   }
   // public void testFailMatrix() {
   // try {

@@ -2,10 +2,10 @@
 package ch.alpine.sophus.gbc.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.RotateLeft;
@@ -36,6 +36,6 @@ public class AddsTest {
 
   @Test
   public void testNegFail() {
-    AssertFail.of(() -> Adds.matrix(-1));
+    assertThrows(Exception.class, () -> Adds.matrix(-1));
   }
 }

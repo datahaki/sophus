@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Optional;
 import java.util.Random;
 
@@ -10,7 +12,6 @@ import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -47,7 +48,7 @@ public class RnBiinvariantMeanTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> RnBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> RnBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.ref.d1h;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -12,7 +13,6 @@ import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -81,8 +81,8 @@ public class Hermite3SubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, null, RnBiinvariantMean.INSTANCE));
-    AssertFail.of(() -> Hermite3Subdivisions.of(null, LieTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
-    AssertFail.of(() -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, LieTransport.INSTANCE, null));
+    assertThrows(Exception.class, () -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, null, RnBiinvariantMean.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite3Subdivisions.of(null, LieTransport.INSTANCE, RnBiinvariantMean.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, LieTransport.INSTANCE, null));
   }
 }

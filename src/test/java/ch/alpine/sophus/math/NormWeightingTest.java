@@ -2,12 +2,12 @@
 package ch.alpine.sophus.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -45,7 +45,7 @@ public class NormWeightingTest {
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> NormWeighting.of(null, InversePowerVariogram.of(1)));
-    AssertFail.of(() -> NormWeighting.of(Vector2Norm::of, null));
+    assertThrows(Exception.class, () -> NormWeighting.of(null, InversePowerVariogram.of(1)));
+    assertThrows(Exception.class, () -> NormWeighting.of(Vector2Norm::of, null));
   }
 }

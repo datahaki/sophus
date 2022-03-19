@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,6 @@ import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Transpose;
@@ -68,7 +69,7 @@ public class GrManifoldTest {
     Tensor p1 = RandomSample.of(new GrRandomSample(n, 1));
     Tensor p2 = RandomSample.of(new GrRandomSample(n, 2));
     Tensor q = ConstantArray.of(Pi.VALUE, n, n);
-    AssertFail.of(() -> new GrExponential(p1).log(q));
-    AssertFail.of(() -> new GrExponential(p2).log(q));
+    assertThrows(Exception.class, () -> new GrExponential(p1).log(q));
+    assertThrows(Exception.class, () -> new GrExponential(p2).log(q));
   }
 }

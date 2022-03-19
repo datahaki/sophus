@@ -2,11 +2,11 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -64,6 +64,6 @@ public class MSpline3CurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new MSpline3CurveSubdivision(null));
+    assertThrows(Exception.class, () -> new MSpline3CurveSubdivision(null));
   }
 }

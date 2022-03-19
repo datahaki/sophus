@@ -1,10 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -31,6 +32,6 @@ public class SnTransportTest {
   @Test
   public void testTangentFail() {
     TensorUnaryOperator tensorUnaryOperator = SnTransport.INSTANCE.shift(UnitVector.of(3, 0), UnitVector.of(3, 1));
-    AssertFail.of(() -> tensorUnaryOperator.apply(UnitVector.of(3, 0)));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(UnitVector.of(3, 0)));
   }
 }

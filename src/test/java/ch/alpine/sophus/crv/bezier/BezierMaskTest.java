@@ -2,13 +2,13 @@
 package ch.alpine.sophus.crv.bezier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -113,7 +113,7 @@ public class BezierMaskTest {
 
   @Test
   public void testNegFail() {
-    AssertFail.of(() -> BezierMaskTest.of(0));
-    AssertFail.of(() -> BezierMaskTest.of(-1));
+    assertThrows(Exception.class, () -> BezierMaskTest.of(0));
+    assertThrows(Exception.class, () -> BezierMaskTest.of(-1));
   }
 }

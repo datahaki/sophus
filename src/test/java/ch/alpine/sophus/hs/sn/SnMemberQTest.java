@@ -1,9 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 
@@ -22,6 +23,6 @@ public class SnMemberQTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> SnMemberQ.INSTANCE.test(null));
+    assertThrows(Exception.class, () -> SnMemberQ.INSTANCE.test(null));
   }
 }

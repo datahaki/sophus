@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,7 +17,6 @@ import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -65,6 +65,6 @@ public class LieDifferencesTest {
 
   @Test
   public void testLieGroupNullFail() {
-    AssertFail.of(() -> new LieDifferences(null));
+    assertThrows(Exception.class, () -> new LieDifferences(null));
   }
 }

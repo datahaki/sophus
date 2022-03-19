@@ -2,12 +2,12 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
@@ -72,6 +72,6 @@ public class Normal2DTest {
   @Test
   public void testTriple() {
     Distribution distribution = TriangularDistribution.with(Quantity.of(0, "m"), Quantity.of(1, "m"));
-    AssertFail.of(() -> Normal2D.string(RandomVariate.of(distribution, 1, 3)));
+    assertThrows(Exception.class, () -> Normal2D.string(RandomVariate.of(distribution, 1, 3)));
   }
 }

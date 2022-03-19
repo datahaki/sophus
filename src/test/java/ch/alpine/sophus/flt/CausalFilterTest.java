@@ -2,6 +2,7 @@
 package ch.alpine.sophus.flt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,7 +16,6 @@ import ch.alpine.sophus.flt.ga.GeodesicIIR1;
 import ch.alpine.sophus.flt.ga.GeodesicIIR2;
 import ch.alpine.sophus.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
@@ -79,6 +79,6 @@ public class CausalFilterTest {
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> CausalFilter.of(null));
+    assertThrows(Exception.class, () -> CausalFilter.of(null));
   }
 }

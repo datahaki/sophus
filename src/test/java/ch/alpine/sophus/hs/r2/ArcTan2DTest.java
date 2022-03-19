@@ -2,12 +2,12 @@
 package ch.alpine.sophus.hs.r2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -56,8 +56,8 @@ public class ArcTan2DTest {
 
   @Test
   public void testVectorXYFail() {
-    AssertFail.of(() -> ArcTan2D.of(RealScalar.ZERO));
-    AssertFail.of(() -> ArcTan2D.of(Tensors.vector(1)));
-    AssertFail.of(() -> ArcTan2D.of(Array.zeros(3, 3, 3)));
+    assertThrows(Exception.class, () -> ArcTan2D.of(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> ArcTan2D.of(Tensors.vector(1)));
+    assertThrows(Exception.class, () -> ArcTan2D.of(Array.zeros(3, 3, 3)));
   }
 }

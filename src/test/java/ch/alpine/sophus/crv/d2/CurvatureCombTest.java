@@ -2,11 +2,11 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -102,6 +102,6 @@ public class CurvatureCombTest {
   @Test
   public void testFail() {
     Tensor points = Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 0, 0}}");
-    AssertFail.of(() -> CurvatureComb.of(points, RealScalar.ONE, false));
+    assertThrows(Exception.class, () -> CurvatureComb.of(points, RealScalar.ONE, false));
   }
 }

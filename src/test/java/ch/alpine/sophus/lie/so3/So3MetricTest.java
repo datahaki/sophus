@@ -1,9 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -32,6 +33,6 @@ public class So3MetricTest {
     Tensor p = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     Tensor q = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     OrthogonalMatrixQ.require(p);
-    AssertFail.of(() -> So3Metric.INSTANCE.distance(p, q));
+    assertThrows(Exception.class, () -> So3Metric.INSTANCE.distance(p, q));
   }
 }

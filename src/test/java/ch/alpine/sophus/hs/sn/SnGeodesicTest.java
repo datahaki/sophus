@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.sn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,6 @@ import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.hs.s2.S2Geodesic;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -88,7 +88,7 @@ public class SnGeodesicTest {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
     Scalar scalar = RandomVariate.of(NormalDistribution.standard());
-    AssertFail.of(() -> SnGeodesic.INSTANCE.split(p, q, scalar));
+    assertThrows(Exception.class, () -> SnGeodesic.INSTANCE.split(p, q, scalar));
   }
 
   @Test
@@ -145,16 +145,16 @@ public class SnGeodesicTest {
 
   @Test
   public void testDimensionsFail() {
-    AssertFail.of(() -> SnGeodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
+    assertThrows(Exception.class, () -> SnGeodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
   }
 
   @Test
   public void testNormFail() {
-    AssertFail.of(() -> SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
+    assertThrows(Exception.class, () -> SnGeodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
   }
 
   @Test
   public void testMidpointAntipodesFail() {
-    AssertFail.of(() -> SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate()));
+    assertThrows(Exception.class, () -> SnGeodesic.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate()));
   }
 }

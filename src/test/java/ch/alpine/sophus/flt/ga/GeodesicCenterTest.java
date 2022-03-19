@@ -2,6 +2,7 @@
 package ch.alpine.sophus.flt.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -13,7 +14,6 @@ import ch.alpine.sophus.flt.ga.GeodesicCenter.Splits;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -70,15 +70,15 @@ public class GeodesicCenterTest {
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, CONSTANT);
     for (int index = 0; index < 9; ++index) {
       int fi = index;
-      AssertFail.of(() -> tensorUnaryOperator.apply(Array.zeros(2 * fi)));
+      assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Array.zeros(2 * fi)));
     }
   }
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));
-    AssertFail.of(() -> GeodesicCenter.of(RnGeodesic.INSTANCE, (ScalarUnaryOperator) null));
-    AssertFail.of(() -> GeodesicCenter.of(null, CONSTANT));
+    assertThrows(Exception.class, () -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));
+    assertThrows(Exception.class, () -> GeodesicCenter.of(RnGeodesic.INSTANCE, (ScalarUnaryOperator) null));
+    assertThrows(Exception.class, () -> GeodesicCenter.of(null, CONSTANT));
   }
 
   @Test
@@ -116,23 +116,23 @@ public class GeodesicCenterTest {
 
   @Test
   public void testFailEven() {
-    AssertFail.of(() -> GeodesicCenter.Splits.of(Tensors.vector(1, 2)));
+    assertThrows(Exception.class, () -> GeodesicCenter.Splits.of(Tensors.vector(1, 2)));
   }
 
   @Test
   public void testNonSymmetric() {
-    AssertFail.of(() -> GeodesicCenter.Splits.of(Tensors.vector(1, 2, 2)));
+    assertThrows(Exception.class, () -> GeodesicCenter.Splits.of(Tensors.vector(1, 2, 2)));
   }
 
   @Test
   public void testSplitsEvenFail() {
     Splits splits = new GeodesicCenter.Splits(UniformWindowSampler.of(GaussianWindow.FUNCTION));
     splits.apply(5);
-    AssertFail.of(() -> splits.apply(4));
+    assertThrows(Exception.class, () -> splits.apply(4));
   }
 
   @Test
   public void testSplitsNullFail() {
-    AssertFail.of(() -> new GeodesicCenter.Splits(null));
+    assertThrows(Exception.class, () -> new GeodesicCenter.Splits(null));
   }
 }

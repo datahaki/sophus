@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,6 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.sopq.TSopqProject;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -30,7 +31,7 @@ public class HnBiinvariantMeanTest {
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
     Tensor result = biinvariantMean.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
     Chop._10.requireClose(result, Tensors.vector(0.45508986056222733, 0, 1.09868411346781));
-    AssertFail.of(() -> biinvariantMean.mean(Tensors.of(x, y), Tensors.vector(0.6, 0.5)));
+    assertThrows(Exception.class, () -> biinvariantMean.mean(Tensors.of(x, y), Tensors.vector(0.6, 0.5)));
   }
 
   @Test
@@ -67,6 +68,6 @@ public class HnBiinvariantMeanTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> HnBiinvariantMean.of(null));
+    assertThrows(Exception.class, () -> HnBiinvariantMean.of(null));
   }
 }

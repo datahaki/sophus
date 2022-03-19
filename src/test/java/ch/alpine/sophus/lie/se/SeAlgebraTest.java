@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,6 @@ import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.ad.HsBarycentricCoordinate;
 import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.mat.Tolerance;
@@ -39,9 +39,9 @@ public class SeAlgebraTest {
       LieAlgebra lieAlgebra = SeAlgebra.of(n);
       Tensor ad = lieAlgebra.ad();
       int fn = n;
-      AssertFail.of(() -> new HsAlgebra(ad, fn - 1, 8));
+      assertThrows(Exception.class, () -> new HsAlgebra(ad, fn - 1, 8));
       if (2 < n)
-        AssertFail.of(() -> new HsAlgebra(ad, fn + 1, 8));
+        assertThrows(Exception.class, () -> new HsAlgebra(ad, fn + 1, 8));
       HsAlgebra hsAlgebra = new HsAlgebra(ad, n, 10);
       Tensor g = RandomVariate.of(distribution, ad.length());
       Tensor m = RandomVariate.of(distribution, n);
@@ -58,7 +58,7 @@ public class SeAlgebraTest {
 
   @Test
   public void testNFail() {
-    AssertFail.of(() -> SeAlgebra.of(0));
-    AssertFail.of(() -> SeAlgebra.of(-1));
+    assertThrows(Exception.class, () -> SeAlgebra.of(0));
+    assertThrows(Exception.class, () -> SeAlgebra.of(-1));
   }
 }

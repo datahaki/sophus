@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.mat.HilbertMatrix;
@@ -37,6 +38,6 @@ public class GardenCoordinateTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> GardenCoordinate.of(RnManifold.INSTANCE, null, HilbertMatrix.of(10, 3)));
+    assertThrows(Exception.class, () -> GardenCoordinate.of(RnManifold.INSTANCE, null, HilbertMatrix.of(10, 3)));
   }
 }

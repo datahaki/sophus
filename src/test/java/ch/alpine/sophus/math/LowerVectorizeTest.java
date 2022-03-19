@@ -2,10 +2,10 @@
 package ch.alpine.sophus.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
@@ -15,8 +15,8 @@ import ch.alpine.tensor.spa.Normal;
 public class LowerVectorizeTest {
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> LowerVectorize.of(Tensors.vector(), +0));
-    AssertFail.of(() -> LowerVectorize.of(Tensors.vector(), -1));
+    assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(), +0));
+    assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(), -1));
   }
 
   @Test
@@ -29,19 +29,19 @@ public class LowerVectorizeTest {
 
   @Test
   public void testScalarFail() {
-    AssertFail.of(() -> LowerVectorize.of(Pi.VALUE, 0));
-    AssertFail.of(() -> LowerVectorize.of(Pi.VALUE, -1));
+    assertThrows(Exception.class, () -> LowerVectorize.of(Pi.VALUE, 0));
+    assertThrows(Exception.class, () -> LowerVectorize.of(Pi.VALUE, -1));
   }
 
   @Test
   public void testVectorFail() {
-    AssertFail.of(() -> LowerVectorize.of(Tensors.vector(1, 2, 3), 0));
-    AssertFail.of(() -> LowerVectorize.of(Tensors.vector(1, 2, 3), -1));
+    assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(1, 2, 3), 0));
+    assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(1, 2, 3), -1));
   }
 
   @Test
   public void testRank3() {
-    // AssertFail.of(() -> LowerVectorize.of(LeviCivitaTensor.of(3), 0));
+    // assertThrows(Exception.class, () -> LowerVectorize.of(LeviCivitaTensor.of(3), 0));
     Tensor tensor = LowerVectorize.of(LeviCivitaTensor.of(3), 0);
     Normal.of(tensor);
   }

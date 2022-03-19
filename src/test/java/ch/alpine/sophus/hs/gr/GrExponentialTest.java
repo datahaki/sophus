@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -10,7 +11,6 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -102,6 +102,6 @@ public class GrExponentialTest {
   @Test
   public void testGrFail() {
     Tensor x = Tensors.fromString("{{1, 1}, {0, 1}}");
-    AssertFail.of(() -> new GrExponential(x));
+    assertThrows(Exception.class, () -> new GrExponential(x));
   }
 }

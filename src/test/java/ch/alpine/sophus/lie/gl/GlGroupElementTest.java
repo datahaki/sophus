@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.gl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -76,23 +76,23 @@ public class GlGroupElementTest {
   @Test
   public void testAdjointFail() {
     GlGroupElement linearGroupElement = GlGroupElement.of(IdentityMatrix.of(5));
-    AssertFail.of(() -> linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5)));
+    assertThrows(Exception.class, () -> linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5)));
   }
 
   @Test
   public void testNonSquareFail() {
-    AssertFail.of(() -> GlGroupElement.of(HilbertMatrix.of(2, 3)));
+    assertThrows(Exception.class, () -> GlGroupElement.of(HilbertMatrix.of(2, 3)));
   }
 
   @Test
   public void testCombineNonSquareFail() {
     GlGroupElement linearGroupElement = GlGroupElement.of(DiagonalMatrix.of(1, 2));
-    AssertFail.of(() -> linearGroupElement.combine(HilbertMatrix.of(2, 3)));
-    AssertFail.of(() -> linearGroupElement.combine(Tensors.vector(1, 2)));
+    assertThrows(Exception.class, () -> linearGroupElement.combine(HilbertMatrix.of(2, 3)));
+    assertThrows(Exception.class, () -> linearGroupElement.combine(Tensors.vector(1, 2)));
   }
 
   @Test
   public void testNonInvertibleFail() {
-    AssertFail.of(() -> GlGroupElement.of(DiagonalMatrix.of(1, 0, 2)));
+    assertThrows(Exception.class, () -> GlGroupElement.of(DiagonalMatrix.of(1, 0, 2)));
   }
 }

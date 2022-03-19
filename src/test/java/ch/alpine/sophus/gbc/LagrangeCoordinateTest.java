@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,6 @@ import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
@@ -75,6 +76,6 @@ public class LagrangeCoordinateTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new LagrangeCoordinate(null));
+    assertThrows(Exception.class, () -> new LagrangeCoordinate(null));
   }
 }

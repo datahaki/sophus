@@ -2,11 +2,11 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -37,6 +37,6 @@ public class EightPointCurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new EightPointCurveSubdivision(null));
+    assertThrows(Exception.class, () -> new EightPointCurveSubdivision(null));
   }
 }

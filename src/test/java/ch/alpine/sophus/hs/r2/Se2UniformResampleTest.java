@@ -1,10 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.r2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -26,6 +27,6 @@ public class Se2UniformResampleTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> Se2UniformResample.of(null));
+    assertThrows(Exception.class, () -> Se2UniformResample.of(null));
   }
 }

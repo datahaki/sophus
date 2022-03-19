@@ -3,13 +3,13 @@ package ch.alpine.sophus.lie.rn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -46,7 +46,7 @@ public class RnGeodesicTest {
     Tensor knots = Tensors.vector(1, 2, 3, 4);
     Tensor control = Tensors.vector(9, 3, 4);
     DeBoor.of(RnGeodesic.INSTANCE, knots, control);
-    AssertFail.of(() -> DeBoor.of(null, knots, control));
+    assertThrows(Exception.class, () -> DeBoor.of(null, knots, control));
   }
 
   @Test

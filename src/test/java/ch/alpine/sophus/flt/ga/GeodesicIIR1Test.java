@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ext.Serialization;
@@ -65,16 +66,16 @@ public class GeodesicIIR1Test {
   @Test
   public void testNullFail() {
     GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0.2));
-    AssertFail.of(() -> geodesicIIR1.apply(null));
+    assertThrows(Exception.class, () -> geodesicIIR1.apply(null));
   }
 
   @Test
   public void testZeroFail() {
-    AssertFail.of(() -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0)));
+    assertThrows(Exception.class, () -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0)));
   }
 
   @Test
   public void testLargeFail() {
-    AssertFail.of(() -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(1.01)));
+    assertThrows(Exception.class, () -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(1.01)));
   }
 }

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,6 @@ import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.lie.gl.GlGroupElement;
 import ch.alpine.sophus.lie.so.SoGroup;
 import ch.alpine.sophus.lie.so.SoGroupElement;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Serialization;
@@ -53,6 +54,6 @@ public class So3ExponentialTest {
 
   @Test
   public void testFailOrthogonal() {
-    AssertFail.of(() -> So3Exponential.INSTANCE.log(So3TestHelper.spawn_so3()));
+    assertThrows(Exception.class, () -> So3Exponential.INSTANCE.log(So3TestHelper.spawn_so3()));
   }
 }

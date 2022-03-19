@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.Distribution;
@@ -41,6 +42,6 @@ public class HnTransportTest {
     Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
     TensorUnaryOperator shift = HnTransport.INSTANCE.shift(p, q);
     Tensor v = RandomVariate.of(distribution, d + 1);
-    AssertFail.of(() -> shift.apply(v));
+    assertThrows(Exception.class, () -> shift.apply(v));
   }
 }

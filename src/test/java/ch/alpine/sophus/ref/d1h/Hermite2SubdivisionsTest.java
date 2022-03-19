@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,7 +12,6 @@ import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Reverse;
@@ -48,13 +49,13 @@ public class Hermite2SubdivisionsTest {
 
   @Test
   public void testNullA1Fail() {
-    AssertFail.of(() -> Hermite2Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
-    AssertFail.of(() -> Hermite2Subdivisions.standard(null, LieTransport.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
+    assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(null, LieTransport.INSTANCE));
   }
 
   @Test
   public void testNullA2Fail() {
-    AssertFail.of(() -> Hermite2Subdivisions.manifold(Se2CoveringManifold.INSTANCE, null));
-    AssertFail.of(() -> Hermite2Subdivisions.manifold(null, LieTransport.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite2Subdivisions.manifold(Se2CoveringManifold.INSTANCE, null));
+    assertThrows(Exception.class, () -> Hermite2Subdivisions.manifold(null, LieTransport.INSTANCE));
   }
 }

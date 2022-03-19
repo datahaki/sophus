@@ -2,12 +2,12 @@
 package ch.alpine.sophus.crv.spline;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -159,21 +159,21 @@ public class GeodesicBSplineFunctionTest {
       GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots);
     }
     Tensor knots = Tensors.vector(1, 2, 3, 2, 5);
-    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots));
+    assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 1, knots, knots));
   }
 
   @Test
   public void testDegreeFail() {
-    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, -1, UnitVector.of(7, 3)));
+    assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, -1, UnitVector.of(7, 3)));
   }
 
   @Test
   public void testKnotsFail() {
-    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Range.of(0, 10), Range.of(0, 11)));
+    assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Range.of(0, 10), Range.of(0, 11)));
   }
 
   @Test
   public void testKnotsUnsortedFail() {
-    AssertFail.of(() -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Tensors.vector(3, 2, 1), Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, 3, Tensors.vector(3, 2, 1), Tensors.vector(1, 2, 3)));
   }
 }

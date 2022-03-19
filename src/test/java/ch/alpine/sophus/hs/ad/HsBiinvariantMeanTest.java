@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.ad;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
@@ -18,7 +19,6 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -132,10 +132,10 @@ public class HsBiinvariantMeanTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> HsBiinvariantMean.of(null));
-    AssertFail.of(() -> HsBiinvariantMean.of(null, Chop._10));
+    assertThrows(Exception.class, () -> HsBiinvariantMean.of(null));
+    assertThrows(Exception.class, () -> HsBiinvariantMean.of(null, Chop._10));
     Tensor ad = So3Algebra.INSTANCE.ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
-    AssertFail.of(() -> HsBiinvariantMean.of(hsAlgebra, null));
+    assertThrows(Exception.class, () -> HsBiinvariantMean.of(hsAlgebra, null));
   }
 }

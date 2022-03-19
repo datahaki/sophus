@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.he;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,6 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -114,14 +114,14 @@ public class HeGroupElementTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> new HeGroupElement(Tensors.of(HilbertMatrix.of(3), Tensors.vector(1, 2, 3), RealScalar.ONE)));
-    AssertFail.of(() -> new HeGroupElement(Tensors.of(Tensors.vector(1, 2, 3), HilbertMatrix.of(3), RealScalar.ONE)));
+    assertThrows(Exception.class, () -> new HeGroupElement(Tensors.of(HilbertMatrix.of(3), Tensors.vector(1, 2, 3), RealScalar.ONE)));
+    assertThrows(Exception.class, () -> new HeGroupElement(Tensors.of(Tensors.vector(1, 2, 3), HilbertMatrix.of(3), RealScalar.ONE)));
   }
 
   @Test
   public void testDlNullFail() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
-    AssertFail.of(() -> a.dL(null));
+    assertThrows(Exception.class, () -> a.dL(null));
   }
 }

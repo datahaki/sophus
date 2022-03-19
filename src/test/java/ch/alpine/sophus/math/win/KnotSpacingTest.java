@@ -2,13 +2,13 @@
 package ch.alpine.sophus.math.win;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -61,11 +61,11 @@ public class KnotSpacingTest {
   @Test
   public void testScalarFail() {
     TensorUnaryOperator centripetalKnotSpacing = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0.25);
-    AssertFail.of(() -> centripetalKnotSpacing.apply(RealScalar.ONE));
+    assertThrows(Exception.class, () -> centripetalKnotSpacing.apply(RealScalar.ONE));
   }
 
   @Test
   public void testChordalFail() {
-    AssertFail.of(() -> KnotSpacing.chordal(null));
+    assertThrows(Exception.class, () -> KnotSpacing.chordal(null));
   }
 }

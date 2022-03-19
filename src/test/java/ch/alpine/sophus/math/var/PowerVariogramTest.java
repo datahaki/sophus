@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,6 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.rn.RnMetric;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -66,6 +67,6 @@ public class PowerVariogramTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
+    assertThrows(Exception.class, () -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
   }
 }

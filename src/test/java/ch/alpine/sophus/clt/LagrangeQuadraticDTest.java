@@ -2,13 +2,13 @@
 package ch.alpine.sophus.clt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -66,7 +66,7 @@ public class LagrangeQuadraticDTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new LagrangeQuadraticD(null, RealScalar.ONE));
-    AssertFail.of(() -> new LagrangeQuadraticD(RealScalar.ONE, null));
+    assertThrows(Exception.class, () -> new LagrangeQuadraticD(null, RealScalar.ONE));
+    assertThrows(Exception.class, () -> new LagrangeQuadraticD(RealScalar.ONE, null));
   }
 }

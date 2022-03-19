@@ -2,6 +2,7 @@
 package ch.alpine.sophus.dv;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -14,7 +15,6 @@ import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -81,6 +81,6 @@ public class GardenDistanceVectorTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> GardenDistanceVector.of(null, Tensors.empty()));
+    assertThrows(Exception.class, () -> GardenDistanceVector.of(null, Tensors.empty()));
   }
 }

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.rn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
@@ -16,7 +17,6 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
@@ -134,7 +134,7 @@ public class RnManifoldTest {
   @Test
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
-      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 
   @Test

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
@@ -55,6 +56,6 @@ public class SnLineDistanceTest {
 
   @Test
   public void testPointFail() {
-    AssertFail.of(() -> SnLineDistance.INSTANCE.tensorNorm(UnitVector.of(3, 1), UnitVector.of(3, 1)));
+    assertThrows(Exception.class, () -> SnLineDistance.INSTANCE.tensorNorm(UnitVector.of(3, 1), UnitVector.of(3, 1)));
   }
 }

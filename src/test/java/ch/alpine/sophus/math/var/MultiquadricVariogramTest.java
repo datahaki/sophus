@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -31,6 +32,6 @@ public class MultiquadricVariogramTest {
 
   @Test
   public void testFailNonPositive() {
-    AssertFail.of(() -> MultiquadricVariogram.of(RealScalar.of(-1)));
+    assertThrows(Exception.class, () -> MultiquadricVariogram.of(RealScalar.of(-1)));
   }
 }

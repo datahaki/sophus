@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
@@ -50,7 +50,7 @@ public class CliffordAlgebraTest {
 
   @Test
   public void testDnegativeFail() {
-    AssertFail.of(() -> CliffordAlgebraCache.positive(-1));
+    assertThrows(Exception.class, () -> CliffordAlgebraCache.positive(-1));
   }
 
   @Test
@@ -158,7 +158,7 @@ public class CliffordAlgebraTest {
     assertEquals(cliffordAlgebra.grade(x, 1), Tensors.vector(0, 2, 3, 4, 0, 0, 0, 0));
     assertEquals(cliffordAlgebra.grade(x, 2), Tensors.vector(0, 0, 0, 0, 5, -3, -4, 0));
     assertEquals(cliffordAlgebra.grade(x, 3), Tensors.vector(0, 0, 0, 0, 0, 0, 0, -1));
-    AssertFail.of(() -> cliffordAlgebra.grade(x, 4));
+    assertThrows(Exception.class, () -> cliffordAlgebra.grade(x, 4));
   }
 
   @Test
@@ -219,8 +219,8 @@ public class CliffordAlgebraTest {
   @Test
   public void testReverseFail() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
-    AssertFail.of(() -> cliffordAlgebra.reverse(Pi.VALUE));
-    AssertFail.of(() -> cliffordAlgebra.reverse(HilbertMatrix.of(4)));
+    assertThrows(Exception.class, () -> cliffordAlgebra.reverse(Pi.VALUE));
+    assertThrows(Exception.class, () -> cliffordAlgebra.reverse(HilbertMatrix.of(4)));
   }
 
   @Test

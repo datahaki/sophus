@@ -2,13 +2,13 @@
 package ch.alpine.sophus.itp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -81,12 +81,12 @@ public class BarycentricRationalInterpolationTest {
 
   @Test
   public void testUnorderedFail() {
-    AssertFail.of(() -> BarycentricRationalInterpolation.of(Tensors.vector(2, 1, 3), 1));
+    assertThrows(Exception.class, () -> BarycentricRationalInterpolation.of(Tensors.vector(2, 1, 3), 1));
   }
 
   @Test
   public void testNegativeFail() {
     BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), 10);
-    AssertFail.of(() -> BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), -2));
+    assertThrows(Exception.class, () -> BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), -2));
   }
 }

@@ -2,11 +2,11 @@
 package ch.alpine.sophus.crv.spline;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -31,6 +31,6 @@ public class LagrangeInterpolationTest {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(-3, 7), 4, 2).unmodifiable();
     Interpolation interpolation = LagrangeInterpolation.of(RnGeodesic.INSTANCE, control);
     interpolation.get(Tensors.vector(1));
-    AssertFail.of(() -> interpolation.get(Tensors.vector(1, 2)));
+    assertThrows(Exception.class, () -> interpolation.get(Tensors.vector(1, 2)));
   }
 }

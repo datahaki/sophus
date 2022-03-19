@@ -2,6 +2,7 @@
 package ch.alpine.sophus.bm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -17,7 +18,6 @@ import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -89,7 +89,7 @@ public class ReducingMeanTest {
     Tensor weights = Tensors.vector(0.0, 0.0, 0.1);
     Tensor sequence = Tensors.vector(3, 4, 10);
     BiinvariantMean biinvariantMean = ReducingMean.of(RnGeodesic.INSTANCE);
-    AssertFail.of(() -> biinvariantMean.mean(sequence, weights));
+    assertThrows(Exception.class, () -> biinvariantMean.mean(sequence, weights));
   }
 
   @Test

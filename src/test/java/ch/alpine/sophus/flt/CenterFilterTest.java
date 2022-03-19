@@ -2,6 +2,7 @@
 package ch.alpine.sophus.flt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,6 @@ import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -83,11 +83,11 @@ public class CenterFilterTest {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
     CenterFilter centerFilter = new CenterFilter(geodesicCenter, 0);
     assertEquals(centerFilter.radius(), 0);
-    AssertFail.of(() -> new CenterFilter(geodesicCenter, -1));
+    assertThrows(Exception.class, () -> new CenterFilter(geodesicCenter, -1));
   }
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> new CenterFilter(null, 1));
+    assertThrows(Exception.class, () -> new CenterFilter(null, 1));
   }
 }

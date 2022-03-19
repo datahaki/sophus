@@ -2,12 +2,12 @@
 package ch.alpine.sophus.crv.bezier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -42,29 +42,29 @@ public class BezierExtrapolationTest {
   @Test
   public void testFailScalar() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGeodesic.INSTANCE);
-    AssertFail.of(() -> tensorUnaryOperator.apply(RealScalar.ONE));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ONE));
   }
 
   @Test
   public void testFailEmpty() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
-    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.empty()));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
   @Test
   public void testFailSe2_1() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
-    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.vector(1)));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.vector(1)));
   }
 
   @Test
   public void testFailSe2() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Geodesic.INSTANCE);
-    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.vector(1, 2, 3)));
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> BezierExtrapolation.of(null));
+    assertThrows(Exception.class, () -> BezierExtrapolation.of(null));
   }
 }

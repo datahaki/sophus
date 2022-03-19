@@ -2,13 +2,13 @@
 package ch.alpine.sophus.crv.dubins;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -49,6 +49,6 @@ public class FixedRadiusDubinsTest {
 
   @Test
   public void testNegativeFail() {
-    AssertFail.of(() -> FixedRadiusDubins.of(Tensors.vector(1, 2, 3), RealScalar.of(-0.1)));
+    assertThrows(Exception.class, () -> FixedRadiusDubins.of(Tensors.vector(1, 2, 3), RealScalar.of(-0.1)));
   }
 }

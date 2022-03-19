@@ -2,11 +2,11 @@
 package ch.alpine.sophus.lie.he;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -109,6 +109,6 @@ public class HeBiinvariantMeanTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 }

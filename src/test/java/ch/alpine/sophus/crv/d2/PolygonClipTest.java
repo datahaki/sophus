@@ -2,6 +2,7 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -42,7 +42,7 @@ public class PolygonClipTest {
     Tensor b = Tensors.empty();
     Tensor result = PolygonClip.of(a).apply(b);
     assertTrue(Tensors.isEmpty(result));
-    AssertFail.of(() -> result.append(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> result.append(RealScalar.ZERO));
     assertTrue(Tensors.isEmpty(a));
     assertTrue(Tensors.isEmpty(b));
   }
@@ -138,6 +138,6 @@ public class PolygonClipTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> PolygonClip.of(HilbertMatrix.of(2, 3)));
+    assertThrows(Exception.class, () -> PolygonClip.of(HilbertMatrix.of(2, 3)));
   }
 }

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.crv.spline;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -12,7 +13,6 @@ import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
 import ch.alpine.sophus.math.win.KnotSpacing;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -61,7 +61,7 @@ public class GeodesicCatmullRomTest {
   public void testLengthFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 3, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
-    AssertFail.of(() -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control));
+    assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control));
   }
 
   @Test
@@ -69,6 +69,6 @@ public class GeodesicCatmullRomTest {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
     GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control);
-    AssertFail.of(() -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots.extract(0, knots.length() - 1), control));
+    assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots.extract(0, knots.length() - 1), control));
   }
 }

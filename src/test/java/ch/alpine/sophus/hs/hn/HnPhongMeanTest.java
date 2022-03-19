@@ -33,6 +33,6 @@ public class HnPhongMeanTest {
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
     HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
-    // AssertFail.of(() -> HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.6, 0.5)));
+    // assertThrows(Exception.class, () -> HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.6, 0.5)));
   }
 }

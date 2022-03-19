@@ -2,6 +2,7 @@
 package ch.alpine.sophus.itp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -12,7 +13,6 @@ import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -79,6 +79,6 @@ public class InverseDistanceWeightingTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> new InverseDistanceWeighting(null));
+    assertThrows(Exception.class, () -> new InverseDistanceWeighting(null));
   }
 }

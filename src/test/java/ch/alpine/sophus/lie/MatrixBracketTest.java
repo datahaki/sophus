@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -75,29 +75,29 @@ public class MatrixBracketTest {
 
   @Test
   public void testBracketVectorFail() {
-    AssertFail.of(() -> MatrixBracket.of(Tensors.empty(), Tensors.empty()));
-    AssertFail.of(() -> MatrixBracket.of(Tensors.vector(1, 2), Tensors.vector(3, 4)));
+    assertThrows(Exception.class, () -> MatrixBracket.of(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> MatrixBracket.of(Tensors.vector(1, 2), Tensors.vector(3, 4)));
   }
 
   @Test
   public void testBracketMatrixFail() {
     Tensor x = RotationMatrix.of(RealScalar.ONE);
     Tensor y = Tensors.vector(3, 4);
-    AssertFail.of(() -> MatrixBracket.of(x, y));
-    AssertFail.of(() -> MatrixBracket.of(y, x));
+    assertThrows(Exception.class, () -> MatrixBracket.of(x, y));
+    assertThrows(Exception.class, () -> MatrixBracket.of(y, x));
   }
 
   @Test
   public void testBracketAdFail() {
-    AssertFail.of(() -> MatrixBracket.of(Array.zeros(2, 2, 2), Array.zeros(2, 2, 2)));
+    assertThrows(Exception.class, () -> MatrixBracket.of(Array.zeros(2, 2, 2), Array.zeros(2, 2, 2)));
   }
 
   @Test
   public void testBracketAdVectorFail() {
     Tensor x = Array.zeros(3, 3, 3);
     Tensor y = Tensors.vector(1, 2, 3);
-    AssertFail.of(() -> MatrixBracket.of(x, y));
-    AssertFail.of(() -> MatrixBracket.of(y, x));
+    assertThrows(Exception.class, () -> MatrixBracket.of(x, y));
+    assertThrows(Exception.class, () -> MatrixBracket.of(y, x));
   }
 
   @Test

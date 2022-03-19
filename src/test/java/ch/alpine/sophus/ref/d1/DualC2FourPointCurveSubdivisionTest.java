@@ -2,11 +2,11 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -36,7 +36,7 @@ public class DualC2FourPointCurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> DualC2FourPointCurveSubdivision.cubic(null));
-    AssertFail.of(() -> DualC2FourPointCurveSubdivision.tightest(null));
+    assertThrows(Exception.class, () -> DualC2FourPointCurveSubdivision.cubic(null));
+    assertThrows(Exception.class, () -> DualC2FourPointCurveSubdivision.tightest(null));
   }
 }

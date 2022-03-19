@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -121,11 +122,11 @@ public class RnAffineCoordinateTest {
 
   @Test
   public void testVectorFail() {
-    AssertFail.of(() -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
+    assertThrows(Exception.class, () -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
   public void testEmptyFail() {
-    AssertFail.of(() -> RnAffineCoordinate.of(Tensors.empty()));
+    assertThrows(Exception.class, () -> RnAffineCoordinate.of(Tensors.empty()));
   }
 }

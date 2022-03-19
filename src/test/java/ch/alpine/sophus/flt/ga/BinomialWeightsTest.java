@@ -2,10 +2,10 @@
 package ch.alpine.sophus.flt.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -31,6 +31,6 @@ public class BinomialWeightsTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> BinomialWeights.INSTANCE.apply(-1));
+    assertThrows(Exception.class, () -> BinomialWeights.INSTANCE.apply(-1));
   }
 }

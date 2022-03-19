@@ -3,13 +3,13 @@ package ch.alpine.sophus.crv.dubins;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -81,12 +81,12 @@ public class DubinsPathTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> DubinsType.LSR.tangent(2, RealScalar.of(-10)));
+    assertThrows(Exception.class, () -> DubinsType.LSR.tangent(2, RealScalar.of(-10)));
   }
 
   @Test
   public void testAnticipateFail() {
-    AssertFail.of(() -> DubinsType.LSR.tangent(-2, RealScalar.of(10)));
+    assertThrows(Exception.class, () -> DubinsType.LSR.tangent(-2, RealScalar.of(10)));
   }
 
   @Test
@@ -138,7 +138,7 @@ public class DubinsPathTest {
 
   @Test
   public void testSignFail() {
-    AssertFail.of(() -> DubinsPath.of(DubinsType.LRL, RealScalar.ONE, Tensors.vector(1, -10, 1)));
+    assertThrows(Exception.class, () -> DubinsPath.of(DubinsType.LRL, RealScalar.ONE, Tensors.vector(1, -10, 1)));
   }
 
   @Test
@@ -146,17 +146,17 @@ public class DubinsPathTest {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LRL, RealScalar.ONE, Tensors.vector(1, 10, 1));
     assertEquals(dubinsPath.length(), Quantity.of(12, ""));
     ScalarTensorFunction scalarTensorFunction = dubinsPath.sampler(Tensors.vector(1, 2, 3));
-    AssertFail.of(() -> scalarTensorFunction.apply(RealScalar.of(-.1)));
-    AssertFail.of(() -> scalarTensorFunction.apply(RealScalar.of(13)));
+    assertThrows(Exception.class, () -> scalarTensorFunction.apply(RealScalar.of(-.1)));
+    assertThrows(Exception.class, () -> scalarTensorFunction.apply(RealScalar.of(13)));
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> DubinsPath.of(null, RealScalar.ONE, Tensors.vector(1, 10, 1)));
+    assertThrows(Exception.class, () -> DubinsPath.of(null, RealScalar.ONE, Tensors.vector(1, 10, 1)));
   }
 
   @Test
   public void testVectorFail() {
-    AssertFail.of(() -> DubinsPath.of(DubinsType.RLR, RealScalar.ONE, Tensors.vector(1, 10, 1, 3)));
+    assertThrows(Exception.class, () -> DubinsPath.of(DubinsType.RLR, RealScalar.ONE, Tensors.vector(1, 10, 1, 3)));
   }
 }

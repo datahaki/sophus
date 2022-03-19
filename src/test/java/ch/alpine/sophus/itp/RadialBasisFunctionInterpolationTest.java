@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.util.Random;
 
@@ -12,7 +14,6 @@ import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.sophus.math.var.VariogramFunctions;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -86,6 +87,6 @@ public class RadialBasisFunctionInterpolationTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> RadialBasisFunctionInterpolation.of(null, Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> RadialBasisFunctionInterpolation.of(null, Tensors.empty(), Tensors.empty()));
   }
 }

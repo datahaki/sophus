@@ -2,6 +2,7 @@
 package ch.alpine.sophus.flt.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.function.Function;
 
@@ -11,7 +12,6 @@ import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
 import ch.alpine.sophus.math.win.HalfWindowSampler;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -30,7 +30,7 @@ public class GeodesicExtrapolationTest {
   @Test
   public void testEmptyFail() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
-    AssertFail.of(() -> tensorUnaryOperator.apply(Tensors.empty()));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
   @Test
@@ -130,21 +130,21 @@ public class GeodesicExtrapolationTest {
   @Test
   public void testAffinityFail() {
     Tensor mask = Tensors.vector(0.5, 0.8);
-    AssertFail.of(() -> GeodesicExtrapolation.Splits.of(mask));
+    assertThrows(Exception.class, () -> GeodesicExtrapolation.Splits.of(mask));
   }
 
   @Test
   public void testNullFail1() {
-    AssertFail.of(() -> GeodesicExtrapolation.of(null, Sin.FUNCTION));
+    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(null, Sin.FUNCTION));
   }
 
   @Test
   public void testNullFailITF() {
-    AssertFail.of(() -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (Function<Integer, Tensor>) null));
+    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (Function<Integer, Tensor>) null));
   }
 
   @Test
   public void testNullFailSUO() {
-    AssertFail.of(() -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (ScalarUnaryOperator) null));
+    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (ScalarUnaryOperator) null));
   }
 }

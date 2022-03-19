@@ -3,6 +3,7 @@ package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -68,7 +68,7 @@ public class OriginEnclosureQTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> OriginEnclosureQ.INSTANCE.test(IdentityMatrix.of(4)));
+    assertThrows(Exception.class, () -> OriginEnclosureQ.INSTANCE.test(IdentityMatrix.of(4)));
   }
 
   @Test
@@ -89,6 +89,6 @@ public class OriginEnclosureQTest {
 
   @Test
   public void testScalarFail() {
-    AssertFail.of(() -> FranklinPnpoly.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
+    assertThrows(Exception.class, () -> FranklinPnpoly.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
   }
 }

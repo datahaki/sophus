@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
@@ -52,7 +52,7 @@ public class GrRandomSampleTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> new GrRandomSample(-3, 2));
-    AssertFail.of(() -> new GrRandomSample(3, 4));
+    assertThrows(Exception.class, () -> new GrRandomSample(-3, 2));
+    assertThrows(Exception.class, () -> new GrRandomSample(3, 4));
   }
 }

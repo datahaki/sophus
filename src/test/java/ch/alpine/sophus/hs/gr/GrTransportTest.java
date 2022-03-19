@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,6 @@ import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.BasisTransform;
@@ -77,7 +78,7 @@ public class GrTransportTest {
       Tensor q = RandomSample.of(randomSampleInterface);
       TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(p, q);
       Tensor ov = RandomVariate.of(distribution, n, n);
-      AssertFail.of(() -> tensorUnaryOperator.apply(ov));
+      assertThrows(Exception.class, () -> tensorUnaryOperator.apply(ov));
     }
   }
 }

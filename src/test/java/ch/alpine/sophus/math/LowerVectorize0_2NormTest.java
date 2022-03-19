@@ -1,9 +1,10 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -27,10 +28,10 @@ public class LowerVectorize0_2NormTest {
 
   @Test
   public void testLengthFail() {
-    AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Pi.VALUE));
-    AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector()));
-    AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2)));
-    AssertFail.of(() -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2, 3, 4)));
+    assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Pi.VALUE));
+    assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector()));
+    assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2)));
+    assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
@@ -39,7 +40,7 @@ public class LowerVectorize0_2NormTest {
     LowerVectorize0_2Norm.requireTriangleNumber(3);
     LowerVectorize0_2Norm.requireTriangleNumber(6);
     LowerVectorize0_2Norm.requireTriangleNumber(10);
-    AssertFail.of(() -> LowerVectorize0_2Norm.requireTriangleNumber(2));
-    AssertFail.of(() -> LowerVectorize0_2Norm.requireTriangleNumber(4));
+    assertThrows(Exception.class, () -> LowerVectorize0_2Norm.requireTriangleNumber(2));
+    assertThrows(Exception.class, () -> LowerVectorize0_2Norm.requireTriangleNumber(4));
   }
 }

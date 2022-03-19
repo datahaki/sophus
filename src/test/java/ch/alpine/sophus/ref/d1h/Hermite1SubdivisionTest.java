@@ -2,6 +2,7 @@
 package ch.alpine.sophus.ref.d1h;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -13,7 +14,6 @@ import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -78,7 +78,7 @@ public class Hermite1SubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> Hermite1Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
-    AssertFail.of(() -> Hermite1Subdivisions.standard(null, LieTransport.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite1Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
+    assertThrows(Exception.class, () -> Hermite1Subdivisions.standard(null, LieTransport.INSTANCE));
   }
 }

@@ -2,13 +2,13 @@
 package ch.alpine.sophus.flt.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -87,6 +87,6 @@ public class Regularization2StepStringTest {
   @Test
   public void testScalarFail() {
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.HALF);
-    AssertFail.of(() -> tensorUnaryOperator.apply(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ZERO));
   }
 }

@@ -1,9 +1,10 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -22,6 +23,6 @@ public class GaussianVariogramTest {
 
   @Test
   public void testZeroFail() {
-    AssertFail.of(() -> new GaussianVariogram(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> new GaussianVariogram(RealScalar.ZERO));
   }
 }

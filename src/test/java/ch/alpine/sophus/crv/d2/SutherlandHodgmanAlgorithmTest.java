@@ -2,12 +2,12 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -53,7 +53,7 @@ public class SutherlandHodgmanAlgorithmTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> SutherlandHodgmanAlgorithm.of(HilbertMatrix.of(2, 3)));
+    assertThrows(Exception.class, () -> SutherlandHodgmanAlgorithm.of(HilbertMatrix.of(2, 3)));
   }
 
   @Test
@@ -69,7 +69,7 @@ public class SutherlandHodgmanAlgorithmTest {
 
   @Test
   public void testSingular() {
-    AssertFail.of(() -> SutherlandHodgmanAlgorithm.intersection( //
+    assertThrows(Exception.class, () -> SutherlandHodgmanAlgorithm.intersection( //
         Tensors.vector(1, 0), //
         Tensors.vector(2, 0), //
         Tensors.vector(4, 0), //

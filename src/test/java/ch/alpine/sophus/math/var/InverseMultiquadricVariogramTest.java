@@ -2,10 +2,10 @@
 package ch.alpine.sophus.math.var;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -22,6 +22,6 @@ public class InverseMultiquadricVariogramTest {
 
   @Test
   public void testNegativeFail() {
-    AssertFail.of(() -> InverseMultiquadricVariogram.of(-3));
+    assertThrows(Exception.class, () -> InverseMultiquadricVariogram.of(-3));
   }
 }

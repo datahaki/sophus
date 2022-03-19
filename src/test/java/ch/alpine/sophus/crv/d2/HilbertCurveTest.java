@@ -2,10 +2,10 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensors;
 
@@ -26,7 +26,7 @@ public class HilbertCurveTest {
 
   @Test
   public void testNegativeFail() {
-    AssertFail.of(() -> HilbertCurve.of(-1));
-    AssertFail.of(() -> HilbertPolygon.of(-1));
+    assertThrows(Exception.class, () -> HilbertCurve.of(-1));
+    assertThrows(Exception.class, () -> HilbertPolygon.of(-1));
   }
 }

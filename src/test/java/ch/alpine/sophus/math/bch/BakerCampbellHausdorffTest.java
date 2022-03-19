@@ -2,6 +2,7 @@
 package ch.alpine.sophus.math.bch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -17,7 +18,6 @@ import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -157,20 +157,20 @@ public class BakerCampbellHausdorffTest {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     Serialization.copy(BakerCampbellHausdorff.of(ad, 2));
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 2));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 2));
   }
 
   @Test
   public void testDegreeFail() {
     Tensor ad = Array.sparse(2, 2, 2);
     BakerCampbellHausdorff.of(ad, 1);
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 1, null));
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 0));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 1, null));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 0));
   }
 
   @Test
   public void testChopNullFail() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 6, null));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 6, null));
   }
 }

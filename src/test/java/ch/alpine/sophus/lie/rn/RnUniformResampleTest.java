@@ -2,13 +2,13 @@
 package ch.alpine.sophus.lie.rn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -32,12 +32,12 @@ public class RnUniformResampleTest {
 
   @Test
   public void testNegativeFail() {
-    AssertFail.of(() -> RnUniformResample.of(Quantity.of(0.0, "m")));
-    AssertFail.of(() -> RnUniformResample.of(Quantity.of(-1, "m")));
+    assertThrows(Exception.class, () -> RnUniformResample.of(Quantity.of(0.0, "m")));
+    assertThrows(Exception.class, () -> RnUniformResample.of(Quantity.of(-1, "m")));
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> RnUniformResample.of(null));
+    assertThrows(Exception.class, () -> RnUniformResample.of(null));
   }
 }

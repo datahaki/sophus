@@ -1,6 +1,7 @@
 // code by ob
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -12,7 +13,6 @@ import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -248,6 +248,6 @@ public class Se2BiinvariantMeansTest {
   @Test
   public void testEmpty() {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
-      AssertFail.of(() -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));
+      assertThrows(Exception.class, () -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));
   }
 }
