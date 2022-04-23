@@ -2,7 +2,7 @@
 package ch.alpine.sophus.gbc.amp;
 
 import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.tensor.DeterminateScalarQ;
+import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -74,8 +74,7 @@ public enum Amplifiers {
         Tensor temp = errors.divide(var);
         // tuo.apply(errors);
         // System.out.println(temp);
-        boolean allMatch = temp.stream().map(Scalar.class::cast).allMatch(DeterminateScalarQ::of);
-        return allMatch ? temp : ConstantArray.of(RealScalar.ONE, errors.length());
+        return FiniteQ.all(temp) ? temp : ConstantArray.of(RealScalar.ONE, errors.length());
       };
     }
   },;

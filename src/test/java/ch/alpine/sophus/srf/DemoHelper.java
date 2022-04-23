@@ -12,7 +12,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 
-/* package */ enum StaticHelper {
+/* package */ enum DemoHelper {
   ;
   private static final int GALLERY_RES = 720; // 128 + 64;
   private static final File DIRECTORY = HomeDirectory.file("Projects", "latex", "images", "tensor");

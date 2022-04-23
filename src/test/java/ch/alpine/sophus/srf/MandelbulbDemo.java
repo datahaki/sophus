@@ -45,6 +45,6 @@ import ch.alpine.tensor.sca.Clips;
   }
 
   public static void main(String[] args) throws Exception {
-    StaticHelper.export(INSTANCE, NylanderPower.class, ColorDataGradients.CLASSIC);
+    DemoHelper.export(INSTANCE, NylanderPower.class, ColorDataGradients.CLASSIC);
   }
 }

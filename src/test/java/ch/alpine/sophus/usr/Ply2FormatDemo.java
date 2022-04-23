@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.srf.io;
+package ch.alpine.sophus.usr;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.alpine.sophus.srf.SurfaceMesh;
+import ch.alpine.sophus.srf.io.Ply2Format;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ReadLine;
 import ch.alpine.tensor.io.Export;

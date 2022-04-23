@@ -1,7 +1,7 @@
 // code by ureif
 package ch.alpine.sophus.clt;
 
-import ch.alpine.tensor.DeterminateScalarQ;
+import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -68,8 +68,8 @@ public class LagrangeQuadratic implements ScalarUnaryOperator {
       return new LagrangeQuadraticD(c1.zero(), c2.zero());
     Scalar d_c0 = c1.divide(length);
     Scalar d_c1 = c2.add(c2).divide(length);
-    return DeterminateScalarQ.of(d_c0) //
-        && DeterminateScalarQ.of(d_c1) //
+    return FiniteQ.of(d_c0) //
+        && FiniteQ.of(d_c1) //
             ? new LagrangeQuadraticD(d_c0, d_c1)
             : new LagrangeQuadraticD(c1.zero(), c2.zero());
   }

@@ -10,6 +10,8 @@ import java.util.Random;
 import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.api.SeriesInterface;
 import ch.alpine.sophus.lie.CliffordAlgebra;
@@ -91,39 +93,43 @@ public class BakerCampbellHausdorffTest {
     // System.out.println(String.format("apx: %10d", t_apx.nanoSeconds()));
   }
 
-  private static final int[] DEGREES = new int[] { 6, 8 };
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testHe1(int d) {
+    _check(new HeAlgebra(2).ad(), d);
+  }
 
-  @Test
-  public void testHe1() {
-    for (int d : DEGREES)
-      _check(new HeAlgebra(2).ad(), d);
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testSl2(int d) {
+    _check(Sl2Algebra.INSTANCE.ad(), d);
   }
 
   @Test
-  public void testSl2() {
-    for (int d : DEGREES)
-      _check(Sl2Algebra.INSTANCE.ad(), d);
-  }
-
-  @Test
-  public void testSl2Sophus() {
+  public void testSl2SophusAd() {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
-    for (int d : DEGREES)
-      _check(ad, d);
     assertEquals(Det.of(KillingForm.of(ad)), RealScalar.of(-8));
   }
 
-  @Test
-  public void testSe2() {
-    for (int d : new int[] { 6, 8, 10 })
-      _check(Se2Algebra.INSTANCE.ad(), d);
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testSl2Sophus(int d) {
+    Tensor ad = Tensors.fromString( //
+        "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
+    _check(ad, d);
   }
 
-  @Test
-  public void testSo3() {
-    for (int d : DEGREES)
-      _check(So3Algebra.INSTANCE.ad(), d);
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8, 10 })
+  public void testSe2(int d) {
+    _check(Se2Algebra.INSTANCE.ad(), d);
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testSo3(int d) {
+    _check(So3Algebra.INSTANCE.ad(), d);
   }
 
   @Test

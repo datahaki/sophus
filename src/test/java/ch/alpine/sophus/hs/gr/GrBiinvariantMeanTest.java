@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.AveragingWeights;
@@ -52,17 +53,15 @@ public class GrBiinvariantMeanTest {
     }
   }
 
-  @Test
+  @RepeatedTest(10)
   public void testGeodesic() {
     HsGeodesic hsGeodesic = new HsGeodesic(GrManifold.INSTANCE);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
-    for (int count = 0; count < 10; ++count) {
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor q = RandomSample.of(randomSampleInterface);
-      ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
-      Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
-      for (Tensor point : sequence)
-        GrMemberQ.INSTANCE.require(point);
-    }
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
+    Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
+    for (Tensor point : sequence)
+      GrMemberQ.INSTANCE.require(point);
   }
 }

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.NumberQ;
+import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -29,6 +29,6 @@ public class Clothoid1Test {
     assertEquals(beg, scalarTensorFunction.apply(RealScalar.ZERO));
     assertEquals(end, scalarTensorFunction.apply(RealScalar.ONE));
     Tensor curve = Subdivide.of(0.0, 1.0, 50).map(scalarTensorFunction);
-    assertTrue(NumberQ.all(curve));
+    assertTrue(FiniteQ.all(curve));
   }
 }

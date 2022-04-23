@@ -1,9 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import java.io.IOException;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -11,74 +14,40 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
 public class BiinvariantsTest {
-  @Test
-  public void testDistanceSequenceNullFail() {
-    for (Biinvariant biinvariant : Biinvariants.values())
-      try {
-        biinvariant.distances(RnManifold.INSTANCE, null);
-        System.out.println(biinvariant);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+  @ParameterizedTest
+  @EnumSource(Biinvariants.class)
+  public void testDistanceSequenceNullFail(Biinvariant biinvariant) {
+    assertThrows(Exception.class, () -> biinvariant.distances(RnManifold.INSTANCE, null));
   }
 
-  @Test
-  public void testVarDistVariogramNullFail() {
-    for (Biinvariant biinvariant : Biinvariants.values())
-      try {
-        biinvariant.var_dist(RnManifold.INSTANCE, null, Tensors.empty());
-        System.out.println(biinvariant);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+  @ParameterizedTest
+  @EnumSource(Biinvariants.class)
+  public void testVarDistVariogramNullFail(Biinvariant biinvariant) {
+    assertThrows(Exception.class, () -> biinvariant.var_dist(RnManifold.INSTANCE, null, Tensors.empty()));
   }
 
-  @Test
-  public void testWeightingVariogramNullFail() {
-    for (Biinvariant biinvariant : Biinvariants.values())
-      try {
-        biinvariant.weighting(RnManifold.INSTANCE, null, Tensors.empty());
-        System.out.println(biinvariant);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+  @ParameterizedTest
+  @EnumSource(Biinvariants.class)
+  public void testWeightingVariogramNullFail(Biinvariant biinvariant) {
+    assertThrows(Exception.class, () -> biinvariant.weighting(RnManifold.INSTANCE, null, Tensors.empty()));
   }
 
-  @Test
-  public void testCoordinateVariogramNullFail() {
-    for (Biinvariant biinvariant : Biinvariants.values())
-      try {
-        biinvariant.coordinate(RnManifold.INSTANCE, null, Tensors.empty());
-        System.out.println(biinvariant);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+  @ParameterizedTest
+  @EnumSource(Biinvariants.class)
+  public void testCoordinateVariogramNullFail(Biinvariant biinvariant) {
+    assertThrows(Exception.class, () -> biinvariant.coordinate(RnManifold.INSTANCE, null, Tensors.empty()));
   }
 
-  @Test
-  public void testCoordinateSequenceNullFail() {
-    for (Biinvariant biinvariant : Biinvariants.values())
-      try {
-        biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), null);
-        System.out.println(biinvariant);
-        fail();
-      } catch (Exception exception) {
-        // ---
-      }
+  @ParameterizedTest
+  @EnumSource(Biinvariants.class)
+  public void testCoordinateSequenceNullFail(Biinvariant biinvariant) {
+    assertThrows(Exception.class, () -> biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), null));
   }
 
-  @Test
-  public void testSerializationFail() {
-    for (Biinvariant biinvariant : Biinvariants.values())
-      try {
-        Serialization.copy(biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), Tensors.empty()));
-      } catch (Exception exception) {
-        System.out.println(biinvariant);
-        fail();
-      }
+  @ParameterizedTest
+  @EnumSource(Biinvariants.class)
+  public void testSerializationFail(Biinvariant biinvariant) throws ClassNotFoundException, IOException {
+    // in earlier versions, the instance used to be non-serializable
+    Serialization.copy(biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), Tensors.empty()));
   }
 }

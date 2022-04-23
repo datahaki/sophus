@@ -10,8 +10,7 @@ import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.tensor.DeterminateScalarQ;
-import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -29,7 +28,7 @@ public class HsCoordinatesTest {
         AffineQ.require(w1, Chop._08);
         Tensor w2 = barycentricCoordinate.weights(CirclePoints.of(n), Tensors.vector(2, 2));
         assertEquals(w2.length(), n);
-        assertTrue(w2.stream().map(Scalar.class::cast).allMatch(DeterminateScalarQ::of));
+        assertTrue(FiniteQ.all(w2));
         AffineQ.require(w2, Chop._08);
       }
     }

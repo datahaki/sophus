@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
-import ch.alpine.tensor.NumberQ;
-import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
@@ -42,7 +41,7 @@ public class HnGeodesicTest {
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor r = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor result = Nest.of(bSpline2CurveSubdivision::cyclic, Tensors.of(p, q, r), 3);
-      assertTrue(result.flatten(-1).map(Scalar.class::cast).allMatch(NumberQ::of));
+      assertTrue(FiniteQ.all(result));
     }
   }
 
