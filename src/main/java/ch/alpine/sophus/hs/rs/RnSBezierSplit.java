@@ -27,8 +27,14 @@ public enum RnSBezierSplit implements Geodesic {
   METHOD_0 {
     @Override
     protected Scalar theta(Tensor p0, Tensor v0, Tensor p1, Tensor v1) {
-      Optional<Scalar> t0 = VectorAngle.of(v0, p1.subtract(p0));
-      Optional<Scalar> t1 = VectorAngle.of(v1, p1.subtract(p0));
+      Tensor d01 = p1.subtract(p0);
+      // Scalar n01 = Vector2Norm.of(d01);
+      // if (Tolerance.CHOP.isZero(n01))
+      //
+      Optional<Scalar> t0 = VectorAngle.of(v0, d01);
+      Optional<Scalar> t1 = VectorAngle.of(v1, d01);
+      if (t0.isEmpty() || t1.isEmpty())
+        return RealScalar.ZERO;
       return t0.orElseThrow().add(t1.orElseThrow()).divide(RealScalar.of(4));
     }
   }, //
@@ -69,21 +75,21 @@ public enum RnSBezierSplit implements Geodesic {
     Tensor p;
     {
       // (1-t)**2*(1+2*t)
-      Scalar ap0 = Polynomial.of(Tensors.vector(1, 0, -3, 2)).apply(t);
+      // Scalar ap0 = Polynomial.of(Tensors.vector(1, 0, -3, 2)).apply(t);
       Scalar fp0 = Times.of(omt, omt, RealScalar.ONE.add(t).add(t));
-      Tolerance.CHOP.requireClose(ap0, fp0);
+      // Tolerance.CHOP.requireClose(ap0, fp0);
       // 3*alpha*t*(1-t)**2
-      Scalar av0 = Polynomial.of(Tensors.vector(0, 3, -6, 3).multiply(alpha)).apply(t);
+      // Scalar av0 = Polynomial.of(Tensors.vector(0, 3, -6, 3).multiply(alpha)).apply(t);
       Scalar fv0 = Times.of(RealScalar.of(3), alpha, t, omt, omt);
-      Tolerance.CHOP.requireClose(av0, fv0);
+      // Tolerance.CHOP.requireClose(av0, fv0);
       // t**2*(3-2*t)
-      Scalar ap1 = Polynomial.of(Tensors.vector(0, 0, 3, -2)).apply(t);
+      // Scalar ap1 = Polynomial.of(Tensors.vector(0, 0, 3, -2)).apply(t);
       Scalar fp1 = Times.of(t, t, RealScalar.of(3).subtract(t).subtract(t));
-      Tolerance.CHOP.requireClose(ap1, fp1);
+      // Tolerance.CHOP.requireClose(ap1, fp1);
       // -3*alpha*t**2*(1-t)
-      Scalar av1 = Polynomial.of(Tensors.vector(0, 0, -3, 3).multiply(alpha)).apply(t);
+      // Scalar av1 = Polynomial.of(Tensors.vector(0, 0, -3, 3).multiply(alpha)).apply(t);
       Scalar fv1 = Times.of(RealScalar.of(-3), alpha, t, t, omt);
-      Tolerance.CHOP.requireClose(av1, fv1);
+      // Tolerance.CHOP.requireClose(av1, fv1);
       p = Total.of(Tensors.of( //
           p0.multiply(fp0), //
           v0.multiply(fv0), //
@@ -93,15 +99,15 @@ public enum RnSBezierSplit implements Geodesic {
     Tensor v;
     {
       // 2*t*(t-1)
-      Scalar ap0 = Polynomial.of(Tensors.vector(0, -2, 2)).apply(t);
+      // Scalar ap0 = Polynomial.of(Tensors.vector(0, -2, 2)).apply(t);
       Scalar gp0 = Times.of(RealScalar.of(-2), t, omt);
-      Tolerance.CHOP.requireClose(ap0, gp0);
+      // Tolerance.CHOP.requireClose(ap0, gp0);
       // alpha*(3*t**2-4*t+1)
       Scalar gv0 = Polynomial.of(Tensors.vector(1, -4, 3).multiply(alpha)).apply(t);
       // 2*t*(1-t)
-      Scalar ap1 = Polynomial.of(Tensors.vector(0, 2, -2)).apply(t);
+      // Scalar ap1 = Polynomial.of(Tensors.vector(0, 2, -2)).apply(t);
       Scalar gp1 = Times.of(RealScalar.of(2), t, omt);
-      Tolerance.CHOP.requireClose(ap1, gp1);
+      // Tolerance.CHOP.requireClose(ap1, gp1);
       // -alpha*t*(2-3*t)
       Scalar gv1 = Polynomial.of(Tensors.vector(0, -2, 3).multiply(alpha)).apply(t);
       v = NORMALIZE.apply(Total.of(Tensors.of( //
