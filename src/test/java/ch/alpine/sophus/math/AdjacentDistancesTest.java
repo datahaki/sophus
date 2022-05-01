@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnMetric;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;

@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ExactTensorQ;
-import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.chq.ExactTensorQ;
+import ch.alpine.tensor.chq.FiniteTensorQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -46,7 +46,7 @@ public class S2GeodesicTest {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
     Tensor split = S2Geodesic.INSTANCE.split(p, q, RandomVariate.of(NormalDistribution.standard()));
-    assertTrue(FiniteQ.all(split));
+    assertTrue(FiniteTensorQ.of(split));
   }
 
   @Test

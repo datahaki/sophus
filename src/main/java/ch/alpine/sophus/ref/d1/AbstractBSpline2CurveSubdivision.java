@@ -3,10 +3,10 @@ package ch.alpine.sophus.ref.d1;
 
 import java.util.Iterator;
 
-import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.chq.ScalarQ;
 
 /** base class for B-Spline degree 2 curve subdivision
  * Chaikin 1965 */

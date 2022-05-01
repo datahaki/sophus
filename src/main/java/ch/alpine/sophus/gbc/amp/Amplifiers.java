@@ -2,13 +2,13 @@
 package ch.alpine.sophus.gbc.amp;
 
 import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.FiniteTensorQ;
 import ch.alpine.tensor.red.MeanDeviation;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Sign;
@@ -74,7 +74,7 @@ public enum Amplifiers {
         Tensor temp = errors.divide(var);
         // tuo.apply(errors);
         // System.out.println(temp);
-        return FiniteQ.all(temp) ? temp : ConstantArray.of(RealScalar.ONE, errors.length());
+        return FiniteTensorQ.of(temp) ? temp : ConstantArray.of(RealScalar.ONE, errors.length());
       };
     }
   },;

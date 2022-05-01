@@ -8,11 +8,11 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.pdf.Distribution;

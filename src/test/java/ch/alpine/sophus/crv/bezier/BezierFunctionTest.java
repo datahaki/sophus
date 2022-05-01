@@ -10,8 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.tensor.ExactScalarQ;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -20,6 +18,8 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.chq.ExactScalarQ;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.sca.Chop;
 

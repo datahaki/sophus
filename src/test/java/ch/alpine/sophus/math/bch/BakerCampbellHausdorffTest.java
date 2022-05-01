@@ -2,8 +2,8 @@
 package ch.alpine.sophus.math.bch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.Random;
@@ -20,13 +20,13 @@ import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.mat.re.Det;
@@ -135,19 +135,24 @@ public class BakerCampbellHausdorffTest {
   @Test
   public void testOptimized() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
-    assertTrue(BakerCampbellHausdorff.of(ad, 6) instanceof BchSeries6);
-    assertTrue(BakerCampbellHausdorff.of(ad, 8) instanceof BchSeries8);
-    assertTrue(BakerCampbellHausdorff.of(ad, 10) instanceof BchSeriesA);
-    assertTrue(BakerCampbellHausdorff.of(ad, 6, Chop._02) instanceof BchSeries6);
-    assertTrue(BakerCampbellHausdorff.of(ad, 8, Chop._02) instanceof BchSeries8);
-    assertTrue(BakerCampbellHausdorff.of(ad, 10, Chop._02) instanceof BchSeriesA);
+    assertInstanceOf(BchSeries6.class, BakerCampbellHausdorff.of(ad, 6));
+    assertInstanceOf(BchSeries8.class, BakerCampbellHausdorff.of(ad, 8));
+    assertInstanceOf(BchSeriesA.class, BakerCampbellHausdorff.of(ad, 10));
+  }
+
+  @Test
+  public void testOptimized2() {
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
+    assertInstanceOf(BchSeries6.class, BakerCampbellHausdorff.of(ad, 6, Chop._02));
+    assertInstanceOf(BchSeries8.class, BakerCampbellHausdorff.of(ad, 8, Chop._02));
+    assertInstanceOf(BchSeriesA.class, BakerCampbellHausdorff.of(ad, 10, Chop._02));
   }
 
   @Test
   public void testSparse() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.of(1, 2);
     Tensor cp = cliffordAlgebra.cp();
-    assertTrue(cp instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, cp);
     BinaryOperator<Tensor> binaryOperator = Serialization.copy(BakerCampbellHausdorff.of(cp, 3));
     int n = cp.length();
     Distribution distribution = DiscreteUniformDistribution.of(-10, 10);

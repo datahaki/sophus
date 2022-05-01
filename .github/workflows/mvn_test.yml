@@ -18,6 +18,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+      - name: cloning tensor 106
+        run: |
+          mkdir tensor
+          cd tensor
+          git clone git@github.com:datahaki/tensor.git
+          git checkout v106
+          mvn clean install -DskipTests=true
       - name: mvn test
         working-directory: .
         run: mvn test -B

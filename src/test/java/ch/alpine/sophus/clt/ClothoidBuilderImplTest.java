@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.io.IOException;
 
@@ -42,7 +42,7 @@ public class ClothoidBuilderImplTest {
   @Test
   public void testErf() {
     ScalarTensorFunction scalarTensorFunction = CLOTHOID_BUILDER.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
-    assertTrue(scalarTensorFunction instanceof Clothoid);
+    assertInstanceOf(Clothoid.class, scalarTensorFunction);
   }
 
   @SuppressWarnings("unused")

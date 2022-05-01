@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.itp.LinearInterpolation;

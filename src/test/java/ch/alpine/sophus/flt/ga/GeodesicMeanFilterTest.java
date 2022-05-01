@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.img.MeanFilter;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Unitize;

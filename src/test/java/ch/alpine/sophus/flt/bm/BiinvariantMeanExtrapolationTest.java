@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -15,6 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;

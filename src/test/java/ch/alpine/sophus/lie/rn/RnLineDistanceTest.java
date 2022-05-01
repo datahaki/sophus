@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactScalarQ;
 
 public class RnLineDistanceTest {
   @Test

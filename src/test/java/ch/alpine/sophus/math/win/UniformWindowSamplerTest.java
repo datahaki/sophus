@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.SymmetricVectorQ;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.GaussianWindow;

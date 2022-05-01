@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class GrAlgebraTest {
   @Test
   public void testSimple() {
     HsAlgebra hsAlgebra = GrAlgebra.of(5, 2, 6);
-    assertTrue(hsAlgebra.ad() instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, hsAlgebra.ad());
     int n = 6;
     assertEquals(hsAlgebra.dimM(), n);
     assertEquals(hsAlgebra.dimH(), 1 + 3);
@@ -44,6 +45,7 @@ public class GrAlgebraTest {
 
   @Test
   public void testBasis() {
-    assertTrue(GrAlgebra.basis(5, 2) instanceof SparseArray);
+    assertInstanceOf(SparseArray.class,
+    GrAlgebra.basis(5, 2) );
   }
 }

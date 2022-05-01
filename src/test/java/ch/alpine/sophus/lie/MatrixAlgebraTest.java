@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -41,7 +42,7 @@ public class MatrixAlgebraTest {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
-    assertTrue(b2 instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, b2);
     Tensor basis = Tensors.of(b0, b1, b2);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     assertEquals(matrixAlgebra.ad(), Se2Algebra.INSTANCE.ad());
@@ -56,7 +57,7 @@ public class MatrixAlgebraTest {
     Tolerance.CHOP.requireClose( //
         matrixAlgebra.toVector(N.DOUBLE.of(b1.add(b2.multiply(RealScalar.of(0.3))))), Tensors.vector(0, 1, 0.3));
     Tensor rank4 = JacobiIdentity.of(matrixAlgebra.ad());
-    assertTrue(rank4 instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, rank4);
   }
 
   @Test

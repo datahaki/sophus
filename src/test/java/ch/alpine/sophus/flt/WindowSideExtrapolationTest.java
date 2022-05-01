@@ -7,9 +7,9 @@ import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 
 public class WindowSideExtrapolationTest {

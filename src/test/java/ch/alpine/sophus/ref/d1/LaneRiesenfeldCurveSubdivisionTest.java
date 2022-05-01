@@ -10,10 +10,10 @@ import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.hs.h2.H2Midpoint;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.chq.ExactTensorQ;
 
 public class LaneRiesenfeldCurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();

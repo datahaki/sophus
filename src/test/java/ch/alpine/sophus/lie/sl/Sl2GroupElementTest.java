@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 

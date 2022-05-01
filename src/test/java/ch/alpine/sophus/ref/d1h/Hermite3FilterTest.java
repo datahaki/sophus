@@ -13,13 +13,13 @@ import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 

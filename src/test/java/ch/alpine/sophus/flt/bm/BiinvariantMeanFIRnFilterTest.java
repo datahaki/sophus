@@ -9,11 +9,11 @@ import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.WindowSideExtrapolation;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 

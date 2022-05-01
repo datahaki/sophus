@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.srf.SurfaceMesh;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.red.FirstPosition;
 

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.clt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -98,7 +99,8 @@ public class ClothoidTest {
       Tensor q = RandomVariate.of(distribution, 3);
       LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();
       Scalar head = Serialization.copy(headTailInterface).head();
-      assertTrue(head instanceof RealScalar);
+      assertInstanceOf(RealScalar.class,
+      head );
     }
   }
 

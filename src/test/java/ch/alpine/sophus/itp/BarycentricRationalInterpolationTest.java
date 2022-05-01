@@ -9,7 +9,6 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -18,6 +17,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;

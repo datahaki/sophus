@@ -3,10 +3,10 @@ package ch.alpine.sophus.hs.h2;
 
 import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Power;
@@ -41,7 +41,7 @@ public enum H2Geodesic implements SplitInterface {
     Scalar p1_c1 = p1.subtract(c1);
     Scalar c2 = Sqrt.FUNCTION.apply(AbsSquared.FUNCTION.apply(p1_c1).add(p2.multiply(p2)));
     Scalar c3 = ArcTanh.FUNCTION.apply(p1_c1.divide(c2));
-    if (FiniteQ.of(c3)) {
+    if (FiniteScalarQ.of(c3)) {
       Scalar c4 = ArcTanh.FUNCTION.apply(q1.subtract(c1).divide(c2)).subtract(c3);
       return Tensors.of( //
           c1.add(c2.multiply(Tanh.FUNCTION.apply(c3.add(c4.multiply(scalar))))), //

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -18,6 +17,7 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.itp.BSplineFunctionString;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;

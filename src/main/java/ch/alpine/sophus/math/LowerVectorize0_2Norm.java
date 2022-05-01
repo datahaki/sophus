@@ -2,12 +2,12 @@
 package ch.alpine.sophus.math;
 
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.Vector2Norm;

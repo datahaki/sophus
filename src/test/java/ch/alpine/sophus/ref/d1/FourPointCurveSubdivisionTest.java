@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -18,6 +17,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;

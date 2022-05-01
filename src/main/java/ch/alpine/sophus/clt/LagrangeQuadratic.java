@@ -1,11 +1,11 @@
 // code by ureif
 package ch.alpine.sophus.clt;
 
-import ch.alpine.tensor.FiniteQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.itp.InterpolatingPolynomial;
 
 /** Reference: U. Reif slide 8/32
@@ -68,8 +68,8 @@ public class LagrangeQuadratic implements ScalarUnaryOperator {
       return new LagrangeQuadraticD(c1.zero(), c2.zero());
     Scalar d_c0 = c1.divide(length);
     Scalar d_c1 = c2.add(c2).divide(length);
-    return FiniteQ.of(d_c0) //
-        && FiniteQ.of(d_c1) //
+    return FiniteScalarQ.of(d_c0) //
+        && FiniteScalarQ.of(d_c1) //
             ? new LagrangeQuadraticD(d_c0, d_c1)
             : new LagrangeQuadraticD(c1.zero(), c2.zero());
   }

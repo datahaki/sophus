@@ -16,12 +16,12 @@ import ch.alpine.sophus.flt.ga.GeodesicIIR1;
 import ch.alpine.sophus.flt.ga.GeodesicIIR2;
 import ch.alpine.sophus.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 

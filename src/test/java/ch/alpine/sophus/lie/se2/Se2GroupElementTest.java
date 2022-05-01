@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,7 +37,7 @@ public class Se2GroupElementTest {
   @Test
   public void testInverse() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(1, 2, 3));
-    assertTrue(element.inverse() instanceof Se2GroupElement);
+    assertInstanceOf(Se2GroupElement.class, element.inverse());
   }
 
   @Test
