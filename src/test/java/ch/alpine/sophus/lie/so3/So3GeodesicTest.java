@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So3GeodesicTest {
+class So3GeodesicTest {
   @Test
   public void testSimple() {
     Tensor p = Rodrigues.vectorExp(Tensors.vector(1, 2, 3));

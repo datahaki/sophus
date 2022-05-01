@@ -28,7 +28,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class InverseDistanceWeightingTest {
+class InverseDistanceWeightingTest {
   @Test
   public void testSimple() {
     BarycentricCoordinate barycentricCoordinate = //

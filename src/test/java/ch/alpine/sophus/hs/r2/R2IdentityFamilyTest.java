@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class R2IdentityFamilyTest {
+class R2IdentityFamilyTest {
   @Test
   public void testForwardSe2() {
     assertEquals(R2IdentityFamily.INSTANCE.forward_se2(RealScalar.of(-312.32)), IdentityMatrix.of(3));

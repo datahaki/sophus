@@ -15,7 +15,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-public class GeodesicIIRnFilterTest {
+class GeodesicIIRnFilterTest {
   @Test
   public void testTranslation() {
     Tensor p = Tensors.vector(0, 0, 0);

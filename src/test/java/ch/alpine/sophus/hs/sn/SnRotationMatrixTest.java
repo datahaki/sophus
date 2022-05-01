@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnRotationMatrixTest {
+class SnRotationMatrixTest {
   private static final Distribution UNIFORM = NormalDistribution.standard();
 
   @Test

@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Sign;
 
-public class LBilinearFormTest {
+class LBilinearFormTest {
   @Test
   public void testSimple() {
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);

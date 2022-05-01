@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 
-public class TSnProjectionTest {
+class TSnProjectionTest {
   @Test
   public void testSimple() {
     for (int d = 1; d < 6; ++d) {

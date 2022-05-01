@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnPhongMeanTest {
+class HnPhongMeanTest {
   @Test
   public void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);

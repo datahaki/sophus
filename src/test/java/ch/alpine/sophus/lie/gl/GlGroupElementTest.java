@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GlGroupElementTest {
+class GlGroupElementTest {
   @Test
   public void testSimple() {
     int n = 5;

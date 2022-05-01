@@ -16,7 +16,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class EightPointCurveSubdivisionTest {
+class EightPointCurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGeodesic.INSTANCE);

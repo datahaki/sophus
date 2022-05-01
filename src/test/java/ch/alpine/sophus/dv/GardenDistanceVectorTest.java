@@ -26,7 +26,7 @@ import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class GardenDistanceVectorTest {
+class GardenDistanceVectorTest {
   @Test
   public void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));

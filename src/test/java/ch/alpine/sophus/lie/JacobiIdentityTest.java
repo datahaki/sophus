@@ -19,7 +19,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class JacobiIdentityTest {
+class JacobiIdentityTest {
   @Test
   public void testHeisenberg() {
     Tensor ad = new HeAlgebra(1).ad();

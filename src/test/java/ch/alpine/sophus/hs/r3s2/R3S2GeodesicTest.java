@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public class R3S2GeodesicTest {
+class R3S2GeodesicTest {
   @Test
   public void testZero() {
     Tensor split = R3S2Geodesic.INSTANCE.split( //

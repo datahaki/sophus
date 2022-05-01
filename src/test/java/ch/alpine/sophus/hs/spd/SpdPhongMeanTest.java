@@ -28,7 +28,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.GeometricMean;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdPhongMeanTest {
+class SpdPhongMeanTest {
   @Test
   public void testSimple() {
     Random random = new Random(1);

@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
 
-public class SutherlandHodgmanAlgorithmTest {
+class SutherlandHodgmanAlgorithmTest {
   // the examples show that the algo is not symmetric A cap B != B cap A
   @Test
   public void testSingle() {

@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.red.Total;
 
-public class BinomialWeightsTest {
+class BinomialWeightsTest {
   @Test
   public void testBinomial() {
     for (int size = 1; size < 5; ++size) {

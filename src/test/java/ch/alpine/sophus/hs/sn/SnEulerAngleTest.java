@@ -7,7 +7,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.CauchyDistribution;
 
-public class SnEulerAngleTest {
+class SnEulerAngleTest {
   @Test
   public void testSimple() {
     for (int d = 0; d < 6; ++d) {

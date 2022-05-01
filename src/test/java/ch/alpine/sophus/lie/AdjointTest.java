@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class AdjointTest {
+class AdjointTest {
   @Test
   public void testSe2() {
     Se2Group lieGroup = Se2Group.INSTANCE;

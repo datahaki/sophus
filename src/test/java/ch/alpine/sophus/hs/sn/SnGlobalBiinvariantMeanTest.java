@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnGlobalBiinvariantMeanTest {
+class SnGlobalBiinvariantMeanTest {
   @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.standard();

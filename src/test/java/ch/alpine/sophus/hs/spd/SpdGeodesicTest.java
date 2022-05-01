@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdGeodesicTest {
+class SpdGeodesicTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {

@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
-public class StAlgebraTest {
+class StAlgebraTest {
   @Test
   public void test5x3() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 3, 8);

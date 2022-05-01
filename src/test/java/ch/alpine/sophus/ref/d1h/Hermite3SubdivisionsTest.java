@@ -10,7 +10,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 
-public class Hermite3SubdivisionsTest {
+class Hermite3SubdivisionsTest {
   @Test
   public void testStandardCompare() {
     TestHelper.check(RnHermite3Subdivisions.standard(), //

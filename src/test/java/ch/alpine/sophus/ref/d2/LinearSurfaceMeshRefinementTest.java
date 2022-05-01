@@ -16,7 +16,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.red.FirstPosition;
 
-public class LinearSurfaceMeshRefinementTest {
+class LinearSurfaceMeshRefinementTest {
   @Test
   public void testSe2CSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //

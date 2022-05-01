@@ -24,7 +24,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Clips;
 
-public class DistanceMatrixTest {
+class DistanceMatrixTest {
   @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "A")));

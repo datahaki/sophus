@@ -19,7 +19,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class BiinvariantMeanIIRnFilterTest {
+class BiinvariantMeanIIRnFilterTest {
   @Test
   public void testSimple() {
     for (int radius = 0; radius < 6; ++radius) {

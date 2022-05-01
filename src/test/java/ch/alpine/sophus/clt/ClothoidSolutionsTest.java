@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Mod;
 
-public class ClothoidSolutionsTest {
+class ClothoidSolutionsTest {
   private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(15.0));
   private static final int ATTEMPTS = 3;
 

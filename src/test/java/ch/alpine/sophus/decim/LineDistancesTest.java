@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 
-public class LineDistancesTest {
+class LineDistancesTest {
   @Test
   public void testSimple() {
     for (LineDistances lineDistances : LineDistances.values()) {

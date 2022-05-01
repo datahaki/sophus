@@ -15,7 +15,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class BarycentricMetricInterpolationTest {
+class BarycentricMetricInterpolationTest {
   @Test
   public void testSimpleBa() {
     ScalarTensorFunction scalarTensorFunction = //

@@ -43,7 +43,7 @@ import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
-public class RodriguesTest {
+class RodriguesTest {
   @Test
   public void testConvergenceSo3() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);

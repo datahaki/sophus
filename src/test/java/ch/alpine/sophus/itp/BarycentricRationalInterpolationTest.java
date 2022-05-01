@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class BarycentricRationalInterpolationTest {
+class BarycentricRationalInterpolationTest {
   @Test
   public void testSimple() {
     ScalarTensorFunction scalarTensorFunction = //

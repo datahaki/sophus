@@ -12,7 +12,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
 
-public class HnAngleTest {
+class HnAngleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     HnAngle hnAngle = Serialization.copy(new HnAngle(UnitVector.of(4, 3)));

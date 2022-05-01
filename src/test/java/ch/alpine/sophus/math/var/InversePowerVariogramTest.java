@@ -19,7 +19,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 
-public class InversePowerVariogramTest {
+class InversePowerVariogramTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor tensor = Tensors.vector(2, 3, 4, 5);

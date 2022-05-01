@@ -11,7 +11,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class GaussianVariogramTest {
+class GaussianVariogramTest {
   @Test
   public void testQuantity() {
     ScalarUnaryOperator variogram = new GaussianVariogram(Quantity.of(2, "m"));

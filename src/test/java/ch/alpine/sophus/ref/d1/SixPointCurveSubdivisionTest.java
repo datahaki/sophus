@@ -15,7 +15,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 
-public class SixPointCurveSubdivisionTest {
+class SixPointCurveSubdivisionTest {
   @Test
   public void testP1() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGeodesic.INSTANCE);

@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 
-public class InfluenceBiinvariantVectorTest {
+class InfluenceBiinvariantVectorTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     InfluenceBiinvariantVector influenceBiinvariantVector = new InfluenceBiinvariantVector( //

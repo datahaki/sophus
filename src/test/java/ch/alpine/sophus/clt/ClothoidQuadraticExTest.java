@@ -10,7 +10,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.chq.ExactScalarQ;
 
-public class ClothoidQuadraticExTest {
+class ClothoidQuadraticExTest {
   @Test
   public void testSimple() {
     ClothoidQuadraticEx clothoidQuadratic = //

@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public class HeBiinvariantMeanTest {
+class HeBiinvariantMeanTest {
   @Test
   public void testTrivial() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");

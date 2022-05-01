@@ -7,7 +7,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class HnFastMeanTest {
+class HnFastMeanTest {
   @Test
   public void testAffineFail() {
     BiinvariantMean biinvariantMean = HnFastMean.INSTANCE;

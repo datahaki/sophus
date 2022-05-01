@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class HeGroupElementTest {
+class HeGroupElementTest {
   private static final Exponential LIE_EXPONENTIAL = HeExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = HeGroup.INSTANCE;
 

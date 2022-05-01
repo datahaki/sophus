@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public class LogarithmicSpiralTest {
+class LogarithmicSpiralTest {
   @Test
   public void testSimple() {
     ScalarTensorFunction scalarTensorFunction = LogarithmicSpiral.of(2, 0.1759);

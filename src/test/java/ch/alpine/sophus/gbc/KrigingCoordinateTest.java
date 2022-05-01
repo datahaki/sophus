@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class KrigingCoordinateTest {
+class KrigingCoordinateTest {
   @Test
   public void testNull1Fail() {
     assertThrows(Exception.class, () -> KrigingCoordinate.of(t -> t, RnManifold.INSTANCE, null));

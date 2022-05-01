@@ -26,7 +26,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
 
-public class LaneRiesenfeld3CurveSubdivisionTest {
+class LaneRiesenfeld3CurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(RnGeodesic.INSTANCE);

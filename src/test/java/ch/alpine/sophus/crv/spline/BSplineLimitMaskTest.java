@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class BSplineLimitMaskTest {
+class BSplineLimitMaskTest {
   @Test
   public void testLimitMask() {
     assertEquals(BSplineLimitMask.FUNCTION.apply(0 * 2 + 1), Tensors.fromString("{1}"));

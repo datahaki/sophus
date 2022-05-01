@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.MatrixQ;
 
-public class Se3GeodesicTest {
+class Se3GeodesicTest {
   @Test
   public void testSimple() {
     Tensor p = Se3Exponential.INSTANCE.exp(Tensors.of(Tensors.vector(1, 2, 3), Tensors.vector(0.2, 0.3, 0.4)));

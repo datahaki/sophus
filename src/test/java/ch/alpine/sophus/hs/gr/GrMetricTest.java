@@ -21,7 +21,7 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrMetricTest {
+class GrMetricTest {
   /** @param vector
    * @return matrix that projects points to line spanned by vector */
   private static Tensor projection1(Tensor vector) {

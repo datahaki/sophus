@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class SoGroupTest {
+class SoGroupTest {
   @Test
   public void testDetNegFail() {
     assertThrows(Exception.class, () -> SoGroup.INSTANCE.element(DiagonalMatrix.of(1, 1, -1)));

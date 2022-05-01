@@ -29,7 +29,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Sl2AlgebraTest {
+class Sl2AlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
   @Test

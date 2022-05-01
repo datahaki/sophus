@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class Se2GroupElementTest {
+class Se2GroupElementTest {
   @Test
   public void testSimple() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(1, 2, 3));

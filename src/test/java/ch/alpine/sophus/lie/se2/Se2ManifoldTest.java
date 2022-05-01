@@ -17,7 +17,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 
-public class Se2ManifoldTest {
+class Se2ManifoldTest {
   @Test
   public void testSimple() {
     int n = 5 + new Random().nextInt(5);

@@ -23,7 +23,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 
-public class Hermite3FilterTest {
+class Hermite3FilterTest {
   @Test
   public void testR1PolynomialReproduction() {
     Tensor coeffs = Tensors.vector(1, 3, -2, 3);

@@ -19,7 +19,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Mean;
 
-public class BoxRandomSampleTest {
+class BoxRandomSampleTest {
   @Test
   public void testSimple3D() {
     Tensor offset = Tensors.vector(2, 2, 3);

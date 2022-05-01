@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicFIR2Test {
+class GeodesicFIR2Test {
   @Test
   public void testTranslation() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(0, 0, 0);

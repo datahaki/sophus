@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringMetricTest {
+class Se2CoveringMetricTest {
   @Test
   public void testPlanar() {
     Scalar scalar = Se2CoveringMetric.INSTANCE.distance(Tensors.vector(1, 1, 0), Tensors.vector(4, 5, 0));

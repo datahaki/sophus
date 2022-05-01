@@ -19,7 +19,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.qty.Quantity;
 
-public class PolygonRegionTest {
+class PolygonRegionTest {
   @Test
   public void testEmpty() throws ClassNotFoundException, IOException {
     PolygonRegion polygonRegion = Serialization.copy(new PolygonRegion(Tensors.of(Tensors.vector(1, 2))));

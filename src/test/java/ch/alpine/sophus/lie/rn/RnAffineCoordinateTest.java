@@ -23,7 +23,7 @@ import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class RnAffineCoordinateTest {
+class RnAffineCoordinateTest {
   @Test
   public void testMean() {
     Distribution distribution = UniformDistribution.unit();

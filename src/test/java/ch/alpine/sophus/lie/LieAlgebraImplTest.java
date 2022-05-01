@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class LieAlgebraImplTest {
+class LieAlgebraImplTest {
   private static final Scalar P1 = RealScalar.ONE;
   private static final Scalar N1 = RealScalar.ONE.negate();
 

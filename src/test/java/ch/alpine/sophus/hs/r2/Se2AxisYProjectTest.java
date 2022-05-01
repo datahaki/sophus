@@ -25,7 +25,7 @@ import ch.alpine.tensor.qty.QuantityUnit;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2AxisYProjectTest {
+class Se2AxisYProjectTest {
   @Test
   public void testEx1() {
     Scalar t = Se2AxisYProject.of(Tensors.vector(1, 0, 0.3)).apply(Tensors.vector(10, 0));

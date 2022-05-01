@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class LagrangeMultiplierTest {
+class LagrangeMultiplierTest {
   @Test
   public void testLagrange() {
     int n = 7;

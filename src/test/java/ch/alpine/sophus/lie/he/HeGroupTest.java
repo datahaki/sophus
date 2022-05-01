@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class HeGroupTest {
+class HeGroupTest {
   @Test
   public void testSimple() {
     assertThrows(Exception.class, () -> HeGroup.INSTANCE.element(null));

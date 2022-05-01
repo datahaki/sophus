@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class H2GeodesicTest {
+class H2GeodesicTest {
   @Test
   public void testSimple() {
     Tensor split = H2Geodesic.INSTANCE.split(Tensors.vector(1, 1), Tensors.vector(3, 1), RationalScalar.HALF);

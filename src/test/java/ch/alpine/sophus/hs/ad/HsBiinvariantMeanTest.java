@@ -30,7 +30,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HsBiinvariantMeanTest {
+class HsBiinvariantMeanTest {
   @Test
   public void testMean() {
     Distribution distributionX = UniformDistribution.of(-0.05, 0.05);

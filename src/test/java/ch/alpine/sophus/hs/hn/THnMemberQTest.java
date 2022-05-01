@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class THnMemberQTest {
+class THnMemberQTest {
   @Test
   public void testProject() throws ClassNotFoundException, IOException {
     Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(NormalDistribution.standard(), 3));

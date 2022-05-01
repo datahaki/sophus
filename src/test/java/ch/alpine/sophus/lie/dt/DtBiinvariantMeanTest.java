@@ -15,7 +15,7 @@ import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class DtBiinvariantMeanTest {
+class DtBiinvariantMeanTest {
   @Test
   public void testTrivial() {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));

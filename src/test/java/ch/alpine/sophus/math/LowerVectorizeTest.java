@@ -12,7 +12,7 @@ import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.spa.Normal;
 
-public class LowerVectorizeTest {
+class LowerVectorizeTest {
   @Test
   public void testEmpty() {
     assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(), +0));

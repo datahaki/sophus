@@ -15,7 +15,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 
-public class DoubleExponentialTest {
+class DoubleExponentialTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     DoubleExponential doubleExponential = //

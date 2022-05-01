@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdRiemannTest {
+class SpdRiemannTest {
   @Test
   public void testSimple2() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(2));

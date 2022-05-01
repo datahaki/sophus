@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 
-public class WindowSideExtrapolationTest {
+class WindowSideExtrapolationTest {
   @Test
   public void testSimple() {
     Function<Integer, Tensor> function = WindowSideExtrapolation.of(DirichletWindow.FUNCTION);

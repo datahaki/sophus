@@ -15,7 +15,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.Chop;
 
-public class PowerBarycenterTest {
+class PowerBarycenterTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
     BiFunction<Tensor, Scalar, Tensor> biFunction = Serialization.copy(PowerBarycenter.of(1.5));

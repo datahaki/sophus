@@ -20,7 +20,7 @@ import ch.alpine.tensor.qty.QuantityUnit;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class Curvature2DTest {
+class Curvature2DTest {
   @Test
   public void testString2() {
     Tensor points = Tensors.fromString("{{0, 0}, {1, 1}}");

@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So3BiinvariantMeanTest {
+class So3BiinvariantMeanTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(So3Manifold.INSTANCE);
 

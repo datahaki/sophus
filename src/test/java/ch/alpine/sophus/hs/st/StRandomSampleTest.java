@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class StRandomSampleTest {
+class StRandomSampleTest {
   @Test
   public void testFail() {
     assertThrows(Exception.class, () -> StRandomSample.of(3, -1));

@@ -11,7 +11,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.sca.Chop;
 
-public class BSplineLimitMatrixTest {
+class BSplineLimitMatrixTest {
   @Test
   public void testSimple() {
     for (int degree = 0; degree < 5; ++degree)

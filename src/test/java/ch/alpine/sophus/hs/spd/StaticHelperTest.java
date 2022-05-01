@@ -23,7 +23,7 @@ import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Log;
 
-public class StaticHelperTest {
+class StaticHelperTest {
   @Test
   public void testSimple() {
     assertEquals(StaticHelper.norm(IdentityMatrix.of(3)), RealScalar.ZERO);

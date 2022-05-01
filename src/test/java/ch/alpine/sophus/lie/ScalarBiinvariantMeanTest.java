@@ -11,7 +11,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.HilbertMatrix;
 
-public class ScalarBiinvariantMeanTest {
+class ScalarBiinvariantMeanTest {
   private static final ScalarBiinvariantMean[] SO2_BIINVARIANT_MEANS = { //
       So2PhongBiinvariantMean.INSTANCE, //
       So2LinearBiinvariantMean.INSTANCE };

@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class So3FastMeanTest {
+class So3FastMeanTest {
   @Test
   public void testSimple() {
     int n = 7;

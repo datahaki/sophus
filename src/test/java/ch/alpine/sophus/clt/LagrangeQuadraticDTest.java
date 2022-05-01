@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class LagrangeQuadraticDTest {
+class LagrangeQuadraticDTest {
   private static final Scalar _3 = RealScalar.of(+3);
   private static final Scalar _4 = RealScalar.of(+4);
 

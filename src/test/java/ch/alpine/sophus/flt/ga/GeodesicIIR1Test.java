@@ -14,7 +14,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicIIR1Test {
+class GeodesicIIR1Test {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     GeodesicIIR1 geodesicIIR1 = //

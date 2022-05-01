@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class S2LineDistanceTest {
+class S2LineDistanceTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     TensorNorm tensorNorm = Serialization.copy(S2LineDistance.INSTANCE.tensorNorm(Tensors.vector(1, 0, 0), Tensors.vector(0, 1, 0)));

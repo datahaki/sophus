@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnFastMeanTest {
+class SnFastMeanTest {
   @Test
   public void testSnNormalized() {
     Random random = new Random(3);

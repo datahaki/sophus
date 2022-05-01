@@ -49,7 +49,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Unitize;
 
-public class Se2CoveringManifoldTest {
+class Se2CoveringManifoldTest {
   private static final BarycentricCoordinate[] ALL_COORDINATES = //
       GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);

@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se3ExponentialTest {
+class Se3ExponentialTest {
   private static final Exponential LIE_EXPONENTIAL = Se3Exponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se3Group.INSTANCE;
   private static final RandomSampleInterface RSI_TSe3 = new TSe3RandomSample( //

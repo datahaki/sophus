@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdBiinvariantMeanTest {
+class SpdBiinvariantMeanTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);

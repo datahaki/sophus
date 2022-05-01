@@ -15,7 +15,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se3GroupElementTest {
+class Se3GroupElementTest {
   private static void _check(Tensor R, Tensor t) {
     Se3GroupElement g = new Se3GroupElement(R, t);
     Tensor adjoint = g.inverse().adjoint(Tensors.fromString("{{1, 2, 3}, {4, 5, 6}}"));

@@ -11,7 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactScalarQ;
 
-public class RnMetricTest {
+class RnMetricTest {
   @Test
   public void testSimple() {
     TensorMetric tensorMetric = RnMetric.INSTANCE;

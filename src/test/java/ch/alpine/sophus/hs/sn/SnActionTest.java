@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnActionTest {
+class SnActionTest {
   @Test
   public void testSimple() {
     Scalar scalar = RealScalar.of(0.5);

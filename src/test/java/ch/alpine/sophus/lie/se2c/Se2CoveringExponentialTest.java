@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se2CoveringExponentialTest {
+class Se2CoveringExponentialTest {
   private static final Exponential LIE_EXPONENTIAL = Se2CoveringExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se2CoveringGroup.INSTANCE;
 

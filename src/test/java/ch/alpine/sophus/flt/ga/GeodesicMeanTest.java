@@ -12,7 +12,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Mean;
 
-public class GeodesicMeanTest {
+class GeodesicMeanTest {
   @Test
   public void testSimple() {
     for (int radius = 0; radius <= 5; ++radius) {

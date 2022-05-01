@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SphereFitTest {
+class SphereFitTest {
   @Test
   public void testToString() {
     Tensor points = Tensors.of( //

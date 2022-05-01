@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.so2.So2CoveringBiinvariantMean;
 import ch.alpine.tensor.Tensors;
 
-public class BiinvariantMeansTest {
+class BiinvariantMeansTest {
   @Test
   public void testNullFail() {
     assertThrows(Exception.class, () -> BiinvariantMeans.of(null, Tensors.vector(1)));

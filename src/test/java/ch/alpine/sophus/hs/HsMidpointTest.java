@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 
-public class HsMidpointTest {
+class HsMidpointTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     HsMidpoint hsMidpoint = Serialization.copy(new HsMidpoint(RnManifold.INSTANCE));

@@ -15,7 +15,7 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
 
-public class BezierExtrapolationTest {
+class BezierExtrapolationTest {
   @Test
   public void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGeodesic.INSTANCE);

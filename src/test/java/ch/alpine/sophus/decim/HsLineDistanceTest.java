@@ -19,7 +19,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
 
-public class HsLineDistanceTest {
+class HsLineDistanceTest {
   @Test
   public void testRnMatch() throws ClassNotFoundException, IOException {
     HsLineDistance hsLineDistance = //

@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Hermite2SubdivisionsTest {
+class Hermite2SubdivisionsTest {
   @Test
   public void testSimple() {
     TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));

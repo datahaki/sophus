@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
-public class S2ManifoldTest {
+class S2ManifoldTest {
   @Test
   public void testTangentSpace() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);

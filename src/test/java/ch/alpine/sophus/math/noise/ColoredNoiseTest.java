@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.sca.Clips;
 
-public class ColoredNoiseTest {
+class ColoredNoiseTest {
   @Test
   public void testSimple() {
     ColoredNoise coloredNoise = new ColoredNoise(1.2);

@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class So2ExponentialTest {
+class So2ExponentialTest {
   @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.unit();

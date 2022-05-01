@@ -11,7 +11,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class RnGroupElementTest {
+class RnGroupElementTest {
   @Test
   public void testSimple() {
     RnGroupElement rnGroupElement = new RnGroupElement(Tensors.vector(1, 2, 3));

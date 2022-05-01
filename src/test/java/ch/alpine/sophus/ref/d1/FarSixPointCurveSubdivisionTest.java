@@ -14,7 +14,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class FarSixPointCurveSubdivisionTest {
+class FarSixPointCurveSubdivisionTest {
   @Test
   public void testP1() {
     FarSixPointCurveSubdivision spcs = new FarSixPointCurveSubdivision(RnGeodesic.INSTANCE);

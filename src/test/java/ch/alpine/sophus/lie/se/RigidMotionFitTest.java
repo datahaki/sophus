@@ -29,7 +29,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
-public class RigidMotionFitTest {
+class RigidMotionFitTest {
   @Test
   public void testExact() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();

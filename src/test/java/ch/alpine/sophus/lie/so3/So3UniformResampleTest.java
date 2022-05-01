@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 
-public class So3UniformResampleTest {
+class So3UniformResampleTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = So3UniformResample.of(RealScalar.ONE);

@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnExponentialTest {
+class HnExponentialTest {
   @Test
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();

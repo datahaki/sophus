@@ -11,7 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 
-public class AnalyticClothoidPartialTest {
+class AnalyticClothoidPartialTest {
   @Test
   public void testSimple1() throws ClassNotFoundException, IOException {
     ClothoidPartial clothoidPartial = Serialization.copy(AnalyticClothoidPartial.of(RealScalar.of(1.3), RealScalar.of(-0.7), RealScalar.of(0.2)));

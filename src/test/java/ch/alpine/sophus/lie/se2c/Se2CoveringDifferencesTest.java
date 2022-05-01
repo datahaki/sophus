@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringDifferencesTest {
+class Se2CoveringDifferencesTest {
   @Test
   public void testSimple() {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);

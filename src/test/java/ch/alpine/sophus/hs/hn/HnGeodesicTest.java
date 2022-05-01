@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnGeodesicTest {
+class HnGeodesicTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Geodesic geodesicInterface = Serialization.copy(HnGeodesic.INSTANCE);

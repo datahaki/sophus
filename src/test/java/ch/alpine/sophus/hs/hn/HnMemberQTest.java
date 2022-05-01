@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class HnMemberQTest {
+class HnMemberQTest {
   @Test
   public void testSimple() {
     for (int n = 2; n < 10; ++n)

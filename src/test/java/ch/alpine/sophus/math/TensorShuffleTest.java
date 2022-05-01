@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class TensorShuffleTest {
+class TensorShuffleTest {
   @Test
   public void testPermutations() {
     Tensor vector = Tensors.vector(1, 2, 3).unmodifiable();

@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrGeodesicTest {
+class GrGeodesicTest {
   @Test
   public void testMidpoint() {
     int n = 4;

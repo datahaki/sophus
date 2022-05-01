@@ -10,7 +10,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se3NumericsTest {
+class Se3NumericsTest {
   @Test
   public void testSimple() {
     Se3Numerics se3Numerics1 = new Se3Numerics(RealScalar.of(1e-2));

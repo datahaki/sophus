@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
-public class GeodesicBSplineInterpolationTest {
+class GeodesicBSplineInterpolationTest {
   /* package */ static Tensor pet(Tensor prev, Tensor eval, Tensor goal) {
     return prev.add(goal.subtract(eval));
   }

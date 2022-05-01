@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.c.LogisticDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrTransportTest {
+class GrTransportTest {
   public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
 
   @Test

@@ -16,7 +16,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnRandomSampleTest {
+class SnRandomSampleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int dimension = 0; dimension < 6; ++dimension) {

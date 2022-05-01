@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnTransportTest {
+class HnTransportTest {
   private static final HsTransport POLE_LADDER = new PoleLadder(HnManifold.INSTANCE);
 
   @Test

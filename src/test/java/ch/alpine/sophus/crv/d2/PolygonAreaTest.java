@@ -19,7 +19,7 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 
-public class PolygonAreaTest {
+class PolygonAreaTest {
   @Test
   public void testAreaTriangle() {
     Tensor poly = Tensors.fromString("{{1, 1}, {2, 1}, {1, 2}}");

@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.tri.Cos;
 
-public class FindZeroTest {
+class FindZeroTest {
   @Test
   public void testSimple() {
     FindZero findZero = new FindZero(Cos.FUNCTION, Sign::isPositive, Chop._12);

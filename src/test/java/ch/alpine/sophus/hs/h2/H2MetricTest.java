@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Log;
 import ch.alpine.tensor.sca.tri.ArcSinh;
 
-public class H2MetricTest {
+class H2MetricTest {
   @Test
   public void testTrivial() {
     Tensor p = Tensors.vector(-Math.random(), Math.random());

@@ -16,7 +16,7 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class Se2CurveDecimationTest {
+class Se2CurveDecimationTest {
   @Test
   public void testRandom() {
     CurveDecimation curveDecimation = Se2CurveDecimation.of(RealScalar.ONE);

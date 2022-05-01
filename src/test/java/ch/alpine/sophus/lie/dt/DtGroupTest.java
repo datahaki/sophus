@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class DtGroupTest {
+class DtGroupTest {
   private static final Exponential LIE_EXPONENTIAL = DtExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = DtGroup.INSTANCE;
 

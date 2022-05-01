@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;
 
-public class CornerTangentTest {
+class CornerTangentTest {
   @Test
   public void testSimple() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);

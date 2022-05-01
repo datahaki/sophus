@@ -15,7 +15,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicInterpolationTest {
+class GeodesicInterpolationTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor sequence = Tensors.fromString("{{1, 2, 3}, {4, 3, 2}, {5, -1, 2.5}}");

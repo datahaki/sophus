@@ -27,7 +27,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class PolygonClipTest {
+class PolygonClipTest {
   public static boolean equalsCycle(Tensor cycle1, Tensor cycle2) {
     if (cycle1.length() == cycle2.length())
       for (int index = 0; index < cycle2.length(); ++index)

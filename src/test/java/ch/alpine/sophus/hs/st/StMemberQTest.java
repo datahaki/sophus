@@ -7,7 +7,7 @@ import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 
-public class StMemberQTest {
+class StMemberQTest {
   @Test
   public void testSimple() {
     for (int n = 3; n < 6; ++n)

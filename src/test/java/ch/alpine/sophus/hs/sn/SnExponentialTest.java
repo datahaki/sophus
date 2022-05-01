@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnExponentialTest {
+class SnExponentialTest {
   @Test
   public void test2D() throws ClassNotFoundException, IOException {
     SnExponential snExp = Serialization.copy(new SnExponential(UnitVector.of(2, 0)));

@@ -9,7 +9,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class RnHermite2SubdivisionsTest {
+class RnHermite2SubdivisionsTest {
   @Test
   public void testA1() {
     RnHermite2Subdivision a1 = RnHermite2Subdivisions.standard();

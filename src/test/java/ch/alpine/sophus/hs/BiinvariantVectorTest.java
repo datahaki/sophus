@@ -32,7 +32,7 @@ import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Round;
 
-public class BiinvariantVectorTest {
+class BiinvariantVectorTest {
   @Test
   public void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);

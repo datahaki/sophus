@@ -16,7 +16,7 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringBarycenterTest {
+class Se2CoveringBarycenterTest {
   @Test
   public void testZeros() {
     Tensor sequence = Tensors.fromString("{{2, 3, 4}, {1, 2, 3}, {-2, 1, 1}, {2, -1, -7}}");

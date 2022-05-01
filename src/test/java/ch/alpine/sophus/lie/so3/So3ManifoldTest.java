@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So3ManifoldTest {
+class So3ManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(So3Manifold.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(SoGroup.INSTANCE);

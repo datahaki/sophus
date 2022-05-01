@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class ScManifoldTest {
+class ScManifoldTest {
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap( //
       ScManifold.INSTANCE, //
       new MetricCoordinate(NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));

@@ -13,7 +13,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.itp.InterpolatingPolynomial;
 
-public class MonomialExtrapolationMaskTest {
+class MonomialExtrapolationMaskTest {
   @Test
   public void testSimple() {
     assertEquals(MonomialExtrapolationMask.INSTANCE.apply(1), Tensors.vector(1));

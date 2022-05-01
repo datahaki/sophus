@@ -3,7 +3,7 @@ package ch.alpine.sophus.math;
 
 import org.junit.jupiter.api.Test;
 
-public class PlausibleRationalTest {
+class PlausibleRationalTest {
   @Test
   public void testSimple() {
     // Scalar v = PlausibleRational.FUNCTION.apply(RealScalar.of(-0.8660254037844389));

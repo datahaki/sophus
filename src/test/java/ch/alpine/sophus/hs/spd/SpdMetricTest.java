@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class SpdMetricTest {
+class SpdMetricTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {

@@ -23,7 +23,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 
-public class BSpline2CurveSubdivisionTest {
+class BSpline2CurveSubdivisionTest {
   private static final CurveSubdivision CURVE_SUBDIVISION = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE);
 
   @Test

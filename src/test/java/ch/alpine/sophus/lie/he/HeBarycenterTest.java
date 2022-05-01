@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-public class HeBarycenterTest {
+class HeBarycenterTest {
   @Test
   public void test3dim() {
     Tensor p = Tensors.fromString("{{1}, {4}, 5}");

@@ -15,7 +15,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2ExpFixpointTest {
+class Se2ExpFixpointTest {
   @Test
   public void testSimple() {
     Tensor velocity = Tensors.fromString("{3[m*s^-1], .2[m*s^-1], 0.3[s^-1]}");

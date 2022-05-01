@@ -31,7 +31,7 @@ import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class ThreePointCoordinateTest {
+class ThreePointCoordinateTest {
   private static BarycentricCoordinate r2(ThreePointScaling biFunction) {
     return HsCoordinates.wrap(RnManifold.INSTANCE, ThreePointCoordinate.of(biFunction));
   }

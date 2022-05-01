@@ -28,7 +28,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrExponentialTest {
+class GrExponentialTest {
   @Test
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");

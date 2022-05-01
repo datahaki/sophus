@@ -17,7 +17,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 
-public class Regularization2StepStringTest {
+class Regularization2StepStringTest {
   private static final TensorUnaryOperator STRING = //
       Regularization2Step.string(RnGeodesic.INSTANCE, RationalScalar.of(1, 4));
 

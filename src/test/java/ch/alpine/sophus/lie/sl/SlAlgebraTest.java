@@ -15,7 +15,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Det;
 
-public class SlAlgebraTest {
+class SlAlgebraTest {
   @Test
   public void testSl2Match() {
     LieAlgebra slAlgebra = SlAlgebra.of(2);

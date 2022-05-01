@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensors;
 
-public class SymmetricVectorQTest {
+class SymmetricVectorQTest {
   @Test
   public void testSimple() {
     assertTrue(SymmetricVectorQ.of(Tensors.empty()));

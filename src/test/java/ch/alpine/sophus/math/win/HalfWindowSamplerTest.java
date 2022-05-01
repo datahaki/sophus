@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.win.BartlettWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class HalfWindowSamplerTest {
+class HalfWindowSamplerTest {
   @Test
   public void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {

@@ -15,7 +15,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.qty.Quantity;
 
-public class RnUniformResampleTest {
+class RnUniformResampleTest {
   @Test
   public void testString() throws ClassNotFoundException, IOException {
     CurveSubdivision curveSubdivision = Serialization.copy(RnUniformResample.of(Quantity.of(2, "m")));

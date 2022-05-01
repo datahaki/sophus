@@ -13,7 +13,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class SphericalVariogramTest {
+class SphericalVariogramTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     ScalarUnaryOperator variogram = Serialization.copy(SphericalVariogram.of(5, 3));

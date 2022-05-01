@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class TSnMemberQTest {
+class TSnMemberQTest {
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     MemberQ memberQ = Serialization.copy(SnMemberQ.INSTANCE);

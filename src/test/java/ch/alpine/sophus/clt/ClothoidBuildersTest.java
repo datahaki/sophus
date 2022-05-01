@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Sign;
 
-public class ClothoidBuildersTest {
+class ClothoidBuildersTest {
   @Test
   public void testCurvature() {
     Distribution distribution = UniformDistribution.unit();

@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.LinearSolve;
 
-public class So3ExponentialTest {
+class So3ExponentialTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(So3Exponential.INSTANCE);

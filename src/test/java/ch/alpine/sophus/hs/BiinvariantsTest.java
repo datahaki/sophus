@@ -13,7 +13,7 @@ import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
-public class BiinvariantsTest {
+class BiinvariantsTest {
   @ParameterizedTest
   @EnumSource(Biinvariants.class)
   public void testDistanceSequenceNullFail(Biinvariant biinvariant) {

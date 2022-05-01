@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class UniformWindowSamplerTest {
+class UniformWindowSamplerTest {
   @Test
   public void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {

@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public class SplitParametricCurveTest {
+class SplitParametricCurveTest {
   @Test
   public void testSimple() {
     Geodesic geodesicInterface = SplitParametricCurve.of(RnGeodesic.INSTANCE);

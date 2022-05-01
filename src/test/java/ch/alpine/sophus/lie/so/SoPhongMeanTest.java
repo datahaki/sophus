@@ -27,7 +27,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class SoPhongMeanTest {
+class SoPhongMeanTest {
   @Test
   public void testSimple() {
     int n = 7;

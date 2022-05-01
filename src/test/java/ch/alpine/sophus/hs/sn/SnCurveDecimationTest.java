@@ -15,7 +15,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-public class SnCurveDecimationTest {
+class SnCurveDecimationTest {
   @Test
   public void testGeodesic() {
     Tensor p0 = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0, 0));

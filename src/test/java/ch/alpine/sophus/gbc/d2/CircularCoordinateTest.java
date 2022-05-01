@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class CircularCoordinateTest {
+class CircularCoordinateTest {
   @Test
   public void testSimple() {
     int n = 5;

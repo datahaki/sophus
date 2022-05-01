@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class DoTest {
+class DoTest {
   @Test
   public void testSimple() {
     Supplier<Tensor> supplier = new Supplier<>() {

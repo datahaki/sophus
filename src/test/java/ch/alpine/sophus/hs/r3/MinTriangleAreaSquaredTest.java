@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
 
-public class MinTriangleAreaSquaredTest {
+class MinTriangleAreaSquaredTest {
   @Test
   public void testSimple() {
     for (int n = 3; n <= 6; ++n) {

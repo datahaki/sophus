@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class KullbackLeiblerDivergenceTest {
+class KullbackLeiblerDivergenceTest {
   @SuppressWarnings("unused")
   @Test
   public void testSimple() {

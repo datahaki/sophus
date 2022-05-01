@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class IterativeCoordinateMatrixTest {
+class IterativeCoordinateMatrixTest {
   @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);

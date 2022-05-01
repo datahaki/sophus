@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class MidpointTangentApproximationTest {
+class MidpointTangentApproximationTest {
   @Test
   public void testSimple() {
     Scalar f = OriginalApproximation.INSTANCE.apply(RealScalar.of(0.3), RealScalar.of(-0.82));

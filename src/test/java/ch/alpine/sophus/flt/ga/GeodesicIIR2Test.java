@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicIIR2Test {
+class GeodesicIIR2Test {
   @Test
   public void testSimple() {
     Geodesic geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);

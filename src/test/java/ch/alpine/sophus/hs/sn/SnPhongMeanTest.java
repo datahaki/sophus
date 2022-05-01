@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnPhongMeanTest {
+class SnPhongMeanTest {
   @Test
   public void testSnNormalized() {
     Distribution distribution = NormalDistribution.of(1, 0.2);

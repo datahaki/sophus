@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.num.Pi;
 
-public class So2Test {
+class So2Test {
   @Test
   public void testSimple() {
     assertEquals(So2.MOD.apply(Pi.VALUE), Pi.VALUE.negate());

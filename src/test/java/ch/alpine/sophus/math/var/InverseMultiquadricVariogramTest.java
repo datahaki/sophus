@@ -12,7 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.ExactScalarQ;
 
-public class InverseMultiquadricVariogramTest {
+class InverseMultiquadricVariogramTest {
   @Test
   public void testSimple() {
     ScalarUnaryOperator scalarUnaryOperator = InverseMultiquadricVariogram.of(3);

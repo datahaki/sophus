@@ -19,7 +19,7 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class SoGroupElementTest {
+class SoGroupElementTest {
   private static final LieGroup LIE_GROUP = SoGroup.INSTANCE;
 
   @Test

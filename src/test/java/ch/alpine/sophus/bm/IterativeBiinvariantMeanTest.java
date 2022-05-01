@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class IterativeBiinvariantMeanTest {
+class IterativeBiinvariantMeanTest {
   @Test
   public void testSE2() {
     Scalar TWO = RealScalar.of(2);

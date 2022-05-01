@@ -7,7 +7,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.mat.Tolerance;
 
-public class MidpointTangentLayer2Test {
+class MidpointTangentLayer2Test {
   @Test
   public void testMathematicaSync() {
     Scalar scalar = MidpointTangentLayer2.INSTANCE.apply(RealScalar.of(1), RealScalar.of(6));

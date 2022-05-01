@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 
-public class SnMemberQTest {
+class SnMemberQTest {
   @Test
   public void testD1() {
     SnMemberQ.INSTANCE.require(Tensors.vector(+1));

@@ -18,7 +18,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.re.Det;
 
-public class KillingFormTest {
+class KillingFormTest {
   @Test
   public void testSe2() {
     Tensor ad = Se2Algebra.INSTANCE.ad().unmodifiable();

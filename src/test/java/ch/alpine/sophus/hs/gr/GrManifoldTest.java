@@ -23,7 +23,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrManifoldTest {
+class GrManifoldTest {
   @Test
   public void testBiinvariance() {
     Biinvariant[] biinvariants = new Biinvariant[] { //

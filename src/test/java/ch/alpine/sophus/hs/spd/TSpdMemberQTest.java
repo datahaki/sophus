@@ -10,7 +10,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
-public class TSpdMemberQTest {
+class TSpdMemberQTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 10; ++n) {

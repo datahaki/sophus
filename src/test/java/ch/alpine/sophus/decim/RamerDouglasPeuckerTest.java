@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 
-public class RamerDouglasPeuckerTest {
+class RamerDouglasPeuckerTest {
   @Test
   public void testEmpty() {
     Tensor tensor = Tensors.empty();

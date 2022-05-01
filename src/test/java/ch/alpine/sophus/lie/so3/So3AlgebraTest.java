@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So3AlgebraTest {
+class So3AlgebraTest {
   @Test
   public void testSimple() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);

@@ -25,7 +25,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 
-public class CausalFilterTest {
+class CausalFilterTest {
   @Test
   public void testIIR1() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")

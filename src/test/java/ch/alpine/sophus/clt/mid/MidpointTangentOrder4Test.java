@@ -9,7 +9,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class MidpointTangentOrder4Test {
+class MidpointTangentOrder4Test {
   @Test
   public void testSymmetry() {
     for (int count = 0; count < 100; ++count) {

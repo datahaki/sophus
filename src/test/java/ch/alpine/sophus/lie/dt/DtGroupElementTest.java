@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class DtGroupElementTest {
+class DtGroupElementTest {
   @Test
   public void testSt1Inverse() {
     Tensor p = Tensors.vector(3, 6);

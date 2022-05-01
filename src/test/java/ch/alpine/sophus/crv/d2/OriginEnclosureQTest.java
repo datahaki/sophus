@@ -21,7 +21,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.qty.Unit;
 
-public class OriginEnclosureQTest {
+class OriginEnclosureQTest {
   @Test
   public void testInsidePlain() {
     Tensor polygon = Tensors.matrix(new Number[][] { //

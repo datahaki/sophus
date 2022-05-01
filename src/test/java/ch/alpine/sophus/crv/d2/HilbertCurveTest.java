@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 
-public class HilbertCurveTest {
+class HilbertCurveTest {
   @Test
   public void testSimple() {
     ExactTensorQ.require(HilbertCurve.of(0));

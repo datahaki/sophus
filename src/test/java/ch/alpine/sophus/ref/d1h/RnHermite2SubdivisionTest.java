@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class RnHermite2SubdivisionTest {
+class RnHermite2SubdivisionTest {
   static final List<HermiteSubdivision> LIST = Arrays.asList( //
       RnHermite2Subdivisions.standard(), //
       RnHermite2Subdivisions.manifold());

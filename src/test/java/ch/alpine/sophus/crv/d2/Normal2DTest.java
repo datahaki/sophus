@@ -20,7 +20,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.red.Total;
 
-public class Normal2DTest {
+class Normal2DTest {
   @Test
   public void testStringLength() {
     Distribution distribution = NormalDistribution.standard();

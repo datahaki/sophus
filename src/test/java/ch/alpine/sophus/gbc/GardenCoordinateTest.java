@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class GardenCoordinateTest {
+class GardenCoordinateTest {
   @Test
   public void testR1equiv() {
     // in R^d we have w^H = w^G

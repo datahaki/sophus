@@ -12,7 +12,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.red.Variance;
 import ch.alpine.tensor.sca.Chop;
 
-public class So2UniformResampleTest {
+class So2UniformResampleTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = So2UniformResample.of(RealScalar.of(0.1));

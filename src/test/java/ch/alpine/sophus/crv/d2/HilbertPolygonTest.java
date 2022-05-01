@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class HilbertPolygonTest {
+class HilbertPolygonTest {
   @Test
   public void testZeroClosedFail() {
     assertThrows(Exception.class, () -> HilbertPolygon.of(0));

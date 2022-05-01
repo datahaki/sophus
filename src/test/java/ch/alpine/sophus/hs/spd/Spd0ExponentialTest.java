@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Spd0ExponentialTest {
+class Spd0ExponentialTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {

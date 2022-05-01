@@ -27,7 +27,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class BallRandomSampleTest {
+class BallRandomSampleTest {
   @Test
   public void testSimple() {
     Tensor center = Tensors.vector(10, 20, 30, 40);

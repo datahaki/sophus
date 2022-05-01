@@ -17,7 +17,7 @@ import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class Su3AlgebraTest {
+class Su3AlgebraTest {
   @Test
   public void testSimple() {
     Su3Algebra su3Algebra = Su3Algebra.INSTANCE;

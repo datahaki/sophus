@@ -7,7 +7,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
-public class ClothoidDistanceTest {
+class ClothoidDistanceTest {
   @Test
   public void testSimple() {
     Chop._10.requireClose(ClothoidDistance.SE2_ANALYTIC.norm(Tensors.vector(10, 0, 0)), RealScalar.of(10));

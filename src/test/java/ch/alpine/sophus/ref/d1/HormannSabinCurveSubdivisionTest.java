@@ -19,7 +19,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
 
-public class HormannSabinCurveSubdivisionTest {
+class HormannSabinCurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE);

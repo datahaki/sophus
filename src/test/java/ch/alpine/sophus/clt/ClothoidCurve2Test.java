@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class ClothoidCurve2Test {
+class ClothoidCurve2Test {
   @Test
   public void testQuantity() {
     Tensor p1 = Tensors.fromString("{2[m], 3[m], 1}");

@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class StochasticMatrixQTest {
+class StochasticMatrixQTest {
   @Test
   public void testSimple() {
     StochasticMatrixQ.requireRows(IdentityMatrix.of(3), Chop._08);

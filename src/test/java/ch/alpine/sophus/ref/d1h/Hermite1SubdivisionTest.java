@@ -25,7 +25,7 @@ import ch.alpine.tensor.jet.JetScalar;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.qty.Quantity;
 
-public class Hermite1SubdivisionTest {
+class Hermite1SubdivisionTest {
   @Test
   public void testJetScalar() {
     HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE);

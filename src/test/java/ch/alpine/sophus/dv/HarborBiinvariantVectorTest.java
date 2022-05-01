@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class HarborBiinvariantVectorTest {
+class HarborBiinvariantVectorTest {
   /** @param vectorLogManifold
    * @param sequence
    * @return */

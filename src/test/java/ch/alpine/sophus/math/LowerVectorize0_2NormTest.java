@@ -15,7 +15,7 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class LowerVectorize0_2NormTest {
+class LowerVectorize0_2NormTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 10; ++n) {

@@ -17,7 +17,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
-public class Hermite1SubdivisionsTest {
+class Hermite1SubdivisionsTest {
   @Test
   public void testSimple() {
     TestHelper.check( //

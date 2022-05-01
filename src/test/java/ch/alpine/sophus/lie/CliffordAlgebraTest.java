@@ -4,12 +4,9 @@ package ch.alpine.sophus.lie;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.stream.IntStream;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +41,7 @@ import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.spa.Nnz;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class CliffordAlgebraTest {
+class CliffordAlgebraTest {
   @Test
   public void testD0() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = Serialization.copy(CliffordAlgebraCache.positive(0));
@@ -232,8 +229,7 @@ public class CliffordAlgebraTest {
       for (int q = 0; q < 2; ++q) {
         CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.of(p, q);
         Tensor cp = cliffordAlgebra.cp();
-        assertInstanceOf(SparseArray.class, 
-        cp );
+        assertInstanceOf(SparseArray.class, cp);
         JacobiIdentity.require(cp);
         Tensor x = RandomVariate.of(DiscreteUniformDistribution.of(-10, +10), cp.length());
         Tensor y = RandomVariate.of(DiscreteUniformDistribution.of(-10, +10), cp.length());

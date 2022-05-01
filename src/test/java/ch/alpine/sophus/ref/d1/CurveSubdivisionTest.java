@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class CurveSubdivisionTest {
+class CurveSubdivisionTest {
   private static void _checkSym(CurveSubdivision cs, Tensor tensor) {
     Tensor forward = cs.string(tensor);
     Tensor reverse = cs.string(Reverse.of(tensor));

@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class DubinsPathComparatorsTest {
+class DubinsPathComparatorsTest {
   @Test
   public void testSimple() {
     assertNotNull(DubinsPathComparators.LENGTH);

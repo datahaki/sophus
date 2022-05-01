@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So2FilterBiinvariantMeanTest {
+class So2FilterBiinvariantMeanTest {
   @Test
   public void testLength2Permutations() {
     Distribution distribution = UniformDistribution.of(-10, 10);

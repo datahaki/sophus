@@ -20,7 +20,7 @@ import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.red.KroneckerDelta;
 
-public class MatrixBracketTest {
+class MatrixBracketTest {
   private static void _check(Tensor ad, Tensor basis) {
     JacobiIdentity.require(ad);
     int n = ad.length();

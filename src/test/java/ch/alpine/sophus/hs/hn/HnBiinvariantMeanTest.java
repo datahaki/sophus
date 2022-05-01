@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnBiinvariantMeanTest {
+class HnBiinvariantMeanTest {
   @Test
   public void testAffineFail() {
     BiinvariantMean biinvariantMean = HnBiinvariantMean.of(Chop._12);

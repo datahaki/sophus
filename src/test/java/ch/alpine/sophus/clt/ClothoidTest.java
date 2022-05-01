@@ -31,7 +31,7 @@ import ch.alpine.tensor.qty.QuantityUnit;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 
-public class ClothoidTest {
+class ClothoidTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
@@ -99,8 +99,7 @@ public class ClothoidTest {
       Tensor q = RandomVariate.of(distribution, 3);
       LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();
       Scalar head = Serialization.copy(headTailInterface).head();
-      assertInstanceOf(RealScalar.class,
-      head );
+      assertInstanceOf(RealScalar.class, head);
     }
   }
 

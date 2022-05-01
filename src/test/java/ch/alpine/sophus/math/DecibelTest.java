@@ -11,7 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 
-public class DecibelTest {
+class DecibelTest {
   @Test
   public void testSimple() {
     Scalar scalar = Decibel.FUNCTION.apply(RealScalar.of(100));

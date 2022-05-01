@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2RigidMotionFitTest {
+class Se2RigidMotionFitTest {
   @Test
   public void testExact() {
     Distribution distribution = NormalDistribution.standard();

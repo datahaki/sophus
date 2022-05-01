@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.sca.Chop;
 
-public class AbstractBSplineInterpolationTest {
+class AbstractBSplineInterpolationTest {
   @Test
   public void testS2() {
     Tensor target = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {-1, 0, 0}}");

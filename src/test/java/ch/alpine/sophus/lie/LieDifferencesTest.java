@@ -28,7 +28,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class LieDifferencesTest {
+class LieDifferencesTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();

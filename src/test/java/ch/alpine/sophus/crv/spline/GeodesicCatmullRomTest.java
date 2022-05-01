@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicCatmullRomTest {
+class GeodesicCatmullRomTest {
   @Test
   public void testUniformInterpolatory() throws ClassNotFoundException, IOException {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 3);

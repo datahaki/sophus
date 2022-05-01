@@ -11,7 +11,7 @@ import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 
-public class Hermite2SubdivisionTest {
+class Hermite2SubdivisionTest {
   @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
     TestHelper.checkQuantity(Hermite2Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));

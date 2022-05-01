@@ -20,7 +20,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class CurvatureCombTest {
+class CurvatureCombTest {
   @Test
   public void testSimple() {
     Tensor points = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}}");

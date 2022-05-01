@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Sign;
 
-public class HnRayTest {
+class HnRayTest {
   @Test
   public void testExp() {
     Distribution distribution = NormalDistribution.standard();

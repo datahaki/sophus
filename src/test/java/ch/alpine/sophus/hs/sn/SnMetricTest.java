@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.ArcCos;
 
-public class SnMetricTest {
+class SnMetricTest {
   private static Scalar _check(Tensor p, Tensor q) {
     return ArcCos.FUNCTION.apply((Scalar) p.dot(q)); // complex number if |p.q| > 1
   }

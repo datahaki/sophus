@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class LagrangeQuadraticTest {
+class LagrangeQuadraticTest {
   @Test
   public void testSimple() {
     LagrangeQuadratic lagrangeQuadratic = //

@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-public class RegionTest {
+class RegionTest {
   @FunctionalInterface
   public static interface Some {
     public boolean single(Object s);

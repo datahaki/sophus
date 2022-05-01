@@ -13,7 +13,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.io.ResourceData;
 import ch.alpine.tensor.red.Mean;
 
-public class DooSabinRefinementTest {
+class DooSabinRefinementTest {
   @Test
   public void testCube() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));

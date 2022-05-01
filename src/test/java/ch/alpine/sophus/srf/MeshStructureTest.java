@@ -11,7 +11,7 @@ import ch.alpine.sophus.math.IntDirectedEdge;
 import ch.alpine.sophus.srf.io.PlyFormat;
 import ch.alpine.tensor.io.ResourceData;
 
-public class MeshStructureTest {
+class MeshStructureTest {
   @Test
   public void testSimple() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));

@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.lie.TensorProduct;
 
-public class GrMemberQTest {
+class GrMemberQTest {
   @Test
   public void testSimple() {
     int n = 5;

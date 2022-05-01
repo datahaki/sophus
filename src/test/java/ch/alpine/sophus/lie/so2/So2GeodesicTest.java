@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So2GeodesicTest {
+class So2GeodesicTest {
   @Test
   public void testSimple() {
     Tensor p = So2Exponential.INSTANCE.exp(RealScalar.ONE);

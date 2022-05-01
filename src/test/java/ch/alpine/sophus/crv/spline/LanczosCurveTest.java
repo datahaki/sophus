@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.fft.FourierMatrix;
 
-public class LanczosCurveTest {
+class LanczosCurveTest {
   @Test
   public void testSimple() {
     Tensor refine = LanczosCurve.refine(Tensors.vector(1, 2, 3, 2, 1, 2, 3), 100);

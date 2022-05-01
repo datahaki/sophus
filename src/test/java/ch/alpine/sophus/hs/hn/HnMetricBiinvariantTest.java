@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnMetricBiinvariantTest {
+class HnMetricBiinvariantTest {
   @Test
   public void testCoordinateBiinvariant() throws ClassNotFoundException, IOException {
     Random random = new Random(40);

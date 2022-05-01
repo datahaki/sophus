@@ -33,7 +33,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class ReducingMeanTest {
+class ReducingMeanTest {
   private static Tensor _check(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
     BiinvariantMean biinvariantMean = ReducingMean.of(RnGeodesic.INSTANCE);

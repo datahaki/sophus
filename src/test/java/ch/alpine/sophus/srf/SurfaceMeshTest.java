@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
-public class SurfaceMeshTest {
+class SurfaceMeshTest {
   @Test
   public void testEmpty() throws ClassNotFoundException, IOException {
     SurfaceMesh surfaceMesh = Serialization.copy(new SurfaceMesh());

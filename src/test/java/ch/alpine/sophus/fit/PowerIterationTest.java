@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
 
-public class PowerIterationTest {
+class PowerIterationTest {
   @Test
   public void testSymmetric() {
     Tensor matrix = Tensors.fromString("{{2, 3, 0, 1}, {3, 1, 7, 5}, {0, 7, 10, 9}, {1, 5, 9, 13}}");

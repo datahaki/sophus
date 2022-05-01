@@ -9,7 +9,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.num.Pi;
 
-public class So2MetricTest {
+class So2MetricTest {
   @Test
   public void testTrivial1() {
     Scalar err = So2Metric.INSTANCE.distance(RealScalar.ONE, RealScalar.ONE);

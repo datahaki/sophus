@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class RnExponentialTest {
+class RnExponentialTest {
   @Test
   public void testSimple() {
     Tensor matrix = HilbertMatrix.of(2, 3);

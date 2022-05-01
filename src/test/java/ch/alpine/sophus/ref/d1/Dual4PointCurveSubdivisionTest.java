@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
 
-public class Dual4PointCurveSubdivisionTest {
+class Dual4PointCurveSubdivisionTest {
   @Test
   public void testSimple() {
     assertThrows(Exception.class, () -> new Dual4PointCurveSubdivision(null, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO));

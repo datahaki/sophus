@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
 
-public class S3UnitQuaternionDistanceTest {
+class S3UnitQuaternionDistanceTest {
   @Test
   public void testSimple() {
     Quaternion p = Quaternion.of(3, 1, 2, 3);

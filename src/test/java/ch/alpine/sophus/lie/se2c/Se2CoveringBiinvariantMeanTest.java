@@ -29,7 +29,7 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se2CoveringBiinvariantMeanTest {
+class Se2CoveringBiinvariantMeanTest {
   @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));

@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
 
-public class SnAngleTest {
+class SnAngleTest {
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     Serialization.copy(new SnAngle(UnitVector.of(4, 2)));

@@ -16,7 +16,7 @@ import ch.alpine.tensor.img.MeanFilter;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Unitize;
 
-public class GeodesicMeanFilterTest {
+class GeodesicMeanFilterTest {
   @Test
   public void testSimple() {
     for (int radius = 0; radius < 4; ++radius) {

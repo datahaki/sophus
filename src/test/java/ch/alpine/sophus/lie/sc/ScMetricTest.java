@@ -12,7 +12,7 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class ScMetricTest {
+class ScMetricTest {
   private static void _check(Tensor p, Tensor q, Tensor r) {
     Scalar pq = ScMetric.INSTANCE.distance(p, q);
     Sign.requirePositive(pq);

@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.d.BernoulliDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
-public class LieGroupBSplineInterpolationTest {
+class LieGroupBSplineInterpolationTest {
   @Test
   public void testIterationRnExact() {
     Tensor target = Tensors.vector(1, 2, 0, 2, 1, 3);

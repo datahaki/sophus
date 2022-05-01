@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class AffineQTest {
+class AffineQTest {
   @Test
   public void testRequire() {
     AffineQ.require(Tensors.vector(0.5, 0.5), Chop._08);

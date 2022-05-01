@@ -21,7 +21,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class DubinsPathTest {
+class DubinsPathTest {
   @Test
   public void testFirstTurnRight() {
     assertFalse(DubinsType.LSR.isFirstTurnRight());

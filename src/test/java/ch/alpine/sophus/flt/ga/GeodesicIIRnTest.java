@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.RealScalar;
 
-public class GeodesicIIRnTest {
+class GeodesicIIRnTest {
   @Test
   public void testFailOpNull() {
     assertThrows(Exception.class, () -> GeodesicIIRn.of(null, RnGeodesic.INSTANCE, 3, RealScalar.ONE));

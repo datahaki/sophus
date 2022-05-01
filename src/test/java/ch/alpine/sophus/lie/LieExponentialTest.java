@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.so.SoGroup;
 
-public class LieExponentialTest {
+class LieExponentialTest {
   @Test
   public void testNullFail() {
     assertThrows(Exception.class, () -> LieExponential.of(SoGroup.INSTANCE, null));

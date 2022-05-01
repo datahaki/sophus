@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.ArcTan;
 
-public class ArcTan2DTest {
+class ArcTan2DTest {
   @Test
   public void testZero() {
     assertEquals(ArcTan2D.of(Array.zeros(10)), RealScalar.ZERO);

@@ -19,7 +19,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
 
-public class SoRandomSampleTest {
+class SoRandomSampleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {

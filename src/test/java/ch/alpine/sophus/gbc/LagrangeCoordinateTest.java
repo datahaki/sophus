@@ -26,7 +26,7 @@ import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Imag;
 
-public class LagrangeCoordinateTest {
+class LagrangeCoordinateTest {
   private static void _check(Tensor levers, Tensor weights) {
     AffineQ.require(weights, Chop._10);
     Chop._08.requireAllZero(weights.dot(levers));

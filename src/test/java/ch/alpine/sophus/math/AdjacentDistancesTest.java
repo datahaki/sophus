@@ -17,7 +17,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 
-public class AdjacentDistancesTest {
+class AdjacentDistancesTest {
   @Test
   public void testR2() throws ClassNotFoundException, IOException {
     Tensor tensor = Serialization.copy(new AdjacentDistances(RnMetric.INSTANCE)) //

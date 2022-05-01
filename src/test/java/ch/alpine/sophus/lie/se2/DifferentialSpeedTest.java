@@ -19,7 +19,7 @@ import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Cos;
 
-public class DifferentialSpeedTest {
+class DifferentialSpeedTest {
   @Test
   public void testSimple() {
     DifferentialSpeed ds = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(0.5));

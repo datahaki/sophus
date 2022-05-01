@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class SeAlgebraTest {
+class SeAlgebraTest {
   @Test
   public void testOne() {
     LieAlgebra lieAlgebra = SeAlgebra.of(1);

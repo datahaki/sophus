@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class HeAlgebraTest {
+class HeAlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
   @Test

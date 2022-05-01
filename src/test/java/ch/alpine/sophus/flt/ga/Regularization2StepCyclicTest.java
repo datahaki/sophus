@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
 
-public class Regularization2StepCyclicTest {
+class Regularization2StepCyclicTest {
   private static final TensorUnaryOperator CYCLIC = //
       Regularization2Step.cyclic(RnGeodesic.INSTANCE, RationalScalar.of(1, 4));
 

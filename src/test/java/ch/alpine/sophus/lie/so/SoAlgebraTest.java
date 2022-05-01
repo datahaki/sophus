@@ -12,7 +12,7 @@ import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 
-public class SoAlgebraTest {
+class SoAlgebraTest {
   @Test
   public void testHsS3() {
     for (int n = 2; n < 7; ++n) {

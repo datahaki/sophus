@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class PolygonCentroidTest {
+class PolygonCentroidTest {
   @Test
   public void testSimple() {
     for (int n = 2; n < 10; ++n) {

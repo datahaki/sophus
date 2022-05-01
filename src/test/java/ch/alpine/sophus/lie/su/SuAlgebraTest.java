@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Trace;
 
-public class SuAlgebraTest {
+class SuAlgebraTest {
   @Test
   public void testSimple() {
     for (int n = 2; n < 5; ++n) {

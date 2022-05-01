@@ -12,7 +12,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
-public class TSpdRandomSampleTest {
+class TSpdRandomSampleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     TSpdRandomSample simRandomSample = new TSpdRandomSample(3, TriangularDistribution.with(0, 1));

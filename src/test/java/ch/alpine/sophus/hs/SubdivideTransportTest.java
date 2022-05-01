@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so3.So3Manifold;
 
-public class SubdivideTransportTest {
+class SubdivideTransportTest {
   @Test
   public void testSubdivideFail() {
     assertThrows(Exception.class, () -> SubdivideTransport.of( //

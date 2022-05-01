@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class So2LinearBiinvariantMeanTest {
+class So2LinearBiinvariantMeanTest {
   private static final Clip CLIP = Clips.absolute(Pi.VALUE);
   private static final ScalarBiinvariantMean[] SCALAR_BIINVARIANT_MEANS = { //
       So2PhongBiinvariantMean.INSTANCE, //

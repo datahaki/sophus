@@ -36,7 +36,7 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.spa.Normal;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class MatrixAlgebraTest {
+class MatrixAlgebraTest {
   @Test
   public void testSe2() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");

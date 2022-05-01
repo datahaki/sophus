@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrBiinvariantMeanTest {
+class GrBiinvariantMeanTest {
   @Test
   public void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);

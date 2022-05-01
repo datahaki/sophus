@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-public class BiinvariantMeanExtrapolationTest {
+class BiinvariantMeanExtrapolationTest {
   @Test
   public void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //

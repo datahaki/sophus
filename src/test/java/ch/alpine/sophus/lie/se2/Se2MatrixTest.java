@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2MatrixTest {
+class Se2MatrixTest {
   @Test
   public void testSimple1() {
     Tensor matrix = Se2Matrix.of(Tensors.vector(2, 3, 4));

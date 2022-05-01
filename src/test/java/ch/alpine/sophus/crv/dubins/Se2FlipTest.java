@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 
-public class Se2FlipTest {
+class Se2FlipTest {
   @Test
   public void testSimple() {
     Tensor tensor = Se2Flip.FUNCTION.apply(Tensors.vector(1, 2, 3));

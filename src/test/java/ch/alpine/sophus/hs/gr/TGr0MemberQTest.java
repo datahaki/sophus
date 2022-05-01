@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class TGr0MemberQTest {
+class TGr0MemberQTest {
   @Test
   public void testSimple21() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(2, 1);

@@ -16,7 +16,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2BijectionTest {
+class Se2BijectionTest {
   @Test
   public void testSimple() {
     Bijection bijection = new Se2Bijection(Tensors.vector(2, 3, .3));

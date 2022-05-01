@@ -36,7 +36,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class BakerCampbellHausdorffTest {
+class BakerCampbellHausdorffTest {
   private static void _check(Tensor ad, int degree) {
     BakerCampbellHausdorff bakerCampbellHausdorff = //
         new BakerCampbellHausdorff(ad, degree, Chop._14);

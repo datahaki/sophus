@@ -25,7 +25,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class SnAlgebraTest {
+class SnAlgebraTest {
   @Test
   public void testProperty() {
     for (int d = 2; d < 5; ++d) {

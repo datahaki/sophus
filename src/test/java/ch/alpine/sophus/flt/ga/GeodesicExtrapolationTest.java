@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class GeodesicExtrapolationTest {
+class GeodesicExtrapolationTest {
   @Test
   public void testEmptyFail() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);

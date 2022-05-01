@@ -27,7 +27,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.qty.Unit;
 
-public class PowerVariogramTest {
+class PowerVariogramTest {
   @Test
   public void testFitQuantity() throws ClassNotFoundException, IOException {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));

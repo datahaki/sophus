@@ -15,7 +15,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.qty.Quantity;
 
-public class ThinPlateSplineVariogramTest {
+class ThinPlateSplineVariogramTest {
   @Test
   public void testSimple() {
     ScalarUnaryOperator scalarUnaryOperator = ThinPlateSplineVariogram.of(3);

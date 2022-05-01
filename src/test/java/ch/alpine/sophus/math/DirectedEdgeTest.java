@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.ext.Serialization;
 
-public class DirectedEdgeTest {
+class DirectedEdgeTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     IntDirectedEdge directedEdge = Serialization.copy(new IntDirectedEdge(2, 3));

@@ -15,7 +15,7 @@ import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-public class LagrangeInterpolationTest {
+class LagrangeInterpolationTest {
   @Test
   public void testSimple() {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(-3, 7), 4, 7).unmodifiable();

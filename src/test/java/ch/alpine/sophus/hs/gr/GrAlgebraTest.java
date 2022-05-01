@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class GrAlgebraTest {
+class GrAlgebraTest {
   @Test
   public void testSimple() {
     HsAlgebra hsAlgebra = GrAlgebra.of(5, 2, 6);
@@ -45,7 +44,6 @@ public class GrAlgebraTest {
 
   @Test
   public void testBasis() {
-    assertInstanceOf(SparseArray.class,
-    GrAlgebra.basis(5, 2) );
+    assertInstanceOf(SparseArray.class, GrAlgebra.basis(5, 2));
   }
 }

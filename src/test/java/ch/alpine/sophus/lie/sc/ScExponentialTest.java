@@ -9,7 +9,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class ScExponentialTest {
+class ScExponentialTest {
   @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(-500, 500);

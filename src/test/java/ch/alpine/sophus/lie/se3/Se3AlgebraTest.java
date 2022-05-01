@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 
-public class Se3AlgebraTest {
+class Se3AlgebraTest {
   @Test
   public void testSimple() {
     Se3Algebra.INSTANCE.basis();

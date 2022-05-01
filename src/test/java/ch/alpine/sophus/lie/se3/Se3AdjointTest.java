@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se3AdjointTest {
+class Se3AdjointTest {
   @Test
   public void testForwardInverse() {
     Distribution distribution = NormalDistribution.standard();

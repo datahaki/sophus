@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class LeveragesCoordinateTest {
+class LeveragesCoordinateTest {
   @Test
   public void testR1equiv() {
     // in R1 we have W^ID = w^IL

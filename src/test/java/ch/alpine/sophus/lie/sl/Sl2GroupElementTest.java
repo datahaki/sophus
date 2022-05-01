@@ -19,7 +19,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-public class Sl2GroupElementTest {
+class Sl2GroupElementTest {
   private static Tensor adjoint(LieGroupElement lieGroupElement) {
     return Tensor.of(IdentityMatrix.of(3).stream().map(lieGroupElement::adjoint));
   }

@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Sl2ExponentialTest {
+class Sl2ExponentialTest {
   @Test
   public void testSimple() {
     Tensor x = Tensors.fromString("{{2, 3}, {4, -2}}");

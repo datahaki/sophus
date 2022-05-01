@@ -9,7 +9,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Sign;
 
-public class StarPointsTest {
+class StarPointsTest {
   @Test
   public void testSimple() {
     Tensor polygon = StarPoints.of(4, RealScalar.ONE, RealScalar.of(0.3));

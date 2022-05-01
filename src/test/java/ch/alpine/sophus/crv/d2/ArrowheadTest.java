@@ -14,7 +14,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Sign;
 
-public class ArrowheadTest {
+class ArrowheadTest {
   @Test
   public void testOriented() {
     Tensor polygon = Arrowhead.of(1);

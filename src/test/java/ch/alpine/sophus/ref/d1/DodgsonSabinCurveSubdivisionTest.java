@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Chop;
 
-public class DodgsonSabinCurveSubdivisionTest {
+class DodgsonSabinCurveSubdivisionTest {
   @Test
   public void testThree() {
     Tensor a = Tensors.vector(1, 1.1);

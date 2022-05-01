@@ -11,7 +11,7 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class R2SGroupElementTest {
+class R2SGroupElementTest {
   @Test
   public void testSimple() {
     Tensor xyu = RandomVariate.of(NormalDistribution.standard(), 3);

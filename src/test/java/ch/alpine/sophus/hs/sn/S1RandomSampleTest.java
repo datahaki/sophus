@@ -11,7 +11,7 @@ import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 
-public class S1RandomSampleTest {
+class S1RandomSampleTest {
   @Test
   public void testSimple() {
     Tensor tensor = RandomSample.of(S1RandomSample.INSTANCE, 10);

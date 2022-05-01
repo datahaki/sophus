@@ -23,7 +23,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.sca.Chop;
 
-public class BezierFunctionTest {
+class BezierFunctionTest {
   @Test
   public void testSimple() {
     Tensor control = Tensors.fromString("{{0, 1}, {1, 0}, {2, 1}}");

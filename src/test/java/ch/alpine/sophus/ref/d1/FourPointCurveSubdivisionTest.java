@@ -23,7 +23,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
 
-public class FourPointCurveSubdivisionTest {
+class FourPointCurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);

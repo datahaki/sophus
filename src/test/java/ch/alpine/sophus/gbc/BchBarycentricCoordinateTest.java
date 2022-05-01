@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class BchBarycentricCoordinateTest {
+class BchBarycentricCoordinateTest {
   @Test
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);

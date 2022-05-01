@@ -23,7 +23,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.sca.Chop;
 
-public class BchBinaryAverageTest {
+class BchBinaryAverageTest {
   @Test
   public void testSe2() {
     Exponential exponential = Se2CoveringExponential.INSTANCE;

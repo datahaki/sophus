@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class LieTransportTest {
+class LieTransportTest {
   private static final Distribution DISTRIBUTION = UniformDistribution.of(-10, 10);
 
   @Test

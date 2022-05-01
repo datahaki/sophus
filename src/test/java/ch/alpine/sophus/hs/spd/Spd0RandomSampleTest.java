@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Spd0RandomSampleTest {
+class Spd0RandomSampleTest {
   private static void _check(Tensor g, MatrixSqrt matrixSqrt) {
     Chop._06.requireClose(Inverse.of(matrixSqrt.sqrt()), matrixSqrt.sqrt_inverse());
     Chop._06.requireClose(matrixSqrt.sqrt().dot(matrixSqrt.sqrt()), g);

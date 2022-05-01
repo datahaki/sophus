@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.red.GeometricMean;
 import ch.alpine.tensor.sca.Chop;
 
-public class ScBiinvariantMeanTest {
+class ScBiinvariantMeanTest {
   @Test
   public void testSimple() {
     Tensor scalar = ScBiinvariantMean.INSTANCE.mean(Tensors.vector(1, 2, 3).map(Tensors::of), Tensors.fromString("{1/3, 1/3, 1/3}"));

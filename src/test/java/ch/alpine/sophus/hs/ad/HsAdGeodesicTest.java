@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HsAdGeodesicTest {
+class HsAdGeodesicTest {
   @Test
   public void testSimple() {
     Distribution distribution = TriangularDistribution.with(0, 0.2);

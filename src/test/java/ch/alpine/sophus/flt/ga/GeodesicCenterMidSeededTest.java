@@ -9,7 +9,7 @@ import ch.alpine.sophus.flt.ga.GeodesicCenterMidSeeded.Splits;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-public class GeodesicCenterMidSeededTest {
+class GeodesicCenterMidSeededTest {
   @Test
   public void testSplitsEvenFail() {
     Splits splits = new GeodesicCenterMidSeeded.Splits(UniformWindowSampler.of(GaussianWindow.FUNCTION));

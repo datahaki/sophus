@@ -11,7 +11,7 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
-public class LieProjectedLineDistanceTest {
+class LieProjectedLineDistanceTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     LieProjectedLineDistance lieProjectedLineDistance = //

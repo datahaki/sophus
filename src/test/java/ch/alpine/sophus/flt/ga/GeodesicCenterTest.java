@@ -29,7 +29,7 @@ import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class GeodesicCenterTest {
+class GeodesicCenterTest {
   @SuppressWarnings("unchecked")
   private static final Function<Integer, Tensor> CONSTANT = (Function<Integer, Tensor> & Serializable) //
   i -> Array.of(k -> RationalScalar.of(1, i), i);

@@ -9,7 +9,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class Se3GroupTest {
+class Se3GroupTest {
   @Test
   public void testSimple() {
     Se3Group.INSTANCE.element(IdentityMatrix.of(4));

@@ -18,7 +18,7 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class BSpline5CurveSubdivisionTest {
+class BSpline5CurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test

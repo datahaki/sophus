@@ -21,7 +21,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.Chop;
 
-public class PoleLadderTest {
+class PoleLadderTest {
   @Test
   public void testRn() {
     HsTransport hsTransport = new PoleLadder(RnManifold.INSTANCE);

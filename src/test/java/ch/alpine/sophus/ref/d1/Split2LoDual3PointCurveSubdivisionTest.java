@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.chq.ExactTensorQ;
 
-public class Split2LoDual3PointCurveSubdivisionTest {
+class Split2LoDual3PointCurveSubdivisionTest {
   private static final CurveSubdivision CURVE_SUBDIVISION = //
       Split2LoDual3PointCurveSubdivision.of(RnGeodesic.INSTANCE, RationalScalar.of(1, 3), RationalScalar.of(1, 4));
 

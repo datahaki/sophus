@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.win.DirichletWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class BaseWindowSamplerTest {
+class BaseWindowSamplerTest {
   private static Tensor constant(int i) {
     int width = 2 * i + 1;
     Scalar weight = RationalScalar.of(1, width);

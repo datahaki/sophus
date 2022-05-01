@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class NylanderPowerTest {
+class NylanderPowerTest {
   @Test
   public void testZero() {
     for (int exp = 0; exp < 5; ++exp)

@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class RnBiinvariantMeanTest {
+class RnBiinvariantMeanTest {
   @Test
   public void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(3));

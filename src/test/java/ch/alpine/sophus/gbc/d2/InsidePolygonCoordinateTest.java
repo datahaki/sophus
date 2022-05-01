@@ -18,7 +18,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Chop;
 
-public class InsidePolygonCoordinateTest {
+class InsidePolygonCoordinateTest {
   @Test
   public void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {

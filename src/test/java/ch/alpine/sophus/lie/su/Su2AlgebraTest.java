@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Trace;
 
-public class Su2AlgebraTest {
+class Su2AlgebraTest {
   @Test
   public void testKillingForm() {
     LieAlgebra lieAlgebra = Su2Algebra.INSTANCE;

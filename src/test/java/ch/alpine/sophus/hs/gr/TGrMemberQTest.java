@@ -35,7 +35,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.PoissonDistribution;
 import ch.alpine.tensor.sca.Sign;
 
-public class TGrMemberQTest {
+class TGrMemberQTest {
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     int n = 5;

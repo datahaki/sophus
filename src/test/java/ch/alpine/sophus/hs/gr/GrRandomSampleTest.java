@@ -17,7 +17,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrRandomSampleTest {
+class GrRandomSampleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int k = 1; k < 5; ++k) {

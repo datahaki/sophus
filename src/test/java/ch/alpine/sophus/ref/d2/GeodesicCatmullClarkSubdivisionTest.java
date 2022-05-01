@@ -17,7 +17,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicCatmullClarkSubdivisionTest {
+class GeodesicCatmullClarkSubdivisionTest {
   @Test
   public void testQuad() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //

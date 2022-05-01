@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class DtGeodesicTest {
+class DtGeodesicTest {
   @Test
   public void testSt1Simple() {
     Tensor split = DtGeodesic.INSTANCE.split(Tensors.vector(5, 1), Tensors.vector(10, 0), RealScalar.of(0.7));

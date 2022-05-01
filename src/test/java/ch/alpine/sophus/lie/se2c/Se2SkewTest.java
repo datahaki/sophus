@@ -16,7 +16,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2SkewTest {
+class Se2SkewTest {
   @Test
   public void testZero() {
     Tensor tensor = Se2Skew.logflow(RealScalar.ZERO);

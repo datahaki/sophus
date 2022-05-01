@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class BchSeriesTest {
+class BchSeriesTest {
   private static final Distribution DISTRIBUTION = DiscreteUniformDistribution.of(-10, 11);
   private static final LieAlgebra[] LIE_ALGEBRAS = new LieAlgebra[] { //
       SlAlgebra.of(3), //

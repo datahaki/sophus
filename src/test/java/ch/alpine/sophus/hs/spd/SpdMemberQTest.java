@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdMemberQTest {
+class SpdMemberQTest {
   private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { //
       Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
 

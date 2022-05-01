@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 
-public class HeGeodesicTest {
+class HeGeodesicTest {
   @Test
   public void testSimple() {
     Tensor p = Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, 7}");

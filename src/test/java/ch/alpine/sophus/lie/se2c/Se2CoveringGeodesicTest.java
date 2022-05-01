@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringGeodesicTest {
+class Se2CoveringGeodesicTest {
   @Test
   public void testArticle() {
     Tensor tensor = Se2CoveringGeodesic.INSTANCE.split( //

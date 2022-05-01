@@ -10,7 +10,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 
-public class MetricPointcloudDistanceTest {
+class MetricPointcloudDistanceTest {
   @Test
   public void testSimple() {
     TensorScalarFunction tensorScalarFunction = new MetricPointcloudDistance(CirclePoints.of(20), RnMetric.INSTANCE);

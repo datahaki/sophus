@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
 /** anchor == target */
-public class LeveragesDistanceVectorTest {
+class LeveragesDistanceVectorTest {
   @Test
   public void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);

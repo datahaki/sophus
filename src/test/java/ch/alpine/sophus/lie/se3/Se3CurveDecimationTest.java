@@ -15,7 +15,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.Serialization;
 
-public class Se3CurveDecimationTest {
+class Se3CurveDecimationTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     CurveDecimation curveDecimation = Serialization.copy(Se3CurveDecimation.of(RealScalar.of(0.3)));

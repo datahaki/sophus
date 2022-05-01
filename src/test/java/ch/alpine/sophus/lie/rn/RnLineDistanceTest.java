@@ -12,7 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactScalarQ;
 
-public class RnLineDistanceTest {
+class RnLineDistanceTest {
   @Test
   public void testSimple() {
     LineDistance lineDistance = RnLineDistance.INSTANCE;

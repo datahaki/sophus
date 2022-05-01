@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So3MetricTest {
+class So3MetricTest {
   @Test
   public void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.5, 0.3);

@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.mat.HilbertMatrix;
 
-public class BianchiIdentityTest {
+class BianchiIdentityTest {
   @Test
   public void testRequireTrivial() {
     BianchiIdentity.require(Array.zeros(4, 4, 4, 4));

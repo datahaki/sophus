@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2AdjointTest {
+class Se2AdjointTest {
   @Test
   public void testRotationFixpointSideLeft() {
     TensorUnaryOperator se2Adjoint = Se2Adjoint.inverse(Tensors.vector(0, 1, 0)); // "left rear wheel"

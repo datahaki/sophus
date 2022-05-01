@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.red.Total;
 
-public class DualC2FourPointCurveSubdivisionTest {
+class DualC2FourPointCurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = DualC2FourPointCurveSubdivision.cubic(RnGeodesic.INSTANCE);

@@ -11,7 +11,7 @@ import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
-public class SoExponentialTest {
+class SoExponentialTest {
   @Test
   public void testSimple() {
     Random random = new Random(1);

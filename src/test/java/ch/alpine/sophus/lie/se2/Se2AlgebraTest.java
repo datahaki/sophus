@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.Normal;
 
-public class Se2AlgebraTest {
+class Se2AlgebraTest {
   @Test
   public void testFromMatrices() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());

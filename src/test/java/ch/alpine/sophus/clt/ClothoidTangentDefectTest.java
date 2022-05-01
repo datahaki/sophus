@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class ClothoidTangentDefectTest {
+class ClothoidTangentDefectTest {
   @Test
   public void testSimple() {
     Tolerance.CHOP.requireClose( //

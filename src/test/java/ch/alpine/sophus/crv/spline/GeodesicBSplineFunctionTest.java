@@ -28,7 +28,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicBSplineFunctionTest {
+class GeodesicBSplineFunctionTest {
   @Test
   public void testLetsSee() {
     Distribution distribution = DiscreteUniformDistribution.of(-5, 5);

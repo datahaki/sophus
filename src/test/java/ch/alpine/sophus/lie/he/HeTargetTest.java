@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-public class HeTargetTest {
+class HeTargetTest {
   @Test
   public void testFailNegative() {
     assertThrows(Exception.class, () -> new HeTarget(Vector2Norm::of, RealScalar.of(-1)));

@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HsWeiszfeldMethodTest {
+class HsWeiszfeldMethodTest {
   @Test
   public void testSimple() {
     Random random = new Random(3);

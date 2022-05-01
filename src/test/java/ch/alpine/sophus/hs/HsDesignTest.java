@@ -32,7 +32,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class HsDesignTest {
+class HsDesignTest {
   @Test
   public void testRn() {
     VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;

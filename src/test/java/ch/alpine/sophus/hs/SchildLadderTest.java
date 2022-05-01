@@ -23,7 +23,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
-public class SchildLadderTest {
+class SchildLadderTest {
   @Test
   public void testRn() {
     HsTransport hsTransport = SchildLadder.of(RnManifold.INSTANCE);

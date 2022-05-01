@@ -13,7 +13,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.red.Mean;
 
-public class GeodesicFIRnTest {
+class GeodesicFIRnTest {
   @Test
   public void testSimple() {
     Tensor s0 = Tensors.vector(1, 2, 3);

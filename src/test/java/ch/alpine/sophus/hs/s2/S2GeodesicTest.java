@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class S2GeodesicTest {
+class S2GeodesicTest {
   @Test
   public void testSimple() {
     Tensor p = UnitVector.of(3, 0);

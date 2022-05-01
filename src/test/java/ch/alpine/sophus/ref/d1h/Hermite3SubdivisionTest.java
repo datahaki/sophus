@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Hermite3SubdivisionTest {
+class Hermite3SubdivisionTest {
   @Test
   public void testStringLength2() {
     Tensor control = Tensors.fromString("{{3, 4}, {1, -3}}");

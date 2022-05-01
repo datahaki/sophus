@@ -17,7 +17,7 @@ import ch.alpine.tensor.chq.FiniteTensorQ;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Chop;
 
-public class HsCoordinatesTest {
+class HsCoordinatesTest {
   @Test
   public void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {

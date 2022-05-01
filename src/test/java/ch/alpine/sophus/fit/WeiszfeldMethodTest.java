@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class WeiszfeldMethodTest {
+class WeiszfeldMethodTest {
   public static final SpatialMedian DEFAULT = new WeiszfeldMethod(Tolerance.CHOP);
 
   @Test

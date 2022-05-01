@@ -27,7 +27,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.win.HammingWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 
-public class CenterFilterTest {
+class CenterFilterTest {
   @Test
   public void testSimple() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);

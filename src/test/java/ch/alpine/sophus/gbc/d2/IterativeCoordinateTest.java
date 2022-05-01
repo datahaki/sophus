@@ -37,7 +37,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class IterativeCoordinateTest {
+class IterativeCoordinateTest {
   private static void _checkIterative(Genesis genesis) {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     for (int n = 3; n < 10; ++n) {

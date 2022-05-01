@@ -15,7 +15,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
 
-public class MSpline3CurveSubdivisionTest {
+class MSpline3CurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);

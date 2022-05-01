@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdPointExponentialTest {
+class SpdPointExponentialTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {

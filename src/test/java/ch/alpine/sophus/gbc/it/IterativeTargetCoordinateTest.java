@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Ramp;
 
-public class IterativeTargetCoordinateTest {
+class IterativeTargetCoordinateTest {
   @Test
   public void testSimple() {
     int count = 0;

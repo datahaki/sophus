@@ -23,7 +23,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
 
-public class BSpline4CurveSubdivisionTest {
+class BSpline4CurveSubdivisionTest {
   @Test
   public void testSplit2Lo() {
     CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);

@@ -15,11 +15,11 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.chq.FiniteTensorQ;
 
-public class Clothoid1Test {
+class Clothoid1Test {
   @Test
   public void testSimple() {
     ScalarTensorFunction scalarTensorFunction = Clothoid1.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
-    assertInstanceOf(ClothoidCurve1.class,scalarTensorFunction );
+    assertInstanceOf(ClothoidCurve1.class, scalarTensorFunction);
   }
 
   @Test

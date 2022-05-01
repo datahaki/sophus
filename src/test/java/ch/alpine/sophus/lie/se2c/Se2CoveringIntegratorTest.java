@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringIntegratorTest {
+class Se2CoveringIntegratorTest {
   @Test
   public void testFullRotation() {
     Tensor g = Tensors.vector(10, 0, 0).unmodifiable();
