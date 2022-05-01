@@ -3,11 +3,12 @@ package ch.alpine.sophus.hs.rs;
 
 import java.util.Optional;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
@@ -22,7 +23,7 @@ import ch.alpine.tensor.sca.tri.Cos;
 /** Reference:
  * "Geometric Hermite Interpolation in Rn by Refinements"
  * by Hofit Ben-Zion Vardi, Nira Dyn, Nir Sharon, 2022 */
-public enum RnSBezierSplit implements SplitInterface {
+public enum RnSBezierSplit implements Geodesic {
   METHOD_0 {
     @Override
     protected Scalar theta(Tensor p0, Tensor v0, Tensor p1, Tensor v1) {
@@ -45,11 +46,20 @@ public enum RnSBezierSplit implements SplitInterface {
   protected abstract Scalar theta(Tensor p0, Tensor v0, Tensor p1, Tensor v1);
 
   @Override
+  public ScalarTensorFunction curve(Tensor pv0, Tensor pv1) {
+    // TODO SOPHUS IMPL this can be improved
+    return t -> split(pv0, pv1, t);
+  }
+
+  @Override
   public Tensor split(Tensor pv0, Tensor pv1, Scalar t) {
     Tensor p0 = pv0.get(0);
     Tensor v0 = pv0.get(1);
     Tensor p1 = pv1.get(0);
     Tensor v1 = pv1.get(1);
+    // ---
+    Tolerance.CHOP.requireClose(Vector2Norm.of(v0), RealScalar.ONE);
+    Tolerance.CHOP.requireClose(Vector2Norm.of(v1), RealScalar.ONE);
     Scalar cos = Cos.FUNCTION.apply(theta(p0, v0, p1, v1));
     Scalar alpha = Chop._12.isZero(cos) //
         ? RealScalar.ZERO
@@ -94,12 +104,12 @@ public enum RnSBezierSplit implements SplitInterface {
       Tolerance.CHOP.requireClose(ap1, gp1);
       // -alpha*t*(2-3*t)
       Scalar gv1 = Polynomial.of(Tensors.vector(0, -2, 3).multiply(alpha)).apply(t);
-      v = Total.of(Tensors.of( //
+      v = NORMALIZE.apply(Total.of(Tensors.of( //
           p0.multiply(gp0), //
           v0.multiply(gv0), //
           p1.multiply(gp1), //
-          v1.multiply(gv1)));
+          v1.multiply(gv1))));
     }
-    return Tensors.of(p, NORMALIZE.apply(v));
+    return Tensors.of(p, v);
   }
 }
