@@ -22,9 +22,10 @@ jobs:
         run: |
           mkdir tensor
           cd tensor
-          git clone git@github.com:datahaki/tensor.git
+          git clone https://github.com/datahaki/tensor.git
           git checkout v106
           mvn clean install -DskipTests=true
+          cd ..
       - name: mvn test
         working-directory: .
         run: mvn test -B
