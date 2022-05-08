@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.tensor.RationalScalar;

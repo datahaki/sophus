@@ -1,4 +1,4 @@
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

@@ -1,5 +1,5 @@
 // code by jph, gjoel
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import java.io.Serializable;
 import java.util.Comparator;

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import java.util.stream.Stream;
 

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

@@ -1,7 +1,7 @@
 // code by jph
 // adapted from https://github.com/mcapino/trajectorytools
 // adapted from https://github.com/AtsushiSakai/PythonRobotics
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import java.util.Optional;
 

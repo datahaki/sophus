@@ -1,5 +1,5 @@
 // code by gjoel, jph
-package ch.alpine.sophus.crv.dubins;
+package ch.alpine.sophus.crv.dub;
 
 import ch.alpine.sophus.api.TransitionWrap;
 import ch.alpine.sophus.crv.AbstractTransition;
