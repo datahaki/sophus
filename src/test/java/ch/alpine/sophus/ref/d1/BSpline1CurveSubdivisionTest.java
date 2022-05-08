@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.clt.ClothoidBuilder;
-import ch.alpine.sophus.clt.ClothoidBuilders;
+import ch.alpine.sophus.crv.clt.ClothoidBuilder;
+import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

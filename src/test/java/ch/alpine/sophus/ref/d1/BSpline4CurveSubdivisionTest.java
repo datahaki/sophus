@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.clt.ClothoidBuilders;
+import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

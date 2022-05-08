@@ -20,32 +20,32 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * @see SchildLadder */
 public class SubdivideTransport implements HsTransport, Serializable {
   /** @param hsTransport
-   * @param geodesicInterface
+   * @param geodesicSpace
    * @param n
    * @return */
-  public static HsTransport of(HsTransport hsTransport, GeodesicSpace geodesicInterface, int n) {
+  public static HsTransport of(HsTransport hsTransport, GeodesicSpace geodesicSpace, int n) {
     return new SubdivideTransport( //
         Objects.requireNonNull(hsTransport), //
-        Objects.requireNonNull(geodesicInterface), //
+        Objects.requireNonNull(geodesicSpace), //
         n);
   }
 
   // ---
   private final HsTransport hsTransport;
-  private final GeodesicSpace geodesicInterface;
+  private final GeodesicSpace geodesicSpace;
   private final Tensor domain;
   private final Scalar factor;
 
-  public SubdivideTransport(HsTransport hsTransport, GeodesicSpace geodesicInterface, int n) {
+  public SubdivideTransport(HsTransport hsTransport, GeodesicSpace geodesicSpace, int n) {
     this.hsTransport = hsTransport;
-    this.geodesicInterface = geodesicInterface;
+    this.geodesicSpace = geodesicSpace;
     domain = Subdivide.of(0, 1, n);
     this.factor = RealScalar.of(n);
   }
 
   @Override
   public TensorUnaryOperator shift(Tensor xo, Tensor xw) {
-    return new Rung(domain.map(geodesicInterface.curve(xo, xw)));
+    return new Rung(domain.map(geodesicSpace.curve(xo, xw)));
   }
 
   private class Rung implements TensorUnaryOperator {

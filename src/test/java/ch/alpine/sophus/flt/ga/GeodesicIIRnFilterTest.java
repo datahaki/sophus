@@ -53,9 +53,9 @@ class GeodesicIIRnFilterTest {
     Tensor r = q.add(q);
     Tensor s = r.add(q);
     Tensor control = Tensors.of(p, q, r, s);
-    GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
-    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
-    Tensor refined = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, 2, RealScalar.of(0.5)).apply(control);
+    GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicSpace, GaussianWindow.FUNCTION);
+    Tensor refined = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicSpace, 2, RealScalar.of(0.5)).apply(control);
     assertEquals(refined.get(0), p);
     assertEquals(refined.get(1), q);
     Chop._12.requireClose(refined.get(3), Tensors.vector(1.7680545946869155, 3.0641742929076536, 3.0));
@@ -66,9 +66,9 @@ class GeodesicIIRnFilterTest {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 0, 0}, {4, 0, 0}, {5, 0, 0}}");
     Scalar alpha = RealScalar.of(0.5);
     final int radius = 3;
-    GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
-    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
-    Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, radius, alpha).apply(control);
+    GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicSpace, GaussianWindow.FUNCTION);
+    Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicSpace, radius, alpha).apply(control);
     assertEquals(control, actual);
   }
 
@@ -77,9 +77,9 @@ class GeodesicIIRnFilterTest {
     Tensor control = Tensors.fromString("{{0, 0.2, 0}, {1, 0, 0}, {2, 7, 0}, {3, 9, 0}, {3, 0, 0}, {-1, 0, -1}}");
     Scalar alpha = RealScalar.of(1);
     final int radius = 3;
-    GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
-    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
-    Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, radius, alpha).apply(control);
+    GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicSpace, GaussianWindow.FUNCTION);
+    Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicSpace, radius, alpha).apply(control);
     Chop._09.requireClose(control, actual);
   }
 
@@ -88,9 +88,9 @@ class GeodesicIIRnFilterTest {
     Tensor control = Tensors.fromString("{{0, 0.2, 0}, {1, 0, 0}, {2, 7, 0}, {3, 9, 0}, {3, 0, 0}, {-1, 0, -1}}");
     Scalar alpha = RealScalar.of(0);
     final int radius = 3;
-    GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
-    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicInterface, GaussianWindow.FUNCTION);
-    Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicInterface, radius, alpha).apply(control);
+    GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+    TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(geodesicSpace, GaussianWindow.FUNCTION);
+    Tensor actual = GeodesicIIRnFilter.of(tensorUnaryOperator, geodesicSpace, radius, alpha).apply(control);
     Tensor expected = Tensors.fromString(
         "{{0, 0.2, 0}, {1, 0, 0}, {2.0, -0.2, 0.0}, {3.0, -0.3999999999999999, 0.0}, {4.0, -0.5999999999999998, 0.0}, {5.0, -0.7999999999999996, 0.0}}");
     Chop._09.requireClose(expected, actual);

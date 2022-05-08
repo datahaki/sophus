@@ -45,10 +45,10 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
 
   /** @param hsManifold
    * @param chop
-   * @param geodesic
+   * @param geodesicSpace
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, GeodesicSpace geodesic) {
-    return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesic));
+  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, GeodesicSpace geodesicSpace) {
+    return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesicSpace));
   }
 
   /** serves as initial guess at begin of fix point iteration that

@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
+import ch.alpine.sophus.crv.MonomialExtrapolationMask;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
 import ch.alpine.sophus.math.win.HalfWindowSampler;

@@ -17,8 +17,8 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 class SplitParametricCurveTest {
   @Test
   public void testSimple() {
-    GeodesicSpace geodesicInterface = SplitParametricCurve.of(RnGeodesic.INSTANCE);
-    ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
+    GeodesicSpace geodesicSpace = SplitParametricCurve.of(RnGeodesic.INSTANCE);
+    ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertEquals(scalarTensorFunction.apply(RealScalar.ZERO), UnitVector.of(3, 0));
     assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.vector(0.5, 0.5, 0));
   }

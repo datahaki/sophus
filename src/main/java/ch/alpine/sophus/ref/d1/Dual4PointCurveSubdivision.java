@@ -18,7 +18,7 @@ import ch.alpine.tensor.ext.Integers;
 
 /** dual scheme */
 public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializable {
-  private final GeodesicSpace geodesicInterface;
+  private final GeodesicSpace geodesicSpace;
   private final Scalar lo_pq;
   private final Scalar lo_rs;
   private final Scalar lo_pqrs;
@@ -26,14 +26,14 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
   private final Scalar hi_rs;
   private final Scalar hi_pqrs;
 
-  /** @param geodesicInterface non-null
+  /** @param geodesicSpace non-null
    * @param pq_f
    * @param rs_f
    * @param pqrs */
   public Dual4PointCurveSubdivision( //
-      GeodesicSpace geodesicInterface, //
+      GeodesicSpace geodesicSpace, //
       Scalar pq_f, Scalar rs_f, Scalar pqrs) {
-    this.geodesicInterface = Objects.requireNonNull(geodesicInterface);
+    this.geodesicSpace = Objects.requireNonNull(geodesicSpace);
     this.lo_pq = pq_f;
     this.lo_rs = rs_f;
     this.lo_pqrs = pqrs;
@@ -54,8 +54,8 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
     Tensor r = tensor.get(1);
     for (int index = 0; index < length; ++index) {
       Tensor s = tensor.get((index + 2) % length);
-      ScalarTensorFunction c_pq = geodesicInterface.curve(p, q);
-      ScalarTensorFunction c_rs = geodesicInterface.curve(r, s);
+      ScalarTensorFunction c_pq = geodesicSpace.curve(p, q);
+      ScalarTensorFunction c_rs = geodesicSpace.curve(r, s);
       list.add(lo(c_pq, c_rs));
       list.add(hi(c_pq, c_rs));
       p = q;
@@ -75,13 +75,13 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
   private Tensor lo(ScalarTensorFunction c_pq, ScalarTensorFunction c_rs) {
     Tensor pq = c_pq.apply(lo_pq);
     Tensor rs = c_rs.apply(lo_rs);
-    return geodesicInterface.split(pq, rs, lo_pqrs);
+    return geodesicSpace.split(pq, rs, lo_pqrs);
   }
 
   // @return point between q and r but more towards r
   private Tensor hi(ScalarTensorFunction c_pq, ScalarTensorFunction c_rs) {
     Tensor pq = c_pq.apply(hi_pq);
     Tensor rs = c_rs.apply(hi_rs);
-    return geodesicInterface.split(pq, rs, hi_pqrs);
+    return geodesicSpace.split(pq, rs, hi_pqrs);
   }
 }

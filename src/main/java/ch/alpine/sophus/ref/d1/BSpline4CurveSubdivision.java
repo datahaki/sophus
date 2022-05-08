@@ -2,7 +2,7 @@
 package ch.alpine.sophus.ref.d1;
 
 import ch.alpine.sophus.api.SplitInterface;
-import ch.alpine.sophus.clt.Clothoid;
+import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

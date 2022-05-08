@@ -22,12 +22,12 @@ import ch.alpine.tensor.sca.Chop;
 class HnGeodesicTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
-    GeodesicSpace geodesicInterface = Serialization.copy(HnGeodesic.INSTANCE);
+    GeodesicSpace geodesicSpace = Serialization.copy(HnGeodesic.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      Tensor midpoint = geodesicInterface.midpoint(p, q);
+      Tensor midpoint = geodesicSpace.midpoint(p, q);
       HnMemberQ.INSTANCE.require(midpoint);
     }
   }
