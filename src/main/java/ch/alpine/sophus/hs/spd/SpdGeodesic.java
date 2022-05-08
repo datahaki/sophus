@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HsGeodesic;
 
 /** References:
@@ -20,5 +20,5 @@ import ch.alpine.sophus.hs.HsGeodesic;
  * Tests on Manifold-valued Data */
 public enum SpdGeodesic {
   ;
-  public static final Geodesic INSTANCE = new HsGeodesic(SpdManifold.INSTANCE);
+  public static final GeodesicSpace INSTANCE = new HsGeodesic(SpdManifold.INSTANCE);
 }

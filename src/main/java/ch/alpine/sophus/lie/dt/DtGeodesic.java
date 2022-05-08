@@ -1,7 +1,7 @@
 // code by ob
 package ch.alpine.sophus.lie.dt;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -11,7 +11,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
  * 
  * Another reference for ST is "Deep Compositing Using Lie Algebras" by Tom Duff. The article
  * parameterizes the group differently with the scaling coefficient alpha := 1 - lambda */
-public enum DtGeodesic implements Geodesic {
+public enum DtGeodesic implements GeodesicSpace {
   INSTANCE;
 
   @Override // from Geodesic

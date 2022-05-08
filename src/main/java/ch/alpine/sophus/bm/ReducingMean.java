@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
@@ -23,11 +23,11 @@ import ch.alpine.tensor.sca.Abs;
  * 
  * tests have shown empirically for the SPD manifold, that the reducing
  * mean is closed to the exact mean than the {@link SpdPhongMean} */
-/* package */ record ReducingMean(Geodesic geodesic) implements BiinvariantMean, Serializable {
+/* package */ record ReducingMean(GeodesicSpace geodesic) implements BiinvariantMean, Serializable {
 
   /** @param geodesic
    * @return */
-  public static BiinvariantMean of(Geodesic geodesic) {
+  public static BiinvariantMean of(GeodesicSpace geodesic) {
     return new ReducingMean(Objects.requireNonNull(geodesic));
   }
 

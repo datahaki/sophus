@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** geodesics in the Euclidean space R^n are straight lines */
-public enum RnGeodesic implements Geodesic {
+public enum RnGeodesic implements GeodesicSpace {
   INSTANCE;
 
   @Override // from TensorGeodesic

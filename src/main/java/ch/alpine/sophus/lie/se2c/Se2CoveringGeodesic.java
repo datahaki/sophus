@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public enum Se2CoveringGeodesic implements Geodesic {
+public enum Se2CoveringGeodesic implements GeodesicSpace {
   INSTANCE;
 
   @Override // from TensorGeodesic

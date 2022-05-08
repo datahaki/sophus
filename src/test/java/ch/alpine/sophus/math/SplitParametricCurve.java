@@ -4,16 +4,16 @@ package ch.alpine.sophus.math;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BinaryAverage;
 
-public class SplitParametricCurve implements Geodesic, Serializable {
+public class SplitParametricCurve implements GeodesicSpace, Serializable {
   /** @param binaryAverage
    * @return */
-  public static Geodesic of(BinaryAverage binaryAverage) {
+  public static GeodesicSpace of(BinaryAverage binaryAverage) {
     return new SplitParametricCurve(Objects.requireNonNull(binaryAverage));
   }
 

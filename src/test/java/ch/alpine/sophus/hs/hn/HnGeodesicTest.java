@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 class HnGeodesicTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
-    Geodesic geodesicInterface = Serialization.copy(HnGeodesic.INSTANCE);
+    GeodesicSpace geodesicInterface = Serialization.copy(HnGeodesic.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));

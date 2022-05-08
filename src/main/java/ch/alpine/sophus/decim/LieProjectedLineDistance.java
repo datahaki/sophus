@@ -14,7 +14,7 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-// TODO at least discuss
+// TODO SOPHUS at least discuss
 public record LieProjectedLineDistance(LieGroup lieGroup, Exponential exponential) //
     implements LineDistance, Serializable {
 

@@ -1,7 +1,7 @@
 // code by ureif
 package ch.alpine.sophus.clt;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.ComplexScalar;
@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Real;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** original implementation */
-/* package */ enum ComplexClothoidCurve implements Geodesic {
+/* package */ enum ComplexClothoidCurve implements GeodesicSpace {
   INSTANCE;
 
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));

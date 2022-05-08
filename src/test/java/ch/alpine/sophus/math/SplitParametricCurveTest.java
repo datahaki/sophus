@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -17,7 +17,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 class SplitParametricCurveTest {
   @Test
   public void testSimple() {
-    Geodesic geodesicInterface = SplitParametricCurve.of(RnGeodesic.INSTANCE);
+    GeodesicSpace geodesicInterface = SplitParametricCurve.of(RnGeodesic.INSTANCE);
     ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertEquals(scalarTensorFunction.apply(RealScalar.ZERO), UnitVector.of(3, 0));
     assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.vector(0.5, 0.5, 0));

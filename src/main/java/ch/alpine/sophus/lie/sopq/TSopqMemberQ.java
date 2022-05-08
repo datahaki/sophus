@@ -18,7 +18,7 @@ public class TSopqMemberQ implements MemberQ, Serializable {
 
   @Override // from MemberQ
   public boolean test(Tensor x) {
-    // FIXME ALG implement
+    // FIXME SOPHUS ALG implement
     return false;
   }
 }

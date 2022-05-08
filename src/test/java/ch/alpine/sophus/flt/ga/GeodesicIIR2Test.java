@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.CausalFilter;
 import ch.alpine.sophus.hs.HsGeodesic;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.sca.Chop;
 class GeodesicIIR2Test {
   @Test
   public void testSimple() {
-    Geodesic geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
+    GeodesicSpace geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
     GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicInterface, alpha);
     Tensor vector0 = Tensors.vector(1, 2, 0.25);
@@ -40,7 +40,7 @@ class GeodesicIIR2Test {
 
   @Test
   public void testLinear() {
-    Geodesic geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
+    GeodesicSpace geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
     Scalar alpha = RationalScalar.HALF;
     TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicInterface, alpha);
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));

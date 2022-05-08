@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.ext.Integers;
 
 /** dual scheme */
 public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializable {
-  private final Geodesic geodesicInterface;
+  private final GeodesicSpace geodesicInterface;
   private final Scalar lo_pq;
   private final Scalar lo_rs;
   private final Scalar lo_pqrs;
@@ -31,7 +31,7 @@ public class Dual4PointCurveSubdivision implements CurveSubdivision, Serializabl
    * @param rs_f
    * @param pqrs */
   public Dual4PointCurveSubdivision( //
-      Geodesic geodesicInterface, //
+      GeodesicSpace geodesicInterface, //
       Scalar pq_f, Scalar rs_f, Scalar pqrs) {
     this.geodesicInterface = Objects.requireNonNull(geodesicInterface);
     this.lo_pq = pq_f;

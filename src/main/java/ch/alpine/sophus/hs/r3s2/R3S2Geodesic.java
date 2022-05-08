@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.r3s2;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.lie.se3.Se3Geodesic;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
@@ -17,7 +17,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
  * 
  * Elements of R3S2 are tensors of the form
  * {{px, py, pz}, {nx, ny, nz}} */
-public enum R3S2Geodesic implements Geodesic {
+public enum R3S2Geodesic implements GeodesicSpace {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
@@ -47,7 +47,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @param geodesic
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, Geodesic geodesic) {
+  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, GeodesicSpace geodesic) {
     return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesic));
   }
 

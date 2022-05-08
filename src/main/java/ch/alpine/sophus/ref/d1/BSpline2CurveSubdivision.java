@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d1;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -19,10 +19,10 @@ public class BSpline2CurveSubdivision extends AbstractBSpline2CurveSubdivision i
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
   private static final Scalar _3_4 = RationalScalar.of(3, 4);
   // ---
-  protected final Geodesic parametricCurve;
+  protected final GeodesicSpace parametricCurve;
 
   /** @param parametricCurve non-null */
-  public BSpline2CurveSubdivision(Geodesic parametricCurve) {
+  public BSpline2CurveSubdivision(GeodesicSpace parametricCurve) {
     this.parametricCurve = Objects.requireNonNull(parametricCurve);
   }
 

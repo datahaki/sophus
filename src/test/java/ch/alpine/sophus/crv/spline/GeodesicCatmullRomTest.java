@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
@@ -44,7 +44,7 @@ class GeodesicCatmullRomTest {
 
   @Test
   public void testCentripetalInterpolatory() {
-    Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
+    GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
     Tensor control = Tensors.empty();
     for (int index = 0; index < 5; index++)
       control.append(Tensors.vector(Math.random(), Math.random(), Math.random()));

@@ -5,13 +5,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** general implementation of geodesic using exp/log */
-public class HsGeodesic implements Geodesic, Serializable {
+public class HsGeodesic implements GeodesicSpace, Serializable {
   private final HsManifold hsManifold;
 
   /** @param hsManifold */

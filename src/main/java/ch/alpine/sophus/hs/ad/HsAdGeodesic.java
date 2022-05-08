@@ -4,12 +4,12 @@ package ch.alpine.sophus.hs.ad;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public class HsAdGeodesic implements Geodesic, Serializable {
+public class HsAdGeodesic implements GeodesicSpace, Serializable {
   private final HsAlgebra hsAlgebra;
 
   public HsAdGeodesic(HsAlgebra hsAlgebra) {

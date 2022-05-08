@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.rs;
 
 import java.util.Optional;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.tri.Cos;
 /** Reference:
  * "Geometric Hermite Interpolation in Rn by Refinements"
  * by Hofit Ben-Zion Vardi, Nira Dyn, Nir Sharon, 2022 */
-public enum RnSBezierSplit implements Geodesic {
+public enum RnSBezierSplit implements GeodesicSpace {
   METHOD_0 {
     @Override
     protected Scalar theta(Tensor p0, Tensor v0, Tensor p1, Tensor v1) {

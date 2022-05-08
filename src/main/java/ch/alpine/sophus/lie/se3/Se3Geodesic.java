@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Scalar;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.re.LinearSolve;
  * 
  * @see GlGroup
  * @see LieGroupElement */
-public enum Se3Geodesic implements Geodesic {
+public enum Se3Geodesic implements GeodesicSpace {
   INSTANCE;
 
   @Override // from TensorGeodesic
