@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.itp.FindRoot;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Real;
@@ -46,19 +47,28 @@ public class ClothoidSolutions implements Serializable {
     public Search(Scalar s1, Scalar s2) {
       ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(s1, s2);
       ScalarUnaryOperator function = s -> Real.FUNCTION.apply(clothoidTangentDefect.apply(s));
-      FindZero findZero = new FindZero(function, Sign::isPositive, CHOP);
+      FindRoot findRoot = FindRoot.of(function, CHOP);
       Tensor defects = probes.map(clothoidTangentDefect);
+      // System.out.println("defects=");
+      // defects.stream().forEach(System.out::println);
       defects_real = defects.map(Real.FUNCTION);
       // Tensor defects_imag = defects.map(Imag.FUNCTION);
       boolean prev = Sign.isPositive(defects_real.Get(0));
       for (int index = 1; index < probes.length(); ++index) {
         boolean next = Sign.isPositive(defects_real.Get(index));
-        if (prev && !next)
-          lambdas.append(findZero.between( //
-              probes.Get(index - 1), //
-              probes.Get(index), //
-              defects_real.Get(index - 1), //
-              defects_real.Get(index)));
+        if (prev && !next) {
+          Scalar y0 = defects_real.Get(index - 1);
+          Scalar y1 = defects_real.Get(index);
+          try { // necessary because of degenerate input
+            lambdas.append(findRoot.between( //
+                probes.Get(index - 1), //
+                probes.Get(index), //
+                y0, //
+                y1));
+          } catch (Exception exception) {
+            // ---
+          }
+        }
         prev = next;
       }
     }

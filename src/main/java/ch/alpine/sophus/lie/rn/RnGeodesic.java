@@ -8,6 +8,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 /** geodesics in the Euclidean space R^n are straight lines */
 public enum RnGeodesic implements GeodesicSpace {
   INSTANCE;
+  // TODO check repo for Tensors.of vs. Unprotect.byRef
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {

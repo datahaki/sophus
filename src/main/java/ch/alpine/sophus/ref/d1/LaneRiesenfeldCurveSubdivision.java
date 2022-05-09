@@ -20,7 +20,7 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
   /** @param geodesicSpace
    * @param degree strictly positive
    * @return
-   * @throws Exception if midpointInterface is null */
+   * @throws Exception if geodesicSpace is null */
   public static CurveSubdivision of(GeodesicSpace geodesicSpace, int degree) {
     return new LaneRiesenfeldCurveSubdivision(geodesicSpace, Integers.requirePositive(degree));
   }

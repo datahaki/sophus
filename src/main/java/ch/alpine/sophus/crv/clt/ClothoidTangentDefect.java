@@ -37,7 +37,7 @@ public class ClothoidTangentDefect implements ScalarUnaryOperator {
   }
 
   @Override
-  public Scalar apply(Scalar lam) {
+  public Scalar apply(Scalar lam) { // lam != 0
     Scalar factor = DIAG.divide(Sqrt.FUNCTION.apply(lam));
     Scalar exp = Exp.FUNCTION.apply(s2_half_sqr.divide(lam).add(s1).add(lam).multiply(ComplexScalar.I));
     Scalar erf1 = Erf.FUNCTION.apply(s2_half.add(lam).multiply(factor));

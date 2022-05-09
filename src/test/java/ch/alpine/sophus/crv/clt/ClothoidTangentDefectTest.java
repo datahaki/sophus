@@ -38,4 +38,10 @@ class ClothoidTangentDefectTest {
       Sign.requirePositive(ClothoidTangentDefect.of(s1, s2).signum(lam));
     }
   }
+
+  @Test
+  public void testZeros() {
+    ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(RealScalar.ZERO, RealScalar.ZERO);
+    clothoidTangentDefect.defect(RealScalar.of(0.1));
+  }
 }

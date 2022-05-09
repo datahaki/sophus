@@ -16,7 +16,7 @@ public class BSpline1CurveSubdivision extends AbstractBSpline1CurveSubdivision i
   private final GeodesicSpace geodesicSpace;
 
   /** @param geodesicSpace non-null
-   * @throws Exception if given midpointInterface is null */
+   * @throws Exception if given geodesicSpace is null */
   public BSpline1CurveSubdivision(GeodesicSpace geodesicSpace) {
     this.geodesicSpace = Objects.requireNonNull(geodesicSpace);
   }

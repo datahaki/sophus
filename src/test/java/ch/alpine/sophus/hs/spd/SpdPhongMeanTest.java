@@ -35,9 +35,9 @@ class SpdPhongMeanTest {
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, TriangularDistribution.with(0, 1));
-      Tensor sequence = RandomSample.of(rsi, n);
+      Tensor sequence = RandomSample.of(rsi, random, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.of(SpdManifold.INSTANCE, Chop._10);
