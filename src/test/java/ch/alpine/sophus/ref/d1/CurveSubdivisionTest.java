@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.h2.H2Midpoint;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
@@ -55,8 +54,8 @@ class CurveSubdivisionTest {
       new SixPointCurveSubdivision(Se2Geodesic.INSTANCE), //
       new EightPointCurveSubdivision(Se2Geodesic.INSTANCE), //
       new MSpline3CurveSubdivision(Se2BiinvariantMeans.GLOBAL), //
-      LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1), //
-      LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 2), //
+      // LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1), //
+      // LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 2), //
       LaneRiesenfeld3CurveSubdivision.of(Se2Geodesic.INSTANCE), //
   };
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.MidpointInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
@@ -14,7 +14,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exact in R^n
  * 
  * @see PoleLadder */
-public record SchildLadder(HsManifold hsManifold, MidpointInterface midpointInterface) implements HsTransport, Serializable {
+public record SchildLadder(HsManifold hsManifold, GeodesicSpace geodesicSpace) implements HsTransport, Serializable {
   /** @param hsManifold
    * @return */
   public static HsTransport of(HsManifold hsManifold) {
@@ -44,9 +44,9 @@ public record SchildLadder(HsManifold hsManifold, MidpointInterface midpointInte
     @Override
     public Tensor apply(Tensor v) {
       Tensor x = exp_p.exp(v);
-      Tensor m = Objects.isNull(midpointInterface) //
-          ? HsMidpoint.of(exp_q, x)
-          : midpointInterface.midpoint(q, x);
+      Tensor m = Objects.isNull(geodesicSpace) //
+          ? exp_q.midpoint(x)
+          : geodesicSpace.midpoint(q, x);
       Tensor xm = exp_p.log(m);
       return exp_q.log(exp_p.exp(xm.add(xm)));
     }

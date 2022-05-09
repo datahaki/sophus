@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.gr;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -21,7 +20,8 @@ class GrGeodesicTest {
       Tensor q = RandomSample.of(randomSampleInterface);
       GrExponential exp_p = new GrExponential(p);
       GrExponential exp_q = new GrExponential(q);
-      Tensor m1 = HsMidpoint.of(exp_p, q);
+      // TODO SOPHUS compare with exp log
+      Tensor m1 = exp_p.midpoint(q);
       Tensor m2 = exp_p.midpoint(q);
       Chop._08.requireClose(m1, m2);
       Tensor m3 = GrGeodesic.INSTANCE.midpoint(p, q);

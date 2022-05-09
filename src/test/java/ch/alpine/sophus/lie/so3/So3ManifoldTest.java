@@ -89,7 +89,7 @@ class So3ManifoldTest {
 
   @Test
   public void testAffineLinearReproduction() {
-    Random random = new Random();
+    Random random = new Random(1);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
     BarycentricCoordinate AFFINE = AffineWrap.of(So3Manifold.INSTANCE);

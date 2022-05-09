@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.MidpointInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
@@ -23,17 +23,17 @@ import ch.alpine.tensor.ext.Integers;
  * "A theoretical development for the computer generation of piecewise polynomial surfaces"
  * by J. M. Lane and R. F. Riesenfeld; IEEE Trans. Pattern Anal. Machine Intell. 2 (1980), 35-46 */
 public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3CurveSubdivision implements Serializable {
-  /** @param midpointInterface
+  /** @param geodesicSpace
    * @return */
-  public static CurveSubdivision of(MidpointInterface midpointInterface) {
-    return new LaneRiesenfeld3CurveSubdivision(Objects.requireNonNull(midpointInterface));
+  public static CurveSubdivision of(GeodesicSpace geodesicSpace) {
+    return new LaneRiesenfeld3CurveSubdivision(Objects.requireNonNull(geodesicSpace));
   }
 
   // ---
-  private final MidpointInterface midpointInterface;
+  private final GeodesicSpace geodesicSpace;
 
-  private LaneRiesenfeld3CurveSubdivision(MidpointInterface midpointInterface) {
-    this.midpointInterface = midpointInterface;
+  private LaneRiesenfeld3CurveSubdivision(GeodesicSpace geodesicSpace) {
+    this.geodesicSpace = geodesicSpace;
   }
 
   @Override // from CurveSubdivision
@@ -90,6 +90,6 @@ public final class LaneRiesenfeld3CurveSubdivision extends AbstractBSpline3Curve
 
   @Override // from AbstractBSpline1CurveSubdivision
   public Tensor midpoint(Tensor p, Tensor q) {
-    return midpointInterface.midpoint(p, q);
+    return geodesicSpace.midpoint(p, q);
   }
 }

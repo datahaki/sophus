@@ -4,14 +4,19 @@ package ch.alpine.sophus.hs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
+import ch.alpine.tensor.ext.Serialization;
 
 class HsGeodesicTest {
   @Test
@@ -23,6 +28,14 @@ class HsGeodesicTest {
     Tensor tensor = lieGroupGeodesic.split(p, q, lambda);
     Tensor split = Se2CoveringGeodesic.INSTANCE.split(p, q, lambda);
     assertEquals(tensor, split);
+  }
+
+  @Test
+  public void testSimple() throws ClassNotFoundException, IOException {
+    HsGeodesic hsMidpoint = Serialization.copy(new HsGeodesic(RnManifold.INSTANCE));
+    Tensor tensor = hsMidpoint.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
+    ExactTensorQ.require(tensor);
+    assertEquals(tensor, Tensors.vector(3, 1, 9));
   }
 
   @Test

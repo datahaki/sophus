@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.hs.h2.H2Midpoint;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -115,6 +114,6 @@ class LaneRiesenfeldCurveSubdivisionTest {
 
   @Test
   public void testDegreeFail() {
-    assertThrows(Exception.class, () -> LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 0));
+    assertThrows(Exception.class, () -> LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 0));
   }
 }

@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsGeodesic;
-import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.hs.s2.S2Geodesic;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -132,7 +131,7 @@ class SnGeodesicTest {
 
   @Test
   public void testMidpoint() {
-    HsMidpoint hsMidpoint = new HsMidpoint(SnManifold.INSTANCE);
+    HsGeodesic hsMidpoint = new HsGeodesic(SnManifold.INSTANCE);
     for (int dimension = 2; dimension <= 5; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
       Tensor p = RandomSample.of(randomSampleInterface);

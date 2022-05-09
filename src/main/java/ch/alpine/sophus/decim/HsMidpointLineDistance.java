@@ -5,13 +5,13 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
+import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsMidpoint;
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
-public record HsMidpointLineDistance(HsLineDistance hsLineDistance, HsMidpoint hsMidpoint) //
+public record HsMidpointLineDistance(HsLineDistance hsLineDistance, HsGeodesic hsMidpoint) //
     implements LineDistance, Serializable {
   /** @param lieGroup
    * @param exponential
@@ -26,7 +26,7 @@ public record HsMidpointLineDistance(HsLineDistance hsLineDistance, HsMidpoint h
   public static LineDistance of(HsManifold hsManifold) {
     return new HsMidpointLineDistance( //
         new HsLineDistance(hsManifold), //
-        new HsMidpoint(hsManifold));
+        new HsGeodesic(hsManifold));
   }
 
   @Override // from LineDistance
