@@ -55,9 +55,4 @@ public enum H2Midpoint implements GeodesicSpace {
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     throw new UnsupportedOperationException();
   }
-
-  @Override
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    throw new UnsupportedOperationException();
-  }
 }

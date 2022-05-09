@@ -7,7 +7,6 @@ import java.util.Objects;
 import ch.alpine.sophus.crv.clt.mid.ClothoidQuadratic;
 import ch.alpine.sophus.crv.clt.par.ClothoidIntegral;
 import ch.alpine.sophus.crv.clt.par.ClothoidIntegration;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 
 /** Reference: U. Reif slides
@@ -39,10 +38,5 @@ public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable 
         lagrangeQuadratic, //
         clothoidIntegral, //
         clothoidContext.diff());
-  }
-
-  @Override // from BinaryAverage
-  public Tensor split(Tensor p, Tensor q, Scalar t) {
-    return curve(p, q).apply(t);
   }
 }

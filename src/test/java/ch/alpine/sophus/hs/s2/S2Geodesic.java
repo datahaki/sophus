@@ -16,7 +16,11 @@ import ch.alpine.tensor.sca.tri.Sin;
  * 
  * https://en.wikipedia.org/wiki/N-sphere
  * 
- * superseded by {@link SnGeodesic} */
+ * superseded by {@link SnGeodesic}
+ * 
+ * p and q are vectors of length 3 with unit length
+ * 
+ * Careful: function does not check length of input vectors! */
 public enum S2Geodesic implements GeodesicSpace {
   INSTANCE;
 
@@ -29,13 +33,5 @@ public enum S2Geodesic implements GeodesicSpace {
     Scalar prod = a.divide(sina);
     Tensor cross = Cross.of(p, q);
     return scalar -> Rodrigues.vectorExp(cross.multiply(scalar).multiply(prod)).dot(p);
-  }
-
-  /** p and q are vectors of length 3 with unit length
-   * 
-   * Careful: function does not check length of input vectors! */
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
   }
 }

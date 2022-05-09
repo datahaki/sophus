@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Objects;
 
 import ch.alpine.sophus.crv.clt.ClothoidSolutions.Search;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Clips;
 
@@ -33,10 +32,5 @@ public class PriorityClothoid implements ClothoidBuilder, Serializable {
     return ClothoidEmit.stream(clothoidContext, search.lambdas()) //
         .min(comparator) //
         .orElseThrow();
-  }
-
-  @Override
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
   }
 }

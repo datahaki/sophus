@@ -9,6 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BinaryAverage;
 
+// TODO SOPHUS implement as GeoSpace!
 public class BchBinaryAverage implements BinaryAverage, Serializable {
   /** @param bch non-null */
   public static BinaryAverage of(BinaryOperator<Tensor> bch) {

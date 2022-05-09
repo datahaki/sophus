@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
@@ -26,13 +25,9 @@ public interface HsManifold extends VectorLogManifold, GeodesicSpace {
 
   @Override
   default ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return scalar -> split(p, q, scalar);
-  }
-
-  @Override
-  default Tensor split(Tensor p, Tensor q, Scalar scalar) {
     Exponential exponential = exponential(p);
-    return exponential.exp(exponential.log(q).multiply(scalar));
+    Tensor log = exponential.log(q);
+    return scalar -> exponential.exp(log.multiply(scalar));
   }
 
   @Override // from MidpointInterface

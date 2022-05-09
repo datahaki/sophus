@@ -2,7 +2,6 @@
 package ch.alpine.sophus.lie.dt;
 
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
@@ -20,10 +19,5 @@ public enum DtGeodesic implements GeodesicSpace {
     Tensor delta = p_act.inverse().combine(q);
     Tensor x = DtExponential.INSTANCE.log(delta);
     return scalar -> p_act.combine(DtExponential.INSTANCE.exp(x.multiply(scalar)));
-  }
-
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
   }
 }

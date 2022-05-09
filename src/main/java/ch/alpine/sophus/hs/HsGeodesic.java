@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
@@ -24,11 +23,6 @@ public class HsGeodesic implements GeodesicSpace, Serializable {
     Exponential exponential = hsManifold.exponential(p);
     Tensor log = exponential.log(q);
     return scalar -> exponential.exp(log.multiply(scalar));
-  }
-
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
   }
 
   @Override // from MidpointInterface

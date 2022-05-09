@@ -30,13 +30,13 @@ public enum H2Geodesic implements GeodesicSpace {
    * 
    * @throws Exception if input is not valid */
   @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
+  public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Scalar p1 = p.Get(0);
     Scalar p2 = Sign.requirePositive(p.Get(1));
     Scalar q1 = q.Get(0);
     Scalar q2 = Sign.requirePositive(q.Get(1));
     if (p1.equals(q1)) // when p == q or p == -q
-      return Tensors.of(p1, height(p2, q2, scalar));
+      return scalar -> Tensors.of(p1, height(p2, q2, scalar));
     Scalar pq = p1.subtract(q1);
     Scalar c1 = (Scalar) p.dot(p).subtract(q.dot(q)).divide(pq.add(pq));
     Scalar p1_c1 = p1.subtract(c1);
@@ -44,19 +44,14 @@ public enum H2Geodesic implements GeodesicSpace {
     Scalar c3 = ArcTanh.FUNCTION.apply(p1_c1.divide(c2));
     if (FiniteScalarQ.of(c3)) {
       Scalar c4 = ArcTanh.FUNCTION.apply(q1.subtract(c1).divide(c2)).subtract(c3);
-      return Tensors.of( //
+      return scalar -> Tensors.of( //
           c1.add(c2.multiply(Tanh.FUNCTION.apply(c3.add(c4.multiply(scalar))))), //
           c2.divide(Cosh.FUNCTION.apply(c3.add(c4.multiply(scalar)))));
     }
-    return Tensors.of(RnGeodesic.INSTANCE.split(p1, q1, scalar), height(p2, q2, scalar));
+    return scalar -> Tensors.of(RnGeodesic.INSTANCE.split(p1, q1, scalar), height(p2, q2, scalar));
   }
 
   private static Scalar height(Scalar p2, Scalar q2, Scalar t) {
     return Power.function(t).apply(q2.divide(p2)).multiply(p2);
-  }
-
-  @Override
-  public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    return l -> split(p, q, l);
   }
 }

@@ -5,7 +5,6 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.lie.se3.Se3Geodesic;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -37,10 +36,5 @@ public enum R3S2Geodesic implements GeodesicSpace {
           Se3Matrix.translation(split), //
           Se3Matrix.rotation(split).dot(pn));
     };
-  }
-
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
   }
 }

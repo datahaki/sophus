@@ -62,9 +62,4 @@ import ch.alpine.tensor.sca.pow.Sqrt;
           ret_a);
     };
   }
-
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar t) {
-    return curve(p, q).apply(t);
-  }
 }
