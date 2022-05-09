@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -13,24 +13,24 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * a factor of 0 results in the identity operator
  * typically the factor is in the interval [0, 1] */
 public abstract class Regularization2Step implements TensorUnaryOperator {
-  /** @param splitInterface
+  /** @param geodesicSpace
    * @param factor for instance 2/3 */
-  public static TensorUnaryOperator cyclic(SplitInterface splitInterface, Scalar factor) {
-    return new Regularization2StepCyclic(splitInterface, factor);
+  public static TensorUnaryOperator cyclic(GeodesicSpace geodesicSpace, Scalar factor) {
+    return new Regularization2StepCyclic(geodesicSpace, factor);
   }
 
-  /** @param splitInterface
+  /** @param geodesicSpace
    * @param factor for instance 2/3 */
-  public static TensorUnaryOperator string(SplitInterface splitInterface, Scalar factor) {
-    return new Regularization2StepString(splitInterface, factor);
+  public static TensorUnaryOperator string(GeodesicSpace geodesicSpace, Scalar factor) {
+    return new Regularization2StepString(geodesicSpace, factor);
   }
 
   // ---
-  private final SplitInterface splitInterface;
+  private final GeodesicSpace geodesicSpace;
   private final Scalar factor;
 
-  protected Regularization2Step(SplitInterface splitInterface, Scalar factor) {
-    this.splitInterface = splitInterface;
+  protected Regularization2Step(GeodesicSpace geodesicSpace, Scalar factor) {
+    this.geodesicSpace = geodesicSpace;
     this.factor = factor;
   }
 
@@ -39,6 +39,6 @@ public abstract class Regularization2Step implements TensorUnaryOperator {
    * @param next
    * @return [curr, [prev, next]_1/2]_factor */
   final Tensor average(Tensor prev, Tensor curr, Tensor next) {
-    return splitInterface.split(curr, splitInterface.midpoint(prev, next), factor);
+    return geodesicSpace.split(curr, geodesicSpace.midpoint(prev, next), factor);
   }
 }

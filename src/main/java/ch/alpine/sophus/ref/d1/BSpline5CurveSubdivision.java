@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d1;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -21,9 +21,9 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
   private static final Scalar _3_8 = RationalScalar.of(3, 8);
   private static final Scalar _1_16 = RationalScalar.of(1, 16);
 
-  /** @param splitInterface */
-  public BSpline5CurveSubdivision(SplitInterface splitInterface) {
-    super(splitInterface);
+  /** @param geodesicSpace */
+  public BSpline5CurveSubdivision(GeodesicSpace geodesicSpace) {
+    super(geodesicSpace);
   }
 
   @Override // from AbstractBSpline3CurveSubdivision
@@ -86,14 +86,14 @@ public class BSpline5CurveSubdivision extends BSpline3CurveSubdivision {
   // reposition of point q
   private Tensor quinte(Tensor p, Tensor q, Tensor r) {
     return midpoint( //
-        splitInterface.split(p, q, _5_8), //
-        splitInterface.split(q, r, _3_8));
+        geodesicSpace.split(p, q, _5_8), //
+        geodesicSpace.split(q, r, _3_8));
   }
 
   // insertion between points q and r
   private Tensor center(Tensor p, Tensor q, Tensor r, Tensor s) {
     return midpoint( //
-        splitInterface.split(p, q, _15_16), //
-        splitInterface.split(r, s, _1_16));
+        geodesicSpace.split(p, q, _15_16), //
+        geodesicSpace.split(r, s, _1_16));
   }
 }

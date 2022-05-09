@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ScalarQ;
 
 public abstract class AbstractSixPointCurveSubdivision extends FourPointCurveSubdivision {
-  public AbstractSixPointCurveSubdivision(SplitInterface splitInterface) {
-    super(splitInterface);
+  public AbstractSixPointCurveSubdivision(GeodesicSpace geodesicSpace) {
+    super(geodesicSpace);
   }
 
   @Override // from FourPointCurveSubdivision

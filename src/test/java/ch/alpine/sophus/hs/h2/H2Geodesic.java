@@ -1,11 +1,12 @@
 // code by ob
 package ch.alpine.sophus.hs.h2;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.Sign;
@@ -22,7 +23,7 @@ import ch.alpine.tensor.sca.tri.Tanh;
  * half-plane coordinates are of the form {x, y} with y strictly positive
  * 
  * Tomasz Popiel, Lyle Noakes - Bézier Curves and C^2 interpolation in Riemannian manifolds */
-public enum H2Geodesic implements SplitInterface {
+public enum H2Geodesic implements GeodesicSpace {
   INSTANCE;
 
   /** p and q are vectors of length 2 with the second entry positive
@@ -52,5 +53,10 @@ public enum H2Geodesic implements SplitInterface {
 
   private static Scalar height(Scalar p2, Scalar q2, Scalar t) {
     return Power.function(t).apply(q2.divide(p2)).multiply(p2);
+  }
+
+  @Override
+  public ScalarTensorFunction curve(Tensor p, Tensor q) {
+    return l -> split(p, q, l);
   }
 }

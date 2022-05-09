@@ -4,7 +4,7 @@ package ch.alpine.sophus.crv;
 import java.io.Serializable;
 import java.util.stream.IntStream;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
@@ -16,15 +16,15 @@ public abstract class AbstractBSplineInterpolation implements Serializable {
   private static final Chop CHOP_DEFAULT = Chop._12;
   private static final int MAXITER = 500;
   // ---
-  protected final SplitInterface splitInterface;
+  protected final GeodesicSpace geodesicSpace;
   private final int degree;
   private final Tensor target;
 
-  /** @param splitInterface corresponding to lie group
+  /** @param geodesicSpace corresponding to lie group
    * @param degree of underlying b-spline
    * @param target points to interpolate */
-  public AbstractBSplineInterpolation(SplitInterface splitInterface, int degree, Tensor target) {
-    this.splitInterface = splitInterface;
+  public AbstractBSplineInterpolation(GeodesicSpace geodesicSpace, int degree, Tensor target) {
+    this.geodesicSpace = geodesicSpace;
     this.degree = Integers.requirePositiveOrZero(degree);
     this.target = target;
   }
@@ -94,7 +94,7 @@ public abstract class AbstractBSplineInterpolation implements Serializable {
   }
 
   private GeodesicBSplineFunction geodesicBSplineFunction(Tensor control) {
-    return GeodesicBSplineFunction.of(splitInterface, degree, control);
+    return GeodesicBSplineFunction.of(geodesicSpace, degree, control);
   }
 
   /** @param p previous control point position

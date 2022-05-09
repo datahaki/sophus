@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -20,17 +20,17 @@ public class SixPointCurveSubdivision extends AbstractSixPointCurveSubdivision {
   private static final Scalar PQ = RationalScalar.of(25, 22);
   private static final Scalar _R = RationalScalar.of(75, 64);
 
-  /** @param splitInterface */
-  public SixPointCurveSubdivision(SplitInterface splitInterface) {
-    super(splitInterface);
+  /** @param geodesicSpace */
+  public SixPointCurveSubdivision(GeodesicSpace geodesicSpace) {
+    super(geodesicSpace);
   }
 
   @Override // from AbstractSixPointCurveSubdivision
   protected Tensor center(Tensor p, Tensor q, Tensor r, Tensor s, Tensor t, Tensor u) {
-    Tensor pq = splitInterface.split(p, q, PQ);
-    Tensor _r = splitInterface.split(pq, r, _R);
-    Tensor ut = splitInterface.split(u, t, PQ);
-    Tensor _s = splitInterface.split(ut, s, _R);
+    Tensor pq = geodesicSpace.split(p, q, PQ);
+    Tensor _r = geodesicSpace.split(pq, r, _R);
+    Tensor ut = geodesicSpace.split(u, t, PQ);
+    Tensor _s = geodesicSpace.split(ut, s, _R);
     return midpoint(_r, _s);
   }
 }
