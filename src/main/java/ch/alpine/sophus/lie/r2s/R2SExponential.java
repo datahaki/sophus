@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 
-public enum R2SExponential implements Exponential {
+/* package */ enum R2SExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential

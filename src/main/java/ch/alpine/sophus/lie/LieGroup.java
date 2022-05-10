@@ -9,6 +9,7 @@ import ch.alpine.tensor.Tensor;
 
 /** interface maps tensor coordinate to an element of a lie group */
 // TODO SOPHUS API should give LieAlgebra with ad (since this is implied from basis/group action)
+// TODO SOPHUS API TOP should lieGroup also extend Exponential directly?
 public interface LieGroup extends HomogeneousSpace {
   /** function produces an instance of a lie group element from a given tensor
    * 
