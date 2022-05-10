@@ -73,7 +73,7 @@ class RnAffineCoordinateTest {
   @Test
   public void testWeights() {
     Distribution distribution = UniformDistribution.unit();
-    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
+    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnGroup.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, d);

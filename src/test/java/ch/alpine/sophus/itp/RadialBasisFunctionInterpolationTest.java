@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.sophus.math.var.VariogramFunctions;
@@ -39,7 +39,7 @@ class RadialBasisFunctionInterpolationTest {
         VariogramFunctions.INVERSE_MULTIQUADRIC };
     for (Biinvariant biinvariant : PDA)
       for (VariogramFunctions variograms : vars) {
-        TensorUnaryOperator weightingInterface = biinvariant.weighting(RnManifold.INSTANCE, variograms.of(RealScalar.TWO), sequence);
+        TensorUnaryOperator weightingInterface = biinvariant.weighting(RnGroup.INSTANCE, variograms.of(RealScalar.TWO), sequence);
         TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
             RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values));
         int index = random.nextInt(sequence.length());
@@ -56,7 +56,7 @@ class RadialBasisFunctionInterpolationTest {
     Tensor sequence = RandomVariate.of(distribution, random, n, 3);
     Tensor values = RandomVariate.of(distribution, random, n, 2);
     for (Biinvariant biinvariant : PDA) {
-      TensorUnaryOperator weightingInterface = biinvariant.var_dist(RnManifold.INSTANCE, PowerVariogram.of(1, 2), sequence);
+      TensorUnaryOperator weightingInterface = biinvariant.var_dist(RnGroup.INSTANCE, PowerVariogram.of(1, 2), sequence);
       TensorUnaryOperator tensorUnaryOperator = //
           RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values);
       for (int index = 0; index < sequence.length(); ++index) {
@@ -72,7 +72,7 @@ class RadialBasisFunctionInterpolationTest {
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     for (Biinvariant biinvariant : PDA) {
-      TensorUnaryOperator weightingInterface = biinvariant.weighting(RnManifold.INSTANCE, PowerVariogram.of(1, 2), sequence);
+      TensorUnaryOperator weightingInterface = biinvariant.weighting(RnGroup.INSTANCE, PowerVariogram.of(1, 2), sequence);
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));

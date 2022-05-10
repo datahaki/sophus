@@ -41,7 +41,7 @@ class RnManifoldTest {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor mean = RandomVariate.of(distribution, n);
-      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
         Tensor weights = barycentricCoordinate.weights(points, mean);
         Tensor result = RnBiinvariantMean.INSTANCE.mean(points, weights);
         Chop._08.requireClose(mean, result);
@@ -58,7 +58,7 @@ class RnManifoldTest {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor xya = RandomVariate.of(distribution, n);
-      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
         Tensor weights = barycentricCoordinate.weights(points, xya);
         Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
         Tensor x_recreated = biinvariantMean.mean(points, weights);
@@ -80,7 +80,7 @@ class RnManifoldTest {
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor x = RandomVariate.of(distribution, n);
       TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+          MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
       Tensor weights = tensorUnaryOperator.apply(x);
       Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
       Chop._06.requireClose(x, y);
@@ -95,7 +95,7 @@ class RnManifoldTest {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
       TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+          MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
       Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
     }
   }
@@ -109,7 +109,7 @@ class RnManifoldTest {
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor x = RandomVariate.of(distribution, n);
       TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(1), points);
+          MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
       Tensor weights = tensorUnaryOperator.apply(x);
       Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
       Chop._06.requireClose(x, y);
@@ -119,7 +119,7 @@ class RnManifoldTest {
   @Test
   public void testAffineSimple() {
     Random random = new Random(1);
-    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
+    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnGroup.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
       for (int length = dim + 1; length < 8; ++length) {
         Distribution distribution = NormalDistribution.standard();
@@ -133,7 +133,7 @@ class RnManifoldTest {
 
   @Test
   public void testNullFail() {
-    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE))
       assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 
@@ -141,7 +141,7 @@ class RnManifoldTest {
   public void testColinear() {
     int d = 2;
     int n = 5;
-    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
       Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
       sequence.append(sequence.get(n - 1).multiply(RealScalar.of(5)));
       Tensor weights = barycentricCoordinate.weights(sequence, Array.zeros(d));

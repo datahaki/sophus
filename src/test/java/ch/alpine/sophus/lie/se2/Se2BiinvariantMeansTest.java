@@ -56,7 +56,7 @@ class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = Serialization.copy(biinvariantMean).mean(sequence, weights);
       // TODO SOPHUS TEST this does not check anything... also below!
-      new MeanDefect(sequenceUnordered, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(sequenceUnordered, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Tensor actualUnordered = biinvariantMean.mean(sequenceUnordered, weights);
       // ---
       Chop._14.requireClose(expected, actual);
@@ -70,7 +70,7 @@ class Se2BiinvariantMeansTest {
     Tensor weights = Tensors.vector(1);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(p, weights);
-      new MeanDefect(p, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(p, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Chop._14.requireClose(p.get(0), actual);
     }
   }
@@ -85,7 +85,7 @@ class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(3, 3, 0), actual);
-      new MeanDefect(sequence, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
     }
   }
 
@@ -99,7 +99,7 @@ class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(0, 0, 0.6), actual);
-      new MeanDefect(sequence, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
     }
   }
 
@@ -159,7 +159,7 @@ class Se2BiinvariantMeansTest {
         Tensor result = biinvariantMean.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
         Chop._12.requireClose(result, solution);
       }
-      new MeanDefect(sequence, weights, Se2Manifold.INSTANCE.exponential(solution)).tangent();
+      new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(solution)).tangent();
     }
   }
 

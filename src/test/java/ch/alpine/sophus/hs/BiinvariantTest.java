@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.sn.SnPhongMean;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.itp.CrossAveraging;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -35,7 +35,7 @@ class BiinvariantTest {
     Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     TensorUnaryOperator weightingInterface = Serialization.copy( //
-        biinvariant.distances(RnManifold.INSTANCE, sequence));
+        biinvariant.distances(RnGroup.INSTANCE, sequence));
     Tensor point = RandomVariate.of(distribution, 3);
     Tensor weights = weightingInterface.apply(point);
     weights.map(QuantityMagnitude.singleton("m"));
@@ -47,7 +47,7 @@ class BiinvariantTest {
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
       TensorUnaryOperator weightingInterface = //
-          biinvariant.distances(RnManifold.INSTANCE, sequence);
+          biinvariant.distances(RnGroup.INSTANCE, sequence);
       weightingInterface.apply(RandomVariate.of(distribution, 3));
     }
   }
@@ -58,7 +58,7 @@ class BiinvariantTest {
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-          biinvariant.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
+          biinvariant.weighting(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence));
       Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
@@ -70,7 +70,7 @@ class BiinvariantTest {
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-          biinvariant.coordinate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
+          biinvariant.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence));
       Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
@@ -84,7 +84,7 @@ class BiinvariantTest {
       int n = 4 + random.nextInt(4);
       Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-          biinvariant.weighting(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence));
+          biinvariant.weighting(Se2CoveringGroup.INSTANCE, InversePowerVariogram.of(2), sequence));
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);

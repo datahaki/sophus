@@ -29,7 +29,7 @@ class So3FastMeanTest {
     Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
     OrthogonalMatrixQ.require(m1);
     Tensor m2 = So3FastMean.INSTANCE.mean(sequence, weights);
-    Tensor mE = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+    Tensor mE = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
     Tensor distances = Tensors.of( //
         So3Metric.INSTANCE.distance(mE, m2), //
         So3Metric.INSTANCE.distance(mE, m1), //

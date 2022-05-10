@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So3BiinvariantMeanTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
-      GbcHelper.barycentrics(So3Manifold.INSTANCE);
+      GbcHelper.barycentrics(So3Group.INSTANCE);
 
   @Test
   public void testSimple() {
@@ -29,7 +29,7 @@ class So3BiinvariantMeanTest {
         Rodrigues.vectorExp(Tensors.vector(-1 + 0.3, 0, 0)));
     Tensor log = new MeanDefect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), //
-        So3Manifold.INSTANCE.exponential(Rodrigues.vectorExp(Tensors.vector(+0.3, 0, 0)))).tangent();
+        So3Group.INSTANCE.exponential(Rodrigues.vectorExp(Tensors.vector(+0.3, 0, 0)))).tangent();
     Chop._10.requireAllZero(log);
   }
 

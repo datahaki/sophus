@@ -5,8 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.lie.LieExponential;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
@@ -17,13 +16,13 @@ public record HsMidpointLineDistance(HsLineDistance hsLineDistance, GeodesicSpac
    * @param exponential
    * @return */
   public static LineDistance of(LieGroup lieGroup) {
-    return of(LieExponential.of(lieGroup));
+    return of(lieGroup);
   }
 
   /** @param vectorLogManifold
    * @param hsManifold
    * @return */
-  public static LineDistance of(HsManifold hsManifold) {
+  public static LineDistance of(HomogeneousSpace hsManifold) {
     return new HsMidpointLineDistance( //
         new HsLineDistance(hsManifold), //
         hsManifold);

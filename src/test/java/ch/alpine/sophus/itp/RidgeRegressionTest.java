@@ -10,7 +10,6 @@ import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.itp.RidgeRegression.Form2;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.pdf.Distribution;
@@ -23,7 +22,7 @@ class RidgeRegressionTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     RidgeRegression ridgeRegression = new RidgeRegression(vectorLogManifold);
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);

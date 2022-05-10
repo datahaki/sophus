@@ -39,7 +39,7 @@ class GrTransportTest {
     Tensor log = new GrExponential(p).log(q);
     tGrMemberQ.require(log);
     Tensor qv0 = POLE_LADDER.shift(p, q).apply(pv);
-    Tensor qv1 = Serialization.copy(GrTransport.INSTANCE.shift(p, q)).apply(pv);
+    Tensor qv1 = Serialization.copy(GrManifold.INSTANCE.hsTransport().shift(p, q)).apply(pv);
     new TGrMemberQ(q).require(qv1);
     Chop._08.requireClose(qv0, qv1);
     Tensor match = GrAction.match(p, q);
@@ -61,7 +61,7 @@ class GrTransportTest {
       Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
-      TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(o, p);
+      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(o, p);
       Tensor pv = tensorUnaryOperator.apply(ov);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
       tGrMemberQ.require(pv);
@@ -76,7 +76,7 @@ class GrTransportTest {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(p, q);
+      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(p, q);
       Tensor ov = RandomVariate.of(distribution, n, n);
       assertThrows(Exception.class, () -> tensorUnaryOperator.apply(ov));
     }

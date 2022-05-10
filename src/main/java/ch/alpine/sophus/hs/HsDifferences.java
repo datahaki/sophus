@@ -22,11 +22,11 @@ import ch.alpine.tensor.alg.Differences;
  * @see Differences
  * @see LieDifferences */
 public final class HsDifferences extends AdjacentReduce {
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
 
   /** @param hsManifold
    * @throws Exception if either parameter is null */
-  public HsDifferences(HsManifold hsManifold) {
+  public HsDifferences(HomogeneousSpace hsManifold) {
     this.hsManifold = Objects.requireNonNull(hsManifold);
   }
 

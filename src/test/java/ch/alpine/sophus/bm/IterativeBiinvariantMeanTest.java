@@ -8,9 +8,9 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.se2.Se2Manifold;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -46,7 +46,7 @@ class IterativeBiinvariantMeanTest {
     double nom = Math.sqrt(2) - Math.PI / 4;
     double denom = 1 + Math.PI / 4 * (Math.sqrt(2) / (2 - Math.sqrt(2)));
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
-    IterativeBiinvariantMean bMI = IterativeBiinvariantMean.of(Se2Manifold.INSTANCE, Chop._12);
+    IterativeBiinvariantMean bMI = IterativeBiinvariantMean.of(Se2Group.INSTANCE, Chop._12);
     Tensor actual = bMI.apply(sequenceUnordered, weights).orElseThrow();
     Tolerance.CHOP.requireClose(actual, expected);
   }
@@ -61,7 +61,7 @@ class IterativeBiinvariantMeanTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
       Tensor actual = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       IterativeBiinvariantMean biinvariantMeanImplicit = //
-          Serialization.copy(IterativeBiinvariantMean.of(Se2CoveringManifold.INSTANCE, Chop._12));
+          Serialization.copy(IterativeBiinvariantMean.of(Se2CoveringGroup.INSTANCE, Chop._12));
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
         Tolerance.CHOP.requireClose(actual, result.orElseThrow());

@@ -9,8 +9,8 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.CausalFilter;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2.Se2Manifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Chop;
 class GeodesicIIR2Test {
   @Test
   public void testSimple() {
-    GeodesicSpace geodesicSpace = Se2Manifold.INSTANCE;
+    GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
     Scalar alpha = RationalScalar.HALF;
     GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicSpace, alpha);
     Tensor vector0 = Tensors.vector(1, 2, 0.25);
@@ -39,7 +39,7 @@ class GeodesicIIR2Test {
 
   @Test
   public void testLinear() {
-    GeodesicSpace geodesicSpace = RnManifold.INSTANCE;
+    GeodesicSpace geodesicSpace = RnGroup.INSTANCE;
     Scalar alpha = RationalScalar.HALF;
     TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicSpace, alpha);
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));

@@ -4,6 +4,8 @@ package ch.alpine.sophus.lie.se;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -34,6 +36,7 @@ class SeAlgebraTest {
 
   @Test
   public void testHs() {
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = SeAlgebra.of(n);
@@ -43,12 +46,12 @@ class SeAlgebraTest {
       if (2 < n)
         assertThrows(Exception.class, () -> new HsAlgebra(ad, fn + 1, 8));
       HsAlgebra hsAlgebra = new HsAlgebra(ad, n, 10);
-      Tensor g = RandomVariate.of(distribution, ad.length());
-      Tensor m = RandomVariate.of(distribution, n);
+      Tensor g = RandomVariate.of(distribution, random, ad.length());
+      Tensor m = RandomVariate.of(distribution, random, n);
       hsAlgebra.action(g, m);
       HsBarycentricCoordinate hsBarycentricCoordinate = new HsBarycentricCoordinate(hsAlgebra, LeveragesGenesis.DEFAULT);
-      Tensor sequence = RandomVariate.of(distribution, n + 2, n);
-      Tensor x = RandomVariate.of(distribution, n);
+      Tensor sequence = RandomVariate.of(distribution, random, n + 2, n);
+      Tensor x = RandomVariate.of(distribution, random, n);
       Tensor weights = hsBarycentricCoordinate.weights(sequence, x);
       BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
       Tensor mean = biinvariantMean.mean(sequence, weights);

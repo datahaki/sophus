@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2.Se2Manifold;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2.Se2Group;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -37,7 +37,7 @@ class BiinvariantVectorTest {
   public void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
     Tensor matrix = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
     Tensor nullsp = LeftNullSpace.of(matrix);
     OrthogonalMatrixQ.require(nullsp);
@@ -80,7 +80,7 @@ class BiinvariantVectorTest {
   @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -92,7 +92,7 @@ class BiinvariantVectorTest {
   @Test
   public void testSe2AnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2Manifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2Group.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);

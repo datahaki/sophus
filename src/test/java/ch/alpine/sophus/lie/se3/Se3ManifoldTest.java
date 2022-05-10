@@ -33,10 +33,10 @@ import ch.alpine.tensor.sca.Clips;
 
 class Se3ManifoldTest {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(Se3Manifold.INSTANCE, Chop._12);
-  private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Manifold.INSTANCE);
+      IterativeBiinvariantMean.of(Se3Group.INSTANCE, Chop._12);
+  private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Group.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //
-      GbcHelper.biinvariant(Se3Manifold.INSTANCE);
+      GbcHelper.biinvariant(Se3Group.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);
   private static final RandomSampleInterface RSI_Se3 = new Se3RandomSample( //
       UniformDistribution.of(Clips.absolute(5)), //
@@ -58,7 +58,7 @@ class Se3ManifoldTest {
         weights = NormalizeTotal.FUNCTION.apply(weights);
         Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
         assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
-        Tensor defect = new MeanDefect(sequence, weights, Se3Manifold.INSTANCE.exponential(mean)).tangent();
+        Tensor defect = new MeanDefect(sequence, weights, Se3Group.INSTANCE.exponential(mean)).tangent();
         Chop._08.requireAllZero(defect);
       }
     }
@@ -72,7 +72,7 @@ class Se3ManifoldTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
       assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
-      Tensor defect = new MeanDefect(sequence, weights, Se3Manifold.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se3Group.INSTANCE.exponential(mean)).tangent();
       assertEquals(Dimensions.of(defect), Arrays.asList(2, 3));
       Chop._08.requireAllZero(defect);
     }

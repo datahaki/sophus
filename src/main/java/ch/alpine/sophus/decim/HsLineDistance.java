@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -13,7 +13,7 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public record HsLineDistance(HsManifold hsManifold) implements LineDistance, Serializable {
+public record HsLineDistance(HomogeneousSpace hsManifold) implements LineDistance, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
 
   @Override // from LineDistance

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.ext.Integers;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
   private final HsTransport hsTransport;
   private final Scalar lgv;
   private final Scalar lvg;
@@ -32,7 +32,7 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
    * @return
    * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      HsManifold hsManifold, Scalar lgv, Scalar lvg, Scalar lvv) {
+      HomogeneousSpace hsManifold, Scalar lgv, Scalar lvg, Scalar lvv) {
     this.hsManifold = hsManifold;
     hsTransport = hsManifold.hsTransport();
     this.lgv = Objects.requireNonNull(lgv);

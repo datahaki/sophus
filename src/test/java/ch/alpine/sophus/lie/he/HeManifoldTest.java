@@ -26,8 +26,8 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
 class HeManifoldTest {
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeManifold.INSTANCE);
-  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeManifold.INSTANCE, new MetricCoordinate( //
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeGroup.INSTANCE);
+  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap(HeGroup.INSTANCE, new MetricCoordinate( //
       NormWeighting.of( //
           new HeTarget(Vector2Norm::of, RealScalar.ONE), //
           InversePowerVariogram.of(1))));

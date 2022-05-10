@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ class GardenDistanceVectorTest {
   @Test
   public void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy(GardenDistanceVector.of(vectorLogManifold, sequence));
@@ -54,7 +54,7 @@ class GardenDistanceVectorTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, sequence);
@@ -65,7 +65,7 @@ class GardenDistanceVectorTest {
 
   @Test
   public void testEmpty() {
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.empty());
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.empty());
@@ -73,7 +73,7 @@ class GardenDistanceVectorTest {
 
   @Test
   public void testSingleton() {
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.fromString("{{2,3,4}}"));
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.vector(0));

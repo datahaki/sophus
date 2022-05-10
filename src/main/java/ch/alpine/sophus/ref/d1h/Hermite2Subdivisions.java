@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -39,7 +39,7 @@ public enum Hermite2Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HsManifold hsManifold, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace hsManifold, Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
     Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -73,7 +73,7 @@ public enum Hermite2Subdivisions {
    * @param hsTransport
    * @return
    * @see Hermite1Subdivision */
-  public static HermiteSubdivision standard(HsManifold hsManifold) {
+  public static HermiteSubdivision standard(HomogeneousSpace hsManifold) {
     return of(hsManifold, N1_8, N1_2);
   }
 
@@ -88,7 +88,7 @@ public enum Hermite2Subdivisions {
    * @param hsManifold
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision manifold(HsManifold hsManifold) {
+  public static HermiteSubdivision manifold(HomogeneousSpace hsManifold) {
     return of(hsManifold, N1_5, _9_10);
   }
 }

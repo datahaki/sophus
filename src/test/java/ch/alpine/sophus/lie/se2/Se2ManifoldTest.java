@@ -22,7 +22,7 @@ class Se2ManifoldTest {
   public void testSimple() {
     int n = 5 + new Random().nextInt(5);
     Tensor sequence = RandomSample.of(Se2RandomSample.of(LogNormalDistribution.standard()), n);
-    TensorUnaryOperator tuo = Biinvariants.HARBOR.distances(Se2Manifold.INSTANCE, sequence);
+    TensorUnaryOperator tuo = Biinvariants.HARBOR.distances(Se2Group.INSTANCE, sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     assertEquals(Dimensions.of(matrix), Arrays.asList(n, n));
     assertTrue(SymmetricMatrixQ.of(matrix));

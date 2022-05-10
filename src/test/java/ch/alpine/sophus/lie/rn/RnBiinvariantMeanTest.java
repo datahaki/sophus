@@ -52,7 +52,7 @@ class RnBiinvariantMeanTest {
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(RnManifold.INSTANCE, Chop._12);
+      IterativeBiinvariantMean.of(RnGroup.INSTANCE, Chop._12);
 
   @Test
   public void testSimple2() {
@@ -62,7 +62,7 @@ class RnBiinvariantMeanTest {
         RnExponential.INSTANCE.exp(Tensors.vector(-1 + 0.3, 0, 0)));
     Tensor log = new MeanDefect( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), //
-        RnManifold.INSTANCE.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)))).tangent();
+        RnGroup.INSTANCE.exponential(RnExponential.INSTANCE.exp(Tensors.vector(+0.3, 0, 0)))).tangent();
     Chop._10.requireAllZero(log);
   }
 
@@ -70,7 +70,7 @@ class RnBiinvariantMeanTest {
   public void testConvergence() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     final int d = 3;
-    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE))
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE))
       for (int n = d + 1; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(RnExponential.INSTANCE::exp));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
@@ -87,7 +87,7 @@ class RnBiinvariantMeanTest {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;
-    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+    for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(RnExponential.INSTANCE::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), random, n));
       Optional<Tensor> optional = ITERATIVE_BIINVARIANT_MEAN.apply(sequence, weights);

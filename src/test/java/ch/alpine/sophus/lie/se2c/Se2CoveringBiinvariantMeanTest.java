@@ -55,7 +55,7 @@ class Se2CoveringBiinvariantMeanTest {
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringGroup.INSTANCE.exponential(mean)).tangent();
       Chop._04.requireClose(defect, defect.map(Scalar::zero)); // 1e-6 does not always work
     }
   }
@@ -73,7 +73,7 @@ class Se2CoveringBiinvariantMeanTest {
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       QuantityMagnitude.SI().in("m").apply(mean.Get(0));
       QuantityMagnitude.SI().in("m").apply(mean.Get(1));
-      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringGroup.INSTANCE.exponential(mean)).tangent();
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }

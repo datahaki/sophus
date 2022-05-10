@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Differences;
 import ch.alpine.sophus.lie.se2.Se2RandomSample;
 import ch.alpine.sophus.lie.se3.Se3Differences;
@@ -34,7 +34,7 @@ class LieDifferencesTest {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
     LieDifferences lieDifferences = //
-        Serialization.copy(new LieDifferences(RnManifold.INSTANCE));
+        Serialization.copy(new LieDifferences(RnGroup.INSTANCE));
     assertEquals(lieDifferences.apply(tensor), Differences.of(tensor));
   }
 

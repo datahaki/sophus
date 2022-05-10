@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -25,7 +25,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * factor in position (1, 1) of matrices A(-1) A(1)
    * with same sign and equal to 1/2 */
   // ---
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
   private final HsTransport hsTransport;
   private final TensorUnaryOperator tripleCenter;
   private final Scalar mgv;
@@ -47,7 +47,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * @param vpqr
    * @throws Exception if either parameters is null */
   public Hermite3Subdivision( //
-      HsManifold hsManifold, //
+      HomogeneousSpace hsManifold, //
       TensorUnaryOperator tripleCenter, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {

@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Reverse;
@@ -20,13 +20,13 @@ import ch.alpine.tensor.sca.Chop;
 class Hermite2SubdivisionsTest {
   @Test
   public void testSimple() {
-    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.INSTANCE));
-    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnManifold.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnGroup.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnGroup.INSTANCE));
   }
 
   static final List<HermiteSubdivision> LIST = Arrays.asList( //
-      Hermite2Subdivisions.standard(RnManifold.INSTANCE), //
-      Hermite2Subdivisions.manifold(RnManifold.INSTANCE));
+      Hermite2Subdivisions.standard(RnGroup.INSTANCE), //
+      Hermite2Subdivisions.manifold(RnGroup.INSTANCE));
 
   @Test
   public void testStringReverseRn() {

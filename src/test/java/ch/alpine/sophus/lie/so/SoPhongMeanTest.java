@@ -9,7 +9,7 @@ import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
-import ch.alpine.sophus.lie.so3.So3Manifold;
+import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.RealScalar;
@@ -41,14 +41,14 @@ class SoPhongMeanTest {
     OrthogonalMatrixQ.require(m1);
     Tolerance.CHOP.requireClose(Det.of(m1), RealScalar.ONE);
     {
-      Tensor mE0 = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+      Tensor mE0 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE0);
       Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
       Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);
       d0E.add(d1E);
     }
     {
-      Tensor mE1 = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
+      Tensor mE1 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE1);
       Scalar d0E = So3Metric.INSTANCE.distance(m0, mE1);
       Scalar d1E = So3Metric.INSTANCE.distance(m1, mE1);
@@ -74,7 +74,7 @@ class SoPhongMeanTest {
     // System.out.println(sequence);
     // System.out.println(m1);
     {
-      Tensor mE0 = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+      Tensor mE0 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE0);
       Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
       Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);
@@ -82,7 +82,7 @@ class SoPhongMeanTest {
       Tolerance.CHOP.requireZero(d1E);
     }
     {
-      Tensor mE1 = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
+      Tensor mE1 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE1);
       Scalar d0E = So3Metric.INSTANCE.distance(m0, mE1);
       Scalar d1E = So3Metric.INSTANCE.distance(m1, mE1);

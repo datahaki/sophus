@@ -18,11 +18,11 @@ import ch.alpine.tensor.alg.Differences;
  * 
  * @see Differences */
 public final class LieDifferences extends AdjacentReduce {
-  private final LieExponential lieExponential;
+  private final LieGroup lieExponential;
 
   /** @param lieExponential
    * @throws Exception if either parameter is null */
-  public LieDifferences(LieExponential lieExponential) {
+  public LieDifferences(LieGroup lieExponential) {
     this.lieExponential = Objects.requireNonNull(lieExponential);
   }
 

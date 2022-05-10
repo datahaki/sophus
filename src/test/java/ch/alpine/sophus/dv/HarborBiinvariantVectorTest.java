@@ -14,9 +14,8 @@ import ch.alpine.sophus.hs.BiinvariantVectorFunction;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.Distribution;
@@ -38,7 +37,7 @@ class HarborBiinvariantVectorTest {
   public void testRn() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
     int length = 4 + random.nextInt(6);
     Tensor sequence = RandomVariate.of(distribution, length, 3);
     Tensor point = RandomVariate.of(distribution, 3);
@@ -56,7 +55,7 @@ class HarborBiinvariantVectorTest {
   public void testSe2C() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     int length = 4 + random.nextInt(4);
     Tensor sequence = RandomVariate.of(distribution, length, 3);
     Tensor point = RandomVariate.of(distribution, 3);
@@ -76,7 +75,7 @@ class HarborBiinvariantVectorTest {
 
   @Test
   public void testRandom() {
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     for (Biinvariant biinvariant : BIINVARIANT)

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -42,7 +42,7 @@ public enum Hermite1Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HsManifold hsManifold, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace hsManifold, Scalar lambda, Scalar mu) {
     return new Hermite1Subdivision( //
         hsManifold, //
         lambda, //
@@ -60,7 +60,7 @@ public enum Hermite1Subdivisions {
    * @param hsManifold
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision standard(HsManifold hsManifold) {
+  public static HermiteSubdivision standard(HomogeneousSpace hsManifold) {
     return of(hsManifold, N1_8, N1_2);
   }
 }

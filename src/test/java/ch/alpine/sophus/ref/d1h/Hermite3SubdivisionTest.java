@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -27,7 +27,7 @@ class Hermite3SubdivisionTest {
     Tensor control = Tensors.fromString("{{3, 4}, {1, -3}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().string(RealScalar.ONE, control);
     TensorIteration tensorIteration2 = //
-        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnGroup.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .string(RealScalar.ONE, control);
     for (int count = 0; count < 6; ++count) {
       Tensor it1 = tensorIteration1.iterate();
@@ -44,10 +44,10 @@ class Hermite3SubdivisionTest {
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
     TensorIteration tensorIteration1 = //
-        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnGroup.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .string(RealScalar.ONE, cp1);
     TensorIteration tensorIteration2 = //
-        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnGroup.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .string(RealScalar.ONE, Reverse.of(cp2));
     for (int count = 0; count < 3; ++count) {
       Tensor result1 = tensorIteration1.iterate();
@@ -62,7 +62,7 @@ class Hermite3SubdivisionTest {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().cyclic(RealScalar.ONE, control);
     TensorIteration tensorIteration2 = //
-        Hermite3Subdivisions.of(RnManifold.INSTANCE, RnBiinvariantMean.INSTANCE) //
+        Hermite3Subdivisions.of(RnGroup.INSTANCE, RnBiinvariantMean.INSTANCE) //
             .cyclic(RealScalar.ONE, control);
     for (int count = 0; count < 6; ++count) {
       Tensor it1 = tensorIteration1.iterate();
@@ -75,12 +75,12 @@ class Hermite3SubdivisionTest {
 
   @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
-    TestHelper.checkQuantity(Hermite3Subdivisions.of(RnManifold.INSTANCE, RnBiinvariantMean.INSTANCE));
+    TestHelper.checkQuantity(Hermite3Subdivisions.of(RnGroup.INSTANCE, RnBiinvariantMean.INSTANCE));
   }
 
   @Test
   public void testNullFail() {
     assertThrows(Exception.class, () -> Hermite3Subdivisions.of(null, RnBiinvariantMean.INSTANCE));
-    assertThrows(Exception.class, () -> Hermite3Subdivisions.of(Se2CoveringManifold.INSTANCE, null));
+    assertThrows(Exception.class, () -> Hermite3Subdivisions.of(Se2CoveringGroup.INSTANCE, null));
   }
 }

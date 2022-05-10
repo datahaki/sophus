@@ -5,5 +5,5 @@ import ch.alpine.sophus.lie.LieDifferences;
 
 public enum Se2Differences {
   ;
-  public static final LieDifferences INSTANCE = new LieDifferences(Se2Manifold.INSTANCE);
+  public static final LieDifferences INSTANCE = new LieDifferences(Se2Group.INSTANCE);
 }

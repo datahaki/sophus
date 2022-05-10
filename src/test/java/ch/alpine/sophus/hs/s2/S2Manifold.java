@@ -2,14 +2,14 @@
 package ch.alpine.sophus.hs.s2;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.sophus.hs.sn.SnTransport;
 import ch.alpine.tensor.Tensor;
 
 /** 2-dimensional tangent space parameterization */
-public enum S2Manifold implements HsManifold {
+public enum S2Manifold implements HomogeneousSpace {
   INSTANCE;
 
   @Override // from HsManifold

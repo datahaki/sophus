@@ -18,7 +18,7 @@ class SoExponentialTest {
     for (int n = 2; n < 10; ++n) {
       Tensor p = SoRandomSample.of(n).randomSample(random);
       Tensor q = SoRandomSample.of(n).randomSample(random);
-      Exponential exponential = SoManifold.INSTANCE.exponential(p);
+      Exponential exponential = SoGroup.INSTANCE.exponential(p);
       Tensor vp = exponential.log(q);
       TSoMemberQ.INSTANCE.require(vp);
       Tensor qr = exponential.exp(vp);

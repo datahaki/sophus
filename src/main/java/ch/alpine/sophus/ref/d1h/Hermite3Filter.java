@@ -27,9 +27,9 @@ public class Hermite3Filter implements HermiteFilter {
    * @param exponential
    * @param biinvariantMean
    * @throws Exception if either parameters is null */
-  public Hermite3Filter(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+  public Hermite3Filter(LieGroup lieGroup, BiinvariantMean biinvariantMean) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.exponential = Objects.requireNonNull(exponential);
+    this.exponential = lieGroup.exponential();
     this.biinvariantMean = Objects.requireNonNull(biinvariantMean);
   }
 

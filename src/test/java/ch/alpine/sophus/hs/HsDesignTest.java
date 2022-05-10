@@ -10,9 +10,8 @@ import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Scalar;
@@ -35,7 +34,7 @@ import ch.alpine.tensor.sca.Clips;
 class HsDesignTest {
   @Test
   public void testRn() {
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       Distribution distribution = UniformDistribution.unit();
       for (int count = dimension + 1; count < 8; ++count) {
@@ -80,7 +79,7 @@ class HsDesignTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       for (Tensor point : sequence) {
@@ -99,7 +98,7 @@ class HsDesignTest {
   @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 8; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -122,7 +121,7 @@ class HsDesignTest {
   @Test
   public void testSe2CadInvariant() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);

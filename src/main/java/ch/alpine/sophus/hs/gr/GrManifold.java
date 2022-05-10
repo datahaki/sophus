@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.TangentSpace;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.Tensor;
  * Gr(n, 1) ~ S^(n - 1) / {+-1}
  * 
  * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2) */
-public enum GrManifold implements HsManifold {
+public enum GrManifold implements HomogeneousSpace {
   INSTANCE;
 
   @Override // from VectorLogManifold

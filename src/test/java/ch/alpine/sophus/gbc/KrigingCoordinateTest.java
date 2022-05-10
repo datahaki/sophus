@@ -5,18 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
 class KrigingCoordinateTest {
   @Test
   public void testNull1Fail() {
-    assertThrows(Exception.class, () -> KrigingCoordinate.of(t -> t, RnManifold.INSTANCE, null));
+    assertThrows(Exception.class, () -> KrigingCoordinate.of(t -> t, RnGroup.INSTANCE, null));
   }
 
   @Test
   public void testNull2Fail() {
-    assertThrows(Exception.class, () -> KrigingCoordinate.of(null, RnManifold.INSTANCE, IdentityMatrix.of(4)));
+    assertThrows(Exception.class, () -> KrigingCoordinate.of(null, RnGroup.INSTANCE, IdentityMatrix.of(4)));
   }
 
   @Test

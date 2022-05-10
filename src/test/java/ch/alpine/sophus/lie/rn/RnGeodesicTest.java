@@ -67,12 +67,12 @@ class RnGeodesicTest {
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
     for (Biinvariant biinvariant : new Biinvariant[] { MetricBiinvariant.EUCLIDEAN, Biinvariants.HARBOR }) {
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.distances(RnManifold.INSTANCE, sequence);
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.distances(RnGroup.INSTANCE, sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       SymmetricMatrixQ.require(vardst);
     }
     {
-      TensorUnaryOperator tensorUnaryOperator = Biinvariants.LEVERAGES.distances(RnManifold.INSTANCE, sequence);
+      TensorUnaryOperator tensorUnaryOperator = Biinvariants.LEVERAGES.distances(RnGroup.INSTANCE, sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       assertFalse(SymmetricMatrixQ.of(vardst));
     }

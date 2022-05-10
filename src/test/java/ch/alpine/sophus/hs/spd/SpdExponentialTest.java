@@ -4,6 +4,7 @@ package ch.alpine.sophus.hs.spd;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,10 +27,11 @@ import ch.alpine.tensor.sca.Clips;
 class SpdExponentialTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
+    Random random = new Random(3);
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
-      Tensor p = RandomSample.of(spd);
-      Tensor q = RandomSample.of(spd);
+      Tensor p = RandomSample.of(spd, random);
+      Tensor q = RandomSample.of(spd, random);
       SpdExponential spdExp = Serialization.copy(new SpdExponential(p));
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);

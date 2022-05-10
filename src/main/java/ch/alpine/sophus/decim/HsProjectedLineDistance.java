@@ -5,16 +5,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 public class HsProjectedLineDistance implements LineDistance, Serializable {
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
   private final HsLineProjection hsLineProjection;
 
-  public HsProjectedLineDistance(HsManifold hsManifold) {
+  public HsProjectedLineDistance(HomogeneousSpace hsManifold) {
     this.hsManifold = Objects.requireNonNull(hsManifold);
     hsLineProjection = new HsLineProjection(hsManifold);
   }

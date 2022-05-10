@@ -14,7 +14,7 @@ public enum So3BiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
   private static final BiinvariantMean BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE);
+      IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE);
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {

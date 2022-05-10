@@ -25,7 +25,7 @@ class RnExponentialTest {
   public void testLinearPrecision() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
-    for (BarycentricCoordinate barycentricCoordinates : GbcHelper.barycentrics(RnManifold.INSTANCE)) {
+    for (BarycentricCoordinate barycentricCoordinates : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
       Tensor weights = barycentricCoordinates.weights(sequence, point);
       Chop._10.requireClose(weights.dot(sequence), point);
     }

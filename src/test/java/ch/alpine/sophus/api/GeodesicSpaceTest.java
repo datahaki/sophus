@@ -7,9 +7,9 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.ext.Serialization;
 class GeodesicSpaceTest {
   @Test
   public void testSe2() {
-    GeodesicSpace lieGroupGeodesic = Se2CoveringManifold.INSTANCE;
+    GeodesicSpace lieGroupGeodesic = Se2CoveringGroup.INSTANCE;
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(4, 5, 6);
     Scalar lambda = RealScalar.of(0.7);
@@ -31,7 +31,7 @@ class GeodesicSpaceTest {
 
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
-    GeodesicSpace hsMidpoint = Serialization.copy(RnManifold.INSTANCE);
+    GeodesicSpace hsMidpoint = Serialization.copy(RnGroup.INSTANCE);
     Tensor tensor = hsMidpoint.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
     ExactTensorQ.require(tensor);
     assertEquals(tensor, Tensors.vector(3, 1, 9));

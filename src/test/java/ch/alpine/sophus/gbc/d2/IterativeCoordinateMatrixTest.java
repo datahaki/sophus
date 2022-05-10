@@ -9,7 +9,7 @@ import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.MetricCoordinate;
-import ch.alpine.sophus.lie.rn.RnExponential;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.pdf.Distribution;
@@ -26,7 +26,7 @@ class IterativeCoordinateMatrixTest {
       for (int n = 3; n < 10; ++n) {
         Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
         Tensor weights = genesis.origin(levers);
-        MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
+        MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE.exponential());
         Tensor tangent = meanDefect.tangent();
         Chop._07.requireAllZero(tangent);
       }
@@ -43,7 +43,7 @@ class IterativeCoordinateMatrixTest {
         Tensor levers = RandomVariate.of(distribution, n, 2);
         if (OriginEnclosureQ.INSTANCE.test(levers)) {
           Tensor weights = genesis.origin(levers);
-          MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
+          MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE.exponential());
           Tensor tangent = meanDefect.tangent();
           Chop._07.requireAllZero(tangent);
           ++count;

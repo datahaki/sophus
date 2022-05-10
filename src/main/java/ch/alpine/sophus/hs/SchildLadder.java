@@ -14,11 +14,11 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exact in R^n
  * 
  * @see PoleLadder */
-public record SchildLadder(HsManifold hsManifold, GeodesicSpace geodesicSpace) implements HsTransport, Serializable {
-  /** @param hsManifold
+public record SchildLadder(HomogeneousSpace hsManifold, GeodesicSpace geodesicSpace) implements HsTransport, Serializable {
+  /** @param homogeneousSpace
    * @return */
-  public static HsTransport of(HsManifold hsManifold) {
-    return new SchildLadder(Objects.requireNonNull(hsManifold), null);
+  public static HsTransport of(HomogeneousSpace homogeneousSpace) {
+    return new SchildLadder(Objects.requireNonNull(homogeneousSpace), null);
   }
 
   public SchildLadder {

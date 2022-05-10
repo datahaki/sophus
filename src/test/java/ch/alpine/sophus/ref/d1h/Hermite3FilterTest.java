@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnExponential;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
@@ -32,7 +31,7 @@ class Hermite3FilterTest {
     Tensor domain = Range.of(0, 10);
     Tensor control = Transpose.of(Tensors.of(domain.map(f0), domain.map(f1)));
     HermiteFilter hermiteFilter = //
-        new Hermite3Filter(RnGroup.INSTANCE, RnExponential.INSTANCE, RnBiinvariantMean.INSTANCE);
+        new Hermite3Filter(RnGroup.INSTANCE, RnBiinvariantMean.INSTANCE);
     TensorIteration tensorIteration = hermiteFilter.string(RealScalar.ONE, control);
     Tensor iterate = Do.of(tensorIteration::iterate, 2);
     ExactTensorQ.require(iterate);
@@ -43,7 +42,7 @@ class Hermite3FilterTest {
   public void testSe2ConstantReproduction() {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     HermiteFilter hermiteFilter = //
-        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMeans.FILTER);
+        new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER);
     TensorIteration tensorIteration = hermiteFilter.string(RealScalar.ONE, control);
     Tensor iterate = Do.of(tensorIteration::iterate, 2);
     Chop._14.requireClose(control, iterate);
@@ -59,7 +58,7 @@ class Hermite3FilterTest {
       pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringExponential.INSTANCE.exp(pv));
     }
     HermiteFilter hermiteFilter = //
-        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMeans.FILTER);
+        new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER);
     TensorIteration tensorIteration = hermiteFilter.string(RealScalar.ONE, control);
     Tensor iterate = Do.of(tensorIteration::iterate, 2);
     Chop._14.requireClose(control, iterate);

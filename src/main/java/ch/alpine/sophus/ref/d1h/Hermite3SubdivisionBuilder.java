@@ -7,13 +7,13 @@ import java.util.function.Function;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
   private final Tensor cgw;
   private final Scalar mgv;
   private final Scalar mvg;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   private final Tensor vpqr;
 
   public Hermite3SubdivisionBuilder( //
-      HsManifold hsManifold, //
+      HomogeneousSpace hsManifold, //
       Tensor cgw, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {

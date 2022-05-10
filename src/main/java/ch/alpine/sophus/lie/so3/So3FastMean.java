@@ -14,6 +14,6 @@ public enum So3FastMean implements BiinvariantMean {
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Tensor mean = SoPhongMean.INSTANCE.mean(sequence, weights);
-    return new MeanDefect(sequence, weights, So3Manifold.INSTANCE.exponential(mean)).shifted();
+    return new MeanDefect(sequence, weights, So3Group.INSTANCE.exponential(mean)).shifted();
   }
 }

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.crv.d2.PolygonRegion;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class ThreePointCoordinateTest {
   private static BarycentricCoordinate r2(ThreePointScaling biFunction) {
-    return HsCoordinates.wrap(RnManifold.INSTANCE, ThreePointCoordinate.of(biFunction));
+    return HsCoordinates.wrap(RnGroup.INSTANCE, ThreePointCoordinate.of(biFunction));
   }
 
   @Test

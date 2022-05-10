@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
   private final HsTransport hsTransport;
   private final Scalar lgg;
   private final Scalar lgv;
@@ -39,7 +39,7 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
    * @param vpq
    * @throws Exception if either parameters is null */
   public Hermite2Subdivision( //
-      HsManifold hsManifold, //
+      HomogeneousSpace hsManifold, //
       Scalar lgg, Scalar lgv, Scalar hgv, Scalar hvg, Tensor vpq) {
     this.hsManifold = hsManifold;
     hsTransport = hsManifold.hsTransport();

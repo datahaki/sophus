@@ -2,7 +2,7 @@
 package ch.alpine.sophus.itp;
 
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -17,12 +17,12 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
    * @return */
   public static ScalarTensorFunction of(Tensor knots, ScalarUnaryOperator variogram) {
     return new BarycentricMetricInterpolation( //
-        MetricBiinvariant.EUCLIDEAN.coordinate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
+        MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, variogram, knots.map(Tensors::of)));
   }
 
   public static ScalarTensorFunction la(Tensor knots, ScalarUnaryOperator variogram) {
     return new BarycentricMetricInterpolation( //
-        MetricBiinvariant.EUCLIDEAN.lagrainate(RnManifold.INSTANCE, variogram, knots.map(Tensors::of)));
+        MetricBiinvariant.EUCLIDEAN.lagrainate(RnGroup.INSTANCE, variogram, knots.map(Tensors::of)));
   }
 
   // ---

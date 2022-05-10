@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMax;
@@ -30,7 +30,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @param initialGuess
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, BiinvariantMean initialGuess) {
+  public static IterativeBiinvariantMean of(HomogeneousSpace hsManifold, Chop chop, BiinvariantMean initialGuess) {
     return new IterativeBiinvariantMean(hsManifold, chop, initialGuess);
   }
 
@@ -39,7 +39,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param hsManifold
    * @param chop
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop) {
+  public static IterativeBiinvariantMean of(HomogeneousSpace hsManifold, Chop chop) {
     return of(hsManifold, chop, ArgMaxSelection.INSTANCE);
   }
 
@@ -47,7 +47,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @param geodesicSpace
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, GeodesicSpace geodesicSpace) {
+  public static IterativeBiinvariantMean of(HomogeneousSpace hsManifold, Chop chop, GeodesicSpace geodesicSpace) {
     return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesicSpace));
   }
 
@@ -65,11 +65,11 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   }
 
   // ---
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace hsManifold;
   private final Chop chop;
   private final BiinvariantMean initialGuess;
 
-  private IterativeBiinvariantMean(HsManifold hsManifold, Chop chop, BiinvariantMean initialGuess) {
+  private IterativeBiinvariantMean(HomogeneousSpace hsManifold, Chop chop, BiinvariantMean initialGuess) {
     this.hsManifold = hsManifold;
     this.chop = Objects.requireNonNull(chop);
     this.initialGuess = Objects.requireNonNull(initialGuess);

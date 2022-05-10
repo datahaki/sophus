@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So3ManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
-      GbcHelper.barycentrics(So3Manifold.INSTANCE);
+      GbcHelper.barycentrics(So3Group.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(So3Group.INSTANCE);
 
   @Test
@@ -35,7 +35,7 @@ class So3ManifoldTest {
     Tensor mean = Rodrigues.vectorExp(Tensors.vector(0.4, 0.2, 0.3));
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor weights = barycentricCoordinate.weights(sequence, mean);
-      Tensor defect = new MeanDefect(sequence, weights, So3Manifold.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, So3Group.INSTANCE.exponential(mean)).tangent();
       Chop._10.requireAllZero(defect);
     }
   }
@@ -91,7 +91,7 @@ class So3ManifoldTest {
     Random random = new Random(1);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
-    BarycentricCoordinate AFFINE = AffineWrap.of(So3Manifold.INSTANCE);
+    BarycentricCoordinate AFFINE = AffineWrap.of(So3Group.INSTANCE);
     int n = 4 + random.nextInt(2);
     Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
     Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));

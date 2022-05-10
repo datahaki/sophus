@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -26,7 +26,7 @@ class HsWeiszfeldMethodTest {
     for (int d = 2; d < 5; ++d)
       for (int n = 2; n < 20; n += 4) {
         Tensor sequence = RandomVariate.of(distribution, random, n, d);
-        TensorUnaryOperator create = MetricBiinvariant.EUCLIDEAN.weighting(RnManifold.INSTANCE, InversePowerVariogram.of(1), sequence);
+        TensorUnaryOperator create = MetricBiinvariant.EUCLIDEAN.weighting(RnGroup.INSTANCE, InversePowerVariogram.of(1), sequence);
         SpatialMedian sm1 = new HsWeiszfeldMethod( //
             RnBiinvariantMean.INSTANCE, //
             create, //

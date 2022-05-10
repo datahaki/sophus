@@ -17,6 +17,6 @@ public enum RnCurveDecimation {
    * @param epsilon
    * @return */
   public static CurveDecimation of(Scalar epsilon) {
-    return CurveDecimation.of(RnManifold.INSTANCE, epsilon);
+    return CurveDecimation.of(RnGroup.INSTANCE, epsilon);
   }
 }

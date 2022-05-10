@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -26,7 +26,7 @@ import ch.alpine.tensor.qty.Quantity;
 class Hermite1SubdivisionTest {
   @Test
   public void testJetScalar() {
-    HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnManifold.INSTANCE);
+    HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnGroup.INSTANCE);
     Polynomial polynomial = Polynomial.of(Tensors.vector(2, 1, 3, 4));
     Polynomial derivative = polynomial.derivative();
     ScalarTensorFunction stf = s -> Tensors.of(polynomial.apply(s), derivative.apply(s));
@@ -49,7 +49,7 @@ class Hermite1SubdivisionTest {
   @Test
   public void testJetQuantity() {
     ScalarUnaryOperator lift = s -> Quantity.of(s, "s");
-    HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnManifold.INSTANCE);
+    HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnGroup.INSTANCE);
     Polynomial polynomial = Polynomial.of(Tensors.fromString("{2[m],3[m*s^-1],1[m*s^-2],4[m*s^-3]}"));
     Polynomial derivative = polynomial.derivative();
     ScalarTensorFunction stf = s -> Tensors.of(polynomial.apply(s), derivative.apply(s));
@@ -71,7 +71,7 @@ class Hermite1SubdivisionTest {
 
   @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
-    TestHelper.checkQuantity(Hermite1Subdivisions.standard(RnManifold.INSTANCE));
+    TestHelper.checkQuantity(Hermite1Subdivisions.standard(RnGroup.INSTANCE));
   }
 
   @Test

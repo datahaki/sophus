@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class ScManifoldTest {
   public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap( //
-      ScManifold.INSTANCE, //
+      ScGroup.INSTANCE, //
       new MetricCoordinate(NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));
 
   @Test

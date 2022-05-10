@@ -19,7 +19,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020 p.14
  * 
  * @see SchildLadder */
-public record PoleLadder(HsManifold hsManifold) implements HsTransport, Serializable {
+public record PoleLadder(HomogeneousSpace hsManifold) implements HsTransport, Serializable {
   public PoleLadder {
     Objects.requireNonNull(hsManifold);
   }

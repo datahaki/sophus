@@ -29,7 +29,7 @@ class Se2CurveDecimationTest {
 
   @Test
   public void testSymmetric() {
-    CurveDecimation curveDecimation = CurveDecimation.symmetric(Se2Manifold.INSTANCE, RealScalar.ONE);
+    CurveDecimation curveDecimation = CurveDecimation.symmetric(Se2Group.INSTANCE, RealScalar.ONE);
     Tensor tensor = RandomVariate.of(UniformDistribution.of(-1, 1), 100, 3);
     Tensor result1 = curveDecimation.apply(tensor);
     List<Integer> list1 = Dimensions.of(result1);

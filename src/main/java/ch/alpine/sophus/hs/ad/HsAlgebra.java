@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
-import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.HomogeneousSpaceOld;
 import ch.alpine.sophus.hs.HsPair;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
 /** https://en.wikipedia.org/wiki/Symmetric_space */
-public class HsAlgebra implements HomogeneousSpace, Serializable {
+public class HsAlgebra implements HomogeneousSpaceOld, Serializable {
   private static final int MAX_ITERATIONS = 100;
   // ---
   private final Tensor ad;

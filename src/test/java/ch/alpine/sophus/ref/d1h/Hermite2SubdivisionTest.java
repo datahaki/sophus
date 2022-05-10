@@ -7,12 +7,12 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 
 class Hermite2SubdivisionTest {
   @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
-    TestHelper.checkQuantity(Hermite2Subdivisions.standard(RnManifold.INSTANCE));
+    TestHelper.checkQuantity(Hermite2Subdivisions.standard(RnGroup.INSTANCE));
   }
 
   @Test

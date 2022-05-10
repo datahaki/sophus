@@ -71,7 +71,7 @@ class Se2CoveringGroupTest {
     for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
       Tensor all = tensorMapping.slash(sequence);
       Tensor one = tensorMapping.apply(point);
-      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE)) {
+      for (BarycentricCoordinate barycentricCoordinate : GbcHelper.biinvariant(Se2CoveringGroup.INSTANCE)) {
         Tensor w1 = barycentricCoordinate.weights(sequence, point);
         Tensor w2 = barycentricCoordinate.weights(all, one);
         if (!Chop._03.isClose(w1, w2)) {
@@ -82,8 +82,8 @@ class Se2CoveringGroupTest {
         }
       }
       for (int exp = 0; exp < 3; ++exp) {
-        TensorUnaryOperator gr1 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), sequence);
-        TensorUnaryOperator gr2 = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, Power.function(exp), all);
+        TensorUnaryOperator gr1 = HarborCoordinate.of(Se2CoveringGroup.INSTANCE, Power.function(exp), sequence);
+        TensorUnaryOperator gr2 = HarborCoordinate.of(Se2CoveringGroup.INSTANCE, Power.function(exp), all);
         Tensor w1 = gr1.apply(point);
         Tensor w2 = gr2.apply(one);
         Chop._10.requireClose(w1, w2);
@@ -96,7 +96,7 @@ class Se2CoveringGroupTest {
     Random random = new Random();
     int n = 5 + random.nextInt(5);
     Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
-    TensorUnaryOperator grCoordinate = HarborCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(2), sequence);
+    TensorUnaryOperator grCoordinate = HarborCoordinate.of(Se2CoveringGroup.INSTANCE, InversePowerVariogram.of(2), sequence);
     Tensor point = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Tensor weights = grCoordinate.apply(point);
     Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);

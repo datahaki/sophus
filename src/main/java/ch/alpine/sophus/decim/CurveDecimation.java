@@ -3,7 +3,7 @@ package ch.alpine.sophus.decim;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -13,14 +13,14 @@ public interface CurveDecimation extends TensorUnaryOperator {
   /** @param hsManifold
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation of(HsManifold hsManifold, Scalar epsilon) {
+  public static CurveDecimation of(HomogeneousSpace hsManifold, Scalar epsilon) {
     return new RamerDouglasPeucker(new HsLineDistance(hsManifold), epsilon);
   }
 
   /** @param hsManifold
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation symmetric(HsManifold hsManifold, Scalar epsilon) {
+  public static CurveDecimation symmetric(HomogeneousSpace hsManifold, Scalar epsilon) {
     return new RamerDouglasPeucker( //
         new SymmetricLineDistance(new HsLineDistance(hsManifold)), //
         epsilon);

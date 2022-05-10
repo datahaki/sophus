@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.sn;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.RealScalar;
@@ -17,7 +17,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.tri.Sin;
 
-public enum SnManifold implements HsManifold {
+public enum SnManifold implements HomogeneousSpace {
   INSTANCE;
 
   @Override // from VectorLogManifold
