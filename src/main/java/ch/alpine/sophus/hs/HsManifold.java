@@ -6,7 +6,9 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-/** interface that extends the capabilities of vector log manifold
+/** homogeneous space
+ * 
+ * interface that extends the capabilities of vector log manifold
  * hs exponential provides the exp function to move from a point p
  * to a point q on the manifold, via the tangent vector at p */
 public interface HsManifold extends VectorLogManifold, GeodesicSpace {

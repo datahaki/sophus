@@ -1,4 +1,3 @@
-// code by jph
 package ch.alpine.sophus.hs.hn;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,10 +18,10 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
 
-class HnGeodesicTest {
+class HnManifoldTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
-    GeodesicSpace geodesicSpace = Serialization.copy(HnGeodesic.INSTANCE);
+    GeodesicSpace geodesicSpace = Serialization.copy(HnManifold.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
@@ -34,7 +33,7 @@ class HnGeodesicTest {
 
   @Test
   public void testSubdiv() {
-    BSpline2CurveSubdivision bSpline2CurveSubdivision = new BSpline2CurveSubdivision(HnGeodesic.INSTANCE);
+    BSpline2CurveSubdivision bSpline2CurveSubdivision = new BSpline2CurveSubdivision(HnManifold.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));

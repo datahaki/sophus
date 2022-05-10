@@ -6,8 +6,8 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnLineDistance;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -52,7 +52,7 @@ class S2LineDistanceTest {
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      Tensor r = SnGeodesic.INSTANCE.split(p, q, RandomVariate.of(distribution));
+      Tensor r = SnManifold.INSTANCE.split(p, q, RandomVariate.of(distribution));
       Chop._10.requireAllZero(S2LineDistance.INSTANCE.tensorNorm(p, q).norm(r));
       Chop._10.requireAllZero(SnLineDistance.INSTANCE.tensorNorm(p, q).norm(r));
     }

@@ -8,6 +8,7 @@ import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 
+/** hyperboloid model with fast midpoint computation */
 public enum HnManifold implements HsManifold {
   INSTANCE;
 

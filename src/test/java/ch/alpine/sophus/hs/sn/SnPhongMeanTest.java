@@ -37,9 +37,9 @@ class SnPhongMeanTest {
       for (int count = 0; count < 10; ++count) {
         Tensor x = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, d));
         Tensor y = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, d));
-        Tensor m1 = SnGeodesic.INSTANCE.midpoint(x, y);
+        Tensor m1 = SnManifold.INSTANCE.midpoint(x, y);
         SnMemberQ.INSTANCE.require(m1);
-        Tensor m2 = SnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
+        Tensor m2 = SnManifold.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
         SnMemberQ.INSTANCE.require(m2);
         Chop._08.requireClose(m1, m2);
         Tensor mp = SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));

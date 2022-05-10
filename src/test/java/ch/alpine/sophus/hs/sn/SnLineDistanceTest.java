@@ -48,7 +48,7 @@ class SnLineDistanceTest {
       for (int count = 0; count < 10; ++count) {
         Tensor p = RandomSample.of(randomSampleInterface);
         Tensor q = RandomSample.of(randomSampleInterface);
-        Tensor r = SnGeodesic.INSTANCE.split(p, q, RandomVariate.of(distribution));
+        Tensor r = SnManifold.INSTANCE.split(p, q, RandomVariate.of(distribution));
         Chop._10.requireAllZero(SnLineDistance.INSTANCE.tensorNorm(p, q).norm(r));
       }
     }

@@ -18,9 +18,9 @@ class HnPhongMeanTest {
     for (int d = 1; d < 6; ++d) {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      Tensor m1 = HnGeodesic.INSTANCE.midpoint(x, y);
+      Tensor m1 = HnManifold.INSTANCE.midpoint(x, y);
       HnMemberQ.INSTANCE.require(m1);
-      Tensor m2 = HnGeodesic.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
+      Tensor m2 = HnManifold.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
       HnMemberQ.INSTANCE.require(m2);
       Chop._08.requireClose(m1, m2);
       Tensor mp = HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));

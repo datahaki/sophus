@@ -1,8 +1,7 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -18,10 +17,10 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 
-class HsGeodesicTest {
+class GeodesicSpaceTest {
   @Test
   public void testSe2() {
-    HsGeodesic lieGroupGeodesic = new HsGeodesic(Se2CoveringManifold.INSTANCE);
+    GeodesicSpace lieGroupGeodesic = Se2CoveringManifold.INSTANCE;
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(4, 5, 6);
     Scalar lambda = RealScalar.of(0.7);
@@ -32,14 +31,9 @@ class HsGeodesicTest {
 
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
-    HsGeodesic hsMidpoint = Serialization.copy(new HsGeodesic(RnManifold.INSTANCE));
+    GeodesicSpace hsMidpoint = Serialization.copy(RnManifold.INSTANCE);
     Tensor tensor = hsMidpoint.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
     ExactTensorQ.require(tensor);
     assertEquals(tensor, Tensors.vector(3, 1, 9));
-  }
-
-  @Test
-  public void testNullFail() {
-    assertThrows(Exception.class, () -> new HsGeodesic(null));
   }
 }

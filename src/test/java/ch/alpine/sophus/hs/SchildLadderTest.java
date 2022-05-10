@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -41,7 +40,7 @@ class SchildLadderTest {
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = SchildLadder.of(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
-    TensorUnaryOperator shift3 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE, SnGeodesic.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift3 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE, SnManifold.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);

@@ -3,15 +3,15 @@ package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
-import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
 // TODO SOPHUS is this still useful?
-public record HsMidpointLineDistance(HsLineDistance hsLineDistance, HsGeodesic hsMidpoint) //
+public record HsMidpointLineDistance(HsLineDistance hsLineDistance, GeodesicSpace hsMidpoint) //
     implements LineDistance, Serializable {
   /** @param lieGroup
    * @param exponential
@@ -26,7 +26,7 @@ public record HsMidpointLineDistance(HsLineDistance hsLineDistance, HsGeodesic h
   public static LineDistance of(HsManifold hsManifold) {
     return new HsMidpointLineDistance( //
         new HsLineDistance(hsManifold), //
-        new HsGeodesic(hsManifold));
+        hsManifold);
   }
 
   @Override // from LineDistance

@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -55,7 +55,7 @@ class GrBiinvariantMeanTest {
 
   @RepeatedTest(10)
   public void testGeodesic() {
-    HsGeodesic hsGeodesic = new HsGeodesic(GrManifold.INSTANCE);
+    GeodesicSpace hsGeodesic = GrManifold.INSTANCE;
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);

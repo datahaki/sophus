@@ -24,7 +24,7 @@ class GrGeodesicTest {
       Tensor m1 = exp_p.midpoint(q);
       Tensor m2 = exp_p.midpoint(q);
       Chop._08.requireClose(m1, m2);
-      Tensor m3 = GrGeodesic.INSTANCE.midpoint(p, q);
+      Tensor m3 = GrManifold.INSTANCE.midpoint(p, q);
       Chop._08.requireClose(m1, m3);
       Tensor m4 = exp_q.midpoint(p);
       Chop._08.requireClose(m1, m4);
@@ -38,7 +38,7 @@ class GrGeodesicTest {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      ScalarTensorFunction stf = GrGeodesic.INSTANCE.curve(p, q);
+      ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
       Tensor mir1 = stf.apply(RealScalar.ONE.negate());
       GrExponential exp_p = new GrExponential(p);
       Tensor mir2 = exp_p.flip(q);

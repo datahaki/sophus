@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
@@ -28,7 +27,6 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
   // ---
   private final HsManifold hsManifold;
   private final HsTransport hsTransport;
-  private final HsGeodesic hsGeodesic;
   private final TensorUnaryOperator tripleCenter;
   private final Scalar mgv;
   private final Scalar mvv;
@@ -55,7 +53,6 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Scalar cgv, Scalar vpr, Tensor vpqr) {
     this.hsManifold = hsManifold;
     hsTransport = hsManifold.hsTransport();
-    hsGeodesic = new HsGeodesic(hsManifold);
     this.tripleCenter = Objects.requireNonNull(tripleCenter);
     this.mgv = Objects.requireNonNull(mgv);
     this.mvg = mvg.add(mvg);
@@ -126,7 +123,7 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
       Tensor pv = p.get(1);
       Tensor qg = q.get(0);
       Tensor qv = q.get(1);
-      Tensor rg1 = hsGeodesic.midpoint(pg, qg); // initial guess
+      Tensor rg1 = hsManifold.midpoint(pg, qg); // initial guess
       Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv);
       Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv);
       Tensor rg1df = rg1v2.subtract(rg1v1).multiply(rgk);

@@ -11,6 +11,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.itp.FindRoot;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Real;
 import ch.alpine.tensor.sca.Sign;
 
@@ -60,9 +61,8 @@ public class ClothoidSolutions implements Serializable {
           Scalar y0 = defects_real.Get(index - 1);
           Scalar y1 = defects_real.Get(index);
           try { // necessary because of degenerate input
-            lambdas.append(findRoot.between( //
-                probes.Get(index - 1), //
-                probes.Get(index), //
+            lambdas.append(findRoot.inside( //
+                Clips.interval(probes.Get(index - 1), probes.Get(index)), //
                 y0, //
                 y1));
           } catch (Exception exception) {

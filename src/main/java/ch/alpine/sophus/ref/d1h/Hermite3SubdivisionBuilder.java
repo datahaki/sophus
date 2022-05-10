@@ -7,16 +7,13 @@ import java.util.function.Function;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
   private final HsManifold hsManifold;
-  private final HsTransport hsTransport;
   private final Tensor cgw;
   private final Scalar mgv;
   private final Scalar mvg;
@@ -31,7 +28,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
     this.hsManifold = hsManifold;
-    hsTransport = hsManifold.hsTransport();
     this.cgw = cgw;
     this.mgv = mgv;
     this.mvg = mvg;
@@ -54,7 +50,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   public HermiteSubdivision create() {
     @SuppressWarnings("unchecked")
     Function<Integer, Tensor> function = (Function<Integer, Tensor> & Serializable) i -> cgw;
-    return get(GeodesicCenter.of(new HsGeodesic(hsManifold), function));
+    return get(GeodesicCenter.of(hsManifold, function));
   }
 
   private HermiteSubdivision get(TensorUnaryOperator tripleCenter) {

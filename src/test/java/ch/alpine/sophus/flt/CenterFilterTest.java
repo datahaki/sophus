@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.BinomialWeights;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
@@ -60,7 +60,7 @@ class CenterFilterTest {
 
   @Test
   public void testS2() {
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(SnGeodesic.INSTANCE, HannWindow.FUNCTION);
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(SnManifold.INSTANCE, HannWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Distribution distribution = NormalDistribution.standard();
     Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(Vector2Norm.NORMALIZE));

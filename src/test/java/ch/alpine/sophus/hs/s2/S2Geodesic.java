@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.s2;
 
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.tri.Sin;
  * 
  * https://en.wikipedia.org/wiki/N-sphere
  * 
- * superseded by {@link SnGeodesic}
+ * superseded by {@link SnManifold}
  * 
  * p and q are vectors of length 3 with unit length
  * 

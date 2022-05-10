@@ -10,7 +10,6 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.spd.Spd0RandomSample;
-import ch.alpine.sophus.hs.spd.SpdGeodesic;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
@@ -95,7 +94,7 @@ class ReducingMeanTest {
   @Test
   public void testSimple() {
     Random random = new Random(1);
-    BiinvariantMean bm = ReducingMean.of(SpdGeodesic.INSTANCE);
+    BiinvariantMean bm = ReducingMean.of(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.of(0, 0.3));

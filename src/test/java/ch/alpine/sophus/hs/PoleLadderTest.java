@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
@@ -40,7 +39,7 @@ class PoleLadderTest {
     HsTransport poleLadder = new PoleLadder(SnManifold.INSTANCE);
     TensorUnaryOperator shift1 = //
         Serialization.copy(poleLadder).shift(orig, dest);
-    TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnGeodesic.INSTANCE, 7).shift(orig, dest);
+    TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnManifold.INSTANCE, 7).shift(orig, dest);
     TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);
