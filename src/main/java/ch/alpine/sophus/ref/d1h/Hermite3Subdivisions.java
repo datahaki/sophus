@@ -1,11 +1,8 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import java.util.Objects;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -48,10 +45,9 @@ public enum Hermite3Subdivisions {
    * @param omega
    * @return */
   public static Hermite3SubdivisionBuilder _of( //
-      HsManifold hsManifold, HsTransport hsTransport, Scalar theta, Scalar omega) {
+      HsManifold hsManifold, Scalar theta, Scalar omega) {
     return new Hermite3SubdivisionBuilder( //
         hsManifold, //
-        Objects.requireNonNull(hsTransport), //
         Tensors.of(theta, RealScalar.ONE.subtract(theta.add(theta)), theta), //
         RationalScalar.of(-1, 8), RationalScalar.of(3, 4), RationalScalar.of(-1, 8), //
         RationalScalar.of(-1, 2).multiply(theta), //
@@ -65,8 +61,8 @@ public enum Hermite3Subdivisions {
    * @param omega
    * @return */
   public static HermiteSubdivision of( //
-      HsManifold hsManifold, HsTransport hsTransport, Scalar theta, Scalar omega) {
-    return _of(hsManifold, hsTransport, theta, omega).create();
+      HsManifold hsManifold, Scalar theta, Scalar omega) {
+    return _of(hsManifold, theta, omega).create();
   }
 
   /** @param hsManifold
@@ -76,8 +72,8 @@ public enum Hermite3Subdivisions {
    * @param omega
    * @return */
   public static HermiteSubdivision of( //
-      HsManifold hsManifold, HsTransport hsTransport, BiinvariantMean biinvariantMean, Scalar theta, Scalar omega) {
-    return _of(hsManifold, hsTransport, theta, omega).create(biinvariantMean);
+      HsManifold hsManifold, BiinvariantMean biinvariantMean, Scalar theta, Scalar omega) {
+    return _of(hsManifold, theta, omega).create(biinvariantMean);
   }
 
   // ---
@@ -86,15 +82,15 @@ public enum Hermite3Subdivisions {
    * @param hsManifold
    * @param hsTransport
    * @throws Exception if either parameters is null */
-  public static Hermite3SubdivisionBuilder _standard(HsManifold hsManifold, HsTransport hsTransport) {
-    return _of(hsManifold, hsTransport, RationalScalar.of(+1, 128), RationalScalar.of(-1, 16));
+  public static Hermite3SubdivisionBuilder _standard(HsManifold hsManifold) {
+    return _of(hsManifold, RationalScalar.of(+1, 128), RationalScalar.of(-1, 16));
   }
 
   /** @param hsManifold
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision of(HsManifold hsManifold, HsTransport hsTransport) {
-    return _standard(hsManifold, hsTransport).create();
+  public static HermiteSubdivision of(HsManifold hsManifold) {
+    return _standard(hsManifold).create();
   }
 
   /** @param hsManifold
@@ -102,8 +98,8 @@ public enum Hermite3Subdivisions {
    * @param biinvariantMean
    * @return */
   public static HermiteSubdivision of( //
-      HsManifold hsManifold, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
-    return _standard(hsManifold, hsTransport).create(biinvariantMean);
+      HsManifold hsManifold, BiinvariantMean biinvariantMean) {
+    return _standard(hsManifold).create(biinvariantMean);
   }
 
   // ---
@@ -125,8 +121,8 @@ public enum Hermite3Subdivisions {
    * @param hsManifold
    * @param hsTransport
    * @return */
-  private static Hermite3SubdivisionBuilder _a1(HsManifold hsManifold, HsTransport hsTransport) {
-    return new Hermite3SubdivisionBuilder(hsManifold, hsTransport, //
+  private static Hermite3SubdivisionBuilder _a1(HsManifold hsManifold) {
+    return new Hermite3SubdivisionBuilder(hsManifold, //
         Tensors.fromString("{1/128, 63/64, 1/128}"), //
         RationalScalar.of(-1, 16), RationalScalar.of(15, 16), RationalScalar.of(-7, 32), //
         RationalScalar.of(+7, 256), //
@@ -137,16 +133,16 @@ public enum Hermite3Subdivisions {
   /** @param hsManifold
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision a1(HsManifold hsManifold, HsTransport hsTransport) {
-    return _a1(hsManifold, hsTransport).create();
+  public static HermiteSubdivision a1(HsManifold hsManifold) {
+    return _a1(hsManifold).create();
   }
 
   /** @param hsManifold
    * @param hsTransport
    * @param biinvariantMean
    * @return */
-  public static HermiteSubdivision a1(HsManifold hsManifold, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
-    return _a1(hsManifold, hsTransport).create(biinvariantMean);
+  public static HermiteSubdivision a1(HsManifold hsManifold, BiinvariantMean biinvariantMean) {
+    return _a1(hsManifold).create(biinvariantMean);
   }
 
   // ---
@@ -168,8 +164,8 @@ public enum Hermite3Subdivisions {
    * @param hsManifold
    * @param hsTransport
    * @return */
-  private static Hermite3SubdivisionBuilder _a2(HsManifold hsManifold, HsTransport hsTransport) {
-    return new Hermite3SubdivisionBuilder(hsManifold, hsTransport, //
+  private static Hermite3SubdivisionBuilder _a2(HsManifold hsManifold) {
+    return new Hermite3SubdivisionBuilder(hsManifold, //
         Tensors.fromString("{7/96, 41/48, 7/96}"), //
         RationalScalar.of(-5, 56), RationalScalar.of(7, 12), RationalScalar.of(-1, 24), //
         RationalScalar.of(-25, 1344), //
@@ -180,16 +176,16 @@ public enum Hermite3Subdivisions {
   /** @param hsManifold
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision a2(HsManifold hsManifold, HsTransport hsTransport) {
-    return _a2(hsManifold, hsTransport).create();
+  public static HermiteSubdivision a2(HsManifold hsManifold) {
+    return _a2(hsManifold).create();
   }
 
   /** @param hsManifold
    * @param hsTransport
    * @param biinvariantMean
    * @return */
-  public static HermiteSubdivision a2(HsManifold hsManifold, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
-    return _a2(hsManifold, hsTransport).create(biinvariantMean);
+  public static HermiteSubdivision a2(HsManifold hsManifold, BiinvariantMean biinvariantMean) {
+    return _a2(hsManifold).create(biinvariantMean);
   }
 
   // ---
@@ -200,7 +196,7 @@ public enum Hermite3Subdivisions {
    * @param hsTransport
    * @param biinvariantMean
    * @return */
-  public static HermiteSubdivision a3(HsManifold hsManifold, HsTransport hsTransport, BiinvariantMean biinvariantMean) {
+  public static HermiteSubdivision a3(HsManifold hsManifold, BiinvariantMean biinvariantMean) {
     throw new UnsupportedOperationException();
   }
 }

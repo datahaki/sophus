@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.LinearSolve;
@@ -31,5 +32,10 @@ public enum SpdManifold implements HsManifold {
   @Override // from HsManifold
   public Tensor flip(Tensor p, Tensor q) {
     return p.dot(LinearSolve.of(q, p));
+  }
+
+  @Override
+  public HsTransport hsTransport() {
+    return SpdTransport.INSTANCE;
   }
 }

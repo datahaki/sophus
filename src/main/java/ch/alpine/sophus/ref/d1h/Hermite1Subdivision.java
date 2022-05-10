@@ -34,9 +34,9 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
    * @return
    * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      HsManifold hsManifold, HsTransport hsTransport, Scalar lgv, Scalar lvg, Scalar lvv) {
+      HsManifold hsManifold, Scalar lgv, Scalar lvg, Scalar lvv) {
     this.hsManifold = hsManifold;
-    this.hsTransport = hsTransport;
+    hsTransport = hsManifold.hsTransport();
     hsGeodesic = new HsGeodesic(hsManifold);
     this.lgv = Objects.requireNonNull(lgv);
     this.lvg = lvg.add(lvg);

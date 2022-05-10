@@ -14,6 +14,9 @@ public interface HsManifold extends VectorLogManifold, GeodesicSpace {
    * @return exponential map at given point p on manifold */
   Exponential exponential(Tensor p);
 
+  /** @return parallel transport */
+  HsTransport hsTransport();
+
   /** related to "involution"/"involutive automorphism"
    * 
    * @param p

@@ -1,10 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import java.util.Objects;
-
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -42,7 +39,7 @@ public enum Hermite2Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HsManifold hsManifold, HsTransport hsTransport, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HsManifold hsManifold, Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
     Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -56,7 +53,6 @@ public enum Hermite2Subdivisions {
     Tensor ALP = Tensors.of(Tensors.of(an1_11, an1_12.negate()), Tensors.of(an1_21.negate(), an1_22)).multiply(_1_8);
     return new Hermite2Subdivision( //
         hsManifold, //
-        Objects.requireNonNull(hsTransport), //
         ALQ.Get(0, 0), // lgg
         ALP.Get(0, 1), // lgv
         ALQ.Get(0, 1), // hgv
@@ -77,8 +73,8 @@ public enum Hermite2Subdivisions {
    * @param hsTransport
    * @return
    * @see Hermite1Subdivision */
-  public static HermiteSubdivision standard(HsManifold hsManifold, HsTransport hsTransport) {
-    return of(hsManifold, hsTransport, N1_8, N1_2);
+  public static HermiteSubdivision standard(HsManifold hsManifold) {
+    return of(hsManifold, N1_8, N1_2);
   }
 
   // ---
@@ -92,7 +88,7 @@ public enum Hermite2Subdivisions {
    * @param hsManifold
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision manifold(HsManifold hsManifold, HsTransport hsTransport) {
-    return of(hsManifold, hsTransport, N1_5, _9_10);
+  public static HermiteSubdivision manifold(HsManifold hsManifold) {
+    return of(hsManifold, N1_5, _9_10);
   }
 }

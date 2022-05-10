@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Tensor;
 
@@ -60,5 +61,10 @@ public final class LieExponential implements HsManifold, Serializable {
     public Tensor vectorLog(Tensor q) {
       return exponential.vectorLog(inverse.combine(q));
     }
+  }
+
+  @Override
+  public HsTransport hsTransport() {
+    return LieTransport.INSTANCE;
   }
 }

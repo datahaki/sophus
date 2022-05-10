@@ -3,6 +3,8 @@ package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Tensor;
 
@@ -42,5 +44,10 @@ public enum GrManifold implements HsManifold {
   @Override // from HsManifold
   public Exponential exponential(Tensor x) {
     return new GrExponential(x);
+  }
+
+  @Override
+  public HsTransport hsTransport() {
+    return new PoleLadder(this);
   }
 }

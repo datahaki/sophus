@@ -26,12 +26,12 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   private final Tensor vpqr;
 
   public Hermite3SubdivisionBuilder( //
-      HsManifold hsManifold, HsTransport hsTransport, //
+      HsManifold hsManifold, //
       Tensor cgw, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
     this.hsManifold = hsManifold;
-    this.hsTransport = hsTransport;
+    hsTransport = hsManifold.hsTransport();
     this.cgw = cgw;
     this.mgv = mgv;
     this.mvg = mvg;
@@ -58,7 +58,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   }
 
   private HermiteSubdivision get(TensorUnaryOperator tripleCenter) {
-    return new Hermite3Subdivision(hsManifold, hsTransport, //
+    return new Hermite3Subdivision(hsManifold, //
         tripleCenter, //
         mgv, mvg, mvv, //
         cgv, vpr, vpqr);

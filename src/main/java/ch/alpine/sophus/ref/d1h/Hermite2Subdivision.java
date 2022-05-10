@@ -41,10 +41,10 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
    * @param vpq
    * @throws Exception if either parameters is null */
   public Hermite2Subdivision( //
-      HsManifold hsManifold, HsTransport hsTransport, //
+      HsManifold hsManifold, //
       Scalar lgg, Scalar lgv, Scalar hgv, Scalar hvg, Tensor vpq) {
     this.hsManifold = hsManifold;
-    this.hsTransport = hsTransport;
+    hsTransport = hsManifold.hsTransport();
     hsGeodesic = new HsGeodesic(hsManifold);
     this.lgg = lgg;
     hgg = RealScalar.ONE.subtract(this.lgg);

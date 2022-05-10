@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.sn;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -30,5 +31,10 @@ public enum SnManifold implements HsManifold {
   @Override // from MidpointInterface
   public Tensor midpoint(Tensor p, Tensor q) {
     return Vector2Norm.NORMALIZE.apply(p.add(q));
+  }
+
+  @Override
+  public HsTransport hsTransport() {
+    return SnTransport.INSTANCE;
   }
 }

@@ -9,9 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Reverse;
@@ -22,13 +20,13 @@ import ch.alpine.tensor.sca.Chop;
 class Hermite2SubdivisionsTest {
   @Test
   public void testSimple() {
-    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));
-    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnManifold.INSTANCE, LieTransport.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnManifold.INSTANCE));
+    TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnManifold.INSTANCE));
   }
 
   static final List<HermiteSubdivision> LIST = Arrays.asList( //
-      Hermite2Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE), //
-      Hermite2Subdivisions.manifold(RnManifold.INSTANCE, LieTransport.INSTANCE));
+      Hermite2Subdivisions.standard(RnManifold.INSTANCE), //
+      Hermite2Subdivisions.manifold(RnManifold.INSTANCE));
 
   @Test
   public void testStringReverseRn() {
@@ -49,13 +47,11 @@ class Hermite2SubdivisionsTest {
 
   @Test
   public void testNullA1Fail() {
-    assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(Se2CoveringManifold.INSTANCE, null));
-    assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(null, LieTransport.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(null));
   }
 
   @Test
   public void testNullA2Fail() {
-    assertThrows(Exception.class, () -> Hermite2Subdivisions.manifold(Se2CoveringManifold.INSTANCE, null));
-    assertThrows(Exception.class, () -> Hermite2Subdivisions.manifold(null, LieTransport.INSTANCE));
+    assertThrows(Exception.class, () -> Hermite2Subdivisions.manifold(null));
   }
 }

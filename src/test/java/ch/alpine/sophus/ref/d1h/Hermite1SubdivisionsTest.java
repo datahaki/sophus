@@ -9,7 +9,6 @@ import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -22,7 +21,7 @@ class Hermite1SubdivisionsTest {
   public void testSimple() {
     TestHelper.check( //
         RnHermite1Subdivisions.instance(), //
-        Hermite1Subdivisions.standard(RnManifold.INSTANCE, LieTransport.INSTANCE));
+        Hermite1Subdivisions.standard(RnManifold.INSTANCE));
   }
 
   @Test
@@ -31,7 +30,7 @@ class Hermite1SubdivisionsTest {
     Scalar mu = RationalScalar.of(-1, 3);
     TestHelper.check( //
         RnHermite1Subdivisions.of(lambda, mu), //
-        Hermite1Subdivisions.of(RnManifold.INSTANCE, LieTransport.INSTANCE, lambda, mu));
+        Hermite1Subdivisions.of(RnManifold.INSTANCE, lambda, mu));
   }
 
   @Test

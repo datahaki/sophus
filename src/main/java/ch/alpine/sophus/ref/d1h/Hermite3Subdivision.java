@@ -49,12 +49,12 @@ public class Hermite3Subdivision implements HermiteSubdivision, Serializable {
    * @param vpqr
    * @throws Exception if either parameters is null */
   public Hermite3Subdivision( //
-      HsManifold hsManifold, HsTransport hsTransport, //
+      HsManifold hsManifold, //
       TensorUnaryOperator tripleCenter, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
     this.hsManifold = hsManifold;
-    this.hsTransport = hsTransport;
+    hsTransport = hsManifold.hsTransport();
     hsGeodesic = new HsGeodesic(hsManifold);
     this.tripleCenter = Objects.requireNonNull(tripleCenter);
     this.mgv = Objects.requireNonNull(mgv);
