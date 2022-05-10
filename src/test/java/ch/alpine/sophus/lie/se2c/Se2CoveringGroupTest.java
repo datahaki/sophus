@@ -47,9 +47,9 @@ class Se2CoveringGroupTest {
   public void testConvergenceSe2() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
-    Tensor mX = Se2CoveringExponential.INSTANCE.exp(x);
-    Tensor mY = Se2CoveringExponential.INSTANCE.exp(y);
-    Tensor res = Se2CoveringExponential.INSTANCE.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
+    Tensor mX = Se2CoveringGroup.INSTANCE.exp(x);
+    Tensor mY = Se2CoveringGroup.INSTANCE.exp(y);
+    Tensor res = Se2CoveringGroup.INSTANCE.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));
     Scalar cmp = RealScalar.ONE;
     for (int degree = 1; degree < 6; ++degree) {
       BinaryOperator<Tensor> binaryOperator = Se2Algebra.INSTANCE.bch(degree);

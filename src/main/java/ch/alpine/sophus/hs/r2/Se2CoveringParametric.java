@@ -34,7 +34,7 @@ public class Se2CoveringParametric implements TensorMetric, Serializable {
    * @return length of geodesic between p and q when projected to R^2 including the number of windings */
   @Override // from TensorMetric
   public final Scalar distance(Tensor p, Tensor q) {
-    Tensor log = Se2CoveringGroup.INSTANCE.exponential().log(lieGroup.element(p).inverse().combine(q));
+    Tensor log = Se2CoveringGroup.INSTANCE.log(lieGroup.element(p).inverse().combine(q));
     return Hypot.of(log.Get(0), log.Get(1));
   }
 }

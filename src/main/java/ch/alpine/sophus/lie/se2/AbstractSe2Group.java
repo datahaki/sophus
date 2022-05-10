@@ -1,7 +1,7 @@
 // code by jph
-package ch.alpine.sophus.lie.se2c;
+package ch.alpine.sophus.lie.se2;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -11,14 +11,13 @@ import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
 import ch.alpine.tensor.sca.tri.Tan;
 
-/** References:
- * http://vixra.org/abs/1807.0463
- * https://www.youtube.com/watch?v=2vDciaUgL4E
+/** Hint:
+ * The angular coordinate is not automatically mapped to [-pi, pi).
  * 
- * @see Se2Skew */
-/* package */ enum Se2CoveringExponential implements Exponential {
-  INSTANCE;
-
+ * References:
+ * http://vixra.org/abs/1807.0463
+ * https://www.youtube.com/watch?v=2vDciaUgL4E */
+public abstract class AbstractSe2Group implements LieGroup {
   private static final Scalar HALF = RealScalar.of(0.5);
 
   /** maps a vector x from the Lie-algebra se2 to a vector of the Lie-group SE2
@@ -26,7 +25,7 @@ import ch.alpine.tensor.sca.tri.Tan;
    * @param x element in the se2 Lie-algebra of the form {vx, vy, beta}
    * @return element g in SE2 as vector with coordinates of g == exp x */
   @Override // from Exponential
-  public Tensor exp(Tensor x) {
+  public final Tensor exp(Tensor x) {
     Scalar be = x.Get(2);
     if (Scalars.isZero(be))
       return x.copy();
@@ -43,7 +42,7 @@ import ch.alpine.tensor.sca.tri.Tan;
   /** @param g element in the SE2 Lie group of the form {px, py, beta}
    * @return element x in the se2 Lie algebra with x == log g, and g == exp x */
   @Override // from Exponential
-  public Tensor log(Tensor g) {
+  public final Tensor log(Tensor g) {
     Scalar be = g.Get(2);
     Scalar be2 = be.multiply(HALF);
     Scalar tan = Tan.FUNCTION.apply(be2);
@@ -58,7 +57,7 @@ import ch.alpine.tensor.sca.tri.Tan;
   }
 
   @Override // from TangentSpace
-  public Tensor vectorLog(Tensor g) {
+  public final Tensor vectorLog(Tensor g) {
     return log(g);
   }
 }

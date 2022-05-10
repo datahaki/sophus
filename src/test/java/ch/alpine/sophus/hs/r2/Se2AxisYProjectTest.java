@@ -46,7 +46,7 @@ class Se2AxisYProjectTest {
     Scalar t = Se2AxisYProject.of(u).apply(p);
     Chop._12.requireClose(t, RealScalar.of(5.124917769722165));
     TensorUnaryOperator se2ForwardAction = //
-        new Se2Bijection(Se2CoveringGroup.INSTANCE.exponential().exp(u.multiply(t.negate()))).forward();
+        new Se2Bijection(Se2CoveringGroup.INSTANCE.exp(u.multiply(t.negate()))).forward();
     Tensor v = se2ForwardAction.apply(p);
     Chop._13.requireClose(v, Tensors.fromString("{0, -6.672220679869088}"));
   }
@@ -58,7 +58,7 @@ class Se2AxisYProjectTest {
     Scalar t = Se2AxisYProject.of(u).apply(p);
     Chop._12.requireClose(t, RealScalar.of(-5.124917769722165));
     TensorUnaryOperator se2ForwardAction = //
-        new Se2Bijection(Se2CoveringGroup.INSTANCE.exponential().exp(u.multiply(t.negate()))).forward();
+        new Se2Bijection(Se2CoveringGroup.INSTANCE.exp(u.multiply(t.negate()))).forward();
     Tensor v = se2ForwardAction.apply(p);
     Chop._13.requireClose(v, Tensors.fromString("{0, -6.672220679869088}"));
   }
@@ -88,7 +88,7 @@ class Se2AxisYProjectTest {
     Scalar t = Se2AxisYProject.of(u).apply(p);
     Chop._12.requireClose(t, RealScalar.of(-5));
     TensorUnaryOperator se2ForwardAction = //
-        new Se2Bijection(Se2CoveringGroup.INSTANCE.exponential().exp(u.multiply(t.negate()))).forward();
+        new Se2Bijection(Se2CoveringGroup.INSTANCE.exp(u.multiply(t.negate()))).forward();
     Tensor v = se2ForwardAction.apply(p);
     assertEquals(v, Tensors.vector(0, 3));
   }
@@ -137,7 +137,7 @@ class Se2AxisYProjectTest {
       Tensor u = Tensors.vector(0.9, 0, 0.3);
       Tensor p = RandomSample.of(rsi);
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
-      Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exponential().exp(u.multiply(t)));
+      Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exp(u.multiply(t)));
       Tensor v = m.dot(Append.of(p, RealScalar.ONE));
       Chop._12.requireAllZero(v.Get(0));
     }
@@ -150,7 +150,7 @@ class Se2AxisYProjectTest {
       Tensor u = Tensors.vector(1.1, 0, 1.3);
       Tensor p = RandomSample.of(rsi);
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
-      Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exponential().exp(u.multiply(t)));
+      Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exp(u.multiply(t)));
       Tensor v = m.dot(p.copy().append(RealScalar.ONE));
       Chop._12.requireAllZero(v.Get(0));
     }
@@ -163,7 +163,7 @@ class Se2AxisYProjectTest {
       Tensor u = Tensors.vector(2, 0, 0);
       Tensor p = RandomSample.of(rsi);
       Scalar t = Se2AxisYProject.of(u).apply(p).negate();
-      Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exponential().exp(u.multiply(t)));
+      Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exp(u.multiply(t)));
       Tensor v = m.dot(p.copy().append(RealScalar.ONE));
       Chop._12.requireAllZero(v.Get(0));
     }

@@ -80,7 +80,7 @@ class Se2CoveringGroupElementTest {
       Tensor xya = RandomVariate.of(distribution, 3);
       Se2CoveringGroupElement se2GroupAction = new Se2CoveringGroupElement(xya);
       Tensor v = RandomVariate.of(distribution, 3);
-      Tensor other = Se2CoveringExponential.INSTANCE.exp(v);
+      Tensor other = Se2CoveringGroup.INSTANCE.exp(v);
       Tensor result = se2GroupAction.combine(other);
       Tensor prod = Se2CoveringIntegrator.INSTANCE.spin(xya, v);
       Chop._10.requireClose(prod, result);
@@ -151,7 +151,7 @@ class Se2CoveringGroupElementTest {
     Scalar h = RealScalar.of(1e-6);
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(g);
     // Tensor gexphx =
-    se2CoveringGroupElement.combine(Se2CoveringExponential.INSTANCE.exp(x.multiply(h)));
+    se2CoveringGroupElement.combine(Se2CoveringGroup.INSTANCE.exp(x.multiply(h)));
     // Tensor nu = gexphx.divide(h);
     // Tensor dL = se2CoveringGroupElement.dL(x);
     // System.out.println(nu);

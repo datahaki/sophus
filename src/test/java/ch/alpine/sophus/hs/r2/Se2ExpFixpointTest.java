@@ -21,7 +21,7 @@ class Se2ExpFixpointTest {
     Tensor velocity = Tensors.fromString("{3[m*s^-1], .2[m*s^-1], 0.3[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
     for (Tensor _t : Subdivide.of(Quantity.of(-2.1, "s"), Quantity.of(10, "s"), 13)) {
-      Se2Bijection se2Bijection = new Se2Bijection(Se2CoveringGroup.INSTANCE.exponential().exp(velocity.multiply((Scalar) _t)));
+      Se2Bijection se2Bijection = new Se2Bijection(Se2CoveringGroup.INSTANCE.exp(velocity.multiply((Scalar) _t)));
       Chop._10.requireClose(se2Bijection.forward().apply(optional.get()), optional.get());
     }
   }
@@ -31,7 +31,7 @@ class Se2ExpFixpointTest {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0.3[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
     for (Tensor _t : Subdivide.of(Quantity.of(-5.1, "s"), Quantity.of(10, "s"), 17)) {
-      Se2Bijection se2Bijection = new Se2Bijection(Se2CoveringGroup.INSTANCE.exponential().exp(velocity.multiply((Scalar) _t)));
+      Se2Bijection se2Bijection = new Se2Bijection(Se2CoveringGroup.INSTANCE.exp(velocity.multiply((Scalar) _t)));
       Chop._10.requireClose(se2Bijection.forward().apply(optional.get()), optional.get());
     }
   }

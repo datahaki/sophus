@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.re.LinearSolve;
 class So3ExponentialTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
-    Serialization.copy(So3Exponential.INSTANCE);
+    Serialization.copy(So3Group.INSTANCE);
   }
 
   @Test
@@ -31,7 +31,7 @@ class So3ExponentialTest {
       Tensor tensor = LinearSolve.of(g, v).dot(g);
       AntisymmetricMatrixQ.require(tensor);
       // AntisymmetricMatrixQ.require(So3Exponential.INSTANCE.log(g));
-      VectorQ.requireLength(So3Exponential.INSTANCE.vectorLog(g), 3);
+      VectorQ.requireLength(So3Group.INSTANCE.vectorLog(g), 3);
     }
   }
 
@@ -53,6 +53,6 @@ class So3ExponentialTest {
 
   @Test
   public void testFailOrthogonal() {
-    assertThrows(Exception.class, () -> So3Exponential.INSTANCE.log(So3TestHelper.spawn_so3()));
+    assertThrows(Exception.class, () -> So3Group.INSTANCE.log(So3TestHelper.spawn_so3()));
   }
 }

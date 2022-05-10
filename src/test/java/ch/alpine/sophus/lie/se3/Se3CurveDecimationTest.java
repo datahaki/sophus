@@ -23,7 +23,7 @@ class Se3CurveDecimationTest {
     // Se3GroupElement pe = new Se3GroupElement(p);
     Tensor q = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.2, .3, -.1)), Tensors.vector(1, 2, 5));
     // Se3GroupElement qe = new Se3GroupElement(q);
-    ScalarTensorFunction scalarTensorFunction = Se3Geodesic.INSTANCE.curve(p, q);
+    ScalarTensorFunction scalarTensorFunction = Se3Group.INSTANCE.curve(p, q);
     Tensor m1 = scalarTensorFunction.apply(RealScalar.of(0.3));
     Tensor m2 = scalarTensorFunction.apply(RealScalar.of(0.8));
     Tensor curve = Tensors.of(p, m1, m2, q);

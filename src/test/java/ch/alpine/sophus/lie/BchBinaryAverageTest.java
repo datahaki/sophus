@@ -13,7 +13,6 @@ import ch.alpine.sophus.hs.sn.TSnMemberQ;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.lie.so3.So3Exponential;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -25,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 class BchBinaryAverageTest {
   @Test
   public void testSe2() {
-    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
+    Exponential exponential = Se2CoveringGroup.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.1);
     Tensor y = Tensors.vector(0.2, -0.1, 0.2);
     Tensor mX = exponential.exp(x);
@@ -39,7 +38,7 @@ class BchBinaryAverageTest {
 
   @Test
   public void testSo3() {
-    Exponential exponential = So3Exponential.INSTANCE;
+    Exponential exponential = So3Group.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = exponential.exp(x);

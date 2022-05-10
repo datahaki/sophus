@@ -7,7 +7,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Tensor;
@@ -20,16 +19,15 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
 class Se2CoveringExponentialTest {
-  private static final Exponential LIE_EXPONENTIAL = Se2CoveringExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = Se2CoveringGroup.INSTANCE;
 
   @Test
   public void testSimpleXY() {
     Tensor x = Tensors.vector(3, 2, 0).unmodifiable();
-    Tensor g = LIE_EXPONENTIAL.exp(x);
+    Tensor g = LIE_GROUP.exp(x);
     ExactTensorQ.require(g);
     assertEquals(g, x);
-    Tensor y = LIE_EXPONENTIAL.log(g);
+    Tensor y = LIE_GROUP.log(g);
     ExactTensorQ.require(y);
     assertEquals(y, x);
   }
@@ -43,8 +41,8 @@ class Se2CoveringExponentialTest {
       Tensor g = RandomVariate.of(distribution, 3); // element
       Tensor x = RandomVariate.of(distribution, 3); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = ge.combine(LIE_EXPONENTIAL.exp(x)); // g.Exp[x]
-      Tensor rhs = LIE_GROUP.element(LIE_EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
+      Tensor lhs = ge.combine(LIE_GROUP.exp(x)); // g.Exp[x]
+      Tensor rhs = LIE_GROUP.element(LIE_GROUP.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }
   }
@@ -59,9 +57,9 @@ class Se2CoveringExponentialTest {
       Tensor g = RandomVariate.of(distribution, random, 3); // element
       Tensor m = RandomVariate.of(distribution, random, 3); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = LIE_EXPONENTIAL.log( //
+      Tensor lhs = LIE_GROUP.log( //
           LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
-      Tensor rhs = ge.adjoint(LIE_EXPONENTIAL.log(m)); // Ad(g).Log[m]
+      Tensor rhs = ge.adjoint(LIE_GROUP.log(m)); // Ad(g).Log[m]
       Chop._10.requireClose(lhs, rhs);
     }
   }
@@ -70,9 +68,9 @@ class Se2CoveringExponentialTest {
   public void testSimpleLinearSubspace() {
     for (int theta = -10; theta <= 10; ++theta) {
       Tensor x = Tensors.vector(0, 0, theta).unmodifiable();
-      Tensor g = Se2CoveringExponential.INSTANCE.exp(x);
+      Tensor g = Se2CoveringGroup.INSTANCE.exp(x);
       assertEquals(g, x);
-      Tensor y = Se2CoveringExponential.INSTANCE.log(g);
+      Tensor y = Se2CoveringGroup.INSTANCE.log(g);
       assertEquals(y, x);
     }
   }
@@ -80,9 +78,9 @@ class Se2CoveringExponentialTest {
   @Test
   public void testQuantity() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.3}");
-    Tensor log = LIE_EXPONENTIAL.log(xya);
+    Tensor log = LIE_GROUP.log(xya);
     Chop._12.requireClose(log, Tensors.fromString("{1.2924887258384925[m], 1.834977451676985[m], 0.3}"));
-    Tensor exp = LIE_EXPONENTIAL.exp(log);
+    Tensor exp = LIE_GROUP.exp(log);
     Chop._12.requireClose(exp, xya);
   }
 }

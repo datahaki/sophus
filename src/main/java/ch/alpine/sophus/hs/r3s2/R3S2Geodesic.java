@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.r3s2;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
-import ch.alpine.sophus.lie.se3.Se3Geodesic;
+import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -31,7 +31,7 @@ public enum R3S2Geodesic implements GeodesicSpace {
     Tensor pSe3 = Se3Matrix.of(ID3, pt);
     Tensor qSe3 = Se3Matrix.of(rotation, qt);
     return scalar -> {
-      Tensor split = Se3Geodesic.INSTANCE.split(pSe3, qSe3, scalar);
+      Tensor split = Se3Group.INSTANCE.split(pSe3, qSe3, scalar);
       return Tensors.of( //
           Se3Matrix.translation(split), //
           Se3Matrix.rotation(split).dot(pn));

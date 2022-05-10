@@ -11,6 +11,6 @@ public enum ScMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Vector1Norm.of(ScExponential.INSTANCE.log(q.divide(p.Get(0))));
+    return Vector1Norm.of(ScGroup.INSTANCE.log(q.divide(p.Get(0))));
   }
 }

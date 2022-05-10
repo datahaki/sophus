@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -17,7 +16,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class DtGroupTest {
-  private static final Exponential LIE_EXPONENTIAL = DtExponential.INSTANCE;
   private static final LieGroup LIE_GROUP = DtGroup.INSTANCE;
 
   @Test
@@ -48,8 +46,8 @@ class DtGroupTest {
       RandomSampleInterface tsi = new TDtRandomSample(n, UniformDistribution.of(-1, 1));
       Tensor x = RandomSample.of(tsi); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = ge.combine(LIE_EXPONENTIAL.exp(x)); // g.Exp[x]
-      Tensor rhs = LIE_GROUP.element(LIE_EXPONENTIAL.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
+      Tensor lhs = ge.combine(LIE_GROUP.exp(x)); // g.Exp[x]
+      Tensor rhs = LIE_GROUP.element(LIE_GROUP.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }
   }
@@ -63,9 +61,9 @@ class DtGroupTest {
       Tensor g = RandomSample.of(rsi);
       Tensor m = RandomSample.of(rsi);
       LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = LIE_EXPONENTIAL.log( //
+      Tensor lhs = LIE_GROUP.log( //
           LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
-      Tensor rhs = ge.adjoint(LIE_EXPONENTIAL.log(m)); // Ad(g).Log[m]
+      Tensor rhs = ge.adjoint(LIE_GROUP.log(m)); // Ad(g).Log[m]
       Chop._10.requireClose(lhs, rhs);
     }
   }

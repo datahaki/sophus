@@ -26,7 +26,7 @@ class IterativeCoordinateMatrixTest {
       for (int n = 3; n < 10; ++n) {
         Tensor levers = CirclePoints.of(n).add(RandomVariate.of(distribution, n, 2));
         Tensor weights = genesis.origin(levers);
-        MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE.exponential());
+        MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE);
         Tensor tangent = meanDefect.tangent();
         Chop._07.requireAllZero(tangent);
       }
@@ -43,7 +43,7 @@ class IterativeCoordinateMatrixTest {
         Tensor levers = RandomVariate.of(distribution, n, 2);
         if (OriginEnclosureQ.INSTANCE.test(levers)) {
           Tensor weights = genesis.origin(levers);
-          MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE.exponential());
+          MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE);
           Tensor tangent = meanDefect.tangent();
           Chop._07.requireAllZero(tangent);
           ++count;

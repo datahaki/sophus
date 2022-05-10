@@ -19,6 +19,6 @@ public enum ScBiinvariantMean implements BiinvariantMean {
   @Override // from ScalarBiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
-    return ScExponential.INSTANCE.exp(weights.dot(Tensor.of(sequence.stream().map(ScExponential.INSTANCE::log))));
+    return ScGroup.INSTANCE.exp(weights.dot(Tensor.of(sequence.stream().map(ScGroup.INSTANCE::log))));
   }
 }

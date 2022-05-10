@@ -15,8 +15,8 @@ class ScExponentialTest {
     Distribution distribution = UniformDistribution.of(-500, 500);
     for (int count = 0; count < 100; ++count) {
       Tensor x = RandomVariate.of(distribution, 1);
-      Tensor exp = ScExponential.INSTANCE.exp(x);
-      Tensor log = ScExponential.INSTANCE.log(exp);
+      Tensor exp = ScGroup.INSTANCE.exp(x);
+      Tensor log = ScGroup.INSTANCE.log(exp);
       Chop._10.requireClose(x, log);
     }
   }

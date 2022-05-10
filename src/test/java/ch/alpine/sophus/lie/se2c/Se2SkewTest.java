@@ -51,7 +51,7 @@ class Se2SkewTest {
     Tensor xy = Tensors.vector(2, 3).unmodifiable();
     Scalar angle = RealScalar.of(0.2);
     Tensor csk = Se2Skew.logflow(angle);
-    Tensor log = Se2CoveringExponential.INSTANCE.log(xy.copy().append(angle));
+    Tensor log = Se2CoveringGroup.INSTANCE.log(xy.copy().append(angle));
     Tolerance.CHOP.requireClose(log.extract(0, 2), csk.dot(xy));
   }
 }

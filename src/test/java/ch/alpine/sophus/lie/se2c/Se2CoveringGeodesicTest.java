@@ -29,7 +29,7 @@ class Se2CoveringGeodesicTest {
     Tensor q = Tensors.vector(2.503476971090440, +0.08179934782700435, 0.9817477042468102);
     Scalar scalar = RealScalar.of(0.5);
     Tensor delta = new Se2CoveringGroupElement(p).inverse().combine(q);
-    Tensor x = Se2CoveringExponential.INSTANCE.log(delta).multiply(scalar);
+    Tensor x = Se2CoveringGroup.INSTANCE.log(delta).multiply(scalar);
     x.get();
     // x= {0.20432112230000457, -0.1559021143001622, -5.551115123125783E-17}
     // mathematica gives

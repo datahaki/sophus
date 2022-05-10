@@ -17,8 +17,8 @@ class RnExponentialTest {
   @Test
   public void testSimple() {
     Tensor matrix = HilbertMatrix.of(2, 3);
-    assertEquals(RnExponential.INSTANCE.exp(matrix), matrix);
-    assertEquals(RnExponential.INSTANCE.log(matrix), matrix);
+    assertEquals(RnGroup.INSTANCE.exp(matrix), matrix);
+    assertEquals(RnGroup.INSTANCE.log(matrix), matrix);
   }
 
   @Test

@@ -13,6 +13,6 @@ public enum Se2Integrator implements LieIntegrator {
    * @return g . exp x */
   @Override // from LieIntegrator
   public Tensor spin(Tensor g, Tensor x) {
-    return Se2Group.INSTANCE.element(g).combine(Se2CoveringGroup.INSTANCE.exponential().exp(x));
+    return Se2Group.INSTANCE.element(g).combine(Se2CoveringGroup.INSTANCE.exp(x));
   }
 }

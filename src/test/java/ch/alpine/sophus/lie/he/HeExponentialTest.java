@@ -19,8 +19,8 @@ class HeExponentialTest {
   public void testExpLog() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = RandomSample.of(RSI);
-      Tensor xyz = HeExponential.INSTANCE.exp(inp);
-      Tensor uvw = HeExponential.INSTANCE.log(xyz);
+      Tensor xyz = HeGroup.INSTANCE.exp(inp);
+      Tensor uvw = HeGroup.INSTANCE.log(xyz);
       Tolerance.CHOP.requireClose(inp, uvw);
     }
   }
@@ -29,8 +29,8 @@ class HeExponentialTest {
   public void testLogExp() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = RandomSample.of(RSI);
-      Tensor uvw = HeExponential.INSTANCE.log(inp);
-      Tensor xyz = HeExponential.INSTANCE.exp(uvw);
+      Tensor uvw = HeGroup.INSTANCE.log(inp);
+      Tensor xyz = HeGroup.INSTANCE.exp(uvw);
       Tolerance.CHOP.requireClose(inp, xyz);
     }
   }
@@ -40,8 +40,8 @@ class HeExponentialTest {
     for (int count = 0; count < 10; ++count) {
       Tensor g = RandomSample.of(RSI);
       Tensor m = RandomSample.of(RSI);
-      Tensor lhs = HeExponential.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).apply(m));
-      Tensor rhs = HeGroup.INSTANCE.element(g).adjoint(HeExponential.INSTANCE.log(m));
+      Tensor lhs = HeGroup.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).apply(m));
+      Tensor rhs = HeGroup.INSTANCE.element(g).adjoint(HeGroup.INSTANCE.log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }
   }

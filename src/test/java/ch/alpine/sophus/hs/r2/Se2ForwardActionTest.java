@@ -37,12 +37,12 @@ class Se2ForwardActionTest {
   @Test
   public void testSome() {
     Tensor u = Tensors.vector(1.2, 0, 0.75);
-    Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exponential().exp(u));
+    Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exp(u));
     Tensor p = Tensors.vector(-2, 3);
     Tensor v = m.dot(p.copy().append(RealScalar.ONE));
-    Tensor r = Se2CoveringIntegrator.INSTANCE.spin(Se2CoveringGroup.INSTANCE.exponential().exp(u), p.append(RealScalar.ZERO));
+    Tensor r = Se2CoveringIntegrator.INSTANCE.spin(Se2CoveringGroup.INSTANCE.exp(u), p.append(RealScalar.ZERO));
     assertEquals(r.extract(0, 2), v.extract(0, 2));
-    Se2ForwardAction se2ForwardAction = new Se2ForwardAction(Se2CoveringGroup.INSTANCE.exponential().exp(u));
+    Se2ForwardAction se2ForwardAction = new Se2ForwardAction(Se2CoveringGroup.INSTANCE.exp(u));
     assertEquals(se2ForwardAction.apply(p), v.extract(0, 2));
   }
 

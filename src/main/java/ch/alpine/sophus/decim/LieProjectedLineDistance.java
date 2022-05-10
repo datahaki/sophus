@@ -3,7 +3,6 @@ package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
@@ -32,17 +31,16 @@ public record LieProjectedLineDistance(LieGroup lieGroup) //
     public NormImpl(Tensor beg, Tensor end) {
       lieBeg = lieGroup.element(beg);
       lieInv = lieBeg.inverse();
-      this.normal = NORMALIZE_UNLESS_ZERO.apply(lieGroup.exponential().log(lieInv.combine(end)));
+      this.normal = NORMALIZE_UNLESS_ZERO.apply(lieGroup.log(lieInv.combine(end)));
     }
 
     @Override // from TensorNorm
     public Scalar norm(Tensor tensor) {
-      Exponential exponential = lieGroup.exponential();
-      Tensor vector = exponential.log(lieInv.combine(tensor)); // tensor - p
+      Tensor vector = lieGroup.log(lieInv.combine(tensor)); // tensor - p
       Tensor project = Times.of(vector.dot(normal), normal);
-      Tensor along = lieBeg.combine(exponential.exp(project));
+      Tensor along = lieBeg.combine(lieGroup.exp(project));
       Tensor dir = lieGroup.element(along).inverse().combine(tensor);
-      return Vector2Norm.of(exponential.log(dir));
+      return Vector2Norm.of(lieGroup.log(dir));
     }
   }
 }

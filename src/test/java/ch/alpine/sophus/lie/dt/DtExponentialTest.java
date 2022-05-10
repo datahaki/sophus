@@ -25,8 +25,8 @@ class DtExponentialTest {
     Scalar u = RealScalar.of(7);
     Scalar v = RealScalar.of(3);
     Tensor inp = Tensors.of(u, v);
-    Tensor xy = DtExponential.INSTANCE.exp(inp);
-    Tensor uv = DtExponential.INSTANCE.log(xy);
+    Tensor xy = DtGroup.INSTANCE.exp(inp);
+    Tensor uv = DtGroup.INSTANCE.log(xy);
     Tolerance.CHOP.requireClose(inp, uv);
   }
 
@@ -35,8 +35,8 @@ class DtExponentialTest {
     Scalar u = RealScalar.of(7);
     Scalar v = RealScalar.of(3);
     Tensor inp = Tensors.of(u, v);
-    Tensor uv = DtExponential.INSTANCE.log(inp);
-    Tensor xy = DtExponential.INSTANCE.exp(uv);
+    Tensor uv = DtGroup.INSTANCE.log(inp);
+    Tensor xy = DtGroup.INSTANCE.exp(uv);
     Tolerance.CHOP.requireClose(inp, xy);
   }
 
@@ -47,8 +47,8 @@ class DtExponentialTest {
       Tensor inp = Tensors.of( //
           RandomVariate.of(distribution), //
           RandomVariate.of(distribution, 2, 3));
-      Tensor xy = DtExponential.INSTANCE.exp(inp);
-      Tensor uv = DtExponential.INSTANCE.log(xy);
+      Tensor xy = DtGroup.INSTANCE.exp(inp);
+      Tensor uv = DtGroup.INSTANCE.log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -60,8 +60,8 @@ class DtExponentialTest {
       Tensor inp = Tensors.of( //
           RealScalar.ZERO, //
           RandomVariate.of(distribution, 2, 3));
-      Tensor xy = DtExponential.INSTANCE.exp(inp);
-      Tensor uv = DtExponential.INSTANCE.log(xy);
+      Tensor xy = DtGroup.INSTANCE.exp(inp);
+      Tensor uv = DtGroup.INSTANCE.log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -70,8 +70,8 @@ class DtExponentialTest {
   public void testSt1Singular() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = Tensors.vector(0, Math.random());
-      Tensor xy = DtExponential.INSTANCE.exp(inp);
-      Tensor uv = DtExponential.INSTANCE.log(xy);
+      Tensor xy = DtGroup.INSTANCE.exp(inp);
+      Tensor uv = DtGroup.INSTANCE.log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -82,8 +82,8 @@ class DtExponentialTest {
       Scalar u = RealScalar.of(Math.random());
       Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
       Tensor inp = Tensors.of(u, v);
-      Tensor xy = DtExponential.INSTANCE.exp(inp);
-      Tensor uv = DtExponential.INSTANCE.log(xy);
+      Tensor xy = DtGroup.INSTANCE.exp(inp);
+      Tensor uv = DtGroup.INSTANCE.log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -94,8 +94,8 @@ class DtExponentialTest {
       Scalar u = RealScalar.of(Math.random());
       Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
       Tensor inp = Tensors.of(u, v);
-      Tensor uv = DtExponential.INSTANCE.log(inp);
-      Tensor xy = DtExponential.INSTANCE.exp(uv);
+      Tensor uv = DtGroup.INSTANCE.log(inp);
+      Tensor xy = DtGroup.INSTANCE.exp(uv);
       Tolerance.CHOP.requireClose(inp, xy);
     }
   }
@@ -104,8 +104,8 @@ class DtExponentialTest {
   public void testSingular() {
     Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
     Tensor inp = Tensors.of(RealScalar.ZERO, v);
-    Tensor xy = DtExponential.INSTANCE.exp(inp);
-    Tensor uv = DtExponential.INSTANCE.log(xy);
+    Tensor xy = DtGroup.INSTANCE.exp(inp);
+    Tensor uv = DtGroup.INSTANCE.log(xy);
     Tolerance.CHOP.requireClose(inp, uv);
   }
 
@@ -117,8 +117,8 @@ class DtExponentialTest {
     Tensor inv = stGroupElement.inverse().toCoordinate();
     Tensor neutral = stGroupElement.combine(inv);
     Tolerance.CHOP.requireClose(neutral, Tensors.fromString("{1, {0, 0}}"));
-    Tensor log1 = DtExponential.INSTANCE.log(lambda_t);
-    Tensor log2 = DtExponential.INSTANCE.log(inv);
+    Tensor log1 = DtGroup.INSTANCE.log(lambda_t);
+    Tensor log2 = DtGroup.INSTANCE.log(inv);
     Tolerance.CHOP.requireClose(log1, log2.negate());
   }
 
@@ -128,8 +128,8 @@ class DtExponentialTest {
       RandomSampleInterface rsi = new DtRandomSample(2, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
       Tensor g = RandomSample.of(rsi);
       Tensor m = RandomSample.of(rsi);
-      Tensor lhs = DtExponential.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).apply(m));
-      Tensor rhs = DtGroup.INSTANCE.element(g).adjoint(DtExponential.INSTANCE.log(m));
+      Tensor lhs = DtGroup.INSTANCE.log(LIE_GROUP_OPS.conjugation(g).apply(m));
+      Tensor rhs = DtGroup.INSTANCE.element(g).adjoint(DtGroup.INSTANCE.log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }
   }

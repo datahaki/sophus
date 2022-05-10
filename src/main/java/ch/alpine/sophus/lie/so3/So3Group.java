@@ -1,14 +1,16 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so.SoGroupElement;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.mat.re.LinearSolve;
 
-/** special orthogonal group of 3 x 3 orthogonal matrices with determinant 1 */
+/** special orthogonal group of 3 x 3 orthogonal matrices with determinant 1
+ * 
+ * elements from the group SO(3) are 3x3 matrices
+ * elements from the tangent space TeSO(3) are skew 3x3 matrices */
 public enum So3Group implements LieGroup {
   INSTANCE;
 
@@ -17,9 +19,19 @@ public enum So3Group implements LieGroup {
     return SoGroupElement.of(matrix);
   }
 
-  @Override
-  public Exponential exponential() {
-    return So3Exponential.INSTANCE;
+  @Override // from Exponential
+  public Tensor exp(Tensor v) { // v is vector of length 3
+    return Rodrigues.vectorExp(v);
+  }
+
+  @Override // from Exponential
+  public Tensor log(Tensor p) {
+    return Rodrigues.INSTANCE.vectorLog(p);
+  }
+
+  @Override // from TangentSpace
+  public Tensor vectorLog(Tensor q) {
+    return Rodrigues.INSTANCE.vectorLog(q);
   }
 
   /** p and q are orthogonal matrices with dimension 3 x 3 */

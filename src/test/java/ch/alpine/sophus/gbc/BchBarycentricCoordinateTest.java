@@ -39,9 +39,9 @@ class BchBarycentricCoordinateTest {
       Tensor mean = HsBiinvariantMean.of(hsAlgebra).mean(sequence, weights);
       Chop._06.requireClose(mean, x);
       // ---
-      Tensor seqG = Tensor.of(sequence.stream().map(Se2CoveringGroup.INSTANCE.exponential()::exp));
+      Tensor seqG = Tensor.of(sequence.stream().map(Se2CoveringGroup.INSTANCE::exp));
       BarycentricCoordinate bc = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, variogram);
-      Tensor weights2 = bc.weights(seqG, Se2CoveringGroup.INSTANCE.exponential().exp(x));
+      Tensor weights2 = bc.weights(seqG, Se2CoveringGroup.INSTANCE.exp(x));
       Chop._08.requireClose(weights, weights2);
     }
   }

@@ -86,7 +86,7 @@ class HsAlgebraTest {
     Tensor g = RandomVariate.of(distribution, random, 3);
     Tensor p = RandomVariate.of(distribution, random, 2);
     Tensor q1 = hsAlgebra.action(g, p);
-    Tensor xyz = Se2CoveringGroup.INSTANCE.exponential().exp(g);
+    Tensor xyz = Se2CoveringGroup.INSTANCE.exp(g);
     Tensor mat = Se2Matrix.of(xyz);
     Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q2);

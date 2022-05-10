@@ -22,27 +22,27 @@ class Sl2ExponentialTest {
   @Test
   public void testSimple() {
     Tensor x = Tensors.fromString("{{2, 3}, {4, -2}}");
-    Tensor exp = Sl2Exponential.INSTANCE.exp(x);
+    Tensor exp = Sl2Group.INSTANCE.exp(x);
     Chop._10.requireClose(exp, MatrixExp.of(x));
     Chop._10.requireClose(Det.of(exp), RealScalar.ONE);
-    Tensor log = Sl2Exponential.INSTANCE.log(exp);
+    Tensor log = Sl2Group.INSTANCE.log(exp);
     Chop._10.requireClose(x, log);
   }
 
   @Test
   public void testNegativeDelta() {
     Tensor x = Tensors.fromString("{{2, -3}, {4, -2}}");
-    Tensor exp = Sl2Exponential.INSTANCE.exp(x);
+    Tensor exp = Sl2Group.INSTANCE.exp(x);
     Chop._10.requireClose(exp, MatrixExp.of(x));
     Chop._10.requireClose(Det.of(exp), RealScalar.ONE);
-    Tensor log = Sl2Exponential.INSTANCE.log(exp);
+    Tensor log = Sl2Group.INSTANCE.log(exp);
     Chop._10.requireClose(x, log);
   }
 
   @Test
   public void testId() {
     Tensor g = IdentityMatrix.of(2).negate();
-    Tensor log = Sl2Exponential.INSTANCE.log(g);
+    Tensor log = Sl2Group.INSTANCE.log(g);
     Tolerance.CHOP.requireClose(log, HodgeDual.of(Pi.VALUE, 2));
   }
 
@@ -52,13 +52,13 @@ class Sl2ExponentialTest {
     for (int count = 0; count < 10; ++count) {
       Tensor x = RandomVariate.of(distribution, 2, 2);
       x.set(x.get(0, 0).negate(), 1, 1);
-      Tensor e1 = Sl2Exponential.INSTANCE.exp(x);
+      Tensor e1 = Sl2Group.INSTANCE.exp(x);
       Tensor e2 = MatrixExp.of(x);
       Chop._10.requireClose(e1, e2);
       Chop._10.requireClose(Det.of(e1), RealScalar.ONE);
-      Tensor log = Sl2Exponential.INSTANCE.log(e2);
+      Tensor log = Sl2Group.INSTANCE.log(e2);
       Chop._10.requireClose(log, x);
-      Tensor vlg = Sl2Exponential.INSTANCE.vectorLog(e2);
+      Tensor vlg = Sl2Group.INSTANCE.vectorLog(e2);
       VectorQ.requireLength(vlg, 3);
     }
   }
