@@ -9,7 +9,6 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
 import ch.alpine.tensor.RealScalar;
@@ -38,7 +37,7 @@ class Hermite1SubdivisionTest {
     Tensor expect = x.map(stf);
     assertEquals(tensor, expect);
     Tensor points = Tensor.of(control.stream().map(JetScalar::of));
-    FourPointCurveSubdivision fps = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
+    FourPointCurveSubdivision fps = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor string = fps.string(points);
     Tensor lifted = Tensor.of(tensor.stream().map(JetScalar::of));
     assertEquals( //
@@ -61,7 +60,7 @@ class Hermite1SubdivisionTest {
     Tensor expect = x.map(stf);
     assertEquals(tensor, expect);
     Tensor points = Tensor.of(control.stream().map(JetScalar::of));
-    FourPointCurveSubdivision fps = new FourPointCurveSubdivision(RnGeodesic.INSTANCE);
+    FourPointCurveSubdivision fps = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor string = fps.string(points);
     Tensor lifted = Tensor.of(tensor.stream().map(JetScalar::of));
     assertEquals( //

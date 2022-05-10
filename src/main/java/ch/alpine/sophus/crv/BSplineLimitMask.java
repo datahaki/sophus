@@ -3,7 +3,7 @@ package ch.alpine.sophus.crv;
 
 import java.util.function.Function;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.UnitVector;
@@ -24,6 +24,6 @@ public enum BSplineLimitMask implements Function<Integer, Tensor> {
       throw new IllegalArgumentException("" + degree);
     int extent = (degree - 1) / 2;
     return Range.of(extent + 1, degree + extent + 1) //
-        .map(GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, UnitVector.of(2 * degree + 1, degree)));
+        .map(GeodesicBSplineFunction.of(RnGroup.INSTANCE, degree, UnitVector.of(2 * degree + 1, degree)));
   }
 }

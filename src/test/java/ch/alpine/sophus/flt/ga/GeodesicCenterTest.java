@@ -11,7 +11,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicCenter.Splits;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.tensor.RationalScalar;
@@ -37,7 +37,7 @@ class GeodesicCenterTest {
   @Test
   public void testSimple() {
     // function generates window to compute mean: all points in window have same weight
-    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, CONSTANT);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGroup.INSTANCE, CONSTANT);
     for (int index = 0; index < 9; ++index) {
       Tensor apply = tensorUnaryOperator.apply(UnitVector.of(9, index));
       assertEquals(apply, RationalScalar.of(1, 9));
@@ -47,7 +47,7 @@ class GeodesicCenterTest {
   @Test
   public void testDirichlet() {
     // function generates window to compute mean: all points in window have same weight
-    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGroup.INSTANCE, DirichletWindow.FUNCTION);
     for (int index = 0; index < 9; ++index) {
       Tensor apply = tensorUnaryOperator.apply(UnitVector.of(9, index));
       assertEquals(apply, RationalScalar.of(1, 9));
@@ -67,7 +67,7 @@ class GeodesicCenterTest {
 
   @Test
   public void testEvenFail() {
-    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGeodesic.INSTANCE, CONSTANT);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(RnGroup.INSTANCE, CONSTANT);
     for (int index = 0; index < 9; ++index) {
       int fi = index;
       assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Array.zeros(2 * fi)));
@@ -76,8 +76,8 @@ class GeodesicCenterTest {
 
   @Test
   public void testFail() {
-    assertThrows(Exception.class, () -> GeodesicCenter.of(RnGeodesic.INSTANCE, (UniformWindowSampler) null));
-    assertThrows(Exception.class, () -> GeodesicCenter.of(RnGeodesic.INSTANCE, (ScalarUnaryOperator) null));
+    assertThrows(Exception.class, () -> GeodesicCenter.of(RnGroup.INSTANCE, (UniformWindowSampler) null));
+    assertThrows(Exception.class, () -> GeodesicCenter.of(RnGroup.INSTANCE, (ScalarUnaryOperator) null));
     assertThrows(Exception.class, () -> GeodesicCenter.of(null, CONSTANT));
   }
 

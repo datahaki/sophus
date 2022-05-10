@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -16,14 +16,14 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 
 class Regularization2StepCyclicTest {
   private static final TensorUnaryOperator CYCLIC = //
-      Regularization2Step.cyclic(RnGeodesic.INSTANCE, RationalScalar.of(1, 4));
+      Regularization2Step.cyclic(RnGroup.INSTANCE, RationalScalar.of(1, 4));
 
   @Test
   public void testLo() {
     Tensor signal = Tensors.vector(1, 0, 0, 0, 0);
     Tensor tensor = CYCLIC.apply(signal);
     assertEquals(tensor, Tensors.fromString("{3/4, 1/8, 0, 0, 1/8}"));
-    TensorUnaryOperator regularization2StepCyclic = Regularization2Step.cyclic(RnGeodesic.INSTANCE, RealScalar.of(0.25));
+    TensorUnaryOperator regularization2StepCyclic = Regularization2Step.cyclic(RnGroup.INSTANCE, RealScalar.of(0.25));
     assertEquals(tensor, regularization2StepCyclic.apply(signal));
   }
 
@@ -32,7 +32,7 @@ class Regularization2StepCyclicTest {
     Tensor signal = Tensors.vector(0, 0, 0, 0, 1);
     Tensor tensor = CYCLIC.apply(signal);
     assertEquals(tensor, Tensors.fromString("{1/8, 0, 0, 1/8, 3/4}"));
-    TensorUnaryOperator tensorUnaryOperator = Regularization2Step.cyclic(RnGeodesic.INSTANCE, RealScalar.of(0.25));
+    TensorUnaryOperator tensorUnaryOperator = Regularization2Step.cyclic(RnGroup.INSTANCE, RealScalar.of(0.25));
     assertEquals(tensor, tensorUnaryOperator.apply(signal));
   }
 
@@ -56,14 +56,14 @@ class Regularization2StepCyclicTest {
   @Test
   public void testZero() {
     Tensor signal = Tensors.vector(1, 1, 1, 2, 1, 1, 3, 1, 1, 1);
-    Tensor tensor = Regularization2Step.cyclic(RnGeodesic.INSTANCE, RealScalar.ZERO).apply(signal);
+    Tensor tensor = Regularization2Step.cyclic(RnGroup.INSTANCE, RealScalar.ZERO).apply(signal);
     ExactTensorQ.require(tensor);
     assertEquals(tensor, signal);
   }
 
   @Test
   public void testScalarFail() {
-    TensorUnaryOperator tensorUnaryOperator = Regularization2Step.cyclic(RnGeodesic.INSTANCE, RationalScalar.HALF);
+    TensorUnaryOperator tensorUnaryOperator = Regularization2Step.cyclic(RnGroup.INSTANCE, RationalScalar.HALF);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ZERO));
   }
 }

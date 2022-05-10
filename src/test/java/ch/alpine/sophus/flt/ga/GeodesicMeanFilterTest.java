@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -20,7 +20,7 @@ class GeodesicMeanFilterTest {
   @Test
   public void testSimple() {
     for (int radius = 0; radius < 4; ++radius) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
+      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
       Tensor tensor = Tensors.vector(1, 2, 3, 4, 6, 7);
       Tensor result = tensorUnaryOperator.apply(tensor);
       assertEquals(result.length(), tensor.length());
@@ -29,7 +29,7 @@ class GeodesicMeanFilterTest {
 
   @Test
   public void testRadiusOne() {
-    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, 1);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, 1);
     Tensor tensor = UnitVector.of(10, 5);
     Tensor result = tensorUnaryOperator.apply(tensor);
     assertEquals(Total.of(result), RealScalar.ONE);
@@ -40,7 +40,7 @@ class GeodesicMeanFilterTest {
   @Test
   public void testMultiRadius() {
     for (int radius = 0; radius < 5; ++radius) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
+      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
       Tensor tensor = UnitVector.of(2 * radius + 1, radius);
       Tensor result = tensorUnaryOperator.apply(tensor);
       Tensor expect = MeanFilter.of(tensor, radius);
@@ -52,7 +52,7 @@ class GeodesicMeanFilterTest {
   @Test
   public void testBiUnits() {
     int radius = 2;
-    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
     Tensor tensor = Tensors.vector(0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0);
     Tensor result = tensorUnaryOperator.apply(tensor);
     Tensor expect = MeanFilter.of(tensor, radius);

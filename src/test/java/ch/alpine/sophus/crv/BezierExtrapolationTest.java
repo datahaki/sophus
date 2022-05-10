@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 class BezierExtrapolationTest {
   @Test
   public void testSimple() {
-    TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGeodesic.INSTANCE);
+    TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGroup.INSTANCE);
     for (int index = 2; index < 10; ++index)
       assertEquals(tensorUnaryOperator.apply(Range.of(0, index)), RealScalar.of(index));
   }
@@ -41,7 +41,7 @@ class BezierExtrapolationTest {
 
   @Test
   public void testFailScalar() {
-    TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGeodesic.INSTANCE);
+    TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGroup.INSTANCE);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ONE));
   }
 

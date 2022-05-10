@@ -7,6 +7,7 @@ import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
  * 
@@ -23,5 +24,12 @@ public enum RnGroup implements LieGroup {
   @Override
   public Exponential exponential() {
     return RnExponential.INSTANCE;
+  }
+
+  /** geodesics in the Euclidean space R^n are straight lines */
+  @Override // from TensorGeodesic
+  public ScalarTensorFunction curve(Tensor p, Tensor q) {
+    Tensor delta = q.subtract(p);
+    return scalar -> p.add(delta.multiply(scalar));
   }
 }

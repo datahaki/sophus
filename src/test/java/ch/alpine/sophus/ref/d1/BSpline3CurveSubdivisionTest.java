@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -39,7 +39,7 @@ class BSpline3CurveSubdivisionTest {
 
   @Test
   public void testSimple() {
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
     Tensor actual = Nest.of(curveSubdivision::cyclic, tensor, 1);
@@ -51,7 +51,7 @@ class BSpline3CurveSubdivisionTest {
   @Test
   public void testString() {
     Tensor curve = Tensors.vector(0, 1, 2, 3);
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
     assertEquals(refined, Tensors.fromString("{0, 1/2, 1, 3/2, 2, 5/2, 3}"));
     ExactTensorQ.require(refined);
@@ -60,7 +60,7 @@ class BSpline3CurveSubdivisionTest {
   @Test
   public void testStringTwo() {
     Tensor curve = Tensors.vector(0, 1);
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
     assertEquals(refined, Tensors.fromString("{0, 1/2, 1}"));
     ExactTensorQ.require(refined);
@@ -69,7 +69,7 @@ class BSpline3CurveSubdivisionTest {
   @Test
   public void testStringOne() {
     Tensor curve = Tensors.vector(1);
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
     assertEquals(refined, Tensors.fromString("{1}"));
     ExactTensorQ.require(refined);
@@ -78,7 +78,7 @@ class BSpline3CurveSubdivisionTest {
   @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
-    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.string(curve), Tensors.empty());
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
@@ -93,7 +93,7 @@ class BSpline3CurveSubdivisionTest {
 
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator fps = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
+    TensorUnaryOperator fps = new BSpline3CurveSubdivision(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
@@ -118,14 +118,14 @@ class BSpline3CurveSubdivisionTest {
     final Tensor bs;
     final Tensor lr;
     {
-      CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+      CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
       Timing timing = Timing.started();
       bs = Nest.of(curveSubdivision::string, tensor, depth);
       timing.stop();
       // System.out.println("bs=" + timing.seconds());
     }
     {
-      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGeodesic.INSTANCE, 3);
+      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 3);
       Timing timing = Timing.started();
       lr = Nest.of(curveSubdivision::string, tensor, depth);
       timing.stop();

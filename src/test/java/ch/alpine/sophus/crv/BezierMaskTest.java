@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -90,7 +90,7 @@ class BezierMaskTest {
   @Test
   public void testFunctionMatch() {
     int n = 5;
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGeodesic.INSTANCE, IdentityMatrix.of(n));
+    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGroup.INSTANCE, IdentityMatrix.of(n));
     Scalar p = RationalScalar.of(2, 7);
     Tensor vector = scalarTensorFunction.apply(p);
     Tensor weight = BezierMaskTest.of(n).apply(p);

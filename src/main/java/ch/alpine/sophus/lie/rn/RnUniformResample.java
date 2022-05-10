@@ -10,6 +10,6 @@ public enum RnUniformResample {
   /** @param spacing positive
    * @return */
   public static CurveSubdivision of(Scalar spacing) {
-    return UniformResample.of(RnMetric.INSTANCE, RnGeodesic.INSTANCE, spacing);
+    return UniformResample.of(RnMetric.INSTANCE, RnGroup.INSTANCE, spacing);
   }
 }

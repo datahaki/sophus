@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.flt.ga.BinomialWeights;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.win.HannWindow;
 class CenterFilterTest {
   @Test
   public void testSimple() {
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator centerFilter = new CenterFilter(geodesicCenter, 3);
     Tensor linear = Range.of(0, 10);
     Tensor result = centerFilter.apply(linear);
@@ -40,7 +40,7 @@ class CenterFilterTest {
 
   @Test
   public void testKernel3() {
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 3);
     Tensor signal = UnitVector.of(9, 4);
     Tensor result = geodesicCenterFilter.apply(signal);
@@ -50,7 +50,7 @@ class CenterFilterTest {
 
   @Test
   public void testKernel1() {
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Tensor signal = UnitVector.of(5, 2);
     Tensor result = geodesicCenterFilter.apply(signal);
@@ -80,7 +80,7 @@ class CenterFilterTest {
 
   @Test
   public void testNegativeRadiusFail() {
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGeodesic.INSTANCE, BinomialWeights.INSTANCE);
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     CenterFilter centerFilter = new CenterFilter(geodesicCenter, 0);
     assertEquals(centerFilter.radius(), 0);
     assertThrows(Exception.class, () -> new CenterFilter(geodesicCenter, -1));

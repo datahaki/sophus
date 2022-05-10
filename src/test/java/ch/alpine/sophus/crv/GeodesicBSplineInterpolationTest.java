@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.AbstractBSplineInterpolation.Iteration;
 import ch.alpine.sophus.hs.h2.H2Geodesic;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
@@ -26,7 +26,7 @@ class GeodesicBSplineInterpolationTest {
   public void testApplyRn() {
     Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
-        new GeodesicBSplineInterpolation(RnGeodesic.INSTANCE, 2, target);
+        new GeodesicBSplineInterpolation(RnGroup.INSTANCE, 2, target);
     Tensor control = geodesicBSplineInterpolation.apply();
     Tensor vector = Tensors.vector(1, 2.7510513036161504, -0.922624053826282, 2.784693019343523, 0.21446593776315992, 3);
     Chop._10.requireClose(control, vector);
@@ -36,7 +36,7 @@ class GeodesicBSplineInterpolationTest {
   public void testMoveRn() {
     Tensor tensor = RandomVariate.of(DiscreteUniformDistribution.of(2, 100), 3, 5);
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
-        new GeodesicBSplineInterpolation(RnGeodesic.INSTANCE, 2, tensor);
+        new GeodesicBSplineInterpolation(RnGroup.INSTANCE, 2, tensor);
     Tensor prev = tensor.get(0);
     Tensor eval = tensor.get(1);
     Tensor goal = tensor.get(2);

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
@@ -28,13 +28,13 @@ class CurveSubdivisionTest {
     Distribution distribution = UniformDistribution.of(-2, 3);
     for (int length = 0; length < 10; ++length) {
       Tensor tensor = RandomVariate.of(distribution, length, 2);
-      _checkSym(new BSpline1CurveSubdivision(RnGeodesic.INSTANCE), tensor);
-      _checkSym(new BSpline2CurveSubdivision(RnGeodesic.INSTANCE), tensor);
-      _checkSym(new BSpline3CurveSubdivision(RnGeodesic.INSTANCE), tensor);
-      _checkSym(BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE), tensor);
-      _checkSym(new FourPointCurveSubdivision(RnGeodesic.INSTANCE), tensor);
+      _checkSym(new BSpline1CurveSubdivision(RnGroup.INSTANCE), tensor);
+      _checkSym(new BSpline2CurveSubdivision(RnGroup.INSTANCE), tensor);
+      _checkSym(new BSpline3CurveSubdivision(RnGroup.INSTANCE), tensor);
+      _checkSym(BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE), tensor);
+      _checkSym(new FourPointCurveSubdivision(RnGroup.INSTANCE), tensor);
       _checkSym(DodgsonSabinCurveSubdivision.INSTANCE, tensor);
-      _checkSym(HormannSabinCurveSubdivision.split3(RnGeodesic.INSTANCE), tensor);
+      _checkSym(HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE), tensor);
     }
   }
 

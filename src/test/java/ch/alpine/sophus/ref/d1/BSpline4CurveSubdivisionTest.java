@@ -9,7 +9,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -26,7 +26,7 @@ import ch.alpine.tensor.red.Nest;
 class BSpline4CurveSubdivisionTest {
   @Test
   public void testSplit2Lo() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
     Tensor actual = Nest.of(curveSubdivision::cyclic, tensor, 1);
@@ -36,28 +36,28 @@ class BSpline4CurveSubdivisionTest {
 
   @Test
   public void test2Lo() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split3(RnGeodesic.INSTANCE, RationalScalar.of(1, 6));
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split3(RnGroup.INSTANCE, RationalScalar.of(1, 6));
     Tensor tensor = curveSubdivision.string(UnitVector.of(5, 2));
     assertEquals(tensor, Tensors.fromString("{0, 1/16, 5/16, 5/8, 5/8, 5/16, 1/16, 0}"));
   }
 
   @Test
   public void testSplit3() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split3(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split3(RnGroup.INSTANCE);
     Tensor tensor = curveSubdivision.string(UnitVector.of(5, 2));
     assertEquals(tensor, Tensors.fromString("{0, 1/16, 5/16, 5/8, 5/8, 5/16, 1/16, 0}"));
   }
 
   @Test
   public void test2Hi() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2hi(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2hi(RnGroup.INSTANCE);
     Tensor tensor = curveSubdivision.string(UnitVector.of(5, 2));
     assertEquals(tensor, Tensors.fromString("{0, 1/16, 5/16, 5/8, 5/8, 5/16, 1/16, 0}"));
   }
 
   @Test
   public void testCyclic() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1, 2, 3);
     Tensor string = curveSubdivision.cyclic(vector);
     assertEquals(string, Tensors.fromString("{1, 1/2, 3/4, 5/4, 7/4, 9/4, 5/2, 2}"));
@@ -66,7 +66,7 @@ class BSpline4CurveSubdivisionTest {
 
   @Test
   public void testString() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1, 2, 3);
     Tensor string = curveSubdivision.string(vector);
     assertEquals(string, Tensors.fromString("{1/4, 3/4, 5/4, 7/4, 9/4, 11/4}"));
@@ -75,7 +75,7 @@ class BSpline4CurveSubdivisionTest {
 
   @Test
   public void testStringTwo() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1);
     Tensor string = curveSubdivision.string(vector);
     assertEquals(string, Tensors.fromString("{1/4, 3/4}"));
@@ -84,7 +84,7 @@ class BSpline4CurveSubdivisionTest {
 
   @Test
   public void testStringOne() {
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(3);
     Tensor string = curveSubdivision.string(vector);
     assertEquals(string, Tensors.vector(3));
@@ -94,7 +94,7 @@ class BSpline4CurveSubdivisionTest {
   @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
-    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.string(curve), Tensors.empty());
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
@@ -109,7 +109,7 @@ class BSpline4CurveSubdivisionTest {
 
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator fps = BSpline4CurveSubdivision.split2lo(RnGeodesic.INSTANCE)::cyclic;
+    TensorUnaryOperator fps = BSpline4CurveSubdivision.split2lo(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }

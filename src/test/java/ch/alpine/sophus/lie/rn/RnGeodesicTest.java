@@ -29,14 +29,14 @@ import ch.alpine.tensor.sca.Chop;
 class RnGeodesicTest {
   @Test
   public void testSimple() {
-    Tensor actual = RnGeodesic.INSTANCE.split(Tensors.vector(10, 1), Tensors.vector(11, 0), RealScalar.of(-1));
+    Tensor actual = RnGroup.INSTANCE.split(Tensors.vector(10, 1), Tensors.vector(11, 0), RealScalar.of(-1));
     ExactTensorQ.require(actual);
     assertEquals(Tensors.vector(9, 2), actual);
   }
 
   @Test
   public void testSimple2() {
-    GeodesicSpace geodesicSpace = RnGeodesic.INSTANCE;
+    GeodesicSpace geodesicSpace = RnGroup.INSTANCE;
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertEquals(scalarTensorFunction.apply(RealScalar.ZERO), UnitVector.of(3, 0));
     assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.vector(0.5, 0.5, 0));
@@ -48,8 +48,8 @@ class RnGeodesicTest {
     for (int index = 0; index < 10; ++index) {
       Tensor p = RandomVariate.of(distribution, 7);
       Tensor q = RandomVariate.of(distribution, 7);
-      Chop._14.requireClose(p, RnGeodesic.INSTANCE.split(p, q, RealScalar.ZERO));
-      Chop._14.requireClose(q, RnGeodesic.INSTANCE.split(p, q, RealScalar.ONE));
+      Chop._14.requireClose(p, RnGroup.INSTANCE.split(p, q, RealScalar.ZERO));
+      Chop._14.requireClose(q, RnGroup.INSTANCE.split(p, q, RealScalar.ONE));
     }
   }
 
@@ -57,7 +57,7 @@ class RnGeodesicTest {
   public void testDeBoor() {
     Tensor knots = Tensors.vector(1, 2, 3, 4);
     Tensor control = Tensors.vector(9, 3, 4);
-    DeBoor.of(RnGeodesic.INSTANCE, knots, control);
+    DeBoor.of(RnGroup.INSTANCE, knots, control);
     assertThrows(Exception.class, () -> DeBoor.of(null, knots, control));
   }
 

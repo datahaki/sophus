@@ -13,7 +13,7 @@ import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -35,7 +35,7 @@ import ch.alpine.tensor.sca.Chop;
 class ReducingMeanTest {
   private static Tensor _check(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
-    BiinvariantMean biinvariantMean = ReducingMean.of(RnGeodesic.INSTANCE);
+    BiinvariantMean biinvariantMean = ReducingMean.of(RnGroup.INSTANCE);
     Tensor mean = biinvariantMean.mean(sequence, weights);
     Tolerance.CHOP.requireClose(mean, weights.dot(sequence));
     return mean;
@@ -87,7 +87,7 @@ class ReducingMeanTest {
   public void testExactFail() {
     Tensor weights = Tensors.vector(0.0, 0.0, 0.1);
     Tensor sequence = Tensors.vector(3, 4, 10);
-    BiinvariantMean biinvariantMean = ReducingMean.of(RnGeodesic.INSTANCE);
+    BiinvariantMean biinvariantMean = ReducingMean.of(RnGroup.INSTANCE);
     assertThrows(Exception.class, () -> biinvariantMean.mean(sequence, weights));
   }
 

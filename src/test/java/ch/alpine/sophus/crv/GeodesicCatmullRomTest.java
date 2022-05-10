@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RealScalar;
@@ -61,14 +61,14 @@ class GeodesicCatmullRomTest {
   public void testLengthFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 3, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
-    assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control));
+    assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGroup.INSTANCE, knots, control));
   }
 
   @Test
   public void testKnotsInconsistentFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
-    GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots, control);
-    assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGeodesic.INSTANCE, knots.extract(0, knots.length() - 1), control));
+    GeodesicCatmullRom.of(RnGroup.INSTANCE, knots, control);
+    assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGroup.INSTANCE, knots.extract(0, knots.length() - 1), control));
   }
 }

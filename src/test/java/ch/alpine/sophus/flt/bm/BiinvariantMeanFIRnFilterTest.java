@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.crv.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.WindowSideExtrapolation;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
@@ -22,7 +22,7 @@ class BiinvariantMeanFIRnFilterTest {
   public void testSimple() {
     for (int radius = 0; radius < 6; ++radius) {
       TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanFIRnFilter.of( //
-          RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE, RnGeodesic.INSTANCE, radius, RationalScalar.HALF);
+          RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE, RnGroup.INSTANCE, radius, RationalScalar.HALF);
       Tensor signal = Range.of(0, 10);
       Tensor tensor = tensorUnaryOperator.apply(signal);
       assertEquals(signal, tensor);
@@ -35,7 +35,7 @@ class BiinvariantMeanFIRnFilterTest {
     for (WindowFunctions smoothingKernel : WindowFunctions.values())
       for (int radius = 0; radius < 6; ++radius) {
         TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanFIRnFilter.of( //
-            RnBiinvariantMean.INSTANCE, WindowSideExtrapolation.of(smoothingKernel.get()), RnGeodesic.INSTANCE, radius, RationalScalar.HALF);
+            RnBiinvariantMean.INSTANCE, WindowSideExtrapolation.of(smoothingKernel.get()), RnGroup.INSTANCE, radius, RationalScalar.HALF);
         Tensor signal = Range.of(0, 10);
         Tensor tensor = tensorUnaryOperator.apply(signal);
         Chop._10.requireClose(tensor, signal);

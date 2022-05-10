@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -23,7 +23,7 @@ class BSpline5CurveSubdivisionTest {
 
   @Test
   public void testCyclicMask() {
-    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     Tensor tensor = curveSubdivision.cyclic(Tensors.vector(1, 0, 0, 0, 0, 0, 0));
     assertEquals(tensor, Tensors.fromString( //
         "{5/8, 15/32, 3/16, 1/32, 0, 0, 0, 0, 0, 0, 0, 1/32, 3/16, 15/32}"));
@@ -31,7 +31,7 @@ class BSpline5CurveSubdivisionTest {
 
   @Test
   public void testString() {
-    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     for (int length = 3; length < 7; ++length) {
       Tensor tensor = curveSubdivision.cyclic(UnitVector.of(length, 2));
       ExactTensorQ.require(tensor);
@@ -42,7 +42,7 @@ class BSpline5CurveSubdivisionTest {
   @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
-    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.string(curve), Tensors.empty());
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
@@ -57,7 +57,7 @@ class BSpline5CurveSubdivisionTest {
 
   @Test
   public void testTerminal() {
-    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     Clip clip = Clips.interval(1, 2);
     for (int length = 2; length < 7; ++length) {
       Tensor tensor = curveSubdivision.string(UnitVector.of(length, 0));

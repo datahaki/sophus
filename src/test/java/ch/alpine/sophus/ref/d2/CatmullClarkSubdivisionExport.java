@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -29,7 +29,7 @@ enum CatmullClarkSubdivisionExport {
 
   private static Tensor univariate() {
     Distribution distribution = NormalDistribution.standard();
-    GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGeodesic.INSTANCE);
+    GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor tensor = RandomVariate.of(distribution, 4, 5);
     return Nest.of(catmullClarkSubdivision::refine, tensor, 3);
   }

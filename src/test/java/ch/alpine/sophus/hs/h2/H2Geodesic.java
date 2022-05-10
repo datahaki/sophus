@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.h2;
 
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -48,7 +48,7 @@ public enum H2Geodesic implements GeodesicSpace {
           c1.add(c2.multiply(Tanh.FUNCTION.apply(c3.add(c4.multiply(scalar))))), //
           c2.divide(Cosh.FUNCTION.apply(c3.add(c4.multiply(scalar)))));
     }
-    return scalar -> Tensors.of(RnGeodesic.INSTANCE.split(p1, q1, scalar), height(p2, q2, scalar));
+    return scalar -> Tensors.of(RnGroup.INSTANCE.split(p1, q1, scalar), height(p2, q2, scalar));
   }
 
   private static Scalar height(Scalar p2, Scalar q2, Scalar t) {

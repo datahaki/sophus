@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.crv;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BSplineInterpolation;
@@ -22,8 +21,8 @@ public final class LieGroupBSplineInterpolation extends AbstractBSplineInterpola
    * @param geodesicSpace corresponding to lie group
    * @param degree of underlying b-spline
    * @param target */
-  public LieGroupBSplineInterpolation(LieGroup lieGroup, GeodesicSpace geodesicSpace, int degree, Tensor target) {
-    super(geodesicSpace, degree, target);
+  public LieGroupBSplineInterpolation(LieGroup lieGroup, int degree, Tensor target) {
+    super(lieGroup, degree, target);
     this.lieGroup = lieGroup;
   }
 

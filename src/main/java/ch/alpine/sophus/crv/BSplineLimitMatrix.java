@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.crv;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
@@ -18,7 +18,7 @@ public enum BSplineLimitMatrix {
     Integers.requirePositive(n);
     Tensor domain = Range.of(0, n);
     return Transpose.of(Tensors.vector(k -> //
-    domain.map(GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, degree, UnitVector.of(n, k))), n));
+    domain.map(GeodesicBSplineFunction.of(RnGroup.INSTANCE, degree, UnitVector.of(n, k))), n));
   }
   // public static Tensor string(int n, int degree) {
   // Tensor domain = Range.of(0, n);

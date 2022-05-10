@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Last;
@@ -69,7 +69,7 @@ public class GeodesicBSplineFunction extends BSplineFunction {
     navigableMap.put(knots.Get(0), 0);
     for (int index = 1; index < knots.length(); ++index)
       navigableMap.put(Integers.isEven(degree) //
-          ? (Scalar) RnGeodesic.INSTANCE.midpoint(knots.Get(index - 1), knots.Get(index))
+          ? (Scalar) RnGroup.INSTANCE.midpoint(knots.Get(index - 1), knots.Get(index))
           : knots.Get(index), index);
     samples = Range.of(-degree + 1, sequence.length() + degree) //
         .map(index -> index.subtract(shift)) //

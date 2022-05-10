@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -40,7 +40,7 @@ class BSplineLimitMaskTest {
   }
 
   private static final TensorUnaryOperator TENSOR_UNARY_OPERATOR = //
-      GeodesicCenter.of(RnGeodesic.INSTANCE, BSplineLimitMask.FUNCTION);
+      GeodesicCenter.of(RnGroup.INSTANCE, BSplineLimitMask.FUNCTION);
 
   @Test
   public void testSimple3() {

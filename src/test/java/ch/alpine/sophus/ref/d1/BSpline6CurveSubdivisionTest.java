@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
@@ -20,7 +20,7 @@ class BSpline6CurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = //
-        BSpline6CurveSubdivision.of(RnGeodesic.INSTANCE);
+        BSpline6CurveSubdivision.of(RnGroup.INSTANCE);
     Tensor tensor = curveSubdivision.cyclic(UnitVector.of(5, 0));
     assertEquals(tensor, //
         Tensors.fromString("{35/64, 21/64, 7/64, 1/64, 0, 0, 1/64, 7/64, 21/64, 35/64}"));
@@ -30,7 +30,7 @@ class BSpline6CurveSubdivisionTest {
   @Test
   public void testEmpty() {
     Tensor curve = Tensors.vector();
-    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(RnGeodesic.INSTANCE);
+    CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
 

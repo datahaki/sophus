@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -27,7 +27,7 @@ class BezierFunctionTest {
   @Test
   public void testSimple() {
     Tensor control = Tensors.fromString("{{0, 1}, {1, 0}, {2, 1}}");
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGeodesic.INSTANCE, control);
+    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGroup.INSTANCE, control);
     Tensor tensor = scalarTensorFunction.apply(RationalScalar.of(1, 4));
     assertEquals(tensor, Tensors.fromString("{1/2, 5/8}"));
     ExactTensorQ.require(tensor);
@@ -36,7 +36,7 @@ class BezierFunctionTest {
   @Test
   public void testRn() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}, {3, 1}}");
-    ScalarTensorFunction stf1 = BezierFunction.of(RnGeodesic.INSTANCE, control);
+    ScalarTensorFunction stf1 = BezierFunction.of(RnGroup.INSTANCE, control);
     Scalar scalar = RationalScalar.of(1, 4);
     Tensor tensor = stf1.apply(scalar);
     assertEquals(tensor, Tensors.fromString("{3/4, 7/16}"));

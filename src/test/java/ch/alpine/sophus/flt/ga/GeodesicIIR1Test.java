@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.ext.Serialization;
@@ -18,7 +18,7 @@ class GeodesicIIR1Test {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     GeodesicIIR1 geodesicIIR1 = //
-        Serialization.copy(new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0.5)));
+        Serialization.copy(new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0.5)));
     // irc=0.0[s^-2]
     // irc=1.9999999999999996[s^-2]
     // irc=1.0000000000000009[s^-2]
@@ -41,7 +41,7 @@ class GeodesicIIR1Test {
 
   @Test
   public void testInitialized() {
-    GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0.5));
+    GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0.5));
     geodesicIIR1.apply(Quantity.of(0, "s^-2"));
     // irc=0.0[s^-2]
     // irc=1.9999999999999996[s^-2]
@@ -65,17 +65,17 @@ class GeodesicIIR1Test {
 
   @Test
   public void testNullFail() {
-    GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0.2));
+    GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0.2));
     assertThrows(Exception.class, () -> geodesicIIR1.apply(null));
   }
 
   @Test
   public void testZeroFail() {
-    assertThrows(Exception.class, () -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(0)));
+    assertThrows(Exception.class, () -> new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0)));
   }
 
   @Test
   public void testLargeFail() {
-    assertThrows(Exception.class, () -> new GeodesicIIR1(RnGeodesic.INSTANCE, RealScalar.of(1.01)));
+    assertThrows(Exception.class, () -> new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(1.01)));
   }
 }
