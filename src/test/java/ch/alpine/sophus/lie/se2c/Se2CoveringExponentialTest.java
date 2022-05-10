@@ -3,6 +3,8 @@ package ch.alpine.sophus.lie.se2c;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
@@ -51,10 +53,11 @@ class Se2CoveringExponentialTest {
   public void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int count = 0; count < 10; ++count) {
-      Tensor g = RandomVariate.of(distribution, 3); // element
-      Tensor m = RandomVariate.of(distribution, 3); // vector
+      Tensor g = RandomVariate.of(distribution, random, 3); // element
+      Tensor m = RandomVariate.of(distribution, random, 3); // vector
       LieGroupElement ge = LIE_GROUP.element(g);
       Tensor lhs = LIE_EXPONENTIAL.log( //
           LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
