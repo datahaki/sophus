@@ -18,13 +18,13 @@ import ch.alpine.tensor.sca.Chop;
 class Se2GeodesicTest {
   @Test
   public void testSimple() {
-    Tensor split = Se2Geodesic.INSTANCE.split(Tensors.vector(0, 0, 0), Tensors.vector(10, 0, 1), RealScalar.of(0.7));
+    Tensor split = Se2Group.INSTANCE.split(Tensors.vector(0, 0, 0), Tensors.vector(10, 0, 1), RealScalar.of(0.7));
     Chop._13.requireClose(split, Tensors.fromString("{7.071951896570488, -1.0688209919859546, 0.7}"));
   }
 
   @Test
   public void testModPi() {
-    Tensor split = Se2Geodesic.INSTANCE.split(Tensors.vector(0, 0, 10), Tensors.vector(0, 0, 10), RealScalar.of(0.738));
+    Tensor split = Se2Group.INSTANCE.split(Tensors.vector(0, 0, 10), Tensors.vector(0, 0, 10), RealScalar.of(0.738));
     Chop._13.requireClose(split, Tensors.of(RealScalar.ZERO, RealScalar.ZERO, So2.MOD.apply(RealScalar.of(10))));
   }
 
@@ -38,7 +38,7 @@ class Se2GeodesicTest {
       Tensor q = RandomVariate.of(distribution, random, 3);
       Scalar w = RandomVariate.of(wd, random);
       Tensor mean = Se2BiinvariantMeans.FILTER.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
-      Tensor splt = Se2Geodesic.INSTANCE.split(p, q, w);
+      Tensor splt = Se2Group.INSTANCE.split(p, q, w);
       splt.set(So2.MOD, 2);
       Chop._12.requireClose(mean, splt);
     }

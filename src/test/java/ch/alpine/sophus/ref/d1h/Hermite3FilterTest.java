@@ -10,7 +10,7 @@ import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -55,7 +55,7 @@ class Hermite3FilterTest {
     Tensor control = Tensors.empty();
     for (int count = 0; count < 10; ++count) {
       control.append(Tensors.of(pg, pv));
-      pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringExponential.INSTANCE.exp(pv));
+      pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringGroup.INSTANCE.exponential().exp(pv));
     }
     HermiteFilter hermiteFilter = //
         new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER);

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -43,7 +42,7 @@ class Se2AlgebraTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
     Tensor y = RandomVariate.of(distribution, 3);
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
     Tensor mX = exponential.exp(x);
     Tensor mY = exponential.exp(y);
     Tensor res = exponential.log(Se2CoveringGroup.INSTANCE.element(mX).combine(mY));

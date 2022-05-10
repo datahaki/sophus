@@ -16,8 +16,12 @@ import ch.alpine.tensor.sca.Clips;
 class DtGeodesicTest {
   @Test
   public void testSt1Simple() {
-    Tensor split = DtGeodesic.INSTANCE.split(Tensors.vector(5, 1), Tensors.vector(10, 0), RealScalar.of(0.7));
+    Tensor p = Tensors.vector(5, 1);
+    Tensor q = Tensors.vector(10, 0);
+    Scalar lambda = RealScalar.of(0.7);
+    Tensor split = DtGeodesic.INSTANCE.split(p, q, lambda);
     Chop._13.requireClose(split, Tensors.vector(8.122523963562355, 0.37549520728752905));
+    Chop._13.requireClose(split, DtGroup.INSTANCE.split(p, q, lambda));
   }
 
   @Test
@@ -42,6 +46,7 @@ class DtGeodesicTest {
       Tensor split = DtGeodesic.INSTANCE.split(p, q, (Scalar) x);
       clip_l.requireInside(split.Get(0));
       clip_t.requireInside(split.Get(1));
+      Chop._13.requireClose(split, DtGroup.INSTANCE.split(p, q, (Scalar) x));
     }
   }
 

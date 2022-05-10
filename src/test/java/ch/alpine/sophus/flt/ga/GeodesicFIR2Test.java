@@ -10,7 +10,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.CausalFilter;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -33,7 +33,7 @@ class GeodesicFIR2Test {
     Scalar alpha = RealScalar.of(0.5);
     Tensor control = Tensors.of(p, q, r);
     TensorUnaryOperator geodesicFIR2 = //
-        Serialization.copy(GeodesicFIR2.of(Se2Geodesic.INSTANCE, alpha));
+        Serialization.copy(GeodesicFIR2.of(Se2Group.INSTANCE, alpha));
     Tensor refined = Tensor.of(control.stream().map(geodesicFIR2));
     assertEquals(refined.get(1), Tensors.vector(1, 1, 0));
     Chop._12.requireClose(refined.get(2), Tensors.vector(1.5, 2.127670960610518, 0.5));
@@ -45,7 +45,7 @@ class GeodesicFIR2Test {
     Tensor q = Tensors.vector(0, 0, 2);
     Scalar alpha = RealScalar.of(0.5);
     Tensor control = Tensors.of(p, q);
-    TensorUnaryOperator geodesicFIR2 = GeodesicFIR2.of(Se2Geodesic.INSTANCE, alpha);
+    TensorUnaryOperator geodesicFIR2 = GeodesicFIR2.of(Se2Group.INSTANCE, alpha);
     Tensor refined = Tensor.of(control.stream().map(geodesicFIR2));
     assertEquals(refined.get(1), Tensors.vector(0, 0, 2));
   }
@@ -54,7 +54,7 @@ class GeodesicFIR2Test {
   public void testCombined() {
     Scalar alpha = RealScalar.of(0.5);
     TensorUnaryOperator causalFilter = //
-        CausalFilter.of(() -> GeodesicFIR2.of(Se2Geodesic.INSTANCE, alpha));
+        CausalFilter.of(() -> GeodesicFIR2.of(Se2Group.INSTANCE, alpha));
     Distribution distribution = NormalDistribution.standard();
     Tensor control = RandomVariate.of(distribution, 100, 3);
     Tensor result = causalFilter.apply(control);

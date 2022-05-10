@@ -11,7 +11,6 @@ import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMemberQ;
 import ch.alpine.sophus.hs.sn.TSnMemberQ;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3Exponential;
@@ -26,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 class BchBinaryAverageTest {
   @Test
   public void testSe2() {
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
     Tensor x = Tensors.vector(0.1, 0.2, 0.1);
     Tensor y = Tensors.vector(0.2, -0.1, 0.2);
     Tensor mX = exponential.exp(x);

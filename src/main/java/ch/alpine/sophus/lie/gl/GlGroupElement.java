@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie.gl;
 import java.io.Serializable;
 
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.lie.so3.So3Geodesic;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.re.Inverse;
@@ -15,7 +14,7 @@ import ch.alpine.tensor.mat.re.Inverse;
  * new LinearGroupElement(a).inverse().combine(b)
  * new LinearGroupElement(LinearSolve.of(a, b))
  * 
- * @see So3Geodesic */
+ * So3Geodesic */
 public class GlGroupElement implements LieGroupElement, Serializable {
   /** @param matrix square and invertible
    * @return

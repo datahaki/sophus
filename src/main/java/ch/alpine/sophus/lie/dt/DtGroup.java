@@ -15,7 +15,14 @@ import ch.alpine.tensor.Tensor;
  * mannian metric. This group has many of the properties of rigid-body or affine
  * transformations, but with only n + 1 degrees of freedom, which simplifies greatly the
  * computations, and allows a direct 2D geometric visualization in the plane for n = 1.
- * For these reasons, this is a highly pedagogical case." */
+ * For these reasons, this is a highly pedagogical case."
+ * 
+ * References:
+ * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
+ * by Xavier Pennec, Vincent Arsigny, p.26, Section 4.1, Eq. (14).
+ * 
+ * Another reference for ST is "Deep Compositing Using Lie Algebras" by Tom Duff. The article
+ * parameterizes the group differently with the scaling coefficient alpha := 1 - lambda */
 public enum DtGroup implements LieGroup {
   INSTANCE;
 

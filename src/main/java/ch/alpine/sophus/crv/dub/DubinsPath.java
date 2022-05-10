@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.itp.ArcLengthParameterization;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringIntegrator;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -89,7 +89,7 @@ public class DubinsPath implements Serializable {
     tensor.append(g);
     for (int index = 0; index < 3; ++index)
       tensor.append(g = Se2CoveringIntegrator.INSTANCE.spin(g, type.tangent(index, radius).multiply(segLength.Get(index))));
-    return ArcLengthParameterization.of(segLength, Se2CoveringGeodesic.INSTANCE, tensor);
+    return ArcLengthParameterization.of(segLength, Se2CoveringGroup.INSTANCE, tensor);
   }
 
   /** @param g start configuration

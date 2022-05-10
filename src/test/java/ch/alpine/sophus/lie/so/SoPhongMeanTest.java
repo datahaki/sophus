@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
-import ch.alpine.sophus.lie.so3.So3Geodesic;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.AffineQ;
@@ -96,7 +95,7 @@ class SoPhongMeanTest {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
     Tensor p = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
     Tensor q = So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3));
-    Tensor m1 = So3Geodesic.INSTANCE.midpoint(p, q);
+    Tensor m1 = So3Group.INSTANCE.midpoint(p, q);
     Tensor m2 = SoPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
     Tolerance.CHOP.requireClose(m1, m2);
   }

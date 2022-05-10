@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.MonomialExtrapolationMask;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.math.win.HalfWindowSampler;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -140,11 +140,11 @@ class GeodesicExtrapolationTest {
 
   @Test
   public void testNullFailITF() {
-    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (Function<Integer, Tensor>) null));
+    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Group.INSTANCE, (Function<Integer, Tensor>) null));
   }
 
   @Test
   public void testNullFailSUO() {
-    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Geodesic.INSTANCE, (ScalarUnaryOperator) null));
+    assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Group.INSTANCE, (ScalarUnaryOperator) null));
   }
 }

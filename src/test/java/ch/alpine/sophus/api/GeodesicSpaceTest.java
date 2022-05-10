@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -25,7 +24,7 @@ class GeodesicSpaceTest {
     Tensor q = Tensors.vector(4, 5, 6);
     Scalar lambda = RealScalar.of(0.7);
     Tensor tensor = lieGroupGeodesic.split(p, q, lambda);
-    Tensor split = Se2CoveringGeodesic.INSTANCE.split(p, q, lambda);
+    Tensor split = Se2CoveringGroup.INSTANCE.split(p, q, lambda);
     assertEquals(tensor, split);
   }
 

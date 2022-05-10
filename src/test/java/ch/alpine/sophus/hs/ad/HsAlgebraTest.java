@@ -20,7 +20,7 @@ import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.sl.SlAlgebra;
@@ -86,7 +86,7 @@ class HsAlgebraTest {
     Tensor g = RandomVariate.of(distribution, random, 3);
     Tensor p = RandomVariate.of(distribution, random, 2);
     Tensor q1 = hsAlgebra.action(g, p);
-    Tensor xyz = Se2CoveringExponential.INSTANCE.exp(g);
+    Tensor xyz = Se2CoveringGroup.INSTANCE.exponential().exp(g);
     Tensor mat = Se2Matrix.of(xyz);
     Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q2);

@@ -13,7 +13,7 @@ import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -142,14 +142,14 @@ class BSpline3CurveSubdivisionTest {
     final Tensor bs;
     final Tensor lr;
     {
-      CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(Se2CoveringGeodesic.INSTANCE);
+      CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(Se2CoveringGroup.INSTANCE);
       Timing timing = Timing.started();
       bs = Nest.of(curveSubdivision::string, tensor, depth);
       timing.stop();
       // System.out.println("bs=" + timing.seconds());
     }
     {
-      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(Se2CoveringGeodesic.INSTANCE, 3);
+      CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(Se2CoveringGroup.INSTANCE, 3);
       Timing timing = Timing.started();
       lr = Nest.of(curveSubdivision::string, tensor, depth);
       timing.stop();

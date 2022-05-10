@@ -29,7 +29,7 @@ public interface LieGroup extends HomogeneousSpace {
     return new LieExponential(this, point);
   }
 
-  @Override
+  @Override // from HsManifold
   public default HsTransport hsTransport() {
     return LieTransport.INSTANCE;
   }

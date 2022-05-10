@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -29,7 +29,7 @@ class GeodesicCatmullRomTest {
     TensorUnaryOperator centripedalKnotSpacing = KnotSpacing.uniform();
     Tensor knots = centripedalKnotSpacing.apply(control);
     GeodesicCatmullRom geodesicCatmullRom = //
-        Serialization.copy(GeodesicCatmullRom.of(Se2Geodesic.INSTANCE, knots, control));
+        Serialization.copy(GeodesicCatmullRom.of(Se2Group.INSTANCE, knots, control));
     // ---
     Tensor actual1 = geodesicCatmullRom.apply(RealScalar.of(1));
     Tensor expected1 = control.get(1);
@@ -44,7 +44,7 @@ class GeodesicCatmullRomTest {
 
   @Test
   public void testCentripetalInterpolatory() {
-    GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+    GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
     Tensor control = Tensors.empty();
     for (int index = 0; index < 5; index++)
       control.append(Tensors.vector(Math.random(), Math.random(), Math.random()));

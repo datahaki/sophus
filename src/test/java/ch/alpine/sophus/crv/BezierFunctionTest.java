@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -49,7 +49,7 @@ class BezierFunctionTest {
   @Test
   public void testSe2Covering() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 1/2}, {2, 0.4, 2/5}}");
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, control);
+    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGroup.INSTANCE, control);
     Scalar scalar = RationalScalar.of(1, 4);
     Tensor tensor = scalarTensorFunction.apply(scalar);
     assertEquals(tensor.Get(2), RationalScalar.of(17, 80));
@@ -59,7 +59,7 @@ class BezierFunctionTest {
   @Test
   public void testOutsideFail() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 1/2}, {2, 0.4, 2/5}}");
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, control);
+    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGroup.INSTANCE, control);
     Scalar scalar = RationalScalar.of(-1, 4);
     Tensor tensor = scalarTensorFunction.apply(scalar);
     Chop._12.requireClose(tensor, Tensors.vector(-0.45359613406197646, 0.22282532025418184, -23 / 80.));
@@ -68,7 +68,7 @@ class BezierFunctionTest {
 
   @Test
   public void testSingleton() {
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Array.zeros(1, 3));
+    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(Se2CoveringGroup.INSTANCE, Array.zeros(1, 3));
     for (Tensor _x : Subdivide.of(-1, 2, 3 * 3)) {
       Tensor tensor = scalarTensorFunction.apply((Scalar) _x);
       assertEquals(tensor, Array.zeros(3));
@@ -78,13 +78,13 @@ class BezierFunctionTest {
 
   @Test
   public void testFailEmpty() {
-    assertThrows(Exception.class, () -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, Tensors.empty()));
+    assertThrows(Exception.class, () -> BezierFunction.of(Se2CoveringGroup.INSTANCE, Tensors.empty()));
     assertThrows(Exception.class, () -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
   }
 
   @Test
   public void testFailScalar() {
-    assertThrows(Exception.class, () -> BezierFunction.of(Se2CoveringGeodesic.INSTANCE, RealScalar.ZERO));
+    assertThrows(Exception.class, () -> BezierFunction.of(Se2CoveringGroup.INSTANCE, RealScalar.ZERO));
   }
 
   @Test

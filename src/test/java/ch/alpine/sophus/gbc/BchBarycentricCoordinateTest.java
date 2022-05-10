@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -40,9 +39,9 @@ class BchBarycentricCoordinateTest {
       Tensor mean = HsBiinvariantMean.of(hsAlgebra).mean(sequence, weights);
       Chop._06.requireClose(mean, x);
       // ---
-      Tensor seqG = Tensor.of(sequence.stream().map(Se2CoveringExponential.INSTANCE::exp));
+      Tensor seqG = Tensor.of(sequence.stream().map(Se2CoveringGroup.INSTANCE.exponential()::exp));
       BarycentricCoordinate bc = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, variogram);
-      Tensor weights2 = bc.weights(seqG, Se2CoveringExponential.INSTANCE.exp(x));
+      Tensor weights2 = bc.weights(seqG, Se2CoveringGroup.INSTANCE.exponential().exp(x));
       Chop._08.requireClose(weights, weights2);
     }
   }

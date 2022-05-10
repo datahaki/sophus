@@ -11,7 +11,7 @@ import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.lie.so3.So3Geodesic;
+import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
@@ -70,7 +70,7 @@ class CenterFilterTest {
 
   @Test
   public void testSo3() {
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Geodesic.INSTANCE, HammingWindow.FUNCTION);
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Group.INSTANCE, HammingWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = Tensor.of(RandomVariate.of(distribution, 10, 3).stream().map(Rodrigues::vectorExp));

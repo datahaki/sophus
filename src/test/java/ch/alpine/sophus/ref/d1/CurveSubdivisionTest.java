@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.num.Pi;
@@ -39,24 +39,24 @@ class CurveSubdivisionTest {
   }
 
   public static final CurveSubdivision[] CURVE_SUBDIVISIONS = { //
-      new BSpline1CurveSubdivision(Se2Geodesic.INSTANCE), //
-      new BSpline2CurveSubdivision(Se2Geodesic.INSTANCE), //
-      new BSpline3CurveSubdivision(Se2Geodesic.INSTANCE), //
-      BSpline4CurveSubdivision.split2lo(Se2Geodesic.INSTANCE), //
-      BSpline4CurveSubdivision.split2hi(Se2Geodesic.INSTANCE), //
-      BSpline4CurveSubdivision.split3(Se2Geodesic.INSTANCE), //
-      new BSpline5CurveSubdivision(Se2Geodesic.INSTANCE), //
-      BSpline6CurveSubdivision.of(Se2Geodesic.INSTANCE), //
-      new FourPointCurveSubdivision(Se2Geodesic.INSTANCE), //
+      new BSpline1CurveSubdivision(Se2Group.INSTANCE), //
+      new BSpline2CurveSubdivision(Se2Group.INSTANCE), //
+      new BSpline3CurveSubdivision(Se2Group.INSTANCE), //
+      BSpline4CurveSubdivision.split2lo(Se2Group.INSTANCE), //
+      BSpline4CurveSubdivision.split2hi(Se2Group.INSTANCE), //
+      BSpline4CurveSubdivision.split3(Se2Group.INSTANCE), //
+      new BSpline5CurveSubdivision(Se2Group.INSTANCE), //
+      BSpline6CurveSubdivision.of(Se2Group.INSTANCE), //
+      new FourPointCurveSubdivision(Se2Group.INSTANCE), //
       DodgsonSabinCurveSubdivision.INSTANCE, //
-      DualC2FourPointCurveSubdivision.cubic(Se2Geodesic.INSTANCE), //
-      DualC2FourPointCurveSubdivision.tightest(Se2Geodesic.INSTANCE), //
-      new SixPointCurveSubdivision(Se2Geodesic.INSTANCE), //
-      new EightPointCurveSubdivision(Se2Geodesic.INSTANCE), //
+      DualC2FourPointCurveSubdivision.cubic(Se2Group.INSTANCE), //
+      DualC2FourPointCurveSubdivision.tightest(Se2Group.INSTANCE), //
+      new SixPointCurveSubdivision(Se2Group.INSTANCE), //
+      new EightPointCurveSubdivision(Se2Group.INSTANCE), //
       new MSpline3CurveSubdivision(Se2BiinvariantMeans.GLOBAL), //
       // LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1), //
       // LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 2), //
-      LaneRiesenfeld3CurveSubdivision.of(Se2Geodesic.INSTANCE), //
+      LaneRiesenfeld3CurveSubdivision.of(Se2Group.INSTANCE), //
   };
 
   @Test

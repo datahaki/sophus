@@ -15,7 +15,7 @@ import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Exponential;
@@ -54,7 +54,7 @@ class HsBiinvariantMeanTest {
 
   @Test
   public void testSe2Mean4() {
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
     Tensor p2 = Tensors.vector(-0.05, 0.03, 0.1);
@@ -73,7 +73,7 @@ class HsBiinvariantMeanTest {
 
   @Test
   public void testSe2MeanRandom() {
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
     Tensor ad = Se2Algebra.INSTANCE.ad();

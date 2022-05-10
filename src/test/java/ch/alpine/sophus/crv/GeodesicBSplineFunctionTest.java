@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -52,10 +52,10 @@ class GeodesicBSplineFunctionTest {
     for (int degree = 1; degree < 7; ++degree) {
       Tensor control = RandomVariate.of(distribution, n, 3);
       GeodesicBSplineFunction mapForward = //
-          GeodesicBSplineFunction.of(Se2CoveringGeodesic.INSTANCE, degree, control);
+          GeodesicBSplineFunction.of(Se2CoveringGroup.INSTANCE, degree, control);
       Tensor forward = domain.map(mapForward);
       GeodesicBSplineFunction mapReverse = //
-          GeodesicBSplineFunction.of(Se2CoveringGeodesic.INSTANCE, degree, Reverse.of(control));
+          GeodesicBSplineFunction.of(Se2CoveringGroup.INSTANCE, degree, Reverse.of(control));
       Tensor reverse = Reverse.of(domain.map(mapReverse));
       Chop._10.requireClose(forward, reverse);
       assertEquals(mapReverse.domain().min(), RealScalar.ZERO);

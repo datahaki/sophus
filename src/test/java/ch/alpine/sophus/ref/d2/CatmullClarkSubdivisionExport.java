@@ -6,7 +6,7 @@ import java.util.Random;
 
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -35,7 +35,7 @@ enum CatmullClarkSubdivisionExport {
   }
 
   private static Tensor se2() {
-    GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(Se2Geodesic.INSTANCE);
+    GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(Se2Group.INSTANCE);
     Random random = new Random();
     Tensor tensor = Tensors.matrix((i, j) -> Tensors.vector( //
         i + random.nextGaussian() * .2, //

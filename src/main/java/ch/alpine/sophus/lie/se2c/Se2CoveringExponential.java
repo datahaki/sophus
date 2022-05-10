@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.tri.Tan;
  * https://www.youtube.com/watch?v=2vDciaUgL4E
  * 
  * @see Se2Skew */
-public enum Se2CoveringExponential implements Exponential {
+/* package */ enum Se2CoveringExponential implements Exponential {
   INSTANCE;
 
   private static final Scalar HALF = RealScalar.of(0.5);

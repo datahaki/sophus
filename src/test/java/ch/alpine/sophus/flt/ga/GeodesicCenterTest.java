@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicCenter.Splits;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
@@ -57,7 +57,7 @@ class GeodesicCenterTest {
   @Test
   public void testSe2() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2Geodesic.INSTANCE, smoothingKernel.get());
+      TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2Group.INSTANCE, smoothingKernel.get());
       Distribution distribution = UniformDistribution.unit();
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       Tensor tensor = tensorUnaryOperator.apply(sequence);
