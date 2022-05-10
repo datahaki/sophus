@@ -12,7 +12,6 @@ import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.so.SoGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
@@ -24,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 class So3ManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = //
       GbcHelper.barycentrics(So3Manifold.INSTANCE);
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(SoGroup.INSTANCE);
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(So3Group.INSTANCE);
 
   @Test
   public void testSimple() {
@@ -55,7 +54,7 @@ class So3ManifoldTest {
         Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
         Chop._08.requireClose(mean, o2);
         // ---
-        LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3(random));
+        LieGroupElement lieGroupElement = So3Group.INSTANCE.element(So3TestHelper.spawn_So3(random));
         Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
         Tensor weights2 = barycentricCoordinate.weights(seqlft, lieGroupElement.combine(mean));
         Chop._06.requireClose(weights1, weights2);
@@ -100,7 +99,7 @@ class So3ManifoldTest {
     Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
     Chop._08.requireClose(mean, o2);
     // ---
-    LieGroupElement lieGroupElement = SoGroup.INSTANCE.element(So3TestHelper.spawn_So3());
+    LieGroupElement lieGroupElement = So3Group.INSTANCE.element(So3TestHelper.spawn_So3());
     Tensor seqlft = Tensor.of(sequence.stream().map(lieGroupElement::combine));
     Tensor weights2 = AFFINE.weights(seqlft, lieGroupElement.combine(mean));
     Chop._10.requireClose(weights1, weights2);

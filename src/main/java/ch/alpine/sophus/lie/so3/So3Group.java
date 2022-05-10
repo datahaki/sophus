@@ -1,15 +1,13 @@
 // code by jph
-package ch.alpine.sophus.lie.so;
+package ch.alpine.sophus.lie.so3;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.so3.So3Group;
+import ch.alpine.sophus.lie.so.SoGroupElement;
 import ch.alpine.tensor.Tensor;
 
-/** special orthogonal group of n x n orthogonal matrices with determinant 1
- * 
- * for n == 3 use {@link So3Group} */
-public enum SoGroup implements LieGroup {
+/** special orthogonal group of 3 x 3 orthogonal matrices with determinant 1 */
+public enum So3Group implements LieGroup {
   INSTANCE;
 
   @Override // from LieGroup
@@ -19,6 +17,6 @@ public enum SoGroup implements LieGroup {
 
   @Override
   public Exponential exponential() {
-    return SoExponential.INSTANCE;
+    return So3Exponential.INSTANCE;
   }
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.lie.gl.GlGroupElement;
-import ch.alpine.sophus.lie.so.SoGroup;
 import ch.alpine.sophus.lie.so.SoGroupElement;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
@@ -40,7 +39,7 @@ class So3ExponentialTest {
   public void testLinearGroup() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
-      SoGroupElement so3GroupElement = SoGroup.INSTANCE.element(g);
+      SoGroupElement so3GroupElement = So3Group.INSTANCE.element(g);
       GlGroupElement linearGroupElement = GlGroup.INSTANCE.element(g);
       Tensor v = So3TestHelper.spawn_so3();
       Tolerance.CHOP.requireClose( //
