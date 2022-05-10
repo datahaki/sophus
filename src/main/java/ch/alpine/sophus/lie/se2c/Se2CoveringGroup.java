@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
@@ -11,5 +12,10 @@ public enum Se2CoveringGroup implements LieGroup {
   @Override // from LieGroup
   public Se2CoveringGroupElement element(Tensor xya) {
     return new Se2CoveringGroupElement(xya);
+  }
+
+  @Override
+  public Exponential exponential() {
+    return Se2CoveringExponential.INSTANCE;
   }
 }

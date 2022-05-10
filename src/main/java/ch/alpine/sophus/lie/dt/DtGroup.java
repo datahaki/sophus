@@ -1,6 +1,7 @@
 // code by ob
 package ch.alpine.sophus.lie.dt;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
@@ -21,5 +22,10 @@ public enum DtGroup implements LieGroup {
   @Override // from LieGroup
   public DtGroupElement element(Tensor lambda_t) {
     return new DtGroupElement(lambda_t);
+  }
+
+  @Override
+  public Exponential exponential() {
+    return DtExponential.INSTANCE;
   }
 }

@@ -5,7 +5,5 @@ import ch.alpine.sophus.lie.LieExponential;
 
 public enum R2SManifold {
   ;
-  public static final LieExponential INSTANCE = LieExponential.of( //
-      R2SGroup.INSTANCE, //
-      R2SExponential.INSTANCE);
+  public static final LieExponential INSTANCE = LieExponential.of(R2SGroup.INSTANCE);
 }

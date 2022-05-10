@@ -5,7 +5,5 @@ import ch.alpine.sophus.lie.LieExponential;
 
 public enum Se2CoveringManifold {
   ;
-  public static final LieExponential INSTANCE = LieExponential.of( //
-      Se2CoveringGroup.INSTANCE, //
-      Se2CoveringExponential.INSTANCE);
+  public static final LieExponential INSTANCE = LieExponential.of(Se2CoveringGroup.INSTANCE);
 }

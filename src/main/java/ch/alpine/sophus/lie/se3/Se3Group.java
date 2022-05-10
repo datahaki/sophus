@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
@@ -11,5 +12,10 @@ public enum Se3Group implements LieGroup {
   @Override // from LieGroup
   public Se3GroupElement element(Tensor g) {
     return new Se3GroupElement(g);
+  }
+
+  @Override
+  public Exponential exponential() {
+    return Se3Exponential.INSTANCE;
   }
 }

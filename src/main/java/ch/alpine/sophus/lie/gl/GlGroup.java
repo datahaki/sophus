@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
@@ -12,5 +13,10 @@ public enum GlGroup implements LieGroup {
   @Override // from LieGroup
   public GlGroupElement element(Tensor matrix) {
     return GlGroupElement.of(matrix);
+  }
+
+  @Override
+  public Exponential exponential() {
+    return GlExponential.INSTANCE;
   }
 }

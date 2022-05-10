@@ -11,23 +11,20 @@ import ch.alpine.tensor.Tensor;
 
 /** all tangent vectors are assumed to be in the tangent space at the neutral element,
  * i.e. given in the basis of TeG */
-public class LieExponential implements HsManifold, Serializable {
+public final class LieExponential implements HsManifold, Serializable {
   /** @param lieGroup G
-   * @param exponential at TeG
    * @return */
-  public static LieExponential of(LieGroup lieGroup, Exponential exponential) {
-    return new LieExponential( //
-        Objects.requireNonNull(lieGroup), //
-        Objects.requireNonNull(exponential));
+  public static LieExponential of(LieGroup lieGroup) {
+    return new LieExponential(Objects.requireNonNull(lieGroup));
   }
 
   // ---
   private final LieGroup lieGroup;
   private final Exponential exponential;
 
-  private LieExponential(LieGroup lieGroup, Exponential exponential) {
+  private LieExponential(LieGroup lieGroup) {
     this.lieGroup = lieGroup;
-    this.exponential = exponential;
+    this.exponential = lieGroup.exponential();
   }
 
   @Override // from VectorLogManifold

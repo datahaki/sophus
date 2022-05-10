@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.rn;
 
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -17,5 +18,10 @@ public enum RnGroup implements LieGroup {
   @Override // from LieGroup
   public RnGroupElement element(Tensor tensor) {
     return new RnGroupElement(Objects.requireNonNull(tensor));
+  }
+
+  @Override
+  public Exponential exponential() {
+    return RnExponential.INSTANCE;
   }
 }

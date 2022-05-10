@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 
@@ -11,5 +12,10 @@ public enum HeGroup implements LieGroup {
   @Override // from LieGroup
   public HeGroupElement element(Tensor xyz) {
     return new HeGroupElement(xyz);
+  }
+
+  @Override
+  public Exponential exponential() {
+    return HeExponential.INSTANCE;
   }
 }
