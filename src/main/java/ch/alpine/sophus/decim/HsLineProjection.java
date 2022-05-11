@@ -9,13 +9,13 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public record HsLineProjection(HomogeneousSpace hsManifold) {
+public record HsLineProjection(HomogeneousSpace homogeneousSpace) {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
 
   public Tensor onto(Tensor p, Tensor q, Tensor r) {
     // TODO SOPHUS ALG magic const
     for (int count = 0; count < 6; ++count) {
-      Exponential exponential = hsManifold.exponential(p);
+      Exponential exponential = homogeneousSpace.exponential(p);
       Tensor lq = exponential.log(q);
       // TODO SOPHUS ALG not generic: log not always vector, metric different
       Tensor normal = NORMALIZE_UNLESS_ZERO.apply(lq);

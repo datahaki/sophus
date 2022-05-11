@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Chop;
 public enum HnManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor p) {
     return new HnExponential(p);
   }
@@ -25,7 +25,7 @@ public enum HnManifold implements HomogeneousSpace {
     return p.add(p).multiply(nxy).subtract(q);
   }
 
-  @Override // from MidpointInterface
+  @Override
   public Tensor midpoint(Tensor p, Tensor q) {
     return HnProjection.INSTANCE.apply(p.add(q));
   }

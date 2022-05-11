@@ -37,14 +37,13 @@ public enum Hermite1Subdivisions {
    * "Dual Hermite subdivision schemes of de Rham-type"
    * by Conti, Merrien, Romani, 2015, p. 11, H1[lambda, mu]
    * 
-   * @param hsManifold
-   * @param hsTransport
+   * @param homogeneousSpace
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HomogeneousSpace hsManifold, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, Scalar lambda, Scalar mu) {
     return new Hermite1Subdivision( //
-        hsManifold, //
+        homogeneousSpace, //
         lambda, //
         RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
         mu.multiply(_1_4));
@@ -57,10 +56,10 @@ public enum Hermite1Subdivisions {
    * "Construction of Hermite subdivision schemes reproducing polynomials"
    * by Byeongseon Jeong, Jungho Yoon, 2017
    * 
-   * @param hsManifold
+   * @param homogeneousSpace
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision standard(HomogeneousSpace hsManifold) {
-    return of(hsManifold, N1_8, N1_2);
+  public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
+    return of(homogeneousSpace, N1_8, N1_2);
   }
 }

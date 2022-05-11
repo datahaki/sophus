@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /* package */ class Hermite3SubdivisionBuilder implements Serializable {
-  private final HomogeneousSpace hsManifold;
+  private final HomogeneousSpace homogeneousSpace;
   private final Tensor cgw;
   private final Scalar mgv;
   private final Scalar mvg;
@@ -23,11 +23,11 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   private final Tensor vpqr;
 
   public Hermite3SubdivisionBuilder( //
-      HomogeneousSpace hsManifold, //
+      HomogeneousSpace homogeneousSpace, //
       Tensor cgw, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
-    this.hsManifold = hsManifold;
+    this.homogeneousSpace = homogeneousSpace;
     this.cgw = cgw;
     this.mgv = mgv;
     this.mvg = mvg;
@@ -50,11 +50,11 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   public HermiteSubdivision create() {
     @SuppressWarnings("unchecked")
     Function<Integer, Tensor> function = (Function<Integer, Tensor> & Serializable) i -> cgw;
-    return get(GeodesicCenter.of(hsManifold, function));
+    return get(GeodesicCenter.of(homogeneousSpace, function));
   }
 
   private HermiteSubdivision get(TensorUnaryOperator tripleCenter) {
-    return new Hermite3Subdivision(hsManifold, //
+    return new Hermite3Subdivision(homogeneousSpace, //
         tripleCenter, //
         mgv, mvg, mvv, //
         cgv, vpr, vpqr);

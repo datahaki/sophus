@@ -35,12 +35,12 @@ import ch.alpine.tensor.sca.Chop;
 public enum SpdManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor p) {
     return new SpdExponential(p);
   }
 
-  @Override // from HsManifold
+  @Override
   public Tensor flip(Tensor p, Tensor q) {
     return p.dot(LinearSolve.of(q, p));
   }

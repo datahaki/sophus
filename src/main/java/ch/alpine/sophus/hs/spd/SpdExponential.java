@@ -72,7 +72,7 @@ public class SpdExponential implements Exponential, Serializable {
     return basis(Spd0Exponential.INSTANCE.midpoint(basis(q, pn)), pp);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     return LowerVectorize.of(log(q), 0);
   }

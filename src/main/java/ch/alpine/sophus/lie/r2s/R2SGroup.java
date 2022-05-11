@@ -45,7 +45,7 @@ public enum R2SGroup implements LieGroup {
         z.subtract(x.multiply(y).multiply(RationalScalar.HALF)));
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor xyz) {
     return Flatten.of(log(xyz));
   }

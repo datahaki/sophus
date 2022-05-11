@@ -11,12 +11,12 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 public class HsProjectedLineDistance implements LineDistance, Serializable {
-  private final HomogeneousSpace hsManifold;
+  private final HomogeneousSpace homogeneousSpace;
   private final HsLineProjection hsLineProjection;
 
-  public HsProjectedLineDistance(HomogeneousSpace hsManifold) {
-    this.hsManifold = Objects.requireNonNull(hsManifold);
-    hsLineProjection = new HsLineProjection(hsManifold);
+  public HsProjectedLineDistance(HomogeneousSpace homogeneousSpace) {
+    this.homogeneousSpace = Objects.requireNonNull(homogeneousSpace);
+    hsLineProjection = new HsLineProjection(homogeneousSpace);
   }
 
   @Override // from LineDistance
@@ -36,7 +36,7 @@ public class HsProjectedLineDistance implements LineDistance, Serializable {
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
       Tensor c = hsLineProjection.onto(beg, end, r);
-      return Vector2Norm.of(hsManifold.exponential(c).log(r));
+      return Vector2Norm.of(homogeneousSpace.exponential(c).log(r));
     }
   }
 }

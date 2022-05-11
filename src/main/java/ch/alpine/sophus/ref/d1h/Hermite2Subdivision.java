@@ -21,7 +21,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * implementation for R^n */
 public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
-  private final HomogeneousSpace hsManifold;
+  private final HomogeneousSpace homogeneousSpace;
   private final HsTransport hsTransport;
   private final Scalar lgg;
   private final Scalar lgv;
@@ -30,8 +30,7 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
   private final Scalar hvg;
   private final Tensor vpq;
 
-  /** @param hsManifold
-   * @param hsTransport
+  /** @param homogeneousSpace
    * @param lgg
    * @param lgv
    * @param hgv
@@ -39,10 +38,10 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
    * @param vpq
    * @throws Exception if either parameters is null */
   public Hermite2Subdivision( //
-      HomogeneousSpace hsManifold, //
+      HomogeneousSpace homogeneousSpace, //
       Scalar lgg, Scalar lgv, Scalar hgv, Scalar hvg, Tensor vpq) {
-    this.hsManifold = hsManifold;
-    hsTransport = hsManifold.hsTransport();
+    this.homogeneousSpace = homogeneousSpace;
+    hsTransport = homogeneousSpace.hsTransport();
     this.lgg = lgg;
     hgg = RealScalar.ONE.subtract(this.lgg);
     this.lgv = Objects.requireNonNull(lgv);
@@ -80,15 +79,15 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
       Tensor qg = q.get(0);
       Tensor qv = q.get(1);
       // ---
-      ScalarTensorFunction scalarTensorFunction = hsManifold.curve(pg, qg);
+      ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(pg, qg);
       {
         Tensor rg1 = scalarTensorFunction.apply(lgg); // initial guess
         Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv.multiply(rgp));
         Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv.multiply(rgq));
         Tensor rv1df = rg1v1.subtract(rg1v2);
-        Tensor rg = hsManifold.exponential(rg1).exp(rv1df);
+        Tensor rg = homogeneousSpace.exponential(rg1).exp(rv1df);
         // ---
-        Exponential exponential = hsManifold.exponential(rg);
+        Exponential exponential = homogeneousSpace.exponential(rg);
         Tensor lrp = exponential.log(pg); // p - r
         Tensor lrq = exponential.log(qg); // q - r
         Tensor rv1 = lrq.subtract(lrp).multiply(rvk);
@@ -104,9 +103,9 @@ public class Hermite2Subdivision implements HermiteSubdivision, Serializable {
         Tensor rg1v1 = hsTransport.shift(pg, rg1).apply(pv.multiply(rgq));
         Tensor rg1v2 = hsTransport.shift(qg, rg1).apply(qv.multiply(rgp));
         Tensor rv1df = rg1v1.subtract(rg1v2);
-        Tensor rg = hsManifold.exponential(rg1).exp(rv1df);
+        Tensor rg = homogeneousSpace.exponential(rg1).exp(rv1df);
         // ---
-        Exponential exponential = hsManifold.exponential(rg);
+        Exponential exponential = homogeneousSpace.exponential(rg);
         Tensor lrp = exponential.log(pg); // p - r
         Tensor lrq = exponential.log(qg); // q - r
         Tensor rv1 = lrq.subtract(lrp).multiply(rvk);

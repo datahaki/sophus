@@ -19,9 +19,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020 p.14
  * 
  * @see SchildLadder */
-public record PoleLadder(HomogeneousSpace hsManifold) implements HsTransport, Serializable {
+public record PoleLadder(HomogeneousSpace homogeneousSpace) implements HsTransport, Serializable {
   public PoleLadder {
-    Objects.requireNonNull(hsManifold);
+    Objects.requireNonNull(homogeneousSpace);
   }
 
   @Override // from HsTransport
@@ -35,10 +35,10 @@ public record PoleLadder(HomogeneousSpace hsManifold) implements HsTransport, Se
     private final Exponential exp_m;
 
     private Rung(Tensor p, Tensor q) {
-      exp_p = hsManifold.exponential(p);
-      exp_q = hsManifold.exponential(q);
+      exp_p = homogeneousSpace.exponential(p);
+      exp_q = homogeneousSpace.exponential(q);
       Tensor m = exp_p.midpoint(q);
-      exp_m = hsManifold.exponential(m);
+      exp_m = homogeneousSpace.exponential(m);
     }
 
     @Override

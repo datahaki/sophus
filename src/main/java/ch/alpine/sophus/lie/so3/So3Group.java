@@ -37,7 +37,7 @@ public enum So3Group implements LieGroup {
     return Rodrigues.INSTANCE.vectorLog(p);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     return Rodrigues.INSTANCE.vectorLog(q);
   }

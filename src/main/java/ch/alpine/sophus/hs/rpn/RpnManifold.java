@@ -27,7 +27,7 @@ import ch.alpine.tensor.sca.tri.Sin;
 public enum RpnManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor point) {
     return new RpnExponential(point);
   }
@@ -37,7 +37,7 @@ public enum RpnManifold implements HomogeneousSpace {
     return new PoleLadder(this);
   }
 
-  @Override // from ParametricCurve
+  @Override
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     // TODO SOPHUS duplicate with SnManifold
     // TODO SOPHUS ALG

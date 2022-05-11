@@ -74,7 +74,7 @@ public enum Se3Group implements LieGroup {
 
   /** @param g matrix of dimensions 4 x 4
    * @return vector of length 6 */
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor g) {
     return Flatten.of(log(g));
   }

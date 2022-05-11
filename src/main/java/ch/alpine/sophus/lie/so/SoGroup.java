@@ -33,7 +33,7 @@ public enum SoGroup implements LieGroup {
     return MatrixLog.of(matrix);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor matrix) {
     return LowerVectorize.of(log(matrix), -1);
   }

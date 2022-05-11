@@ -72,7 +72,7 @@ public enum Rodrigues implements Exponential {
     return ArcCos.FUNCTION.apply(value);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     return vectorize(log(q));
   }

@@ -56,7 +56,7 @@ public abstract class AbstractSe2Group implements LieGroup {
         be);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public final Tensor vectorLog(Tensor g) {
     return log(g);
   }

@@ -10,19 +10,19 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** http://vixra.org/abs/1909.0174 */
 public interface CurveDecimation extends TensorUnaryOperator {
-  /** @param hsManifold
+  /** @param homogeneousSpace
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation of(HomogeneousSpace hsManifold, Scalar epsilon) {
-    return new RamerDouglasPeucker(new HsLineDistance(hsManifold), epsilon);
+  public static CurveDecimation of(HomogeneousSpace homogeneousSpace, Scalar epsilon) {
+    return new RamerDouglasPeucker(new HsLineDistance(homogeneousSpace), epsilon);
   }
 
-  /** @param hsManifold
+  /** @param homogeneousSpace
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation symmetric(HomogeneousSpace hsManifold, Scalar epsilon) {
+  public static CurveDecimation symmetric(HomogeneousSpace homogeneousSpace, Scalar epsilon) {
     return new RamerDouglasPeucker( //
-        new SymmetricLineDistance(new HsLineDistance(hsManifold)), //
+        new SymmetricLineDistance(new HsLineDistance(homogeneousSpace)), //
         epsilon);
   }
 

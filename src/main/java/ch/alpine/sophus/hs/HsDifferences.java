@@ -22,16 +22,16 @@ import ch.alpine.tensor.alg.Differences;
  * @see Differences
  * @see LieDifferences */
 public final class HsDifferences extends AdjacentReduce {
-  private final HomogeneousSpace hsManifold;
+  private final HomogeneousSpace homogeneousSpace;
 
   /** @param hsManifold
    * @throws Exception if either parameter is null */
   public HsDifferences(HomogeneousSpace hsManifold) {
-    this.hsManifold = Objects.requireNonNull(hsManifold);
+    this.homogeneousSpace = Objects.requireNonNull(hsManifold);
   }
 
   @Override
   protected Tensor reduce(Tensor p, Tensor q) {
-    return Tensors.of(p, hsManifold.exponential(p).log(q));
+    return Tensors.of(p, homogeneousSpace.exponential(p).log(q));
   }
 }

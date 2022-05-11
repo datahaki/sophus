@@ -43,7 +43,7 @@ public enum HeGroup implements LieGroup {
         z.subtract(x.dot(y).multiply(RationalScalar.HALF)));
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor xyz) {
     return Flatten.of(log(xyz));
   }

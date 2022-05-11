@@ -30,7 +30,7 @@ public class S2Exponential implements Exponential, Serializable {
     return project.dot(exponential.log(q)); // returns vector of length 2
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     return log(q); // returns vector of length 2
   }

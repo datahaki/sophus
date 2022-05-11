@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 public enum S2Manifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor p) {
     return new S2Exponential(p);
   }

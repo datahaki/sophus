@@ -20,12 +20,12 @@ public record HsMidpointLineDistance(HsLineDistance hsLineDistance, GeodesicSpac
   }
 
   /** @param vectorLogManifold
-   * @param hsManifold
+   * @param homogeneousSpace
    * @return */
-  public static LineDistance of(HomogeneousSpace hsManifold) {
+  public static LineDistance of(HomogeneousSpace homogeneousSpace) {
     return new HsMidpointLineDistance( //
-        new HsLineDistance(hsManifold), //
-        hsManifold);
+        new HsLineDistance(homogeneousSpace), //
+        homogeneousSpace);
   }
 
   @Override // from LineDistance

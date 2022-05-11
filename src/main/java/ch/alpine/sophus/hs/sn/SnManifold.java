@@ -22,18 +22,18 @@ import ch.alpine.tensor.sca.tri.Sin;
 public enum SnManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor point) {
     return new SnExponential(point);
   }
 
-  @Override // from HsManifold
+  @Override
   public Tensor flip(Tensor p, Tensor q) {
     Tensor r = p.multiply((Scalar) p.dot(q));
     return r.add(r).subtract(q);
   }
 
-  @Override // from MidpointInterface
+  @Override
   public Tensor midpoint(Tensor p, Tensor q) {
     return Vector2Norm.NORMALIZE.apply(p.add(q));
   }

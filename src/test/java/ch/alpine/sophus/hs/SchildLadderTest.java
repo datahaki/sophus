@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 class SchildLadderTest {
   @Test
   public void testRn() {
-    HsTransport hsTransport = SchildLadder.of(RnGroup.INSTANCE);
+    HsTransport hsTransport = new SchildLadder(RnGroup.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);
@@ -38,9 +38,9 @@ class SchildLadderTest {
   public void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
-    TensorUnaryOperator shift1 = SchildLadder.of(SnManifold.INSTANCE).shift(orig, dest);
-    TensorUnaryOperator shift2 = Serialization.copy(SchildLadder.of(SnManifold.INSTANCE)).shift(orig, dest);
-    TensorUnaryOperator shift3 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE, SnManifold.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift1 = new SchildLadder(SnManifold.INSTANCE).shift(orig, dest);
+    TensorUnaryOperator shift2 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift3 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE)).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);
@@ -74,6 +74,6 @@ class SchildLadderTest {
 
   @Test
   public void testNullFail() {
-    assertThrows(Exception.class, () -> SchildLadder.of(null));
+    assertThrows(Exception.class, () -> new SchildLadder(null));
   }
 }

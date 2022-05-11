@@ -20,8 +20,8 @@ class S2ManifoldTest {
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      Exponential tangentSpace = S2Manifold.INSTANCE.exponential(p);
-      Tensor log = tangentSpace.vectorLog(q);
+      Exponential exponential = S2Manifold.INSTANCE.exponential(p);
+      Tensor log = exponential.vectorLog(q);
       VectorQ.requireLength(log, 2);
       Chop._08.requireClose(Vector2Norm.of(log), SnMetric.INSTANCE.distance(p, q));
     }

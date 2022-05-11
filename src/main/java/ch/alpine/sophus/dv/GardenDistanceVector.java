@@ -36,9 +36,9 @@ public class GardenDistanceVector implements TensorUnaryOperator {
     tangentSpaces = new ArrayList<>(sequence.length());
     array = new ArrayList<>(sequence.length());
     for (Tensor point : sequence) {
-      Exponential tangentSpace = vectorLogManifold.exponential(point);
-      tangentSpaces.add(tangentSpace);
-      array.add(new Mahalanobis(Tensor.of(sequence.stream().map(tangentSpace::vectorLog))));
+      Exponential exponential = vectorLogManifold.exponential(point);
+      tangentSpaces.add(exponential);
+      array.add(new Mahalanobis(Tensor.of(sequence.stream().map(exponential::vectorLog))));
     }
   }
 

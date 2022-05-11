@@ -23,7 +23,7 @@ public enum So2Exponential implements Exponential {
     return (Scalar) scalar;
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor scalar) {
     return Tensors.of(scalar);
   }

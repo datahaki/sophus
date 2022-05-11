@@ -29,7 +29,7 @@ import ch.alpine.tensor.Tensor;
     return lieGroup.log(inverse.combine(q));
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     return lieGroup.vectorLog(inverse.combine(q));
   }

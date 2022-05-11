@@ -36,7 +36,7 @@ public enum RnGroup implements LieGroup {
     return y.copy();
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor y) {
     return y.copy();
   }

@@ -38,7 +38,7 @@ import ch.alpine.tensor.sca.Chop;
 public enum GrManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor x) {
     return new GrExponential(x);
   }

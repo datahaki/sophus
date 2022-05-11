@@ -60,7 +60,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xyn);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor y) {
     return log(y);
   }

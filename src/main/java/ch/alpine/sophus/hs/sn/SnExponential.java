@@ -74,7 +74,7 @@ public class SnExponential implements Exponential, Serializable {
     return SnRotationMatrix.of(p, q);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor y) {
     return tSnProjection.dot(log(y));
   }

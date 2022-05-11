@@ -70,7 +70,7 @@ public enum DtGroup implements LieGroup {
         lambda_t.get(1).multiply(Logc.FUNCTION.apply(lambda)));
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor lambda_t) {
     return Flatten.of(log(lambda_t));
   }
