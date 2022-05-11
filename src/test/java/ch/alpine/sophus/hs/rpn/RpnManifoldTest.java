@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
 
-class RpnBiinvariantMeanTest {
+class RpnManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
 
   @Test
