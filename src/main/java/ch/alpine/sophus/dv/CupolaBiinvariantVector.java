@@ -2,7 +2,7 @@
 package ch.alpine.sophus.dv;
 
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.gr.GrMetric;
 import ch.alpine.tensor.Tensor;
 
@@ -14,7 +14,7 @@ public enum CupolaBiinvariantVector {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
-  public static BiinvariantVectorFunction of(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public static BiinvariantVectorFunction of(Manifold vectorLogManifold, Tensor sequence) {
     return new InfluenceBiinvariantVector(vectorLogManifold, sequence, GrMetric.INSTANCE);
   }
 }

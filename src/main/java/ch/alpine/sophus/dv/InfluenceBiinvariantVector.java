@@ -9,7 +9,7 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.BiinvariantVector;
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
@@ -28,7 +28,7 @@ public class InfluenceBiinvariantVector implements BiinvariantVectorFunction, Se
 
   /** @param vectorLogManifold
    * @param sequence */
-  public InfluenceBiinvariantVector(VectorLogManifold vectorLogManifold, Tensor sequence, TensorMetric tensorMetric) {
+  public InfluenceBiinvariantVector(Manifold vectorLogManifold, Tensor sequence, TensorMetric tensorMetric) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.sequence = sequence;
     this.tensorMetric = Objects.requireNonNull(tensorMetric);

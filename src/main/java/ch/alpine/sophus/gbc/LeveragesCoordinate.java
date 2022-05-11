@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 /** leverage coordinates are biinvariant
@@ -14,7 +14,7 @@ public enum LeveragesCoordinate {
   /** @param vectorLogManifold
    * @param variogram for instance InversePowerVariogram.of(2)
    * @return */
-  public static BarycentricCoordinate of(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate of(Manifold vectorLogManifold, ScalarUnaryOperator variogram) {
     return HsCoordinates.wrap(vectorLogManifold, new LeveragesGenesis(variogram));
   }
 }

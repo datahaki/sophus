@@ -2,7 +2,7 @@
 package ch.alpine.sophus.gbc;
 
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
@@ -14,7 +14,7 @@ public class InverseCoordinate implements TensorUnaryOperator {
    * @param sequence
    * @return */
   public static TensorUnaryOperator of( //
-      TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator, Manifold vectorLogManifold, Tensor sequence) {
     return new InverseCoordinate(tensorUnaryOperator, vectorLogManifold, sequence);
   }
 
@@ -25,7 +25,7 @@ public class InverseCoordinate implements TensorUnaryOperator {
   private final Tensor sequence;
 
   private InverseCoordinate( //
-      TensorUnaryOperator tensorUnaryOperator, VectorLogManifold vectorLogManifold, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator, Manifold vectorLogManifold, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.tensorUnaryOperator = tensorUnaryOperator;
     Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(tensorUnaryOperator)));

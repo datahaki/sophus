@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.dv.GardenDistanceVector;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -20,7 +20,7 @@ public class GardenCoordinate implements TensorUnaryOperator {
    * @param sequence
    * @return */
   public static TensorUnaryOperator of( //
-      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     return new GardenCoordinate(vectorLogManifold, Objects.requireNonNull(variogram), sequence);
   }
 
@@ -30,7 +30,7 @@ public class GardenCoordinate implements TensorUnaryOperator {
   private final TensorUnaryOperator distances;
   private final Tensor sequence;
 
-  private GardenCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  private GardenCoordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(vectorLogManifold);
     this.variogram = variogram;
     distances = GardenDistanceVector.of(vectorLogManifold, sequence);

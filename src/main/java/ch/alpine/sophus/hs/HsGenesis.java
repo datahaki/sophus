@@ -15,7 +15,7 @@ public enum HsGenesis {
    * @param genesis
    * @param sequence
    * @return */
-  public static TensorUnaryOperator wrap(VectorLogManifold vectorLogManifold, Genesis genesis, Tensor sequence) {
+  public static TensorUnaryOperator wrap(Manifold vectorLogManifold, Genesis genesis, Tensor sequence) {
     Objects.requireNonNull(sequence);
     BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(vectorLogManifold, genesis);
     return point -> barycentricCoordinate.weights(sequence, point);

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -33,7 +33,7 @@ class GrManifoldTest {
     Random random = new Random();
     int n = 3 + random.nextInt(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    VectorLogManifold vectorLogManifold = GrManifold.INSTANCE;
+    Manifold vectorLogManifold = GrManifold.INSTANCE;
     int k = 1 + random.nextInt(n - 1);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     int d = k * (n - k);

@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
  * 
  * "Projection matrix"
  * on Wikipedia, 2020 */
-public record HsDesign(VectorLogManifold vectorLogManifold) implements Serializable {
+public record HsDesign(Manifold vectorLogManifold) implements Serializable {
   public HsDesign {
     Objects.requireNonNull(vectorLogManifold);
   }
@@ -22,7 +22,7 @@ public record HsDesign(VectorLogManifold vectorLogManifold) implements Serializa
    * @param point
    * @return */
   public Stream<Tensor> stream(Tensor sequence, Tensor point) {
-    return sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog);
+    return sequence.stream().map(vectorLogManifold.exponential(point)::vectorLog);
   }
 
   /** In statistics the matrix is called "design matrix"

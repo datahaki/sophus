@@ -18,7 +18,7 @@ import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesCoordinate;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.NormWeighting;
@@ -177,7 +177,7 @@ class Se2CoveringManifoldTest {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
       int n = 4 + random.nextInt(4);
       Tensor points = RandomVariate.of(distributiox, n, 3);
@@ -210,7 +210,7 @@ class Se2CoveringManifoldTest {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
       int n = 4 + random.nextInt(4);
       Tensor sequence = RandomVariate.of(distribution, n, 3);

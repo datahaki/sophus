@@ -4,7 +4,6 @@ package ch.alpine.sophus.hs.s2;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -21,7 +20,7 @@ class S2ManifoldTest {
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      TangentSpace tangentSpace = S2Manifold.INSTANCE.logAt(p);
+      Exponential tangentSpace = S2Manifold.INSTANCE.exponential(p);
       Tensor log = tangentSpace.vectorLog(q);
       VectorQ.requireLength(log, 2);
       Chop._08.requireClose(Vector2Norm.of(log), SnMetric.INSTANCE.distance(p, q));

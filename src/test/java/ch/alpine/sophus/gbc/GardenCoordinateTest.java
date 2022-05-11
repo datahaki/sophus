@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -23,7 +23,7 @@ class GardenCoordinateTest {
   public void testR1equiv() {
     // in R^d we have w^H = w^G
     // but not in R2 etc.
-    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold vectorLogManifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int d = 1; d < 5; ++d)

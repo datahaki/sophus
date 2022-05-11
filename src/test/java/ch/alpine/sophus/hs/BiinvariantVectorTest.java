@@ -37,14 +37,14 @@ class BiinvariantVectorTest {
   public void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
-    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
-    Tensor matrix = Tensor.of(sequence.stream().map(vectorLogManifold.logAt(point)::vectorLog));
+    Manifold vectorLogManifold = RnGroup.INSTANCE;
+    Tensor matrix = Tensor.of(sequence.stream().map(vectorLogManifold.exponential(point)::vectorLog));
     Tensor nullsp = LeftNullSpace.of(matrix);
     OrthogonalMatrixQ.require(nullsp);
     Chop._08.requireClose(PseudoInverse.of(nullsp), Transpose.of(nullsp));
   }
 
-  private static Tensor _check(VectorLogManifold vectorLogManifold, Tensor sequence, Tensor point) {
+  private static Tensor _check(Manifold vectorLogManifold, Tensor sequence, Tensor point) {
     HsDesign hsDesign = new HsDesign(vectorLogManifold);
     Tensor V = hsDesign.matrix(sequence, point);
     Tensor VT = Transpose.of(V);
@@ -80,7 +80,7 @@ class BiinvariantVectorTest {
   @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -92,7 +92,7 @@ class BiinvariantVectorTest {
   @Test
   public void testSe2AnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2Group.INSTANCE;
+    Manifold vectorLogManifold = Se2Group.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -103,7 +103,7 @@ class BiinvariantVectorTest {
 
   @Test
   public void testSnCAnchorIsTarget() {
-    VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
+    Manifold vectorLogManifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 4; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
       for (int count = dimension + 1; count < 7; ++count) {

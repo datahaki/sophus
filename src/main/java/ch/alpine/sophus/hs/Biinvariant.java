@@ -16,13 +16,13 @@ public interface Biinvariant {
   /** @param vectorLogManifold
    * @param sequence
    * @return operator that maps a point to a vector of relative distances to the elements in the given sequence */
-  TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence);
+  TensorUnaryOperator distances(Manifold vectorLogManifold, Tensor sequence);
 
   /** @param vectorLogManifold
    * @param variogram
    * @param sequence
    * @return distance vector with entries subject to given variogram */
-  default TensorUnaryOperator var_dist(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  default TensorUnaryOperator var_dist(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = distances(vectorLogManifold, sequence);
     Objects.requireNonNull(variogram);
     return point -> tensorUnaryOperator.apply(point).map(variogram);
@@ -32,7 +32,7 @@ public interface Biinvariant {
    * @param variogram
    * @param sequence
    * @return distance vector with entries subject to given variogram normalized to sum up to 1 */
-  default TensorUnaryOperator weighting(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  default TensorUnaryOperator weighting(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = var_dist(vectorLogManifold, variogram, sequence);
     return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.apply(point));
   }
@@ -41,7 +41,7 @@ public interface Biinvariant {
    * @param variogram
    * @param sequence
    * @return operator that provides barycentric coordinates */
-  TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
+  TensorUnaryOperator coordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** barycentric coordinate solution of Lagrange multiplier system
    * 
@@ -49,7 +49,7 @@ public interface Biinvariant {
    * @param variogram
    * @param sequence
    * @return operator that provides barycentric coordinates */
-  default TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  default TensorUnaryOperator lagrainate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     TensorUnaryOperator tensorUnaryOperator = weighting(vectorLogManifold, variogram, sequence);
     return point -> LagrangeCoordinates.of( //
         new HsDesign(vectorLogManifold).matrix(sequence, point), // TODO SOPHUS ALG levers are computed twice

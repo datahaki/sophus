@@ -3,7 +3,7 @@ package ch.alpine.sophus.itp;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
   private final HsDesign hsDesign;
 
   /** @param vectorLogManifold non-null */
-  public RidgeRegression(VectorLogManifold vectorLogManifold) {
+  public RidgeRegression(Manifold vectorLogManifold) {
     hsDesign = new HsDesign(vectorLogManifold);
   }
 

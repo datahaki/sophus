@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.Clips;
 class HsDesignTest {
   @Test
   public void testRn() {
-    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold vectorLogManifold = RnGroup.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       Distribution distribution = UniformDistribution.unit();
       for (int count = dimension + 1; count < 8; ++count) {
@@ -61,7 +61,7 @@ class HsDesignTest {
 
   @Test
   public void testSn() {
-    VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
+    Manifold vectorLogManifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
       for (int count = dimension + 2; count < 8; ++count) {
@@ -79,7 +79,7 @@ class HsDesignTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       for (Tensor point : sequence) {
@@ -98,7 +98,7 @@ class HsDesignTest {
   @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 8; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -121,7 +121,7 @@ class HsDesignTest {
   @Test
   public void testSe2CadInvariant() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);

@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
@@ -28,7 +28,7 @@ class LeveragesCoordinateTest {
   public void testR1equiv() {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.
-    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold vectorLogManifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int length = 3; length < 10; ++length) {

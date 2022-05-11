@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.itp.RidgeRegression.Form2;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
@@ -22,7 +22,7 @@ class RidgeRegressionTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
     RidgeRegression ridgeRegression = new RidgeRegression(vectorLogManifold);
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);

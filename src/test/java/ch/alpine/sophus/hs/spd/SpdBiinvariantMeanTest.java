@@ -40,16 +40,16 @@ class SpdBiinvariantMeanTest {
 
   @Test
   public void testTransformSon() {
-    Random random = new Random();
+    Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 4; ++n) {
       int count = random.nextInt(5);
       int len = n * n + count;
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
-      Tensor sequence = RandomSample.of(rsi, len);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, len));
+      Tensor sequence = RandomSample.of(rsi, random, len);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, len));
       Tensor mL = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor g = RandomSample.of(SoRandomSample.of(n));
+      Tensor g = RandomSample.of(SoRandomSample.of(n), random);
       Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
       Tensor mR = SpdBiinvariantMean.INSTANCE.mean(sR, weights);
       Chop._06.requireClose(mR, BasisTransform.ofForm(mL, g));

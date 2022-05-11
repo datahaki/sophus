@@ -2,7 +2,7 @@
 package ch.alpine.sophus.gbc;
 
 import ch.alpine.sophus.dv.LeveragesDistanceVector;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Timing;
@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 /* package */ enum LeveragesDistancesDemo {
   ;
   public static void main(String[] args) {
-    VectorLogManifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold vectorLogManifold = RnGroup.INSTANCE;
     BarycentricCoordinate w1 = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();

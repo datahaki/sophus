@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Tensor;
 
 /** interface maps tensor coordinate to an element of a lie group
@@ -17,11 +16,6 @@ public interface LieGroup extends HomogeneousSpace, Exponential {
    * @param tensor
    * @return lie group element */
   LieGroupElement element(Tensor tensor);
-
-  @Override // from VectorLogManifold
-  public default TangentSpace logAt(Tensor point) {
-    return exponential(point);
-  }
 
   @Override // from HsManifold
   public default Exponential exponential(Tensor point) {

@@ -5,7 +5,6 @@ import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.Tensor;
 
 /** Quote from geomstats:
@@ -35,11 +34,6 @@ import ch.alpine.tensor.Tensor;
  * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2) */
 public enum GrManifold implements HomogeneousSpace {
   INSTANCE;
-
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor x) {
-    return new GrExponential(x);
-  }
 
   @Override // from HsManifold
   public Exponential exponential(Tensor x) {

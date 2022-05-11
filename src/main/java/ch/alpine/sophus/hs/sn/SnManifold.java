@@ -4,7 +4,6 @@ package ch.alpine.sophus.hs.sn;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.TangentSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -19,11 +18,6 @@ import ch.alpine.tensor.sca.tri.Sin;
 
 public enum SnManifold implements HomogeneousSpace {
   INSTANCE;
-
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor point) {
-    return new SnExponential(point);
-  }
 
   @Override // from HsManifold
   public Exponential exponential(Tensor point) {

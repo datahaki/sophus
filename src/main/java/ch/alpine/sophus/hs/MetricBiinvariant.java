@@ -52,7 +52,7 @@ public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) imple
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator distances(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public TensorUnaryOperator distances(Manifold vectorLogManifold, Tensor sequence) {
     Objects.requireNonNull(vectorLogManifold);
     Objects.requireNonNull(sequence);
     return point -> Tensor.of(new HsDesign(vectorLogManifold).stream(sequence, point) //
@@ -60,13 +60,13 @@ public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) imple
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator coordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public TensorUnaryOperator coordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     Genesis genesis = new MetricCoordinate(new InverseDistanceWeighting(variogram, tensorScalarFunction));
     return HsGenesis.wrap(vectorLogManifold, genesis, sequence);
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator lagrainate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public TensorUnaryOperator lagrainate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
     Objects.requireNonNull(vectorLogManifold);
     Objects.requireNonNull(variogram);
     Objects.requireNonNull(sequence);

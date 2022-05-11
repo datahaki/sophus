@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.alpine.sophus.hs.TangentSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.gr.Mahalanobis;
@@ -24,19 +24,19 @@ public class GardenDistanceVector implements TensorUnaryOperator {
   /** @param vectorLogManifold
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public static TensorUnaryOperator of(Manifold vectorLogManifold, Tensor sequence) {
     return new GardenDistanceVector(Objects.requireNonNull(vectorLogManifold), sequence);
   }
 
   // ---
-  private final List<TangentSpace> tangentSpaces;
+  private final List<Exponential> tangentSpaces;
   private final List<Mahalanobis> array;
 
-  public GardenDistanceVector(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public GardenDistanceVector(Manifold vectorLogManifold, Tensor sequence) {
     tangentSpaces = new ArrayList<>(sequence.length());
     array = new ArrayList<>(sequence.length());
     for (Tensor point : sequence) {
-      TangentSpace tangentSpace = vectorLogManifold.logAt(point);
+      Exponential tangentSpace = vectorLogManifold.exponential(point);
       tangentSpaces.add(tangentSpace);
       array.add(new Mahalanobis(Tensor.of(sequence.stream().map(tangentSpace::vectorLog))));
     }
