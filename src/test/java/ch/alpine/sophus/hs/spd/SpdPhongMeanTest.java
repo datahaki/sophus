@@ -84,7 +84,7 @@ class SpdPhongMeanTest {
     SpdMemberQ.INSTANCE.require(q);
     Tensor weights = Tensors.vector(0.4, 0.6);
     Tensor sequence = Unprotect.byRef(p, q);
-    Tensor m1 = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor m1 = SpdManifold.INSTANCE.biinvariantMean(Chop._10).mean(sequence, weights);
     // Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
     Tensor m2 = WeightedGeometricMean.INSTANCE.mean(sequence, weights);
     Tolerance.CHOP.requireClose(m1, m2);

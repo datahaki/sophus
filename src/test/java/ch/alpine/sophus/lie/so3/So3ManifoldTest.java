@@ -15,6 +15,7 @@ import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -51,7 +52,7 @@ class So3ManifoldTest {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(Rodrigues::vectorExp));
         Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, random, 3));
         Tensor weights1 = barycentricCoordinate.weights(sequence, mean);
-        Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
+        Tensor o2 = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, weights1);
         Chop._08.requireClose(mean, o2);
         // ---
         LieGroupElement lieGroupElement = So3Group.INSTANCE.element(So3TestHelper.spawn_So3(random));
@@ -79,7 +80,7 @@ class So3ManifoldTest {
       for (Tensor point : sequence) {
         Tensor weights = barycentricCoordinate.weights(sequence, point);
         Chop._06.requireClose(weights, UnitVector.of(n, index));
-        Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+        Tensor o2 = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, weights);
         Chop._06.requireClose(point, o2);
         ++index;
       }
@@ -96,7 +97,7 @@ class So3ManifoldTest {
     Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
     Tensor mean = Rodrigues.vectorExp(RandomVariate.of(d2, 3));
     Tensor weights1 = AFFINE.weights(sequence, mean);
-    Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, weights1);
+    Tensor o2 = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, weights1);
     Chop._08.requireClose(mean, o2);
     // ---
     LieGroupElement lieGroupElement = So3Group.INSTANCE.element(So3TestHelper.spawn_So3());

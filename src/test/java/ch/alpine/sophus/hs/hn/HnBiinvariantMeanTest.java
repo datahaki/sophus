@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Chop;
 class HnBiinvariantMeanTest {
   @Test
   public void testAffineFail() {
-    BiinvariantMean biinvariantMean = HnBiinvariantMean.of(Chop._12);
+    BiinvariantMean biinvariantMean = HnManifold.INSTANCE.biinvariantMean(Chop._12);
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
     Tensor result = biinvariantMean.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
@@ -51,7 +51,7 @@ class HnBiinvariantMeanTest {
         TensorUnaryOperator tensorUnaryOperator = //
             biinvariant.coordinate(HnManifold.INSTANCE, variogram, sequence);
         Tensor w1 = tensorUnaryOperator.apply(point);
-        Tensor mean = HnBiinvariantMean.of(Chop._08).mean(sequence, w1);
+        Tensor mean = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(sequence, w1);
         Chop._06.requireClose(mean, point);
         Tensor x = RandomVariate.of(NormalDistribution.standard(), random, n, n);
         x = new TSopqProject(d, 1).apply(x);
@@ -59,7 +59,7 @@ class HnBiinvariantMeanTest {
         Tensor seq_l = Tensor.of(sequence.stream().map(hnAction));
         Tensor pnt_l = hnAction.apply(point);
         Tensor w2 = biinvariant.coordinate(HnManifold.INSTANCE, variogram, seq_l).apply(pnt_l);
-        Tensor m2 = HnBiinvariantMean.of(Chop._08).mean(seq_l, w2);
+        Tensor m2 = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(seq_l, w2);
         Chop._06.requireClose(m2, pnt_l);
         Chop._06.requireClose(w1, w2);
       }
@@ -68,6 +68,6 @@ class HnBiinvariantMeanTest {
 
   @Test
   public void testNullFail() {
-    assertThrows(Exception.class, () -> HnBiinvariantMean.of(null));
+    assertThrows(Exception.class, () -> HnManifold.INSTANCE.biinvariantMean(null));
   }
 }

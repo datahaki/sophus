@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -62,9 +64,14 @@ public enum Sl2Group implements LieGroup {
     return log;
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     // specific to Sl2, skip 1, or limit 3
     return Tensor.of(log(q).flatten(1).skip(1));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop);
   }
 }

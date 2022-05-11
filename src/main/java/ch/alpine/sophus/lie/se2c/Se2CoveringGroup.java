@@ -3,8 +3,10 @@ package ch.alpine.sophus.lie.se2c;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.se2.AbstractSe2Group;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.sca.Chop;
 
 /** the covering group of SE(2) is parameterized by R^3
  * 
@@ -22,5 +24,10 @@ public class Se2CoveringGroup extends AbstractSe2Group implements Serializable {
   @Override // from LieGroup
   public Se2CoveringGroupElement element(Tensor xya) {
     return new Se2CoveringGroupElement(xya);
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return Se2CoveringBiinvariantMean.INSTANCE;
   }
 }

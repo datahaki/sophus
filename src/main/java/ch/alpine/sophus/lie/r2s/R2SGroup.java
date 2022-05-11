@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.r2s;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.he.HeGroup;
@@ -11,6 +12,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.sca.Chop;
 
 /** @see HeGroup */
 public enum R2SGroup implements LieGroup {
@@ -54,5 +56,10 @@ public enum R2SGroup implements LieGroup {
     Tensor delta = p_act.inverse().combine(q);
     Tensor x = log(delta);
     return scalar -> p_act.combine(exp(x.multiply(scalar)));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    throw new UnsupportedOperationException();
   }
 }

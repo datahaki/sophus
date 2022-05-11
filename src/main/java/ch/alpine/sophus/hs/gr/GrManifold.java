@@ -2,10 +2,13 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.sca.Chop;
 
 /** Quote from geomstats:
  * "Manifold of linear subspaces.
@@ -43,5 +46,10 @@ public enum GrManifold implements HomogeneousSpace {
   @Override
   public HsTransport hsTransport() {
     return new PoleLadder(this);
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop);
   }
 }

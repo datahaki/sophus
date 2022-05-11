@@ -3,10 +3,12 @@ package ch.alpine.sophus.lie.rn;
 
 import java.util.Objects;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.sca.Chop;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
  * 
@@ -44,5 +46,10 @@ public enum RnGroup implements LieGroup {
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor delta = q.subtract(p);
     return scalar -> p.add(delta.multiply(scalar));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return RnBiinvariantMean.INSTANCE;
   }
 }

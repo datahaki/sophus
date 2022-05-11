@@ -2,10 +2,13 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.LinearSolve;
+import ch.alpine.tensor.sca.Chop;
 
 /** Sym+(n) == GL+(n)/SO(n)
  * 
@@ -45,5 +48,10 @@ public enum SpdManifold implements HomogeneousSpace {
   @Override
   public HsTransport hsTransport() {
     return SpdTransport.INSTANCE;
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(SpdManifold.INSTANCE, chop, SpdPhongMean.INSTANCE);
   }
 }

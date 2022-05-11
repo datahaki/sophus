@@ -1,11 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.sca.Chop;
 
 /** Lie group GL(n) of invertible square matrices
  * also called "immersely linear Lie group"
@@ -35,5 +37,10 @@ public enum GlGroup implements LieGroup {
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor matrix) {
     return Flatten.of(log(matrix));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    throw new UnsupportedOperationException();
   }
 }

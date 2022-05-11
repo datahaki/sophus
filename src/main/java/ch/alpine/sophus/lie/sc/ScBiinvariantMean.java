@@ -2,7 +2,6 @@
 package ch.alpine.sophus.lie.sc;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.lie.dt.DtBiinvariantMean;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.WeightedGeometricMean;
 import ch.alpine.tensor.Tensor;

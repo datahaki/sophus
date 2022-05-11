@@ -10,6 +10,7 @@ import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -41,9 +42,9 @@ class So3BiinvariantMeanTest {
       int n = 4 + random.nextInt(6);
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, random, n, 3).stream().map(Rodrigues::vectorExp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), random, n));
-      Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+      Tensor mean = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, weights);
       Tensor w2 = barycentricCoordinate.weights(sequence, mean);
-      Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
+      Tensor o2 = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, w2);
       Chop._08.requireClose(mean, o2);
     }
   }
@@ -55,9 +56,9 @@ class So3BiinvariantMeanTest {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, 3).stream().map(Rodrigues::vectorExp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-      Tensor mean = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+      Tensor mean = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, weights);
       Tensor w2 = barycentricCoordinate.weights(sequence, mean);
-      Tensor o2 = So3BiinvariantMean.INSTANCE.mean(sequence, w2);
+      Tensor o2 = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, w2);
       Chop._08.requireClose(mean, o2.get());
       Chop._08.requireClose(weights, w2);
     }

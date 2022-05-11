@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.AffineQ;
@@ -107,7 +106,7 @@ class SoPhongMeanTest {
     Tensor weights = Tensors.vector(0.2, 0.8);
     AffineQ.require(weights);
     Tensor sequence = Tensors.of(p, q);
-    Tensor m1 = So3BiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor m1 = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(sequence, weights);
     Tensor m2 = SoPhongMean.INSTANCE.mean(sequence, weights);
     assertTrue(Scalars.lessThan(FrobeniusNorm.between(m1, m2), RealScalar.of(0.1)));
     // System.out.println(Pretty.of(m1));

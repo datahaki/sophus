@@ -10,14 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnExponential;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -46,7 +45,7 @@ class HsBiinvariantMeanTest {
       Tensor m_avg = biinvariantMean.mean(sequence_m, weights);
       SnExponential snExponential = new SnExponential(UnitVector.of(3, 2));
       Tensor pointsS2 = Tensor.of(sequence_m.stream().map(r -> r.copy().append(RealScalar.ZERO)).map(snExponential::exp));
-      Tensor meanS2 = SnBiinvariantMean.INSTANCE.mean(pointsS2, weights);
+      Tensor meanS2 = SnManifold.INSTANCE.biinvariantMean(Chop._14).mean(pointsS2, weights);
       Tensor res = snExponential.log(meanS2).extract(0, 2);
       Tolerance.CHOP.requireClose(m_avg, res);
     }
@@ -101,7 +100,7 @@ class HsBiinvariantMeanTest {
     Tensor sequence = Tensors.of(p0, p1, p2, p3);
     Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
-    Tensor meanG = So3BiinvariantMean.INSTANCE.mean(seqG, weights);
+    Tensor meanG = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
     Tensor ad = So3Algebra.INSTANCE.ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
@@ -122,7 +121,7 @@ class HsBiinvariantMeanTest {
       Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, random, n));
-      Tensor meanG = So3BiinvariantMean.INSTANCE.mean(seqG, weights);
+      Tensor meanG = So3Group.INSTANCE.biinvariantMean(Tolerance.CHOP).mean(seqG, weights);
       Tensor mean = exponential.log(meanG);
       BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
       Tensor meanb = biinvariantMean.mean(sequence, weights);

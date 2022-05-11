@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.gl.GlGroup;
@@ -15,6 +17,7 @@ import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.sca.Chop;
 
 /** g is a 4 x 4 matrix in SE(3)
  * 
@@ -81,5 +84,10 @@ public enum Se3Group implements LieGroup {
     // TODO check if this adds value
     Tensor log = log(LinearSolve.of(p, q));
     return scalar -> p.dot(exp(log.multiply(scalar)));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop);
   }
 }

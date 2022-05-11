@@ -3,11 +3,10 @@ package ch.alpine.sophus.lie.so3;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.lie.so.SoPhongMean;
 import ch.alpine.tensor.Tensor;
 
-/** Phong mean with 1-step correction towards {@link SnBiinvariantMean} */
+/** Phong mean with 1-step correction towards SoBiinvariantMean */
 public enum So3FastMean implements BiinvariantMean {
   INSTANCE;
 

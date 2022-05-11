@@ -3,8 +3,10 @@ package ch.alpine.sophus.hs;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.sca.Chop;
 
 /** homogeneous space
  * 
@@ -14,6 +16,10 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 public interface HomogeneousSpace extends GeodesicSpace, Manifold {
   /** @return parallel transport */
   HsTransport hsTransport();
+
+  /** @param chop
+   * @return */
+  BiinvariantMean biinvariantMean(Chop chop);
 
   /** related to "involution"/"involutive automorphism"
    * 

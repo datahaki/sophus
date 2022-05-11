@@ -38,7 +38,7 @@ class SnBiinvariantMeanTest {
       Chop._12.requireClose(weights, NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1)));
       Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
       Chop._12.requireAllZero(evaluate);
-      Chop._05.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
+      Chop._05.requireClose(mean, SnManifold.INSTANCE.biinvariantMean(Chop._06).mean(sequence, weights));
     }
   }
 
@@ -49,7 +49,7 @@ class SnBiinvariantMeanTest {
       Tensor angles = RandomVariate.of(distribution, n);
       Tensor sequence = angles.map(AngleVector::of);
       Tensor weights = AveragingWeights.of(n);
-      Tensor point = SnBiinvariantMean.of(Chop._06).mean(sequence, weights);
+      Tensor point = SnManifold.INSTANCE.biinvariantMean(Chop._06).mean(sequence, weights);
       Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
     }
   }

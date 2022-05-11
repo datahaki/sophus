@@ -2,10 +2,13 @@
 package ch.alpine.sophus.hs.hn;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.sca.Chop;
 
 /** hyperboloid model with fast midpoint computation */
 public enum HnManifold implements HomogeneousSpace {
@@ -30,5 +33,10 @@ public enum HnManifold implements HomogeneousSpace {
   @Override
   public HsTransport hsTransport() {
     return HnTransport.INSTANCE;
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop, HnPhongMean.INSTANCE);
   }
 }

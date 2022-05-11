@@ -1,11 +1,13 @@
 // code by ob
 package ch.alpine.sophus.lie.dt;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Expc;
@@ -71,5 +73,10 @@ public enum DtGroup implements LieGroup {
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor lambda_t) {
     return Flatten.of(log(lambda_t));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return DtBiinvariantMean.INSTANCE;
   }
 }

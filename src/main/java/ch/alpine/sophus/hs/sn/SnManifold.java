@@ -2,6 +2,8 @@
 package ch.alpine.sophus.hs.sn;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RealScalar;
@@ -14,6 +16,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Sin;
 
 public enum SnManifold implements HomogeneousSpace {
@@ -58,5 +61,16 @@ public enum SnManifold implements HomogeneousSpace {
     return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
         Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
+  }
+
+  /** Buss and Fillmore prove for data on spheres S^2, the step size of 1 for
+   * weights w_i == 1/N is sufficient for convergence to the mean.
+   * 
+   * Reference:
+   * "Spherical averages and applications to spherical splines and interpolation"
+   * by S. R. Buss, J. P. Fillmore, 2001 */
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(SnManifold.INSTANCE, chop, SnPhongMean.INSTANCE);
   }
 }

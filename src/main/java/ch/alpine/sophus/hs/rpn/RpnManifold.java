@@ -2,6 +2,8 @@
 package ch.alpine.sophus.hs.rpn;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
@@ -16,6 +18,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Sin;
 
 /** Reference:
@@ -46,5 +49,10 @@ public enum RpnManifold implements HomogeneousSpace {
     return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
         Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop);
   }
 }

@@ -1,12 +1,16 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import java.util.Objects;
+
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.sca.Chop;
 
 /** (2*n+1)-dimensional Heisenberg group */
 public enum HeGroup implements LieGroup {
@@ -42,5 +46,11 @@ public enum HeGroup implements LieGroup {
   @Override // from TangentSpace
   public Tensor vectorLog(Tensor xyz) {
     return Flatten.of(log(xyz));
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    Objects.requireNonNull(chop);
+    return HeBiinvariantMean.INSTANCE;
   }
 }

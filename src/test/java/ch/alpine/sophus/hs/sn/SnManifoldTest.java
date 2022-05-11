@@ -43,7 +43,7 @@ class SnManifoldTest {
         AffineQ.require(weights, Chop._08);
         Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
         Chop._06.requireAllZero(evaluate);
-        Chop._06.requireClose(mean, SnBiinvariantMean.INSTANCE.mean(sequence, weights));
+        Chop._06.requireClose(mean, SnManifold.INSTANCE.biinvariantMean(Chop._14).mean(sequence, weights));
       }
   }
 
@@ -62,7 +62,7 @@ class SnManifoldTest {
         Chop._06.requireClose(weights, UnitVector.of(n, count));
         Tensor evaluate = new MeanDefect(sequence, weights, SnManifold.INSTANCE.exponential(mean)).tangent();
         Chop._06.requireAllZero(evaluate);
-        Chop._03.requireClose(mean, SnBiinvariantMean.of(Chop._06).mean(sequence, weights));
+        Chop._03.requireClose(mean, SnManifold.INSTANCE.biinvariantMean(Chop._06).mean(sequence, weights));
       }
   }
 
