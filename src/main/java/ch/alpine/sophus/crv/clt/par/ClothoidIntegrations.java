@@ -8,7 +8,7 @@ import ch.alpine.sophus.crv.clt.LagrangeQuadratic;
 public enum ClothoidIntegrations implements ClothoidIntegration {
   /** slower but more precise */
   ANALYTIC(AnalyticClothoidIntegral::new), //
-  LEGENDRE(Legendre3ClothoidIntegral::new), //
+  LEGENDRE(LegendreClothoidIntegral::new), //
   ;
 
   private final Function<LagrangeQuadratic, ClothoidIntegral> function;

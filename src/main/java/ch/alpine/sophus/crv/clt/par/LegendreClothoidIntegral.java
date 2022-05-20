@@ -15,7 +15,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** 3-point Gauss Legendre quadrature on interval [0, 1] */
-/* package */ class Legendre3ClothoidIntegral implements ClothoidPartial, ClothoidIntegral, Serializable {
+/* package */ class LegendreClothoidIntegral implements ClothoidPartial, ClothoidIntegral, Serializable {
   private static final Scalar _1 = RealScalar.of(1.0);
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //
@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
   /** @param scalarUnaryOperator typically a quadratic polynomial
    * 
    * @see LagrangeQuadratic */
-  public Legendre3ClothoidIntegral(ScalarUnaryOperator scalarUnaryOperator) {
+  public LegendreClothoidIntegral(ScalarUnaryOperator scalarUnaryOperator) {
     this.scalarUnaryOperator = scalarUnaryOperator;
   }
 
