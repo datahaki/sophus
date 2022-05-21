@@ -28,7 +28,7 @@ class IterativeTargetCoordinateTest {
     for (int n = 5; n < 20; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
       if (OriginEnclosureQ.isInsideConvexHull(levers)) {
-        Deque<Evaluation> deque = genesis.deque(levers);
+        Deque<WeightsFactors> deque = genesis.deque(levers);
         Tensor vector = genesis.origin(levers);
         AffineQ.require(vector, Chop._10);
         Chop._08.requireAllZero(vector.dot(levers));

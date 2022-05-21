@@ -20,6 +20,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.sca.Chop;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
+// TODO SOPHUS can be made record (as IterativeAffineCoordinate)
 public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
   public static final Chop CHOP = Tolerance.CHOP;
   // ---
@@ -36,12 +37,12 @@ public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
   }
 
   @Override
-  public Deque<Evaluation> deque(Tensor levers) {
-    Deque<Evaluation> deque = new ArrayDeque<>();
+  public Deque<WeightsFactors> deque(Tensor levers) {
+    Deque<WeightsFactors> deque = new ArrayDeque<>();
     Tensor w = genesis.origin(levers); // weighting
     Tensor m = InfluenceMatrix.of(levers).residualMaker();
     Tensor n = NormalizeTotal.FUNCTION.apply(m.dot(w)); // coordinates
-    deque.add(new Evaluation(n, n.map(Scalar::zero)));
+    deque.add(new WeightsFactors(n, n.map(Scalar::zero)));
     // TODO SOPHUS ALG also target values above 1
     Tensor b = n.map(IdentRamp.FUNCTION);
     // Tensor b = n.map(Abs.FUNCTION);
@@ -53,7 +54,7 @@ public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
         Tensor sol = tuo.apply(b);
         w = w.add(sol);
         n = NormalizeTotal.FUNCTION.apply(m.dot(w));
-        deque.add(new Evaluation(n, n.map(Scalar::zero)));
+        deque.add(new WeightsFactors(n, n.map(Scalar::zero)));
         b = n.map(IdentRamp.FUNCTION);
         // b = n.map(Abs.FUNCTION);
         if (CHOP.allZero(b))

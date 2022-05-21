@@ -35,8 +35,8 @@ class IterativeAffineCoordinateTest {
           if (OriginEnclosureQ.isInsideConvexHull(levers)) {
             _check(levers, AffineCoordinate.INSTANCE.origin(levers));
             _check(levers, genesis.origin(levers));
-            Deque<Evaluation> deque = genesis.deque(levers);
-            for (Evaluation evaluation : deque)
+            Deque<WeightsFactors> deque = genesis.deque(levers);
+            for (WeightsFactors evaluation : deque)
               _check(levers, evaluation.weights());
           }
         }
