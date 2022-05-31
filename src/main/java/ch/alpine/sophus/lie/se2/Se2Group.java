@@ -27,6 +27,6 @@ public class Se2Group extends AbstractSe2Group implements Serializable {
 
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return Se2BiinvariantMeans.FILTER; // TODO SOPHUS check choice
+    return Se2BiinvariantMeans.LINEAR;
   }
 }

@@ -13,10 +13,10 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.red.Total;
-import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Cos;
 
