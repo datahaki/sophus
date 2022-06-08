@@ -9,6 +9,6 @@ public enum Se3CurveDecimation {
   /** @param epsilon
    * @return */
   public static CurveDecimation of(Scalar epsilon) {
-    return CurveDecimation.of(Se3Manifold.INSTANCE, epsilon);
+    return CurveDecimation.of(Se3Group.INSTANCE, epsilon);
   }
 }

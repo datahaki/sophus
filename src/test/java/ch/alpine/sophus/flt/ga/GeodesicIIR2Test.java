@@ -5,14 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Geodesic;
-import ch.alpine.sophus.crv.spline.MonomialExtrapolationMask;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.crv.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.CausalFilter;
-import ch.alpine.sophus.hs.HsGeodesic;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2.Se2Manifold;
-import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -20,16 +17,17 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GeodesicIIR2Test {
+class GeodesicIIR2Test {
   @Test
   public void testSimple() {
-    Geodesic geodesicInterface = new HsGeodesic(Se2Manifold.INSTANCE);
+    GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
     Scalar alpha = RationalScalar.HALF;
-    GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicInterface, alpha);
+    GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicSpace, alpha);
     Tensor vector0 = Tensors.vector(1, 2, 0.25);
     Tensor res0 = geodesicIIR2.apply(vector0);
     assertEquals(res0, vector0);
@@ -40,9 +38,9 @@ public class GeodesicIIR2Test {
 
   @Test
   public void testLinear() {
-    Geodesic geodesicInterface = new HsGeodesic(RnManifold.INSTANCE);
+    GeodesicSpace geodesicSpace = RnGroup.INSTANCE;
     Scalar alpha = RationalScalar.HALF;
-    TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicInterface, alpha);
+    TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicSpace, alpha);
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(10)), RealScalar.of(10));
     assertEquals(tensorUnaryOperator.apply(RealScalar.of(20)), RealScalar.of(15));
@@ -61,7 +59,7 @@ public class GeodesicIIR2Test {
   @Test
   public void testId2() {
     Scalar alpha = RealScalar.ONE;
-    TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGeodesic.INSTANCE, alpha));
+    TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGroup.INSTANCE, alpha));
     for (int k = 0; k < 10; ++k) {
       Tensor signal = UnitVector.of(10, k);
       assertEquals(signal, tuo1.apply(signal));
@@ -71,9 +69,9 @@ public class GeodesicIIR2Test {
   @Test
   public void testId() {
     Scalar alpha = RealScalar.ONE;
-    TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGeodesic.INSTANCE, alpha));
+    TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGroup.INSTANCE, alpha));
     TensorUnaryOperator tuo2 = GeodesicIIRnFilter.of( //
-        GeodesicExtrapolation.of(RnGeodesic.INSTANCE, MonomialExtrapolationMask.INSTANCE), RnGeodesic.INSTANCE, 2, alpha);
+        GeodesicExtrapolation.of(RnGroup.INSTANCE, MonomialExtrapolationMask.INSTANCE), RnGroup.INSTANCE, 2, alpha);
     Tensor signal = RandomVariate.of(UniformDistribution.unit(), 10);
     Tensor r1 = tuo1.apply(signal);
     Tensor r2 = tuo2.apply(signal);

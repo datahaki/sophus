@@ -2,13 +2,13 @@
 package ch.alpine.sophus.math.sample;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Mean;
 
-public class BoxRandomSampleTest {
+class BoxRandomSampleTest {
   @Test
   public void testSimple3D() {
     Tensor offset = Tensors.vector(2, 2, 3);
@@ -49,11 +49,11 @@ public class BoxRandomSampleTest {
 
   @Test
   public void testDimensionFail() {
-    AssertFail.of(() -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3)));
   }
 
   @Test
   public void testSignFail() {
-    AssertFail.of(() -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1)));
+    assertThrows(Exception.class, () -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1)));
   }
 }

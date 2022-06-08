@@ -4,9 +4,9 @@ package ch.alpine.sophus.hs.rpn;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Min;
-import ch.alpine.tensor.red.VectorAngle;
 
 /** real projective plane */
 public enum RpnMetric implements TensorMetric {

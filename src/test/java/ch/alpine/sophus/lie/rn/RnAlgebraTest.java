@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class RnAlgebraTest {
+class RnAlgebraTest {
   @Test
   public void testSimple() {
     RnAlgebra rnAlgebra = new RnAlgebra(3);

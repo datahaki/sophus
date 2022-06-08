@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.sophus.srf.io.PlyFormat;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.io.ResourceData;
 import ch.alpine.tensor.red.Mean;
 
-public class DooSabinRefinementTest {
+class DooSabinRefinementTest {
   @Test
   public void testCube() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));

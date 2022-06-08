@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class GlMemberQTest {
+class GlMemberQTest {
   @Test
   public void testSimple() {
     assertTrue(GlMemberQ.INSTANCE.test(IdentityMatrix.of(2)));

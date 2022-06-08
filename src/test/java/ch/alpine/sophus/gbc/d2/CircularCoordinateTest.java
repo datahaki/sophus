@@ -4,7 +4,7 @@ package ch.alpine.sophus.gbc.d2;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.lie.rn.RnExponential;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.pdf.Distribution;
@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class CircularCoordinateTest {
+class CircularCoordinateTest {
   @Test
   public void testSimple() {
     int n = 5;
@@ -29,7 +29,7 @@ public class CircularCoordinateTest {
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 2);
       Tensor weights = CircularCoordinate.INSTANCE.origin(sequence);
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, RnExponential.INSTANCE);
+      MeanDefect meanDefect = new MeanDefect(sequence, weights, RnGroup.INSTANCE);
       Tensor tangent = meanDefect.tangent();
       Chop._07.requireAllZero(tangent);
     }

@@ -12,7 +12,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se2CoveringRandomSampleTest {
+class Se2CoveringRandomSampleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     RandomSampleInterface randomSampleInterface = //

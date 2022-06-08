@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
@@ -9,12 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.lie.TensorProduct;
 
-public class GrMemberQTest {
+class GrMemberQTest {
   @Test
   public void testSimple() {
     int n = 5;
@@ -34,6 +34,6 @@ public class GrMemberQTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> GrMemberQ.INSTANCE.test(null));
+    assertThrows(Exception.class, () -> GrMemberQ.INSTANCE.test(null));
   }
 }

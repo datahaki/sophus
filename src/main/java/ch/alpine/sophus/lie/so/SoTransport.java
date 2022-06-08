@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.so;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.mat.re.Inverse;
+import ch.alpine.tensor.mat.ConjugateTranspose;
 
 /** Reference:
  * "Hermite subdivision on manifolds via parallel transport"
@@ -14,7 +14,7 @@ public enum SoTransport implements HsTransport {
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    Tensor qpinv = q.dot(Inverse.of(p)); // "move vector from p to e then move to q"
+    Tensor qpinv = q.dot(ConjugateTranspose.of(p)); // "move vector from p to e then move to q"
     return vp -> qpinv.dot(vp);
   }
 }

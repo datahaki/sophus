@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.BinCounts;
 
-public class PerlinContinuousNoiseTest {
+class PerlinContinuousNoiseTest {
   @Test
   public void testSimple() {
     Tensor noise = Tensors.vector(i -> DoubleScalar.of(10 * (1 + PerlinContinuousNoise.FUNCTION.at(1.6, .1 * i, .1 + i))), 1000);

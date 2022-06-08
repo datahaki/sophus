@@ -16,7 +16,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.TensorProduct;
 
-public class RnCurveDecimationTest {
+class RnCurveDecimationTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     CurveDecimation curveDecimation = Serialization.copy(RnCurveDecimation.of(RealScalar.ZERO));

@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -8,7 +9,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -29,7 +29,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
-public class RigidMotionFitTest {
+class RigidMotionFitTest {
   @Test
   public void testExact() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
@@ -112,8 +112,8 @@ public class RigidMotionFitTest {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
     Tensor target = RandomVariate.of(distribution, 7, 3);
-    AssertFail.of(() -> RigidMotionFit.of(points, target, Tensors.vector(1, 2, 3, 4, 5, 6)));
-    AssertFail.of(() -> RigidMotionFit.of(points, target, Tensors.vector(1, 2, 3, 4, 5, 6, 7)));
+    assertThrows(Exception.class, () -> RigidMotionFit.of(points, target, Tensors.vector(1, 2, 3, 4, 5, 6)));
+    assertThrows(Exception.class, () -> RigidMotionFit.of(points, target, Tensors.vector(1, 2, 3, 4, 5, 6, 7)));
   }
 
   @Test
@@ -121,8 +121,8 @@ public class RigidMotionFitTest {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
     Tensor target = RandomVariate.of(distribution, 6, 3);
-    AssertFail.of(() -> RigidMotionFit.of(points, target, Array.zeros(6)));
-    AssertFail.of(() -> RigidMotionFit.of(points, target, Array.zeros(6).map(N.DOUBLE)));
+    assertThrows(Exception.class, () -> RigidMotionFit.of(points, target, Array.zeros(6)));
+    assertThrows(Exception.class, () -> RigidMotionFit.of(points, target, Array.zeros(6).map(N.DOUBLE)));
   }
 
   @Test

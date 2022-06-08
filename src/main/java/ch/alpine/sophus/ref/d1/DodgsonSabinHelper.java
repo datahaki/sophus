@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 /* package */ enum DodgsonSabinHelper {
   ;
-  static final CurveSubdivision BSPLINE3_EUCLIDEAN = new BSpline3CurveSubdivision(RnGeodesic.INSTANCE);
+  static final CurveSubdivision BSPLINE3_EUCLIDEAN = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
   private static final Scalar HALF = RealScalar.of(0.5);
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
 

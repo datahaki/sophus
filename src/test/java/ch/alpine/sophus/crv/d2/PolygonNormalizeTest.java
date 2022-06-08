@@ -9,7 +9,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class PolygonNormalizeTest {
+class PolygonNormalizeTest {
   @Test
   public void testSimple() {
     Tensor polygon = Tensors.fromString("{{0, 0}, {2, 0}, {2, 2}, {0, 2}}");

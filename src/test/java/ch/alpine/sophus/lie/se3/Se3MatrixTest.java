@@ -12,7 +12,7 @@ import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class Se3MatrixTest {
+class Se3MatrixTest {
   @Test
   public void testId() {
     Tensor tensor = Se3Matrix.of(IdentityMatrix.of(3), Array.zeros(3));

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.ext.Serialization;
 
-public class MetricBiinvariantTest {
+class MetricBiinvariantTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(MetricBiinvariant.EUCLIDEAN);

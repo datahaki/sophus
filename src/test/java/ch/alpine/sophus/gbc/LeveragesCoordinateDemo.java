@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.hs.VectorLogManifold;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -13,9 +13,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 /* package */ enum LeveragesCoordinateDemo {
   ;
   public static void main(String[] args) {
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    BarycentricCoordinate c1 = LeveragesCoordinate.of(vectorLogManifold, variogram);
+    BarycentricCoordinate c1 = LeveragesCoordinate.of(manifold, variogram);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {

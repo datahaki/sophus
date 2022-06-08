@@ -9,12 +9,12 @@ import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.OrderedQ;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.AntihermitianMatrixQ;
 import ch.alpine.tensor.mat.ConjugateTranspose;
 import ch.alpine.tensor.mat.DiagonalMatrix;
@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Trace;
 
-public class Su2AlgebraTest {
+class Su2AlgebraTest {
   @Test
   public void testKillingForm() {
     LieAlgebra lieAlgebra = Su2Algebra.INSTANCE;

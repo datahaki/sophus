@@ -6,25 +6,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.itp.RidgeRegression.Form2;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class RidgeRegressionTest {
+class RidgeRegressionTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
 
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
-    RidgeRegression ridgeRegression = new RidgeRegression(vectorLogManifold);
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
+    RidgeRegression ridgeRegression = new RidgeRegression(manifold);
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       for (Tensor point : sequence) {

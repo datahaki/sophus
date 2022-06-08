@@ -4,12 +4,12 @@ package ch.alpine.sophus.ref.d1;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.chq.ScalarQ;
 import ch.alpine.tensor.ext.Integers;
 
 public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
@@ -17,12 +17,12 @@ public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
   private static final Scalar _R = RationalScalar.of(245, 201);
   private static final Scalar _S = RationalScalar.of(1225, 1024);
   // ---
-  private final SplitInterface splitInterface;
+  private final GeodesicSpace geodesicSpace;
 
-  /** @param splitInterface */
-  public EightPointCurveSubdivision(SplitInterface splitInterface) {
-    super(splitInterface);
-    this.splitInterface = splitInterface;
+  /** @param geodesicSpace */
+  public EightPointCurveSubdivision(GeodesicSpace geodesicSpace) {
+    super(geodesicSpace);
+    this.geodesicSpace = geodesicSpace;
   }
 
   @Override // from CurveSubdivision
@@ -48,13 +48,13 @@ public class EightPointCurveSubdivision extends BSpline1CurveSubdivision {
   }
 
   private Tensor center(Tensor p, Tensor q, Tensor r, Tensor s, Tensor t, Tensor u, Tensor v, Tensor w) {
-    Tensor pq = splitInterface.split(p, q, PQ);
-    Tensor _r = splitInterface.split(pq, r, _R);
-    Tensor _s = splitInterface.split(_r, s, _S);
+    Tensor pq = geodesicSpace.split(p, q, PQ);
+    Tensor _r = geodesicSpace.split(pq, r, _R);
+    Tensor _s = geodesicSpace.split(_r, s, _S);
     // ---
-    Tensor wv = splitInterface.split(w, v, PQ);
-    Tensor _u = splitInterface.split(wv, u, _R);
-    Tensor _t = splitInterface.split(_u, t, _S);
+    Tensor wv = geodesicSpace.split(w, v, PQ);
+    Tensor _u = geodesicSpace.split(wv, u, _R);
+    Tensor _t = geodesicSpace.split(_u, t, _S);
     return midpoint(_s, _t);
   }
 

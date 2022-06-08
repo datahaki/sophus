@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.qty.Quantity;
 
-public class ExponentialVariogramTest {
+class ExponentialVariogramTest {
   @Test
   public void testSimple() {
     ScalarUnaryOperator scalarUnaryOperator = new ExponentialVariogram(Quantity.of(1, "m"), RealScalar.of(2));

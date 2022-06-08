@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class TSopqProjectTest {
+class TSopqProjectTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     TSopqProject tSopqProject = new TSopqProject(3, 2);

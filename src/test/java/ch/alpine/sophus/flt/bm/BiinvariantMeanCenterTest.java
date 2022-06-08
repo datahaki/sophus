@@ -2,6 +2,7 @@
 package ch.alpine.sophus.flt.bm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.BinomialWeights;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class BiinvariantMeanCenterTest {
+class BiinvariantMeanCenterTest {
   @Test
   public void testSe2() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
@@ -42,6 +42,6 @@ public class BiinvariantMeanCenterTest {
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null));
+    assertThrows(Exception.class, () -> BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null));
   }
 }

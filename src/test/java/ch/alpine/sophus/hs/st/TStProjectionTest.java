@@ -19,7 +19,7 @@ import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class TStProjectionTest {
+class TStProjectionTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(7);

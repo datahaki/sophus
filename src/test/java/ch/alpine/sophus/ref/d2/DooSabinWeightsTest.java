@@ -7,7 +7,7 @@ import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
-public class DooSabinWeightsTest {
+class DooSabinWeightsTest {
   @Test
   public void testSimple() {
     for (int n = 3; n <= 12; ++n) {

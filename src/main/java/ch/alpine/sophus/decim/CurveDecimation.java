@@ -3,26 +3,26 @@ package ch.alpine.sophus.decim;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** http://vixra.org/abs/1909.0174 */
 public interface CurveDecimation extends TensorUnaryOperator {
-  /** @param hsManifold
+  /** @param homogeneousSpace
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation of(HsManifold hsManifold, Scalar epsilon) {
-    return new RamerDouglasPeucker(new HsLineDistance(hsManifold), epsilon);
+  public static CurveDecimation of(HomogeneousSpace homogeneousSpace, Scalar epsilon) {
+    return new RamerDouglasPeucker(new HsLineDistance(homogeneousSpace), epsilon);
   }
 
-  /** @param hsManifold
+  /** @param homogeneousSpace
    * @param epsilon non-negative
    * @return */
-  public static CurveDecimation symmetric(HsManifold hsManifold, Scalar epsilon) {
+  public static CurveDecimation symmetric(HomogeneousSpace homogeneousSpace, Scalar epsilon) {
     return new RamerDouglasPeucker( //
-        new SymmetricLineDistance(new HsLineDistance(hsManifold)), //
+        new SymmetricLineDistance(new HsLineDistance(homogeneousSpace)), //
         epsilon);
   }
 

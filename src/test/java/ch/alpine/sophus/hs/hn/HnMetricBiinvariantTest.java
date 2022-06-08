@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HnMetricBiinvariantTest {
+class HnMetricBiinvariantTest {
   @Test
   public void testCoordinateBiinvariant() throws ClassNotFoundException, IOException {
     Random random = new Random(40);
@@ -37,7 +37,7 @@ public class HnMetricBiinvariantTest {
       TensorUnaryOperator tensorUnaryOperator = //
           biinvariant.coordinate(HnManifold.INSTANCE, variogram, sequence);
       Tensor w1 = tensorUnaryOperator.apply(point);
-      Tensor mean = HnBiinvariantMean.of(Chop._08).mean(sequence, w1);
+      Tensor mean = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(sequence, w1);
       Chop._06.requireClose(mean, point);
       Tensor x = RandomVariate.of(NormalDistribution.standard(), random, n, n);
       x = new TSopqProject(d, 1).apply(x);
@@ -45,7 +45,7 @@ public class HnMetricBiinvariantTest {
       Tensor seq_l = Tensor.of(sequence.stream().map(sopq::dot));
       Tensor pnt_l = sopq.dot(point);
       Tensor w2 = biinvariant.coordinate(HnManifold.INSTANCE, variogram, seq_l).apply(pnt_l);
-      Tensor m2 = HnBiinvariantMean.of(Chop._08).mean(seq_l, w2);
+      Tensor m2 = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(seq_l, w2);
       Chop._06.requireClose(m2, pnt_l);
       Chop._06.requireClose(w1, w2);
     }
@@ -65,7 +65,7 @@ public class HnMetricBiinvariantTest {
       TensorUnaryOperator tensorUnaryOperator = //
           biinvariant.lagrainate(HnManifold.INSTANCE, variogram, sequence);
       Tensor w1 = tensorUnaryOperator.apply(point);
-      Tensor mean = HnBiinvariantMean.of(Chop._08).mean(sequence, w1);
+      Tensor mean = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(sequence, w1);
       Chop._06.requireClose(mean, point);
       Tensor x = RandomVariate.of(NormalDistribution.standard(), random, n, n);
       x = new TSopqProject(d, 1).apply(x);
@@ -73,7 +73,7 @@ public class HnMetricBiinvariantTest {
       Tensor seq_l = Tensor.of(sequence.stream().map(sopq::dot));
       Tensor pnt_l = sopq.dot(point);
       Tensor w2 = biinvariant.lagrainate(HnManifold.INSTANCE, variogram, seq_l).apply(pnt_l);
-      Tensor m2 = HnBiinvariantMean.of(Chop._08).mean(seq_l, w2);
+      Tensor m2 = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(seq_l, w2);
       Chop._06.requireClose(m2, pnt_l);
       Chop._06.requireClose(w1, w2);
     }

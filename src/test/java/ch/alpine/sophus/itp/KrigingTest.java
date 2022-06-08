@@ -11,9 +11,8 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.ExponentialVariogram;
 import ch.alpine.sophus.math.var.PowerVariogram;
@@ -35,7 +34,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 
-public class KrigingTest {
+class KrigingTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final Biinvariant[] BIINV = { Biinvariants.HARBOR };
   private static final Biinvariant[] SYMME = { MetricBiinvariant.EUCLIDEAN, Biinvariants.HARBOR };
@@ -53,7 +52,7 @@ public class KrigingTest {
       Tensor values = RandomVariate.of(distributiox, n);
       Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
       TensorUnaryOperator tensorUnaryOperator1 = //
-          biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, points);
+          biinvariant.var_dist(Se2CoveringGroup.INSTANCE, powerVariogram, points);
       Kriging kriging1 = Kriging.regression(tensorUnaryOperator1, points, values, covariance);
       Tensor est1 = kriging1.estimate(xya);
       Scalar var1 = kriging1.variance(xya);
@@ -61,7 +60,7 @@ public class KrigingTest {
       for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
         Tensor all = tensorMapping.slash(points);
         TensorUnaryOperator tensorUnaryOperatorL = //
-            biinvariant.var_dist(Se2CoveringManifold.INSTANCE, powerVariogram, all);
+            biinvariant.var_dist(Se2CoveringGroup.INSTANCE, powerVariogram, all);
         Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, all, values, covariance);
         Tensor one = tensorMapping.apply(xya);
         Chop._10.requireClose(est1, krigingL.estimate(one));
@@ -79,7 +78,7 @@ public class KrigingTest {
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (Biinvariant biinvariant : SYMME) {
       TensorUnaryOperator weightingInterface = //
-          biinvariant.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          biinvariant.var_dist(RnGroup.INSTANCE, variogram, sequence);
       Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
@@ -97,7 +96,7 @@ public class KrigingTest {
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
     for (Biinvariant biinvariant : SYMME) {
       TensorUnaryOperator weightingInterface = //
-          biinvariant.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          biinvariant.var_dist(RnGroup.INSTANCE, variogram, sequence);
       Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
@@ -116,7 +115,7 @@ public class KrigingTest {
       Tensor sequence = RandomVariate.of(distribution, n, d);
       for (Biinvariant biinvariant : SYMME) {
         TensorUnaryOperator tensorUnaryOperator = //
-            Serialization.copy(biinvariant.var_dist(RnManifold.INSTANCE, variogram, sequence));
+            Serialization.copy(biinvariant.var_dist(RnGroup.INSTANCE, variogram, sequence));
         Kriging kriging = Serialization.copy(Kriging.barycentric(tensorUnaryOperator, sequence));
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor tensor = kriging.estimate(sequence.get(index));
@@ -140,7 +139,7 @@ public class KrigingTest {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     TensorUnaryOperator weightingInterface = //
-        MetricBiinvariant.EUCLIDEAN.var_dist(RnManifold.INSTANCE, variogram, sequence);
+        MetricBiinvariant.EUCLIDEAN.var_dist(RnGroup.INSTANCE, variogram, sequence);
     Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
@@ -157,7 +156,7 @@ public class KrigingTest {
     Tensor values = RandomVariate.of(distributionY, n);
     for (Biinvariant biinvariant : BIINV) {
       TensorUnaryOperator weightingInterface = //
-          biinvariant.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          biinvariant.var_dist(RnGroup.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(apply);

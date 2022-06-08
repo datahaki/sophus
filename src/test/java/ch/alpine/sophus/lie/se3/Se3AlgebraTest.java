@@ -2,13 +2,13 @@
 package ch.alpine.sophus.lie.se3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
-import ch.alpine.sophus.usr.AssertFail;
 
-public class Se3AlgebraTest {
+class Se3AlgebraTest {
   @Test
   public void testSimple() {
     Se3Algebra.INSTANCE.basis();
@@ -18,9 +18,9 @@ public class Se3AlgebraTest {
 
   @Test
   public void testHsFails() {
-    AssertFail.of(() -> new HsAlgebra(Se3Algebra.INSTANCE.ad(), 1, 6));
-    AssertFail.of(() -> new HsAlgebra(Se3Algebra.INSTANCE.ad(), 2, 6));
+    assertThrows(Exception.class, () -> new HsAlgebra(Se3Algebra.INSTANCE.ad(), 1, 6));
+    assertThrows(Exception.class, () -> new HsAlgebra(Se3Algebra.INSTANCE.ad(), 2, 6));
     assertEquals(new HsAlgebra(Se3Algebra.INSTANCE.ad(), 3, 6).dimH(), 3);
-    AssertFail.of(() -> new HsAlgebra(Se3Algebra.INSTANCE.ad(), 4, 6));
+    assertThrows(Exception.class, () -> new HsAlgebra(Se3Algebra.INSTANCE.ad(), 4, 6));
   }
 }

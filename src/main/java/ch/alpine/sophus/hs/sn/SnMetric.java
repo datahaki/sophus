@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.sn;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.red.VectorAngle;
+import ch.alpine.tensor.nrm.VectorAngle;
 
 /** The distance between two point on the d-dimensional sphere
  * embedded in R^(d+1) is the vector angle between the points.

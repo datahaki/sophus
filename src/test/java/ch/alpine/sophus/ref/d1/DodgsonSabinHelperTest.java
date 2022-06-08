@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
-public class DodgsonSabinHelperTest {
+class DodgsonSabinHelperTest {
   @Test
   public void testCrafted() {
     Tensor a = Tensors.vector(1, 1.1);

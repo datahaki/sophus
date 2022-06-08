@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.su;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class Su3AlgebraTest {
+class Su3AlgebraTest {
   @Test
   public void testSimple() {
     Su3Algebra su3Algebra = Su3Algebra.INSTANCE;
@@ -25,7 +25,7 @@ public class Su3AlgebraTest {
     // System.out.println(ad);
     ad = ad.map(PlausibleRational.FUNCTION);
     // System.out.println(ad);
-    assertTrue(ad instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, ad);
     Tensor form = KillingForm.of(ad);
     // System.out.println(Pretty.of(form));
     Tolerance.CHOP.requireClose(Diagonal.of(form), ConstantArray.of(RealScalar.of(3), 8));

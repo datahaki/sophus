@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
 
-public class IdentRampTest {
+class IdentRampTest {
   @Test
   public void testSimple() {
     assertEquals(IdentRamp.FUNCTION.apply(RealScalar.of(-0.5)), RealScalar.of(+0.5));

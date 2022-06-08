@@ -23,8 +23,8 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se3ExponentialTest {
-  private static final Exponential LIE_EXPONENTIAL = Se3Exponential.INSTANCE;
+class Se3ExponentialTest {
+  private static final Exponential LIE_EXPONENTIAL = Se3Group.INSTANCE;
   private static final LieGroup LIE_GROUP = Se3Group.INSTANCE;
   private static final RandomSampleInterface RSI_TSe3 = new TSe3RandomSample( //
       UniformDistribution.of(Clips.absolute(10)), //
@@ -39,8 +39,8 @@ public class Se3ExponentialTest {
     Tensor input = Tensors.of( //
         translation, //
         Tensors.vector(0.2, 0.3, -0.1));
-    Tensor g = Se3Exponential.INSTANCE.exp(input);
-    Tensor u_w = Se3Exponential.INSTANCE.log(g);
+    Tensor g = Se3Group.INSTANCE.exp(input);
+    Tensor u_w = Se3Group.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
     Tensor log = MatrixLog.of(g);
     Chop._12.requireClose(Se3Matrix.translation(log), translation);
@@ -53,8 +53,8 @@ public class Se3ExponentialTest {
     Tensor input = Tensors.of( //
         Tensors.fromString("{1[m*s^-1], 2[m*s^-1], 3[m*s^-1]}"), //
         Tensors.vector(0.2, 0.3, -0.1));
-    Tensor g = Se3Exponential.INSTANCE.exp(input);
-    Tensor u_w = Se3Exponential.INSTANCE.log(g);
+    Tensor g = Se3Group.INSTANCE.exp(input);
+    Tensor u_w = Se3Group.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
   }
   // public void testUnits2() {
@@ -71,8 +71,8 @@ public class Se3ExponentialTest {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (int index = 0; index < 100; ++index) {
       Tensor input = RandomVariate.of(distribution, 2, 3);
-      Tensor g = Se3Exponential.INSTANCE.exp(input);
-      Tensor u_w = Se3Exponential.INSTANCE.log(g);
+      Tensor g = Se3Group.INSTANCE.exp(input);
+      Tensor u_w = Se3Group.INSTANCE.log(g);
       Chop._12.requireClose(input, u_w);
     }
   }
@@ -82,9 +82,9 @@ public class Se3ExponentialTest {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
         Tensors.vector(0, 0, 0));
-    Tensor g = Se3Exponential.INSTANCE.exp(input);
+    Tensor g = Se3Group.INSTANCE.exp(input);
     assertEquals(g, Se3Matrix.of(IdentityMatrix.of(3), input.get(0)));
-    Tensor u_w = Se3Exponential.INSTANCE.log(g);
+    Tensor u_w = Se3Group.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
   }
 
@@ -93,8 +93,8 @@ public class Se3ExponentialTest {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
         Tensors.vector(1e-15, 1e-15, -1e-15));
-    Tensor g = Se3Exponential.INSTANCE.exp(input);
-    Tensor u_w = Se3Exponential.INSTANCE.log(g);
+    Tensor g = Se3Group.INSTANCE.exp(input);
+    Tensor u_w = Se3Group.INSTANCE.log(g);
     Chop._12.requireClose(input, u_w);
   }
 

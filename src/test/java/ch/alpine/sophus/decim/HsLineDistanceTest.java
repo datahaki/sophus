@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -19,11 +19,11 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
 
-public class HsLineDistanceTest {
+class HsLineDistanceTest {
   @Test
   public void testRnMatch() throws ClassNotFoundException, IOException {
     HsLineDistance hsLineDistance = //
-        Serialization.copy(new HsLineDistance(RnManifold.INSTANCE));
+        Serialization.copy(new HsLineDistance(RnGroup.INSTANCE));
     NormImpl tensorNorm = //
         Serialization.copy(hsLineDistance.tensorNorm(Tensors.vector(1, 2), Tensors.vector(10, 2)));
     assertEquals(tensorNorm.norm(Tensors.vector(5, 2)), RealScalar.ZERO);

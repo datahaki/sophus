@@ -1,6 +1,7 @@
 // code by ob
 package ch.alpine.sophus.lie.se2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -12,7 +13,6 @@ import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class Se2BiinvariantMeansTest {
+class Se2BiinvariantMeansTest {
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
   @Test
@@ -56,7 +56,7 @@ public class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = Serialization.copy(biinvariantMean).mean(sequence, weights);
       // TODO SOPHUS TEST this does not check anything... also below!
-      new MeanDefect(sequenceUnordered, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(sequenceUnordered, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Tensor actualUnordered = biinvariantMean.mean(sequenceUnordered, weights);
       // ---
       Chop._14.requireClose(expected, actual);
@@ -70,7 +70,7 @@ public class Se2BiinvariantMeansTest {
     Tensor weights = Tensors.vector(1);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(p, weights);
-      new MeanDefect(p, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(p, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Chop._14.requireClose(p.get(0), actual);
     }
   }
@@ -85,7 +85,7 @@ public class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(3, 3, 0), actual);
-      new MeanDefect(sequence, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
     }
   }
 
@@ -99,7 +99,7 @@ public class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(0, 0, 0.6), actual);
-      new MeanDefect(sequence, weights, Se2Manifold.INSTANCE.exponential(actual)).tangent();
+      new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
     }
   }
 
@@ -159,7 +159,7 @@ public class Se2BiinvariantMeansTest {
         Tensor result = biinvariantMean.mean(BiinvariantMeanTestHelper.order(sequence, index), BiinvariantMeanTestHelper.order(weights, index));
         Chop._12.requireClose(result, solution);
       }
-      new MeanDefect(sequence, weights, Se2Manifold.INSTANCE.exponential(solution)).tangent();
+      new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(solution)).tangent();
     }
   }
 
@@ -248,6 +248,6 @@ public class Se2BiinvariantMeansTest {
   @Test
   public void testEmpty() {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
-      AssertFail.of(() -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));
+      assertThrows(Exception.class, () -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));
   }
 }

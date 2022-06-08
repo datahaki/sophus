@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.se2;
 
 import ch.alpine.sophus.lie.LieIntegrator;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.Tensor;
 
 public enum Se2Integrator implements LieIntegrator {
@@ -13,6 +13,6 @@ public enum Se2Integrator implements LieIntegrator {
    * @return g . exp x */
   @Override // from LieIntegrator
   public Tensor spin(Tensor g, Tensor x) {
-    return Se2Group.INSTANCE.element(g).combine(Se2CoveringExponential.INSTANCE.exp(x));
+    return Se2Group.INSTANCE.element(g).combine(Se2CoveringGroup.INSTANCE.exp(x));
   }
 }

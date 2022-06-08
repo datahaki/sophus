@@ -7,13 +7,13 @@ import java.io.IOException;
 
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.Distribution;

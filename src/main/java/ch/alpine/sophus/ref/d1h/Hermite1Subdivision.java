@@ -8,8 +8,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.hs.HsGeodesic;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -19,25 +18,22 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.ext.Integers;
 
 public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace homogeneousSpace;
   private final HsTransport hsTransport;
-  private final HsGeodesic hsGeodesic;
   private final Scalar lgv;
   private final Scalar lvg;
   private final Scalar lvv;
 
-  /** @param hsManifold
-   * @param hsTransport
+  /** @param homogeneousSpace
    * @param lgv
    * @param lvg
    * @param lvv
    * @return
    * @throws Exception if either parameters is null */
   public Hermite1Subdivision( //
-      HsManifold hsManifold, HsTransport hsTransport, Scalar lgv, Scalar lvg, Scalar lvv) {
-    this.hsManifold = hsManifold;
-    this.hsTransport = hsTransport;
-    hsGeodesic = new HsGeodesic(hsManifold);
+      HomogeneousSpace homogeneousSpace, Scalar lgv, Scalar lvg, Scalar lvv) {
+    this.homogeneousSpace = homogeneousSpace;
+    hsTransport = homogeneousSpace.hsTransport();
     this.lgv = Objects.requireNonNull(lgv);
     this.lvg = lvg.add(lvg);
     this.lvv = lvv.add(lvv);
@@ -74,14 +70,14 @@ public class Hermite1Subdivision implements HermiteSubdivision, Serializable {
       Tensor qv = q.get(1);
       final Tensor rg;
       {
-        Tensor rg1 = hsGeodesic.midpoint(pg, qg);
+        Tensor rg1 = homogeneousSpace.midpoint(pg, qg);
         Tensor rpv = hsTransport.shift(pg, rg1).apply(pv); // at rg1
         Tensor rqv = hsTransport.shift(qg, rg1).apply(qv);
-        rg = hsManifold.exponential(rg1).exp(rpv.subtract(rqv).multiply(rgk));
+        rg = homogeneousSpace.exponential(rg1).exp(rpv.subtract(rqv).multiply(rgk));
       }
       final Tensor rv1;
       {
-        Exponential exponential = hsManifold.exponential(rg);
+        Exponential exponential = homogeneousSpace.exponential(rg);
         Tensor lrq = exponential.log(qg); // at rg pointing to q
         Tensor lrp = exponential.log(pg); // at rg pointing to p
         rv1 = lrq.subtract(lrp).multiply(rvk); // at rg

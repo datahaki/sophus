@@ -10,15 +10,14 @@ import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.mat.PositiveSemidefiniteMatrixQ;
@@ -32,19 +31,19 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class HsDesignTest {
+class HsDesignTest {
   @Test
   public void testRn() {
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       Distribution distribution = UniformDistribution.unit();
       for (int count = dimension + 1; count < 8; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, dimension);
-        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).sigma_inverse()));
+        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(manifold).matrix(sequence, point)).sigma_inverse()));
         for (Tensor form : forms)
           assertTrue(PositiveDefiniteMatrixQ.ofHermitian(form));
         Tensor point = RandomVariate.of(distribution, dimension);
-        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).sigma_inverse()));
+        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(new Mahalanobis(new HsDesign(manifold).matrix(sequence, point)).sigma_inverse()));
       }
     }
   }
@@ -62,16 +61,16 @@ public class HsDesignTest {
 
   @Test
   public void testSn() {
-    VectorLogManifold vectorLogManifold = SnManifold.INSTANCE;
+    Manifold manifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
       for (int count = dimension + 2; count < 8; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
-        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).sigma_inverse()));
+        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(manifold).matrix(sequence, point)).sigma_inverse()));
         for (Tensor form : forms)
           assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(form, Chop._06)); // has excess dimension
         Tensor point = RandomSample.of(randomSampleInterface);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+        Tensor matrix = new HsDesign(manifold).matrix(sequence, point);
         assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(new Mahalanobis(matrix).sigma_inverse(), Chop._08));
       }
     }
@@ -80,11 +79,11 @@ public class HsDesignTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       for (Tensor point : sequence) {
-        Tensor design = new HsDesign(vectorLogManifold).matrix(sequence, point);
+        Tensor design = new HsDesign(manifold).matrix(sequence, point);
         Mahalanobis mahalanobis = new Mahalanobis(design);
         InfluenceMatrix influenceMatrix = InfluenceMatrix.of(design);
         Chop._08.requireClose(mahalanobis.leverages(), influenceMatrix.leverages());
@@ -99,11 +98,11 @@ public class HsDesignTest {
   @Test
   public void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 8; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      Tensor design = new HsDesign(vectorLogManifold).matrix(sequence, point);
+      Tensor design = new HsDesign(manifold).matrix(sequence, point);
       Mahalanobis mahalanobis = new Mahalanobis(design);
       Tensor sigma_inverse = mahalanobis.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
@@ -111,7 +110,7 @@ public class HsDesignTest {
       Tensor vt = design;
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, point);
+      Tensor matrix = new HsDesign(manifold).matrix(sequence, point);
       InfluenceMatrix hsInfluence = InfluenceMatrix.of(matrix);
       Chop._08.requireClose(dot, hsInfluence.residualMaker());
     }
@@ -122,15 +121,15 @@ public class HsDesignTest {
   @Test
   public void testSe2CadInvariant() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      Tensor leverages_sqrt = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point)).leverages_sqrt();
+      Tensor leverages_sqrt = new Mahalanobis(new HsDesign(manifold).matrix(sequence, point)).leverages_sqrt();
       leverages_sqrt.stream().map(Scalar.class::cast).forEach(Clips.unit()::requireInside);
       Tensor shift = RandomVariate.of(distribution, 3);
       for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(tensorMapping.slash(sequence), tensorMapping.apply(point));
+        Tensor matrix = new HsDesign(manifold).matrix(tensorMapping.slash(sequence), tensorMapping.apply(point));
         Chop._05.requireClose(leverages_sqrt, //
             new Mahalanobis(matrix).leverages_sqrt());
       }

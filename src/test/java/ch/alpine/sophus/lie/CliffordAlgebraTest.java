@@ -2,16 +2,15 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -20,6 +19,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Numel;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.Quaternion;
@@ -41,7 +41,7 @@ import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.spa.Nnz;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class CliffordAlgebraTest {
+class CliffordAlgebraTest {
   @Test
   public void testD0() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = Serialization.copy(CliffordAlgebraCache.positive(0));
@@ -50,7 +50,7 @@ public class CliffordAlgebraTest {
 
   @Test
   public void testDnegativeFail() {
-    AssertFail.of(() -> CliffordAlgebraCache.positive(-1));
+    assertThrows(Exception.class, () -> CliffordAlgebraCache.positive(-1));
   }
 
   @Test
@@ -93,7 +93,7 @@ public class CliffordAlgebraTest {
     SparseArray cp = (SparseArray) cliffordAlgebra.cp();
     assertEquals(Nnz.of(cp), 6);
     assertEquals(Numel.of(cp), 64);
-    assertTrue(JacobiIdentity.of(cp) instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, JacobiIdentity.of(cp));
     Tensor x = Tensors.vector(1, 2, 3, 4);
     Tensor m = gp.dot(x);
     LinearSolve.of(m, UnitVector.of(4, 0));
@@ -158,7 +158,7 @@ public class CliffordAlgebraTest {
     assertEquals(cliffordAlgebra.grade(x, 1), Tensors.vector(0, 2, 3, 4, 0, 0, 0, 0));
     assertEquals(cliffordAlgebra.grade(x, 2), Tensors.vector(0, 0, 0, 0, 5, -3, -4, 0));
     assertEquals(cliffordAlgebra.grade(x, 3), Tensors.vector(0, 0, 0, 0, 0, 0, 0, -1));
-    AssertFail.of(() -> cliffordAlgebra.grade(x, 4));
+    assertThrows(Exception.class, () -> cliffordAlgebra.grade(x, 4));
   }
 
   @Test
@@ -219,8 +219,8 @@ public class CliffordAlgebraTest {
   @Test
   public void testReverseFail() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
-    AssertFail.of(() -> cliffordAlgebra.reverse(Pi.VALUE));
-    AssertFail.of(() -> cliffordAlgebra.reverse(HilbertMatrix.of(4)));
+    assertThrows(Exception.class, () -> cliffordAlgebra.reverse(Pi.VALUE));
+    assertThrows(Exception.class, () -> cliffordAlgebra.reverse(HilbertMatrix.of(4)));
   }
 
   @Test
@@ -229,7 +229,7 @@ public class CliffordAlgebraTest {
       for (int q = 0; q < 2; ++q) {
         CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.of(p, q);
         Tensor cp = cliffordAlgebra.cp();
-        assertTrue(cp instanceof SparseArray);
+        assertInstanceOf(SparseArray.class, cp);
         JacobiIdentity.require(cp);
         Tensor x = RandomVariate.of(DiscreteUniformDistribution.of(-10, +10), cp.length());
         Tensor y = RandomVariate.of(DiscreteUniformDistribution.of(-10, +10), cp.length());

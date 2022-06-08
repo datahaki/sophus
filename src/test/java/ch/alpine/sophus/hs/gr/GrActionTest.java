@@ -8,7 +8,7 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrActionTest {
+class GrActionTest {
   @Test
   public void testDecomp() {
     int n = 5;

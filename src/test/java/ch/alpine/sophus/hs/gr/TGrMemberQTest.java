@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -35,7 +35,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.PoissonDistribution;
 import ch.alpine.tensor.sca.Sign;
 
-public class TGrMemberQTest {
+class TGrMemberQTest {
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     int n = 5;
@@ -119,6 +119,6 @@ public class TGrMemberQTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new TGrMemberQ(null));
+    assertThrows(Exception.class, () -> new TGrMemberQ(null));
   }
 }

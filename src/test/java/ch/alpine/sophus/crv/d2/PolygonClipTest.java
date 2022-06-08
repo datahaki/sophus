@@ -2,6 +2,7 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -9,8 +10,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -19,6 +18,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.RotateLeft;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.HilbertMatrix;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class PolygonClipTest {
+class PolygonClipTest {
   public static boolean equalsCycle(Tensor cycle1, Tensor cycle2) {
     if (cycle1.length() == cycle2.length())
       for (int index = 0; index < cycle2.length(); ++index)
@@ -42,7 +42,7 @@ public class PolygonClipTest {
     Tensor b = Tensors.empty();
     Tensor result = PolygonClip.of(a).apply(b);
     assertTrue(Tensors.isEmpty(result));
-    AssertFail.of(() -> result.append(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> result.append(RealScalar.ZERO));
     assertTrue(Tensors.isEmpty(a));
     assertTrue(Tensors.isEmpty(b));
   }
@@ -138,6 +138,6 @@ public class PolygonClipTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> PolygonClip.of(HilbertMatrix.of(2, 3)));
+    assertThrows(Exception.class, () -> PolygonClip.of(HilbertMatrix.of(2, 3)));
   }
 }

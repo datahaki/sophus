@@ -6,16 +6,14 @@ import java.util.function.BinaryOperator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.HsGeodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMemberQ;
 import ch.alpine.sophus.hs.sn.TSnMemberQ;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.lie.so3.So3Exponential;
-import ch.alpine.sophus.lie.so3.So3Manifold;
+import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -23,16 +21,16 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.sca.Chop;
 
-public class BchBinaryAverageTest {
+class BchBinaryAverageTest {
   @Test
   public void testSe2() {
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Exponential exponential = Se2CoveringGroup.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.1);
     Tensor y = Tensors.vector(0.2, -0.1, 0.2);
     Tensor mX = exponential.exp(x);
     Tensor mY = exponential.exp(y);
     Scalar lambda = RealScalar.of(0.3);
-    HsGeodesic hsGeodesic = new HsGeodesic(Se2CoveringManifold.INSTANCE);
+    GeodesicSpace hsGeodesic = Se2CoveringGroup.INSTANCE;
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
     Tensor cmp = BchBinaryAverage.of(Se2Algebra.INSTANCE.bch(6)).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
@@ -40,13 +38,13 @@ public class BchBinaryAverageTest {
 
   @Test
   public void testSo3() {
-    Exponential exponential = So3Exponential.INSTANCE;
+    Exponential exponential = So3Group.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = exponential.exp(x);
     Tensor mY = exponential.exp(y);
     Scalar lambda = RealScalar.of(0.3);
-    HsGeodesic hsGeodesic = new HsGeodesic(So3Manifold.INSTANCE);
+    GeodesicSpace hsGeodesic = So3Group.INSTANCE;
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
     Tensor cmp = BchBinaryAverage.of(So3Algebra.INSTANCE.bch(6)).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
@@ -67,7 +65,7 @@ public class BchBinaryAverageTest {
     tSnMemberQ.require(x);
     tSnMemberQ.require(y);
     Scalar lambda = RealScalar.of(0.3);
-    HsGeodesic hsGeodesic = new HsGeodesic(SnManifold.INSTANCE);
+    GeodesicSpace hsGeodesic = SnManifold.INSTANCE;
     Tensor mz = exponential.log(hsGeodesic.split(mx, my, lambda));
     mz.map(Scalar::zero);
     for (int d = 1; d < 7; ++d) {

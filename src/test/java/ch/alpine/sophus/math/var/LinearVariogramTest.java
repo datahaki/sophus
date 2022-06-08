@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.num.Pi;
 
-public class LinearVariogramTest {
+class LinearVariogramTest {
   @Test
   public void testSimple() {
     assertEquals(new LinearVariogram(Pi.VALUE).a(), Pi.VALUE);

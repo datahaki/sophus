@@ -1,11 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.sca.Sign;
 
-public class LBilinearFormTest {
+class LBilinearFormTest {
   @Test
   public void testSimple() {
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
@@ -66,6 +66,6 @@ public class LBilinearFormTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> LBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
+    assertThrows(Exception.class, () -> LBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
   }
 }

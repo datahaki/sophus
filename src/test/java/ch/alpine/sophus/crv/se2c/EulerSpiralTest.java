@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class EulerSpiralTest {
+class EulerSpiralTest {
   @Test
   public void testSpecific() {
     Tensor xya = EulerSpiral.FUNCTION.apply(RealScalar.of(0.3));

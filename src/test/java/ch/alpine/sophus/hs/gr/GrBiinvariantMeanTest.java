@@ -1,14 +1,16 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.sophus.hs.HsGeodesic;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -22,7 +24,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrBiinvariantMeanTest {
+class GrBiinvariantMeanTest {
   @Test
   public void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
@@ -38,7 +40,7 @@ public class GrBiinvariantMeanTest {
     }
     int n = sequence.length();
     Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
-    AssertFail.of(() -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
+    assertThrows(Exception.class, () -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
     Tensor point = GrBiinvariantMean.INSTANCE.mean(sequence, weights);
     GrMemberQ.INSTANCE.require(point);
     GrMetric.INSTANCE.distance(p, point);
@@ -51,17 +53,15 @@ public class GrBiinvariantMeanTest {
     }
   }
 
-  @Test
+  @RepeatedTest(10)
   public void testGeodesic() {
-    HsGeodesic hsGeodesic = new HsGeodesic(GrManifold.INSTANCE);
+    GeodesicSpace hsGeodesic = GrManifold.INSTANCE;
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
-    for (int count = 0; count < 10; ++count) {
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor q = RandomSample.of(randomSampleInterface);
-      ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
-      Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
-      for (Tensor point : sequence)
-        GrMemberQ.INSTANCE.require(point);
-    }
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
+    Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
+    for (Tensor point : sequence)
+      GrMemberQ.INSTANCE.require(point);
   }
 }

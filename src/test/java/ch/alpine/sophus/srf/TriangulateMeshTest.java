@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.srf.io.PlyFormat;
 import ch.alpine.tensor.io.ResourceData;
 
-public class TriangulateMeshTest {
+class TriangulateMeshTest {
   @Test
   public void testSimple() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));

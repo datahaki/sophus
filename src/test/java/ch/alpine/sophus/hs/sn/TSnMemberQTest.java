@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.sn;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class TSnMemberQTest {
+class TSnMemberQTest {
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     MemberQ memberQ = Serialization.copy(SnMemberQ.INSTANCE);
@@ -50,6 +50,6 @@ public class TSnMemberQTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new TSnMemberQ(null));
+    assertThrows(Exception.class, () -> new TSnMemberQ(null));
   }
 }

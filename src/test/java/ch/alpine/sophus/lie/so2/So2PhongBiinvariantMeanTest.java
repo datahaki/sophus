@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class So2PhongBiinvariantMeanTest {
+class So2PhongBiinvariantMeanTest {
   @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Math.PI));

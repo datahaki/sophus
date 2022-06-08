@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class ParametricResampleTest {
+class ParametricResampleTest {
   @Test
   public void testSimple() {
     Scalar threshold = RealScalar.of(33);

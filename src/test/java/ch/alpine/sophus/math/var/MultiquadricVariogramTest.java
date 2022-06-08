@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -14,7 +15,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.qty.Quantity;
 
-public class MultiquadricVariogramTest {
+class MultiquadricVariogramTest {
   @Test
   public void testQuantity() throws ClassNotFoundException, IOException {
     ScalarUnaryOperator scalarUnaryOperator = Serialization.copy(MultiquadricVariogram.of(Quantity.of(1, "m")));
@@ -31,6 +32,6 @@ public class MultiquadricVariogramTest {
 
   @Test
   public void testFailNonPositive() {
-    AssertFail.of(() -> MultiquadricVariogram.of(RealScalar.of(-1)));
+    assertThrows(Exception.class, () -> MultiquadricVariogram.of(RealScalar.of(-1)));
   }
 }

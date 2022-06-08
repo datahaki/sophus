@@ -1,16 +1,17 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
 
-public class SnAngleTest {
+class SnAngleTest {
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
     Serialization.copy(new SnAngle(UnitVector.of(4, 2)));
@@ -18,6 +19,6 @@ public class SnAngleTest {
 
   @Test
   public void testMemberQFail() {
-    AssertFail.of(() -> new SnAngle(Tensors.vector(1, 1)));
+    assertThrows(Exception.class, () -> new SnAngle(Tensors.vector(1, 1)));
   }
 }

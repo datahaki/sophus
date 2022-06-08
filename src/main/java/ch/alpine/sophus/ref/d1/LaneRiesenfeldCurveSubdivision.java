@@ -6,23 +6,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ch.alpine.sophus.api.MidpointInterface;
-import ch.alpine.tensor.ScalarQ;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.chq.ScalarQ;
 import ch.alpine.tensor.ext.Integers;
 
 /** Reference:
  * "A theoretical development for the computer generation of piecewise polynomial surfaces"
  * by J. M. Lane and R. F. Riesenfeld; IEEE Trans. Pattern Anal. Machine Intell. 2 (1980), 35-46 */
 public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Serializable {
-  /** @param midpointInterface
+  /** @param geodesicSpace
    * @param degree strictly positive
    * @return
-   * @throws Exception if midpointInterface is null */
-  public static CurveSubdivision of(MidpointInterface midpointInterface, int degree) {
-    return new LaneRiesenfeldCurveSubdivision(midpointInterface, Integers.requirePositive(degree));
+   * @throws Exception if geodesicSpace is null */
+  public static CurveSubdivision of(GeodesicSpace geodesicSpace, int degree) {
+    return new LaneRiesenfeldCurveSubdivision(geodesicSpace, Integers.requirePositive(degree));
   }
 
   // ---
@@ -30,8 +30,8 @@ public class LaneRiesenfeldCurveSubdivision implements CurveSubdivision, Seriali
   private final BSpline1CurveSubdivision bSpline1CurveSubdivision;
   private final int degree;
 
-  private LaneRiesenfeldCurveSubdivision(MidpointInterface midpointInterface, int degree) {
-    bSpline1CurveSubdivision = new BSpline1CurveSubdivision(midpointInterface);
+  private LaneRiesenfeldCurveSubdivision(GeodesicSpace geodesicSpace, int degree) {
+    bSpline1CurveSubdivision = new BSpline1CurveSubdivision(geodesicSpace);
     this.degree = degree;
   }
 

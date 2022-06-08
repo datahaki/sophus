@@ -20,9 +20,9 @@ import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class DtManifoldTest {
+class DtManifoldTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtManifold.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtGroup.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //

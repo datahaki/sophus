@@ -2,6 +2,8 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -14,7 +16,6 @@ import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -35,13 +36,13 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.spa.Normal;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class MatrixAlgebraTest {
+class MatrixAlgebraTest {
   @Test
   public void testSe2() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
-    assertTrue(b2 instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, b2);
     Tensor basis = Tensors.of(b0, b1, b2);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     assertEquals(matrixAlgebra.ad(), Se2Algebra.INSTANCE.ad());
@@ -56,7 +57,7 @@ public class MatrixAlgebraTest {
     Tolerance.CHOP.requireClose( //
         matrixAlgebra.toVector(N.DOUBLE.of(b1.add(b2.multiply(RealScalar.of(0.3))))), Tensors.vector(0, 1, 0.3));
     Tensor rank4 = JacobiIdentity.of(matrixAlgebra.ad());
-    assertTrue(rank4 instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, rank4);
   }
 
   @Test
@@ -123,18 +124,18 @@ public class MatrixAlgebraTest {
 
   @Test
   public void testNumericFail() {
-    AssertFail.of(() -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
+    assertThrows(Exception.class, () -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
   }
 
   @Test
   public void testZeroFail() {
-    AssertFail.of(() -> new MatrixAlgebra(Array.zeros(1, 2, 2)));
+    assertThrows(Exception.class, () -> new MatrixAlgebra(Array.zeros(1, 2, 2)));
   }
 
   @Test
   public void testRedundantFail() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
-    AssertFail.of(() -> new MatrixAlgebra(Tensors.of(b0, b0)));
+    assertThrows(Exception.class, () -> new MatrixAlgebra(Tensors.of(b0, b0)));
   }
 
   private static void check(MatrixAlgebra matrixAlgebra, int degree) {

@@ -18,7 +18,7 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Exp;
 
-public class AffineCoordinateTest {
+class AffineCoordinateTest {
   @Test
   public void testS1() {
     Genesis genesis = MetricCoordinate.affine();

@@ -8,7 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 
-public class Se2RandomSampleTest {
+class Se2RandomSampleTest {
   @Test
   public void testSimple() {
     Tensor tensor = RandomSample.of(Se2RandomSample.of(ExponentialDistribution.standard()));

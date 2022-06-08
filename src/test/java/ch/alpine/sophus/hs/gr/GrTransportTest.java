@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,6 @@ import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.BasisTransform;
@@ -23,7 +24,7 @@ import ch.alpine.tensor.pdf.c.LogisticDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrTransportTest {
+class GrTransportTest {
   public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
 
   @Test
@@ -38,7 +39,7 @@ public class GrTransportTest {
     Tensor log = new GrExponential(p).log(q);
     tGrMemberQ.require(log);
     Tensor qv0 = POLE_LADDER.shift(p, q).apply(pv);
-    Tensor qv1 = Serialization.copy(GrTransport.INSTANCE.shift(p, q)).apply(pv);
+    Tensor qv1 = Serialization.copy(GrManifold.INSTANCE.hsTransport().shift(p, q)).apply(pv);
     new TGrMemberQ(q).require(qv1);
     Chop._08.requireClose(qv0, qv1);
     Tensor match = GrAction.match(p, q);
@@ -60,7 +61,7 @@ public class GrTransportTest {
       Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
-      TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(o, p);
+      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(o, p);
       Tensor pv = tensorUnaryOperator.apply(ov);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
       tGrMemberQ.require(pv);
@@ -75,9 +76,9 @@ public class GrTransportTest {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      TensorUnaryOperator tensorUnaryOperator = GrTransport.INSTANCE.shift(p, q);
+      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(p, q);
       Tensor ov = RandomVariate.of(distribution, n, n);
-      AssertFail.of(() -> tensorUnaryOperator.apply(ov));
+      assertThrows(Exception.class, () -> tensorUnaryOperator.apply(ov));
     }
   }
 }

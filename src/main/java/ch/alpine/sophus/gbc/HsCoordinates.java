@@ -7,7 +7,7 @@ import java.util.Objects;
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.HsGenesis;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 
 /** Examples:
@@ -18,19 +18,19 @@ import ch.alpine.tensor.Tensor;
  * 
  * @see HsGenesis */
 public class HsCoordinates implements BarycentricCoordinate, Serializable {
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param genesis
    * @return */
-  public static BarycentricCoordinate wrap(VectorLogManifold vectorLogManifold, Genesis genesis) {
-    return new HsCoordinates(vectorLogManifold, genesis);
+  public static BarycentricCoordinate wrap(Manifold manifold, Genesis genesis) {
+    return new HsCoordinates(manifold, genesis);
   }
 
   // ---
   private final HsDesign hsDesign;
   private final Genesis genesis;
 
-  private HsCoordinates(VectorLogManifold vectorLogManifold, Genesis genesis) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  private HsCoordinates(Manifold manifold, Genesis genesis) {
+    hsDesign = new HsDesign(manifold);
     this.genesis = Objects.requireNonNull(genesis);
   }
 

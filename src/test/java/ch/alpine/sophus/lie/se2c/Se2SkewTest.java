@@ -16,7 +16,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2SkewTest {
+class Se2SkewTest {
   @Test
   public void testZero() {
     Tensor tensor = Se2Skew.logflow(RealScalar.ZERO);
@@ -51,7 +51,7 @@ public class Se2SkewTest {
     Tensor xy = Tensors.vector(2, 3).unmodifiable();
     Scalar angle = RealScalar.of(0.2);
     Tensor csk = Se2Skew.logflow(angle);
-    Tensor log = Se2CoveringExponential.INSTANCE.log(xy.copy().append(angle));
+    Tensor log = Se2CoveringGroup.INSTANCE.log(xy.copy().append(angle));
     Tolerance.CHOP.requireClose(log.extract(0, 2), csk.dot(xy));
   }
 }

@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.exp.Logc;
  * Reference 2:
  * "Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations."
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, p.29, 2006 */
-public enum DtBiinvariantMean implements BiinvariantMean {
+/* package */ enum DtBiinvariantMean implements BiinvariantMean {
   INSTANCE;
 
   @Override // from BiinvariantMean

@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.h2;
 
-import ch.alpine.sophus.api.MidpointInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
@@ -20,10 +21,10 @@ import ch.alpine.tensor.sca.pow.Sqrt;
  * 
  * Reference:
  * Alekseevskij et al. 1993 */
-public enum H2Midpoint implements MidpointInterface {
+public enum H2Midpoint implements GeodesicSpace {
   INSTANCE;
 
-  @Override // from MidpointInterface
+  @Override
   public Tensor midpoint(Tensor a, Tensor b) {
     Tensor sum = psi(a).add(psi(b));
     return phi(sum.divide(nrm(sum)));
@@ -48,5 +49,10 @@ public enum H2Midpoint implements MidpointInterface {
     Scalar x1 = x.Get(1);
     Scalar x2 = x.Get(2);
     return Sqrt.FUNCTION.apply(x0.multiply(x0).subtract(x1.multiply(x1)).subtract(x2.multiply(x2)));
+  }
+
+  @Override
+  public ScalarTensorFunction curve(Tensor p, Tensor q) {
+    throw new UnsupportedOperationException();
   }
 }

@@ -14,7 +14,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    return Vector2Norm.of(Se2CoveringExponential.INSTANCE.log( //
+    return Vector2Norm.of(Se2CoveringGroup.INSTANCE.log( //
         new Se2CoveringGroupElement(p).inverse().combine(q)));
   }
 }

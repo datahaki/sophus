@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
-
-public class ThreePointWeightingTest {
+class ThreePointWeightingTest {
   @Test
   public void testSimple() {
-    AssertFail.of(() -> new ThreePointWeighting(null));
+    assertThrows(Exception.class, () -> new ThreePointWeighting(null));
   }
 }

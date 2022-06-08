@@ -1,10 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import java.util.Objects;
-
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -40,15 +37,13 @@ public enum Hermite1Subdivisions {
    * "Dual Hermite subdivision schemes of de Rham-type"
    * by Conti, Merrien, Romani, 2015, p. 11, H1[lambda, mu]
    * 
-   * @param hsManifold
-   * @param hsTransport
+   * @param homogeneousSpace
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HsManifold hsManifold, HsTransport hsTransport, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, Scalar lambda, Scalar mu) {
     return new Hermite1Subdivision( //
-        hsManifold, //
-        Objects.requireNonNull(hsTransport), //
+        homogeneousSpace, //
         lambda, //
         RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
         mu.multiply(_1_4));
@@ -61,10 +56,10 @@ public enum Hermite1Subdivisions {
    * "Construction of Hermite subdivision schemes reproducing polynomials"
    * by Byeongseon Jeong, Jungho Yoon, 2017
    * 
-   * @param hsManifold
+   * @param homogeneousSpace
    * @param hsTransport
    * @return */
-  public static HermiteSubdivision standard(HsManifold hsManifold, HsTransport hsTransport) {
-    return of(hsManifold, hsTransport, N1_8, N1_2);
+  public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
+    return of(homogeneousSpace, N1_8, N1_2);
   }
 }

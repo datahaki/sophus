@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensors;
 
-public class RnHermite1SubdivisionsTest {
+class RnHermite1SubdivisionsTest {
   @Test
   public void testSimple() {
     RnHermite1Subdivision hs = RnHermite1Subdivisions.of(RationalScalar.of(-1, 8), RationalScalar.of(-1, 2));

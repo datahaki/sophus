@@ -62,7 +62,7 @@ public class GrExponential implements Exponential, Serializable {
     return BasisTransform.ofMatrix(p, MatrixExp.of(mLog(q).multiply(N1_4)));
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     // TODO SOPHUS GR (k x (n - k)) coefficients are sufficient according to theory
     return LowerVectorize.of(log(q), 0); // n (n + 1) / 2

@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.util.function.BiFunction;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -14,7 +15,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.Chop;
 
-public class PowerBarycenterTest {
+class PowerBarycenterTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
     BiFunction<Tensor, Scalar, Tensor> biFunction = Serialization.copy(PowerBarycenter.of(1.5));
@@ -26,7 +27,7 @@ public class PowerBarycenterTest {
   public void testExpFail() {
     PowerBarycenter.of(0.0);
     PowerBarycenter.of(2.0);
-    AssertFail.of(() -> PowerBarycenter.of(-0.1));
-    AssertFail.of(() -> PowerBarycenter.of(2.1));
+    assertThrows(Exception.class, () -> PowerBarycenter.of(-0.1));
+    assertThrows(Exception.class, () -> PowerBarycenter.of(2.1));
   }
 }

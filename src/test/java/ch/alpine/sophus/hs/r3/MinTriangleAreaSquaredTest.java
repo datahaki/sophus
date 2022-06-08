@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.r3;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -19,7 +20,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
 
-public class MinTriangleAreaSquaredTest {
+class MinTriangleAreaSquaredTest {
   @Test
   public void testSimple() {
     for (int n = 3; n <= 6; ++n) {
@@ -105,6 +106,6 @@ public class MinTriangleAreaSquaredTest {
 
   @Test
   public void testEmptyFail() {
-    AssertFail.of(() -> MinTriangleAreaSquared.INSTANCE.origin(Tensors.empty()));
+    assertThrows(Exception.class, () -> MinTriangleAreaSquared.INSTANCE.origin(Tensors.empty()));
   }
 }

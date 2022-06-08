@@ -2,13 +2,16 @@
 package ch.alpine.sophus.math.bch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.Random;
 import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.api.SeriesInterface;
 import ch.alpine.sophus.lie.CliffordAlgebra;
@@ -17,14 +20,13 @@ import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.mat.re.Det;
@@ -34,7 +36,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.SparseArray;
 
-public class BakerCampbellHausdorffTest {
+class BakerCampbellHausdorffTest {
   private static void _check(Tensor ad, int degree) {
     BakerCampbellHausdorff bakerCampbellHausdorff = //
         new BakerCampbellHausdorff(ad, degree, Chop._14);
@@ -91,57 +93,66 @@ public class BakerCampbellHausdorffTest {
     // System.out.println(String.format("apx: %10d", t_apx.nanoSeconds()));
   }
 
-  private static final int[] DEGREES = new int[] { 6, 8 };
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testHe1(int d) {
+    _check(new HeAlgebra(2).ad(), d);
+  }
 
-  @Test
-  public void testHe1() {
-    for (int d : DEGREES)
-      _check(new HeAlgebra(2).ad(), d);
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testSl2(int d) {
+    _check(Sl2Algebra.INSTANCE.ad(), d);
   }
 
   @Test
-  public void testSl2() {
-    for (int d : DEGREES)
-      _check(Sl2Algebra.INSTANCE.ad(), d);
-  }
-
-  @Test
-  public void testSl2Sophus() {
+  public void testSl2SophusAd() {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
-    for (int d : DEGREES)
-      _check(ad, d);
     assertEquals(Det.of(KillingForm.of(ad)), RealScalar.of(-8));
   }
 
-  @Test
-  public void testSe2() {
-    for (int d : new int[] { 6, 8, 10 })
-      _check(Se2Algebra.INSTANCE.ad(), d);
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testSl2Sophus(int d) {
+    Tensor ad = Tensors.fromString( //
+        "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
+    _check(ad, d);
   }
 
-  @Test
-  public void testSo3() {
-    for (int d : DEGREES)
-      _check(So3Algebra.INSTANCE.ad(), d);
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8, 10 })
+  public void testSe2(int d) {
+    _check(Se2Algebra.INSTANCE.ad(), d);
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { 6, 8 })
+  public void testSo3(int d) {
+    _check(So3Algebra.INSTANCE.ad(), d);
   }
 
   @Test
   public void testOptimized() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
-    assertTrue(BakerCampbellHausdorff.of(ad, 6) instanceof BchSeries6);
-    assertTrue(BakerCampbellHausdorff.of(ad, 8) instanceof BchSeries8);
-    assertTrue(BakerCampbellHausdorff.of(ad, 10) instanceof BchSeriesA);
-    assertTrue(BakerCampbellHausdorff.of(ad, 6, Chop._02) instanceof BchSeries6);
-    assertTrue(BakerCampbellHausdorff.of(ad, 8, Chop._02) instanceof BchSeries8);
-    assertTrue(BakerCampbellHausdorff.of(ad, 10, Chop._02) instanceof BchSeriesA);
+    assertInstanceOf(BchSeries6.class, BakerCampbellHausdorff.of(ad, 6));
+    assertInstanceOf(BchSeries8.class, BakerCampbellHausdorff.of(ad, 8));
+    assertInstanceOf(BchSeriesA.class, BakerCampbellHausdorff.of(ad, 10));
+  }
+
+  @Test
+  public void testOptimized2() {
+    Tensor ad = Sl2Algebra.INSTANCE.ad();
+    assertInstanceOf(BchSeries6.class, BakerCampbellHausdorff.of(ad, 6, Chop._02));
+    assertInstanceOf(BchSeries8.class, BakerCampbellHausdorff.of(ad, 8, Chop._02));
+    assertInstanceOf(BchSeriesA.class, BakerCampbellHausdorff.of(ad, 10, Chop._02));
   }
 
   @Test
   public void testSparse() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.of(1, 2);
     Tensor cp = cliffordAlgebra.cp();
-    assertTrue(cp instanceof SparseArray);
+    assertInstanceOf(SparseArray.class, cp);
     BinaryOperator<Tensor> binaryOperator = Serialization.copy(BakerCampbellHausdorff.of(cp, 3));
     int n = cp.length();
     Distribution distribution = DiscreteUniformDistribution.of(-10, 10);
@@ -157,20 +168,20 @@ public class BakerCampbellHausdorffTest {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     Serialization.copy(BakerCampbellHausdorff.of(ad, 2));
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 2));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 2));
   }
 
   @Test
   public void testDegreeFail() {
     Tensor ad = Array.sparse(2, 2, 2);
     BakerCampbellHausdorff.of(ad, 1);
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 1, null));
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 0));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 1, null));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 0));
   }
 
   @Test
   public void testChopNullFail() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
-    AssertFail.of(() -> BakerCampbellHausdorff.of(ad, 6, null));
+    assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 6, null));
   }
 }

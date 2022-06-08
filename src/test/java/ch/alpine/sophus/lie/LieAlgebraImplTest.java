@@ -13,18 +13,18 @@ import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class LieAlgebraImplTest {
+class LieAlgebraImplTest {
   private static final Scalar P1 = RealScalar.ONE;
   private static final Scalar N1 = RealScalar.ONE.negate();
 

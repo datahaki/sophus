@@ -12,13 +12,13 @@ import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.sophus.srf.io.PlyFormat;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.io.ResourceData;
 import ch.alpine.tensor.red.Mean;
 
-public class CatmullClarkRefinementTest {
+class CatmullClarkRefinementTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //

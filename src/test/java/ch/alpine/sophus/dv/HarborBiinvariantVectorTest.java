@@ -12,11 +12,10 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.BiinvariantVector;
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
 import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.Distribution;
@@ -26,25 +25,25 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class HarborBiinvariantVectorTest {
-  /** @param vectorLogManifold
+class HarborBiinvariantVectorTest {
+  /** @param manifold
    * @param sequence
    * @return */
-  public static BiinvariantVectorFunction norm2(VectorLogManifold vectorLogManifold, Tensor sequence) {
-    return new InfluenceBiinvariantVector(vectorLogManifold, sequence, (x, y) -> Matrix2Norm.of(x.subtract(y)));
+  public static BiinvariantVectorFunction norm2(Manifold manifold, Tensor sequence) {
+    return new InfluenceBiinvariantVector(manifold, sequence, (x, y) -> Matrix2Norm.of(x.subtract(y)));
   }
 
   @Test
   public void testRn() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     int length = 4 + random.nextInt(6);
     Tensor sequence = RandomVariate.of(distribution, length, 3);
     Tensor point = RandomVariate.of(distribution, 3);
-    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
-    BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
-    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
+    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(manifold, sequence);
+    BiinvariantVectorFunction d2 = norm2(manifold, sequence);
+    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(manifold, sequence);
     BiinvariantVector v1 = d1.biinvariantVector(point);
     BiinvariantVector v2 = d2.biinvariantVector(point);
     BiinvariantVector v3 = d3.biinvariantVector(point);
@@ -56,13 +55,13 @@ public class HarborBiinvariantVectorTest {
   public void testSe2C() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     int length = 4 + random.nextInt(4);
     Tensor sequence = RandomVariate.of(distribution, length, 3);
     Tensor point = RandomVariate.of(distribution, 3);
-    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(vectorLogManifold, sequence);
-    BiinvariantVectorFunction d2 = norm2(vectorLogManifold, sequence);
-    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(vectorLogManifold, sequence);
+    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(manifold, sequence);
+    BiinvariantVectorFunction d2 = norm2(manifold, sequence);
+    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(manifold, sequence);
     BiinvariantVector v1 = d1.biinvariantVector(point);
     BiinvariantVector v2 = d2.biinvariantVector(point);
     BiinvariantVector v3 = d3.biinvariantVector(point);
@@ -76,18 +75,18 @@ public class HarborBiinvariantVectorTest {
 
   @Test
   public void testRandom() {
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     for (Biinvariant biinvariant : BIINVARIANT)
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor distances = biinvariant.distances(vectorLogManifold, points).apply(xya);
+        Tensor distances = biinvariant.distances(manifold, points).apply(xya);
         Tensor shift = RandomVariate.of(distribution, 3);
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
           Chop._05.requireClose(distances, //
-              biinvariant.distances(vectorLogManifold, tensorMapping.slash(points)).apply(tensorMapping.apply(xya)));
+              biinvariant.distances(manifold, tensorMapping.slash(points)).apply(tensorMapping.apply(xya)));
       }
   }
 }

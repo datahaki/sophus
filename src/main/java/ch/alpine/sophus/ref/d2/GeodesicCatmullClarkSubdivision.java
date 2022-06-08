@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d2;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
@@ -15,18 +15,18 @@ import ch.alpine.tensor.Unprotect;
  * "Recursively generated B-spline surfaces on arbitrary topological meshes"
  * by Catmull, Clark; Computer-Aided Design 16(6), 1978 */
 public class GeodesicCatmullClarkSubdivision {
-  private final SplitInterface splitInterface;
+  private final GeodesicSpace geodesicSpace;
   private final CurveSubdivision curveSubdivision;
 
-  public GeodesicCatmullClarkSubdivision(SplitInterface splitInterface) {
-    this.splitInterface = Objects.requireNonNull(splitInterface);
-    curveSubdivision = new BSpline3CurveSubdivision(splitInterface);
+  public GeodesicCatmullClarkSubdivision(GeodesicSpace geodesicSpace) {
+    this.geodesicSpace = Objects.requireNonNull(geodesicSpace);
+    curveSubdivision = new BSpline3CurveSubdivision(geodesicSpace);
   }
 
   public Tensor quad(Tensor a1, Tensor a2, Tensor b1, Tensor b2) {
-    return splitInterface.midpoint( //
-        splitInterface.midpoint(a1, a2), //
-        splitInterface.midpoint(b1, b2));
+    return geodesicSpace.midpoint( //
+        geodesicSpace.midpoint(a1, a2), //
+        geodesicSpace.midpoint(b1, b2));
   }
 
   public Tensor refine(Tensor grid) {
@@ -77,8 +77,8 @@ public class GeodesicCatmullClarkSubdivision {
             array[pix + 0][piy - 1], //
             array[pix + 0][piy + 1]);
         Tensor cen = array[pix][piy];
-        array[pix][piy] = splitInterface.split(mds, //
-            splitInterface.split(eds, cen, RationalScalar.of(1, 5)), //
+        array[pix][piy] = geodesicSpace.split(mds, //
+            geodesicSpace.split(eds, cen, RationalScalar.of(1, 5)), //
             RationalScalar.of(5, 4));
       }
     Tensor tensor = Tensor.of(Stream.of(array).map(Unprotect::byRef));

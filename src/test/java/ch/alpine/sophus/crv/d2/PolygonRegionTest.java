@@ -2,6 +2,7 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.qty.Quantity;
 
-public class PolygonRegionTest {
+class PolygonRegionTest {
   @Test
   public void testEmpty() throws ClassNotFoundException, IOException {
     PolygonRegion polygonRegion = Serialization.copy(new PolygonRegion(Tensors.of(Tensors.vector(1, 2))));
@@ -34,7 +34,7 @@ public class PolygonRegionTest {
 
   @Test
   public void testDimensionsFail() {
-    AssertFail.of(() -> new PolygonRegion(Tensors.fromString("{{1,2,3}}")));
+    assertThrows(Exception.class, () -> new PolygonRegion(Tensors.fromString("{{1,2,3}}")));
   }
 
   @Test

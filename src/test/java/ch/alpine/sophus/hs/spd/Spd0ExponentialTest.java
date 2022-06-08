@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.LowerTriangularize;
@@ -15,7 +16,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Spd0ExponentialTest {
+class Spd0ExponentialTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 5; ++n) {
@@ -58,13 +59,13 @@ public class Spd0ExponentialTest {
   public void testExpNonSymmetricFail() {
     RandomSampleInterface rsi = new TSpdRandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor x = LowerTriangularize.of(RandomSample.of(rsi));
-    AssertFail.of(() -> Spd0Exponential.INSTANCE.exp(x));
+    assertThrows(Exception.class, () -> Spd0Exponential.INSTANCE.exp(x));
   }
 
   @Test
   public void testLogNonSymmetricFail() {
     Spd0RandomSample spdRandomSample = new Spd0RandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor g = LowerTriangularize.of(RandomSample.of(spdRandomSample));
-    AssertFail.of(() -> Spd0Exponential.INSTANCE.log(g));
+    assertThrows(Exception.class, () -> Spd0Exponential.INSTANCE.log(g));
   }
 }

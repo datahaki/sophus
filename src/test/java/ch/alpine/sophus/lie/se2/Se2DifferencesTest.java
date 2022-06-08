@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2DifferencesTest {
+class Se2DifferencesTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);

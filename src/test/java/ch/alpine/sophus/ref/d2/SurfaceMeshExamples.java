@@ -9,7 +9,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 /** Hint:
  * implementation exists only for evaluation purposes
  * class may be removed in future releases */
-/* package */ enum SurfaceMeshExamples {
+public enum SurfaceMeshExamples {
   ;
   public static SurfaceMesh unitQuad() {
     SurfaceMesh surfaceMesh = new SurfaceMesh();
@@ -55,6 +55,25 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
     SurfaceMesh surfaceMesh = quads5();
     surfaceMesh.addVert(Tensors.vector(6, 6, 0));
     surfaceMesh.addFace(9, 10, 11, 8);
+    return surfaceMesh;
+  }
+
+  public static SurfaceMesh mixed7() {
+    SurfaceMesh surfaceMesh = quads5();
+    surfaceMesh.addVert(Tensors.vector(7, 5.5, 0)); // 11
+    surfaceMesh.addVert(Tensors.vector(5.5, 6.5, 1)); // 12
+    surfaceMesh.addFace(9, 10, 11, 12, 8);
+    return surfaceMesh;
+  }
+
+  public static SurfaceMesh mixed11() {
+    SurfaceMesh surfaceMesh = mixed7();
+    surfaceMesh.addVert(Tensors.vector(0, 8, -1)); // 13
+    surfaceMesh.addVert(Tensors.vector(6, 0, 1)); // 14
+    surfaceMesh.addFace(6, 7, 13);
+    surfaceMesh.addFace(7, 8, 13);
+    surfaceMesh.addFace(4, 14, 5);
+    surfaceMesh.addFace(5, 14, 10);
     return surfaceMesh;
   }
 }

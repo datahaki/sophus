@@ -2,11 +2,11 @@
 package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.qty.Unit;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Cos;
 
-public class DifferentialSpeedTest {
+class DifferentialSpeedTest {
   @Test
   public void testSimple() {
     DifferentialSpeed ds = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(0.5));
@@ -157,6 +157,6 @@ public class DifferentialSpeedTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> DifferentialSpeed.fromSI(RealScalar.of(0.0), RealScalar.of(0.5)));
+    assertThrows(Exception.class, () -> DifferentialSpeed.fromSI(RealScalar.of(0.0), RealScalar.of(0.5)));
   }
 }

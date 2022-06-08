@@ -18,7 +18,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.mat.Tolerance;
 
-public class HsBarycentricCoordinateTest {
+class HsBarycentricCoordinateTest {
   @Test
   public void testSimple() {
     Random random = new Random(3);

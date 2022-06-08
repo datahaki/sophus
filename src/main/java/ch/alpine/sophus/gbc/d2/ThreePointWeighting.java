@@ -19,9 +19,9 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:
  * weighting satisfies barycentric equation but do not necessarily sum up to one. */
-public record ThreePointWeighting(ThreePointScaling biFunction) implements Genesis, Serializable {
+public record ThreePointWeighting(ThreePointScaling threePointScaling) implements Genesis, Serializable {
   public ThreePointWeighting {
-    Objects.requireNonNull(biFunction);
+    Objects.requireNonNull(threePointScaling);
   }
 
   @Override
@@ -34,7 +34,7 @@ public record ThreePointWeighting(ThreePointScaling biFunction) implements Genes
       Scalar den = Vector2Norm.of(dif); // use of metric
       if (Scalars.isZero(den))
         return UnitVector.of(length, ind);
-      auxs[ind] = biFunction.scale(dif, den);
+      auxs[ind] = threePointScaling.scale(dif, den);
       dens[ind] = den;
       ++ind;
     }
@@ -44,7 +44,7 @@ public record ThreePointWeighting(ThreePointScaling biFunction) implements Genes
       Tensor cntr = auxs[index];
       Tensor next = auxs[(index + 1) % length];
       Scalar diff = forward(cntr, next).subtract(forward(cntr, prev));
-      list.add(biFunction.scale(diff, dens[index]));
+      list.add(threePointScaling.scale(diff, dens[index]));
     }
     Integers.requireEquals(list.size(), length);
     return Unprotect.using(list);

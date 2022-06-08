@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2InverseActionTest {
+class Se2InverseActionTest {
   @Test
   public void testSimple() {
     Tensor xya = Tensors.vector(1, 2, 3);

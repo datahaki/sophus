@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.so3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.BinaryOperator;
@@ -10,7 +11,6 @@ import java.util.function.BinaryOperator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -43,7 +43,7 @@ import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
-public class RodriguesTest {
+class RodriguesTest {
   @Test
   public void testConvergenceSo3() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
@@ -247,7 +247,7 @@ public class RodriguesTest {
   public void testOrthPassFormatFailEye() {
     Scalar one = RealScalar.ONE;
     Tensor eyestr = Tensors.matrix((i, j) -> i.equals(j) ? one : one.zero(), 3, 4);
-    AssertFail.of(() -> Rodrigues.INSTANCE.log(eyestr));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(eyestr));
   }
 
   @Test
@@ -255,7 +255,7 @@ public class RodriguesTest {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 5);
     Tensor orthog = Orthogonalize.of(matrix);
     assertTrue(OrthogonalMatrixQ.of(orthog));
-    AssertFail.of(() -> Rodrigues.INSTANCE.log(orthog));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(orthog));
   }
 
   @Test
@@ -268,21 +268,21 @@ public class RodriguesTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> Rodrigues.INSTANCE.exp(RealScalar.ZERO));
-    AssertFail.of(() -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0)));
-    AssertFail.of(() -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0)));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.exp(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0)));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0)));
   }
 
   @Test
   public void testLogTrash() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 3);
-    AssertFail.of(() -> Rodrigues.INSTANCE.log(matrix));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(matrix));
   }
 
   @Test
   public void testLogFail() {
-    AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3)));
-    AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3, 4)));
-    AssertFail.of(() -> Rodrigues.INSTANCE.log(Array.zeros(3, 3, 3)));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(Array.zeros(3)));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(Array.zeros(3, 4)));
+    assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(Array.zeros(3, 3, 3)));
   }
 }

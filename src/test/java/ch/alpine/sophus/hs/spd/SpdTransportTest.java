@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 /** SpdTransport is also tested in {@link SpdRiemannTest} */
-public class SpdTransportTest {
+class SpdTransportTest {
   @Test
   public void testLadder() throws ClassNotFoundException, IOException {
     Tensor p = IdentityMatrix.of(3);

@@ -3,10 +3,10 @@ package ch.alpine.sophus.fit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
 
-public class PowerIterationTest {
+class PowerIterationTest {
   @Test
   public void testSymmetric() {
     Tensor matrix = Tensors.fromString("{{2, 3, 0, 1}, {3, 1, 7, 5}, {0, 7, 10, 9}, {1, 5, 9, 13}}");
@@ -53,17 +53,17 @@ public class PowerIterationTest {
 
   @Test
   public void testZerosFail() {
-    AssertFail.of(() -> PowerIteration.of(Array.zeros(3, 3)));
+    assertThrows(Exception.class, () -> PowerIteration.of(Array.zeros(3, 3)));
   }
 
   @Test
   public void testVectorFail() {
-    AssertFail.of(() -> PowerIteration.of(Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> PowerIteration.of(Tensors.vector(1, 2, 3)));
   }
 
   @Test
   public void testMatrixFail() {
-    AssertFail.of(() -> PowerIteration.of(HilbertMatrix.of(4, 3)));
-    AssertFail.of(() -> PowerIteration.of(HilbertMatrix.of(3, 4)));
+    assertThrows(Exception.class, () -> PowerIteration.of(HilbertMatrix.of(4, 3)));
+    assertThrows(Exception.class, () -> PowerIteration.of(HilbertMatrix.of(3, 4)));
   }
 }

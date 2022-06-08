@@ -2,17 +2,17 @@
 package ch.alpine.sophus.flt.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.red.Total;
 
-public class BinomialWeightsTest {
+class BinomialWeightsTest {
   @Test
   public void testBinomial() {
     for (int size = 1; size < 5; ++size) {
@@ -31,6 +31,6 @@ public class BinomialWeightsTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> BinomialWeights.INSTANCE.apply(-1));
+    assertThrows(Exception.class, () -> BinomialWeights.INSTANCE.apply(-1));
   }
 }

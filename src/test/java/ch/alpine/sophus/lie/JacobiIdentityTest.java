@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,6 @@ import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class JacobiIdentityTest {
+class JacobiIdentityTest {
   @Test
   public void testHeisenberg() {
     Tensor ad = new HeAlgebra(1).ad();
@@ -43,7 +43,7 @@ public class JacobiIdentityTest {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
-    AssertFail.of(() -> JacobiIdentity.require(ad));
+    assertThrows(Exception.class, () -> JacobiIdentity.require(ad));
   }
 
   @Test

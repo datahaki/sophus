@@ -2,20 +2,20 @@
 package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.red.Nest;
 
-public class MSpline3CurveSubdivisionTest {
+class MSpline3CurveSubdivisionTest {
   @Test
   public void testSimple() {
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
@@ -64,6 +64,6 @@ public class MSpline3CurveSubdivisionTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new MSpline3CurveSubdivision(null));
+    assertThrows(Exception.class, () -> new MSpline3CurveSubdivision(null));
   }
 }

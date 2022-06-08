@@ -17,6 +17,6 @@ public class Se3RandomSample implements RandomSampleInterface, Serializable {
 
   @Override
   public Tensor randomSample(Random random) {
-    return Se3Exponential.INSTANCE.exp(rsi.randomSample(random));
+    return Se3Group.INSTANCE.exp(rsi.randomSample(random));
   }
 }

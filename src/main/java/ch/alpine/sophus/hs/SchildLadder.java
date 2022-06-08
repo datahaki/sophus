@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
@@ -14,15 +13,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exact in R^n
  * 
  * @see PoleLadder */
-public record SchildLadder(HsManifold hsManifold, MidpointInterface midpointInterface) implements HsTransport, Serializable {
-  /** @param hsManifold
-   * @return */
-  public static HsTransport of(HsManifold hsManifold) {
-    return new SchildLadder(Objects.requireNonNull(hsManifold), null);
-  }
-
+public record SchildLadder(HomogeneousSpace homogeneousSpace) implements HsTransport, Serializable {
   public SchildLadder {
-    Objects.requireNonNull(hsManifold);
+    Objects.requireNonNull(homogeneousSpace);
   }
 
   @Override // from HsTransport
@@ -31,22 +24,18 @@ public record SchildLadder(HsManifold hsManifold, MidpointInterface midpointInte
   }
 
   private class Rung implements TensorUnaryOperator {
-    private final Tensor q;
     private final Exponential exp_p;
     private final Exponential exp_q;
 
     private Rung(Tensor p, Tensor q) {
-      this.q = q;
-      exp_p = hsManifold.exponential(p);
-      exp_q = hsManifold.exponential(q);
+      exp_p = homogeneousSpace.exponential(p);
+      exp_q = homogeneousSpace.exponential(q);
     }
 
     @Override
     public Tensor apply(Tensor v) {
       Tensor x = exp_p.exp(v);
-      Tensor m = Objects.isNull(midpointInterface) //
-          ? HsMidpoint.of(exp_q, x)
-          : midpointInterface.midpoint(q, x);
+      Tensor m = exp_q.midpoint(x);
       Tensor xm = exp_p.log(m);
       return exp_q.log(exp_p.exp(xm.add(xm)));
     }

@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
-import ch.alpine.sophus.api.Geodesic;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -16,8 +16,12 @@ import ch.alpine.tensor.sca.tri.Sin;
  * 
  * https://en.wikipedia.org/wiki/N-sphere
  * 
- * superseded by {@link SnGeodesic} */
-public enum S2Geodesic implements Geodesic {
+ * superseded by {@link SnManifold}
+ * 
+ * p and q are vectors of length 3 with unit length
+ * 
+ * Careful: function does not check length of input vectors! */
+public enum S2Geodesic implements GeodesicSpace {
   INSTANCE;
 
   @Override // from TensorGeodesic
@@ -29,13 +33,5 @@ public enum S2Geodesic implements Geodesic {
     Scalar prod = a.divide(sina);
     Tensor cross = Cross.of(p, q);
     return scalar -> Rodrigues.vectorExp(cross.multiply(scalar).multiply(prod)).dot(p);
-  }
-
-  /** p and q are vectors of length 3 with unit length
-   * 
-   * Careful: function does not check length of input vectors! */
-  @Override // from GeodesicInterface
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return curve(p, q).apply(scalar);
   }
 }

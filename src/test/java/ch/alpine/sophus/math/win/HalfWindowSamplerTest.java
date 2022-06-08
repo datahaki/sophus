@@ -2,6 +2,7 @@
 package ch.alpine.sophus.math.win;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.Function;
@@ -9,7 +10,6 @@ import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.win.BartlettWindow;
 import ch.alpine.tensor.sca.win.HannWindow;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class HalfWindowSamplerTest {
+class HalfWindowSamplerTest {
   @Test
   public void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
@@ -72,7 +72,7 @@ public class HalfWindowSamplerTest {
         Tensor val1 = function.apply(count);
         Tensor val2 = function.apply(count);
         assertTrue(val1 == val2); // equal by reference
-        AssertFail.of(() -> val1.set(RealScalar.ZERO, 0));
+        assertThrows(Exception.class, () -> val1.set(RealScalar.ZERO, 0));
       }
     }
   }
@@ -80,6 +80,6 @@ public class HalfWindowSamplerTest {
   @Test
   public void testZeroFail() {
     Function<Integer, Tensor> function = HalfWindowSampler.of(HannWindow.FUNCTION);
-    AssertFail.of(() -> function.apply(0));
+    assertThrows(Exception.class, () -> function.apply(0));
   }
 }

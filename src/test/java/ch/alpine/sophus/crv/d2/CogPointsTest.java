@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.lie.r2.ConvexHull;
 import ch.alpine.tensor.sca.Sign;
 
-public class CogPointsTest {
+class CogPointsTest {
   @Test
   public void testSimple() {
     Tensor polygon = CogPoints.of(10, RealScalar.of(10.2), RealScalar.of(3.2));

@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
-
-public class MetricCoordinateTest {
+class MetricCoordinateTest {
   @Test
   public void testCustomNullFail() {
-    AssertFail.of(() -> new MetricCoordinate(null));
+    assertThrows(Exception.class, () -> new MetricCoordinate(null));
   }
 }

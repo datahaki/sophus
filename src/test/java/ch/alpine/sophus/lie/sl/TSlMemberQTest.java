@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class TSlMemberQTest {
+class TSlMemberQTest {
   @Test
   public void testSimple() {
     assertFalse(TSlMemberQ.INSTANCE.test(IdentityMatrix.of(2)));

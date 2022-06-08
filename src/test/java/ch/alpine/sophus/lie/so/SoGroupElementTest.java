@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,6 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3TestHelper;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
@@ -18,7 +19,7 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class SoGroupElementTest {
+class SoGroupElementTest {
   private static final LieGroup LIE_GROUP = SoGroup.INSTANCE;
 
   @Test
@@ -26,7 +27,7 @@ public class SoGroupElementTest {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
     SoGroupElement.of(orth).combine(matr);
-    AssertFail.of(() -> SoGroupElement.of(orth).combine(matr.add(matr)));
+    assertThrows(Exception.class, () -> SoGroupElement.of(orth).combine(matr.add(matr)));
   }
 
   @Test
@@ -79,23 +80,23 @@ public class SoGroupElementTest {
   public void testSimple() {
     SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     so3GroupElement.inverse();
-    AssertFail.of(() -> so3GroupElement.combine(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> so3GroupElement.combine(HilbertMatrix.of(3)));
   }
 
   @Test
   public void testDetNegFail() {
-    AssertFail.of(() -> SoGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
+    assertThrows(Exception.class, () -> SoGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test
   public void testDetNegCombineFail() {
     SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
-    AssertFail.of(() -> so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1)));
+    assertThrows(Exception.class, () -> so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> SoGroupElement.of(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> SoGroupElement.of(HilbertMatrix.of(3)));
   }
 
   @Test

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
@@ -23,12 +23,12 @@ import ch.alpine.tensor.sca.Abs;
  * 
  * tests have shown empirically for the SPD manifold, that the reducing
  * mean is closed to the exact mean than the {@link SpdPhongMean} */
-/* package */ record ReducingMean(Geodesic geodesic) implements BiinvariantMean, Serializable {
+/* package */ record ReducingMean(GeodesicSpace geodesicSpace) implements BiinvariantMean, Serializable {
 
-  /** @param geodesic
+  /** @param geodesicSpace
    * @return */
-  public static BiinvariantMean of(Geodesic geodesic) {
-    return new ReducingMean(Objects.requireNonNull(geodesic));
+  public static BiinvariantMean of(GeodesicSpace geodesicSpace) {
+    return new ReducingMean(Objects.requireNonNull(geodesicSpace));
   }
 
   @Override // from BiinvariantMean
@@ -75,7 +75,7 @@ import ch.alpine.tensor.sca.Abs;
     public boolean split(WPoint wPoint, PriorityQueue<WPoint> priorityQueue) {
       Scalar total = weight.add(wPoint.weight);
       if (Scalars.nonZero(total)) {
-        Tensor split = geodesic.split(point, wPoint.point, wPoint.weight.divide(total));
+        Tensor split = geodesicSpace.split(point, wPoint.point, wPoint.weight.divide(total));
         priorityQueue.add(new WPoint(total, split));
         return true;
       }

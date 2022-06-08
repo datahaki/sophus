@@ -5,22 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.img.MeanFilter;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Unitize;
 
-public class GeodesicMeanFilterTest {
+class GeodesicMeanFilterTest {
   @Test
   public void testSimple() {
     for (int radius = 0; radius < 4; ++radius) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
+      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
       Tensor tensor = Tensors.vector(1, 2, 3, 4, 6, 7);
       Tensor result = tensorUnaryOperator.apply(tensor);
       assertEquals(result.length(), tensor.length());
@@ -29,7 +29,7 @@ public class GeodesicMeanFilterTest {
 
   @Test
   public void testRadiusOne() {
-    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, 1);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, 1);
     Tensor tensor = UnitVector.of(10, 5);
     Tensor result = tensorUnaryOperator.apply(tensor);
     assertEquals(Total.of(result), RealScalar.ONE);
@@ -40,7 +40,7 @@ public class GeodesicMeanFilterTest {
   @Test
   public void testMultiRadius() {
     for (int radius = 0; radius < 5; ++radius) {
-      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
+      TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
       Tensor tensor = UnitVector.of(2 * radius + 1, radius);
       Tensor result = tensorUnaryOperator.apply(tensor);
       Tensor expect = MeanFilter.of(tensor, radius);
@@ -52,7 +52,7 @@ public class GeodesicMeanFilterTest {
   @Test
   public void testBiUnits() {
     int radius = 2;
-    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGeodesic.INSTANCE, radius);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
     Tensor tensor = Tensors.vector(0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0);
     Tensor result = tensorUnaryOperator.apply(tensor);
     Tensor expect = MeanFilter.of(tensor, radius);

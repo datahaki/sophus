@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.GeometricMean;
 
-public class WeightedGeometricMeanTest {
+class WeightedGeometricMeanTest {
   @Test
   public void testSimple() {
     int n = 5;

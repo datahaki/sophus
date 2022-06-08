@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +20,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class BchBarycentricCoordinateTest {
+class BchBarycentricCoordinateTest {
   @Test
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
@@ -40,9 +39,9 @@ public class BchBarycentricCoordinateTest {
       Tensor mean = HsBiinvariantMean.of(hsAlgebra).mean(sequence, weights);
       Chop._06.requireClose(mean, x);
       // ---
-      Tensor seqG = Tensor.of(sequence.stream().map(Se2CoveringExponential.INSTANCE::exp));
-      BarycentricCoordinate bc = LeveragesCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
-      Tensor weights2 = bc.weights(seqG, Se2CoveringExponential.INSTANCE.exp(x));
+      Tensor seqG = Tensor.of(sequence.stream().map(Se2CoveringGroup.INSTANCE::exp));
+      BarycentricCoordinate bc = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, variogram);
+      Tensor weights2 = bc.weights(seqG, Se2CoveringGroup.INSTANCE.exp(x));
       Chop._08.requireClose(weights, weights2);
     }
   }

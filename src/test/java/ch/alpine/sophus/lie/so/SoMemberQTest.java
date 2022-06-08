@@ -3,10 +3,10 @@ package ch.alpine.sophus.lie.so;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.re.Det;
 
-public class SoMemberQTest {
+class SoMemberQTest {
   @Test
   public void testSimple() {
     Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
@@ -32,6 +32,6 @@ public class SoMemberQTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> TSoMemberQ.INSTANCE.test(null));
+    assertThrows(Exception.class, () -> TSoMemberQ.INSTANCE.test(null));
   }
 }

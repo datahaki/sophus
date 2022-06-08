@@ -21,7 +21,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
 
-public class H2MidpointTest {
+class H2MidpointTest {
   @Test
   public void testSymmetric() {
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(Array.zeros(2), RealScalar.ONE);

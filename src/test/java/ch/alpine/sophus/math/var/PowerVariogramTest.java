@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -8,9 +10,8 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.fit.PowerVariogramFit;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.Kriging;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnMetric;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -26,7 +27,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.qty.Unit;
 
-public class PowerVariogramTest {
+class PowerVariogramTest {
   @Test
   public void testFitQuantity() throws ClassNotFoundException, IOException {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
@@ -38,7 +39,7 @@ public class PowerVariogramTest {
     {
       ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
       TensorUnaryOperator weightingInterface = //
-          MetricBiinvariant.EUCLIDEAN.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          MetricBiinvariant.EUCLIDEAN.var_dist(RnGroup.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
@@ -47,7 +48,7 @@ public class PowerVariogramTest {
       PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       TensorUnaryOperator weightingInterface = //
-          MetricBiinvariant.EUCLIDEAN.var_dist(RnManifold.INSTANCE, variogram, sequence);
+          MetricBiinvariant.EUCLIDEAN.var_dist(RnGroup.INSTANCE, variogram, sequence);
       Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
@@ -66,6 +67,6 @@ public class PowerVariogramTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
+    assertThrows(Exception.class, () -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
   }
 }

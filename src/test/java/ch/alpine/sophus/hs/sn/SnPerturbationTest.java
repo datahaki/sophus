@@ -8,7 +8,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class SnPerturbationTest {
+class SnPerturbationTest {
   @Test
   public void testSimple() {
     TensorUnaryOperator snPerturbation = SnPerturbation.of(NormalDistribution.standard());

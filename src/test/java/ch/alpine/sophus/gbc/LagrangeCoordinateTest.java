@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -8,13 +10,12 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -25,7 +26,7 @@ import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Imag;
 
-public class LagrangeCoordinateTest {
+class LagrangeCoordinateTest {
   private static void _check(Tensor levers, Tensor weights) {
     AffineQ.require(weights, Chop._10);
     Chop._08.requireAllZero(weights.dot(levers));
@@ -70,11 +71,11 @@ public class LagrangeCoordinateTest {
     Tensor point = Mean.of(sequence);
     ExactTensorQ.require(point);
     // does not produce equal weights
-    MetricBiinvariant.EUCLIDEAN.lagrainate(RnManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
+    MetricBiinvariant.EUCLIDEAN.lagrainate(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new LagrangeCoordinate(null));
+    assertThrows(Exception.class, () -> new LagrangeCoordinate(null));
   }
 }

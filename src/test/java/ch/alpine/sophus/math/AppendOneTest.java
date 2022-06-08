@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class AppendOneTest {
+class AppendOneTest {
   @Test
   public void testSimple() {
     Tensor vector = Tensors.vector(2, 3);

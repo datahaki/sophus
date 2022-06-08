@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringIntegratorTest {
+class Se2CoveringIntegratorTest {
   @Test
   public void testFullRotation() {
     Tensor g = Tensors.vector(10, 0, 0).unmodifiable();
@@ -47,7 +47,7 @@ public class Se2CoveringIntegratorTest {
   public void testExpSubstitute() {
     Tensor mat = exp_of(1, 2, .3);
     Tensor vec = Se2CoveringIntegrator.INSTANCE.spin(Array.zeros(3), Tensors.vector(1, 2, .3));
-    Tensor v0 = Se2CoveringExponential.INSTANCE.exp(Tensors.vector(1, 2, .3));
+    Tensor v0 = Se2CoveringGroup.INSTANCE.exp(Tensors.vector(1, 2, .3));
     assertEquals(vec, v0);
     Tensor alt = Se2Matrix.of(vec);
     Chop._13.requireClose(mat, alt);
@@ -59,7 +59,7 @@ public class Se2CoveringIntegratorTest {
       Tensor rnd = RandomVariate.of(NormalDistribution.standard(), 3);
       Tensor mat = exp_of(rnd.Get(0), rnd.Get(1), rnd.Get(2));
       Tensor vec = Se2CoveringIntegrator.INSTANCE.spin(Array.zeros(3), rnd);
-      Tensor v0 = Se2CoveringExponential.INSTANCE.exp(rnd);
+      Tensor v0 = Se2CoveringGroup.INSTANCE.exp(rnd);
       assertEquals(vec, v0);
       Tensor alt = Se2Matrix.of(vec);
       boolean close = Chop._11.isClose(mat, alt);

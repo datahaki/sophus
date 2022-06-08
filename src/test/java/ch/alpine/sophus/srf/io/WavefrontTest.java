@@ -22,7 +22,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Sign;
 
-public class WavefrontTest {
+class WavefrontTest {
   private static void check3d(File file) throws IOException {
     try (InputStream inputStream = new FileInputStream(file)) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));

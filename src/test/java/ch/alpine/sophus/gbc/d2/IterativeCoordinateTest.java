@@ -20,7 +20,7 @@ import ch.alpine.sophus.hs.s2.S2Exponential;
 import ch.alpine.sophus.hs.s2.S2Manifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnExponential;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -37,7 +37,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class IterativeCoordinateTest {
+class IterativeCoordinateTest {
   private static void _checkIterative(Genesis genesis) {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     for (int n = 3; n < 10; ++n) {
@@ -51,7 +51,7 @@ public class IterativeCoordinateTest {
           Tensor wn = NormalizeTotal.FUNCTION.apply(genesis.origin(circum).dot(matrix));
           Chop._10.requireClose(wn, weights);
         }
-        MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
+        MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE);
         Tensor tangent = meanDefect.tangent();
         Chop._07.requireAllZero(tangent);
       }
@@ -141,7 +141,7 @@ public class IterativeCoordinateTest {
         for (int k = 0; k < 3; ++k) {
           Genesis ic = new IterativeCoordinate(genesis, k);
           Tensor weights = ic.origin(levers);
-          MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
+          MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE);
           Tensor tangent = meanDefect.tangent();
           Chop._07.requireAllZero(tangent);
         }
@@ -158,7 +158,7 @@ public class IterativeCoordinateTest {
       for (int k = 0; k < 5; ++k) {
         Tensor weights = new IterativeCoordinate(genesis, k).origin(levers);
         Chop._10.requireAllZero(weights.dot(levers));
-        MeanDefect meanDefect = new MeanDefect(levers, weights, RnExponential.INSTANCE);
+        MeanDefect meanDefect = new MeanDefect(levers, weights, RnGroup.INSTANCE);
         Tensor tangent = meanDefect.tangent();
         Chop._07.requireAllZero(tangent);
       }

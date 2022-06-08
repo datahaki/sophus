@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.alg.Array;
 
-public class TGlMemberQTest {
+class TGlMemberQTest {
   @Test
   public void testSimple() {
     assertTrue(TGlMemberQ.INSTANCE.test(Array.zeros(2, 2)));

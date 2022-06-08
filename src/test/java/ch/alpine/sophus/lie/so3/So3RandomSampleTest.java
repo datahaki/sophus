@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Det;
 
-public class So3RandomSampleTest {
+class So3RandomSampleTest {
   @Test
   public void testSimple() {
     for (int count = 0; count < 10; ++count) {

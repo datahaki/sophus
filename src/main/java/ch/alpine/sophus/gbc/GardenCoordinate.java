@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.dv.GardenDistanceVector;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -15,13 +15,13 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 public class GardenCoordinate implements TensorUnaryOperator {
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param variogram
    * @param sequence
    * @return */
   public static TensorUnaryOperator of( //
-      VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new GardenCoordinate(vectorLogManifold, Objects.requireNonNull(variogram), sequence);
+      Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new GardenCoordinate(manifold, Objects.requireNonNull(variogram), sequence);
   }
 
   // ---
@@ -30,10 +30,10 @@ public class GardenCoordinate implements TensorUnaryOperator {
   private final TensorUnaryOperator distances;
   private final Tensor sequence;
 
-  private GardenCoordinate(VectorLogManifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  private GardenCoordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    hsDesign = new HsDesign(manifold);
     this.variogram = variogram;
-    distances = GardenDistanceVector.of(vectorLogManifold, sequence);
+    distances = GardenDistanceVector.of(manifold, sequence);
     this.sequence = sequence;
   }
 

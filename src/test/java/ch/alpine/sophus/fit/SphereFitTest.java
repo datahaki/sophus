@@ -3,6 +3,7 @@ package ch.alpine.sophus.fit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -10,11 +11,10 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.pdf.Distribution;
@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SphereFitTest {
+class SphereFitTest {
   @Test
   public void testToString() {
     Tensor points = Tensors.of( //
@@ -107,26 +107,26 @@ public class SphereFitTest {
 
   @Test
   public void testFailEmpty() {
-    AssertFail.of(() -> SphereFit.of(Tensors.empty()));
+    assertThrows(Exception.class, () -> SphereFit.of(Tensors.empty()));
   }
 
   @Test
   public void testFailScalar() {
-    AssertFail.of(() -> SphereFit.of(RealScalar.ONE));
+    assertThrows(Exception.class, () -> SphereFit.of(RealScalar.ONE));
   }
 
   @Test
   public void testFailRank3() {
-    AssertFail.of(() -> SphereFit.of(LeviCivitaTensor.of(3)));
+    assertThrows(Exception.class, () -> SphereFit.of(LeviCivitaTensor.of(3)));
   }
 
   @Test
   public void testFailUnstructured1() {
-    AssertFail.of(() -> SphereFit.of(Tensors.fromString("{{1, 2, 3}, {4, -5}}")));
+    assertThrows(Exception.class, () -> SphereFit.of(Tensors.fromString("{{1, 2, 3}, {4, -5}}")));
   }
 
   @Test
   public void testFailUnstructured2() {
-    AssertFail.of(() -> SphereFit.of(Tensors.fromString("{{1, 2, 3}, {4, -5}, {6, 7, 8}}")));
+    assertThrows(Exception.class, () -> SphereFit.of(Tensors.fromString("{{1, 2, 3}, {4, -5}, {6, 7, 8}}")));
   }
 }

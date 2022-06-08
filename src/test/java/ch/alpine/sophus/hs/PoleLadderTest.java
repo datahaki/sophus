@@ -2,29 +2,28 @@
 package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.sn.SnGeodesic;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnTransport;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.Chop;
 
-public class PoleLadderTest {
+class PoleLadderTest {
   @Test
   public void testRn() {
-    HsTransport hsTransport = new PoleLadder(RnManifold.INSTANCE);
+    HsTransport hsTransport = new PoleLadder(RnGroup.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);
@@ -40,7 +39,7 @@ public class PoleLadderTest {
     HsTransport poleLadder = new PoleLadder(SnManifold.INSTANCE);
     TensorUnaryOperator shift1 = //
         Serialization.copy(poleLadder).shift(orig, dest);
-    TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnGeodesic.INSTANCE, 7).shift(orig, dest);
+    TensorUnaryOperator shift2 = SubdivideTransport.of(poleLadder, SnManifold.INSTANCE, 7).shift(orig, dest);
     TensorUnaryOperator shift3 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);
@@ -71,6 +70,6 @@ public class PoleLadderTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new PoleLadder(null));
+    assertThrows(Exception.class, () -> new PoleLadder(null));
   }
 }

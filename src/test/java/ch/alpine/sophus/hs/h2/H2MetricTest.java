@@ -2,10 +2,10 @@
 package ch.alpine.sophus.hs.h2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Log;
 import ch.alpine.tensor.sca.tri.ArcSinh;
 
-public class H2MetricTest {
+class H2MetricTest {
   @Test
   public void testTrivial() {
     Tensor p = Tensors.vector(-Math.random(), Math.random());
@@ -48,6 +48,6 @@ public class H2MetricTest {
   public void testNegativeY() {
     Tensor p = Tensors.vector(1, 3);
     Tensor q = Tensors.vector(2, -Math.random());
-    AssertFail.of(() -> H2Metric.INSTANCE.distance(p, q));
+    assertThrows(Exception.class, () -> H2Metric.INSTANCE.distance(p, q));
   }
 }

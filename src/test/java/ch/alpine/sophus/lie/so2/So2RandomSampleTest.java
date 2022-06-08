@@ -10,7 +10,7 @@ import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 
-public class So2RandomSampleTest {
+class So2RandomSampleTest {
   @Test
   public void testSimple() {
     Tensor r1 = RandomSample.of(So2RandomSample.INSTANCE);

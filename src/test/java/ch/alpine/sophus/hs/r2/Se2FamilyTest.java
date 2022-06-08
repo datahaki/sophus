@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2FamilyTest {
+class Se2FamilyTest {
   @Test
   public void testSimple() {
     BijectionFamily bijectionFamily = new Se2Family(s -> Tensors.of( //

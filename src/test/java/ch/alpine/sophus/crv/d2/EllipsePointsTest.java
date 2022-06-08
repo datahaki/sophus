@@ -11,7 +11,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 
-public class EllipsePointsTest {
+class EllipsePointsTest {
   @Test
   public void testScaled() {
     int n = 11;

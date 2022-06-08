@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
@@ -20,16 +19,14 @@ import ch.alpine.tensor.ext.Integers;
 /**  */
 public class Hermite3Filter implements HermiteFilter {
   private final LieGroup lieGroup;
-  private final Exponential exponential;
   private final BiinvariantMean biinvariantMean;
 
   /** @param lieGroup
    * @param exponential
    * @param biinvariantMean
    * @throws Exception if either parameters is null */
-  public Hermite3Filter(LieGroup lieGroup, Exponential exponential, BiinvariantMean biinvariantMean) {
+  public Hermite3Filter(LieGroup lieGroup, BiinvariantMean biinvariantMean) {
     this.lieGroup = Objects.requireNonNull(lieGroup);
-    this.exponential = Objects.requireNonNull(exponential);
     this.biinvariantMean = Objects.requireNonNull(biinvariantMean);
   }
 
@@ -63,7 +60,7 @@ public class Hermite3Filter implements HermiteFilter {
       Tensor cg1 = biinvariantMean.mean(Unprotect.byRef(pg, qg, rg), CGW);
       Tensor cg2 = pv.subtract(rv).divide(cgk);
       Tensor cg = lieGroup.element(cg1).combine(cg2);
-      Tensor log = exponential.log(lieGroup.element(pg).inverse().combine(rg)); // r - p
+      Tensor log = lieGroup.log(lieGroup.element(pg).inverse().combine(rg)); // r - p
       Tensor cv1 = log.multiply(cvk);
       Tensor cv2 = CVW.dot(Unprotect.byRef(pv, qv, rv));
       Tensor cv = cv1.add(cv2);

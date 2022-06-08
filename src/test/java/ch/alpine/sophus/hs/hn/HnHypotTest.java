@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Ramp;
 
-public class HnHypotTest {
+class HnHypotTest {
   @Test
   public void testSimple() {
     Distribution distribution = NormalDistribution.of(0, 1000);

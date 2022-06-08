@@ -9,7 +9,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.num.Pi;
 
-public class So2GroupElementTest {
+class So2GroupElementTest {
   @Test
   public void testInverse() {
     So2GroupElement so2GroupElement = new So2GroupElement(RealScalar.ONE);

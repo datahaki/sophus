@@ -2,10 +2,10 @@
 package ch.alpine.sophus.hs.r3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class NylanderPowerTest {
+class NylanderPowerTest {
   @Test
   public void testZero() {
     for (int exp = 0; exp < 5; ++exp)
@@ -55,16 +55,16 @@ public class NylanderPowerTest {
 
   @Test
   public void testMatrixFail() {
-    AssertFail.of(() -> NylanderPower.of(IdentityMatrix.of(3), 3));
+    assertThrows(Exception.class, () -> NylanderPower.of(IdentityMatrix.of(3), 3));
   }
 
   @Test
   public void testLengthFail() {
-    AssertFail.of(() -> NylanderPower.of(Tensors.vector(1, 2, 3, 4), 3));
+    assertThrows(Exception.class, () -> NylanderPower.of(Tensors.vector(1, 2, 3, 4), 3));
   }
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> NylanderPower.of(Tensors.vector(1, 2, 3), (Scalar) null));
+    assertThrows(Exception.class, () -> NylanderPower.of(Tensors.vector(1, 2, 3), (Scalar) null));
   }
 }

@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.sophus.math.var;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -14,7 +15,7 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.qty.Quantity;
 
-public class ThinPlateSplineVariogramTest {
+class ThinPlateSplineVariogramTest {
   @Test
   public void testSimple() {
     ScalarUnaryOperator scalarUnaryOperator = ThinPlateSplineVariogram.of(3);
@@ -31,6 +32,6 @@ public class ThinPlateSplineVariogramTest {
 
   @Test
   public void testFailNonPositive() {
-    AssertFail.of(() -> new ThinPlateSplineVariogram(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> new ThinPlateSplineVariogram(RealScalar.ZERO));
   }
 }

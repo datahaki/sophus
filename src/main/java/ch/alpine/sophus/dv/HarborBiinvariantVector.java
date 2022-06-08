@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 
@@ -18,11 +18,11 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
  * by Jan Hakenberg, 2020 */
 public enum HarborBiinvariantVector {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param sequence
    * @return */
-  public static BiinvariantVectorFunction of(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  public static BiinvariantVectorFunction of(Manifold manifold, Tensor sequence) {
     return new InfluenceBiinvariantVector( //
-        vectorLogManifold, sequence, (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
+        manifold, sequence, (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
   }
 }

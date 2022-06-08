@@ -24,8 +24,9 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Chop;
 
-public class SnAlgebraTest {
+class SnAlgebraTest {
   @Test
   public void testProperty() {
     for (int d = 2; d < 5; ++d) {
@@ -50,7 +51,7 @@ public class SnAlgebraTest {
         final Tensor hsmean = biinvariantMean.mean(sequence, weights);
         SnExponential snExponential = new SnExponential(UnitVector.of(d + 1, 0));
         Tensor sn_pnt = Tensor.of(sequence.stream().map(p -> snExponential.exp(Insert.of(p, RealScalar.ZERO, 0))));
-        Tensor snmean = SnBiinvariantMean.INSTANCE.mean(sn_pnt, weights);
+        Tensor snmean = SnManifold.INSTANCE.biinvariantMean(Chop._14).mean(sn_pnt, weights);
         final Tensor sn_cmp = snExponential.log(snmean).extract(1, d + 1);
         Tolerance.CHOP.requireClose(hsmean, sn_cmp);
       }

@@ -4,11 +4,11 @@ package ch.alpine.sophus.ref.d1;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.chq.ScalarQ;
 import ch.alpine.tensor.ext.Integers;
 
 /** examples of extensions are

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.flt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,24 +15,23 @@ import ch.alpine.sophus.flt.ga.GeodesicFIR2;
 import ch.alpine.sophus.flt.ga.GeodesicIIR1;
 import ch.alpine.sophus.flt.ga.GeodesicIIR2;
 import ch.alpine.sophus.flt.ga.GeodesicIIRnFilter;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.sca.win.DirichletWindow;
 
-public class CausalFilterTest {
+class CausalFilterTest {
   @Test
   public void testIIR1() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")
     TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of( //
         (Supplier<TensorUnaryOperator> & Serializable) //
-        () -> new GeodesicIIR1(RnGeodesic.INSTANCE, RationalScalar.HALF)));
+        () -> new GeodesicIIR1(RnGroup.INSTANCE, RationalScalar.HALF)));
     {
       Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
       assertEquals(tensor, Tensors.fromString("{1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, 1/256, 1/512}"));
@@ -49,22 +49,22 @@ public class CausalFilterTest {
     @SuppressWarnings("unchecked")
     TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of(//
         (Supplier<TensorUnaryOperator> & Serializable) //
-        () -> new GeodesicIIR2(RnGeodesic.INSTANCE, RationalScalar.HALF)));
+        () -> new GeodesicIIR2(RnGroup.INSTANCE, RationalScalar.HALF)));
     Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
     ExactTensorQ.require(tensor);
   }
 
   @Test
   public void testIIR2b() {
-    TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(RnGeodesic.INSTANCE, DirichletWindow.FUNCTION);
-    TensorUnaryOperator causalFilter = GeodesicIIRnFilter.of(geodesicExtrapolation, RnGeodesic.INSTANCE, 2, RationalScalar.HALF);
+    TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(RnGroup.INSTANCE, DirichletWindow.FUNCTION);
+    TensorUnaryOperator causalFilter = GeodesicIIRnFilter.of(geodesicExtrapolation, RnGroup.INSTANCE, 2, RationalScalar.HALF);
     Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
     ExactTensorQ.require(tensor);
   }
 
   @Test
   public void testFIR2() {
-    TensorUnaryOperator causalFilter = CausalFilter.of(() -> GeodesicFIR2.of(RnGeodesic.INSTANCE, RationalScalar.HALF));
+    TensorUnaryOperator causalFilter = CausalFilter.of(() -> GeodesicFIR2.of(RnGroup.INSTANCE, RationalScalar.HALF));
     {
       Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
       assertEquals(tensor, Tensors.fromString("{1, 0, -1/2, 0, 0, 0, 0, 0, 0, 0}"));
@@ -79,6 +79,6 @@ public class CausalFilterTest {
 
   @Test
   public void testFailNull() {
-    AssertFail.of(() -> CausalFilter.of(null));
+    assertThrows(Exception.class, () -> CausalFilter.of(null));
   }
 }

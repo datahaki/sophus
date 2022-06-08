@@ -2,10 +2,10 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.qty.QuantityUnit;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class Curvature2DTest {
+class Curvature2DTest {
   @Test
   public void testString2() {
     Tensor points = Tensors.fromString("{{0, 0}, {1, 1}}");
@@ -74,17 +74,17 @@ public class Curvature2DTest {
   @Test
   public void testQuantityFail() {
     Tensor points = Join.of(Array.zeros(10, 2).map(s -> Quantity.of(s, "m")), Array.zeros(10, 2));
-    AssertFail.of(() -> Curvature2D.string(points));
+    assertThrows(Exception.class, () -> Curvature2D.string(points));
   }
 
   @Test
   public void testFailHi() {
     Tensor points = Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 0, 0}}");
-    AssertFail.of(() -> Curvature2D.string(points));
+    assertThrows(Exception.class, () -> Curvature2D.string(points));
   }
 
   @Test
   public void testFailStringScalar() {
-    AssertFail.of(() -> Curvature2D.string(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> Curvature2D.string(RealScalar.ZERO));
   }
 }

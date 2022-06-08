@@ -1,10 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +22,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class So2CoveringBiinvariantMeanTest {
+class So2CoveringBiinvariantMeanTest {
   @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
@@ -63,6 +64,6 @@ public class So2CoveringBiinvariantMeanTest {
 
   @Test
   public void testFailTensor() {
-    AssertFail.of(() -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1))));
+    assertThrows(Exception.class, () -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1))));
   }
 }

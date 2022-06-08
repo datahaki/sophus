@@ -11,7 +11,7 @@ import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 
-public class NilpotentAlgebraQTest {
+class NilpotentAlgebraQTest {
   @Test
   public void testSimple() {
     assertTrue(NilpotentAlgebraQ.of(new HeAlgebra(1).ad()));

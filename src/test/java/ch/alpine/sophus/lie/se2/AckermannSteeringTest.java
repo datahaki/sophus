@@ -16,7 +16,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.UnitSystem;
 import ch.alpine.tensor.sca.Chop;
 
-public class AckermannSteeringTest {
+class AckermannSteeringTest {
   @Test
   public void testSimple() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0.4, "m"));

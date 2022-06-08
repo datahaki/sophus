@@ -19,7 +19,7 @@ import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class UAlgebraTest {
+class UAlgebraTest {
   @Test
   public void testSimple() {
     for (int n = 2; n < 5; ++n) {

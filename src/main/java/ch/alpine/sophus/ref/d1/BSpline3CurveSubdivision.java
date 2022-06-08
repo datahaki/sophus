@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d1;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -16,22 +16,22 @@ public class BSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision i
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
   private static final Scalar _3_4 = RationalScalar.of(3, 4);
   // ---
-  protected final SplitInterface splitInterface;
+  protected final GeodesicSpace geodesicSpace;
 
-  /** @param splitInterface */
-  public BSpline3CurveSubdivision(SplitInterface splitInterface) {
-    this.splitInterface = Objects.requireNonNull(splitInterface);
+  /** @param geodesicSpace */
+  public BSpline3CurveSubdivision(GeodesicSpace geodesicSpace) {
+    this.geodesicSpace = Objects.requireNonNull(geodesicSpace);
   }
 
   @Override // from MidpointInterface
   public final Tensor midpoint(Tensor p, Tensor q) { // point between p and q
-    return splitInterface.midpoint(p, q);
+    return geodesicSpace.midpoint(p, q);
   }
 
   @Override // from AbstractBSpline3CurveSubdivision
   protected final Tensor center(Tensor p, Tensor q, Tensor r) { // reposition of point q
     return midpoint( //
-        splitInterface.split(p, q, _3_4), //
-        splitInterface.split(q, r, _1_4));
+        geodesicSpace.split(p, q, _3_4), //
+        geodesicSpace.split(q, r, _1_4));
   }
 }

@@ -1,23 +1,24 @@
 // code by jph
 package ch.alpine.sophus.flt.ga;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.flt.ga.GeodesicCenterMidSeeded.Splits;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-public class GeodesicCenterMidSeededTest {
+class GeodesicCenterMidSeededTest {
   @Test
   public void testSplitsEvenFail() {
     Splits splits = new GeodesicCenterMidSeeded.Splits(UniformWindowSampler.of(GaussianWindow.FUNCTION));
     splits.apply(5);
-    AssertFail.of(() -> splits.apply(4));
+    assertThrows(Exception.class, () -> splits.apply(4));
   }
 
   @Test
   public void testSplitsNullFail() {
-    AssertFail.of(() -> new GeodesicCenterMidSeeded.Splits(null));
+    assertThrows(Exception.class, () -> new GeodesicCenterMidSeeded.Splits(null));
   }
 }

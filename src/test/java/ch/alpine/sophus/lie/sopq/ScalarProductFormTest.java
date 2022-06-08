@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class ScalarProductFormTest {
+class ScalarProductFormTest {
   @Test
   public void testSimple() {
     assertEquals(ScalarProductForm.of(0, 3), DiagonalMatrix.of(-1, -1, -1));

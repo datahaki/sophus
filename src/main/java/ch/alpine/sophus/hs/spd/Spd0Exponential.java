@@ -54,7 +54,7 @@ public enum Spd0Exponential implements Exponential {
     return MatrixSqrt.ofSymmetric(q).sqrt();
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     return LowerVectorize.of(log(q), 0);
   }

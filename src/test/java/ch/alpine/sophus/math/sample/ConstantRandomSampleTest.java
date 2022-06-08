@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.HilbertMatrix;
 
-public class ConstantRandomSampleTest {
+class ConstantRandomSampleTest {
   @Test
   public void testSimple() {
     Tensor tensor = HilbertMatrix.of(2, 3);

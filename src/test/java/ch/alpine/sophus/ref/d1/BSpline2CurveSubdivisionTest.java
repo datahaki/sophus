@@ -3,15 +3,14 @@ package ch.alpine.sophus.ref.d1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -19,12 +18,13 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.num.Rationalize;
 
-public class BSpline2CurveSubdivisionTest {
-  private static final CurveSubdivision CURVE_SUBDIVISION = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE);
+class BSpline2CurveSubdivisionTest {
+  private static final CurveSubdivision CURVE_SUBDIVISION = new BSpline2CurveSubdivision(RnGroup.INSTANCE);
 
   @Test
   public void testCyclic() {
@@ -100,13 +100,13 @@ public class BSpline2CurveSubdivisionTest {
 
   @Test
   public void testSerializable() throws ClassNotFoundException, IOException {
-    TensorUnaryOperator fps = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE)::cyclic;
+    TensorUnaryOperator fps = new BSpline2CurveSubdivision(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new BSpline2CurveSubdivision(null));
+    assertThrows(Exception.class, () -> new BSpline2CurveSubdivision(null));
   }
 }

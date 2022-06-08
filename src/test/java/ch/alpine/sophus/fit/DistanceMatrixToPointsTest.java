@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
 
-public class DistanceMatrixToPointsTest {
+class DistanceMatrixToPointsTest {
   @Test
   public void testRankEuclidean() {
     Random random = new Random(1);

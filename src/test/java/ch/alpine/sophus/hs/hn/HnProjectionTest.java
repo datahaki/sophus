@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class HnProjectionTest {
+class HnProjectionTest {
   @Test
   public void testSimple() {
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 2, 3));

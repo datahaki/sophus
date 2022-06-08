@@ -2,12 +2,12 @@
 package ch.alpine.sophus.hs.r2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -15,15 +15,15 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.ArcTan;
 
-public class ArcTan2DTest {
+class ArcTan2DTest {
   @Test
   public void testZero() {
     assertEquals(ArcTan2D.of(Array.zeros(10)), RealScalar.ZERO);
@@ -56,8 +56,8 @@ public class ArcTan2DTest {
 
   @Test
   public void testVectorXYFail() {
-    AssertFail.of(() -> ArcTan2D.of(RealScalar.ZERO));
-    AssertFail.of(() -> ArcTan2D.of(Tensors.vector(1)));
-    AssertFail.of(() -> ArcTan2D.of(Array.zeros(3, 3, 3)));
+    assertThrows(Exception.class, () -> ArcTan2D.of(RealScalar.ZERO));
+    assertThrows(Exception.class, () -> ArcTan2D.of(Tensors.vector(1)));
+    assertThrows(Exception.class, () -> ArcTan2D.of(Array.zeros(3, 3, 3)));
   }
 }

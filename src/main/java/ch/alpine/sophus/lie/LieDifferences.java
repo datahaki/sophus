@@ -18,12 +18,12 @@ import ch.alpine.tensor.alg.Differences;
  * 
  * @see Differences */
 public final class LieDifferences extends AdjacentReduce {
-  private final LieExponential lieExponential;
+  private final LieGroup lieGroup;
 
-  /** @param lieExponential
+  /** @param lieGroup
    * @throws Exception if either parameter is null */
-  public LieDifferences(LieExponential lieExponential) {
-    this.lieExponential = Objects.requireNonNull(lieExponential);
+  public LieDifferences(LieGroup lieGroup) {
+    this.lieGroup = Objects.requireNonNull(lieGroup);
   }
 
   /** @param p element of the lie group
@@ -31,6 +31,6 @@ public final class LieDifferences extends AdjacentReduce {
    * @return vector == log(p^-1 . q) so that exp(vector) == p^-1 . q */
   @Override
   protected Tensor reduce(Tensor p, Tensor q) {
-    return lieExponential.exponential(p).log(q);
+    return lieGroup.exponential(p).log(q);
   }
 }

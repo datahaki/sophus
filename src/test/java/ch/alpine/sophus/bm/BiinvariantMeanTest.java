@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class BiinvariantMeanTest {
+class BiinvariantMeanTest {
   private static final Distribution DISTRIBUTION = UniformDistribution.unit();
 
   /** @param n

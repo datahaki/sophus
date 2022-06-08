@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class RnGroupElementTest {
+class RnGroupElementTest {
   @Test
   public void testSimple() {
     RnGroupElement rnGroupElement = new RnGroupElement(Tensors.vector(1, 2, 3));

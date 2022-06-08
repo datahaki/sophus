@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.ScalarQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.chq.ScalarQ;
 import ch.alpine.tensor.ext.Integers;
 
 /** @see Regularization2Step */
 /* package */ class Regularization2StepCyclic extends Regularization2Step {
-  public Regularization2StepCyclic(SplitInterface splitInterface, Scalar factor) {
-    super(splitInterface, factor);
+  public Regularization2StepCyclic(GeodesicSpace geodesicSpace, Scalar factor) {
+    super(geodesicSpace, factor);
   }
 
   @Override

@@ -2,20 +2,19 @@
 package ch.alpine.sophus.hs.hn;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.TangentSpace;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.sca.Chop;
 
-public enum HnManifold implements HsManifold {
+/** hyperboloid model with fast midpoint computation */
+public enum HnManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor x) {
-    return new HnExponential(x);
-  }
-
-  @Override // from HsManifold
+  @Override // from Manifold
   public Exponential exponential(Tensor p) {
     return new HnExponential(p);
   }
@@ -26,8 +25,18 @@ public enum HnManifold implements HsManifold {
     return p.add(p).multiply(nxy).subtract(q);
   }
 
-  @Override // from MidpointInterface
+  @Override
   public Tensor midpoint(Tensor p, Tensor q) {
     return HnProjection.INSTANCE.apply(p.add(q));
+  }
+
+  @Override
+  public HsTransport hsTransport() {
+    return HnTransport.INSTANCE;
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop, HnPhongMean.INSTANCE);
   }
 }

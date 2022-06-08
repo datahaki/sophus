@@ -3,14 +3,16 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -26,7 +28,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class GrExponentialTest {
+class GrExponentialTest {
   @Test
   public void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
@@ -77,31 +79,30 @@ public class GrExponentialTest {
     grExponential.vectorLog(exp);
   }
 
-  @Test
-  public void testDesign() {
+  @ParameterizedTest
+  @ValueSource(ints = { 4, 5, 6 })
+  public void testDesign(int n) {
     int k = 3;
-    for (int n = 4; n < 7; ++n) {
-      Tensor x = RandomSample.of(new GrRandomSample(n, k));
-      assertEquals(Dimensions.of(x), Arrays.asList(n, n));
-      assertEquals(MatrixRank.of(x), k);
-      InfluenceMatrixQ.require(x);
-      GrExponential grExponential = new GrExponential(x);
-      TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
-      Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
-      Tensor v = tGrMemberQ.forceProject(pre);
-      tGrMemberQ.require(v);
-      assertFalse(Chop._05.allZero(v));
-      Tensor exp = grExponential.exp(v);
-      InfluenceMatrixQ.require(exp);
-      assertTrue(Scalars.lessThan(RealScalar.of(0.001), FrobeniusNorm.between(x, exp)));
-      Tensor w = grExponential.log(exp);
-      Chop._05.requireClose(v, w);
-    }
+    Tensor x = RandomSample.of(new GrRandomSample(n, k));
+    assertEquals(Dimensions.of(x), Arrays.asList(n, n));
+    assertEquals(MatrixRank.of(x), k);
+    InfluenceMatrixQ.require(x);
+    GrExponential grExponential = new GrExponential(x);
+    TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
+    Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
+    Tensor v = tGrMemberQ.forceProject(pre);
+    tGrMemberQ.require(v);
+    assertFalse(Chop._05.allZero(v));
+    Tensor exp = grExponential.exp(v);
+    InfluenceMatrixQ.require(exp);
+    assertTrue(Scalars.lessThan(RealScalar.of(0.001), FrobeniusNorm.between(x, exp)));
+    Tensor w = grExponential.log(exp);
+    Chop._05.requireClose(v, w);
   }
 
   @Test
   public void testGrFail() {
     Tensor x = Tensors.fromString("{{1, 1}, {0, 1}}");
-    AssertFail.of(() -> new GrExponential(x));
+    assertThrows(Exception.class, () -> new GrExponential(x));
   }
 }

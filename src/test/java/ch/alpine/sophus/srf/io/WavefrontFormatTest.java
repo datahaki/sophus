@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.ReadLine;
 import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.red.Max;
 
-public class WavefrontFormatTest {
+class WavefrontFormatTest {
   @Test
   public void testBlender0() throws IOException {
     try (InputStream inputStream = getClass().getResource("/io/obj/blender0.obj").openStream()) {

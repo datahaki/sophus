@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.st;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,6 @@ import ch.alpine.sophus.hs.ad.HsAdGeodesic;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.ad.HsBarycentricCoordinate;
 import ch.alpine.sophus.hs.ad.HsBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
-public class StAlgebraTest {
+class StAlgebraTest {
   @Test
   public void test5x3() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 3, 8);
@@ -62,11 +62,11 @@ public class StAlgebraTest {
   @Test
   public void testInteresting() {
     StAlgebra.of(5, 5, 8);
-    AssertFail.of(() -> StAlgebra.of(5, 6, 8));
+    assertThrows(Exception.class, () -> StAlgebra.of(5, 6, 8));
   }
 
   @Test
   public void testFails() {
-    AssertFail.of(() -> StAlgebra.of(5, -1, 8));
+    assertThrows(Exception.class, () -> StAlgebra.of(5, -1, 8));
   }
 }

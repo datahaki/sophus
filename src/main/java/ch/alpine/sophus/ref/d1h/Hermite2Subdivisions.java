@@ -1,10 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1h;
 
-import java.util.Objects;
-
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -37,12 +34,11 @@ public enum Hermite2Subdivisions {
    * "An algebraic approach to polynomial reproduction of hermite subdivision schemes"
    * by Conti, Huening, 2018, p. 14
    * 
-   * @param hsManifold
-   * @param hsTransport
+   * @param homogeneousSpace
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HsManifold hsManifold, HsTransport hsTransport, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, Scalar lambda, Scalar mu) {
     Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
     Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -55,8 +51,7 @@ public enum Hermite2Subdivisions {
     Scalar an1_22 = mu.multiply(mu).subtract(Times.of(RealScalar.of(8), lambda, RealScalar.ONE.subtract(mu))).add(mu).add(mu);
     Tensor ALP = Tensors.of(Tensors.of(an1_11, an1_12.negate()), Tensors.of(an1_21.negate(), an1_22)).multiply(_1_8);
     return new Hermite2Subdivision( //
-        hsManifold, //
-        Objects.requireNonNull(hsTransport), //
+        homogeneousSpace, //
         ALQ.Get(0, 0), // lgg
         ALP.Get(0, 1), // lgv
         ALQ.Get(0, 1), // hgv
@@ -73,12 +68,11 @@ public enum Hermite2Subdivisions {
    * Example 45, p. 25
    * by Moosmueller, Dyn, 2017
    * 
-   * @param hsManifold
-   * @param hsTransport
+   * @param homogeneousSpace
    * @return
    * @see Hermite1Subdivision */
-  public static HermiteSubdivision standard(HsManifold hsManifold, HsTransport hsTransport) {
-    return of(hsManifold, hsTransport, N1_8, N1_2);
+  public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
+    return of(homogeneousSpace, N1_8, N1_2);
   }
 
   // ---
@@ -89,10 +83,9 @@ public enum Hermite2Subdivisions {
    * Example 1, p. 1063
    * by Moosmueller, 2017
    * 
-   * @param hsManifold
-   * @param hsTransport
+   * @param homogeneousSpace
    * @return */
-  public static HermiteSubdivision manifold(HsManifold hsManifold, HsTransport hsTransport) {
-    return of(hsManifold, hsTransport, N1_5, _9_10);
+  public static HermiteSubdivision manifold(HomogeneousSpace homogeneousSpace) {
+    return of(homogeneousSpace, N1_5, _9_10);
   }
 }

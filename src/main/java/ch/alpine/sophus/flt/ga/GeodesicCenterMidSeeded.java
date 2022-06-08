@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Function;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.math.SymmetricVectorQ;
 import ch.alpine.sophus.math.win.UniformWindowSampler;
 import ch.alpine.tensor.RationalScalar;
@@ -27,20 +27,20 @@ import ch.alpine.tensor.ext.PackageTestAccess;
  * <p>Careful: the implementation only supports sequences with ODD number of elements!
  * When a sequence of even length is provided an Exception is thrown. */
 public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
-  /** @param splitInterface
+  /** @param geodesicSpace
    * @param function that maps an extent to a weight mask of length == 2 * extent + 1
    * @return operator that maps a sequence of odd number of points to their geodesic center
    * @throws Exception if either input parameter is null */
-  public static TensorUnaryOperator of(SplitInterface splitInterface, Function<Integer, Tensor> function) {
-    return new GeodesicCenterMidSeeded(splitInterface, function);
+  public static TensorUnaryOperator of(GeodesicSpace geodesicSpace, Function<Integer, Tensor> function) {
+    return new GeodesicCenterMidSeeded(geodesicSpace, function);
   }
 
-  /** @param splitInterface
+  /** @param geodesicSpace
    * @param windowFunction
    * @return
    * @throws Exception if either input parameter is null */
-  public static TensorUnaryOperator of(SplitInterface splitInterface, ScalarUnaryOperator windowFunction) {
-    return new GeodesicCenterMidSeeded(splitInterface, UniformWindowSampler.of(windowFunction));
+  public static TensorUnaryOperator of(GeodesicSpace geodesicSpace, ScalarUnaryOperator windowFunction) {
+    return new GeodesicCenterMidSeeded(geodesicSpace, UniformWindowSampler.of(windowFunction));
   }
 
   // ---
@@ -81,11 +81,11 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
   }
 
   // ---
-  private final SplitInterface splitInterface;
+  private final GeodesicSpace geodesicSpace;
   private final Function<Integer, Tensor> function;
 
-  private GeodesicCenterMidSeeded(SplitInterface splitInterface, Function<Integer, Tensor> function) {
-    this.splitInterface = Objects.requireNonNull(splitInterface);
+  private GeodesicCenterMidSeeded(GeodesicSpace geodesicSpace, Function<Integer, Tensor> function) {
+    this.geodesicSpace = Objects.requireNonNull(geodesicSpace);
     this.function = Cache.of(new Splits(function), 32);
   }
 
@@ -100,9 +100,9 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     Tensor pR = tensor.get(radius);
     for (int index = 0; index < radius;) {
       Scalar scalar = splits.Get(index++);
-      pL = splitInterface.split(tensor.get(radius - index), pL, scalar);
-      pR = splitInterface.split(pR, tensor.get(radius + index), RealScalar.ONE.subtract(scalar));
+      pL = geodesicSpace.split(tensor.get(radius - index), pL, scalar);
+      pR = geodesicSpace.split(pR, tensor.get(radius + index), RealScalar.ONE.subtract(scalar));
     }
-    return splitInterface.midpoint(pL, pR);
+    return geodesicSpace.midpoint(pL, pR);
   }
 }

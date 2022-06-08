@@ -9,7 +9,7 @@ import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 
-public class GlGroupTest {
+class GlGroupTest {
   @Test
   public void testSimple() {
     GlGroupElement element = GlGroup.INSTANCE.element(RotationMatrix.of(RealScalar.of(0.24)));

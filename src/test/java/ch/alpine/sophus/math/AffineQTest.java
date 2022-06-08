@@ -1,15 +1,16 @@
 // code by jph
 package ch.alpine.sophus.math;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.sca.Chop;
 
-public class AffineQTest {
+class AffineQTest {
   @Test
   public void testRequire() {
     AffineQ.require(Tensors.vector(0.5, 0.5), Chop._08);
@@ -29,23 +30,23 @@ public class AffineQTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> AffineQ.requirePositiveOrZero(Tensors.vector(2, -1), Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(Tensors.vector(2, -1), Chop._08));
   }
 
   @Test
   public void testFail2() {
-    AssertFail.of(() -> AffineQ.requirePositiveOrZero(Tensors.vector(1, 1), Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(Tensors.vector(1, 1), Chop._08));
   }
 
   @Test
   public void testFailScalar() {
-    AssertFail.of(() -> AffineQ.require(RealScalar.ONE, Chop._08));
-    AssertFail.of(() -> AffineQ.requirePositiveOrZero(RealScalar.ONE, Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.require(RealScalar.ONE, Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(RealScalar.ONE, Chop._08));
   }
 
   @Test
   public void testFailMatrix() {
-    AssertFail.of(() -> AffineQ.require(HilbertMatrix.of(3), Chop._08));
-    AssertFail.of(() -> AffineQ.requirePositiveOrZero(HilbertMatrix.of(3), Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.require(HilbertMatrix.of(3), Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(HilbertMatrix.of(3), Chop._08));
   }
 }

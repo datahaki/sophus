@@ -3,7 +3,7 @@ package ch.alpine.sophus.itp;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -22,9 +22,9 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 /* package */ class RidgeRegression implements Serializable {
   private final HsDesign hsDesign;
 
-  /** @param vectorLogManifold non-null */
-  public RidgeRegression(VectorLogManifold vectorLogManifold) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  /** @param manifold non-null */
+  public RidgeRegression(Manifold manifold) {
+    hsDesign = new HsDesign(manifold);
   }
 
   /* package */ class Form2 implements Serializable {

@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.tri.ArcTan;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
 
-public class S2LoxodromeTest {
+class S2LoxodromeTest {
   private static Tensor prev(Scalar angle, Scalar scalar) {
     Scalar f = ArcTan.FUNCTION.apply(scalar.multiply(angle));
     Scalar cf = Cos.FUNCTION.apply(f);

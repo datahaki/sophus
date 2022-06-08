@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.alpine.sophus.api.Geodesic;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMax;
@@ -26,29 +26,29 @@ import ch.alpine.tensor.sca.Chop;
 public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   private static final int MAX_ITERATIONS = 100;
 
-  /** @param hsManifold
+  /** @param homogeneousSpace
    * @param chop
    * @param initialGuess
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, BiinvariantMean initialGuess) {
-    return new IterativeBiinvariantMean(hsManifold, chop, initialGuess);
+  public static IterativeBiinvariantMean of(HomogeneousSpace homogeneousSpace, Chop chop, BiinvariantMean initialGuess) {
+    return new IterativeBiinvariantMean(homogeneousSpace, chop, initialGuess);
   }
 
   /** uses arg max of weights in sequence as initial guess
    * 
-   * @param hsManifold
+   * @param homogeneousSpace
    * @param chop
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop) {
-    return of(hsManifold, chop, ArgMaxSelection.INSTANCE);
+  public static IterativeBiinvariantMean of(HomogeneousSpace homogeneousSpace, Chop chop) {
+    return of(homogeneousSpace, chop, ArgMaxSelection.INSTANCE);
   }
 
-  /** @param hsManifold
+  /** @param homogeneousSpace
    * @param chop
-   * @param geodesic
+   * @param geodesicSpace
    * @return */
-  public static IterativeBiinvariantMean of(HsManifold hsManifold, Chop chop, Geodesic geodesic) {
-    return new IterativeBiinvariantMean(hsManifold, chop, ReducingMean.of(geodesic));
+  public static IterativeBiinvariantMean of(HomogeneousSpace homogeneousSpace, Chop chop, GeodesicSpace geodesicSpace) {
+    return new IterativeBiinvariantMean(homogeneousSpace, chop, ReducingMean.of(geodesicSpace));
   }
 
   /** serves as initial guess at begin of fix point iteration that
@@ -65,12 +65,12 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   }
 
   // ---
-  private final HsManifold hsManifold;
+  private final HomogeneousSpace homogeneousSpace;
   private final Chop chop;
   private final BiinvariantMean initialGuess;
 
-  private IterativeBiinvariantMean(HsManifold hsManifold, Chop chop, BiinvariantMean initialGuess) {
-    this.hsManifold = hsManifold;
+  private IterativeBiinvariantMean(HomogeneousSpace homogeneousSpace, Chop chop, BiinvariantMean initialGuess) {
+    this.homogeneousSpace = homogeneousSpace;
     this.chop = Objects.requireNonNull(chop);
     this.initialGuess = Objects.requireNonNull(initialGuess);
   }
@@ -87,7 +87,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
     Tensor shifted = initialGuess.mean(sequence, weights); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, hsManifold.exponential(shifted));
+      MeanDefect meanDefect = new MeanDefect(sequence, weights, homogeneousSpace.exponential(shifted));
       shifted = meanDefect.shifted();
       if (chop.allZero(meanDefect.tangent()))
         return Optional.of(shifted);

@@ -2,6 +2,7 @@
 package ch.alpine.sophus.bm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -9,21 +10,19 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.spd.Spd0RandomSample;
-import ch.alpine.sophus.hs.spd.SpdGeodesic;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactScalarQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -33,10 +32,10 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class ReducingMeanTest {
+class ReducingMeanTest {
   private static Tensor _check(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
-    BiinvariantMean biinvariantMean = ReducingMean.of(RnGeodesic.INSTANCE);
+    BiinvariantMean biinvariantMean = ReducingMean.of(RnGroup.INSTANCE);
     Tensor mean = biinvariantMean.mean(sequence, weights);
     Tolerance.CHOP.requireClose(mean, weights.dot(sequence));
     return mean;
@@ -88,14 +87,14 @@ public class ReducingMeanTest {
   public void testExactFail() {
     Tensor weights = Tensors.vector(0.0, 0.0, 0.1);
     Tensor sequence = Tensors.vector(3, 4, 10);
-    BiinvariantMean biinvariantMean = ReducingMean.of(RnGeodesic.INSTANCE);
-    AssertFail.of(() -> biinvariantMean.mean(sequence, weights));
+    BiinvariantMean biinvariantMean = ReducingMean.of(RnGroup.INSTANCE);
+    assertThrows(Exception.class, () -> biinvariantMean.mean(sequence, weights));
   }
 
   @Test
   public void testSimple() {
     Random random = new Random(1);
-    BiinvariantMean bm = ReducingMean.of(SpdGeodesic.INSTANCE);
+    BiinvariantMean bm = ReducingMean.of(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.of(0, 0.3));

@@ -2,18 +2,18 @@
 package ch.alpine.sophus.lie.se3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.pdf.Distribution;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se3AdjointTest {
+class Se3AdjointTest {
   @Test
   public void testForwardInverse() {
     Distribution distribution = NormalDistribution.standard();
@@ -55,7 +55,7 @@ public class Se3AdjointTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> Se3Adjoint.forward(Tensors.vector(1, 2, 3, 4)));
-    AssertFail.of(() -> Se3Adjoint.forward(HilbertMatrix.of(4, 3)));
+    assertThrows(Exception.class, () -> Se3Adjoint.forward(Tensors.vector(1, 2, 3, 4)));
+    assertThrows(Exception.class, () -> Se3Adjoint.forward(HilbertMatrix.of(4, 3)));
   }
 }

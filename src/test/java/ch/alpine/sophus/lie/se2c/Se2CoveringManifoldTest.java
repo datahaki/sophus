@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2c;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -17,14 +18,13 @@ import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesCoordinate;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.NormWeighting;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -49,16 +49,16 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Unitize;
 
-public class Se2CoveringManifoldTest {
+class Se2CoveringManifoldTest {
   private static final BarycentricCoordinate[] ALL_COORDINATES = //
-      GbcHelper.barycentrics(Se2CoveringManifold.INSTANCE);
+      GbcHelper.barycentrics(Se2CoveringGroup.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //
-      GbcHelper.biinvariant(Se2CoveringManifold.INSTANCE);
+      GbcHelper.biinvariant(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate[] QUANTITY_COORDINATES = //
-      GbcHelper.biinvariant_quantity(Se2CoveringManifold.INSTANCE);
+      GbcHelper.biinvariant_quantity(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate AD_INVAR = HsCoordinates.wrap( //
-      Se2CoveringManifold.INSTANCE, //
+      Se2CoveringGroup.INSTANCE, //
       new MetricCoordinate( //
           NormWeighting.of(new Se2CoveringTarget(Vector2NormSquared::of, RealScalar.ONE), InversePowerVariogram.of(1))));
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
@@ -128,7 +128,7 @@ public class Se2CoveringManifoldTest {
   @Test
   public void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
-      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 
   @Test
@@ -177,13 +177,13 @@ public class Se2CoveringManifoldTest {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
       int n = 4 + random.nextInt(4);
       Tensor points = RandomVariate.of(distributiox, n, 3);
       Tensor xya = RandomVariate.of(distribution, 3);
       Tensor weights = barycentricCoordinate.weights(points, xya);
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
+      Tensor matrix = new HsDesign(manifold).matrix(points, xya);
       Tensor influence = matrix.dot(PseudoInverse.of(matrix));
       SymmetricMatrixQ.require(influence, Chop._10);
       Chop._10.requireClose(Symmetrize.of(influence), influence);
@@ -199,7 +199,7 @@ public class Se2CoveringManifoldTest {
         Tensor one = tensorMapping.apply(xya);
         Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
         Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
-        Tensor design = new HsDesign(vectorLogManifold).matrix(all, one);
+        Tensor design = new HsDesign(manifold).matrix(all, one);
         Chop._06.requireClose(influence, InfluenceMatrix.of(design).matrix());
       }
     }
@@ -210,7 +210,7 @@ public class Se2CoveringManifoldTest {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    VectorLogManifold vectorLogManifold = Se2CoveringManifold.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
       int n = 4 + random.nextInt(4);
       Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -219,7 +219,7 @@ public class Se2CoveringManifoldTest {
       Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
       AffineQ.require(weights1, Chop._08);
       Chop._08.requireClose(weights, weights);
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
+      Tensor matrix = new HsDesign(manifold).matrix(sequence, xya);
       Tensor residualMaker = InfluenceMatrix.of(matrix).residualMaker();
       Chop._08.requireClose(residualMaker.dot(weights), weights);
       assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
@@ -310,7 +310,7 @@ public class Se2CoveringManifoldTest {
     for (Tensor _beta : betas) {
       Scalar beta = (Scalar) _beta;
       // BarycentricCoordinate bc0 = LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = LeveragesCoordinate.of(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
         Tensor mean = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
@@ -325,6 +325,6 @@ public class Se2CoveringManifoldTest {
   @Test
   public void testANullFail() {
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
-      AssertFail.of(() -> barycentricCoordinate.weights(null, null));
+      assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 }

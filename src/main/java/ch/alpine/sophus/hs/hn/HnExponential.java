@@ -48,7 +48,7 @@ public class HnExponential implements Exponential, Serializable {
     return HnManifold.INSTANCE.midpoint(p, q);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     // embedding of TxH^n in R^(n+1) is not tight
     return log(q);

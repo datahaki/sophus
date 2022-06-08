@@ -11,10 +11,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 /** Reference:
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020, p. 4 */
-public record DoubleExponential(HsManifold hsManifold, HsTransport hsTransport) implements Serializable {
+public record DoubleExponential(HomogeneousSpace homogeneousSpace) implements Serializable {
   public DoubleExponential {
-    Objects.requireNonNull(hsManifold);
-    Objects.requireNonNull(hsTransport);
+    Objects.requireNonNull(homogeneousSpace);
   }
 
   public DoubleExponentialPoint at(Tensor x) {
@@ -27,13 +26,13 @@ public record DoubleExponential(HsManifold hsManifold, HsTransport hsTransport) 
 
     private DoubleExponentialPoint(Tensor x) {
       this.x = x;
-      exponential = hsManifold.exponential(x);
+      exponential = homogeneousSpace.exponential(x);
     }
 
     public TensorUnaryOperator operator(Tensor v) {
       Tensor xv = exponential.exp(v);
-      Exponential exp_xv = hsManifold.exponential(xv);
-      TensorUnaryOperator operator = hsTransport.shift(x, xv);
+      Exponential exp_xv = homogeneousSpace.exponential(xv);
+      TensorUnaryOperator operator = homogeneousSpace.hsTransport().shift(x, xv);
       return w -> exp_xv.exp(operator.apply(w));
     }
   }

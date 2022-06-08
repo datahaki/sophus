@@ -4,11 +4,11 @@ package ch.alpine.sophus.gbc;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.lie.rn.RnManifold;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -23,20 +23,20 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class LeveragesCoordinateTest {
+class LeveragesCoordinateTest {
   @Test
   public void testR1equiv() {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.
-    VectorLogManifold vectorLogManifold = RnManifold.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int length = 3; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 1);
       Tensor origin = RandomVariate.of(distribution, 1);
       Chop._08.requireClose( //
-          MetricBiinvariant.EUCLIDEAN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
-          Biinvariants.LEVERAGES.weighting(vectorLogManifold, variogram, sequence).apply(origin));
+          MetricBiinvariant.EUCLIDEAN.weighting(manifold, variogram, sequence).apply(origin), //
+          Biinvariants.LEVERAGES.weighting(manifold, variogram, sequence).apply(origin));
     }
   }
 
@@ -63,7 +63,7 @@ public class LeveragesCoordinateTest {
   public void testSe2() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
-    BarycentricCoordinate targetCoordinate = LeveragesCoordinate.of(Se2CoveringManifold.INSTANCE, variogram);
+    BarycentricCoordinate targetCoordinate = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, variogram);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);

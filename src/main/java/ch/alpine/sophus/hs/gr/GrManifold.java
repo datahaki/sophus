@@ -2,9 +2,13 @@
 package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.TangentSpace;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.sca.Chop;
 
 /** Quote from geomstats:
  * "Manifold of linear subspaces.
@@ -31,16 +35,21 @@ import ch.alpine.tensor.Tensor;
  * Gr(n, 1) ~ S^(n - 1) / {+-1}
  * 
  * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2) */
-public enum GrManifold implements HsManifold {
+public enum GrManifold implements HomogeneousSpace {
   INSTANCE;
 
-  @Override // from VectorLogManifold
-  public TangentSpace logAt(Tensor x) {
+  @Override // from Manifold
+  public Exponential exponential(Tensor x) {
     return new GrExponential(x);
   }
 
-  @Override // from HsManifold
-  public Exponential exponential(Tensor x) {
-    return new GrExponential(x);
+  @Override
+  public HsTransport hsTransport() {
+    return new PoleLadder(this);
+  }
+
+  @Override
+  public BiinvariantMean biinvariantMean(Chop chop) {
+    return IterativeBiinvariantMean.of(this, chop);
   }
 }

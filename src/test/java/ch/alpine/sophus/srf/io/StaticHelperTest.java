@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class StaticHelperTest {
+class StaticHelperTest {
   @Test
   public void testSingle() {
     String[] strings = StaticHelper.slash("12//");

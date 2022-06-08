@@ -2,11 +2,11 @@
 package ch.alpine.sophus.lie.he;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public class HeBiinvariantMeanTest {
+class HeBiinvariantMeanTest {
   @Test
   public void testTrivial() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");
@@ -22,7 +22,7 @@ public class HeBiinvariantMeanTest {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     assertEquals(sequence.get(0), actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -32,7 +32,7 @@ public class HeBiinvariantMeanTest {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     assertEquals(element, actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -43,7 +43,7 @@ public class HeBiinvariantMeanTest {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     assertEquals(element, actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -54,7 +54,7 @@ public class HeBiinvariantMeanTest {
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tensor expected = Tensors.fromString("{{2}, {2}, 1.8}");
     Chop._12.requireClose(actual, expected);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -67,7 +67,7 @@ public class HeBiinvariantMeanTest {
     Tensor expected = Tensors.fromString("{{2.0, 4.0}, {2.0, 4.0}, 1.0}");
     assertEquals(actual.get(0), actual.get(1));
     Chop._12.requireClose(actual, expected);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -80,7 +80,7 @@ public class HeBiinvariantMeanTest {
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tensor identity = Tensors.fromString("{{0, 0}, {0, 0}, 0}");
     assertEquals(identity, actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeManifold.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -88,7 +88,7 @@ public class HeBiinvariantMeanTest {
     Tensor p = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     Tensor q = Tensors.fromString("{{-3, 6}, {-2, 8}, -9}");
     Tensor domain = Subdivide.of(-1, 1, 10);
-    Tensor he1 = domain.map(HeGeodesic.INSTANCE.curve(p, q));
+    Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
         w -> HeBiinvariantMean.INSTANCE.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
     Tensor he2 = domain.map(mean);
@@ -100,7 +100,7 @@ public class HeBiinvariantMeanTest {
     Tensor p = Tensors.fromString("{{1}, {4}, 5}");
     Tensor q = Tensors.fromString("{{-3}, {6}, -9}");
     Tensor domain = Subdivide.of(0, 2, 11);
-    Tensor he1 = domain.map(HeGeodesic.INSTANCE.curve(p, q));
+    Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
         w -> HeBiinvariantMean.INSTANCE.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
     Tensor he2 = domain.map(mean);
@@ -109,6 +109,6 @@ public class HeBiinvariantMeanTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 }

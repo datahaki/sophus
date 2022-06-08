@@ -28,16 +28,16 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.GeometricMean;
 import ch.alpine.tensor.sca.Chop;
 
-public class SpdPhongMeanTest {
+class SpdPhongMeanTest {
   @Test
   public void testSimple() {
     Random random = new Random(1);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, TriangularDistribution.with(0, 1));
-      Tensor sequence = RandomSample.of(rsi, n);
+      Tensor sequence = RandomSample.of(rsi, random, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.of(SpdManifold.INSTANCE, Chop._10);
@@ -54,7 +54,7 @@ public class SpdPhongMeanTest {
     RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
-    Tensor m1 = SpdGeodesic.INSTANCE.midpoint(p, q);
+    Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
     SpdMemberQ.INSTANCE.require(m1);
     Tensor m2 = SpdPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
     SpdMemberQ.INSTANCE.require(m2);
@@ -84,7 +84,7 @@ public class SpdPhongMeanTest {
     SpdMemberQ.INSTANCE.require(q);
     Tensor weights = Tensors.vector(0.4, 0.6);
     Tensor sequence = Unprotect.byRef(p, q);
-    Tensor m1 = SpdBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor m1 = SpdManifold.INSTANCE.biinvariantMean(Chop._10).mean(sequence, weights);
     // Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
     Tensor m2 = WeightedGeometricMean.INSTANCE.mean(sequence, weights);
     Tolerance.CHOP.requireClose(m1, m2);

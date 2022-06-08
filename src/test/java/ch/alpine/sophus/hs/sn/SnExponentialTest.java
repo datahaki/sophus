@@ -2,12 +2,12 @@
 package ch.alpine.sophus.hs.sn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnExponentialTest {
+class SnExponentialTest {
   @Test
   public void test2D() throws ClassNotFoundException, IOException {
     SnExponential snExp = Serialization.copy(new SnExponential(UnitVector.of(2, 0)));
@@ -34,14 +34,14 @@ public class SnExponentialTest {
 
   @Test
   public void test2DNormFail() {
-    AssertFail.of(() -> new SnExponential(Tensors.vector(2, 1)));
+    assertThrows(Exception.class, () -> new SnExponential(Tensors.vector(2, 1)));
   }
 
   @Test
   public void test2DExpFail() {
     SnExponential snExp = new SnExponential(UnitVector.of(2, 0));
     Scalar dist = RealScalar.of(0.2);
-    AssertFail.of(() -> snExp.exp(AngleVector.of(dist)));
+    assertThrows(Exception.class, () -> snExp.exp(AngleVector.of(dist)));
   }
 
   @Test
@@ -78,7 +78,7 @@ public class SnExponentialTest {
 
   @Test
   public void test0Fail() {
-    AssertFail.of(() -> new SnExponential(Tensors.empty()));
+    assertThrows(Exception.class, () -> new SnExponential(Tensors.empty()));
   }
 
   @Test
@@ -92,12 +92,12 @@ public class SnExponentialTest {
 
   @Test
   public void testMatrixFail() {
-    AssertFail.of(() -> new SnExponential(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> new SnExponential(HilbertMatrix.of(3)));
   }
 
   @Test
   public void testLogMemberFail() {
     SnExponential snExponential = new SnExponential(UnitVector.of(3, 0));
-    AssertFail.of(() -> snExponential.log(Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> snExponential.log(Tensors.vector(1, 2, 3)));
   }
 }

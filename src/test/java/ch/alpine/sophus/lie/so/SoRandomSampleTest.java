@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Serialization;
@@ -18,7 +19,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
 
-public class SoRandomSampleTest {
+class SoRandomSampleTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
@@ -36,6 +37,6 @@ public class SoRandomSampleTest {
 
   @Test
   public void testZeroFail() {
-    AssertFail.of(() -> SoRandomSample.of(0));
+    assertThrows(Exception.class, () -> SoRandomSample.of(0));
   }
 }

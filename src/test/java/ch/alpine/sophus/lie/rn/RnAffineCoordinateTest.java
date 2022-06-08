@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -22,7 +23,7 @@ import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class RnAffineCoordinateTest {
+class RnAffineCoordinateTest {
   @Test
   public void testMean() {
     Distribution distribution = UniformDistribution.unit();
@@ -72,7 +73,7 @@ public class RnAffineCoordinateTest {
   @Test
   public void testWeights() {
     Distribution distribution = UniformDistribution.unit();
-    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnManifold.INSTANCE);
+    BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnGroup.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor sequence = RandomVariate.of(distribution, n, d);
@@ -121,11 +122,11 @@ public class RnAffineCoordinateTest {
 
   @Test
   public void testVectorFail() {
-    AssertFail.of(() -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
+    assertThrows(Exception.class, () -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
   public void testEmptyFail() {
-    AssertFail.of(() -> RnAffineCoordinate.of(Tensors.empty()));
+    assertThrows(Exception.class, () -> RnAffineCoordinate.of(Tensors.empty()));
   }
 }

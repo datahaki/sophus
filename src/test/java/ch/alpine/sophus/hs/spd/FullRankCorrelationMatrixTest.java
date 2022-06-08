@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 import ch.alpine.tensor.sca.Clips;
 
-public class FullRankCorrelationMatrixTest {
+class FullRankCorrelationMatrixTest {
   @Test
   public void testSimple() {
     for (int n = 1; n < 6; ++n) {

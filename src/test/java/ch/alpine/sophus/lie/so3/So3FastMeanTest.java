@@ -16,12 +16,12 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class So3FastMeanTest {
+class So3FastMeanTest {
   @Test
   public void testSimple() {
     int n = 7;
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
-    Tensor sequence = Tensors.vector(i -> So3Exponential.INSTANCE.exp(RandomVariate.of(distribution, 3)), n);
+    Tensor sequence = Tensors.vector(i -> So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3)), n);
     Distribution distribution_w = UniformDistribution.of(0.4, 1);
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
     Tensor m0 = sequence.get(ArgMax.of(weights));
@@ -29,7 +29,7 @@ public class So3FastMeanTest {
     Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
     OrthogonalMatrixQ.require(m1);
     Tensor m2 = So3FastMean.INSTANCE.mean(sequence, weights);
-    Tensor mE = IterativeBiinvariantMean.of(So3Manifold.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+    Tensor mE = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
     Tensor distances = Tensors.of( //
         So3Metric.INSTANCE.distance(mE, m2), //
         So3Metric.INSTANCE.distance(mE, m1), //

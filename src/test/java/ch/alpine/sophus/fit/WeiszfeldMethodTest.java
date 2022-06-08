@@ -2,6 +2,7 @@
 package ch.alpine.sophus.fit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class WeiszfeldMethodTest {
+class WeiszfeldMethodTest {
   public static final SpatialMedian DEFAULT = new WeiszfeldMethod(Tolerance.CHOP);
 
   @Test
@@ -103,6 +103,6 @@ public class WeiszfeldMethodTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new WeiszfeldMethod(null));
+    assertThrows(Exception.class, () -> new WeiszfeldMethod(null));
   }
 }

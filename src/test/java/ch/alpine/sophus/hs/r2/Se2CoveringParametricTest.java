@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2CoveringParametricTest {
+class Se2CoveringParametricTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
     TensorMetric tensorMetric = Serialization.copy(Se2CoveringParametric.INSTANCE);

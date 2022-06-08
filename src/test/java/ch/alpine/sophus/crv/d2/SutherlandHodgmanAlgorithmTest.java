@@ -2,17 +2,17 @@
 package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.pdf.Distribution;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
 
-public class SutherlandHodgmanAlgorithmTest {
+class SutherlandHodgmanAlgorithmTest {
   // the examples show that the algo is not symmetric A cap B != B cap A
   @Test
   public void testSingle() {
@@ -53,7 +53,7 @@ public class SutherlandHodgmanAlgorithmTest {
 
   @Test
   public void testFail() {
-    AssertFail.of(() -> SutherlandHodgmanAlgorithm.of(HilbertMatrix.of(2, 3)));
+    assertThrows(Exception.class, () -> SutherlandHodgmanAlgorithm.of(HilbertMatrix.of(2, 3)));
   }
 
   @Test
@@ -69,7 +69,7 @@ public class SutherlandHodgmanAlgorithmTest {
 
   @Test
   public void testSingular() {
-    AssertFail.of(() -> SutherlandHodgmanAlgorithm.intersection( //
+    assertThrows(Exception.class, () -> SutherlandHodgmanAlgorithm.intersection( //
         Tensors.vector(1, 0), //
         Tensors.vector(2, 0), //
         Tensors.vector(4, 0), //

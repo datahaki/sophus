@@ -13,7 +13,7 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Variance;
 import ch.alpine.tensor.sca.Chop;
 
-public class SnUniformResampleTest {
+class SnUniformResampleTest {
   @Test
   public void testSimple() {
     Scalar spacing = Pi.VALUE.divide(RealScalar.of(10));

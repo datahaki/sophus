@@ -2,6 +2,7 @@
 package ch.alpine.sophus.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
@@ -9,15 +10,14 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.rn.RnMetric;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Chop;
 
-public class AdjacentDistancesTest {
+class AdjacentDistancesTest {
   @Test
   public void testR2() throws ClassNotFoundException, IOException {
     Tensor tensor = Serialization.copy(new AdjacentDistances(RnMetric.INSTANCE)) //
@@ -39,11 +39,11 @@ public class AdjacentDistancesTest {
 
   @Test
   public void testR2SingleFail() {
-    AssertFail.of(() -> new AdjacentDistances(null));
+    assertThrows(Exception.class, () -> new AdjacentDistances(null));
   }
 
   @Test
   public void testScalarFail() {
-    AssertFail.of(() -> new AdjacentDistances(RnMetric.INSTANCE).apply(Pi.HALF));
+    assertThrows(Exception.class, () -> new AdjacentDistances(RnMetric.INSTANCE).apply(Pi.HALF));
   }
 }

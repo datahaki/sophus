@@ -11,7 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.io.ScalarArray;
-import ch.alpine.tensor.red.LenientAdd;
+import ch.alpine.tensor.qty.LenientAdd;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.pow.Power;
 

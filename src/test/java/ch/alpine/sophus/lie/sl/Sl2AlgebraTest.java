@@ -29,7 +29,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Sl2AlgebraTest {
+class Sl2AlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
   @Test
@@ -45,9 +45,9 @@ public class Sl2AlgebraTest {
     assertEquals(form, DiagonalMatrix.of(-2, 2, 2));
     Tensor mx = matrixAlgebra.toMatrix(x);
     Tensor my = matrixAlgebra.toMatrix(y);
-    Tensor gX = Sl2Exponential.INSTANCE.exp(mx);
-    Tensor gY = Sl2Exponential.INSTANCE.exp(my);
-    Tensor gZ = Sl2Exponential.INSTANCE.log(gX.dot(gY));
+    Tensor gX = Sl2Group.INSTANCE.exp(mx);
+    Tensor gY = Sl2Group.INSTANCE.exp(my);
+    Tensor gZ = Sl2Group.INSTANCE.log(gX.dot(gY));
     Tensor az = matrixAlgebra.toVector(gZ);
     LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(matrixAlgebra.ad());
     Tensor rs6 = lieAlgebraImpl.bch(6).apply(x, y);

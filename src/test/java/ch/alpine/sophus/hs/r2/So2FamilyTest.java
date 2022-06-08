@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class So2FamilyTest {
+class So2FamilyTest {
   @Test
   public void testSimple() {
     BijectionFamily bijectionFamily = new So2Family(s -> RealScalar.of(5).subtract(s));

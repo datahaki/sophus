@@ -1,14 +1,16 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
@@ -22,13 +24,14 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class SpdExponentialTest {
+class SpdExponentialTest {
   @Test
   public void testSimple() throws ClassNotFoundException, IOException {
+    Random random = new Random(3);
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
-      Tensor p = RandomSample.of(spd);
-      Tensor q = RandomSample.of(spd);
+      Tensor p = RandomSample.of(spd, random);
+      Tensor q = RandomSample.of(spd, random);
       SpdExponential spdExp = Serialization.copy(new SpdExponential(p));
       Tensor w = spdExp.log(q);
       Tensor exp = spdExp.exp(w);
@@ -85,11 +88,11 @@ public class SpdExponentialTest {
 
   @Test
   public void testNonSymmetricFail() {
-    AssertFail.of(() -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
+    assertThrows(Exception.class, () -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> new SpdExponential(null));
+    assertThrows(Exception.class, () -> new SpdExponential(null));
   }
 }

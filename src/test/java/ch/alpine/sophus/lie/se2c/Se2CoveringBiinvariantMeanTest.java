@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2c;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -29,7 +29,7 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se2CoveringBiinvariantMeanTest {
+class Se2CoveringBiinvariantMeanTest {
   @Test
   public void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
@@ -55,7 +55,7 @@ public class Se2CoveringBiinvariantMeanTest {
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
-      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringGroup.INSTANCE.exponential(mean)).tangent();
       Chop._04.requireClose(defect, defect.map(Scalar::zero)); // 1e-6 does not always work
     }
   }
@@ -73,7 +73,7 @@ public class Se2CoveringBiinvariantMeanTest {
       Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       QuantityMagnitude.SI().in("m").apply(mean.Get(0));
       QuantityMagnitude.SI().in("m").apply(mean.Get(1));
-      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringManifold.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = new MeanDefect(sequence, weights, Se2CoveringGroup.INSTANCE.exponential(mean)).tangent();
       Chop._06.requireClose(defect, defect.map(Scalar::zero));
     }
   }
@@ -118,11 +118,11 @@ public class Se2CoveringBiinvariantMeanTest {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor vectors = RandomVariate.of(distribution, 3, 3);
     Tensor weights = RandomVariate.of(distribution, 3);
-    Tensor exp = Se2CoveringExponential.INSTANCE.exp(weights.dot(vectors));
+    Tensor exp = Se2CoveringGroup.INSTANCE.exp(weights.dot(vectors));
     // ---
     Tensor sequence = Join.of( //
         Array.zeros(1, 3), //
-        Tensor.of(vectors.stream().map(Se2CoveringExponential.INSTANCE::exp)));
+        Tensor.of(vectors.stream().map(Se2CoveringGroup.INSTANCE::exp)));
     Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, //
         Join.of(Tensors.of(RealScalar.ONE.subtract(Total.ofVector(weights))), weights));
     assertFalse(Chop._08.isClose(exp, mean));
@@ -130,7 +130,7 @@ public class Se2CoveringBiinvariantMeanTest {
 
   @Test
   public void testEmpty() {
-    AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
   @Test
@@ -138,6 +138,6 @@ public class Se2CoveringBiinvariantMeanTest {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor weights = RandomVariate.of(distribution, 3);
-    AssertFail.of(() -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights));
+    assertThrows(Exception.class, () -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights));
   }
 }

@@ -10,12 +10,12 @@ import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Inverse;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
 
-public class Se2CoveringGroupElementTest {
+class Se2CoveringGroupElementTest {
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
       Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
@@ -80,7 +80,7 @@ public class Se2CoveringGroupElementTest {
       Tensor xya = RandomVariate.of(distribution, 3);
       Se2CoveringGroupElement se2GroupAction = new Se2CoveringGroupElement(xya);
       Tensor v = RandomVariate.of(distribution, 3);
-      Tensor other = Se2CoveringExponential.INSTANCE.exp(v);
+      Tensor other = Se2CoveringGroup.INSTANCE.exp(v);
       Tensor result = se2GroupAction.combine(other);
       Tensor prod = Se2CoveringIntegrator.INSTANCE.spin(xya, v);
       Chop._10.requireClose(prod, result);
@@ -151,7 +151,7 @@ public class Se2CoveringGroupElementTest {
     Scalar h = RealScalar.of(1e-6);
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(g);
     // Tensor gexphx =
-    se2CoveringGroupElement.combine(Se2CoveringExponential.INSTANCE.exp(x.multiply(h)));
+    se2CoveringGroupElement.combine(Se2CoveringGroup.INSTANCE.exp(x.multiply(h)));
     // Tensor nu = gexphx.divide(h);
     // Tensor dL = se2CoveringGroupElement.dL(x);
     // System.out.println(nu);

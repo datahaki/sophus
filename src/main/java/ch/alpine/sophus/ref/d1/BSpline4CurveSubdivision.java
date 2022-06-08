@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
-import ch.alpine.sophus.api.SplitInterface;
-import ch.alpine.sophus.clt.Clothoid;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -31,20 +31,20 @@ public enum BSpline4CurveSubdivision {
    * "Manifold-valued subdivision schemes based on geodesic inductive averaging"
    * by Dyn, Sharon, 2014
    * 
-   * @param splitInterface
+   * @param geodesicSpace
    * @return */
-  public static CurveSubdivision split2lo(SplitInterface splitInterface) {
-    return Split2LoDual3PointCurveSubdivision.of(splitInterface, P2_3, P1_16);
+  public static CurveSubdivision split2lo(GeodesicSpace geodesicSpace) {
+    return Split2LoDual3PointCurveSubdivision.of(geodesicSpace, P2_3, P1_16);
   }
 
   // ---
   private static final Scalar P11_16 = RationalScalar.of(11, 16);
   private static final Scalar P1_11 = RationalScalar.of(1, 11);
 
-  /** @param splitInterface
+  /** @param geodesicSpace
    * @return */
-  public static CurveSubdivision split2hi(SplitInterface splitInterface) {
-    return Split2HiDual3PointCurveSubdivision.of(splitInterface, P11_16, P1_11);
+  public static CurveSubdivision split2hi(GeodesicSpace geodesicSpace) {
+    return Split2HiDual3PointCurveSubdivision.of(geodesicSpace, P11_16, P1_11);
   }
 
   // ---
@@ -54,19 +54,19 @@ public enum BSpline4CurveSubdivision {
   /** geodesic split suggested by Hakenberg 2018
    * most suitable for {@link Clothoid}
    * 
-   * @param splitInterface
+   * @param geodesicSpace
    * @return */
-  public static CurveSubdivision split3(SplitInterface splitInterface) {
-    return split3(splitInterface, RationalScalar.HALF);
+  public static CurveSubdivision split3(GeodesicSpace geodesicSpace) {
+    return split3(geodesicSpace, RationalScalar.HALF);
   }
 
   /** function generalizes all variants above with {1/16, 1/2, 11/16}
    * 
-   * @param splitInterface
+   * @param geodesicSpace
    * @param value in the interval [1/16, 11/16] give the best results
    * @return */
-  public static CurveSubdivision split3(SplitInterface splitInterface, Scalar value) {
-    return Split3Dual3PointCurveSubdivision.of(splitInterface, //
+  public static CurveSubdivision split3(GeodesicSpace geodesicSpace, Scalar value) {
+    return Split3Dual3PointCurveSubdivision.of(geodesicSpace, //
         P5.divide(P16.multiply(value.subtract(RealScalar.ONE))).add(RealScalar.ONE), //
         value.multiply(P16).reciprocal(), value);
   }

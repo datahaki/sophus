@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.ad;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
@@ -19,14 +20,13 @@ import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.sl.SlAlgebra;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -43,7 +43,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class HsAlgebraTest {
+class HsAlgebraTest {
   @Test
   public void testSe2() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 6);
@@ -86,7 +86,7 @@ public class HsAlgebraTest {
     Tensor g = RandomVariate.of(distribution, random, 3);
     Tensor p = RandomVariate.of(distribution, random, 2);
     Tensor q1 = hsAlgebra.action(g, p);
-    Tensor xyz = Se2CoveringExponential.INSTANCE.exp(g);
+    Tensor xyz = Se2CoveringGroup.INSTANCE.exp(g);
     Tensor mat = Se2Matrix.of(xyz);
     Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q2);
@@ -97,7 +97,7 @@ public class HsAlgebraTest {
 
   @Test
   public void testSe2Fail() {
-    AssertFail.of(() -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
+    assertThrows(Exception.class, () -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 
   @Test

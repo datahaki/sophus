@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Imag;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class HnMetricTest {
+class HnMetricTest {
   @Test
   public void testZero() {
     Distribution distribution = NormalDistribution.standard();

@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-public class IterativeAffineCoordinateTest {
+class IterativeAffineCoordinateTest {
   private static void _check(Tensor levers, Tensor weights) {
     Chop._10.requireAllZero(weights.dot(levers));
     Chop._10.requireClose(Total.ofVector(weights), RealScalar.ONE);
@@ -35,8 +35,8 @@ public class IterativeAffineCoordinateTest {
           if (OriginEnclosureQ.isInsideConvexHull(levers)) {
             _check(levers, AffineCoordinate.INSTANCE.origin(levers));
             _check(levers, genesis.origin(levers));
-            Deque<Evaluation> deque = genesis.deque(levers);
-            for (Evaluation evaluation : deque)
+            Deque<WeightsFactors> deque = genesis.deque(levers);
+            for (WeightsFactors evaluation : deque)
               _check(levers, evaluation.weights());
           }
         }

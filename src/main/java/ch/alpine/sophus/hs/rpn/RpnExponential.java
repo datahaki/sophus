@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sinc;
 
 /** real projective plane */
-public class RpnExponential implements Exponential, Serializable {
+/* package */ class RpnExponential implements Exponential, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final Tensor x;
@@ -60,7 +60,7 @@ public class RpnExponential implements Exponential, Serializable {
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xyn);
   }
 
-  @Override // from TangentSpace
+  @Override // from Exponential
   public Tensor vectorLog(Tensor y) {
     return log(y);
   }

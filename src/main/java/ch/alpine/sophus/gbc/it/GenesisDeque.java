@@ -7,5 +7,5 @@ import ch.alpine.sophus.api.Genesis;
 import ch.alpine.tensor.Tensor;
 
 public interface GenesisDeque extends Genesis {
-  Deque<Evaluation> deque(Tensor levers);
+  Deque<WeightsFactors> deque(Tensor levers);
 }

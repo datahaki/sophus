@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringIntegrator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class Se2ForwardActionTest {
+class Se2ForwardActionTest {
   @Test
   public void testSimple() {
     Tensor xya = Tensors.vector(1, 2, 3);
@@ -37,12 +37,12 @@ public class Se2ForwardActionTest {
   @Test
   public void testSome() {
     Tensor u = Tensors.vector(1.2, 0, 0.75);
-    Tensor m = Se2Matrix.of(Se2CoveringExponential.INSTANCE.exp(u));
+    Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exp(u));
     Tensor p = Tensors.vector(-2, 3);
     Tensor v = m.dot(p.copy().append(RealScalar.ONE));
-    Tensor r = Se2CoveringIntegrator.INSTANCE.spin(Se2CoveringExponential.INSTANCE.exp(u), p.append(RealScalar.ZERO));
+    Tensor r = Se2CoveringIntegrator.INSTANCE.spin(Se2CoveringGroup.INSTANCE.exp(u), p.append(RealScalar.ZERO));
     assertEquals(r.extract(0, 2), v.extract(0, 2));
-    Se2ForwardAction se2ForwardAction = new Se2ForwardAction(Se2CoveringExponential.INSTANCE.exp(u));
+    Se2ForwardAction se2ForwardAction = new Se2ForwardAction(Se2CoveringGroup.INSTANCE.exp(u));
     assertEquals(se2ForwardAction.apply(p), v.extract(0, 2));
   }
 

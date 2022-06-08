@@ -1,15 +1,16 @@
 // code by jph
 package ch.alpine.sophus.crv.se2c;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.usr.AssertFail;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public class LogarithmicSpiralTest {
+class LogarithmicSpiralTest {
   @Test
   public void testSimple() {
     ScalarTensorFunction scalarTensorFunction = LogarithmicSpiral.of(2, 0.1759);
@@ -30,7 +31,7 @@ public class LogarithmicSpiralTest {
 
   @Test
   public void testNullFail() {
-    AssertFail.of(() -> LogarithmicSpiral.of(RealScalar.of(2), null));
-    AssertFail.of(() -> LogarithmicSpiral.of(null, RealScalar.of(2)));
+    assertThrows(Exception.class, () -> LogarithmicSpiral.of(RealScalar.of(2), null));
+    assertThrows(Exception.class, () -> LogarithmicSpiral.of(null, RealScalar.of(2)));
   }
 }

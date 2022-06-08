@@ -7,7 +7,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.Tolerance;
 
-public class HnSeriesTest {
+class HnSeriesTest {
   @Test
   public void testSimple() {
     Tolerance.CHOP.requireClose(HnSeries.of(RealScalar.of(1.0)), Tensors.vector(1.5430806348152437, 1.1752011936438014));

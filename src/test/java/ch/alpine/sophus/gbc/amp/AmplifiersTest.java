@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
 
-public class AmplifiersTest {
+class AmplifiersTest {
   @Test
   public void testSimple() {
     List<TensorUnaryOperator> list = Arrays.asList( //

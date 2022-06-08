@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.sl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
@@ -10,16 +11,15 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.usr.AssertFail;
-import ch.alpine.tensor.ExactTensorQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-public class Sl2GroupElementTest {
+class Sl2GroupElementTest {
   private static Tensor adjoint(LieGroupElement lieGroupElement) {
     return Tensor.of(IdentityMatrix.of(3).stream().map(lieGroupElement::adjoint));
   }
@@ -64,6 +64,6 @@ public class Sl2GroupElementTest {
 
   @Test
   public void testFailZero() {
-    AssertFail.of(() -> Sl2Group.INSTANCE.element(Tensors.vector(1, 2, 0)));
+    assertThrows(Exception.class, () -> Sl2Group.INSTANCE.element(Tensors.vector(1, 2, 0)));
   }
 }
