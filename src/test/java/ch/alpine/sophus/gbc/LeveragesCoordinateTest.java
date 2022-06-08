@@ -28,15 +28,15 @@ class LeveragesCoordinateTest {
   public void testR1equiv() {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.
-    Manifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int length = 3; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 1);
       Tensor origin = RandomVariate.of(distribution, 1);
       Chop._08.requireClose( //
-          MetricBiinvariant.EUCLIDEAN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
-          Biinvariants.LEVERAGES.weighting(vectorLogManifold, variogram, sequence).apply(origin));
+          MetricBiinvariant.EUCLIDEAN.weighting(manifold, variogram, sequence).apply(origin), //
+          Biinvariants.LEVERAGES.weighting(manifold, variogram, sequence).apply(origin));
     }
   }
 

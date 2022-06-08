@@ -177,13 +177,13 @@ class Se2CoveringManifoldTest {
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
       int n = 4 + random.nextInt(4);
       Tensor points = RandomVariate.of(distributiox, n, 3);
       Tensor xya = RandomVariate.of(distribution, 3);
       Tensor weights = barycentricCoordinate.weights(points, xya);
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(points, xya);
+      Tensor matrix = new HsDesign(manifold).matrix(points, xya);
       Tensor influence = matrix.dot(PseudoInverse.of(matrix));
       SymmetricMatrixQ.require(influence, Chop._10);
       Chop._10.requireClose(Symmetrize.of(influence), influence);
@@ -199,7 +199,7 @@ class Se2CoveringManifoldTest {
         Tensor one = tensorMapping.apply(xya);
         Chop._08.requireClose(one, biinvariantMean.mean(all, weights));
         Chop._06.requireClose(weights, barycentricCoordinate.weights(all, one));
-        Tensor design = new HsDesign(vectorLogManifold).matrix(all, one);
+        Tensor design = new HsDesign(manifold).matrix(all, one);
         Chop._06.requireClose(influence, InfluenceMatrix.of(design).matrix());
       }
     }
@@ -210,7 +210,7 @@ class Se2CoveringManifoldTest {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {
       int n = 4 + random.nextInt(4);
       Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -219,7 +219,7 @@ class Se2CoveringManifoldTest {
       Tensor weights1 = barycentricCoordinate.weights(sequence, xya); // projection
       AffineQ.require(weights1, Chop._08);
       Chop._08.requireClose(weights, weights);
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, xya);
+      Tensor matrix = new HsDesign(manifold).matrix(sequence, xya);
       Tensor residualMaker = InfluenceMatrix.of(matrix).residualMaker();
       Chop._08.requireClose(residualMaker.dot(weights), weights);
       assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));

@@ -18,11 +18,11 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
  * by Jan Hakenberg, 2020 */
 public enum HarborBiinvariantVector {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param sequence
    * @return */
-  public static BiinvariantVectorFunction of(Manifold vectorLogManifold, Tensor sequence) {
+  public static BiinvariantVectorFunction of(Manifold manifold, Tensor sequence) {
     return new InfluenceBiinvariantVector( //
-        vectorLogManifold, sequence, (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
+        manifold, sequence, (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
   }
 }

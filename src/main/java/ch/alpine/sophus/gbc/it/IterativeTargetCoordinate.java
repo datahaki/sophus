@@ -29,6 +29,7 @@ public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
   private final int k;
 
   /** @param genesis
+   * @param beta
    * @param k */
   public IterativeTargetCoordinate(Genesis genesis, Scalar beta, int k) {
     this.genesis = Objects.requireNonNull(genesis);

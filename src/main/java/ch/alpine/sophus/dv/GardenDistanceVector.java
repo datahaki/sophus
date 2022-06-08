@@ -21,22 +21,22 @@ import ch.alpine.tensor.mat.gr.Mahalanobis;
  * 
  * @see HarborBiinvariantVector */
 public class GardenDistanceVector implements TensorUnaryOperator {
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of(Manifold vectorLogManifold, Tensor sequence) {
-    return new GardenDistanceVector(Objects.requireNonNull(vectorLogManifold), sequence);
+  public static TensorUnaryOperator of(Manifold manifold, Tensor sequence) {
+    return new GardenDistanceVector(Objects.requireNonNull(manifold), sequence);
   }
 
   // ---
   private final List<Exponential> tangentSpaces;
   private final List<Mahalanobis> array;
 
-  public GardenDistanceVector(Manifold vectorLogManifold, Tensor sequence) {
+  public GardenDistanceVector(Manifold manifold, Tensor sequence) {
     tangentSpaces = new ArrayList<>(sequence.length());
     array = new ArrayList<>(sequence.length());
     for (Tensor point : sequence) {
-      Exponential exponential = vectorLogManifold.exponential(point);
+      Exponential exponential = manifold.exponential(point);
       tangentSpaces.add(exponential);
       array.add(new Mahalanobis(Tensor.of(sequence.stream().map(exponential::vectorLog))));
     }

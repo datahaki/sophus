@@ -42,7 +42,7 @@ class MeshStructureTest {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         new DooSabinRefinement(RnBiinvariantMean.INSTANCE);
     SurfaceMesh surfaceMesh = SurfaceMeshExamples.mixed7();
-    // surfaceMeshRefinement.refine(surfaceMesh);
+    surfaceMeshRefinement.refine(surfaceMesh);
   }
 
   @Test

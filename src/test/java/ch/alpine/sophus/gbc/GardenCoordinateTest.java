@@ -23,7 +23,7 @@ class GardenCoordinateTest {
   public void testR1equiv() {
     // in R^d we have w^H = w^G
     // but not in R2 etc.
-    Manifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int d = 1; d < 5; ++d)
@@ -31,8 +31,8 @@ class GardenCoordinateTest {
         Tensor sequence = RandomVariate.of(distribution, n, d);
         Tensor origin = RandomVariate.of(distribution, d);
         Chop._08.requireClose( //
-            Biinvariants.GARDEN.weighting(vectorLogManifold, variogram, sequence).apply(origin), //
-            Biinvariants.HARBOR.weighting(vectorLogManifold, variogram, sequence).apply(origin));
+            Biinvariants.GARDEN.weighting(manifold, variogram, sequence).apply(origin), //
+            Biinvariants.HARBOR.weighting(manifold, variogram, sequence).apply(origin));
       }
   }
 

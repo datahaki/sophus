@@ -15,19 +15,32 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.FirstPosition;
 
-/** TODO SOPHUS DOC reference Scotts work */
+/** Reference:
+ * "Multi-Sided Patches via Barycentric Coordinates"
+ * by Scott Schaefer in the book
+ * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics" */
 public class SPatch implements TensorUnaryOperator {
+  /** @param n
+   * @param genesis
+   * @param d
+   * @return */
+  public static SPatch of(int n, Genesis genesis, int d) {
+    return new SPatch(CirclePoints.of(n), genesis, d);
+  }
+
+  // ---
   private final int n;
   private final Genesis genesis;
   private final Tensor v;
   private final Tensor ls;
 
-  /** @param n
+  /** @param v
+   * @param genesis
    * @param d typically 2 */
-  public SPatch(int n, int d, Genesis genesis) {
-    this.n = n;
+  public SPatch(Tensor v, Genesis genesis, int d) {
+    this.n = v.length();
+    this.v = v;
     this.genesis = genesis;
-    v = CirclePoints.of(n);
     if (d != 2)
       throw new IllegalArgumentException("d=" + d);
     Tensor tensor = Tuples.of(Range.of(0, n), d);

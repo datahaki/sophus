@@ -11,108 +11,103 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 public enum GbcHelper {
   ;
-  public static BarycentricCoordinate lagrainate_of(Biinvariant biinvariants, Manifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate lagrainate_of(Biinvariant biinvariants, Manifold manifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return biinvariants.lagrainate(vectorLogManifold, variogram, sequence).apply(point);
+        return biinvariants.lagrainate(manifold, variogram, sequence).apply(point);
       }
     };
   }
 
-  public static BarycentricCoordinate harborCoordinate_of(Manifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate harborCoordinate_of(Manifold manifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return HarborCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+        return HarborCoordinate.of(manifold, variogram, sequence).apply(point);
       }
     };
   }
 
-  public static BarycentricCoordinate gardenCoordinate_of(Manifold vectorLogManifold, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate gardenCoordinate_of(Manifold manifold, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return GardenCoordinate.of(vectorLogManifold, variogram, sequence).apply(point);
+        return GardenCoordinate.of(manifold, variogram, sequence).apply(point);
       }
     };
   }
 
   public static BarycentricCoordinate inversCoordinate_of( //
-      Biinvariant biinvariant, Manifold vectorLogManifold) {
+      Biinvariant biinvariant, Manifold manifold) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return InverseCoordinate.of( //
-            biinvariant.distances(vectorLogManifold, sequence), //
-            vectorLogManifold, sequence).apply(point);
+            biinvariant.distances(manifold, sequence), //
+            manifold, sequence).apply(point);
       }
     };
   }
 
   public static BarycentricCoordinate kriginCoordinate_of( //
-      Biinvariant biinvariant, Manifold vectorLogManifold) {
+      Biinvariant biinvariant, Manifold manifold) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return KrigingCoordinate.of( //
-            biinvariant.distances(vectorLogManifold, sequence), //
-            vectorLogManifold, sequence).apply(point);
+            biinvariant.distances(manifold, sequence), //
+            manifold, sequence).apply(point);
       }
     };
   }
 
-  public static BarycentricCoordinate[] barycentrics(Manifold vectorLogManifold) { //
+  public static BarycentricCoordinate[] barycentrics(Manifold manifold) { //
     return new BarycentricCoordinate[] { //
-        lagrainate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold, InversePowerVariogram.of(2)), //
-        lagrainate_of(Biinvariants.LEVERAGES, vectorLogManifold, InversePowerVariogram.of(2)), //
-        lagrainate_of(Biinvariants.GARDEN, vectorLogManifold, InversePowerVariogram.of(2)), //
-        HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(1))), //
-        HsCoordinates.wrap(vectorLogManifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
-        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(MetricBiinvariant.EUCLIDEAN, manifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(Biinvariants.LEVERAGES, manifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(Biinvariants.GARDEN, manifold, InversePowerVariogram.of(2)), //
+        HsCoordinates.wrap(manifold, MetricCoordinate.of(InversePowerVariogram.of(1))), //
+        HsCoordinates.wrap(manifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
+        gardenCoordinate_of(manifold, InversePowerVariogram.of(1)), //
+        gardenCoordinate_of(manifold, InversePowerVariogram.of(2)), //
         // LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
         // LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
-        harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
-        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
-        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
-        inversCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
-        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
-        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, vectorLogManifold), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
+        harborCoordinate_of(manifold, InversePowerVariogram.of(1)), //
+        harborCoordinate_of(manifold, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.of(manifold, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.of(manifold, InversePowerVariogram.of(2)), //
+        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, manifold), //
+        inversCoordinate_of(MetricBiinvariant.EUCLIDEAN, manifold), //
+        inversCoordinate_of(Biinvariants.HARBOR, manifold), //
+        inversCoordinate_of(Biinvariants.HARBOR, manifold), //
+        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, manifold), //
+        kriginCoordinate_of(MetricBiinvariant.EUCLIDEAN, manifold), //
+        kriginCoordinate_of(Biinvariants.HARBOR, manifold), //
+        kriginCoordinate_of(Biinvariants.HARBOR, manifold), //
     };
   }
 
-  public static BarycentricCoordinate[] biinvariant(Manifold vectorLogManifold) { //
+  public static BarycentricCoordinate[] biinvariant(Manifold manifold) { //
     return new BarycentricCoordinate[] { //
-        lagrainate_of(Biinvariants.LEVERAGES, vectorLogManifold, InversePowerVariogram.of(2)), //
-        lagrainate_of(Biinvariants.GARDEN, vectorLogManifold, InversePowerVariogram.of(2)), //
-        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        gardenCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(Biinvariants.LEVERAGES, manifold, InversePowerVariogram.of(2)), //
+        lagrainate_of(Biinvariants.GARDEN, manifold, InversePowerVariogram.of(2)), //
+        gardenCoordinate_of(manifold, InversePowerVariogram.of(1)), //
+        gardenCoordinate_of(manifold, InversePowerVariogram.of(2)), //
         // LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
         // LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(2)), //
-        harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        LeveragesCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
-        kriginCoordinate_of(Biinvariants.HARBOR, vectorLogManifold), //
+        harborCoordinate_of(manifold, InversePowerVariogram.of(1)), //
+        harborCoordinate_of(manifold, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.of(manifold, InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.of(manifold, InversePowerVariogram.of(2)), //
+        kriginCoordinate_of(Biinvariants.HARBOR, manifold), //
+        kriginCoordinate_of(Biinvariants.HARBOR, manifold), //
     };
   }
 
-  public static BarycentricCoordinate[] biinvariant_quantity(Manifold vectorLogManifold) { //
+  public static BarycentricCoordinate[] biinvariant_quantity(Manifold manifold) { //
     return new BarycentricCoordinate[] { //
-        // AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        // AnchorCoordinate.of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        // harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(1)), //
-        // harborCoordinate_of(vectorLogManifold, InversePowerVariogram.of(2)), //
-        // kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1)), //
-        // kriginCoordinate_of(Biinvariant.HARBOR, vectorLogManifold, PowerVariogram.of(1, 1.5)), //
+        harborCoordinate_of(manifold, InversePowerVariogram.of(2)) //
     };
   }
 }

@@ -22,8 +22,8 @@ class RidgeRegressionTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
-    RidgeRegression ridgeRegression = new RidgeRegression(vectorLogManifold);
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
+    RidgeRegression ridgeRegression = new RidgeRegression(manifold);
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       for (Tensor point : sequence) {

@@ -32,22 +32,22 @@ public enum Biinvariants implements Biinvariant {
    * by Jan Hakenberg, 2020 */
   LEVERAGES {
     @Override // from Biinvariant
-    public TensorUnaryOperator distances(Manifold vectorLogManifold, Tensor sequence) {
-      return HsGenesis.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE, sequence);
+    public TensorUnaryOperator distances(Manifold manifold, Tensor sequence) {
+      return HsGenesis.wrap(manifold, LeveragesDistanceVector.INSTANCE, sequence);
     }
 
     @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HsGenesis.wrap(vectorLogManifold, new LeveragesGenesis(variogram), sequence);
+    public TensorUnaryOperator coordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return HsGenesis.wrap(manifold, new LeveragesGenesis(variogram), sequence);
     }
 
     @Override // from Biinvariant
-    public TensorUnaryOperator lagrainate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      Objects.requireNonNull(vectorLogManifold);
+    public TensorUnaryOperator lagrainate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      Objects.requireNonNull(manifold);
       Objects.requireNonNull(variogram);
       Objects.requireNonNull(sequence);
       return point -> {
-        Tensor levers = Tensor.of(sequence.stream().map(vectorLogManifold.exponential(point)::vectorLog));
+        Tensor levers = Tensor.of(sequence.stream().map(manifold.exponential(point)::vectorLog));
         Tensor target = NormalizeTotal.FUNCTION.apply(LeveragesDistanceVector.INSTANCE.origin(levers).map(variogram));
         return LagrangeCoordinates.of(levers, target);
       };
@@ -57,43 +57,43 @@ public enum Biinvariants implements Biinvariant {
    * results in a symmetric distance matrix -> can use for kriging */
   GARDEN {
     @Override // from Biinvariant
-    public TensorUnaryOperator distances(Manifold vectorLogManifold, Tensor sequence) {
-      return GardenDistanceVector.of(vectorLogManifold, sequence);
+    public TensorUnaryOperator distances(Manifold manifold, Tensor sequence) {
+      return GardenDistanceVector.of(manifold, sequence);
     }
 
     @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return GardenCoordinate.of(vectorLogManifold, variogram, sequence);
+    public TensorUnaryOperator coordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return GardenCoordinate.of(manifold, variogram, sequence);
     }
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
   HARBOR {
     @Override // from Biinvariant
-    public TensorUnaryOperator distances(Manifold vectorLogManifold, Tensor sequence) {
+    public TensorUnaryOperator distances(Manifold manifold, Tensor sequence) {
       BiinvariantVectorFunction biinvariantVectorFunction = //
-          HarborBiinvariantVector.of(vectorLogManifold, sequence);
+          HarborBiinvariantVector.of(manifold, sequence);
       return point -> biinvariantVectorFunction.biinvariantVector(point).vector();
     }
 
     @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return HarborCoordinate.of(vectorLogManifold, variogram, sequence);
+    public TensorUnaryOperator coordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return HarborCoordinate.of(manifold, variogram, sequence);
     }
   },
   /** bi-invariant
    * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
   CUPOLA {
     @Override // from Biinvariant
-    public TensorUnaryOperator distances(Manifold vectorLogManifold, Tensor sequence) {
+    public TensorUnaryOperator distances(Manifold manifold, Tensor sequence) {
       BiinvariantVectorFunction biinvariantVectorFunction = //
-          CupolaBiinvariantVector.of(vectorLogManifold, sequence);
+          CupolaBiinvariantVector.of(manifold, sequence);
       return point -> biinvariantVectorFunction.biinvariantVector(point).vector();
     }
 
     @Override // from Biinvariant
-    public TensorUnaryOperator coordinate(Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return CupolaCoordinate.of(vectorLogManifold, variogram, sequence);
+    public TensorUnaryOperator coordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return CupolaCoordinate.of(manifold, variogram, sequence);
     }
   }, //
   ;

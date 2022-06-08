@@ -13,9 +13,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 /* package */ enum LeveragesCoordinateDemo {
   ;
   public static void main(String[] args) {
-    Manifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    BarycentricCoordinate c1 = LeveragesCoordinate.of(vectorLogManifold, variogram);
+    BarycentricCoordinate c1 = LeveragesCoordinate.of(manifold, variogram);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {

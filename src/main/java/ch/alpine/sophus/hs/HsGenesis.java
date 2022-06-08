@@ -11,13 +11,13 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public enum HsGenesis {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param genesis
    * @param sequence
    * @return */
-  public static TensorUnaryOperator wrap(Manifold vectorLogManifold, Genesis genesis, Tensor sequence) {
+  public static TensorUnaryOperator wrap(Manifold manifold, Genesis genesis, Tensor sequence) {
     Objects.requireNonNull(sequence);
-    BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(vectorLogManifold, genesis);
+    BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(manifold, genesis);
     return point -> barycentricCoordinate.weights(sequence, point);
   }
 }

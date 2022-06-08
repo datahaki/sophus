@@ -22,9 +22,9 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 /* package */ class RidgeRegression implements Serializable {
   private final HsDesign hsDesign;
 
-  /** @param vectorLogManifold non-null */
-  public RidgeRegression(Manifold vectorLogManifold) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  /** @param manifold non-null */
+  public RidgeRegression(Manifold manifold) {
+    hsDesign = new HsDesign(manifold);
   }
 
   /* package */ class Form2 implements Serializable {

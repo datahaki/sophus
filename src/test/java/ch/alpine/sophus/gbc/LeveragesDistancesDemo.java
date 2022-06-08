@@ -12,8 +12,8 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 /* package */ enum LeveragesDistancesDemo {
   ;
   public static void main(String[] args) {
-    Manifold vectorLogManifold = RnGroup.INSTANCE;
-    BarycentricCoordinate w1 = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
+    Manifold manifold = RnGroup.INSTANCE;
+    BarycentricCoordinate w1 = HsCoordinates.wrap(manifold, LeveragesDistanceVector.INSTANCE);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {

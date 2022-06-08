@@ -18,19 +18,19 @@ import ch.alpine.tensor.Tensor;
  * 
  * @see HsGenesis */
 public class HsCoordinates implements BarycentricCoordinate, Serializable {
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param genesis
    * @return */
-  public static BarycentricCoordinate wrap(Manifold vectorLogManifold, Genesis genesis) {
-    return new HsCoordinates(vectorLogManifold, genesis);
+  public static BarycentricCoordinate wrap(Manifold manifold, Genesis genesis) {
+    return new HsCoordinates(manifold, genesis);
   }
 
   // ---
   private final HsDesign hsDesign;
   private final Genesis genesis;
 
-  private HsCoordinates(Manifold vectorLogManifold, Genesis genesis) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  private HsCoordinates(Manifold manifold, Genesis genesis) {
+    hsDesign = new HsDesign(manifold);
     this.genesis = Objects.requireNonNull(genesis);
   }
 

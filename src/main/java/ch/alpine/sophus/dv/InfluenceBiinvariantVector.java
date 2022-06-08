@@ -26,10 +26,10 @@ public class InfluenceBiinvariantVector implements BiinvariantVectorFunction, Se
   private final TensorMetric tensorMetric;
   private final Tensor[] influence;
 
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param sequence */
-  public InfluenceBiinvariantVector(Manifold vectorLogManifold, Tensor sequence, TensorMetric tensorMetric) {
-    hsDesign = new HsDesign(vectorLogManifold);
+  public InfluenceBiinvariantVector(Manifold manifold, Tensor sequence, TensorMetric tensorMetric) {
+    hsDesign = new HsDesign(manifold);
     this.sequence = sequence;
     this.tensorMetric = Objects.requireNonNull(tensorMetric);
     influence = sequence.stream() //

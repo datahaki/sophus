@@ -10,9 +10,9 @@ import ch.alpine.sophus.hs.Manifold;
  * by S. Waldron, Jaen Journal on Approximation, 3(2):209-226, 2011 */
 public enum AffineWrap {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @return biinvariant generalized barycentric coordinates */
-  public static BarycentricCoordinate of(Manifold vectorLogManifold) {
-    return HsCoordinates.wrap(vectorLogManifold, AffineCoordinate.INSTANCE);
+  public static BarycentricCoordinate of(Manifold manifold) {
+    return HsCoordinates.wrap(manifold, AffineCoordinate.INSTANCE);
   }
 }

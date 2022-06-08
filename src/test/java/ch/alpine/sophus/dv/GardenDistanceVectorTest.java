@@ -30,10 +30,10 @@ class GardenDistanceVectorTest {
   @Test
   public void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    Manifold vectorLogManifold = RnGroup.INSTANCE;
+    Manifold manifold = RnGroup.INSTANCE;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = Serialization.copy(GardenDistanceVector.of(vectorLogManifold, sequence));
+      TensorUnaryOperator tensorUnaryOperator = Serialization.copy(GardenDistanceVector.of(manifold, sequence));
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -42,10 +42,10 @@ class GardenDistanceVectorTest {
   @Test
   public void testSn1() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
-    Manifold vectorLogManifold = SnManifold.INSTANCE;
+    Manifold manifold = SnManifold.INSTANCE;
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomSample.of(randomSampleInterface, length);
-      TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(manifold, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -54,10 +54,10 @@ class GardenDistanceVectorTest {
   @Test
   public void testSe2C() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int length = 5; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, sequence);
+      TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(manifold, sequence);
       Tensor matrix = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       Chop._10.requireAllZero(Diagonal.of(matrix));
     }
@@ -65,16 +65,16 @@ class GardenDistanceVectorTest {
 
   @Test
   public void testEmpty() {
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
-    TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.empty());
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
+    TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(manifold, Tensors.empty());
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.empty());
   }
 
   @Test
   public void testSingleton() {
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
-    TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(vectorLogManifold, Tensors.fromString("{{2,3,4}}"));
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
+    TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(manifold, Tensors.fromString("{{2,3,4}}"));
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.vector(0));
   }

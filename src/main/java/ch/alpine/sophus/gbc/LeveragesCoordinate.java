@@ -11,10 +11,10 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
  * by Jan Hakenberg, 2020 */
 public enum LeveragesCoordinate {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param variogram for instance InversePowerVariogram.of(2)
    * @return */
-  public static BarycentricCoordinate of(Manifold vectorLogManifold, ScalarUnaryOperator variogram) {
-    return HsCoordinates.wrap(vectorLogManifold, new LeveragesGenesis(variogram));
+  public static BarycentricCoordinate of(Manifold manifold, ScalarUnaryOperator variogram) {
+    return HsCoordinates.wrap(manifold, new LeveragesGenesis(variogram));
   }
 }

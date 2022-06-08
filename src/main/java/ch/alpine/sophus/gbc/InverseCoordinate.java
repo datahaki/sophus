@@ -10,12 +10,12 @@ import ch.alpine.tensor.mat.re.Inverse;
 
 public class InverseCoordinate implements TensorUnaryOperator {
   /** @param tensorUnaryOperator
-   * @param vectorLogManifold
+   * @param manifold
    * @param sequence
    * @return */
   public static TensorUnaryOperator of( //
-      TensorUnaryOperator tensorUnaryOperator, Manifold vectorLogManifold, Tensor sequence) {
-    return new InverseCoordinate(tensorUnaryOperator, vectorLogManifold, sequence);
+      TensorUnaryOperator tensorUnaryOperator, Manifold manifold, Tensor sequence) {
+    return new InverseCoordinate(tensorUnaryOperator, manifold, sequence);
   }
 
   // ---
@@ -25,8 +25,8 @@ public class InverseCoordinate implements TensorUnaryOperator {
   private final Tensor sequence;
 
   private InverseCoordinate( //
-      TensorUnaryOperator tensorUnaryOperator, Manifold vectorLogManifold, Tensor sequence) {
-    hsDesign = new HsDesign(vectorLogManifold);
+      TensorUnaryOperator tensorUnaryOperator, Manifold manifold, Tensor sequence) {
+    hsDesign = new HsDesign(manifold);
     this.tensorUnaryOperator = tensorUnaryOperator;
     Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(tensorUnaryOperator)));
     weights = Inverse.of(vardst);

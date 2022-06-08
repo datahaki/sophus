@@ -70,18 +70,18 @@ class GrManifoldTest {
     Random random = new Random();
     int n = 3 + random.nextInt(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    Manifold vectorLogManifold = GrManifold.INSTANCE;
+    Manifold manifold = GrManifold.INSTANCE;
     int k = 1 + random.nextInt(n - 1);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     int d = k * (n - k);
     Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
     Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
     for (Biinvariant biinvariant : biinvariants) {
-      Tensor w_o = biinvariant.coordinate(vectorLogManifold, variogram, seq_o).apply(pnt_o);
+      Tensor w_o = biinvariant.coordinate(manifold, variogram, seq_o).apply(pnt_o);
       GrAction grAction = new GrAction(RandomSample.of(SoRandomSample.of(n), random));
       Tensor seq_l = Tensor.of(seq_o.stream().map(grAction));
       Tensor pnt_l = grAction.apply(pnt_o);
-      Tensor w_l = biinvariant.coordinate(vectorLogManifold, variogram, seq_l).apply(pnt_l);
+      Tensor w_l = biinvariant.coordinate(manifold, variogram, seq_l).apply(pnt_l);
       Chop._06.requireClose(w_o, w_l);
     }
   }

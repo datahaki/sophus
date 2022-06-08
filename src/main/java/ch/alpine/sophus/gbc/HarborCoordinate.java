@@ -17,11 +17,11 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * @see InversePowerVariogram */
 public enum HarborCoordinate {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param variogram for instance power to minus two
    * @param sequence */
   public static TensorUnaryOperator of( //
-      Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new BiinvariantVectorCoordinate(HarborBiinvariantVector.of(vectorLogManifold, sequence), variogram);
+      Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new BiinvariantVectorCoordinate(HarborBiinvariantVector.of(manifold, sequence), variogram);
   }
 }

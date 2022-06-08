@@ -26,8 +26,8 @@ class LeveragesDistanceVectorTest {
   @Test
   public void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
-    Manifold vectorLogManifold = RnGroup.INSTANCE;
-    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(vectorLogManifold, sequence);
+    Manifold manifold = RnGroup.INSTANCE;
+    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(manifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
       w2.apply(point);
@@ -38,8 +38,8 @@ class LeveragesDistanceVectorTest {
   public void testSn() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
-    Manifold vectorLogManifold = SnManifold.INSTANCE;
-    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(vectorLogManifold, sequence);
+    Manifold manifold = SnManifold.INSTANCE;
+    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(manifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
       w2.apply(point);
@@ -50,8 +50,8 @@ class LeveragesDistanceVectorTest {
   public void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
-    Manifold vectorLogManifold = Se2Group.INSTANCE;
-    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(vectorLogManifold, sequence);
+    Manifold manifold = Se2Group.INSTANCE;
+    TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(manifold, sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(distribution, 3);
       w2.apply(point);
@@ -61,8 +61,8 @@ class LeveragesDistanceVectorTest {
   @Test
   public void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
-    BarycentricCoordinate w1 = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
+    BarycentricCoordinate w1 = HsCoordinates.wrap(manifold, LeveragesDistanceVector.INSTANCE);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -72,12 +72,12 @@ class LeveragesDistanceVectorTest {
 
   @Test
   public void testSimple() {
-    Manifold vectorLogManifold = Se2CoveringGroup.INSTANCE;
+    Manifold manifold = Se2CoveringGroup.INSTANCE;
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(vectorLogManifold, LeveragesDistanceVector.INSTANCE);
+      BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(manifold, LeveragesDistanceVector.INSTANCE);
       barycentricCoordinate.weights(sequence, point);
     }
   }

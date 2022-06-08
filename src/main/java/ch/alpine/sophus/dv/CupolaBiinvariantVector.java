@@ -11,10 +11,10 @@ import ch.alpine.tensor.Tensor;
  * by Jan Hakenberg, 2020 */
 public enum CupolaBiinvariantVector {
   ;
-  /** @param vectorLogManifold
+  /** @param manifold
    * @param sequence
    * @return */
-  public static BiinvariantVectorFunction of(Manifold vectorLogManifold, Tensor sequence) {
-    return new InfluenceBiinvariantVector(vectorLogManifold, sequence, GrMetric.INSTANCE);
+  public static BiinvariantVectorFunction of(Manifold manifold, Tensor sequence) {
+    return new InfluenceBiinvariantVector(manifold, sequence, GrMetric.INSTANCE);
   }
 }

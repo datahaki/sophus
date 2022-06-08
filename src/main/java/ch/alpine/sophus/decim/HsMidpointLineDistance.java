@@ -13,14 +13,12 @@ import ch.alpine.tensor.Tensor;
 public record HsMidpointLineDistance(HsLineDistance hsLineDistance, GeodesicSpace hsMidpoint) //
     implements LineDistance, Serializable {
   /** @param lieGroup
-   * @param exponential
    * @return */
   public static LineDistance of(LieGroup lieGroup) {
     return of(lieGroup);
   }
 
-  /** @param vectorLogManifold
-   * @param homogeneousSpace
+  /** @param homogeneousSpace
    * @return */
   public static LineDistance of(HomogeneousSpace homogeneousSpace) {
     return new HsMidpointLineDistance( //
