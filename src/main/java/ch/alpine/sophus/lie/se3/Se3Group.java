@@ -81,7 +81,7 @@ public enum Se3Group implements LieGroup {
 
   @Override // from TensorGeodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    // TODO check if this adds value
+    // TODO SOPHUS check if this adds value
     Tensor log = log(LinearSolve.of(p, q));
     return scalar -> p.dot(exp(log.multiply(scalar)));
   }

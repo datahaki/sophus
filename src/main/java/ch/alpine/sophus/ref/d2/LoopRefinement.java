@@ -21,8 +21,8 @@ public record LoopRefinement(BiinvariantMean biinvariantMean) //
     SurfaceMesh out = surfaceMeshRefinement.refine(surfaceMesh);
     MeshStructure meshStructure = new MeshStructure(out);
     for (int index = 0; index < surfaceMesh.vrt.length(); ++index) {
-      // TODO SOPHUS ALG complete
-      // meshStructure.ring(null);
+      // FIXME SOPHUS ALG complete
+      meshStructure.ring(null);
     }
     return out;
   }

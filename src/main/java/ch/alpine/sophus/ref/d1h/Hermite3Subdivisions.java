@@ -94,7 +94,7 @@ public enum Hermite3Subdivisions {
   /** @param homogeneousSpace
    * @param biinvariantMean
    * @return */
-  // TODO check if needed
+  // TODO SOPHUS check if needed
   public static HermiteSubdivision of( //
       HomogeneousSpace homogeneousSpace, BiinvariantMean biinvariantMean) {
     return _standard(homogeneousSpace).create(biinvariantMean);
@@ -137,7 +137,7 @@ public enum Hermite3Subdivisions {
    * @param hsTransport
    * @param biinvariantMean
    * @return */
-  // TODO check if needed
+  // TODO SOPHUS check if needed
   public static HermiteSubdivision a1(HomogeneousSpace homogeneousSpace, BiinvariantMean biinvariantMean) {
     return _a1(homogeneousSpace).create(biinvariantMean);
   }

@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.tri.Sin;
 
 /** Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
-// TODO possibly share baseclass with SnManifold extend
+// TODO SOPHUS possibly share baseclass with SnManifold extend
 public enum RpnManifold implements HomogeneousSpace {
   INSTANCE;
 
