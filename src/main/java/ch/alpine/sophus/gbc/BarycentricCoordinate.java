@@ -1,12 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.api.WeightingInterface;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.tensor.Tensor;
 
 /** The barycentric coordinate is the "INVERSE" of computing a weighted average.
  * 
- * A barycentric coordinate is a {@link WeightingInterface} that reproduces the identity.
+ * A barycentric coordinate is a weight interface that reproduces the identity.
  * 
  * Quote from "Weighted Averages on Surfaces" by Panozzo et al., 2013:
  * "We address both the forward problem, namely computing an average of given anchor points
@@ -15,6 +16,10 @@ import ch.alpine.sophus.bm.BiinvariantMean;
  * 
  * @see BiinvariantMean */
 @FunctionalInterface
-public interface BarycentricCoordinate extends WeightingInterface {
-  // ---
+public interface BarycentricCoordinate {
+  /** @param sequence
+   * @param point
+   * @return vector of affine weights corresponding to given point
+   * @see AffineQ */
+  Tensor weights(Tensor sequence, Tensor point);
 }

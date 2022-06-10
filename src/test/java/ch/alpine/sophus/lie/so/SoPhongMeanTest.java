@@ -38,7 +38,7 @@ class SoPhongMeanTest {
     OrthogonalMatrixQ.require(m1);
     Tolerance.CHOP.requireClose(Det.of(m1), RealScalar.ONE);
     {
-      Tensor mE0 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+      Tensor mE0 = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE0);
       Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
       Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);
@@ -71,7 +71,7 @@ class SoPhongMeanTest {
     // System.out.println(sequence);
     // System.out.println(m1);
     {
-      Tensor mE0 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
+      Tensor mE0 = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE0);
       Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
       Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);

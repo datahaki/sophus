@@ -22,7 +22,9 @@ import ch.alpine.tensor.sca.Abs;
  * fixed point method.
  * 
  * tests have shown empirically for the SPD manifold, that the reducing
- * mean is closed to the exact mean than the {@link SpdPhongMean} */
+ * mean is close to the exact mean than the {@link SpdPhongMean}
+ * 
+ * For R^n the ReducingMean coincides with the weighted average. */
 /* package */ record ReducingMean(GeodesicSpace geodesicSpace) implements BiinvariantMean, Serializable {
 
   /** @param geodesicSpace

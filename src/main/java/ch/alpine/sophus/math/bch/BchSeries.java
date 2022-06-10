@@ -14,7 +14,6 @@ import ch.alpine.tensor.red.Total;
  * References:
  * 1) Neeb
  * 2) "Baker-Campbell-Hausdorff formula" Wikipedia */
-// CONSIDER MOVING LIE.AD to SOPHUS
 /* package */ abstract class BchSeries implements SeriesInterface, Serializable {
   protected final Tensor ad;
 

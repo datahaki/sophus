@@ -7,6 +7,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -25,6 +26,8 @@ import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class GrBiinvariantMeanTest {
+  private static final BiinvariantMean BIINVARIANT_MEAN = GrManifold.INSTANCE.biinvariantMean(Chop._10);
+
   @Test
   public void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
@@ -40,15 +43,15 @@ class GrBiinvariantMeanTest {
     }
     int n = sequence.length();
     Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
-    assertThrows(Exception.class, () -> GrBiinvariantMean.INSTANCE.mean(sequence, RandomVariate.of(distribution, n)));
-    Tensor point = GrBiinvariantMean.INSTANCE.mean(sequence, weights);
+    assertThrows(Exception.class, () -> BIINVARIANT_MEAN.mean(sequence, RandomVariate.of(distribution, n)));
+    Tensor point = BIINVARIANT_MEAN.mean(sequence, weights);
     GrMemberQ.INSTANCE.require(point);
     GrMetric.INSTANCE.distance(p, point);
     {
       Tensor g = RandomSample.of(SoRandomSample.of(4));
       GrAction grAction = new GrAction(g);
       Tensor seq_l = Tensor.of(sequence.stream().map(grAction));
-      Tensor pnt_l = GrBiinvariantMean.INSTANCE.mean(seq_l, weights);
+      Tensor pnt_l = BIINVARIANT_MEAN.mean(seq_l, weights);
       Chop._08.requireClose(grAction.apply(point), pnt_l);
     }
   }

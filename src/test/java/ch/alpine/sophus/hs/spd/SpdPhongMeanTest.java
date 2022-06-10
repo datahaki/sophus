@@ -40,7 +40,7 @@ class SpdPhongMeanTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
-      BiinvariantMean biinvariantMean = IterativeBiinvariantMean.of(SpdManifold.INSTANCE, Chop._10);
+      BiinvariantMean biinvariantMean = IterativeBiinvariantMean.argmax(SpdManifold.INSTANCE, Chop._10);
       Tensor mE0 = biinvariantMean.mean(sequence, weights);
       Scalar d0 = SpdMetric.INSTANCE.distance(m0, mE0);
       Scalar d1 = SpdMetric.INSTANCE.distance(m1, mE0);

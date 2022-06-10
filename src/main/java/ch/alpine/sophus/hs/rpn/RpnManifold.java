@@ -53,6 +53,6 @@ public enum RpnManifold implements HomogeneousSpace {
 
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.of(this, chop);
+    return IterativeBiinvariantMean.argmax(this, chop);
   }
 }

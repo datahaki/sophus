@@ -50,6 +50,6 @@ public enum GrManifold implements HomogeneousSpace {
 
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.of(this, chop);
+    return IterativeBiinvariantMean.reduce(this, chop);
   }
 }

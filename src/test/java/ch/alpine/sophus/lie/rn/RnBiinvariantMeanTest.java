@@ -52,7 +52,7 @@ class RnBiinvariantMeanTest {
   }
 
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
-      IterativeBiinvariantMean.of(RnGroup.INSTANCE, Chop._12);
+      IterativeBiinvariantMean.argmax(RnGroup.INSTANCE, Chop._12);
 
   @Test
   public void testSimple2() {

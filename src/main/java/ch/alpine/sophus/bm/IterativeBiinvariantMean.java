@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
@@ -39,16 +38,15 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param homogeneousSpace
    * @param chop
    * @return */
-  public static IterativeBiinvariantMean of(HomogeneousSpace homogeneousSpace, Chop chop) {
+  public static IterativeBiinvariantMean argmax(HomogeneousSpace homogeneousSpace, Chop chop) {
     return of(homogeneousSpace, chop, ArgMaxSelection.INSTANCE);
   }
 
   /** @param homogeneousSpace
    * @param chop
-   * @param geodesicSpace
    * @return */
-  public static IterativeBiinvariantMean of(HomogeneousSpace homogeneousSpace, Chop chop, GeodesicSpace geodesicSpace) {
-    return new IterativeBiinvariantMean(homogeneousSpace, chop, ReducingMean.of(geodesicSpace));
+  public static IterativeBiinvariantMean reduce(HomogeneousSpace homogeneousSpace, Chop chop) {
+    return new IterativeBiinvariantMean(homogeneousSpace, chop, ReducingMean.of(homogeneousSpace));
   }
 
   /** serves as initial guess at begin of fix point iteration that
@@ -83,7 +81,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
 
   /** @param sequence
    * @param weights
-   * @return approximate biinvariant mean */
+   * @return approximate biinvariant mean, or empty if convergence fail */
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
     Tensor shifted = initialGuess.mean(sequence, weights); // initial guess
     for (int count = 0; count < MAX_ITERATIONS; ++count) {

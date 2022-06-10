@@ -10,6 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 
+// TODO SOPHUS rename&move to more generic
 public class Se2CoveringRandomSample implements RandomSampleInterface, Serializable {
   /** @param distribution
    * @return */

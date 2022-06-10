@@ -72,6 +72,6 @@ public enum Sl2Group implements LieGroup {
 
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.of(this, chop);
+    return IterativeBiinvariantMean.reduce(this, chop);
   }
 }
