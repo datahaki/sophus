@@ -1,7 +1,7 @@
 // code by ureif
 package ch.alpine.sophus.crv.clt;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.ComplexScalar;

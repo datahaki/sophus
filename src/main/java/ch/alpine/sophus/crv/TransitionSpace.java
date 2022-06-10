@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.api;
+package ch.alpine.sophus.crv;
 
 import ch.alpine.sophus.crv.clt.ClothoidTransitionSpace;
 import ch.alpine.sophus.crv.dub.DubinsTransitionSpace;

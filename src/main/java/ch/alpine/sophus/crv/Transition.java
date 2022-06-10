@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.api;
+package ch.alpine.sophus.crv;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.api.Genesis;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.AppendOne;
 import ch.alpine.tensor.Tensor;

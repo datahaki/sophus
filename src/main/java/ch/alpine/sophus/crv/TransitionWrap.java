@@ -1,5 +1,5 @@
 // code by gjoel
-package ch.alpine.sophus.api;
+package ch.alpine.sophus.crv;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;

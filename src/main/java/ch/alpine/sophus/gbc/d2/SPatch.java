@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import ch.alpine.sophus.api.Genesis;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

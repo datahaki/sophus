@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;

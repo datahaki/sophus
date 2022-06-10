@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.decim;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;

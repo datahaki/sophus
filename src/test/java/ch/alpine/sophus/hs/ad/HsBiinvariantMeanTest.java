@@ -8,8 +8,8 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.LieAlgebra;

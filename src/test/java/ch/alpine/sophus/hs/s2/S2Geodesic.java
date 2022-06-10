@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.tensor.Scalar;

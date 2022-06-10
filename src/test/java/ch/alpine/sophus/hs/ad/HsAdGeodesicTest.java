@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.ad;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.sn.SnAlgebra;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.RealScalar;

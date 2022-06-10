@@ -4,7 +4,6 @@ package ch.alpine.sophus.hs;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 

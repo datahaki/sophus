@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.Tensor;
 
 /** all tangent vectors are assumed to be in the tangent space at the neutral element,

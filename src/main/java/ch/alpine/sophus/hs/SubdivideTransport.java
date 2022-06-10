@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

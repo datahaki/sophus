@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
@@ -52,6 +52,6 @@ public enum SpdManifold implements HomogeneousSpace {
 
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.of(SpdManifold.INSTANCE, chop, SpdPhongMean.INSTANCE);
+    return IterativeBiinvariantMean.reduce(SpdManifold.INSTANCE, chop);
   }
 }

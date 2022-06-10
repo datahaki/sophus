@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d1;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 
 /** linear B-spline

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.rs;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

@@ -4,8 +4,8 @@ package ch.alpine.sophus.gbc.d2;
 import java.util.Objects;
 import java.util.OptionalInt;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

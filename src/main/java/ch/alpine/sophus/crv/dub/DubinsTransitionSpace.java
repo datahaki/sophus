@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TransitionSpace;
+import ch.alpine.sophus.crv.TransitionSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Sign;

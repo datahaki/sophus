@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.s2;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.hs.sn.TSnProjection;
 import ch.alpine.tensor.Tensor;

@@ -3,8 +3,8 @@ package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;

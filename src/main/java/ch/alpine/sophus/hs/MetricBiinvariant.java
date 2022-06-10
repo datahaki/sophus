@@ -4,7 +4,6 @@ package ch.alpine.sophus.hs;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.LagrangeCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.hs.gr.GrExponential;

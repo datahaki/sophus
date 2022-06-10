@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.r3s2;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.sophus.lie.se3.Se3Matrix;

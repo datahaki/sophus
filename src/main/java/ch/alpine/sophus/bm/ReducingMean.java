@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
@@ -22,9 +22,11 @@ import ch.alpine.tensor.sca.Abs;
  * fixed point method.
  * 
  * tests have shown empirically for the SPD manifold, that the reducing
- * mean is close to the exact mean than the {@link SpdPhongMean}
+ * mean is closer to the exact mean than the {@link SpdPhongMean}
  * 
- * For R^n the ReducingMean coincides with the weighted average. */
+ * For R^n the ReducingMean coincides with the weighted average.
+ * 
+ * @see IterativeBiinvariantMean */
 /* package */ record ReducingMean(GeodesicSpace geodesicSpace) implements BiinvariantMean, Serializable {
 
   /** @param geodesicSpace

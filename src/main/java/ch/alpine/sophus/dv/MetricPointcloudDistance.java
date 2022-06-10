@@ -30,6 +30,7 @@ public record MetricPointcloudDistance(Tensor points, TensorMetric tensorMetric)
   public Scalar apply(Tensor point) {
     return points.stream() //
         .map(vector -> tensorMetric.distance(point, vector)) //
-        .min(Scalars::compare).orElseThrow();
+        .min(Scalars::compare) //
+        .orElseThrow();
   }
 }

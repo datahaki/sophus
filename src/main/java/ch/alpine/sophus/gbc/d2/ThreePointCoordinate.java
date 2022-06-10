@@ -3,8 +3,8 @@ package ch.alpine.sophus.gbc.d2;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.HsCoordinates;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 
 /** Three-point coordinates are also referred to as "Complete family of coordinates"

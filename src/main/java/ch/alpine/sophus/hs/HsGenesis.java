@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.tensor.Tensor;

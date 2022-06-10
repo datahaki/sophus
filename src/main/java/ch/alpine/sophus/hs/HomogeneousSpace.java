@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;

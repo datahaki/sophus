@@ -4,7 +4,7 @@ package ch.alpine.sophus.ref.d1;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

@@ -3,8 +3,8 @@ package ch.alpine.sophus.gbc;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;

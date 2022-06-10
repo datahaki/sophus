@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.r3;
 
-import ch.alpine.sophus.api.Genesis;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.math.LagrangeMultiplier;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

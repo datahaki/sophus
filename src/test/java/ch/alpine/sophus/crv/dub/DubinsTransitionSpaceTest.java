@@ -9,9 +9,9 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Transition;
-import ch.alpine.sophus.api.TransitionSpace;
-import ch.alpine.sophus.api.TransitionWrap;
+import ch.alpine.sophus.crv.Transition;
+import ch.alpine.sophus.crv.TransitionSpace;
+import ch.alpine.sophus.crv.TransitionWrap;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

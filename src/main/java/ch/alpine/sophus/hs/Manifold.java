@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.api.Exponential;
 import ch.alpine.tensor.Tensor;
 
 @FunctionalInterface

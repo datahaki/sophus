@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.ad;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 

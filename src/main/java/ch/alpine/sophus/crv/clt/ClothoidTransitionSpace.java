@@ -1,7 +1,7 @@
 // code by jph, gjoel
 package ch.alpine.sophus.crv.clt;
 
-import ch.alpine.sophus.api.TransitionSpace;
+import ch.alpine.sophus.crv.TransitionSpace;
 import ch.alpine.tensor.Tensor;
 
 /** start and end points are from SE(2) or SE(2) Covering */

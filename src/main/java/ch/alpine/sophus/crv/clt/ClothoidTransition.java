@@ -1,8 +1,8 @@
 // code by gjoel, jph
 package ch.alpine.sophus.crv.clt;
 
-import ch.alpine.sophus.api.TransitionWrap;
 import ch.alpine.sophus.crv.AbstractTransition;
+import ch.alpine.sophus.crv.TransitionWrap;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

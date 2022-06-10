@@ -3,7 +3,6 @@ package ch.alpine.sophus.crv;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.Transition;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

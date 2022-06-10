@@ -4,7 +4,7 @@ package ch.alpine.sophus.crv;
 import java.io.Serializable;
 import java.util.stream.IntStream;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;

@@ -3,7 +3,7 @@ package ch.alpine.sophus.gbc.d2;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.Genesis;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.DiagonalMatrix;
