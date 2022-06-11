@@ -50,7 +50,7 @@ public enum R2SGroup implements LieGroup {
     return Flatten.of(log(xyz));
   }
 
-  @Override // from TensorGeodesic
+  @Override // from GeodesicSpace
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     R2SGroupElement p_act = new R2SGroupElement(p);
     Tensor delta = p_act.inverse().combine(q);

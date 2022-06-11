@@ -35,14 +35,11 @@ class GrManifoldTest {
       Tensor q = RandomSample.of(randomSampleInterface);
       GrExponential exp_p = new GrExponential(p);
       GrExponential exp_q = new GrExponential(q);
-      // TODO SOPHUS compare with exp log
       Tensor m1 = exp_p.midpoint(q);
-      Tensor m2 = exp_p.midpoint(q);
+      Tensor m2 = exp_q.midpoint(p);
       Chop._08.requireClose(m1, m2);
       Tensor m3 = GrManifold.INSTANCE.midpoint(p, q);
       Chop._08.requireClose(m1, m3);
-      Tensor m4 = exp_q.midpoint(p);
-      Chop._08.requireClose(m1, m4);
     }
   }
 
@@ -93,8 +90,6 @@ class GrManifoldTest {
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
-    // System.out.println(Pretty.of(p.dot(q).map(Round._3)));
-    // System.out.println(Pretty.of(q.dot(p).map(Round._3)));
     Tolerance.CHOP.requireClose(p.dot(q), Transpose.of(q.dot(p)));
     Tolerance.CHOP.requireClose(p, p.dot(p));
     Tolerance.CHOP.requireClose(q, q.dot(q));

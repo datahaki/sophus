@@ -43,7 +43,7 @@ public enum So3Group implements LieGroup {
   }
 
   /** p and q are orthogonal matrices with dimension 3 x 3 */
-  @Override // from ParametricCurve
+  @Override // from GeodesicSpace
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor log = Rodrigues.INSTANCE.log(LinearSolve.of(p, q));
     return scalar -> p.dot(Rodrigues.INSTANCE.exp(log.multiply(scalar)));

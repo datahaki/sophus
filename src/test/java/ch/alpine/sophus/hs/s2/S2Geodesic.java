@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.tri.Sin;
 public enum S2Geodesic implements GeodesicSpace {
   INSTANCE;
 
-  @Override // from TensorGeodesic
+  @Override // from GeodesicSpace
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Scalar a = ArcCos.FUNCTION.apply((Scalar) p.dot(q)); // complex number if |p.q| > 1
     Scalar sina = Sin.FUNCTION.apply(a);

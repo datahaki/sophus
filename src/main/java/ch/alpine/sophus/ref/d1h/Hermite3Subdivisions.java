@@ -19,9 +19,8 @@ public enum Hermite3Subdivisions {
    * @param chop
    * @return Hermite subdivision operator that uses the given biinvariant Mean
    * for computing weighted averages in the Lie group */
-  public static Hermite3Subdivision _create( //
-      HomogeneousSpace homogeneousSpace, //
-      Chop chop, //
+  private static Hermite3Subdivision _create( //
+      HomogeneousSpace homogeneousSpace, Chop chop, //
       Tensor cgw, //
       Scalar mgv, Scalar mvg, Scalar mvv, //
       Scalar cgv, Scalar vpr, Tensor vpqr) {
@@ -67,26 +66,14 @@ public enum Hermite3Subdivisions {
    * @param theta
    * @param omega
    * @return */
-  private static Hermite3Subdivision _of( //
+  public static Hermite3Subdivision of( //
       HomogeneousSpace homogeneousSpace, Chop chop, Scalar theta, Scalar omega) {
-    return _create( //
-        homogeneousSpace, //
-        chop, //
+    return _create(homogeneousSpace, chop, //
         Tensors.of(theta, RealScalar.ONE.subtract(theta.add(theta)), theta), //
         RationalScalar.of(-1, 8), RationalScalar.of(3, 4), RationalScalar.of(-1, 8), //
         RationalScalar.of(-1, 2).multiply(theta), //
         RationalScalar.of(-3, 2).multiply(omega), //
         Tensors.of(RationalScalar.HALF.multiply(omega), RationalScalar.HALF.add(omega.add(omega)), RationalScalar.HALF.multiply(omega)));
-  }
-
-  /** @param homogeneousSpace
-   * @param chop
-   * @param theta
-   * @param omega
-   * @return */
-  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, Chop chop, Scalar theta, Scalar omega) {
-    Objects.requireNonNull(chop);
-    return _of(homogeneousSpace, chop, theta, omega);
   }
 
   // ---
@@ -95,7 +82,7 @@ public enum Hermite3Subdivisions {
    * @param homogeneousSpace
    * @throws Exception if either parameters is null */
   public static Hermite3Subdivision of(HomogeneousSpace homogeneousSpace, Chop chop) {
-    return _of(homogeneousSpace, chop, RationalScalar.of(+1, 128), RationalScalar.of(-1, 16));
+    return of(homogeneousSpace, chop, RationalScalar.of(+1, 128), RationalScalar.of(-1, 16));
   }
 
   // ---
@@ -117,8 +104,7 @@ public enum Hermite3Subdivisions {
    * @param homogeneousSpace
    * @return */
   public static Hermite3Subdivision a1(HomogeneousSpace homogeneousSpace, Chop chop) {
-    return _create(homogeneousSpace, //
-        chop, //
+    return _create(homogeneousSpace, chop, //
         Tensors.fromString("{1/128, 63/64, 1/128}"), //
         RationalScalar.of(-1, 16), RationalScalar.of(15, 16), RationalScalar.of(-7, 32), //
         RationalScalar.of(+7, 256), //
@@ -146,8 +132,7 @@ public enum Hermite3Subdivisions {
    * @param hsTransport
    * @return */
   public static Hermite3Subdivision a2(HomogeneousSpace homogeneousSpace, Chop chop) {
-    return _create(homogeneousSpace, //
-        chop, //
+    return _create(homogeneousSpace, chop, //
         Tensors.fromString("{7/96, 41/48, 7/96}"), //
         RationalScalar.of(-5, 56), RationalScalar.of(7, 12), RationalScalar.of(-1, 24), //
         RationalScalar.of(-25, 1344), //

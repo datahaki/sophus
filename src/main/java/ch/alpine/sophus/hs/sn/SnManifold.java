@@ -51,7 +51,7 @@ public enum SnManifold implements HomogeneousSpace {
    * 
    * The implementation is symmetric in p and q and more efficient
    * than the default implementation. */
-  @Override // from ParametricCurve
+  @Override // from GeodesicSpace
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Scalar a = SnMetric.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q

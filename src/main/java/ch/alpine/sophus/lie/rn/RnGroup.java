@@ -42,7 +42,7 @@ public enum RnGroup implements LieGroup {
   }
 
   /** geodesics in the Euclidean space R^n are straight lines */
-  @Override // from TensorGeodesic
+  @Override // from GeodesicSpace
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     Tensor delta = q.subtract(p);
     return scalar -> p.add(delta.multiply(scalar));
