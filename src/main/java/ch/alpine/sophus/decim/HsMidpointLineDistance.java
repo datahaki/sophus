@@ -3,7 +3,6 @@ package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
@@ -27,7 +26,7 @@ public record HsMidpointLineDistance(HsLineDistance hsLineDistance, GeodesicSpac
   }
 
   @Override // from LineDistance
-  public NormImpl tensorNorm(Tensor p, Tensor q) {
+  public HsLineDistanceLocal tensorNorm(Tensor p, Tensor q) {
     return hsLineDistance.tensorNorm(hsMidpoint.midpoint(p, q), q);
   }
 }

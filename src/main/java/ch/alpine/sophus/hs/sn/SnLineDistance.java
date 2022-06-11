@@ -19,13 +19,13 @@ public enum SnLineDistance implements LineDistance {
 
   @Override // from LineDistance
   public TensorNorm tensorNorm(Tensor p, Tensor q) {
-    return new SnLine(p, q);
+    return new TensorNormImpl(p, q);
   }
 
-  private class SnLine implements TensorNorm, Serializable {
+  private static class TensorNormImpl implements TensorNorm, Serializable {
     private final Tensor m;
 
-    public SnLine(Tensor p, Tensor q) {
+    public TensorNormImpl(Tensor p, Tensor q) {
       Tensor id_pp = IdentityMatrix.of(p.length()).subtract(TensorProduct.of(p, p));
       Tensor qn = Vector2Norm.NORMALIZE.apply(id_pp.dot(q)); // qn is orthogonal to p
       // Tolerance.CHOP.requireZero((Scalar) p.dot(qn));
