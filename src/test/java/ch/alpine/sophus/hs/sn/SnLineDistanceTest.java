@@ -14,6 +14,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -24,6 +25,18 @@ import ch.alpine.tensor.sca.Clips;
 
 class SnLineDistanceTest {
   private static final Clip CLIP = Clips.positive(Pi.HALF);
+
+  @Test
+  public void testSimple() {
+    for (int d = 2; d < 6; ++d) {
+      Tensor p = UnitVector.of(d + 1, 0);
+      Tensor q = UnitVector.of(d + 1, 1);
+      TensorNorm tensorNorm = SnLineDistance.INSTANCE.tensorNorm(p, q);
+      Tensor r = UnitVector.of(d + 1, 2);
+      Scalar norm = tensorNorm.norm(r);
+      Tolerance.CHOP.requireClose(norm, Pi.HALF);
+    }
+  }
 
   @Test
   public void testBounded() throws ClassNotFoundException, IOException {
