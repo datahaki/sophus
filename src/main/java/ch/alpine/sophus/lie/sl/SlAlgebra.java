@@ -69,6 +69,6 @@ public class SlAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public String toString() {
-    return String.format("%s[%d]", getClass().getSimpleName(), n);
+    return String.format("SlAlgebra[%d]", n);
   }
 }

@@ -49,6 +49,6 @@ public class MultiquadricVariogram implements ScalarUnaryOperator {
 
   @Override // from Object
   public final String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), r0);
+    return String.format("MultiquadricVariogram[%s]", r0);
   }
 }

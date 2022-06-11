@@ -72,9 +72,9 @@ class SpdManifoldTest {
       Tensor point = sequence.get(index);
       Tensor weights = barycentricCoordinate.weights(sequence, point);
       AffineQ.require(weights, Chop._08);
-      Chop._06.requireClose(weights, UnitVector.of(len, index));
+      Tolerance.CHOP.requireClose(weights, UnitVector.of(len, index));
       Tensor spd = SpdManifold.INSTANCE.biinvariantMean(Chop._10).mean(sequence, weights);
-      Chop._08.requireClose(spd, point);
+      Tolerance.CHOP.requireClose(spd, point);
     }
   }
 

@@ -58,6 +58,6 @@ public class SphericalVariogram implements ScalarUnaryOperator {
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[%s, %s]", getClass().getSimpleName(), a, b);
+    return String.format("SphericalVariogram[%s, %s]", a, b);
   }
 }

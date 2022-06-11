@@ -22,6 +22,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.mat.Tolerance;
@@ -117,6 +118,23 @@ class ReducingMeanTest {
       // System.out.println(d0);
       // System.out.println(d1);
       // System.out.println(d2);
+    }
+  }
+
+  @Test
+  public void testLagrangeProperty() {
+    Random random = new Random();
+    int d = 2;
+    int len = 5 + random.nextInt(3);
+    RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
+    Tensor sequence = RandomSample.of(rsi, len);
+    BiinvariantMean biinvariantMean = SpdManifold.INSTANCE.biinvariantMean(Chop._10);
+    for (int index = 0; index < len; ++index) {
+      Tensor point = sequence.get(index);
+      Tensor weights = UnitVector.of(len, index);
+      AffineQ.require(weights, Chop._08);
+      Tensor spd = biinvariantMean.mean(sequence, weights);
+      Chop._08.requireClose(spd, point);
     }
   }
 }

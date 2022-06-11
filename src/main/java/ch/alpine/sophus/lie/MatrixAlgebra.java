@@ -58,6 +58,6 @@ public class MatrixAlgebra implements Serializable {
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[dim=%d, Nnz[ad]=%d]", getClass().getSimpleName(), ad().length(), Nnz.of((SparseArray) ad));
+    return String.format("MatrixAlgebra[dim=%d, Nnz[ad]=%d]", ad().length(), Nnz.of((SparseArray) ad));
   }
 }

@@ -35,6 +35,6 @@ public record ExponentialVariogram(Scalar a, Scalar b) implements ScalarUnaryOpe
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[%s, %s]", getClass().getSimpleName(), a, b);
+    return String.format("ExponentialVariogram[%s, %s]", a, b);
   }
 }

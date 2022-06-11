@@ -60,6 +60,6 @@ public class SoAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public String toString() {
-    return String.format("%s[%d]", getClass().getSimpleName(), n);
+    return String.format("SoAlgebra[%d]", n);
   }
 }

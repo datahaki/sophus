@@ -21,7 +21,7 @@ public enum BSplineLimitMask implements Function<Integer, Tensor> {
   @Override
   public Tensor apply(Integer degree) {
     if (Integers.isEven(degree))
-      throw new IllegalArgumentException("" + degree);
+      throw new IllegalArgumentException(degree.toString());
     int extent = (degree - 1) / 2;
     return Range.of(extent + 1, degree + extent + 1) //
         .map(GeodesicBSplineFunction.of(RnGroup.INSTANCE, degree, UnitVector.of(2 * degree + 1, degree)));

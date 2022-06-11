@@ -45,6 +45,6 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), power);
+    return String.format("InversePowerVariogram[%s]", power);
   }
 }

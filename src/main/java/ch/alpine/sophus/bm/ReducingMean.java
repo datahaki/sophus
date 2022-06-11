@@ -12,6 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Abs;
 
 /** approximation of biinvariant mean using a geodesic average that has a
@@ -43,7 +44,8 @@ import ch.alpine.tensor.sca.Abs;
     int index = 0;
     for (Tensor point : sequence) {
       Scalar weight = weights.Get(index);
-      if (Scalars.nonZero(weight))
+      // ignore weights that are effectively zero
+      if (!Tolerance.CHOP.isZero(weight))
         priorityQueue.add(new WPoint(weight, point));
       ++index;
     }

@@ -90,7 +90,7 @@ class BezierMaskTest {
   @Test
   public void testFunctionMatch() {
     int n = 5;
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(RnGroup.INSTANCE, IdentityMatrix.of(n));
+    ScalarTensorFunction scalarTensorFunction = new BezierFunction(RnGroup.INSTANCE, IdentityMatrix.of(n));
     Scalar p = RationalScalar.of(2, 7);
     Tensor vector = scalarTensorFunction.apply(p);
     Tensor weight = BezierMaskTest.of(n).apply(p);

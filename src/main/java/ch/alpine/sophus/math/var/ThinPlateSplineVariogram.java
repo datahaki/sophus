@@ -40,6 +40,6 @@ public record ThinPlateSplineVariogram(Scalar r0) implements ScalarUnaryOperator
 
   @Override // from Object
   public String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), r0);
+    return String.format("ThinPlateSplineVariogram[%s]", r0);
   }
 }

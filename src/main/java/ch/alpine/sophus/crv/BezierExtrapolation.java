@@ -27,6 +27,6 @@ public class BezierExtrapolation implements TensorUnaryOperator {
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
     int n = tensor.length();
-    return BezierFunction.of(binaryAverage, tensor).apply(RationalScalar.of(n, n - 1));
+    return new BezierFunction(binaryAverage, tensor).apply(RationalScalar.of(n, n - 1));
   }
 }

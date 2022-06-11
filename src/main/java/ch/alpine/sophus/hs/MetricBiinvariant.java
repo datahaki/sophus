@@ -78,9 +78,4 @@ public record MetricBiinvariant(TensorScalarFunction tensorScalarFunction) imple
               .map(variogram))));
     };
   }
-
-  @Override // from Object
-  public String toString() {
-    return getClass().getSimpleName();
-  }
 }
