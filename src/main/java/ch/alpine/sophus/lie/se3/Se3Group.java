@@ -69,6 +69,7 @@ public enum Se3Group implements LieGroup {
     Se3Numerics se3Numerics = new Se3Numerics(theta);
     Tensor Vi = ID3.subtract(wx.multiply(RationalScalar.HALF)).add(wx2.multiply(se3Numerics.D));
     Tensor t = Se3Matrix.translation(g);
+    // TODO SOPHUS return matrix in se3
     return Tensors.of(Vi.dot(t), w);
   }
 

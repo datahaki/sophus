@@ -20,6 +20,7 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Sin;
 import ch.alpine.tensor.sca.win.DirichletWindow;
@@ -97,7 +98,7 @@ class GeodesicExtrapolationTest {
   public void testSingle() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGroup.INSTANCE, smoothingKernel.get());
-      Chop._12.requireClose(tensorUnaryOperator.apply(Tensors.vector(10)), RealScalar.of(10));
+      Tolerance.CHOP.requireClose(tensorUnaryOperator.apply(Tensors.vector(10)), RealScalar.of(10));
     }
   }
 
@@ -117,7 +118,7 @@ class GeodesicExtrapolationTest {
     Tensor expect = Tensors.vector( //
         0.6045315182147757, 0.4610592079176246, 0.3765618899029577, //
         0.3135075836053491, 0.2603421497384919, 1.3568791242517575);
-    Chop._12.requireClose(expect, result);
+    Tolerance.CHOP.requireClose(expect, result);
   }
 
   @Test

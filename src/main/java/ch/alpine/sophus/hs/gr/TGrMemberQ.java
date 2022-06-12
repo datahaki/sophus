@@ -7,7 +7,7 @@ import java.util.Objects;
 import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.TensorWedge;
+import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
@@ -30,15 +30,21 @@ public class TGrMemberQ implements MemberQ, Serializable {
         && CHOP.isClose(p.dot(v).add(v.dot(p)), v);
   }
 
-  /** Cafeful: projection is not idempotent!!!
-   * duplicate application maps to zero
+  /** idempotent projection
    * 
    * Reference: geomstats - grassmannian.py
    * 
-   * @param v
-   * @return */
-  public Tensor forceProject(Tensor v) {
-    // TODO SOPHUS ALG find projection that is idempotent
-    return MatrixBracket.of(p, TensorWedge.of(v));
+   * Remark:
+   * an earlier version, geomstats implemented the following
+   * non-idempotent(!) projection
+   * <pre>
+   * MatrixBracket.of(p, TensorWedge.of(v));
+   * </pre>
+   * 
+   * @param v square matrix
+   * @return square matrix that is a tangent vector in T_p(Gr) */
+  public Tensor projection(Tensor v) {
+    v = Symmetrize.of(v);
+    return MatrixBracket.of(p, MatrixBracket.of(p, v));
   }
 }

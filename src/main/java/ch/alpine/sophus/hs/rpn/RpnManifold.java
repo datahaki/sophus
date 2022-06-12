@@ -39,8 +39,7 @@ public enum RpnManifold implements HomogeneousSpace {
 
   @Override
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    // TODO SOPHUS duplicate with SnManifold
-    // TODO SOPHUS ALG
+    // TODO SOPHUS ALG or duplicate with SnManifold
     Scalar a = SnMetric.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();

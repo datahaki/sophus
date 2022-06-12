@@ -10,15 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 
-public class TSe3RandomSample implements RandomSampleInterface, Serializable {
-  private final Distribution p;
-  private final Distribution v;
-
-  public TSe3RandomSample(Distribution p, Distribution v) {
-    this.p = p;
-    this.v = v;
-  }
-
+public record TSe3RandomSample(Distribution p, Distribution v) implements RandomSampleInterface, Serializable {
   @Override
   public Tensor randomSample(Random random) {
     return Tensors.of( //

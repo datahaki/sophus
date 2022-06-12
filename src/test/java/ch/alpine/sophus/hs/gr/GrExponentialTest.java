@@ -36,7 +36,7 @@ class GrExponentialTest {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = tGrMemberQ.forceProject(pre);
+    Tensor v = tGrMemberQ.projection(pre);
     tGrMemberQ.require(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
@@ -55,7 +55,7 @@ class GrExponentialTest {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = tGrMemberQ.forceProject(pre);
+    Tensor v = tGrMemberQ.projection(pre);
     tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     InfluenceMatrixQ.require(exp);
@@ -70,7 +70,7 @@ class GrExponentialTest {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
-    Tensor v = tGrMemberQ.forceProject(pre);
+    Tensor v = tGrMemberQ.projection(pre);
     tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
     assertTrue(InfluenceMatrixQ.of(exp));
@@ -90,7 +90,7 @@ class GrExponentialTest {
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
-    Tensor v = tGrMemberQ.forceProject(pre);
+    Tensor v = tGrMemberQ.projection(pre);
     tGrMemberQ.require(v);
     assertFalse(Chop._05.allZero(v));
     Tensor exp = grExponential.exp(v);

@@ -26,13 +26,12 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
-import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogisticDistribution;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.PoissonDistribution;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
 class TGrMemberQTest {
@@ -45,38 +44,36 @@ class TGrMemberQTest {
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
     Tensor pre = RandomVariate.of(NormalDistribution.standard(), n, n);
     assertFalse(tGrMemberQ.test(pre));
-    final Tensor v = tGrMemberQ.forceProject(pre).multiply(Pi.VALUE);
-    tGrMemberQ.require(v);
-    // System.out.println(Pretty.of(v.map(Round._3)));
-    // System.out.println(SymmetricMatrixQ.of(v));
-    // System.out.println("SOME:" + Pretty.of(x.dot(v).add(v.dot(x)).subtract(v).map(Round._3)));
-    // Tensor w = ;
-    // System.out.println("PROJECTED"+Pretty.of(w.map(Round._3)));
-    // Tolerance.CHOP.requireClose(v, tGrMemberQ.project(v));
-    // Tensor s = tGrMemberQ.project(pre);
-    // tGrMemberQ.require(s);
+    Tensor w1 = tGrMemberQ.projection(pre);
+    tGrMemberQ.require(w1);
+    assertFalse(Chop._08.allZero(w1));
+    Tensor w2 = tGrMemberQ.projection(w1);
+    tGrMemberQ.require(w2);
+    assertFalse(Chop._08.allZero(w2));
+    Tolerance.CHOP.requireClose(w1, w2);
   }
 
   @Test
-  public void testProject() {
-    int n = 4;
-    Distribution distribution = UniformDistribution.unit();
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2); // 4 dimensional
-    for (int count = 0; count < 5; ++count) {
+  public void testProjection() {
+    for (int n = 3; n < 6; ++n) {
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2); // 4 dimensional
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       Tensor v = new GrExponential(p).log(q);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p); // .require(v);
       tGrMemberQ.require(v);
+      assertFalse(Chop._08.allZero(v));
+      Sign.requirePositive(FrobeniusNorm.of(v));
       Tolerance.CHOP.requireAllZero(GrIdentities.of(p, v));
-      Tensor w = tGrMemberQ.forceProject(RandomVariate.of(distribution, n, n));
-      tGrMemberQ.require(w);
-      Sign.requirePositive(FrobeniusNorm.of(w));
-      Tolerance.CHOP.requireAllZero(GrIdentities.of(p, w));
-      // System.out.println(Pretty.of(v.map(Round._3)));
-      // Tensor w = tGrMemberQ.project(v);
-      // System.out.println(Pretty.of(w.map(Round._3)));
-      // Chop._10.requireClose(v, w);
+      Tensor w1 = tGrMemberQ.projection(v);
+      tGrMemberQ.require(w1);
+      assertFalse(Chop._08.allZero(w1));
+      Tensor w2 = tGrMemberQ.projection(v);
+      tGrMemberQ.require(w2);
+      assertFalse(Chop._08.allZero(w2));
+      Tolerance.CHOP.requireClose(w1, w2);
+      Sign.requirePositive(FrobeniusNorm.of(w1));
+      Tolerance.CHOP.requireAllZero(GrIdentities.of(p, w1));
     }
   }
 
@@ -91,7 +88,7 @@ class TGrMemberQTest {
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 3) //
-            .mapToObj(i -> Flatten.of(tGrMemberQ.forceProject(RandomVariate.of(distribution, random, fn, fn)))));
+            .mapToObj(i -> Flatten.of(tGrMemberQ.projection(RandomVariate.of(distribution, random, fn, fn)))));
         int r = MatrixRank.of(samples);
         Integers.requireEquals(r, expected);
       }
@@ -110,7 +107,7 @@ class TGrMemberQTest {
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 5) //
-            .mapToObj(i -> Flatten.of(tGrMemberQ.forceProject(RandomVariate.of(distribution, fn, fn)))));
+            .mapToObj(i -> Flatten.of(tGrMemberQ.projection(RandomVariate.of(distribution, fn, fn)))));
         int r = MatrixRank.of(samples);
         assertEquals(r, expected);
       }

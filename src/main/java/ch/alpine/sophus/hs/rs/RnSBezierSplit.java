@@ -17,7 +17,6 @@ import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.red.Total;
-import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Cos;
 
 /** Reference:
@@ -61,7 +60,7 @@ public enum RnSBezierSplit implements GeodesicSpace {
     Tolerance.CHOP.requireClose(Vector2Norm.of(v0), RealScalar.ONE);
     Tolerance.CHOP.requireClose(Vector2Norm.of(v1), RealScalar.ONE);
     Scalar cos = Cos.FUNCTION.apply(theta(p0, v0, p1, v1));
-    Scalar alpha = Chop._12.isZero(cos) //
+    Scalar alpha = Tolerance.CHOP.isZero(cos) //
         ? RealScalar.ZERO
         : Vector2Norm.between(p0, p1).divide(cos.multiply(cos).multiply(RealScalar.of(3)));
     // ---

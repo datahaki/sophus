@@ -2,5 +2,5 @@
 package ch.alpine.sophus.math.var;
 
 class SineHoleEffectVariogram {
-  // TODO SOPHUS ALG
+  // TODO SOPHUS ALG SineHoleEffectVariogram
 }

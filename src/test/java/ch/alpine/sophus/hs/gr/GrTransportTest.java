@@ -35,7 +35,7 @@ class GrTransportTest {
     Tensor q = RandomSample.of(randomSampleInterface);
     Distribution distribution = LogisticDistribution.of(1, 3);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    Tensor pv = tGrMemberQ.forceProject(RandomVariate.of(distribution, n, n));
+    Tensor pv = tGrMemberQ.projection(RandomVariate.of(distribution, n, n));
     Tensor log = new GrExponential(p).log(q);
     tGrMemberQ.require(log);
     Tensor qv0 = POLE_LADDER.shift(p, q).apply(pv);
