@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -13,8 +14,6 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.sca.Chop;
 
 /* package */ abstract class BaseWindowSampler implements Function<Integer, Tensor>, Serializable {
-  private static final Tensor SINGLETON = Tensors.vector(1).unmodifiable();
-  // ---
   protected final ScalarUnaryOperator windowFunction;
   protected final boolean isContinuous;
 
@@ -27,8 +26,8 @@ import ch.alpine.tensor.sca.Chop;
   @Override // from IntegerTensorFunction
   public final Tensor apply(Integer length) {
     return 1 == Integers.requirePositive(length) //
-        ? SINGLETON
-        : NormalizeTotal.FUNCTION.apply(samples(length)).unmodifiable();
+        ? Tensors.of(RealScalar.ONE)
+        : NormalizeTotal.FUNCTION.apply(samples(length));
   }
 
   /** @param length 2 or greater

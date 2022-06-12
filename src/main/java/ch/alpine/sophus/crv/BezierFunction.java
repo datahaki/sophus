@@ -46,10 +46,9 @@ public record BezierFunction(BinaryAverage binaryAverage, Tensor sequence) imple
    * @param sequence non-empty tensor
    * @return function over the interval [0, 1] (but allows for evaluation outside that interval)
    * @throws Exception if given sequence is empty or a scalar */
-  public BezierFunction(BinaryAverage binaryAverage, Tensor sequence) {
+  public BezierFunction {
     Integers.requirePositive(sequence.length());
-    this.binaryAverage = Objects.requireNonNull(binaryAverage);
-    this.sequence = sequence;
+    Objects.requireNonNull(binaryAverage);
   }
 
   @Override // from ScalarTensorFunction

@@ -9,6 +9,6 @@ import ch.alpine.tensor.Tensor;
 public record ConstantRandomSample(Tensor tensor) implements RandomSampleInterface, Serializable {
   @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
-    return tensor;
+    return tensor.copy();
   }
 }

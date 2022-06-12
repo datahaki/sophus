@@ -8,7 +8,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public record BiinvariantVectorCoordinate(BiinvariantVectorFunction biinvariantVectorFunction, ScalarUnaryOperator variogram) //
+public record BiinvariantVectorCoordinate( //
+    BiinvariantVectorFunction biinvariantVectorFunction, ScalarUnaryOperator variogram) //
     implements TensorUnaryOperator {
   public BiinvariantVectorCoordinate {
     Objects.requireNonNull(biinvariantVectorFunction);

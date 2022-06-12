@@ -10,9 +10,10 @@ import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 
-/** @see InsidePolygonCoordinate */
+/** @see InsidePolygonCoordinate
+ * 
+ * @param genesis that evaluates polygon coordinates at zero (0, 0) */
 public record InsideConvexHullCoordinate(Genesis genesis) implements Genesis, Serializable {
-  /** @param genesis that evaluates polygon coordinates at zero (0, 0) */
   public InsideConvexHullCoordinate {
     Objects.requireNonNull(genesis);
   }
