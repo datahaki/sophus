@@ -26,8 +26,8 @@ import ch.alpine.tensor.sca.Chop;
   @Override // from IntegerTensorFunction
   public final Tensor apply(Integer length) {
     return 1 == Integers.requirePositive(length) //
-        ? Tensors.of(RealScalar.ONE)
-        : NormalizeTotal.FUNCTION.apply(samples(length));
+        ? Tensors.of(RealScalar.ONE).unmodifiable()
+        : NormalizeTotal.FUNCTION.apply(samples(length)).unmodifiable();
   }
 
   /** @param length 2 or greater

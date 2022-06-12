@@ -18,13 +18,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-      - name: mvn install tensor 106
+      - name: mvn install tensor 107
         working-directory: .
         run: |
           cd ..
           git clone https://github.com/datahaki/tensor.git
           cd tensor
-          git checkout v106
+          git checkout v107
           mvn clean install -DskipTests=true
       - name: mvn test
         working-directory: .

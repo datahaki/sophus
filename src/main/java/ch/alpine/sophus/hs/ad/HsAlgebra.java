@@ -2,7 +2,6 @@
 package ch.alpine.sophus.hs.ad;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -132,7 +131,7 @@ public class HsAlgebra implements HomogeneousSpaceOld, Serializable {
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero))
       throw TensorRuntimeException.of(ad);
-    if (!ad.block(Arrays.asList(0, dim_m, dim_m), Arrays.asList(dim_m, dim_h, dim_h)) //
+    if (!ad.block(List.of(0, dim_m, dim_m), List.of(dim_m, dim_h, dim_h)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero))
@@ -141,7 +140,7 @@ public class HsAlgebra implements HomogeneousSpaceOld, Serializable {
 
   /** @return whether [h, m] subset m, i.e. h cap [h, m] = {0} */
   public boolean isReductive() {
-    return ad.block(Arrays.asList(dim_m, dim_m, 0), Arrays.asList(dim_h, dim_h, dim_m)) //
+    return ad.block(List.of(dim_m, dim_m, 0), List.of(dim_h, dim_h, dim_m)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero);
@@ -149,7 +148,7 @@ public class HsAlgebra implements HomogeneousSpaceOld, Serializable {
 
   /** @return whether [m, m] subset h, i.e. m cap [m, m] = {0} */
   public boolean isSymmetric() {
-    return ad.block(Arrays.asList(0, 0, 0), Arrays.asList(dim_m, dim_m, dim_m)) //
+    return ad.block(List.of(0, 0, 0), List.of(dim_m, dim_m, dim_m)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero);
@@ -158,7 +157,7 @@ public class HsAlgebra implements HomogeneousSpaceOld, Serializable {
   /** @return whether [m, g] subset m, in which case finding the element h that
    * projects g to m is trivial */
   public boolean isHTrivial() {
-    return ad.block(Arrays.asList(dim_m, 0, 0), Arrays.asList(dim_h, dim_g, dim_m)) //
+    return ad.block(List.of(dim_m, 0, 0), List.of(dim_h, dim_g, dim_m)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero);

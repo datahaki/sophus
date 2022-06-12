@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.crv;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -96,7 +96,7 @@ public class GeodesicBSplineFunction extends BSplineFunction {
 
   @Override
   protected Tensor knots(int k) {
-    return samples.block(Arrays.asList(k), Arrays.asList(2 * degree));
+    return samples.block(List.of(k), List.of(2 * degree));
   }
 
   @Override

@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.srf;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class MeshStructure {
     while (iteration < MAX_ITERATIONS) {
       IntDirectedEdge nfac = edge_face.get(next);
       if (Objects.isNull(nfac))
-        return Arrays.asList();
+        return List.of();
       int[] fce = surfaceMesh.face(nfac.i());
       next = new IntDirectedEdge(fce[nfac.j()], fce[(nfac.j() + fce.length - 1) % fce.length]);
       if (next.equals(seed))
@@ -46,6 +45,6 @@ public class MeshStructure {
       list.add(next);
       ++iteration;
     }
-    return Arrays.asList();
+    return List.of();
   }
 }

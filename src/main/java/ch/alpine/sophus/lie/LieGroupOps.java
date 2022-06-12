@@ -2,8 +2,8 @@
 package ch.alpine.sophus.lie;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorMapping;
@@ -48,6 +48,6 @@ public class LieGroupOps implements Serializable {
    * @param g
    * @return */
   public Collection<TensorMapping> biinvariant(Tensor g) {
-    return Arrays.asList(actionL(g), actionR(g), conjugation(g), inversion());
+    return List.of(actionL(g), actionR(g), conjugation(g), inversion());
   }
 }
