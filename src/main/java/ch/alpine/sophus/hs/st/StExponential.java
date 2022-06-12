@@ -63,11 +63,12 @@ public class StExponential implements Exponential, Serializable {
 
   @Override
   public Tensor log(Tensor q) {
-    return null;
+    // TODO
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public Tensor vectorLog(Tensor q) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 }

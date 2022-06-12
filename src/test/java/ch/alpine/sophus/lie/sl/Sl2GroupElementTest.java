@@ -44,7 +44,7 @@ class Sl2GroupElementTest {
   @Test
   public void testAdjointCombine() {
     Random random = new Random(3);
-    RandomSampleInterface rsi = new Sl2RandomSample( //
+    RandomSampleInterface rsi = Sl2RandomSample.of( //
         DiscreteUniformDistribution.of(-10, 11), //
         DiscreteUniformDistribution.of(1, 10));
     for (int count = 0; count < 10; ++count) {
