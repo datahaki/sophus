@@ -23,7 +23,7 @@ class InsidePolygonCoordinateTest {
   public void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = //
-          HsCoordinates.wrap(RnGroup.INSTANCE, new InsidePolygonCoordinate(ThreePointCoordinate.of(barycenter)));
+          HsCoordinates.of(RnGroup.INSTANCE, new InsidePolygonCoordinate(ThreePointCoordinate.of(barycenter)));
       for (int n = 3; n < 10; ++n) {
         Tensor w1 = barycentricCoordinate.weights(CirclePoints.of(n), Array.zeros(2));
         Chop._08.requireClose(w1, AveragingWeights.of(n));

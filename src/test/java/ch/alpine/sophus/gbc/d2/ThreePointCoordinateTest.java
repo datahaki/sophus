@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class ThreePointCoordinateTest {
   private static BarycentricCoordinate r2(ThreePointScaling biFunction) {
-    return HsCoordinates.wrap(RnGroup.INSTANCE, ThreePointCoordinate.of(biFunction));
+    return HsCoordinates.of(RnGroup.INSTANCE, ThreePointCoordinate.of(biFunction));
   }
 
   @Test

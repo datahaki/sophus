@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
   ;
   public static void main(String[] args) {
     Manifold manifold = RnGroup.INSTANCE;
-    BarycentricCoordinate w1 = HsCoordinates.wrap(manifold, LeveragesDistanceVector.INSTANCE);
+    BarycentricCoordinate w1 = HsCoordinates.of(manifold, LeveragesDistanceVector.INSTANCE);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {

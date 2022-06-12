@@ -15,6 +15,6 @@ public enum LeveragesCoordinate {
    * @param variogram for instance InversePowerVariogram.of(2)
    * @return */
   public static BarycentricCoordinate of(Manifold manifold, ScalarUnaryOperator variogram) {
-    return HsCoordinates.wrap(manifold, new LeveragesGenesis(variogram));
+    return HsCoordinates.of(manifold, new LeveragesGenesis(variogram));
   }
 }

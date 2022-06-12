@@ -28,7 +28,7 @@ class ScGroupTest {
     }
   }
 
-  public static final BarycentricCoordinate INSTANCE = HsCoordinates.wrap( //
+  public static final BarycentricCoordinate INSTANCE = HsCoordinates.of( //
       ScGroup.INSTANCE, //
       new MetricCoordinate(NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));
 

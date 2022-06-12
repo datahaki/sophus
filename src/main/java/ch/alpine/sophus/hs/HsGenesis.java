@@ -12,11 +12,11 @@ public enum HsGenesis {
   ;
   /** @param manifold
    * @param genesis
-   * @param sequence
+   * @param sequence non-null
    * @return */
   public static TensorUnaryOperator wrap(Manifold manifold, Genesis genesis, Tensor sequence) {
+    BarycentricCoordinate barycentricCoordinate = HsCoordinates.of(manifold, genesis);
     Objects.requireNonNull(sequence);
-    BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(manifold, genesis);
     return point -> barycentricCoordinate.weights(sequence, point);
   }
 }

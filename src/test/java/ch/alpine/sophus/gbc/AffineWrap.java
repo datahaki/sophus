@@ -13,6 +13,6 @@ public enum AffineWrap {
   /** @param manifold
    * @return biinvariant generalized barycentric coordinates */
   public static BarycentricCoordinate of(Manifold manifold) {
-    return HsCoordinates.wrap(manifold, AffineCoordinate.INSTANCE);
+    return HsCoordinates.of(manifold, AffineCoordinate.INSTANCE);
   }
 }

@@ -12,26 +12,22 @@ import ch.alpine.tensor.Tensor;
 
 /** Examples:
  * <pre>
- * HsCoordinates.wrap(RnManifold.INSTANCE, ThreePointCoordinate.of(Barycenter.MEAN_VALUE))
- * HsCoordinates.wrap(SnManifold.INSTANCE, ThreePointCoordinate.of(Barycenter.MEAN_VALUE))
+ * HsCoordinates.of(RnManifold.INSTANCE, ThreePointCoordinate.of(Barycenter.MEAN_VALUE))
+ * HsCoordinates.of(SnManifold.INSTANCE, ThreePointCoordinate.of(Barycenter.MEAN_VALUE))
  * </pre>
  * 
  * @see HsGenesis */
-public class HsCoordinates implements BarycentricCoordinate, Serializable {
+public record HsCoordinates(HsDesign hsDesign, Genesis genesis) implements BarycentricCoordinate, Serializable {
   /** @param manifold
    * @param genesis
    * @return */
-  public static BarycentricCoordinate wrap(Manifold manifold, Genesis genesis) {
-    return new HsCoordinates(manifold, genesis);
+  public static BarycentricCoordinate of(Manifold manifold, Genesis genesis) {
+    return new HsCoordinates(new HsDesign(manifold), genesis);
   }
 
-  // ---
-  private final HsDesign hsDesign;
-  private final Genesis genesis;
-
-  private HsCoordinates(Manifold manifold, Genesis genesis) {
-    hsDesign = new HsDesign(manifold);
-    this.genesis = Objects.requireNonNull(genesis);
+  public HsCoordinates {
+    Objects.requireNonNull(hsDesign);
+    Objects.requireNonNull(genesis);
   }
 
   @Override // from BarycentricCoordinate

@@ -62,7 +62,7 @@ class LeveragesDistanceVectorTest {
   public void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = Se2CoveringGroup.INSTANCE;
-    BarycentricCoordinate w1 = HsCoordinates.wrap(manifold, LeveragesDistanceVector.INSTANCE);
+    BarycentricCoordinate w1 = HsCoordinates.of(manifold, LeveragesDistanceVector.INSTANCE);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -77,7 +77,7 @@ class LeveragesDistanceVectorTest {
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      BarycentricCoordinate barycentricCoordinate = HsCoordinates.wrap(manifold, LeveragesDistanceVector.INSTANCE);
+      BarycentricCoordinate barycentricCoordinate = HsCoordinates.of(manifold, LeveragesDistanceVector.INSTANCE);
       barycentricCoordinate.weights(sequence, point);
     }
   }

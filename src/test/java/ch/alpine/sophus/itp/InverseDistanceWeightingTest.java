@@ -32,7 +32,7 @@ class InverseDistanceWeightingTest {
   @Test
   public void testSimple() {
     BarycentricCoordinate barycentricCoordinate = //
-        HsCoordinates.wrap(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
@@ -40,7 +40,7 @@ class InverseDistanceWeightingTest {
   @Test
   public void testExact() {
     BarycentricCoordinate barycentricCoordinate = //
-        HsCoordinates.wrap(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     Tensor weights = barycentricCoordinate.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
     ExactTensorQ.require(weights);
     assertEquals(weights, UnitVector.of(2, 1));
@@ -50,7 +50,7 @@ class InverseDistanceWeightingTest {
   public void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = //
-        HsCoordinates.wrap(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
       for (int index = 0; index < p1.length(); ++index) {
@@ -64,7 +64,7 @@ class InverseDistanceWeightingTest {
   public void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     BarycentricCoordinate barycentricCoordinate = //
-        Serialization.copy(HsCoordinates.wrap(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(1))));
+        Serialization.copy(HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(1))));
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);

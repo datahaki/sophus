@@ -24,10 +24,9 @@ import ch.alpine.tensor.alg.Differences;
 public final class HsDifferences extends AdjacentReduce {
   private final HomogeneousSpace homogeneousSpace;
 
-  /** @param hsManifold
-   * @throws Exception if either parameter is null */
-  public HsDifferences(HomogeneousSpace hsManifold) {
-    this.homogeneousSpace = Objects.requireNonNull(hsManifold);
+  /** @param homogeneousSpace non-null */
+  public HsDifferences(HomogeneousSpace homogeneousSpace) {
+    this.homogeneousSpace = Objects.requireNonNull(homogeneousSpace);
   }
 
   @Override

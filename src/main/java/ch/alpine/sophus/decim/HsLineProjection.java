@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.decim;
 
+import java.io.Serializable;
+
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
@@ -9,7 +11,7 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public record HsLineProjection(HomogeneousSpace homogeneousSpace) {
+public record HsLineProjection(HomogeneousSpace homogeneousSpace) implements Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
 
   public Tensor onto(Tensor p, Tensor q, Tensor r) {

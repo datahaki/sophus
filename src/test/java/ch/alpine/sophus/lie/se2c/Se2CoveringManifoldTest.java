@@ -57,7 +57,7 @@ class Se2CoveringManifoldTest {
       GbcHelper.biinvariant(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate[] QUANTITY_COORDINATES = //
       GbcHelper.biinvariant_quantity(Se2CoveringGroup.INSTANCE);
-  private static final BarycentricCoordinate AD_INVAR = HsCoordinates.wrap( //
+  private static final BarycentricCoordinate AD_INVAR = HsCoordinates.of( //
       Se2CoveringGroup.INSTANCE, //
       new MetricCoordinate( //
           NormWeighting.of(new Se2CoveringTarget(Vector2NormSquared::of, RealScalar.ONE), InversePowerVariogram.of(1))));

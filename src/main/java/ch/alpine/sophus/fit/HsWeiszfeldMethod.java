@@ -25,10 +25,7 @@ import ch.alpine.tensor.sca.Chop;
  * @param biinvariantMean
  * @param weightingInterface for instance {@link InverseDistanceWeighting}
  * @param chop */
-public record HsWeiszfeldMethod( //
-    BiinvariantMean biinvariantMean, //
-    TensorUnaryOperator weightingInterface, //
-    Chop chop) //
+public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) //
     implements SpatialMedian, Serializable {
 
   private static final int MAX_ITERATIONS = 512;

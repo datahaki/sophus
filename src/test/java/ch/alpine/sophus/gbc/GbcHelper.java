@@ -67,8 +67,8 @@ public enum GbcHelper {
         lagrainate_of(MetricBiinvariant.EUCLIDEAN, manifold, InversePowerVariogram.of(2)), //
         lagrainate_of(Biinvariants.LEVERAGES, manifold, InversePowerVariogram.of(2)), //
         lagrainate_of(Biinvariants.GARDEN, manifold, InversePowerVariogram.of(2)), //
-        HsCoordinates.wrap(manifold, MetricCoordinate.of(InversePowerVariogram.of(1))), //
-        HsCoordinates.wrap(manifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
+        HsCoordinates.of(manifold, MetricCoordinate.of(InversePowerVariogram.of(1))), //
+        HsCoordinates.of(manifold, MetricCoordinate.of(InversePowerVariogram.of(2))), //
         gardenCoordinate_of(manifold, InversePowerVariogram.of(1)), //
         gardenCoordinate_of(manifold, InversePowerVariogram.of(2)), //
         // LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
