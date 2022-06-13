@@ -12,13 +12,13 @@ import ch.alpine.tensor.num.Pi;
 
 class So2Test {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(So2.MOD.apply(Pi.VALUE), Pi.VALUE.negate());
     assertEquals(So2.MOD.apply(Pi.VALUE.negate()), Pi.VALUE.negate());
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     Serialization.copy(So2.MOD);
   }
 }

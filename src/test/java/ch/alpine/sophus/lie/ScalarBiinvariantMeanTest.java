@@ -17,13 +17,13 @@ class ScalarBiinvariantMeanTest {
       So2LinearBiinvariantMean.INSTANCE };
 
   @Test
-  public void testEmptyFail() {
+  void testEmptyFail() {
     for (ScalarBiinvariantMean so2BiinvariantMean : SO2_BIINVARIANT_MEANS)
       assertThrows(Exception.class, () -> so2BiinvariantMean.mean(Tensors.empty(), Tensors.empty()));
   }
 
   @Test
-  public void testMatrixFail() {
+  void testMatrixFail() {
     for (ScalarBiinvariantMean so2BiinvariantMean : SO2_BIINVARIANT_MEANS)
       assertThrows(Exception.class, () -> so2BiinvariantMean.mean(HilbertMatrix.of(3), Tensors.vector(1, 1, 1).divide(RealScalar.of(3))));
   }

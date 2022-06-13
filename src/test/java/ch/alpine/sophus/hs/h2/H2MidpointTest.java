@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class H2MidpointTest {
   @Test
-  public void testSymmetric() {
+  void testSymmetric() {
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(Array.zeros(2), RealScalar.ONE);
     for (int count = 0; count < 10; ++count) {
       Tensor a = RandomSample.of(randomSampleInterface);
@@ -33,13 +33,13 @@ class H2MidpointTest {
   }
 
   @Test
-  public void testLine() {
+  void testLine() {
     Tensor midpoint = H2Midpoint.INSTANCE.midpoint(Tensors.vector(0.5, 0.5), Tensors.vector(0.25, 0.25));
     Chop._12.requireClose(midpoint.Get(0), midpoint.Get(1));
   }
 
   @Test
-  public void testCircle() throws IOException, ClassNotFoundException {
+  void testCircle() throws IOException, ClassNotFoundException {
     CurveSubdivision curveSubdivision = //
         Serialization.copy(LaneRiesenfeldCurveSubdivision.of(H2Midpoint.INSTANCE, 1));
     Tensor tensor = Nest.of(curveSubdivision::string, Tensors.fromString("{{0.5, 0}, {0.0, 0.5}}"), 6);

@@ -37,14 +37,14 @@ class Se2CoveringGroupTest {
       Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(Tensors.vector(1, 2, 3));
     Tensor tensor = se2CoveringGroupElement.combine(Tensors.vector(0, 0, -3));
     assertEquals(tensor, Tensors.vector(1, 2, 0));
   }
 
   @Test
-  public void testConvergenceSe2() {
+  void testConvergenceSe2() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = Se2CoveringGroup.INSTANCE.exp(x);
@@ -62,7 +62,7 @@ class Se2CoveringGroupTest {
   }
 
   @Test
-  public void testAdInv() {
+  void testAdInv() {
     Random random = new Random();
     int n = 5 + random.nextInt(3);
     Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
@@ -92,7 +92,7 @@ class Se2CoveringGroupTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Random random = new Random();
     int n = 5 + random.nextInt(5);
     Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);

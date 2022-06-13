@@ -11,22 +11,22 @@ import ch.alpine.tensor.Tensors;
 
 class Extract2DTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(Extract2D.FUNCTION.apply(Tensors.vector(1, 2, 4)), Tensors.vector(1, 2));
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     assertThrows(Exception.class, () -> Extract2D.FUNCTION.apply(RealScalar.ONE));
   }
 
   @Test
-  public void testFailEmpty() {
+  void testFailEmpty() {
     assertThrows(Exception.class, () -> Extract2D.FUNCTION.apply(Tensors.empty()));
   }
 
   @Test
-  public void testFailOne() {
+  void testFailOne() {
     assertThrows(Exception.class, () -> Extract2D.FUNCTION.apply(Tensors.vector(1)));
   }
 }

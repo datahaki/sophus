@@ -30,7 +30,7 @@ class Spd0RandomSampleTest {
   }
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
         RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -41,7 +41,7 @@ class Spd0RandomSampleTest {
   }
 
   @Test
-  public void testSim() {
+  void testSim() {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
         RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
@@ -51,13 +51,13 @@ class Spd0RandomSampleTest {
   }
 
   @Test
-  public void testNegativeDiagonal() {
+  void testNegativeDiagonal() {
     Tensor matrix = DiagonalMatrix.of(-1, -2, -3);
     _check(matrix, MatrixSqrt.ofSymmetric(matrix));
   }
 
   @Test
-  public void testNonSymmetricFail() {
+  void testNonSymmetricFail() {
     assertThrows(Exception.class, () -> MatrixSqrt.ofSymmetric(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 4)));
   }
 }

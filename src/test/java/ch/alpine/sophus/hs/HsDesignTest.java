@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class HsDesignTest {
   @Test
-  public void testRn() {
+  void testRn() {
     Manifold manifold = RnGroup.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       Distribution distribution = UniformDistribution.unit();
@@ -49,7 +49,7 @@ class HsDesignTest {
   }
 
   @Test
-  public void testRnExact() {
+  void testRnExact() {
     Distribution distribution = DiscreteUniformDistribution.of(-1000, 1000);
     Tensor design = RandomVariate.of(distribution, 6, 3);
     Mahalanobis mahalanobis = new Mahalanobis(design);
@@ -60,7 +60,7 @@ class HsDesignTest {
   }
 
   @Test
-  public void testSn() {
+  void testSn() {
     Manifold manifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
@@ -77,7 +77,7 @@ class HsDesignTest {
   }
 
   @Test
-  public void testSe2C() {
+  void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
@@ -96,7 +96,7 @@ class HsDesignTest {
   }
 
   @Test
-  public void testSe2CAnchorIsTarget() {
+  void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 8; ++count) {
@@ -119,7 +119,7 @@ class HsDesignTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
 
   @Test
-  public void testSe2CadInvariant() {
+  void testSe2CadInvariant() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {

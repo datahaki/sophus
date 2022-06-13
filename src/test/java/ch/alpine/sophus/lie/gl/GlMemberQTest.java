@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class GlMemberQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertTrue(GlMemberQ.INSTANCE.test(IdentityMatrix.of(2)));
     assertFalse(GlMemberQ.INSTANCE.test(Array.zeros(2, 2)));
     assertFalse(GlMemberQ.INSTANCE.test(Array.zeros(2, 3)));

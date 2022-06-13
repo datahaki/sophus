@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class DodgsonSabinHelperTest {
   @Test
-  public void testCrafted() {
+  void testCrafted() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2.2, 0.5);
     Tensor c = Tensors.vector(3, 1.5);
@@ -21,7 +21,7 @@ class DodgsonSabinHelperTest {
   }
 
   @Test
-  public void testCraftedReverse() {
+  void testCraftedReverse() {
     Tensor d = Tensors.vector(1, 1.1);
     Tensor c = Tensors.vector(2.2, 0.5);
     Tensor b = Tensors.vector(3, 1.5);
@@ -31,7 +31,7 @@ class DodgsonSabinHelperTest {
   }
 
   @Test
-  public void testLine() {
+  void testLine() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2, 1.1);
     Tensor c = Tensors.vector(3, 1.1);
@@ -41,7 +41,7 @@ class DodgsonSabinHelperTest {
   }
 
   @Test
-  public void testLineDiagonal() {
+  void testLineDiagonal() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2, 2.1);
     Tensor c = Tensors.vector(3, 3.1);
@@ -51,7 +51,7 @@ class DodgsonSabinHelperTest {
   }
 
   @Test
-  public void testLineThree() {
+  void testLineThree() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2, 1.1);
     Tensor c = Tensors.vector(3, 1.1);

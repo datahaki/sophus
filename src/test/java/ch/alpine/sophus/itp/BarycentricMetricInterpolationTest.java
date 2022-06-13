@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BarycentricMetricInterpolationTest {
   @Test
-  public void testSimpleBa() {
+  void testSimpleBa() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricMetricInterpolation.of(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));
     assertEquals(scalarTensorFunction.apply(RealScalar.of(1)), UnitVector.of(3, 0));
@@ -30,7 +30,7 @@ class BarycentricMetricInterpolationTest {
   }
 
   @Test
-  public void testSimpleLa() {
+  void testSimpleLa() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricMetricInterpolation.la(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));
     assertEquals(scalarTensorFunction.apply(RealScalar.of(1)), UnitVector.of(3, 0));

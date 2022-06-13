@@ -35,7 +35,7 @@ class ClothoidTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testLength() throws ClassNotFoundException, IOException {
+  void testLength() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -48,7 +48,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testLengthZero() {
+  void testLengthZero() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -59,7 +59,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testLengthZeroExact() {
+  void testLengthZeroExact() {
     Distribution distribution = DiscreteUniformDistribution.of(-3, +3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -70,7 +70,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testCurvatureZero() {
+  void testCurvatureZero() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -82,7 +82,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testCurvatureZeroExact() {
+  void testCurvatureZeroExact() {
     Distribution distribution = DiscreteUniformDistribution.of(-3, +3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -92,7 +92,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testCurvature() throws ClassNotFoundException, IOException {
+  void testCurvature() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -104,7 +104,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testLengthMid() {
+  void testLengthMid() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -118,7 +118,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Clothoid clothoid = CLOTHOID_BUILDER.curve(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{7[m], -2[m], 4}"));
     Tensor tensor = clothoid.apply(RealScalar.of(0.3));
     {
@@ -135,7 +135,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(1, 2, 1);
     Tensor q = Tensors.vector(8, 6, 2);
     LagrangeQuadraticD clothoidTerminalRatio = CLOTHOID_BUILDER.curve(p, q).curvature();
@@ -146,7 +146,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testStraight() {
+  void testStraight() {
     Tensor p = Tensors.vector(1, 2, 0);
     Tensor q = Tensors.vector(10, 2, 0);
     LagrangeQuadraticD clothoidTerminalRatio = CLOTHOID_BUILDER.curve(p, q).curvature();
@@ -158,7 +158,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testAlmostStraight() {
+  void testAlmostStraight() {
     Tensor p = Tensors.vector(1, 2, 0);
     Tensor q = Tensors.vector(10, 3, 0);
     LagrangeQuadraticD lagrangeQuadraticD1 = CLOTHOID_BUILDER.curve(p, q).curvature();
@@ -169,7 +169,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testSingular() {
+  void testSingular() {
     Tensor p = Tensors.vector(1, 2, 1);
     Tensor q = Tensors.vector(1, 2, 1);
     LagrangeQuadraticD clothoidCurvature = CLOTHOID_BUILDER.curve(p, q).curvature();
@@ -180,7 +180,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testAngles() {
+  void testAngles() {
     Tensor pxy = Tensors.vector(0, 0);
     Tensor qxy = Tensors.vector(1, 0);
     Tensor angles = Range.of(-3, 4).map(Pi.TWO::multiply);
@@ -193,7 +193,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testLeft() {
+  void testLeft() {
     LagrangeQuadraticD headTailInterface = //
         CLOTHOID_BUILDER.curve(Tensors.vector(0, 1, 0), Tensors.vector(2, 2, 0)).curvature();
     Chop._02.requireClose(headTailInterface.head(), RealScalar.of(+1.223609));
@@ -201,7 +201,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testRight() {
+  void testRight() {
     LagrangeQuadraticD headTailInterface = //
         CLOTHOID_BUILDER.curve(Tensors.vector(0, 1, 0), Tensors.vector(2, 0, 0)).curvature();
     Chop._01.requireClose(headTailInterface.head(), RealScalar.of(-1.2149956565247713));
@@ -209,7 +209,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testFixedLeftUnit() {
+  void testFixedLeftUnit() {
     LagrangeQuadraticD lagrangeQuadraticD = CLOTHOID_BUILDER.curve( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
     Chop._01.requireClose(lagrangeQuadraticD.head(), Quantity.of(+1.2149956565247715, "m^-1")); // cl3
@@ -219,7 +219,7 @@ class ClothoidTest {
   }
 
   @Test
-  public void testOfLeftUnit() {
+  void testOfLeftUnit() {
     LagrangeQuadraticD clothoidTerminalRatio = CLOTHOID_BUILDER.curve( //
         Tensors.fromString("{0[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], 0}")).curvature();
     // System.out.println(clothoidTerminalRatio.head());

@@ -27,7 +27,7 @@ class So3ManifoldTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(So3Group.INSTANCE);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor g1 = Rodrigues.vectorExp(Tensors.vector(0.2, 0.3, 0.4));
     Tensor g2 = Rodrigues.vectorExp(Tensors.vector(0.1, 0.0, 0.5));
     Tensor g3 = Rodrigues.vectorExp(Tensors.vector(0.3, 0.5, 0.2));
@@ -42,7 +42,7 @@ class So3ManifoldTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Random random = new Random(4);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);
@@ -70,7 +70,7 @@ class So3ManifoldTest {
   }
 
   @Test
-  public void testLagrange() {
+  void testLagrange() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.1);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
@@ -88,7 +88,7 @@ class So3ManifoldTest {
   }
 
   @Test
-  public void testAffineLinearReproduction() {
+  void testAffineLinearReproduction() {
     Random random = new Random(1);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     Distribution d2 = NormalDistribution.of(0.0, 0.1);

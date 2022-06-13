@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BiinvariantTest {
   @Test
-  public void testAbsolute() throws ClassNotFoundException, IOException {
+  void testAbsolute() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
@@ -42,7 +42,7 @@ class BiinvariantTest {
   }
 
   @Test
-  public void testBiinvariant() {
+  void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
@@ -53,7 +53,7 @@ class BiinvariantTest {
   }
 
   @Test
-  public void testWeighting() throws ClassNotFoundException, IOException {
+  void testWeighting() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
@@ -65,7 +65,7 @@ class BiinvariantTest {
   }
 
   @Test
-  public void testCoordinate() throws ClassNotFoundException, IOException {
+  void testCoordinate() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
@@ -77,7 +77,7 @@ class BiinvariantTest {
   }
 
   @Test
-  public void testSimplePD() throws ClassNotFoundException, IOException {
+  void testSimplePD() throws ClassNotFoundException, IOException {
     Random random = new Random();
     for (Biinvariant biinvariant : Biinvariants.values()) {
       Distribution distribution = NormalDistribution.standard();

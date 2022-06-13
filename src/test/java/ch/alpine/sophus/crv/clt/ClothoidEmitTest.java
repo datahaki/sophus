@@ -9,7 +9,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class ClothoidEmitTest {
   @Test
-  public void testAngles() throws ClassNotFoundException, IOException {
+  void testAngles() throws ClassNotFoundException, IOException {
     Serialization.copy(ClothoidBuilders.SE2_COVERING);
   }
 }

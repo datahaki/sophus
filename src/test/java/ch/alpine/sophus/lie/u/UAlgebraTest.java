@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class UAlgebraTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = UAlgebra.of(n);
       lieAlgebra.basis().forEach(AntihermitianMatrixQ::require);
@@ -32,7 +32,7 @@ class UAlgebraTest {
   }
 
   @Test
-  public void testEigensystem() {
+  void testEigensystem() {
     LieAlgebra lieAlgebra = UAlgebra.of(3);
     Tensor basis = lieAlgebra.basis();
     assertEquals(basis.length(), 9);

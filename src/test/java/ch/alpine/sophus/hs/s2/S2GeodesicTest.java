@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class S2GeodesicTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
     Tensor split = S2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
@@ -33,7 +33,7 @@ class S2GeodesicTest {
   }
 
   @Test
-  public void testSame() {
+  void testSame() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2);
     Tensor split = S2Geodesic.INSTANCE.split(p, q, RandomVariate.of(NormalDistribution.standard()));
@@ -42,7 +42,7 @@ class S2GeodesicTest {
   }
 
   @Test
-  public void testOpposite() {
+  void testOpposite() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
     Tensor split = S2Geodesic.INSTANCE.split(p, q, RandomVariate.of(NormalDistribution.standard()));
@@ -50,7 +50,7 @@ class S2GeodesicTest {
   }
 
   @Test
-  public void testEndPoints() {
+  void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
       Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
@@ -63,7 +63,7 @@ class S2GeodesicTest {
   }
 
   @Test
-  public void testArticle() {
+  void testArticle() {
     Tensor p = Tensors.vector(1, 0, 0);
     Tensor q = Tensors.vector(0, 1 / Math.sqrt(5), 2 / Math.sqrt(5));
     Tensor tensor = S2Geodesic.INSTANCE.split(p, q, RealScalar.of(0.4));
@@ -73,7 +73,7 @@ class S2GeodesicTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> S2Geodesic.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
     S2Geodesic.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF);
   }

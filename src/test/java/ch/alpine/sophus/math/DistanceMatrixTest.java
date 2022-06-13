@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class DistanceMatrixTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "A")));
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor tensor = DistanceMatrix.of(sequence, Vector2Norm::between);
@@ -37,7 +37,7 @@ class DistanceMatrixTest {
   }
 
   @Test
-  public void testRankEuclidean() {
+  void testRankEuclidean() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));
     Tensor sequence = RandomVariate.of(distribution, random, 10, 2);

@@ -46,7 +46,7 @@ class RnGroupTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(RnGroup.INSTANCE);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     for (int n = 2; n < 5; ++n) {
@@ -62,7 +62,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
     BiinvariantMean biinvariantMean = RnBiinvariantMean.INSTANCE;
@@ -84,7 +84,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 6; ++n) {
@@ -100,7 +100,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testLagrangeProperty() {
+  void testLagrangeProperty() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 6; ++n) {
@@ -113,7 +113,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     for (int n = 2; n < 6; ++n) {
@@ -129,7 +129,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testAffineSimple() {
+  void testAffineSimple() {
     Random random = new Random(1);
     BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnGroup.INSTANCE);
     for (int dim = 2; dim < 4; ++dim)
@@ -144,13 +144,13 @@ class RnGroupTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE))
       assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 
   @Test
-  public void testColinear() {
+  void testColinear() {
     int d = 2;
     int n = 5;
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
@@ -163,14 +163,14 @@ class RnGroupTest {
   }
 
   @Test
-  public void testSimple1() {
+  void testSimple1() {
     Tensor matrix = HilbertMatrix.of(2, 3);
     assertEquals(RnGroup.INSTANCE.exp(matrix), matrix);
     assertEquals(RnGroup.INSTANCE.log(matrix), matrix);
   }
 
   @Test
-  public void testLinearPrecision() {
+  void testLinearPrecision() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
     for (BarycentricCoordinate barycentricCoordinates : GbcHelper.barycentrics(RnGroup.INSTANCE)) {
@@ -180,14 +180,14 @@ class RnGroupTest {
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor actual = RnGroup.INSTANCE.split(Tensors.vector(10, 1), Tensors.vector(11, 0), RealScalar.of(-1));
     ExactTensorQ.require(actual);
     assertEquals(Tensors.vector(9, 2), actual);
   }
 
   @Test
-  public void testSimple3() {
+  void testSimple3() {
     GeodesicSpace geodesicSpace = RnGroup.INSTANCE;
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertEquals(scalarTensorFunction.apply(RealScalar.ZERO), UnitVector.of(3, 0));
@@ -195,7 +195,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testEndPoints() {
+  void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
       Tensor p = RandomVariate.of(distribution, 7);
@@ -206,7 +206,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testDeBoor() {
+  void testDeBoor() {
     Tensor knots = Tensors.vector(1, 2, 3, 4);
     Tensor control = Tensors.vector(9, 3, 4);
     DeBoor.of(RnGroup.INSTANCE, knots, control);
@@ -214,7 +214,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testSymmetric() {
+  void testSymmetric() {
     int d = 2;
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
@@ -231,7 +231,7 @@ class RnGroupTest {
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> RnGroup.INSTANCE.element(null));
   }
   // public void testFailMatrix() {

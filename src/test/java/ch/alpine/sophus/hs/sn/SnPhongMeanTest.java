@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnPhongMeanTest {
   @Test
-  public void testSnNormalized() {
+  void testSnNormalized() {
     Distribution distribution = NormalDistribution.of(1, 0.2);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
@@ -31,7 +31,7 @@ class SnPhongMeanTest {
   }
 
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 2; d < 4; ++d)
       for (int count = 0; count < 10; ++count) {
@@ -48,7 +48,7 @@ class SnPhongMeanTest {
   }
 
   @Test
-  public void testAffineFail() {
+  void testAffineFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = UnitVector.of(3, 1);
     SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
@@ -56,7 +56,7 @@ class SnPhongMeanTest {
   }
 
   @Test
-  public void testAntipodalFail() {
+  void testAntipodalFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = x.negate();
     assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5)));

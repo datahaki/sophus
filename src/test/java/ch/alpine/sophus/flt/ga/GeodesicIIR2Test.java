@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicIIR2Test {
   @Test
-  public void testSimple() {
+  void testSimple() {
     GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
     Scalar alpha = RationalScalar.HALF;
     GeodesicIIR2 geodesicIIR2 = new GeodesicIIR2(geodesicSpace, alpha);
@@ -37,7 +37,7 @@ class GeodesicIIR2Test {
   }
 
   @Test
-  public void testLinear() {
+  void testLinear() {
     GeodesicSpace geodesicSpace = RnGroup.INSTANCE;
     Scalar alpha = RationalScalar.HALF;
     TensorUnaryOperator tensorUnaryOperator = new GeodesicIIR2(geodesicSpace, alpha);
@@ -57,7 +57,7 @@ class GeodesicIIR2Test {
   }
 
   @Test
-  public void testId2() {
+  void testId2() {
     Scalar alpha = RealScalar.ONE;
     TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGroup.INSTANCE, alpha));
     for (int k = 0; k < 10; ++k) {
@@ -67,7 +67,7 @@ class GeodesicIIR2Test {
   }
 
   @Test
-  public void testId() {
+  void testId() {
     Scalar alpha = RealScalar.ONE;
     TensorUnaryOperator tuo1 = CausalFilter.of(() -> new GeodesicIIR2(RnGroup.INSTANCE, alpha));
     TensorUnaryOperator tuo2 = GeodesicIIRnFilter.of( //

@@ -34,7 +34,7 @@ class MatrixBracketTest {
   }
 
   @Test
-  public void testHe1Basis() {
+  void testHe1Basis() {
     Tensor b0 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(0, 1)), 3, 3);
     Tensor b1 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(1, 2)), 3, 3);
     Tensor b2 = Array.of(l -> KroneckerDelta.of(l, Arrays.asList(0, 2)), 3, 3);
@@ -43,13 +43,13 @@ class MatrixBracketTest {
   }
 
   @Test
-  public void testSo3Basis() {
+  void testSo3Basis() {
     Tensor basis = LeviCivitaTensor.of(3).negate();
     _check(So3Algebra.INSTANCE.ad(), basis);
   }
 
   @Test
-  public void testSe2Basis() {
+  void testSe2Basis() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
@@ -58,7 +58,7 @@ class MatrixBracketTest {
   }
 
   @Test
-  public void testSe2Matrix() {
+  void testSe2Matrix() {
     Tensor bx = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     Tensor by = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor bt = Tensors.fromString("{{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}");
@@ -68,19 +68,19 @@ class MatrixBracketTest {
   }
 
   @Test
-  public void testSo3Bracket() {
+  void testSo3Bracket() {
     Tensor so3 = LeviCivitaTensor.of(3).negate();
     assertEquals(MatrixBracket.of(so3.get(0), so3.get(1)), so3.get(2));
   }
 
   @Test
-  public void testBracketVectorFail() {
+  void testBracketVectorFail() {
     assertThrows(Exception.class, () -> MatrixBracket.of(Tensors.empty(), Tensors.empty()));
     assertThrows(Exception.class, () -> MatrixBracket.of(Tensors.vector(1, 2), Tensors.vector(3, 4)));
   }
 
   @Test
-  public void testBracketMatrixFail() {
+  void testBracketMatrixFail() {
     Tensor x = RotationMatrix.of(RealScalar.ONE);
     Tensor y = Tensors.vector(3, 4);
     assertThrows(Exception.class, () -> MatrixBracket.of(x, y));
@@ -88,12 +88,12 @@ class MatrixBracketTest {
   }
 
   @Test
-  public void testBracketAdFail() {
+  void testBracketAdFail() {
     assertThrows(Exception.class, () -> MatrixBracket.of(Array.zeros(2, 2, 2), Array.zeros(2, 2, 2)));
   }
 
   @Test
-  public void testBracketAdVectorFail() {
+  void testBracketAdVectorFail() {
     Tensor x = Array.zeros(3, 3, 3);
     Tensor y = Tensors.vector(1, 2, 3);
     assertThrows(Exception.class, () -> MatrixBracket.of(x, y));
@@ -101,7 +101,7 @@ class MatrixBracketTest {
   }
 
   @Test
-  public void testMatrixAlg() {
+  void testMatrixAlg() {
     assertEquals(So3Algebra.INSTANCE.ad(), LeviCivitaTensor.of(3).negate());
   }
 }

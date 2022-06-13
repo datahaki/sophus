@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Clips;
 class KullbackLeiblerDivergenceTest {
   @SuppressWarnings("unused")
   @Test
-  public void testSimple() {
+  void testSimple() {
     Spd0RandomSample spdRandomSample = new Spd0RandomSample(3, UniformDistribution.of(Clips.absolute(1)));
     Tensor p = RandomSample.of(spdRandomSample);
     Tensor q = RandomSample.of(spdRandomSample);

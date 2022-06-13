@@ -13,7 +13,7 @@ import ch.alpine.sophus.lie.so3.So3Algebra;
 
 class NilpotentAlgebraQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertTrue(NilpotentAlgebraQ.of(new HeAlgebra(1).ad()));
     assertFalse(NilpotentAlgebraQ.of(So3Algebra.INSTANCE.ad()));
     assertFalse(NilpotentAlgebraQ.of(Sl2Algebra.INSTANCE.ad()));

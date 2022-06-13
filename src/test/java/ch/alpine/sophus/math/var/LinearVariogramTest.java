@@ -9,7 +9,7 @@ import ch.alpine.tensor.num.Pi;
 
 class LinearVariogramTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(new LinearVariogram(Pi.VALUE).a(), Pi.VALUE);
   }
 }

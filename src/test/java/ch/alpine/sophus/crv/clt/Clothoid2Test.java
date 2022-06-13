@@ -11,7 +11,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 
 class Clothoid2Test {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarTensorFunction scalarTensorFunction = Clothoid2.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertInstanceOf(ClothoidCurve2.class, scalarTensorFunction);
   }

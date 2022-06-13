@@ -20,7 +20,7 @@ import ch.alpine.tensor.spa.SparseArray;
 
 class GrAlgebraTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     HsAlgebra hsAlgebra = GrAlgebra.of(5, 2, 6);
     assertInstanceOf(SparseArray.class, hsAlgebra.ad());
     int n = 6;
@@ -37,13 +37,13 @@ class GrAlgebraTest {
   }
 
   @Test
-  public void testLarge() {
+  void testLarge() {
     HsAlgebra hsAlgebra = GrAlgebra.of(7, 3, 6);
     assertEquals(hsAlgebra.dimG(), 7 * 6 / 2);
   }
 
   @Test
-  public void testBasis() {
+  void testBasis() {
     assertInstanceOf(SparseArray.class, GrAlgebra.basis(5, 2));
   }
 }

@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2ParametricTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(1 + 3, 2 + 4, 3);
     Scalar scalar = Se2ParametricDeprecate.INSTANCE.distance(p, q);
@@ -32,7 +32,7 @@ class Se2ParametricTest {
   }
 
   @Test
-  public void testHalf() {
+  void testHalf() {
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(1, 2 + 2 * 3, 3 + Math.PI);
     Scalar scalar = Se2ParametricDeprecate.INSTANCE.distance(p, q);
@@ -42,7 +42,7 @@ class Se2ParametricTest {
   }
 
   @Test
-  public void testSimpleUnits() {
+  void testSimpleUnits() {
     Tensor p = Tensors.fromString("{1[m], 2[m], 3}");
     Tensor q = Tensors.fromString("{4[m], 6[m], 3}");
     Scalar scalar = Se2ParametricDeprecate.INSTANCE.distance(p, q);
@@ -52,7 +52,7 @@ class Se2ParametricTest {
   }
 
   @Test
-  public void testOtherUnits() {
+  void testOtherUnits() {
     Tensor p = Tensors.fromString("{1[m], 2[m], 3}");
     Tensor q = Tensors.fromString("{4[m], 6[m], 3.3}");
     Scalar scalar = Se2ParametricDeprecate.INSTANCE.distance(p, q);
@@ -62,12 +62,12 @@ class Se2ParametricTest {
   }
 
   @Test
-  public void testOrigin() {
+  void testOrigin() {
     assertEquals(Se2ParametricDeprecate.INSTANCE.distance(Tensors.vector(0, 0, 0), Tensors.vector(0, 0, 0)), RealScalar.of(0));
   }
 
   @Test
-  public void testOrderInvariant() {
+  void testOrderInvariant() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -83,7 +83,7 @@ class Se2ParametricTest {
   }
 
   @Test
-  public void testSymmetrize() {
+  void testSymmetrize() {
     Distribution distribution = NormalDistribution.standard();
     Tensor p = RandomVariate.of(distribution, 3);
     Tensor q = RandomVariate.of(distribution, 3);

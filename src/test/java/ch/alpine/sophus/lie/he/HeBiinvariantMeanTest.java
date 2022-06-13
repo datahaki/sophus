@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HeBiinvariantMeanTest {
   @Test
-  public void testTrivial() {
+  void testTrivial() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
@@ -26,7 +26,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testTrivialHe3() {
+  void testTrivialHe3() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
@@ -36,7 +36,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testTrivialHe5() {
+  void testTrivialHe5() {
     Tensor p = Tensors.vector(1, 2);
     Tensor element = Tensors.of(p, p, RealScalar.ONE);
     Tensor sequence = Tensors.of(element);
@@ -47,7 +47,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testSimpleHe3() {
+  void testSimpleHe3() {
     Tensor element = Tensors.fromString("{{1}, {1}, 1}");
     Tensor sequence = Tensors.of(element, element.add(element), element.add(element).add(element));
     Tensor weights = Tensors.vector(0.2, 0.6, 0.2);
@@ -58,7 +58,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testSimplelHe5() {
+  void testSimplelHe5() {
     Tensor p = Tensors.vector(1, 2);
     Tensor element = Tensors.of(p, p, RealScalar.ONE);
     Tensor sequence = Tensors.of(element, element.add(element), element.add(element).add(element));
@@ -71,7 +71,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     HeGroupElement p = new HeGroupElement(Tensors.fromString("{{1, 2}, {3, 4}, 5}"));
     HeGroupElement pinv = p.inverse();
     // ---
@@ -84,7 +84,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testBiinvariantMean1() {
+  void testBiinvariantMean1() {
     Tensor p = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     Tensor q = Tensors.fromString("{{-3, 6}, {-2, 8}, -9}");
     Tensor domain = Subdivide.of(-1, 1, 10);
@@ -96,7 +96,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testBiinvariantMean2() {
+  void testBiinvariantMean2() {
     Tensor p = Tensors.fromString("{{1}, {4}, 5}");
     Tensor q = Tensors.fromString("{{-3}, {6}, -9}");
     Tensor domain = Subdivide.of(0, 2, 11);
@@ -108,7 +108,7 @@ class HeBiinvariantMeanTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertThrows(Exception.class, () -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 }

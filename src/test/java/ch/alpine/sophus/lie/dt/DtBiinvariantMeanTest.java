@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class DtBiinvariantMeanTest {
   @Test
-  public void testTrivial() {
+  void testTrivial() {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));
     Tensor weights = Tensors.vector(1);
     Tensor actual = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -26,7 +26,7 @@ class DtBiinvariantMeanTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = Tensors.vector(1, 2);
     Tensor q = Tensors.vector(2, 3);
     Tensor sequence = Tensors.of(p, q);
@@ -38,7 +38,7 @@ class DtBiinvariantMeanTest {
   }
 
   @Test
-  public void testReorder() {
+  void testReorder() {
     Tensor p = Tensors.vector(1, 2);
     Tensor q = Tensors.vector(2, 3);
     Tensor r = Tensors.vector(3, 1);
@@ -57,7 +57,7 @@ class DtBiinvariantMeanTest {
   }
 
   @Test
-  public void testReorderNegative() {
+  void testReorderNegative() {
     Tensor p = Tensors.vector(1, 2);
     Tensor q = Tensors.vector(2, 3);
     Tensor r = Tensors.vector(3, 1);
@@ -77,7 +77,7 @@ class DtBiinvariantMeanTest {
   }
 
   @Test
-  public void testReorderNegativeVector() {
+  void testReorderNegativeVector() {
     Tensor p = Tensors.fromString("{1, {2, 3}}");
     Tensor q = Tensors.fromString("{2, {3, 1}}");
     Tensor r = Tensors.fromString("{3, {1, -3}}");

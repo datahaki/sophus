@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.Tolerance;
 
 class TSnProjectionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int d = 1; d < 6; ++d) {
       Tensor x = RandomSample.of(SnRandomSample.of(d));
       Tensor matrix = TSnProjection.of(x);

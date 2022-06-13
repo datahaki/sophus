@@ -95,18 +95,18 @@ class BakerCampbellHausdorffTest {
 
   @ParameterizedTest
   @ValueSource(ints = { 6, 8 })
-  public void testHe1(int d) {
+  void testHe1(int d) {
     _check(new HeAlgebra(2).ad(), d);
   }
 
   @ParameterizedTest
   @ValueSource(ints = { 6, 8 })
-  public void testSl2(int d) {
+  void testSl2(int d) {
     _check(Sl2Algebra.INSTANCE.ad(), d);
   }
 
   @Test
-  public void testSl2SophusAd() {
+  void testSl2SophusAd() {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
     assertEquals(Det.of(KillingForm.of(ad)), RealScalar.of(-8));
@@ -114,7 +114,7 @@ class BakerCampbellHausdorffTest {
 
   @ParameterizedTest
   @ValueSource(ints = { 6, 8 })
-  public void testSl2Sophus(int d) {
+  void testSl2Sophus(int d) {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, 1}, {0, -1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, -1, 0}, {1, 0, 0}, {0, 0, 0}}}");
     _check(ad, d);
@@ -122,18 +122,18 @@ class BakerCampbellHausdorffTest {
 
   @ParameterizedTest
   @ValueSource(ints = { 6, 8, 10 })
-  public void testSe2(int d) {
+  void testSe2(int d) {
     _check(Se2Algebra.INSTANCE.ad(), d);
   }
 
   @ParameterizedTest
   @ValueSource(ints = { 6, 8 })
-  public void testSo3(int d) {
+  void testSo3(int d) {
     _check(So3Algebra.INSTANCE.ad(), d);
   }
 
   @Test
-  public void testOptimized() {
+  void testOptimized() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertInstanceOf(BchSeries6.class, BakerCampbellHausdorff.of(ad, 6));
     assertInstanceOf(BchSeries8.class, BakerCampbellHausdorff.of(ad, 8));
@@ -141,7 +141,7 @@ class BakerCampbellHausdorffTest {
   }
 
   @Test
-  public void testOptimized2() {
+  void testOptimized2() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertInstanceOf(BchSeries6.class, BakerCampbellHausdorff.of(ad, 6, Chop._02));
     assertInstanceOf(BchSeries8.class, BakerCampbellHausdorff.of(ad, 8, Chop._02));
@@ -149,7 +149,7 @@ class BakerCampbellHausdorffTest {
   }
 
   @Test
-  public void testSparse() throws ClassNotFoundException, IOException {
+  void testSparse() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebra.of(1, 2);
     Tensor cp = cliffordAlgebra.cp();
     assertInstanceOf(SparseArray.class, cp);
@@ -164,7 +164,7 @@ class BakerCampbellHausdorffTest {
   }
 
   @Test
-  public void testJacobiFail() throws ClassNotFoundException, IOException {
+  void testJacobiFail() throws ClassNotFoundException, IOException {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     Serialization.copy(BakerCampbellHausdorff.of(ad, 2));
     ad.set(Scalar::zero, Tensor.ALL, 1, 2);
@@ -172,7 +172,7 @@ class BakerCampbellHausdorffTest {
   }
 
   @Test
-  public void testDegreeFail() {
+  void testDegreeFail() {
     Tensor ad = Array.sparse(2, 2, 2);
     BakerCampbellHausdorff.of(ad, 1);
     assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 1, null));
@@ -180,7 +180,7 @@ class BakerCampbellHausdorffTest {
   }
 
   @Test
-  public void testChopNullFail() {
+  void testChopNullFail() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertThrows(Exception.class, () -> BakerCampbellHausdorff.of(ad, 6, null));
   }

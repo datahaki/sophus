@@ -13,13 +13,13 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class MidpointTangentApproximationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar f = OriginalApproximation.INSTANCE.apply(RealScalar.of(0.3), RealScalar.of(-0.82));
     Tolerance.CHOP.requireClose(f, RealScalar.of(0.1213890127877238));
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Random random = new Random(1);
     for (int count = 0; count < 100; ++count) {
       Scalar b0 = RandomVariate.of(NormalDistribution.standard(), random);

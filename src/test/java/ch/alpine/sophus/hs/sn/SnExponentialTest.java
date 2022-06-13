@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnExponentialTest {
   @Test
-  public void test2D() throws ClassNotFoundException, IOException {
+  void test2D() throws ClassNotFoundException, IOException {
     SnExponential snExp = Serialization.copy(new SnExponential(UnitVector.of(2, 0)));
     Scalar dist = RealScalar.of(0.2);
     Tensor log = snExp.log(AngleVector.of(dist));
@@ -33,31 +33,31 @@ class SnExponentialTest {
   }
 
   @Test
-  public void test2DNormFail() {
+  void test2DNormFail() {
     assertThrows(Exception.class, () -> new SnExponential(Tensors.vector(2, 1)));
   }
 
   @Test
-  public void test2DExpFail() {
+  void test2DExpFail() {
     SnExponential snExp = new SnExponential(UnitVector.of(2, 0));
     Scalar dist = RealScalar.of(0.2);
     assertThrows(Exception.class, () -> snExp.exp(AngleVector.of(dist)));
   }
 
   @Test
-  public void test3D() {
+  void test3D() {
     Tensor tensor = new SnExponential(UnitVector.of(3, 0)).exp(UnitVector.of(3, 1).multiply(RealScalar.of(Math.PI / 2)));
     Chop._12.requireClose(tensor, UnitVector.of(3, 1));
   }
 
   @Test
-  public void test4D() {
+  void test4D() {
     Tensor tensor = new SnExponential(UnitVector.of(4, 0)).exp(UnitVector.of(4, 1).multiply(RealScalar.of(Math.PI)));
     Chop._12.requireClose(tensor, UnitVector.of(4, 0).negate());
   }
 
   @Test
-  public void testId() {
+  void testId() {
     for (int dim = 2; dim < 6; ++dim)
       for (int count = 0; count < 20; ++count) {
         Tensor point = Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), dim));
@@ -67,7 +67,7 @@ class SnExponentialTest {
   }
 
   @Test
-  public void testLog() {
+  void testLog() {
     Tensor point = UnitVector.of(3, 0);
     SnExponential snExp = new SnExponential(point);
     Tensor g = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 1, 1));
@@ -77,12 +77,12 @@ class SnExponentialTest {
   }
 
   @Test
-  public void test0Fail() {
+  void test0Fail() {
     assertThrows(Exception.class, () -> new SnExponential(Tensors.empty()));
   }
 
   @Test
-  public void testDim0Len1() {
+  void testDim0Len1() {
     Tensor p = UnitVector.of(1, 0);
     SnExponential snExponential = new SnExponential(p);
     snExponential.exp(Array.zeros(1));
@@ -91,12 +91,12 @@ class SnExponentialTest {
   }
 
   @Test
-  public void testMatrixFail() {
+  void testMatrixFail() {
     assertThrows(Exception.class, () -> new SnExponential(HilbertMatrix.of(3)));
   }
 
   @Test
-  public void testLogMemberFail() {
+  void testLogMemberFail() {
     SnExponential snExponential = new SnExponential(UnitVector.of(3, 0));
     assertThrows(Exception.class, () -> snExponential.log(Tensors.vector(1, 2, 3)));
   }

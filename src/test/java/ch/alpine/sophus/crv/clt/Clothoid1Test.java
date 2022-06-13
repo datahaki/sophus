@@ -17,13 +17,13 @@ import ch.alpine.tensor.chq.FiniteTensorQ;
 
 class Clothoid1Test {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarTensorFunction scalarTensorFunction = Clothoid1.INSTANCE.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertInstanceOf(ClothoidCurve1.class, scalarTensorFunction);
   }
 
   @Test
-  public void testSingular() {
+  void testSingular() {
     Tensor beg = Tensors.vector(1, 2, 3);
     Tensor end = Tensors.vector(1, 2, -1);
     ScalarTensorFunction scalarTensorFunction = Clothoid1.INSTANCE.curve(beg, end);

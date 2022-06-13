@@ -14,13 +14,13 @@ import ch.alpine.tensor.fft.FourierMatrix;
 
 class LanczosCurveTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor refine = LanczosCurve.refine(Tensors.vector(1, 2, 3, 2, 1, 2, 3), 100);
     assertEquals(refine.length(), 101);
   }
 
   @Test
-  public void testMatrix() {
+  void testMatrix() {
     for (int n = 2; n < 10; ++n) {
       Tensor refine = LanczosCurve.refine(FourierMatrix.of(n), 50);
       assertEquals(Dimensions.of(refine), Arrays.asList(51, n));

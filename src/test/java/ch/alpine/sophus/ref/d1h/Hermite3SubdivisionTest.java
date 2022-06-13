@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Hermite3SubdivisionTest {
   @Test
-  public void testStringLength2() {
+  void testStringLength2() {
     Tensor control = Tensors.fromString("{{3, 4}, {1, -3}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().string(RealScalar.ONE, control);
     TensorIteration tensorIteration2 = //
@@ -39,7 +39,7 @@ class Hermite3SubdivisionTest {
   }
 
   @Test
-  public void testStringReverseRn() {
+  void testStringReverseRn() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -58,7 +58,7 @@ class Hermite3SubdivisionTest {
   }
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration1 = RnHermite3Subdivisions.standard().cyclic(RealScalar.ONE, control);
     TensorIteration tensorIteration2 = //
@@ -74,12 +74,12 @@ class Hermite3SubdivisionTest {
   }
 
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     TestHelper.checkQuantity(Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> Hermite3Subdivisions.of(null, Tolerance.CHOP));
     assertThrows(Exception.class, () -> Hermite3Subdivisions.of(Se2CoveringGroup.INSTANCE, null));
   }

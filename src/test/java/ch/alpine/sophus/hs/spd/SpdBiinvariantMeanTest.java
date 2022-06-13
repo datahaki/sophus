@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SpdBiinvariantMeanTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     BiinvariantMean biinvariantMean = Serialization.copy(SpdManifold.INSTANCE.biinvariantMean(Chop._10));
     Distribution distribution = UniformDistribution.unit();
@@ -39,7 +39,7 @@ class SpdBiinvariantMeanTest {
   }
 
   @Test
-  public void testTransformSon() {
+  void testTransformSon() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 4; ++n) {
@@ -57,7 +57,7 @@ class SpdBiinvariantMeanTest {
   }
 
   @Test
-  public void testTransformGln() {
+  void testTransformGln() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 4; ++n) {

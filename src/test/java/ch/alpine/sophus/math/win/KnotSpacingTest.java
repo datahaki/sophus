@@ -19,14 +19,14 @@ import ch.alpine.tensor.sca.Chop;
 
 class KnotSpacingTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator centripetalKnotSpacing = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0.5);
     Tensor knots = centripetalKnotSpacing.apply(Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, {8, 9, 11}}"));
     Chop._12.requireClose(knots, Tensors.vector(0, 2.525854879647931, 4.988462479155103));
   }
 
   @Test
-  public void testUniform() {
+  void testUniform() {
     TensorUnaryOperator uniform = KnotSpacing.uniform();
     TensorUnaryOperator power_0 = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0);
     Tensor control = Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, {8, 9, 11}}");
@@ -36,7 +36,7 @@ class KnotSpacingTest {
   }
 
   @Test
-  public void testChordal() {
+  void testChordal() {
     TensorUnaryOperator chordal = KnotSpacing.chordal(Se2Parametric.INSTANCE);
     TensorUnaryOperator power_1 = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 1);
     Tensor control = Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, {8, 9, 11}}");
@@ -44,7 +44,7 @@ class KnotSpacingTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator centripetalKnotSpacing = //
         Serialization.copy(KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0.5));
     Tensor knots = centripetalKnotSpacing.apply(Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, {8, 9, 11}}"));
@@ -52,20 +52,20 @@ class KnotSpacingTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     TensorUnaryOperator centripetalKnotSpacing = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0.75);
     assertEquals(centripetalKnotSpacing.apply(Tensors.empty()), Tensors.empty());
     assertEquals(centripetalKnotSpacing.apply(Tensors.fromString("{{2, 3, 4}}")), Tensors.vector(0));
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     TensorUnaryOperator centripetalKnotSpacing = KnotSpacing.centripetal(Se2Parametric.INSTANCE, 0.25);
     assertThrows(Exception.class, () -> centripetalKnotSpacing.apply(RealScalar.ONE));
   }
 
   @Test
-  public void testChordalFail() {
+  void testChordalFail() {
     assertThrows(Exception.class, () -> KnotSpacing.chordal(null));
   }
 }

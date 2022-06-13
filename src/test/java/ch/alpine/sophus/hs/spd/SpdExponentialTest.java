@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class SpdExponentialTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -46,7 +46,7 @@ class SpdExponentialTest {
   }
 
   @Test
-  public void testSpdToSym() {
+  void testSpdToSym() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
@@ -55,7 +55,7 @@ class SpdExponentialTest {
   }
 
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
@@ -73,7 +73,7 @@ class SpdExponentialTest {
   }
 
   @Test
-  public void testIdentity() {
+  void testIdentity() {
     for (int n = 1; n < 4; ++n) {
       Exponential exponential = new SpdExponential(IdentityMatrix.of(n));
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
@@ -87,12 +87,12 @@ class SpdExponentialTest {
   }
 
   @Test
-  public void testNonSymmetricFail() {
+  void testNonSymmetricFail() {
     assertThrows(Exception.class, () -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new SpdExponential(null));
   }
 }

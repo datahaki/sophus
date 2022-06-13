@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BezierFunctionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor control = Tensors.fromString("{{0, 1}, {1, 0}, {2, 1}}");
     ScalarTensorFunction scalarTensorFunction = new BezierFunction(RnGroup.INSTANCE, control);
     Tensor tensor = scalarTensorFunction.apply(RationalScalar.of(1, 4));
@@ -34,7 +34,7 @@ class BezierFunctionTest {
   }
 
   @Test
-  public void testRn() {
+  void testRn() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}, {3, 1}}");
     ScalarTensorFunction stf1 = new BezierFunction(RnGroup.INSTANCE, control);
     Scalar scalar = RationalScalar.of(1, 4);
@@ -49,7 +49,7 @@ class BezierFunctionTest {
   }
 
   @Test
-  public void testSe2Covering() {
+  void testSe2Covering() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 1/2}, {2, 0.4, 2/5}}");
     ScalarTensorFunction scalarTensorFunction = new BezierFunction(Se2CoveringGroup.INSTANCE, control);
     Scalar scalar = RationalScalar.of(1, 4);
@@ -59,7 +59,7 @@ class BezierFunctionTest {
   }
 
   @Test
-  public void testOutsideFail() {
+  void testOutsideFail() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 1/2}, {2, 0.4, 2/5}}");
     ScalarTensorFunction scalarTensorFunction = new BezierFunction(Se2CoveringGroup.INSTANCE, control);
     Scalar scalar = RationalScalar.of(-1, 4);
@@ -69,7 +69,7 @@ class BezierFunctionTest {
   }
 
   @Test
-  public void testSingleton() {
+  void testSingleton() {
     ScalarTensorFunction scalarTensorFunction = new BezierFunction(Se2CoveringGroup.INSTANCE, Array.zeros(1, 3));
     for (Tensor _x : Subdivide.of(-1, 2, 3 * 3)) {
       Tensor tensor = scalarTensorFunction.apply((Scalar) _x);
@@ -79,18 +79,18 @@ class BezierFunctionTest {
   }
 
   @Test
-  public void testFailEmpty() {
+  void testFailEmpty() {
     assertThrows(Exception.class, () -> new BezierFunction(Se2CoveringGroup.INSTANCE, Tensors.empty()));
     assertThrows(Exception.class, () -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     assertThrows(Exception.class, () -> new BezierFunction(Se2CoveringGroup.INSTANCE, RealScalar.ZERO));
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> BezierFunction.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
     assertThrows(Exception.class, () -> new BezierFunction((BinaryAverage) null, Tensors.vector(1, 2, 3)));
   }

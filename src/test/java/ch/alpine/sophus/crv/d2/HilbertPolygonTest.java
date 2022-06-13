@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class HilbertPolygonTest {
   @Test
-  public void testZeroClosedFail() {
+  void testZeroClosedFail() {
     assertThrows(Exception.class, () -> HilbertPolygon.of(0));
   }
 }

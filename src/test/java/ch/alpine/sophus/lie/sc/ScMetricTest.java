@@ -30,7 +30,7 @@ class ScMetricTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     _check(Tensors.of(RealScalar.of(2)), Tensors.of(RealScalar.of(3)), Tensors.of(RealScalar.of(5)));
     _check(Tensors.of(RealScalar.of(2)), Tensors.of(Pi.VALUE), Tensors.of(RealScalar.of(0.1)));
   }

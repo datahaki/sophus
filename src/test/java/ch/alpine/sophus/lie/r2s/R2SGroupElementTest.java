@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class R2SGroupElementTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor xyu = RandomVariate.of(NormalDistribution.standard(), 3);
     R2SGroupElement r2s = new R2SGroupElement(xyu);
     Tolerance.CHOP.requireAllZero(r2s.inverse().combine(xyu));
@@ -21,7 +21,7 @@ class R2SGroupElementTest {
   }
 
   @Test
-  public void test2Pi() {
+  void test2Pi() {
     R2SGroupElement r2s = new R2SGroupElement(Tensors.of(RealScalar.ZERO, RealScalar.ZERO, Pi.VALUE));
     Tensor result = r2s.combine(Tensors.of(RealScalar.ZERO, RealScalar.ZERO, Pi.VALUE));
     Tolerance.CHOP.requireAllZero(result);

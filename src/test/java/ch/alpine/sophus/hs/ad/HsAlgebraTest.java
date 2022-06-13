@@ -45,14 +45,14 @@ import ch.alpine.tensor.sca.Chop;
 
 class HsAlgebraTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 6);
     assertTrue(hsAlgebra.isReductive());
     assertTrue(hsAlgebra.isSymmetric());
   }
 
   @Test
-  public void testSe2Actions() {
+  void testSe2Actions() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
     {
       Tensor g = Tensors.vector(1, 0, 0);
@@ -79,7 +79,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testSe2ActionsExp() {
+  void testSe2ActionsExp() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
@@ -96,12 +96,12 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testSe2Fail() {
+  void testSe2Fail() {
     assertThrows(Exception.class, () -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 
   @Test
-  public void testSo3() {
+  void testSo3() {
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
     assertTrue(hsAlgebra.isReductive());
     assertTrue(hsAlgebra.isSymmetric());
@@ -118,7 +118,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testSl2() {
+  void testSl2() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(sl2_basis_mh());
     HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
     assertEquals(hsAlgebra.dimG(), 3);
@@ -132,7 +132,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testSo3Simple() {
+  void testSo3Simple() {
     Tensor g = Tensors.vector(0.0, 0.0, Math.PI / 2);
     Tensor m = Tensors.vector(0.1, 0.0);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
@@ -149,7 +149,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testSo3ZeroMap() {
+  void testSo3ZeroMap() {
     Tensor g = Tensors.vector(0.1, 0.2, 0);
     Tensor m = Tensors.vector(0.0, 0.0);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
@@ -176,7 +176,7 @@ class HsAlgebraTest {
       new HsAlgebra(SlAlgebra.of(3).ad(), 6, 6) };
 
   @Test
-  public void testAction() {
+  void testAction() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
@@ -195,7 +195,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testProj() {
+  void testProj() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
@@ -209,7 +209,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testDecomp() {
+  void testDecomp() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random(2);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
@@ -225,7 +225,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testLiftProjection() {
+  void testLiftProjection() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
@@ -236,7 +236,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testDecompCheat() {
+  void testDecompCheat() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
@@ -252,7 +252,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testHTrivial() {
+  void testHTrivial() {
     Distribution distribution = DiscreteUniformDistribution.of(-100, 100);
     Random random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
@@ -271,7 +271,7 @@ class HsAlgebraTest {
   }
 
   @Test
-  public void testLieAlgebra() {
+  void testLieAlgebra() {
     for (LieAlgebra lieAlgebra : new LieAlgebra[] { //
         Se2Algebra.INSTANCE, So3Algebra.INSTANCE, new HeAlgebra(2), SlAlgebra.of(3) }) {
       Tensor ad = lieAlgebra.ad();

@@ -38,7 +38,7 @@ import ch.alpine.tensor.spa.SparseArray;
 
 class MatrixAlgebraTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
@@ -61,14 +61,14 @@ class MatrixAlgebraTest {
   }
 
   @Test
-  public void testSl2() {
+  void testSl2() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     Tensor form = KillingForm.of(ad);
     assertEquals(form, DiagonalMatrix.of(-2, 2, 2));
   }
 
   @Test
-  public void testSo3() {
+  void testSo3() {
     Tensor basis = LeviCivitaTensor.of(3).negate();
     Tensor ad = new MatrixAlgebra(basis).ad();
     Tensor form = KillingForm.of(ad);
@@ -76,7 +76,7 @@ class MatrixAlgebraTest {
   }
 
   @Test
-  public void testB0B2() {
+  void testB0B2() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1[m]}, {0, 0, 0[m]}, {0, 0, 0}}");
     b0.set(Quantity.of(0, "m^-1"), 2, 0);
     b0.set(Quantity.of(0, "m^-1"), 2, 1);
@@ -89,7 +89,7 @@ class MatrixAlgebraTest {
   }
 
   @Test
-  public void testSe2Units() {
+  void testSe2Units() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1[m]}, {0, 0, 0[m]}, {0[m^-1], 0[m^-1], 0}}");
     Tensor b1 = Tensors.fromString("{{0, 0, 0[m]}, {0, 0, 1[m]}, {0[m^-1], 0[m^-1], 0}}");
     Tensor b2 = Normal.of(LeviCivitaTensor.of(3).get(2).negate());
@@ -114,7 +114,7 @@ class MatrixAlgebraTest {
   }
 
   @Test
-  public void testUnivariate() {
+  void testUnivariate() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Tensors.of(IdentityMatrix.of(5)));
     assertEquals(matrixAlgebra.toVector(IdentityMatrix.of(5)), UnitVector.of(1, 0));
     String string = matrixAlgebra.toString();
@@ -123,17 +123,17 @@ class MatrixAlgebraTest {
   }
 
   @Test
-  public void testNumericFail() {
+  void testNumericFail() {
     assertThrows(Exception.class, () -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     assertThrows(Exception.class, () -> new MatrixAlgebra(Array.zeros(1, 2, 2)));
   }
 
   @Test
-  public void testRedundantFail() {
+  void testRedundantFail() {
     Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
     assertThrows(Exception.class, () -> new MatrixAlgebra(Tensors.of(b0, b0)));
   }
@@ -157,13 +157,13 @@ class MatrixAlgebraTest {
   }
 
   @Test
-  public void testMatrixLogExpExpSe2() {
+  void testMatrixLogExpExpSe2() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
     check(matrixAlgebra, 8);
   }
 
   @Test
-  public void testMatrixLogExpExpSo3() {
+  void testMatrixLogExpExpSo3() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Algebra.INSTANCE.basis());
     check(matrixAlgebra, 8);
   }

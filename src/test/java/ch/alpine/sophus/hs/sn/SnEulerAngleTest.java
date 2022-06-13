@@ -9,7 +9,7 @@ import ch.alpine.tensor.pdf.c.CauchyDistribution;
 
 class SnEulerAngleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int d = 0; d < 6; ++d) {
       Tensor angles = RandomVariate.of(CauchyDistribution.standard(), d);
       Tensor tensor = SnEulerAngle.of(angles);

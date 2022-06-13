@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnGeodesicTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
     Tensor split = SnManifold.INSTANCE.split(p, q, RationalScalar.HALF);
@@ -42,7 +42,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void test2D() {
+  void test2D() {
     ScalarTensorFunction scalarTensorFunction = //
         SnManifold.INSTANCE.curve(UnitVector.of(2, 0), UnitVector.of(2, 1));
     for (int n = 3; n < 20; ++n) {
@@ -53,7 +53,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void test4D() {
+  void test4D() {
     ScalarTensorFunction scalarTensorFunction = //
         SnManifold.INSTANCE.curve(UnitVector.of(4, 0), UnitVector.of(4, 1));
     Tensor ZEROS = Array.zeros(2);
@@ -65,7 +65,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testRatio() {
+  void testRatio() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
     Tensor split2 = S2Geodesic.INSTANCE.split(p, q, RationalScalar.of(1, 3));
@@ -74,7 +74,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testSame() {
+  void testSame() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2);
     Tensor split = SnManifold.INSTANCE.split(p, q, RandomVariate.of(NormalDistribution.standard()));
@@ -83,7 +83,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testOpposite() {
+  void testOpposite() {
     Tensor p = UnitVector.of(3, 2);
     Tensor q = UnitVector.of(3, 2).negate();
     Scalar scalar = RandomVariate.of(NormalDistribution.standard());
@@ -91,7 +91,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testComparison() {
+  void testComparison() {
     Distribution distribution = NormalDistribution.standard();
     GeodesicSpace hsGeodesic = SnManifold.INSTANCE;
     for (int index = 0; index < 10; ++index) {
@@ -107,7 +107,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testEndPoints() {
+  void testEndPoints() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
       Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
@@ -120,7 +120,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testArticle() {
+  void testArticle() {
     Tensor p = Tensors.vector(1, 0, 0);
     Tensor q = Tensors.vector(0, 1 / Math.sqrt(5), 2 / Math.sqrt(5));
     Tensor tensor = SnManifold.INSTANCE.split(p, q, RealScalar.of(0.4));
@@ -130,7 +130,7 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     GeodesicSpace hsMidpoint = SnManifold.INSTANCE;
     for (int dimension = 2; dimension <= 5; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
@@ -143,17 +143,17 @@ class SnGeodesicTest {
   }
 
   @Test
-  public void testDimensionsFail() {
+  void testDimensionsFail() {
     assertThrows(Exception.class, () -> SnManifold.INSTANCE.split(UnitVector.of(4, 0), UnitVector.of(3, 1), RealScalar.ZERO));
   }
 
   @Test
-  public void testNormFail() {
+  void testNormFail() {
     assertThrows(Exception.class, () -> SnManifold.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
   }
 
   @Test
-  public void testMidpointAntipodesFail() {
+  void testMidpointAntipodesFail() {
     assertThrows(Exception.class, () -> SnManifold.INSTANCE.midpoint(UnitVector.of(3, 0), UnitVector.of(3, 0).negate()));
   }
 }

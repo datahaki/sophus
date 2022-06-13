@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnVectorNormTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 2; d < 5; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
@@ -39,7 +39,7 @@ class HnVectorNormTest {
   }
 
   @Test
-  public void testNormalizeExp() {
+  void testNormalizeExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);

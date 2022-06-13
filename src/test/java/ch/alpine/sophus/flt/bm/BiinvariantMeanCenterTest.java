@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class BiinvariantMeanCenterTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       TensorUnaryOperator tensorUnaryOperator = //
           BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, smoothingKernel.get());
@@ -35,13 +35,13 @@ class BiinvariantMeanCenterTest {
   }
 
   @Test
-  public void testOfFunction() {
+  void testOfFunction() {
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, BinomialWeights.INSTANCE);
     tensorUnaryOperator.apply(RandomVariate.of(UniformDistribution.unit(), 5, 3));
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> BiinvariantMeanCenter.of(Se2BiinvariantMeans.GLOBAL, (ScalarUnaryOperator) null));
   }
 }

@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class Se2CurveDecimationTest {
   @Test
-  public void testRandom() {
+  void testRandom() {
     CurveDecimation curveDecimation = Se2CurveDecimation.of(RealScalar.ONE);
     Tensor tensor = RandomVariate.of(UniformDistribution.of(-1, 1), 100, 3);
     Tensor result = curveDecimation.apply(tensor);
@@ -28,7 +28,7 @@ class Se2CurveDecimationTest {
   }
 
   @Test
-  public void testSymmetric() {
+  void testSymmetric() {
     CurveDecimation curveDecimation = CurveDecimation.symmetric(Se2Group.INSTANCE, RealScalar.ONE);
     Tensor tensor = RandomVariate.of(UniformDistribution.of(-1, 1), 100, 3);
     Tensor result1 = curveDecimation.apply(tensor);

@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.re.Det;
 
 class KillingFormTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     Tensor ad = Se2Algebra.INSTANCE.ad().unmodifiable();
     JacobiIdentity.require(ad);
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
@@ -31,7 +31,7 @@ class KillingFormTest {
   }
 
   @Test
-  public void testSo3() {
+  void testSo3() {
     Tensor ad = So3Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     Tensor kil = KillingForm.of(ad);
@@ -39,7 +39,7 @@ class KillingFormTest {
   }
 
   @Test
-  public void testSl2() {
+  void testSl2() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     Tensor kil = KillingForm.of(ad);
@@ -48,7 +48,7 @@ class KillingFormTest {
   }
 
   @Test
-  public void testHe3() {
+  void testHe3() {
     Tensor ad = new HeAlgebra(1).ad();
     assertEquals(JacobiIdentity.of(ad), Array.zeros(3, 3, 3, 3));
     Tensor kil = KillingForm.of(ad);
@@ -56,7 +56,7 @@ class KillingFormTest {
   }
 
   @Test
-  public void testRank4Fail() {
+  void testRank4Fail() {
     assertThrows(Exception.class, () -> KillingForm.of(Array.zeros(3, 3, 3, 3)));
   }
 }

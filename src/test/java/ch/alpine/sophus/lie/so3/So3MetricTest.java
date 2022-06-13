@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So3MetricTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.5, 0.3);
     Scalar distance = So3Metric.INSTANCE.distance( //
         Rodrigues.vectorExp(Tensors.vector(0, 0, 0)), //
@@ -28,7 +28,7 @@ class So3MetricTest {
   }
 
   @Test
-  public void test4x4Fail() {
+  void test4x4Fail() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor p = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     Tensor q = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));

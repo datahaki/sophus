@@ -16,7 +16,7 @@ import ch.alpine.tensor.num.Pi;
 
 class DoubleExponentialTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     DoubleExponential doubleExponential = //
         Serialization.copy(new DoubleExponential(SnManifold.INSTANCE));
     DoubleExponentialPoint doubleExponentialPoint = doubleExponential.at(UnitVector.of(3, 0));

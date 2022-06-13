@@ -11,7 +11,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 
 class ControlLr2Test {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor result = ControlLr2.INSTANCE.cyclic(Tensors.vector(1, 0, 0, 0));
     ExactTensorQ.require(result);
     assertEquals(result, Tensors.fromString("{1/2, 1/4, 0, 1/4}"));

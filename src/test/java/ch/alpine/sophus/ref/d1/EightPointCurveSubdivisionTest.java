@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class EightPointCurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor cyclic = curveSubdivision.cyclic(UnitVector.of(10, 5));
     assertEquals(Total.of(cyclic), RealScalar.of(2));
@@ -29,14 +29,14 @@ class EightPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testCircle() {
+  void testCircle() {
     CurveSubdivision curveSubdivision = new EightPointCurveSubdivision(RnGroup.INSTANCE);
     for (int n = 40; n < 60; n += 3)
       Chop._09.requireClose(curveSubdivision.cyclic(CirclePoints.of(n)), CirclePoints.of(n * 2));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new EightPointCurveSubdivision(null));
   }
 }

@@ -21,26 +21,26 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 
 class InversePowerVariogramTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Tensor tensor = Tensors.vector(2, 3, 4, 5);
     Tensor w1 = NormalizeTotal.FUNCTION.apply(tensor.map(Serialization.copy(InversePowerVariogram.of(2))));
     ExactTensorQ.require(w1);
   }
 
   @Test
-  public void testZero() {
+  void testZero() {
     assertEquals(InversePowerVariogram.of(1).apply(RealScalar.ZERO), DoubleScalar.POSITIVE_INFINITY);
     assertEquals(InversePowerVariogram.of(2).apply(RealScalar.ZERO), DoubleScalar.POSITIVE_INFINITY);
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     assertEquals(InversePowerVariogram.of(1).apply(RealScalar.of(2)), RationalScalar.HALF);
     assertEquals(InversePowerVariogram.of(2).apply(RealScalar.of(2)), RationalScalar.of(1, 4));
   }
 
   @Test
-  public void testExponentZero() throws ClassNotFoundException, IOException {
+  void testExponentZero() throws ClassNotFoundException, IOException {
     ScalarUnaryOperator suo = Serialization.copy(InversePowerVariogram.of(0));
     Tensor domain = Subdivide.of(-1, 1, 6);
     assertEquals(domain.map(suo), ConstantArray.of(RealScalar.ONE, 7));

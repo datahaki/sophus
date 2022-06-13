@@ -22,7 +22,7 @@ class Se2CoveringExponentialTest {
   private static final LieGroup LIE_GROUP = Se2CoveringGroup.INSTANCE;
 
   @Test
-  public void testSimpleXY() {
+  void testSimpleXY() {
     Tensor x = Tensors.vector(3, 2, 0).unmodifiable();
     Tensor g = LIE_GROUP.exp(x);
     ExactTensorQ.require(g);
@@ -33,7 +33,7 @@ class Se2CoveringExponentialTest {
   }
 
   @Test
-  public void testAdjointExp() {
+  void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
@@ -48,7 +48,7 @@ class Se2CoveringExponentialTest {
   }
 
   @Test
-  public void testAdjointLog() {
+  void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     Random random = new Random(3);
@@ -65,7 +65,7 @@ class Se2CoveringExponentialTest {
   }
 
   @Test
-  public void testSimpleLinearSubspace() {
+  void testSimpleLinearSubspace() {
     for (int theta = -10; theta <= 10; ++theta) {
       Tensor x = Tensors.vector(0, 0, theta).unmodifiable();
       Tensor g = Se2CoveringGroup.INSTANCE.exp(x);
@@ -76,7 +76,7 @@ class Se2CoveringExponentialTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.3}");
     Tensor log = LIE_GROUP.log(xya);
     Chop._12.requireClose(log, Tensors.fromString("{1.2924887258384925[m], 1.834977451676985[m], 0.3}"));

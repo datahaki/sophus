@@ -29,7 +29,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BiinvariantMeanInterpolationTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Tensor vector = RandomVariate.of(UniformDistribution.unit(), 12);
     Interpolation bi = Serialization.copy(BiinvariantMeanInterpolation.of(RnBiinvariantMean.INSTANCE, vector));
     Interpolation li = LinearInterpolation.of(vector);
@@ -41,7 +41,7 @@ class BiinvariantMeanInterpolationTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     Tensor vector = RandomVariate.of(DiscreteUniformDistribution.of(10, 20), 12);
     Interpolation interpolation = BiinvariantMeanInterpolation.of(RnBiinvariantMean.INSTANCE, vector);
     Tensor result = Range.of(0, 12).map(interpolation::at);
@@ -50,7 +50,7 @@ class BiinvariantMeanInterpolationTest {
   }
 
   @Test
-  public void testMultiRn() {
+  void testMultiRn() {
     Tensor tensor = Array.of(Tensors::vector, 3, 2, 4);
     Interpolation interp1 = BiinvariantMeanInterpolation.of(RnBiinvariantMean.INSTANCE, tensor);
     Interpolation interp2 = LinearInterpolation.of(tensor);
@@ -61,7 +61,7 @@ class BiinvariantMeanInterpolationTest {
   }
 
   @Test
-  public void testMultiSe2() {
+  void testMultiSe2() {
     Distribution distribution = NormalDistribution.standard();
     Tensor tensor = RandomVariate.of(distribution, 4, 4, 3);
     Interpolation interp1 = BiinvariantMeanInterpolation.of(Se2CoveringBiinvariantMean.INSTANCE, tensor);

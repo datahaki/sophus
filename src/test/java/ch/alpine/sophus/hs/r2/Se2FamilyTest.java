@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2FamilyTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     BijectionFamily bijectionFamily = new Se2Family(s -> Tensors.of( //
         RealScalar.of(2).add(s), //
         RealScalar.of(1).multiply(s), RealScalar.of(5).subtract(s) //
@@ -30,7 +30,7 @@ class Se2FamilyTest {
   }
 
   @Test
-  public void testReverse() {
+  void testReverse() {
     BijectionFamily bijectionFamily = new Se2Family(s -> Tensors.of( //
         RealScalar.of(2).add(s), //
         RealScalar.of(1).multiply(s), RealScalar.of(5).subtract(s) //

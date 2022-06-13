@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SpdRiemannTest {
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(2));
     Tensor e11 = Tensors.fromString("{{1, 0}, {0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1}, {1, 0}}");
@@ -30,7 +30,7 @@ class SpdRiemannTest {
   }
 
   @Test
-  public void testSimple3() {
+  void testSimple3() {
     SpdRiemann spdRiemann = new SpdRiemann(IdentityMatrix.of(3));
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
@@ -44,7 +44,7 @@ class SpdRiemannTest {
   }
 
   @Test
-  public void testTransport3() {
+  void testTransport3() {
     int n = 3;
     Tensor p = IdentityMatrix.of(n);
     RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
@@ -61,7 +61,7 @@ class SpdRiemannTest {
   }
 
   @Test
-  public void testMultiT() {
+  void testMultiT() {
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");

@@ -14,7 +14,7 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 
 class InfluenceBiinvariantVectorTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     InfluenceBiinvariantVector influenceBiinvariantVector = new InfluenceBiinvariantVector( //
         RnGroup.INSTANCE, Tensors.empty(), (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
     Serialization.copy(influenceBiinvariantVector);

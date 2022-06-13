@@ -9,7 +9,7 @@ import ch.alpine.tensor.RealScalar;
 
 class Dual4PointCurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertThrows(Exception.class, () -> new Dual4PointCurveSubdivision(null, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO));
   }
 }

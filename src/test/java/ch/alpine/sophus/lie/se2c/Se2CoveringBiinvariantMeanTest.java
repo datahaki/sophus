@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class Se2CoveringBiinvariantMeanTest {
   @Test
-  public void testPermutations() {
+  void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -48,7 +48,7 @@ class Se2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testEquation() {
+  void testEquation() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -61,7 +61,7 @@ class Se2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testEquationQuantity() {
+  void testEquationQuantity() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, length, 3).stream().map(row -> Tensors.of( //
@@ -79,7 +79,7 @@ class Se2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testIdentityXY() {
+  void testIdentityXY() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(8));
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -99,7 +99,7 @@ class Se2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = UniformDistribution.unit();
     LieGroupOps lieGroupOps = new LieGroupOps(Se2CoveringGroup.INSTANCE);
     for (int n = 4; n < 10; ++n) {
@@ -114,7 +114,7 @@ class Se2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testBiinvariantMeanNotTangentSpace() {
+  void testBiinvariantMeanNotTangentSpace() {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor vectors = RandomVariate.of(distribution, 3, 3);
     Tensor weights = RandomVariate.of(distribution, 3);
@@ -129,12 +129,12 @@ class Se2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertThrows(Exception.class, () -> Se2CoveringBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
   @Test
-  public void testNonAffineFail() {
+  void testNonAffineFail() {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor weights = RandomVariate.of(distribution, 3);

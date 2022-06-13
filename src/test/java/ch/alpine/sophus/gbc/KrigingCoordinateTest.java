@@ -10,17 +10,17 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class KrigingCoordinateTest {
   @Test
-  public void testNull1Fail() {
+  void testNull1Fail() {
     assertThrows(Exception.class, () -> KrigingCoordinate.of(t -> t, RnGroup.INSTANCE, null));
   }
 
   @Test
-  public void testNull2Fail() {
+  void testNull2Fail() {
     assertThrows(Exception.class, () -> KrigingCoordinate.of(null, RnGroup.INSTANCE, IdentityMatrix.of(4)));
   }
 
   @Test
-  public void testNull3Fail() {
+  void testNull3Fail() {
     assertThrows(Exception.class, () -> KrigingCoordinate.of(t -> t, null, IdentityMatrix.of(4)));
   }
 }

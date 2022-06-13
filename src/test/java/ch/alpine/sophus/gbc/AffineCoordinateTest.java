@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.exp.Exp;
 
 class AffineCoordinateTest {
   @Test
-  public void testS1() {
+  void testS1() {
     Genesis genesis = MetricCoordinate.affine();
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(1);
     for (int n = 3; n < 10; ++n) {
@@ -32,7 +32,7 @@ class AffineCoordinateTest {
   }
 
   @Test
-  public void testRn() {
+  void testRn() {
     Genesis genesis = MetricCoordinate.affine();
     Distribution distribution = NormalDistribution.standard();
     for (int n = 3; n < 10; ++n)
@@ -46,7 +46,7 @@ class AffineCoordinateTest {
   }
 
   @Test
-  public void testIterateR2() {
+  void testIterateR2() {
     Distribution distribution = UniformDistribution.of(-1, 5);
     int d = 2;
     for (int n = 4; n < 10; ++n)

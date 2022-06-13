@@ -51,7 +51,7 @@ class WavefrontTest {
   }
 
   @Test
-  public void testLoad() throws IOException {
+  void testLoad() throws IOException {
     File directory = HomeDirectory.file("Projects/gym-duckietown/gym_duckietown/meshes");
     if (directory.isDirectory())
       for (File file : directory.listFiles())

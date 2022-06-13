@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.exp.Log;
 
 class S3UnitQuaternionDistanceTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Quaternion p = Quaternion.of(3, 1, 2, 3);
     p = p.divide(Abs.FUNCTION.apply(p));
     Quaternion q = Quaternion.of(-2, 0, -4, 7);
@@ -38,7 +38,7 @@ class S3UnitQuaternionDistanceTest {
   }
 
   @Test
-  public void testEichen() {
+  void testEichen() {
     Quaternion p0 = Quaternion.of(1, 0, 0, 0);
     Quaternion p1 = Quaternion.of(0, 1, 0, 0);
     Quaternion p2 = Quaternion.of(0, 0, 1, 0);
@@ -57,7 +57,7 @@ class S3UnitQuaternionDistanceTest {
   }
 
   @Test
-  public void testQuaternionLogExp() {
+  void testQuaternionLogExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 30; ++index) {
       Quaternion quaternion = Quaternion.of(RandomVariate.of(distribution), RandomVariate.of(distribution, 3));
@@ -68,7 +68,7 @@ class S3UnitQuaternionDistanceTest {
   }
 
   @Test
-  public void testQuaternionExpLog() {
+  void testQuaternionExpLog() {
     Distribution distribution = NormalDistribution.of(0, .3);
     for (int index = 0; index < 30; ++index) {
       Quaternion quaternion = Quaternion.of(RandomVariate.of(distribution), RandomVariate.of(distribution, 3));

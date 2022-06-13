@@ -27,7 +27,7 @@ class ClothoidBuilderImplTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(-8, 8);
     ClothoidBuilder clothoidInterface = Serialization.copy(CLOTHOID_BUILDER);
     for (int count = 0; count < 100; ++count) {
@@ -40,14 +40,14 @@ class ClothoidBuilderImplTest {
   }
 
   @Test
-  public void testErf() {
+  void testErf() {
     ScalarTensorFunction scalarTensorFunction = CLOTHOID_BUILDER.curve(Tensors.vector(1, 2, 3), Array.zeros(3));
     assertInstanceOf(Clothoid.class, scalarTensorFunction);
   }
 
   @SuppressWarnings("unused")
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor q = Tensors.vector(-2.05, 0, 0);
     CurveSubdivision lrL = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);
     CurveSubdivision lrA = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), 1);

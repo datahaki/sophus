@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnManifoldTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     GeodesicSpace geodesicSpace = Serialization.copy(HnManifold.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
@@ -32,7 +32,7 @@ class HnManifoldTest {
   }
 
   @Test
-  public void testSubdiv() {
+  void testSubdiv() {
     BSpline2CurveSubdivision bSpline2CurveSubdivision = new BSpline2CurveSubdivision(HnManifold.INSTANCE);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
@@ -45,7 +45,7 @@ class HnManifoldTest {
   }
 
   @Test
-  public void testFlip() {
+  void testFlip() {
     Distribution distribution = NormalDistribution.of(0, 1);
     for (int d = 1; d < 4; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));

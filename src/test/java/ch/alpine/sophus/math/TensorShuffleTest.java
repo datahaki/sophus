@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensors;
 
 class TensorShuffleTest {
   @Test
-  public void testPermutations() {
+  void testPermutations() {
     Tensor vector = Tensors.vector(1, 2, 3).unmodifiable();
     Set<Tensor> set = new HashSet<>();
     for (int index = 0; index < 100; ++index)

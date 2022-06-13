@@ -26,26 +26,26 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2CoveringParametricTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     TensorMetric tensorMetric = Serialization.copy(Se2CoveringParametric.INSTANCE);
     Scalar scalar = tensorMetric.distance(Tensors.vector(1, 2, 3), Tensors.vector(1 + 3, 2 + 4, 3));
     Chop._11.requireClose(scalar, RealScalar.of(5));
   }
 
   @Test
-  public void testInfinity() {
+  void testInfinity() {
     Scalar scalar = Se2CoveringParametricDeprecat.INSTANCE.distance(Tensors.vector(1, 2, 3), Tensors.vector(1 + 3, 2 + 4, 3 + Math.PI * 2));
     assertTrue(Scalars.lessThan(RealScalar.of(1e10), scalar));
   }
 
   @Test
-  public void testHalf() {
+  void testHalf() {
     Scalar scalar = Se2CoveringParametricDeprecat.INSTANCE.distance(Tensors.vector(1, 2, 3), Tensors.vector(1, 2 + 2 * 3, 3 + Math.PI));
     Chop._14.requireClose(scalar, RealScalar.of(3 * Math.PI));
   }
 
   @Test
-  public void testSE2() {
+  void testSE2() {
     double rand = Math.random();
     Scalar scalarSE2C = Se2CoveringParametricDeprecat.INSTANCE.distance(Tensors.vector(1, 2, 0), Tensors.vector(1, 2 + 2 * 3, rand * Math.PI));
     Scalar scalarSE2 = Se2Parametric.INSTANCE.distance(Tensors.vector(1, 2, 0), Tensors.vector(1, 2 + 2 * 3, rand * Math.PI));
@@ -53,19 +53,19 @@ class Se2CoveringParametricTest {
   }
 
   @Test
-  public void testSimpleUnits() {
+  void testSimpleUnits() {
     Scalar scalar = Se2CoveringParametricDeprecat.INSTANCE.distance(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{4[m], 6[m], 3}"));
     assertEquals(scalar, Quantity.of(5, "m"));
   }
 
   @Test
-  public void testOtherUnits() {
+  void testOtherUnits() {
     Scalar scalar = Se2CoveringParametricDeprecat.INSTANCE.distance(Tensors.fromString("{1[m], 2[m], 3}"), Tensors.fromString("{4[m], 6[m], 3.3}"));
     Chop._12.requireClose(scalar, Quantity.of(5.018799335788676, "m"));
   }
 
   @Test
-  public void testUnitCircle54Pi() {
+  void testUnitCircle54Pi() {
     Tensor p = Array.zeros(3);
     Tensor q = Tensors.vector(1, 1, Math.PI / 2 + 2 * Math.PI);
     Scalar se2 = Se2Parametric.INSTANCE.distance(p, q);
@@ -77,7 +77,7 @@ class Se2CoveringParametricTest {
   }
 
   @Test
-  public void testUnitCircle34Pi() {
+  void testUnitCircle34Pi() {
     Tensor p = Array.zeros(3);
     Tensor q = Tensors.vector(1, 1, Math.PI / 2 - 2 * Math.PI);
     Scalar se2 = Se2Parametric.INSTANCE.distance(p, q);
@@ -89,7 +89,7 @@ class Se2CoveringParametricTest {
   }
 
   @Test
-  public void testUnitCircle34Pib() {
+  void testUnitCircle34Pib() {
     Tensor p = Array.zeros(3);
     Tensor q = Tensors.vector(1, 1, Math.PI / 2 - 4 * Math.PI);
     Scalar se2 = Se2Parametric.INSTANCE.distance(p, q);
@@ -101,7 +101,7 @@ class Se2CoveringParametricTest {
   }
 
   @Test
-  public void testOrderInvariant() {
+  void testOrderInvariant() {
     Distribution distribution = UniformDistribution.of(-5, 5);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);

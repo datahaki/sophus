@@ -14,14 +14,14 @@ import ch.alpine.tensor.chq.ExactScalarQ;
 
 class InverseMultiquadricVariogramTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarUnaryOperator scalarUnaryOperator = InverseMultiquadricVariogram.of(3);
     Scalar scalar = scalarUnaryOperator.apply(RealScalar.of(4));
     assertEquals(ExactScalarQ.require(scalar), RationalScalar.of(1, 5));
   }
 
   @Test
-  public void testNegativeFail() {
+  void testNegativeFail() {
     assertThrows(Exception.class, () -> InverseMultiquadricVariogram.of(-3));
   }
 }

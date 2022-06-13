@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class HnWeierstrassCoordinateTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);
@@ -33,14 +33,14 @@ class HnWeierstrassCoordinateTest {
   }
 
   @Test
-  public void testBn() {
+  void testBn() {
     Tensor x = Tensors.vector(-0.3, 0.5);
     Tensor hn = BnCoordinate.bnToHn(x);
     HnMemberQ.INSTANCE.require(hn);
   }
 
   @Test
-  public void testMore() {
+  void testMore() {
     Tensor x = Tensors.vector(0.2, 0);
     Tensor hn = BnCoordinate.bnToHn(x);
     HnMemberQ.INSTANCE.require(hn);
@@ -48,7 +48,7 @@ class HnWeierstrassCoordinateTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = UniformDistribution.of(-0.5, 0.5);
     for (int count = 0; count < 10; ++count) {
       Tensor b2 = RandomVariate.of(distribution, 2);

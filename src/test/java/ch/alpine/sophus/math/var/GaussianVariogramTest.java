@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GaussianVariogramTest {
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     ScalarUnaryOperator variogram = new GaussianVariogram(Quantity.of(2, "m"));
     Scalar lo = variogram.apply(Quantity.of(1, "m"));
     Chop._05.requireClose(lo, RealScalar.of(0.7788007830714049));
@@ -22,7 +22,7 @@ class GaussianVariogramTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     assertThrows(Exception.class, () -> new GaussianVariogram(RealScalar.ZERO));
   }
 }

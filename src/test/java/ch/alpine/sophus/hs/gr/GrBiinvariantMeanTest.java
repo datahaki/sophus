@@ -29,7 +29,7 @@ class GrBiinvariantMeanTest {
   private static final BiinvariantMean BIINVARIANT_MEAN = GrManifold.INSTANCE.biinvariantMean(Chop._10);
 
   @Test
-  public void testBiinvariant() {
+  void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
     Scalar maxDist = RealScalar.of(1.4);
@@ -57,7 +57,7 @@ class GrBiinvariantMeanTest {
   }
 
   @RepeatedTest(10)
-  public void testGeodesic() {
+  void testGeodesic() {
     GeodesicSpace hsGeodesic = GrManifold.INSTANCE;
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
     Tensor p = RandomSample.of(randomSampleInterface);

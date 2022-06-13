@@ -26,7 +26,7 @@ class IterativeAffineCoordinateTest {
   }
 
   @Test
-  public void testAmplifiers() {
+  void testAmplifiers() {
     for (Amplifiers amplifiers : Amplifiers.values()) {
       for (int k : new int[] { 0, 1, 5, 10 }) {
         GenesisDeque genesis = new IterativeAffineCoordinate(amplifiers.supply(3), k);
@@ -45,7 +45,7 @@ class IterativeAffineCoordinateTest {
   }
 
   @Test
-  public void testArraysList() {
+  void testArraysList() {
     List<Object> list = Arrays.asList();
     assertEquals(list.size(), 0);
   }

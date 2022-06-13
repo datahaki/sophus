@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 class SimpleR2TranslationFamilyTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     BijectionFamily bijectionFamily = new SimpleR2TranslationFamily(s -> Tensors.of(RealScalar.of(3), RealScalar.of(100).add(s)));
     Distribution distribution = DiscreteUniformDistribution.of(-15, 16);
     for (int index = 0; index < 100; ++index) {

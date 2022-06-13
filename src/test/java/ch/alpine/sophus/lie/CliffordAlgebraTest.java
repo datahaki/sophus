@@ -43,25 +43,25 @@ import ch.alpine.tensor.spa.SparseArray;
 
 class CliffordAlgebraTest {
   @Test
-  public void testD0() throws ClassNotFoundException, IOException {
+  void testD0() throws ClassNotFoundException, IOException {
     CliffordAlgebra cliffordAlgebra = Serialization.copy(CliffordAlgebraCache.positive(0));
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1}}}"));
   }
 
   @Test
-  public void testDnegativeFail() {
+  void testDnegativeFail() {
     assertThrows(Exception.class, () -> CliffordAlgebraCache.positive(-1));
   }
 
   @Test
-  public void testD1() {
+  void testD1() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, 1}}, {{0, 1}, {1, 0}}}"));
     assertEquals(cliffordAlgebra.gp(), CliffordAlgebraCache.of(1, 0).gp());
   }
 
   @Test
-  public void testD1Complex() {
+  void testD1Complex() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(1);
     assertEquals(cliffordAlgebra.gp(), Tensors.fromString("{{{1, 0}, {0, -1}}, {{0, 1}, {1, 0}}}"));
     assertEquals(cliffordAlgebra.gp(), CliffordAlgebraCache.of(0, 1).gp());
@@ -86,7 +86,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testD2() {
+  void testD2() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
     Tensor gp = cliffordAlgebra.gp();
     assertEquals(Nnz.of((SparseArray) gp), 16);
@@ -123,7 +123,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testD2Quaternions() {
+  void testD2Quaternions() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(2);
     Tensor x = Tensors.vector(2, 5, -3, -4);
     Tensor y = Tensors.vector(1, 8, 4, 9);
@@ -147,7 +147,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testD3() {
+  void testD3() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(3);
     Tensor gp = cliffordAlgebra.gp();
     Tensor x = Tensors.vector(1, 2, 3, 4, 5, -3, -4, -1);
@@ -162,7 +162,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testD3Quaternions() {
+  void testD3Quaternions() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(3);
     Tensor x = Tensors.vector(2, 0, 0, 0, 5, -3, -4, 0);
     Tensor y = Tensors.vector(1, 0, 0, 0, 8, 4, 9, 0);
@@ -186,7 +186,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testD4() {
+  void testD4() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(4);
     Tensor x = Array.zeros(16);
     Tensor y = Array.zeros(16);
@@ -200,7 +200,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testExp() {
+  void testExp() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(3);
     Tensor a = RandomVariate.of(UniformDistribution.unit(), 8);
     Tensor exp1 = cliffordAlgebra.exp(a);
@@ -209,7 +209,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testReverse() {
+  void testReverse() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
     assertEquals(cliffordAlgebra.gp().length(), 4);
     Tensor result = Tensor.of(IdentityMatrix.of(4).stream().map(cliffordAlgebra::reverse));
@@ -217,14 +217,14 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testReverseFail() {
+  void testReverseFail() {
     CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.positive(2);
     assertThrows(Exception.class, () -> cliffordAlgebra.reverse(Pi.VALUE));
     assertThrows(Exception.class, () -> cliffordAlgebra.reverse(HilbertMatrix.of(4)));
   }
 
   @Test
-  public void testCommutator() {
+  void testCommutator() {
     for (int p = 0; p <= 2; ++p)
       for (int q = 0; q < 2; ++q) {
         CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.of(p, q);
@@ -238,7 +238,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testCommutatorNegative() {
+  void testCommutatorNegative() {
     for (int n = 1; n <= 3; ++n) {
       CliffordAlgebra cliffordAlgebra = CliffordAlgebraCache.negative(n);
       JacobiIdentity.require(cliffordAlgebra.cp());
@@ -246,7 +246,7 @@ class CliffordAlgebraTest {
   }
 
   @Test
-  public void testEvenGradeSubalgebra() {
+  void testEvenGradeSubalgebra() {
     // vectors of even grade form subalgebra
     for (int i = 0; i <= 4; ++i) {
       CliffordAlgebra ca = CliffordAlgebraCache.of(i, 4 - i);

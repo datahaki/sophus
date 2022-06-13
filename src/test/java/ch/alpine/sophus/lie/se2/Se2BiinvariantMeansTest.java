@@ -35,7 +35,7 @@ class Se2BiinvariantMeansTest {
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
   @Test
-  public void testArsignyPennec() throws ClassNotFoundException, IOException {
+  void testArsignyPennec() throws ClassNotFoundException, IOException {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
     Scalar rootOfTwo = Sqrt.of(TWO);
@@ -65,7 +65,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testTrivial() {
+  void testTrivial() {
     Tensor p = Tensors.of(Tensors.vector(1, 9, -1));
     Tensor weights = Tensors.vector(1);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
@@ -76,7 +76,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testTranslation() {
+  void testTranslation() {
     Tensor sequence = Tensors.empty();
     Tensor p = Tensors.vector(1, 1, 0);
     for (int index = 0; index < 7; ++index)
@@ -90,7 +90,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testRotation() {
+  void testRotation() {
     Tensor sequence = Tensors.empty();
     Tensor p = Tensors.vector(0, 0, 0.2);
     for (int index = 0; index < 7; ++index)
@@ -104,7 +104,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testOrderInvariance() {
+  void testOrderInvariance() {
     Tensor p = Tensors.vector(4.9, 4.9, 0.9);
     Tensor q = Tensors.vector(5.0, 5.0, 1.0);
     Tensor r = Tensors.vector(5.1, 5.1, 1.1);
@@ -122,7 +122,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testOrderInvariance2() {
+  void testOrderInvariance2() {
     Tensor p = Tensors.vector(4.9, 4.9, 0.9);
     Tensor q = Tensors.vector(5.0, 5.0, 1.0);
     Tensor r = Tensors.vector(5.1, 5.1, 1.1);
@@ -141,7 +141,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testOrderInvariance3() {
+  void testOrderInvariance3() {
     Tensor p = Tensors.fromString("{4.9[m], 4.9[m], 0.9}");
     Tensor q = Tensors.fromString("{5.0[m], 5.0[m], 1.0}");
     Tensor r = Tensors.fromString("{5.1[m], 5.1[m], 1.1}");
@@ -164,7 +164,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testOrderInvarianceNegative() {
+  void testOrderInvarianceNegative() {
     Tensor p = Tensors.vector(14.9, -4.9, 10.9);
     Tensor q = Tensors.vector(15.0, -5.0, 11.0);
     Tensor r = Tensors.vector(15.1, -5.1, 11.1);
@@ -184,7 +184,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testPermutations() {
+  void testPermutations() {
     RandomSampleInterface randomSampleInterface = Se2RandomSample.of(ExponentialDistribution.standard());
     for (int length = 1; length < 6; ++length) {
       // here, we hope that no antipodal points are generated
@@ -201,7 +201,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testGlobalHomogeneous() {
+  void testGlobalHomogeneous() {
     RandomSampleInterface randomSampleInterface = Se2RandomSample.of(ExponentialDistribution.standard());
     for (int length = 1; length < 6; ++length) {
       // here, we hope that no antipodal points are generated
@@ -215,7 +215,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testPermutationsPiHalf() {
+  void testPermutationsPiHalf() {
     for (int length = 1; length < 6; ++length) {
       Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
       // here, we hope that no antipodal points are generated
@@ -234,7 +234,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testCombined() {
+  void testCombined() {
     Tensor sequence = Tensors.empty();
     Tensor p = Tensors.vector(1, 1, 0.1);
     for (int index = 0; index < 7; ++index)
@@ -246,7 +246,7 @@ class Se2BiinvariantMeansTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
       assertThrows(Exception.class, () -> biinvariantMean.mean(Tensors.empty(), Tensors.empty()));
   }

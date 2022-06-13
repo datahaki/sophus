@@ -11,7 +11,7 @@ import ch.alpine.tensor.io.ResourceData;
 
 class TriangulateMeshTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     surfaceMesh = TriangulateMesh.of(surfaceMesh);
     assertTrue(surfaceMesh.boundary().isEmpty());

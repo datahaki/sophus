@@ -31,7 +31,7 @@ class SnManifoldTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 2; d < 5; ++d) {
@@ -48,7 +48,7 @@ class SnManifoldTest {
   }
 
   @Test
-  public void testLagrangeProperty() {
+  void testLagrangeProperty() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 2; d < 4; ++d) {
@@ -67,7 +67,7 @@ class SnManifoldTest {
   }
 
   @Test
-  public void testBiinvariance() {
+  void testBiinvariance() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int d = 2; d < 5; ++d) {

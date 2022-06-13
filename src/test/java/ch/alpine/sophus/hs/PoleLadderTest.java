@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class PoleLadderTest {
   @Test
-  public void testRn() {
+  void testRn() {
     HsTransport hsTransport = new PoleLadder(RnGroup.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
@@ -33,7 +33,7 @@ class PoleLadderTest {
   }
 
   @Test
-  public void testSn() throws ClassNotFoundException, IOException {
+  void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
     HsTransport poleLadder = new PoleLadder(SnManifold.INSTANCE);
@@ -69,7 +69,7 @@ class PoleLadderTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new PoleLadder(null));
   }
 }

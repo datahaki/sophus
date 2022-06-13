@@ -88,7 +88,7 @@ class IterativeCoordinateTest {
   }
 
   @Test
-  public void testMV() {
+  void testMV() {
     Genesis genesis = ThreePointCoordinate.of(Barycenter.MEAN_VALUE);
     _checkIterative(genesis);
     _checkCornering(genesis);
@@ -96,7 +96,7 @@ class IterativeCoordinateTest {
   }
 
   @Test
-  public void testID() {
+  void testID() {
     Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
     _checkIterative(genesis);
     _checkCornering(genesis);
@@ -104,14 +104,14 @@ class IterativeCoordinateTest {
   }
 
   @Test
-  public void testIC() {
+  void testIC() {
     Genesis genesis = new IterativeCoordinate(MetricCoordinate.affine(), 3);
     _checkCornering(genesis);
     _checkAlongedge(genesis, false);
   }
 
   @Test
-  public void testKis0() {
+  void testKis0() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     for (int n = 3; n < 10; ++n) {
       Tensor levers = RandomVariate.of(distribution, n, 2);
@@ -132,7 +132,7 @@ class IterativeCoordinateTest {
   }
 
   @Test
-  public void testBiinv() {
+  void testBiinv() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Genesis genesis = MetricCoordinate.of(InversePowerVariogram.of(2));
     for (int n = 3; n < 10; ++n) {
@@ -150,7 +150,7 @@ class IterativeCoordinateTest {
   }
 
   @Test
-  public void testSimple123() {
+  void testSimple123() {
     Genesis genesis = MetricCoordinate.affine();
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     for (int n = 3; n < 10; ++n) {
@@ -172,7 +172,7 @@ class IterativeCoordinateTest {
   };
 
   @Test
-  public void testS2() {
+  void testS2() {
     Random random = new Random(2);
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor point = UnitVector.of(3, 0);

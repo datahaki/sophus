@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Ramp;
 
 class IterativeTargetCoordinateTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int count = 0;
     IterativeTargetCoordinate genesis = //
         new IterativeTargetCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2)), RealScalar.ONE, 100);

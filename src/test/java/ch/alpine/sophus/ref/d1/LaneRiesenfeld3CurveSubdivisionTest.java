@@ -28,7 +28,7 @@ import ch.alpine.tensor.red.Nest;
 
 class LaneRiesenfeld3CurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(RnGroup.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
@@ -39,7 +39,7 @@ class LaneRiesenfeld3CurveSubdivisionTest {
   }
 
   @Test
-  public void testString() {
+  void testString() {
     Tensor curve = Tensors.vector(0, 1, 2, 3);
     CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(RnGroup.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
@@ -48,7 +48,7 @@ class LaneRiesenfeld3CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringTwo() {
+  void testStringTwo() {
     Tensor curve = Tensors.vector(0, 1);
     CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(RnGroup.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
@@ -57,7 +57,7 @@ class LaneRiesenfeld3CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringOne() {
+  void testStringOne() {
     Tensor curve = Tensors.vector(1);
     CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(RnGroup.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
@@ -66,7 +66,7 @@ class LaneRiesenfeld3CurveSubdivisionTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = LaneRiesenfeld3CurveSubdivision.of(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.string(curve), Tensors.empty());
@@ -74,14 +74,14 @@ class LaneRiesenfeld3CurveSubdivisionTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = LaneRiesenfeld3CurveSubdivision.of(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
 
   @Test
-  public void testR3S2() {
+  void testR3S2() {
     Tensor tensor = Subdivide.of(-0.5, 0.8, 6) //
         .map(scalar -> Tensors.of(scalar, RealScalar.of(0.3), RealScalar.ONE));
     tensor = Tensor.of(tensor.stream() //
@@ -93,7 +93,7 @@ class LaneRiesenfeld3CurveSubdivisionTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> LaneRiesenfeld3CurveSubdivision.of(null));
   }
 }

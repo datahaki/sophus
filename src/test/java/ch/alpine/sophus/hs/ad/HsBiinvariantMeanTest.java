@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HsBiinvariantMeanTest {
   @Test
-  public void testMean() {
+  void testMean() {
     Distribution distributionX = UniformDistribution.of(-0.05, 0.05);
     Distribution distributionW = UniformDistribution.of(0.2, 1);
     LieAlgebra lieAlgebra = So3Algebra.INSTANCE;
@@ -52,7 +52,7 @@ class HsBiinvariantMeanTest {
   }
 
   @Test
-  public void testSe2Mean4() {
+  void testSe2Mean4() {
     Exponential exponential = Se2CoveringGroup.INSTANCE;
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
@@ -71,7 +71,7 @@ class HsBiinvariantMeanTest {
   }
 
   @Test
-  public void testSe2MeanRandom() {
+  void testSe2MeanRandom() {
     Exponential exponential = Se2CoveringGroup.INSTANCE;
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
@@ -91,7 +91,7 @@ class HsBiinvariantMeanTest {
   }
 
   @Test
-  public void testSo3Mean4() {
+  void testSo3Mean4() {
     Exponential exponential = So3Group.INSTANCE;
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
@@ -110,7 +110,7 @@ class HsBiinvariantMeanTest {
   }
 
   @Test
-  public void testSo3MeanRandom() {
+  void testSo3MeanRandom() {
     Exponential exponential = So3Group.INSTANCE;
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
@@ -130,7 +130,7 @@ class HsBiinvariantMeanTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> HsBiinvariantMean.of(null));
     assertThrows(Exception.class, () -> HsBiinvariantMean.of(null, Chop._10));
     Tensor ad = So3Algebra.INSTANCE.ad();

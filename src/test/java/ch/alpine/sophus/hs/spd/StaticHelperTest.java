@@ -25,12 +25,12 @@ import ch.alpine.tensor.sca.exp.Log;
 
 class StaticHelperTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(StaticHelper.norm(IdentityMatrix.of(3)), RealScalar.ZERO);
   }
 
   @Test
-  public void testTrace() {
+  void testTrace() {
     RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
     Tensor q = RandomSample.of(rsi);
     Tensor diag = Tensor.of(Eigensystem.ofSymmetric(q).values().stream() //
@@ -43,7 +43,7 @@ class StaticHelperTest {
   }
 
   @Test
-  public void testPackageVisibility() {
+  void testPackageVisibility() {
     assertFalse(Modifier.isPublic(StaticHelper.class.getModifiers()));
   }
 }

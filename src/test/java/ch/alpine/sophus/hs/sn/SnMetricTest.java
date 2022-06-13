@@ -36,14 +36,14 @@ class SnMetricTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Chop._12.requireClose(SnMetric.INSTANCE.distance(UnitVector.of(3, 0), UnitVector.of(3, 1)), Pi.HALF);
     Chop._12.requireClose(SnMetric.INSTANCE.distance(UnitVector.of(3, 0), UnitVector.of(3, 2)), Pi.HALF);
     Chop._12.requireClose(SnMetric.INSTANCE.distance(UnitVector.of(3, 1), UnitVector.of(3, 2)), Pi.HALF);
   }
 
   @Test
-  public void testDirect() {
+  void testDirect() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
@@ -59,7 +59,7 @@ class SnMetricTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(SnManifold.INSTANCE);
 
   @Test
-  public void testSpecific() {
+  void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       Tensor rotation = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
@@ -75,7 +75,7 @@ class SnMetricTest {
   }
 
   @Test
-  public void testS1Linear() {
+  void testS1Linear() {
     Distribution distribution = UniformDistribution.of(0, Math.PI);
     for (int n = 2; n < 10; ++n) {
       Tensor angles = RandomVariate.of(distribution, n);
@@ -87,7 +87,7 @@ class SnMetricTest {
   }
 
   @Test
-  public void testMemberQFail() {
+  void testMemberQFail() {
     assertThrows(Exception.class, () -> SnMetric.INSTANCE.distance(Tensors.vector(1, 0), Tensors.vector(1, 1)));
     assertThrows(Exception.class, () -> SnMetric.INSTANCE.distance(Tensors.vector(1, 1), Tensors.vector(1, 0)));
   }

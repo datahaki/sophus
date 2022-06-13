@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class LieGroupTest {
   @Test
-  public void testSe2Simple() throws ClassNotFoundException, IOException {
+  void testSe2Simple() throws ClassNotFoundException, IOException {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);
     LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
@@ -38,7 +38,7 @@ class LieGroupTest {
   }
 
   @Test
-  public void testSe2() {
+  void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomSample.of(Se2RandomSample.of(distribution), 10);
     LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
@@ -46,7 +46,7 @@ class LieGroupTest {
   }
 
   @Test
-  public void testSe3Simple() {
+  void testSe3Simple() {
     Tensor m1 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.2, -0.3, 0.4)), Tensors.vector(10, 20, 30));
     Tensor m2 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.4)), Tensors.vector(11, 21, 31));
     LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
@@ -55,7 +55,7 @@ class LieGroupTest {
   }
 
   @Test
-  public void testHeSimple() throws ClassNotFoundException, IOException {
+  void testHeSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     int d = 3;

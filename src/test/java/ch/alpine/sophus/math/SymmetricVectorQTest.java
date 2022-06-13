@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensors;
 
 class SymmetricVectorQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertTrue(SymmetricVectorQ.of(Tensors.empty()));
     assertTrue(SymmetricVectorQ.of(Tensors.vector(1, 2, 2, 1)));
     assertTrue(SymmetricVectorQ.of(Tensors.vector(1, 2, 1)));
@@ -21,14 +21,14 @@ class SymmetricVectorQTest {
   }
 
   @Test
-  public void testNonVector() {
+  void testNonVector() {
     assertTrue(SymmetricVectorQ.of(Tensors.empty()));
     assertFalse(SymmetricVectorQ.of(Tensors.fromString("{{1}}")));
     assertFalse(SymmetricVectorQ.of(Tensors.fromString("{1, {2}, 1}")));
   }
 
   @Test
-  public void testThrow() {
+  void testThrow() {
     assertThrows(Exception.class, () -> SymmetricVectorQ.require(Tensors.vector(1, 1, 3, 1, 1, 1)));
   }
 }

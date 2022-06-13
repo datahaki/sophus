@@ -16,17 +16,17 @@ import ch.alpine.tensor.sca.Chop;
 
 class SoGroupTest {
   @Test
-  public void testDetNegFail() {
+  void testDetNegFail() {
     assertThrows(Exception.class, () -> SoGroup.INSTANCE.element(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test
-  public void testFormat4Ok() {
+  void testFormat4Ok() {
     SoGroup.INSTANCE.element(IdentityMatrix.of(4));
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random(1);
     for (int n = 2; n < 10; ++n) {
       Tensor p = SoRandomSample.of(n).randomSample(random);
@@ -42,7 +42,7 @@ class SoGroupTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> SoGroup.INSTANCE.element(null));
   }
 }

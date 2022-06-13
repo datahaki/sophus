@@ -21,14 +21,14 @@ import ch.alpine.tensor.sca.Chop;
 
 class NormWeightingTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Genesis inverseNorm = NormWeighting.of(Vector2Norm::of, InversePowerVariogram.of(1));
     Tensor weights = inverseNorm.origin(Tensors.vector(1, 3).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.of(3, 4), RationalScalar.of(1, 4)));
   }
 
   @Test
-  public void testPoints() {
+  void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     int j = 2;
     for (int d = 2; d < 6; ++d)
@@ -44,7 +44,7 @@ class NormWeightingTest {
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> NormWeighting.of(null, InversePowerVariogram.of(1)));
     assertThrows(Exception.class, () -> NormWeighting.of(Vector2Norm::of, null));
   }

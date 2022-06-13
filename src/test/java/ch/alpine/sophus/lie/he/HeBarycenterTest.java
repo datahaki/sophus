@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 class HeBarycenterTest {
   @Test
-  public void test3dim() {
+  void test3dim() {
     Tensor p = Tensors.fromString("{{1}, {4}, 5}");
     Tensor q = Tensors.fromString("{{-3}, {6}, -9}");
     Tensor r = Tensors.fromString("{{2}, {1}, 8}");
@@ -28,7 +28,7 @@ class HeBarycenterTest {
   }
 
   @Test
-  public void test5dim() {
+  void test5dim() {
     Distribution distribution = DiscreteUniformDistribution.of(-20000, 20000);
     Tensor sequence = Tensors.vector(l -> Tensors.of(RandomVariate.of(distribution, 2), RandomVariate.of(distribution, 2), RandomVariate.of(distribution)), 6);
     HeBarycenter heBarycenter = new HeBarycenter(sequence);

@@ -17,7 +17,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 class SnCurveDecimationTest {
   @Test
-  public void testGeodesic() {
+  void testGeodesic() {
     Tensor p0 = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0, 0));
     Tensor p1 = Vector2Norm.NORMALIZE.apply(Tensors.vector(0.5, 0.5, 0));
     Tensor p2 = Vector2Norm.NORMALIZE.apply(Tensors.vector(0, 1, 0));
@@ -28,7 +28,7 @@ class SnCurveDecimationTest {
   }
 
   @Test
-  public void testTriangle() throws ClassNotFoundException, IOException {
+  void testTriangle() throws ClassNotFoundException, IOException {
     Tensor p0 = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0, 0));
     Tensor p1 = Vector2Norm.NORMALIZE.apply(Tensors.vector(0.5, 0.5, 0.8));
     Tensor p2 = Vector2Norm.NORMALIZE.apply(Tensors.vector(0, 1, 0));

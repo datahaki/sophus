@@ -18,7 +18,7 @@ class BSpline6CurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = //
         BSpline6CurveSubdivision.of(RnGroup.INSTANCE);
     Tensor tensor = curveSubdivision.cyclic(UnitVector.of(5, 0));
@@ -28,21 +28,21 @@ class BSpline6CurveSubdivisionTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.cyclic(curve), Tensors.empty());
   }
 
   @Test
-  public void testSingleton() {
+  void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     CurveSubdivision curveSubdivision = BSpline6CurveSubdivision.of(CLOTHOID_BUILDER);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> BSpline6CurveSubdivision.of(null));
   }
 }

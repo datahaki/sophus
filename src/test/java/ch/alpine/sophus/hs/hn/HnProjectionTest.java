@@ -13,13 +13,13 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class HnProjectionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 2, 3));
     Tolerance.CHOP.requireClose(x, HnProjection.INSTANCE.apply(x));
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
       Tensor xd = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));

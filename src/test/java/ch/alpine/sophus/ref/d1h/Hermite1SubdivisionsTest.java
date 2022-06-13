@@ -18,14 +18,14 @@ import ch.alpine.tensor.ext.Serialization;
 
 class Hermite1SubdivisionsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TestHelper.check( //
         RnHermite1Subdivisions.instance(), //
         Hermite1Subdivisions.standard(RnGroup.INSTANCE));
   }
 
   @Test
-  public void testParams() {
+  void testParams() {
     Scalar lambda = RationalScalar.of(-1, 16);
     Scalar mu = RationalScalar.of(-1, 3);
     TestHelper.check( //
@@ -34,7 +34,7 @@ class Hermite1SubdivisionsTest {
   }
 
   @Test
-  public void testSerializableCast() throws ClassNotFoundException, IOException {
+  void testSerializableCast() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")
     Function<Integer, Tensor> function = (Function<Integer, Tensor> & Serializable) i -> Tensors.empty();
     assertEquals(Serialization.copy(function).apply(3), Tensors.empty());

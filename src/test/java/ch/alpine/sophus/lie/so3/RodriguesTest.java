@@ -45,7 +45,7 @@ import ch.alpine.tensor.sca.N;
 
 class RodriguesTest {
   @Test
-  public void testConvergenceSo3() {
+  void testConvergenceSo3() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = Rodrigues.vectorExp(x);
@@ -64,7 +64,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor m1 = Rodrigues.vectorExp(vector);
     Tensor m2 = Rodrigues.vectorExp(vector.negate());
@@ -73,7 +73,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testLog() {
+  void testLog() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor matrix = Rodrigues.vectorExp(vector);
     Tensor result = Rodrigues.INSTANCE.vectorLog(matrix);
@@ -81,7 +81,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testTranspose() {
+  void testTranspose() {
     Tensor vector = Tensors.vector(Math.random(), Math.random(), -Math.random());
     Tensor m1 = Rodrigues.vectorExp(vector);
     Tensor m2 = Transpose.of(Rodrigues.vectorExp(vector));
@@ -95,7 +95,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testXY() {
+  void testXY() {
     Tensor m22 = RotationMatrix.of(RealScalar.ONE);
     Tensor mat = Rodrigues.vectorExp(Tensors.vector(0, 0, 1));
     Tensor blu = Tensors.of( //
@@ -105,7 +105,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testFormula() {
+  void testFormula() {
     checkDiff(Tensors.vector(-0.2, 0.1, 0.3));
     checkDiff(Tensors.vector(-0.5, -0.1, 0.03));
     checkDiff(Tensors.vector(-0.3, -0.2, 0.1));
@@ -113,7 +113,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testRotZ() {
+  void testRotZ() {
     Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, 1));
     assertEquals(matrix.get(2, 0), RealScalar.ZERO);
     assertEquals(matrix.get(2, 1), RealScalar.ZERO);
@@ -123,28 +123,28 @@ class RodriguesTest {
   }
 
   @Test
-  public void testPi() {
+  void testPi() {
     Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, Math.PI));
     Tensor expected = DiagonalMatrix.of(-1, -1, 1);
     Chop._14.requireClose(matrix, expected);
   }
 
   @Test
-  public void testTwoPi() {
+  void testTwoPi() {
     Tensor matrix = Rodrigues.vectorExp(Tensors.vector(0, 0, 2 * Math.PI));
     Tensor expected = DiagonalMatrix.of(1, 1, 1);
     Chop._14.requireClose(matrix, expected);
   }
 
   @Test
-  public void testLogEye() {
+  void testLogEye() {
     Tensor matrix = IdentityMatrix.of(3);
     Tensor log = Rodrigues.INSTANCE.log(matrix);
     Chop.NONE.requireAllZero(log);
   }
 
   @Test
-  public void testLog1() {
+  void testLog1() {
     Tensor vec = Tensors.vector(.3, .5, -0.4);
     Tensor matrix = Rodrigues.vectorExp(vec);
     Tensor lom = Rodrigues.INSTANCE.log(matrix);
@@ -154,7 +154,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testLogEps() {
+  void testLogEps() {
     double v = 0.25;
     Tensor log;
     do {
@@ -170,7 +170,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testLogEps2() {
+  void testLogEps2() {
     double eps = Double.MIN_VALUE; // 4.9e-324
     Tensor vec = Tensors.vector(eps, 0, 0);
     Tensor matrix = Rodrigues.vectorExp(vec);
@@ -179,7 +179,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testRodriques() {
+  void testRodriques() {
     for (int count = 0; count < 20; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3();
       assertTrue(OrthogonalMatrixQ.of(matrix));
@@ -206,7 +206,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testRandomOrthogonal() {
+  void testRandomOrthogonal() {
     for (int count = 0; count < 5; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3();
       specialOps(matrix);
@@ -217,7 +217,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testRandomOrthogonal2() {
+  void testRandomOrthogonal2() {
     Distribution noise = UniformDistribution.of(-0.03, 0.03);
     for (int count = 0; count < 5; ++count) {
       Tensor matrix = So3TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
@@ -229,14 +229,14 @@ class RodriguesTest {
   }
 
   @Test
-  public void testRodriguez() {
+  void testRodriguez() {
     Tensor vector = RandomVariate.of(NormalDistribution.standard(), 3);
     Tensor wedge = Cross.skew3(vector);
     Chop._13.requireClose(MatrixExp.of(wedge), Rodrigues.vectorExp(vector));
   }
 
   @Test
-  public void testRodriques2() {
+  void testRodriques2() {
     for (int c = 0; c < 20; ++c) {
       Tensor matrix = So3TestHelper.spawn_So3();
       assertTrue(UnitaryMatrixQ.of(matrix));
@@ -244,14 +244,14 @@ class RodriguesTest {
   }
 
   @Test
-  public void testOrthPassFormatFailEye() {
+  void testOrthPassFormatFailEye() {
     Scalar one = RealScalar.ONE;
     Tensor eyestr = Tensors.matrix((i, j) -> i.equals(j) ? one : one.zero(), 3, 4);
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(eyestr));
   }
 
   @Test
-  public void testOrthPassFormatFail2() {
+  void testOrthPassFormatFail2() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 5);
     Tensor orthog = Orthogonalize.of(matrix);
     assertTrue(OrthogonalMatrixQ.of(orthog));
@@ -259,7 +259,7 @@ class RodriguesTest {
   }
 
   @Test
-  public void testOrthogonalize() {
+  void testOrthogonalize() {
     Tensor matrix = So3TestHelper.spawn_So3();
     Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
     Tolerance.CHOP.requireClose(Orthogonalize.usingSvd(matrix), matrix);
@@ -267,20 +267,20 @@ class RodriguesTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.exp(RealScalar.ZERO));
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0)));
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.exp(Tensors.vector(0, 0, 0, 0)));
   }
 
   @Test
-  public void testLogTrash() {
+  void testLogTrash() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 3);
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(matrix));
   }
 
   @Test
-  public void testLogFail() {
+  void testLogFail() {
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(Array.zeros(3)));
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(Array.zeros(3, 4)));
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(Array.zeros(3, 3, 3)));

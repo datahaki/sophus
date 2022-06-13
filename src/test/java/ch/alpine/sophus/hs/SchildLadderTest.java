@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SchildLadderTest {
   @Test
-  public void testRn() {
+  void testRn() {
     HsTransport hsTransport = new SchildLadder(RnGroup.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
@@ -35,7 +35,7 @@ class SchildLadderTest {
   }
 
   @Test
-  public void testSn() throws ClassNotFoundException, IOException {
+  void testSn() throws ClassNotFoundException, IOException {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = new SchildLadder(SnManifold.INSTANCE).shift(orig, dest);
@@ -73,7 +73,7 @@ class SchildLadderTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new SchildLadder(null));
   }
 }

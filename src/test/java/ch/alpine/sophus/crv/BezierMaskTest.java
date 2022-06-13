@@ -53,12 +53,12 @@ class BezierMaskTest {
   }
 
   @Test
-  public void testSimple1() {
+  void testSimple1() {
     assertEquals(BezierMaskTest.of(1).apply(RealScalar.of(0.2)), Tensors.vector(1));
   }
 
   @Test
-  public void testSimple2() throws ClassNotFoundException, IOException {
+  void testSimple2() throws ClassNotFoundException, IOException {
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(BezierMaskTest.of(2));
     assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.fromString("{1/2, 1/2}"));
     assertEquals(scalarTensorFunction.apply(RealScalar.of(0)), Tensors.fromString("{1, 0}"));
@@ -66,7 +66,7 @@ class BezierMaskTest {
   }
 
   @Test
-  public void testSimple3() {
+  void testSimple3() {
     ScalarTensorFunction scalarTensorFunction = BezierMaskTest.of(3);
     assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.fromString("{1/4, 1/2, 1/4}"));
     assertEquals(scalarTensorFunction.apply(RealScalar.of(0)), Tensors.fromString("{1, 0, 0}"));
@@ -74,7 +74,7 @@ class BezierMaskTest {
   }
 
   @Test
-  public void testDistribution() {
+  void testDistribution() {
     for (int n = 5; n < 10; ++n)
       for (Scalar p : new Scalar[] { RationalScalar.of(1, 3), RationalScalar.of(6, 7) }) {
         Tensor vector = BezierMaskTest.of(n).apply(p);
@@ -88,7 +88,7 @@ class BezierMaskTest {
   }
 
   @Test
-  public void testFunctionMatch() {
+  void testFunctionMatch() {
     int n = 5;
     ScalarTensorFunction scalarTensorFunction = new BezierFunction(RnGroup.INSTANCE, IdentityMatrix.of(n));
     Scalar p = RationalScalar.of(2, 7);
@@ -100,7 +100,7 @@ class BezierMaskTest {
   }
 
   @Test
-  public void testExtrapolate() {
+  void testExtrapolate() {
     assertEquals(BezierMaskTest.extrapolate(2), Tensors.fromString("{-1, 2}"));
     assertEquals(BezierMaskTest.extrapolate(3), Tensors.fromString("{1/4, -3/2, 9/4}"));
     assertEquals(BezierMaskTest.extrapolate(4), Tensors.fromString("{-1/27, 4/9, -16/9, 64/27}"));
@@ -112,7 +112,7 @@ class BezierMaskTest {
   }
 
   @Test
-  public void testNegFail() {
+  void testNegFail() {
     assertThrows(Exception.class, () -> BezierMaskTest.of(0));
     assertThrows(Exception.class, () -> BezierMaskTest.of(-1));
   }

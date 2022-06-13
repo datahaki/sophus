@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SpdPhongMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random(1);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
@@ -49,7 +49,7 @@ class SpdPhongMeanTest {
   }
 
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     int n = 2;
     RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor p = RandomSample.of(rsi);
@@ -66,7 +66,7 @@ class SpdPhongMeanTest {
   }
 
   @Test
-  public void testMidpointDiagonal() {
+  void testMidpointDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
     SpdMemberQ.INSTANCE.require(p);
     Tensor q = DiagonalMatrix.of(3, 0.1);
@@ -77,7 +77,7 @@ class SpdPhongMeanTest {
   }
 
   @Test
-  public void testWeightedDiagonal() {
+  void testWeightedDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
     SpdMemberQ.INSTANCE.require(p);
     Tensor q = DiagonalMatrix.of(3, 0.1);

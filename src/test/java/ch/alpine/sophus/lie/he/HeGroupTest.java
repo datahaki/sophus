@@ -22,7 +22,7 @@ class HeGroupTest {
   private static final RandomSampleInterface RSI = new HeRandomSample(2, UniformDistribution.of(Clips.absolute(10)));
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, 7}");
     Tensor q = Tensors.fromString("{{-1, 6, 2}, {-3, -2, 1}, -4}");
     Tensor actual = HeGroup.INSTANCE.split(p, q, RationalScalar.HALF);
@@ -32,7 +32,7 @@ class HeGroupTest {
   }
 
   @Test
-  public void testExpLog() {
+  void testExpLog() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = RandomSample.of(RSI);
       Tensor xyz = HeGroup.INSTANCE.exp(inp);
@@ -42,7 +42,7 @@ class HeGroupTest {
   }
 
   @Test
-  public void testLogExp() {
+  void testLogExp() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = RandomSample.of(RSI);
       Tensor uvw = HeGroup.INSTANCE.log(inp);
@@ -52,7 +52,7 @@ class HeGroupTest {
   }
 
   @Test
-  public void testAdLog() {
+  void testAdLog() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = RandomSample.of(RSI);
       Tensor m = RandomSample.of(RSI);
@@ -63,7 +63,7 @@ class HeGroupTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> HeGroup.INSTANCE.element(null));
   }
 }

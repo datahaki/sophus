@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicBSplineFunctionTest {
   @Test
-  public void testLetsSee() {
+  void testLetsSee() {
     Distribution distribution = DiscreteUniformDistribution.of(-5, 5);
     for (int n = 1; n < 10; ++n)
       for (int degree = 0; degree < 6; ++degree) {
@@ -45,7 +45,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     int n = 20;
     Tensor domain = Subdivide.of(0, n - 1, 100);
@@ -64,7 +64,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights1a() {
+  void testBasisWeights1a() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 1, UnitVector.of(3, 1));
     Tensor limitMask = Range.of(1, 2).map(func);
     ExactTensorQ.require(limitMask);
@@ -72,7 +72,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights2() {
+  void testBasisWeights2() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 2, UnitVector.of(5, 2));
     Tensor limitMask = Range.of(1, 4).map(func);
     ExactTensorQ.require(limitMask);
@@ -80,7 +80,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights3a() {
+  void testBasisWeights3a() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 3, UnitVector.of(7, 3));
     Tensor limitMask = Range.of(2, 5).map(func);
     ExactTensorQ.require(limitMask);
@@ -88,7 +88,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights3b() {
+  void testBasisWeights3b() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 3, UnitVector.of(5, 2));
     Tensor limitMask = Range.of(1, 4).map(func);
     ExactTensorQ.require(limitMask);
@@ -96,7 +96,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights4() {
+  void testBasisWeights4() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 4, UnitVector.of(9, 4));
     Tensor limitMask = Range.of(2, 7).map(func);
     assertEquals(Total.of(limitMask), RealScalar.ONE);
@@ -105,7 +105,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights5a() {
+  void testBasisWeights5a() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 5, UnitVector.of(11, 5));
     Tensor limitMask = Range.of(3, 8).map(func);
     assertEquals(Total.of(limitMask), RealScalar.ONE);
@@ -114,7 +114,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights5b() {
+  void testBasisWeights5b() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 5, UnitVector.of(9, 4));
     Tensor limitMask = Range.of(2, 7).map(func);
     assertEquals(Total.of(limitMask), RealScalar.ONE);
@@ -123,7 +123,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testBasisWeights5c() {
+  void testBasisWeights5c() {
     GeodesicBSplineFunction func = GeodesicBSplineFunction.of(RnGroup.INSTANCE, 5, UnitVector.of(7, 3));
     Tensor limitMask = Range.of(1, 6).map(func);
     assertEquals(Total.of(limitMask), RealScalar.ONE);
@@ -132,7 +132,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testNonUniformKnots() {
+  void testNonUniformKnots() {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(2, 102), 10, 4);
     Tensor domain = RandomVariate.of(UniformDistribution.of(0, 9), 100);
     for (int degree = 1; degree < 6; ++degree) {
@@ -153,7 +153,7 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testSasdlkjh() {
+  void testSasdlkjh() {
     {
       Tensor knots = Tensors.vector(1, 2, 3, 4, 5);
       GeodesicBSplineFunction.of(RnGroup.INSTANCE, 1, knots, knots);
@@ -163,17 +163,17 @@ class GeodesicBSplineFunctionTest {
   }
 
   @Test
-  public void testDegreeFail() {
+  void testDegreeFail() {
     assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGroup.INSTANCE, -1, UnitVector.of(7, 3)));
   }
 
   @Test
-  public void testKnotsFail() {
+  void testKnotsFail() {
     assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGroup.INSTANCE, 3, Range.of(0, 10), Range.of(0, 11)));
   }
 
   @Test
-  public void testKnotsUnsortedFail() {
+  void testKnotsUnsortedFail() {
     assertThrows(Exception.class, () -> GeodesicBSplineFunction.of(RnGroup.INSTANCE, 3, Tensors.vector(3, 2, 1), Tensors.vector(1, 2, 3)));
   }
 }

@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class RnHermite1SubdivisionTest {
   @Test
-  public void testString() {
+  void testString() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {0, 0}}");
     TensorIteration hermiteSubdivision = RnHermite1Subdivisions.instance().string(RealScalar.ONE, control);
     Tensor iterate = hermiteSubdivision.iterate();
@@ -32,7 +32,7 @@ class RnHermite1SubdivisionTest {
   }
 
   @Test
-  public void testStringReverse() {
+  void testStringReverse() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -47,7 +47,7 @@ class RnHermite1SubdivisionTest {
   }
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     TensorIteration tensorIteration = RnHermite1Subdivisions.instance().cyclic(RealScalar.ONE, control);
     Tensor iterate = tensorIteration.iterate();
@@ -57,7 +57,7 @@ class RnHermite1SubdivisionTest {
   }
 
   @Test
-  public void testPolynomialReproduction() {
+  void testPolynomialReproduction() {
     TestHelper.checkP(3, RnHermite1Subdivisions.instance());
   }
 }

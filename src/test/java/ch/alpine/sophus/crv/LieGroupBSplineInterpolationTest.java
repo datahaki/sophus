@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.N;
 
 class LieGroupBSplineInterpolationTest {
   @Test
-  public void testIterationRnExact() {
+  void testIterationRnExact() {
     Tensor target = Tensors.vector(1, 2, 0, 2, 1, 3);
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 2, target);
@@ -30,7 +30,7 @@ class LieGroupBSplineInterpolationTest {
   }
 
   @Test
-  public void testApplyRn() {
+  void testApplyRn() {
     Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 2, target);
@@ -40,7 +40,7 @@ class LieGroupBSplineInterpolationTest {
   }
 
   @Test
-  public void testApplyRnExact() {
+  void testApplyRnExact() {
     Tensor target = Tensors.vector(1, 2, 0, 2, 1, 3);
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 2, target);
@@ -50,7 +50,7 @@ class LieGroupBSplineInterpolationTest {
   }
 
   @Test
-  public void testExactRnConvergence() {
+  void testExactRnConvergence() {
     Tensor target = RandomVariate.of(BernoulliDistribution.of(RationalScalar.HALF), 10, 3);
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 3, target);
@@ -58,7 +58,7 @@ class LieGroupBSplineInterpolationTest {
   }
 
   @Test
-  public void testIterationRnConvergence() {
+  void testIterationRnConvergence() {
     Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 3, target);

@@ -27,7 +27,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GrManifoldTest {
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
@@ -44,7 +44,7 @@ class GrManifoldTest {
   }
 
   @Test
-  public void testMirror() {
+  void testMirror() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
@@ -59,7 +59,7 @@ class GrManifoldTest {
   }
 
   @Test
-  public void testBiinvariance() {
+  void testBiinvariance() {
     Biinvariant[] biinvariants = new Biinvariant[] { //
         MetricBiinvariant.VECTORIZE0, //
         Biinvariants.LEVERAGES, //
@@ -84,7 +84,7 @@ class GrManifoldTest {
   }
 
   @Test
-  public void testCommute() {
+  void testCommute() {
     int n = 5;
     int k = 2;
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
@@ -96,7 +96,7 @@ class GrManifoldTest {
   }
 
   @Test
-  public void testMismatch() {
+  void testMismatch() {
     int n = 5;
     Tensor p1 = RandomSample.of(new GrRandomSample(n, 1));
     Tensor p2 = RandomSample.of(new GrRandomSample(n, 2));

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class MetricCoordinateTest {
   @Test
-  public void testCustomNullFail() {
+  void testCustomNullFail() {
     assertThrows(Exception.class, () -> new MetricCoordinate(null));
   }
 }

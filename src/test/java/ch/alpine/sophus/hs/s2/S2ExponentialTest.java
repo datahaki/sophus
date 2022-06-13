@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class S2ExponentialTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     S2Exponential s2Exponential = new S2Exponential(Tensors.vector(1, 0, 0));
     Tensor tensor = s2Exponential.projection();
     ExactTensorQ.require(tensor);

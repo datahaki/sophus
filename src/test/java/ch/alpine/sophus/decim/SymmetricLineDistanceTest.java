@@ -10,7 +10,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class SymmetricLineDistanceTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     LineDistance lineDistance = new SymmetricLineDistance(new HsLineDistance(Se2CoveringGroup.INSTANCE));
     Serialization.copy(lineDistance);
   }

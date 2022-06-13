@@ -17,7 +17,7 @@ import ch.alpine.tensor.red.Nest;
 
 class MSpline3CurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
@@ -28,7 +28,7 @@ class MSpline3CurveSubdivisionTest {
   }
 
   @Test
-  public void testString() {
+  void testString() {
     Tensor curve = Tensors.vector(0, 1, 2, 3);
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
@@ -37,7 +37,7 @@ class MSpline3CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringTwo() {
+  void testStringTwo() {
     Tensor curve = Tensors.vector(0, 1);
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
@@ -46,7 +46,7 @@ class MSpline3CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringOne() {
+  void testStringOne() {
     Tensor curve = Tensors.vector(1);
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
     Tensor refined = curveSubdivision.string(curve);
@@ -55,7 +55,7 @@ class MSpline3CurveSubdivisionTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = new MSpline3CurveSubdivision(RnBiinvariantMean.INSTANCE);
     assertEquals(curveSubdivision.string(curve), Tensors.empty());
@@ -63,7 +63,7 @@ class MSpline3CurveSubdivisionTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new MSpline3CurveSubdivision(null));
   }
 }

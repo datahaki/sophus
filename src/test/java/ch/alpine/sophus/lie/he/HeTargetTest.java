@@ -10,7 +10,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 class HeTargetTest {
   @Test
-  public void testFailNegative() {
+  void testFailNegative() {
     assertThrows(Exception.class, () -> new HeTarget(Vector2Norm::of, RealScalar.of(-1)));
   }
 }

@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class AffineQTest {
   @Test
-  public void testRequire() {
+  void testRequire() {
     AffineQ.require(Tensors.vector(0.5, 0.5), Chop._08);
     AffineQ.require(Tensors.vector(0.25, 0.25, 0.25, 0.25), Chop._08);
     AffineQ.require(Tensors.vector(1, 0), Chop._08);
@@ -22,30 +22,30 @@ class AffineQTest {
   }
 
   @Test
-  public void testRequirePositive() {
+  void testRequirePositive() {
     AffineQ.requirePositiveOrZero(Tensors.vector(0.5, 0.5), Chop._08);
     AffineQ.requirePositiveOrZero(Tensors.vector(0.25, 0.25, 0.25, 0.25), Chop._08);
     AffineQ.requirePositiveOrZero(Tensors.vector(1, 0), Chop._08);
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(Tensors.vector(2, -1), Chop._08));
   }
 
   @Test
-  public void testFail2() {
+  void testFail2() {
     assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(Tensors.vector(1, 1), Chop._08));
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     assertThrows(Exception.class, () -> AffineQ.require(RealScalar.ONE, Chop._08));
     assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(RealScalar.ONE, Chop._08));
   }
 
   @Test
-  public void testFailMatrix() {
+  void testFailMatrix() {
     assertThrows(Exception.class, () -> AffineQ.require(HilbertMatrix.of(3), Chop._08));
     assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(HilbertMatrix.of(3), Chop._08));
   }

@@ -25,18 +25,18 @@ import ch.alpine.tensor.sca.tri.ArcTan;
 
 class ArcTan2DTest {
   @Test
-  public void testZero() {
+  void testZero() {
     assertEquals(ArcTan2D.of(Array.zeros(10)), RealScalar.ZERO);
   }
 
   @Test
-  public void testVectorXY() {
+  void testVectorXY() {
     assertEquals(ArcTan2D.of(Tensors.vector(-1, -2)), ArcTan.of(-1, -2));
     assertEquals(ArcTan2D.of(Tensors.vector(-1, -2, 3)), ArcTan.of(-1, -2));
   }
 
   @Test
-  public void testVectorAngle() {
+  void testVectorAngle() {
     Distribution distribution = UniformDistribution.of(-1, 1);
     Tensor v = UnitVector.of(2, 0);
     for (int count = 0; count < 10; ++count) {
@@ -48,14 +48,14 @@ class ArcTan2DTest {
   }
 
   @Test
-  public void testComplex() {
+  void testComplex() {
     Scalar scalar = ArcTan2D.of(Tensors.fromString("{1 + I, 2 - 3*I}"));
     Scalar expect = ComplexScalar.of(-1.4808695768986575, -0.4023594781085251);
     Chop._12.requireClose(scalar, expect);
   }
 
   @Test
-  public void testVectorXYFail() {
+  void testVectorXYFail() {
     assertThrows(Exception.class, () -> ArcTan2D.of(RealScalar.ZERO));
     assertThrows(Exception.class, () -> ArcTan2D.of(Tensors.vector(1)));
     assertThrows(Exception.class, () -> ArcTan2D.of(Array.zeros(3, 3, 3)));

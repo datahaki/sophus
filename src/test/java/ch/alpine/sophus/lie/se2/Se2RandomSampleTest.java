@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 
 class Se2RandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = RandomSample.of(Se2RandomSample.of(ExponentialDistribution.standard()));
     VectorQ.requireLength(tensor, 3);
   }

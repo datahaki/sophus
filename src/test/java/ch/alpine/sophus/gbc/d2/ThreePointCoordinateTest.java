@@ -37,7 +37,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testHDual() {
+  void testHDual() {
     BarycentricCoordinate barycentricCoordinate = r2(Barycenter.WACHSPRESS);
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
     Tensor weights = barycentricCoordinate.weights(P, Tensors.vector(4, 2));
@@ -46,7 +46,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testWeights() throws ClassNotFoundException, IOException {
+  void testWeights() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(r2(Barycenter.WACHSPRESS));
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
     Tensor x = Tensors.vector(4, 2);
@@ -57,7 +57,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(r2(Barycenter.DISCRETE_HARMONIC));
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").map(s -> Quantity.of(s, "m"));
     Tensor x = Tensors.vector(4, 2).map(s -> Quantity.of(s, "m"));
@@ -68,7 +68,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testQuantity2() throws ClassNotFoundException, IOException {
+  void testQuantity2() throws ClassNotFoundException, IOException {
     for (Barycenter barycentric : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = Serialization.copy(r2(barycentric));
       Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").map(s -> Quantity.of(s, "m"));
@@ -79,7 +79,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testScalingInvariant() {
+  void testScalingInvariant() {
     Scalar factor = RealScalar.of(2.3);
     Tensor polygon1 = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
     PolygonRegion polygonRegion = new PolygonRegion(polygon1);
@@ -103,7 +103,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testLagrangeProperty() {
+  void testLagrangeProperty() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
@@ -118,7 +118,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testEdges() {
+  void testEdges() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
@@ -132,7 +132,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testEdgesTriangle() {
+  void testEdgesTriangle() {
     Tensor P = Tensors.fromString("{{1, 1}, {5, 1}, {4, 4}}").unmodifiable();
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
@@ -146,7 +146,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testNonPlanarFail() {
+  void testNonPlanarFail() {
     Distribution distribution = UniformDistribution.unit();
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
@@ -155,7 +155,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testFailEmpty() {
+  void testFailEmpty() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
       assertThrows(Exception.class, () -> barycentricCoordinate.weights(Tensors.empty(), Tensors.empty()));
@@ -163,7 +163,7 @@ class ThreePointCoordinateTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> ThreePointCoordinateTest.r2(null));
   }
 }

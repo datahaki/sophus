@@ -22,7 +22,7 @@ class ClothoidBuilderTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testReverse() {
+  void testReverse() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -42,7 +42,7 @@ class ClothoidBuilderTest {
   }
 
   @Test
-  public void testAction() {
+  void testAction() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -61,7 +61,7 @@ class ClothoidBuilderTest {
   }
 
   @Test
-  public void testTwoPi() {
+  void testTwoPi() {
     Distribution distribution = NormalDistribution.of(0, 3);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -78,7 +78,7 @@ class ClothoidBuilderTest {
   }
 
   @Test
-  public void testStraightSide() {
+  void testStraightSide() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(3, 0, 0);
     LagrangeQuadraticD lagrangeQuadraticD = CLOTHOID_BUILDER.curve(p, q).curvature();
@@ -88,7 +88,7 @@ class ClothoidBuilderTest {
   }
 
   @Test
-  public void testStraightUp() {
+  void testStraightUp() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(0, 3, +Math.PI / 2);
     LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();
@@ -97,7 +97,7 @@ class ClothoidBuilderTest {
   }
 
   @Test
-  public void testCircle() {
+  void testCircle() {
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(-2, 0, -Math.PI / 2);
     LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();

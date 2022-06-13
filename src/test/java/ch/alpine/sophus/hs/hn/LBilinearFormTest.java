@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class LBilinearFormTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
     for (int count = 0; count < 5; ++count) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, 3));
@@ -32,7 +32,7 @@ class LBilinearFormTest {
   }
 
   @Test
-  public void testNegative() {
+  void testNegative() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
@@ -48,7 +48,7 @@ class LBilinearFormTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor J = IdentityMatrix.of(d + 1);
@@ -65,7 +65,7 @@ class LBilinearFormTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> LBilinearForm.between(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 3, 4)));
   }
 }

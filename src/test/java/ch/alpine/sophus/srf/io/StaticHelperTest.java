@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class StaticHelperTest {
   @Test
-  public void testSingle() {
+  void testSingle() {
     String[] strings = StaticHelper.slash("12//");
     assertEquals(strings[0], "12");
     assertEquals(strings[1], "");
@@ -15,7 +15,7 @@ class StaticHelperTest {
   }
 
   @Test
-  public void testDual() {
+  void testDual() {
     String[] strings = StaticHelper.slash("12//34");
     assertEquals(strings[0], "12");
     assertEquals(strings[1], "");

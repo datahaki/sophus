@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 
 class AppendOneTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor vector = Tensors.vector(2, 3);
     Tensor result = AppendOne.FUNCTION.apply(vector);
     assertEquals(vector, Tensors.vector(2, 3));

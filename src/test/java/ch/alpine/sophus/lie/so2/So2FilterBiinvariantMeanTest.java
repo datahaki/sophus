@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So2FilterBiinvariantMeanTest {
   @Test
-  public void testLength2Permutations() {
+  void testLength2Permutations() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Distribution wd = UniformDistribution.of(-3, 3);
     for (int count = 0; count < 100; ++count) {

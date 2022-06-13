@@ -28,14 +28,14 @@ import ch.alpine.tensor.red.Trace;
 
 class Su2AlgebraTest {
   @Test
-  public void testKillingForm() {
+  void testKillingForm() {
     LieAlgebra lieAlgebra = Su2Algebra.INSTANCE;
     Tensor form = KillingForm.of(lieAlgebra.ad());
     assertEquals(form, DiagonalMatrix.of(-8, -8, -8));
   }
 
   @Test
-  public void testBch() {
+  void testBch() {
     Distribution local = UniformDistribution.of(-0.2, 0.2);
     Tensor x = RandomVariate.of(local, 3);
     Tensor y = RandomVariate.of(local, 3);
@@ -60,7 +60,7 @@ class Su2AlgebraTest {
   }
 
   @Test
-  public void testBasis() {
+  void testBasis() {
     for (Tensor matrix : Su2Algebra.INSTANCE.basis()) {
       ExactTensorQ.require(matrix);
       assertEquals(ConjugateTranspose.of(matrix), matrix.negate());
@@ -70,7 +70,7 @@ class Su2AlgebraTest {
   }
 
   @Test
-  public void testBasis2() {
+  void testBasis2() {
     assertEquals(Su2Algebra.INSTANCE.basis(), SuAlgebra.of(2).basis());
   }
 }

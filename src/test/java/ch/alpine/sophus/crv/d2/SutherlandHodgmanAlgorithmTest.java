@@ -24,21 +24,21 @@ import ch.alpine.tensor.sca.Clips;
 class SutherlandHodgmanAlgorithmTest {
   // the examples show that the algo is not symmetric A cap B != B cap A
   @Test
-  public void testSingle() {
+  void testSingle() {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(clip).apply(CirclePoints.of(4));
     assertEquals(polyclipResult.tensor(), Tensors.empty());
   }
 
   @Test
-  public void testSingle2() {
+  void testSingle2() {
     Tensor clip = Array.zeros(1, 2);
     PolyclipResult polyclipResult = SutherlandHodgmanAlgorithm.of(CirclePoints.of(4)).apply(clip);
     assertEquals(polyclipResult.tensor(), clip);
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));
     for (int count = 0; count < 10; ++count) {
@@ -52,12 +52,12 @@ class SutherlandHodgmanAlgorithmTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> SutherlandHodgmanAlgorithm.of(HilbertMatrix.of(2, 3)));
   }
 
   @Test
-  public void testLine() {
+  void testLine() {
     Tensor tensor = SutherlandHodgmanAlgorithm.intersection( //
         Tensors.vector(1, 0), //
         Tensors.vector(2, 0), //
@@ -68,7 +68,7 @@ class SutherlandHodgmanAlgorithmTest {
   }
 
   @Test
-  public void testSingular() {
+  void testSingular() {
     assertThrows(Exception.class, () -> SutherlandHodgmanAlgorithm.intersection( //
         Tensors.vector(1, 0), //
         Tensors.vector(2, 0), //

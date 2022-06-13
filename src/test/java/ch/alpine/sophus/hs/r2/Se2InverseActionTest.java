@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2InverseActionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor xya = Tensors.vector(1, 2, 3);
     TensorUnaryOperator tensorUnaryOperator = new Se2InverseAction(xya);
     Tensor p = Tensors.vector(6, -9, 1);
@@ -30,7 +30,7 @@ class Se2InverseActionTest {
   }
 
   @Test
-  public void testPureSe2() {
+  void testPureSe2() {
     Distribution distribution = NormalDistribution.standard();
     Tensor p = RandomVariate.of(distribution, 3);
     Tensor q = RandomVariate.of(distribution, 3);
@@ -40,7 +40,7 @@ class Se2InverseActionTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     Serialization.copy(se2Bijection.inverse());
   }

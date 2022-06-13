@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class RnAlgebraTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     RnAlgebra rnAlgebra = new RnAlgebra(3);
     BinaryOperator<Tensor> bch1 = BakerCampbellHausdorff.of(rnAlgebra.ad(), 2);
     BinaryOperator<Tensor> bch2 = rnAlgebra.bch(6);
@@ -25,7 +25,7 @@ class RnAlgebraTest {
   }
 
   @Test
-  public void testConsistency() {
+  void testConsistency() {
     RnAlgebra rnAlgebra = new RnAlgebra(3);
     Tensor basis = rnAlgebra.basis();
     assertEquals(rnAlgebra.ad(), new MatrixAlgebra(basis).ad());

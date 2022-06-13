@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BarycentricRationalInterpolationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 4), 1);
     assertEquals(scalarTensorFunction.apply(RealScalar.of(1)), UnitVector.of(3, 0));
@@ -39,7 +39,7 @@ class BarycentricRationalInterpolationTest {
   }
 
   @Test
-  public void testDegrees() {
+  void testDegrees() {
     for (int d = 0; d < 5; ++d) {
       ScalarTensorFunction scalarTensorFunction = //
           BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 4), d);
@@ -53,7 +53,7 @@ class BarycentricRationalInterpolationTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricRationalInterpolation.of(Tensors.fromString("{1[m], 2[m], 4[m]}"), 1);
     assertEquals(scalarTensorFunction.apply(Quantity.of(1, "m")), UnitVector.of(3, 0));
@@ -66,7 +66,7 @@ class BarycentricRationalInterpolationTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     Tensor knots = Sort.of(RandomVariate.of(distribution, random, 10));
@@ -80,12 +80,12 @@ class BarycentricRationalInterpolationTest {
   }
 
   @Test
-  public void testUnorderedFail() {
+  void testUnorderedFail() {
     assertThrows(Exception.class, () -> BarycentricRationalInterpolation.of(Tensors.vector(2, 1, 3), 1));
   }
 
   @Test
-  public void testNegativeFail() {
+  void testNegativeFail() {
     BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), 10);
     assertThrows(Exception.class, () -> BarycentricRationalInterpolation.of(Tensors.vector(1, 2, 3), -2));
   }

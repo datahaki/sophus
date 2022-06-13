@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnMetricBiinvariantTest {
   @Test
-  public void testCoordinateBiinvariant() throws ClassNotFoundException, IOException {
+  void testCoordinateBiinvariant() throws ClassNotFoundException, IOException {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     Biinvariant biinvariant = Serialization.copy(HnMetricBiinvariant.INSTANCE);
@@ -52,7 +52,7 @@ class HnMetricBiinvariantTest {
   }
 
   @Test
-  public void testLagrangeBiinvariant() {
+  void testLagrangeBiinvariant() {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     for (int d = 1; d < 5; ++d) {

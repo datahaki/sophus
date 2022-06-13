@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Hermite2SubdivisionsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TestHelper.check(RnHermite2Subdivisions.standard(), Hermite2Subdivisions.standard(RnGroup.INSTANCE));
     TestHelper.check(RnHermite2Subdivisions.manifold(), Hermite2Subdivisions.manifold(RnGroup.INSTANCE));
   }
@@ -29,7 +29,7 @@ class Hermite2SubdivisionsTest {
       Hermite2Subdivisions.manifold(RnGroup.INSTANCE));
 
   @Test
-  public void testStringReverseRn() {
+  void testStringReverseRn() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -46,12 +46,12 @@ class Hermite2SubdivisionsTest {
   }
 
   @Test
-  public void testNullA1Fail() {
+  void testNullA1Fail() {
     assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(null));
   }
 
   @Test
-  public void testNullA2Fail() {
+  void testNullA2Fail() {
     assertThrows(Exception.class, () -> Hermite2Subdivisions.manifold(null));
   }
 }

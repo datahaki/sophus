@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class FullRankCorrelationMatrixTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 6; ++n) {
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor spd = RandomSample.of(spdRandomSample);
@@ -27,7 +27,7 @@ class FullRankCorrelationMatrixTest {
   }
 
   @Test
-  public void testExp() {
+  void testExp() {
     for (int n = 1; n < 6; ++n) {
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor frc1 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
@@ -39,7 +39,7 @@ class FullRankCorrelationMatrixTest {
   }
 
   @Test
-  public void testExp0() {
+  void testExp0() {
     for (int n = 1; n < 6; ++n) {
       Tensor frc1 = IdentityMatrix.of(n);
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));

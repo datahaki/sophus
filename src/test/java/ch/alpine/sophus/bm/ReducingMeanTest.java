@@ -43,7 +43,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(2, 3, 0, 8, 0, 7, 1));
     Tensor sequence = Tensors.vector(0, 1, 2, 3, 4, 5, 6);
     Tensor mean = _check(sequence, weights);
@@ -51,7 +51,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     int n = 6;
     Distribution distribution = UniformDistribution.of(-1, 1);
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
@@ -60,7 +60,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testExact2() {
+  void testExact2() {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(1, -1, 1));
     Tensor sequence = Tensors.vector(3, 4, 10);
     Tensor mean = _check(sequence, weights);
@@ -69,7 +69,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testExact3() {
+  void testExact3() {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(-1, 1, 1));
     Tensor sequence = Tensors.vector(3, 4, 10);
     Tensor mean = _check(sequence, weights);
@@ -77,7 +77,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testExact4() {
+  void testExact4() {
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, -1));
     Tensor sequence = Tensors.vector(3, 4, 10);
     Tensor mean = _check(sequence, weights);
@@ -85,7 +85,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testExactFail() {
+  void testExactFail() {
     Tensor weights = Tensors.vector(0.0, 0.0, 0.1);
     Tensor sequence = Tensors.vector(3, 4, 10);
     BiinvariantMean biinvariantMean = ReducingMean.of(RnGroup.INSTANCE);
@@ -93,7 +93,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random(1);
     BiinvariantMean bm = ReducingMean.of(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
@@ -122,7 +122,7 @@ class ReducingMeanTest {
   }
 
   @Test
-  public void testLagrangeProperty() {
+  void testLagrangeProperty() {
     Random random = new Random();
     int d = 2;
     int len = 5 + random.nextInt(3);

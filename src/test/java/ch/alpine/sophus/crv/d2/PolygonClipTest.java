@@ -37,7 +37,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor a = Tensors.empty();
     Tensor b = Tensors.empty();
     Tensor result = PolygonClip.of(a).apply(b);
@@ -48,7 +48,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testEmptyNonEmpty() {
+  void testEmptyNonEmpty() {
     Tensor a = Tensors.empty();
     Tensor b = RandomVariate.of(UniformDistribution.unit(), 10, 2);
     Tensor result = PolygonClip.of(a).apply(b);
@@ -56,7 +56,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     // {{2.0, 1.0}, {1.0, 1.0}, {1.0, 2.0}}
     // {{2.0, 1.0}, {1.0, 1.0}, {1.0, 1.5}, {1.3333333333333333, 1.6666666666666667}}
     {
@@ -74,14 +74,14 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     Tensor subject = Tensors.of(Tensors.vector(0.5, 0));
     Tensor result = PolygonClip.of(CirclePoints.of(6)).apply(subject);
     assertEquals(result, subject);
   }
 
   @Test
-  public void testMore() {
+  void testMore() {
     Tensor clipper = Tensors.fromString("{{0, 0}, {1, 0}, {1, 1}, {0, 1}}");
     Tensor subject = Tensors.fromString("{{0, 0}, {1, 0}, {1/2, 1/2}}");
     Tensor result = PolygonClip.of(clipper).apply(subject);
@@ -91,7 +91,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testMore2() {
+  void testMore2() {
     Tensor clip = Tensors.fromString("{{0, 0}, {1, 0}, {1, 1}, {0, 1}}");
     Tensor subj = Tensors.fromString("{{0, 0}, {2, 0}, {1/2, 1/2}}");
     Tensor result = PolygonClip.of(clip).apply(subj);
@@ -102,7 +102,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testMore3() throws ClassNotFoundException, IOException {
+  void testMore3() throws ClassNotFoundException, IOException {
     Tensor clip = Tensors.fromString("{{0, 0}, {1, 0}, {1, 1}, {0, 1}}");
     Tensor subj = Tensors.fromString("{{0, 0}, {2, 0}, {1/2, 1/2}}");
     Tensor result = Serialization.copy(PolygonClip.of(subj)).apply(clip);
@@ -113,7 +113,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testSome() {
+  void testSome() {
     Tensor circ = CirclePoints.of(7).multiply(RealScalar.of(4));
     Tensor poly = Tensors.fromString(
         "{{-5, 0}, {-5.667, -1.050}, {-3.683, -4.750}, {0.067, -5.533}, {1.183, -3.850}, {3.383, -2.183}, {1.683, -1.517}, {-2.283, -3.183}, {-2.933, -2.617}, {-2.317, -1.650}, {-3.4, -2.35}}");
@@ -123,7 +123,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Tensor circ = CirclePoints.of(7);
     TensorUnaryOperator tensorUnaryOperator = PolygonClip.of(circ);
     for (int n = 3; n < 20; ++n) {
@@ -137,7 +137,7 @@ class PolygonClipTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> PolygonClip.of(HilbertMatrix.of(2, 3)));
   }
 }

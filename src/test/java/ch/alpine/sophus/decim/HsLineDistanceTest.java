@@ -20,7 +20,7 @@ import ch.alpine.tensor.num.Pi;
 
 class HsLineDistanceTest {
   @Test
-  public void testRnMatch() throws ClassNotFoundException, IOException {
+  void testRnMatch() throws ClassNotFoundException, IOException {
     HsLineDistance hsLineDistance = //
         Serialization.copy(new HsLineDistance(RnGroup.INSTANCE));
     HsLineDistanceLocal tensorNorm = //
@@ -30,7 +30,7 @@ class HsLineDistanceTest {
   }
 
   @Test
-  public void testSnMatch() throws ClassNotFoundException, IOException {
+  void testSnMatch() throws ClassNotFoundException, IOException {
     HsLineDistance hsLineDistance = //
         Serialization.copy(new HsLineDistance(SnManifold.INSTANCE));
     Tensor p = UnitVector.of(3, 0);

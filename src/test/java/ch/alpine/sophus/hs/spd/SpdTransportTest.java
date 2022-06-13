@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 /** SpdTransport is also tested in {@link SpdRiemannTest} */
 class SpdTransportTest {
   @Test
-  public void testLadder() throws ClassNotFoundException, IOException {
+  void testLadder() throws ClassNotFoundException, IOException {
     Tensor p = IdentityMatrix.of(3);
     RandomSampleInterface rsi = new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
     Tensor q = RandomSample.of(rsi);
@@ -35,7 +35,7 @@ class SpdTransportTest {
   }
 
   @Test
-  public void testMultiT() {
+  void testMultiT() {
     Tensor e11 = Tensors.fromString("{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}}");
     Tensor e12 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");

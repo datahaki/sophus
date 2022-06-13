@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class InverseDistanceWeightingTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     BarycentricCoordinate barycentricCoordinate = //
         HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
@@ -38,7 +38,7 @@ class InverseDistanceWeightingTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     BarycentricCoordinate barycentricCoordinate = //
         HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     Tensor weights = barycentricCoordinate.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
@@ -47,7 +47,7 @@ class InverseDistanceWeightingTest {
   }
 
   @Test
-  public void testPoints() {
+  void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = //
         HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
@@ -61,7 +61,7 @@ class InverseDistanceWeightingTest {
   }
 
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     BarycentricCoordinate barycentricCoordinate = //
         Serialization.copy(HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(1))));
@@ -78,7 +78,7 @@ class InverseDistanceWeightingTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> new InverseDistanceWeighting(null));
   }
 }

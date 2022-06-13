@@ -17,14 +17,14 @@ import ch.alpine.tensor.mat.re.Det;
 
 class SlAlgebraTest {
   @Test
-  public void testSl2Match() {
+  void testSl2Match() {
     LieAlgebra slAlgebra = SlAlgebra.of(2);
     assertEquals(slAlgebra.basis(), Sl2Algebra.INSTANCE.basis());
     assertEquals(slAlgebra.ad(), Sl2Algebra.INSTANCE.ad());
   }
 
   @Test
-  public void testSl3Klling() {
+  void testSl3Klling() {
     LieAlgebra lieAlgebra = SlAlgebra.of(3);
     Tensor ad = lieAlgebra.ad();
     Tensor form = KillingForm.of(ad);

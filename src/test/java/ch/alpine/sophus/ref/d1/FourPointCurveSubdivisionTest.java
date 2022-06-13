@@ -25,7 +25,7 @@ import ch.alpine.tensor.red.Nest;
 
 class FourPointCurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
@@ -35,7 +35,7 @@ class FourPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testString() {
+  void testString() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1, 2, 3);
     Tensor string = curveSubdivision.string(vector);
@@ -44,7 +44,7 @@ class FourPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testStringTwo() {
+  void testStringTwo() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1);
     Tensor string = curveSubdivision.string(vector);
@@ -53,7 +53,7 @@ class FourPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testStringOne() {
+  void testStringOne() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(3);
     Tensor string = curveSubdivision.string(vector);
@@ -62,7 +62,7 @@ class FourPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testSimple1() {
+  void testSimple1() {
     Tensor curve = Tensors.fromString("{{0, 0}, {1, 0}, {0, 1}}");
     TensorUnaryOperator curveSubdivision = //
         new FourPointCurveSubdivision(RnGroup.INSTANCE)::cyclic;
@@ -74,7 +74,7 @@ class FourPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     CurveSubdivision curveSubdivision = new FourPointCurveSubdivision(RnGroup.INSTANCE);
     for (int n = 3; n < 10; ++n) {
       Tensor tensor = curveSubdivision.cyclic(CirclePoints.of(n));
@@ -86,14 +86,14 @@ class FourPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = new FourPointCurveSubdivision(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new FourPointCurveSubdivision(null));
   }
 }

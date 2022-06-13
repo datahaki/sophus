@@ -29,7 +29,7 @@ class DtManifoldTest {
       AFFINE };
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)
@@ -50,7 +50,7 @@ class DtManifoldTest {
   }
 
   @Test
-  public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
+  void testAffineBiinvariant() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)
@@ -71,7 +71,7 @@ class DtManifoldTest {
   }
 
   @Test
-  public void testAffineCenter() throws ClassNotFoundException, IOException {
+  void testAffineCenter() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = n + 2; length < n + 8; ++length) {

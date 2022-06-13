@@ -29,7 +29,7 @@ class RadialBasisFunctionInterpolationTest {
   public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
@@ -49,7 +49,7 @@ class RadialBasisFunctionInterpolationTest {
   }
 
   @Test
-  public void testNormalized() {
+  void testNormalized() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Random random = new Random(1);
@@ -67,7 +67,7 @@ class RadialBasisFunctionInterpolationTest {
   }
 
   @Test
-  public void testBarycentric() {
+  void testBarycentric() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -86,7 +86,7 @@ class RadialBasisFunctionInterpolationTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> RadialBasisFunctionInterpolation.of(null, Tensors.empty(), Tensors.empty()));
   }
 }

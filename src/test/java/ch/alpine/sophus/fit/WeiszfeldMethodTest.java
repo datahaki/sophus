@@ -27,7 +27,7 @@ class WeiszfeldMethodTest {
   public static final SpatialMedian DEFAULT = new WeiszfeldMethod(Tolerance.CHOP);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = Tensors.of( //
         Tensors.vector(-1, 0), //
         Tensors.vector(0, 0), //
@@ -38,7 +38,7 @@ class WeiszfeldMethodTest {
   }
 
   @Test
-  public void testMathematica() {
+  void testMathematica() {
     Tensor points = Tensors.fromString("{{1, 3, 5}, {7, 1, 2}, {9, 3, 1}, {4, 5, 6}}");
     Tensor solution = Tensors.vector(5.6583732018553249826, 2.7448562522811917613, 3.2509991568890024191);
     Optional<Tensor> uniform = DEFAULT.uniform(points);
@@ -46,7 +46,7 @@ class WeiszfeldMethodTest {
   }
 
   @Test
-  public void testMathematicaWeighted() {
+  void testMathematicaWeighted() {
     Tensor points = Tensors.fromString("{{1, 3, 5}, {-4, 1, 2}, {3, 3, 1}, {4, 5, 6}}");
     Tensor weights = Tensors.vector(1, 3, 4, 5);
     Optional<Tensor> weighted = new WeiszfeldMethod(Chop._10).weighted(points, weights.divide(Total.ofVector(weights)));
@@ -57,7 +57,7 @@ class WeiszfeldMethodTest {
   }
 
   @Test
-  public void testPoles() throws ClassNotFoundException, IOException {
+  void testPoles() throws ClassNotFoundException, IOException {
     Tensor tensor = Tensors.of( //
         Tensors.vector(-1, 0), //
         Tensors.vector(0, 0), //
@@ -70,7 +70,7 @@ class WeiszfeldMethodTest {
   }
 
   @Test
-  public void testWeighted() {
+  void testWeighted() {
     Tensor tensor = Tensors.of( //
         Tensors.vector(-1, 0), //
         Tensors.vector(0, 0), //
@@ -84,7 +84,7 @@ class WeiszfeldMethodTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     int present = 0;
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = RandomVariate.of(UniformDistribution.unit(), 20, 2).map(value -> Quantity.of(value, "m"));
@@ -102,7 +102,7 @@ class WeiszfeldMethodTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new WeiszfeldMethod(null));
   }
 }

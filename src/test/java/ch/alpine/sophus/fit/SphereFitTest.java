@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SphereFitTest {
   @Test
-  public void testToString() {
+  void testToString() {
     Tensor points = Tensors.of( //
         Tensors.vector(1, 0), //
         Tensors.vector(0, 0), //
@@ -37,7 +37,7 @@ class SphereFitTest {
   }
 
   @Test
-  public void testLinearSolve() {
+  void testLinearSolve() {
     Tensor _points = Tensors.of( //
         Tensors.vector(1, 0), //
         Tensors.vector(0, 0), //
@@ -55,7 +55,7 @@ class SphereFitTest {
   }
 
   @Test
-  public void testLeastSquare() throws ClassNotFoundException, IOException {
+  void testLeastSquare() throws ClassNotFoundException, IOException {
     Tensor _points = Tensors.of( //
         Tensors.vector(1, 0), //
         Tensors.vector(0, 0), //
@@ -73,7 +73,7 @@ class SphereFitTest {
   }
 
   @Test
-  public void testLowRank() {
+  void testLowRank() {
     Tensor _points = Tensors.of( //
         Tensors.vector(0, 0), //
         Tensors.vector(0, 0), //
@@ -88,7 +88,7 @@ class SphereFitTest {
   }
 
   @Test
-  public void testRank() {
+  void testRank() {
     Distribution distribution = UniformDistribution.unit();
     for (int dim = 3; dim < 5; ++dim)
       for (int count = 1; count < 10; ++count) {
@@ -99,34 +99,34 @@ class SphereFitTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     Tensor points = Tensors.of(Tensors.vector(1, 2, 3));
     Optional<SphereFit> optional = SphereFit.of(points);
     assertFalse(optional.isPresent()); // because a single point is co-linear
   }
 
   @Test
-  public void testFailEmpty() {
+  void testFailEmpty() {
     assertThrows(Exception.class, () -> SphereFit.of(Tensors.empty()));
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     assertThrows(Exception.class, () -> SphereFit.of(RealScalar.ONE));
   }
 
   @Test
-  public void testFailRank3() {
+  void testFailRank3() {
     assertThrows(Exception.class, () -> SphereFit.of(LeviCivitaTensor.of(3)));
   }
 
   @Test
-  public void testFailUnstructured1() {
+  void testFailUnstructured1() {
     assertThrows(Exception.class, () -> SphereFit.of(Tensors.fromString("{{1, 2, 3}, {4, -5}}")));
   }
 
   @Test
-  public void testFailUnstructured2() {
+  void testFailUnstructured2() {
     assertThrows(Exception.class, () -> SphereFit.of(Tensors.fromString("{{1, 2, 3}, {4, -5}, {6, 7, 8}}")));
   }
 }

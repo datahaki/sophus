@@ -40,7 +40,7 @@ class HeManifoldTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(HeGroup.INSTANCE);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int n = 1; n < 3; ++n)
         for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
@@ -59,7 +59,7 @@ class HeManifoldTest {
   }
 
   @Test
-  public void testAffineBiinvariant() throws ClassNotFoundException, IOException {
+  void testAffineBiinvariant() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
@@ -78,7 +78,7 @@ class HeManifoldTest {
   }
 
   @Test
-  public void testAffineCenter() throws ClassNotFoundException, IOException {
+  void testAffineCenter() throws ClassNotFoundException, IOException {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {

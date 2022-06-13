@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2RigidMotionFitTest {
   @Test
-  public void testExact() {
+  void testExact() {
     Distribution distribution = NormalDistribution.standard();
     Scalar angle = RealScalar.of(2);
     Tensor rotation = RotationMatrix.of(angle);
@@ -35,7 +35,7 @@ class Se2RigidMotionFitTest {
   }
 
   @Test
-  public void testExact2() {
+  void testExact2() {
     Random random = new Random(7);
     Distribution distribution = NormalDistribution.standard();
     for (int n = 5; n < 11; ++n) {
@@ -51,7 +51,7 @@ class Se2RigidMotionFitTest {
   }
 
   @Test
-  public void testWeights() {
+  void testWeights() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 10, 3);
     Tensor target = RandomVariate.of(distribution, 10, 3);
@@ -61,7 +61,7 @@ class Se2RigidMotionFitTest {
   }
 
   @Test
-  public void testEmptyFail() {
+  void testEmptyFail() {
     assertThrows(Exception.class, () -> Se2RigidMotionFit.of(Tensors.empty(), Tensors.empty()));
     assertThrows(Exception.class, () -> Se2RigidMotionFit.of(Tensors.empty(), Tensors.empty(), Tensors.empty()));
   }

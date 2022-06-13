@@ -14,7 +14,7 @@ import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 
 class SoAlgebraTest {
   @Test
-  public void testHsS3() {
+  void testHsS3() {
     for (int n = 2; n < 7; ++n) {
       LieAlgebra lieAlgebra = SoAlgebra.of(n);
       Tensor ad = lieAlgebra.ad();

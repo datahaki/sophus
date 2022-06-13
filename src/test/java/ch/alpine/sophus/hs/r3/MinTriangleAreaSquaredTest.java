@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class MinTriangleAreaSquaredTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
@@ -32,7 +32,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testSimpleUnit() {
+  void testSimpleUnit() {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
       polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
@@ -43,7 +43,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testFive() {
+  void testFive() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.unit();
     for (int count = 0; count < 10; ++count) {
@@ -59,7 +59,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testFiveUnit() {
+  void testFiveUnit() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(1, "kg")));
     for (int count = 0; count < 10; ++count) {
@@ -75,7 +75,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testThree() {
+  void testThree() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 3, 3);
@@ -85,7 +85,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testTwo() {
+  void testTwo() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 2, 3);
@@ -95,7 +95,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testOne() {
+  void testOne() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor polygon = RandomVariate.of(distribution, 1, 3);
@@ -105,7 +105,7 @@ class MinTriangleAreaSquaredTest {
   }
 
   @Test
-  public void testEmptyFail() {
+  void testEmptyFail() {
     assertThrows(Exception.class, () -> MinTriangleAreaSquared.INSTANCE.origin(Tensors.empty()));
   }
 }

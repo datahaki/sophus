@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class RnBiinvariantMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(3));
     int length = 10;
     Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -36,7 +36,7 @@ class RnBiinvariantMeanTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     Distribution distribution = DiscreteUniformDistribution.of(10, 100);
     int length = 10;
     Tensor sequence = RandomVariate.of(distribution, length, 3);
@@ -47,7 +47,7 @@ class RnBiinvariantMeanTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertThrows(Exception.class, () -> RnBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
   }
 
@@ -55,7 +55,7 @@ class RnBiinvariantMeanTest {
       IterativeBiinvariantMean.argmax(RnGroup.INSTANCE, Chop._12);
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor sequence = Tensors.of( //
         RnGroup.INSTANCE.exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RnGroup.INSTANCE.exp(Tensors.vector(+0 + 0.3, 0, 0)), //
@@ -67,7 +67,7 @@ class RnBiinvariantMeanTest {
   }
 
   @Test
-  public void testConvergence() {
+  void testConvergence() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     final int d = 3;
     for (BarycentricCoordinate barycentricCoordinate : GbcHelper.barycentrics(RnGroup.INSTANCE))
@@ -83,7 +83,7 @@ class RnBiinvariantMeanTest {
   }
 
   @Test
-  public void testConvergenceExact() {
+  void testConvergenceExact() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;

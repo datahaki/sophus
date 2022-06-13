@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class Spd0ExponentialTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor x = RandomSample.of(rsi);
@@ -34,7 +34,7 @@ class Spd0ExponentialTest {
   }
 
   @Test
-  public void testMatrixExp() {
+  void testMatrixExp() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor x = RandomSample.of(rsi);
@@ -45,7 +45,7 @@ class Spd0ExponentialTest {
   }
 
   @Test
-  public void testMatrixLog() {
+  void testMatrixLog() {
     Spd0RandomSample spdRandomSample = new Spd0RandomSample(2, UniformDistribution.of(Clips.absolute(1)));
     for (int count = 0; count < 10; ++count) {
       Tensor x = RandomSample.of(spdRandomSample);
@@ -56,14 +56,14 @@ class Spd0ExponentialTest {
   }
 
   @Test
-  public void testExpNonSymmetricFail() {
+  void testExpNonSymmetricFail() {
     RandomSampleInterface rsi = new TSpdRandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor x = LowerTriangularize.of(RandomSample.of(rsi));
     assertThrows(Exception.class, () -> Spd0Exponential.INSTANCE.exp(x));
   }
 
   @Test
-  public void testLogNonSymmetricFail() {
+  void testLogNonSymmetricFail() {
     Spd0RandomSample spdRandomSample = new Spd0RandomSample(4, UniformDistribution.of(Clips.absolute(1)));
     Tensor g = LowerTriangularize.of(RandomSample.of(spdRandomSample));
     assertThrows(Exception.class, () -> Spd0Exponential.INSTANCE.log(g));

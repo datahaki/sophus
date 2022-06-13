@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class AbstractBSplineInterpolationTest {
   @Test
-  public void testS2() {
+  void testS2() {
     Tensor target = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {-1, 0, 0}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(SnManifold.INSTANCE, 2, target);
@@ -29,7 +29,7 @@ class AbstractBSplineInterpolationTest {
   }
 
   @Test
-  public void testS2Jacobi() {
+  void testS2Jacobi() {
     Tensor target = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {-1, 0, 0}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(SnManifold.INSTANCE, 2, target);

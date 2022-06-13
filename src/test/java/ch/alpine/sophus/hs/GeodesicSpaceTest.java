@@ -18,7 +18,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class GeodesicSpaceTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     GeodesicSpace lieGroupGeodesic = Se2CoveringGroup.INSTANCE;
     Tensor p = Tensors.vector(1, 2, 3);
     Tensor q = Tensors.vector(4, 5, 6);
@@ -29,7 +29,7 @@ class GeodesicSpaceTest {
   }
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     GeodesicSpace hsMidpoint = Serialization.copy(RnGroup.INSTANCE);
     Tensor tensor = hsMidpoint.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
     ExactTensorQ.require(tensor);

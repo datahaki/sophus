@@ -15,7 +15,7 @@ import ch.alpine.tensor.itp.InterpolatingPolynomial;
 
 class MonomialExtrapolationMaskTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(MonomialExtrapolationMask.INSTANCE.apply(1), Tensors.vector(1));
     assertEquals(MonomialExtrapolationMask.INSTANCE.apply(2), Tensors.vector(-1, 2));
     assertEquals(MonomialExtrapolationMask.INSTANCE.apply(3), Tensors.vector(1, -3, 3));
@@ -23,7 +23,7 @@ class MonomialExtrapolationMaskTest {
   }
 
   @Test
-  public void testInterp() {
+  void testInterp() {
     InterpolatingPolynomial interpolatingPolynomial = InterpolatingPolynomial.of(Tensors.vector(3, 4, 5, 6));
     Tensor values = Tensors.vector(4, 2, 7, -1);
     ScalarUnaryOperator scalarUnaryOperator = interpolatingPolynomial.scalarUnaryOperator(values);

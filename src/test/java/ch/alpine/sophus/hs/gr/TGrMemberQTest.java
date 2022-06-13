@@ -36,7 +36,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class TGrMemberQTest {
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     int n = 5;
     Tensor x = RandomSample.of(new GrRandomSample(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
@@ -54,7 +54,7 @@ class TGrMemberQTest {
   }
 
   @Test
-  public void testProjection() {
+  void testProjection() {
     for (int n = 3; n < 6; ++n) {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2); // 4 dimensional
       Tensor p = RandomSample.of(randomSampleInterface);
@@ -78,7 +78,7 @@ class TGrMemberQTest {
   }
 
   @Test
-  public void testDimensionsX() {
+  void testDimensionsX() {
     Random random = new Random(3);
     Distribution distribution = LogisticDistribution.of(0, 3);
     for (int n = 1; n < 6; ++n) {
@@ -96,7 +96,7 @@ class TGrMemberQTest {
   }
 
   @Test
-  public void testDimensionsExact() {
+  void testDimensionsExact() {
     Distribution distribution = PoissonDistribution.of(10);
     for (int n = 1; n < 6; ++n) {
       int fn = n;
@@ -115,7 +115,7 @@ class TGrMemberQTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new TGrMemberQ(null));
   }
 }

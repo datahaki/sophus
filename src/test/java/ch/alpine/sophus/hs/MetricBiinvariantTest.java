@@ -9,7 +9,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class MetricBiinvariantTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(MetricBiinvariant.EUCLIDEAN);
   }
 }

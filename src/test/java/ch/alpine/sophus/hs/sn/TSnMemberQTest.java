@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class TSnMemberQTest {
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     MemberQ memberQ = Serialization.copy(SnMemberQ.INSTANCE);
     memberQ.require(UnitVector.of(4, 3));
     TSnMemberQ tSnMemberQ = Serialization.copy(new TSnMemberQ(UnitVector.of(4, 3)));
@@ -31,7 +31,7 @@ class TSnMemberQTest {
   }
 
   @Test
-  public void testSnExpLog() {
+  void testSnExpLog() {
     for (int d = 1; d < 4; ++d) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(d);
       Tensor x = RandomSample.of(randomSampleInterface);
@@ -49,7 +49,7 @@ class TSnMemberQTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new TSnMemberQ(null));
   }
 }

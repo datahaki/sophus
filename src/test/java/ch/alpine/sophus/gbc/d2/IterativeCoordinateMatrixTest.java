@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class IterativeCoordinateMatrixTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     for (int k = 1; k < 5; ++k) {
       Genesis genesis = new IterativeCoordinate(MetricCoordinate.affine(), k);
@@ -34,7 +34,7 @@ class IterativeCoordinateMatrixTest {
   }
 
   @Test
-  public void testInside() {
+  void testInside() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     int count = 0;
     for (int k = 1; k < 5; ++k) {

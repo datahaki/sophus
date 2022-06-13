@@ -12,7 +12,7 @@ import ch.alpine.tensor.alg.Dimensions;
 
 class So2RandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor r1 = RandomSample.of(So2RandomSample.INSTANCE);
     Tensor r2 = RandomSample.of(SoRandomSample.of(2));
     assertEquals(Dimensions.of(r1), Dimensions.of(r2));

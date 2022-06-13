@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 class PlausibleRationalTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     // Scalar v = PlausibleRational.FUNCTION.apply(RealScalar.of(-0.8660254037844389));
     // System.out.println(v);
     //

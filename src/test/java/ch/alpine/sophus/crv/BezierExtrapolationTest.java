@@ -17,14 +17,14 @@ import ch.alpine.tensor.sca.Chop;
 
 class BezierExtrapolationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGroup.INSTANCE);
     for (int index = 2; index < 10; ++index)
       assertEquals(tensorUnaryOperator.apply(Range.of(0, index)), RealScalar.of(index));
   }
 
   @Test
-  public void testCircle2() {
+  void testCircle2() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Group.INSTANCE);
     Tensor tensor = tensorUnaryOperator.apply(Tensors.fromString("{{0, 0, 0}, {1, 1, " + Math.PI / 2 + "}}"));
     Tensor result = Tensors.vector(0, 2, -Math.PI);
@@ -32,7 +32,7 @@ class BezierExtrapolationTest {
   }
 
   @Test
-  public void testCircle3() {
+  void testCircle3() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Group.INSTANCE);
     Tensor tensor = tensorUnaryOperator.apply(Tensors.fromString("{{0, 0, 0}, {1, 1, " + Math.PI / 2 + "}, {0, 2, " + Math.PI + "}}"));
     Tensor result = Tensors.vector(-1, 1, -Math.PI * 1 / 2);
@@ -40,31 +40,31 @@ class BezierExtrapolationTest {
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(RnGroup.INSTANCE);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ONE));
   }
 
   @Test
-  public void testFailEmpty() {
+  void testFailEmpty() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Group.INSTANCE);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
   @Test
-  public void testFailSe2_1() {
+  void testFailSe2_1() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Group.INSTANCE);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.vector(1)));
   }
 
   @Test
-  public void testFailSe2() {
+  void testFailSe2() {
     TensorUnaryOperator tensorUnaryOperator = BezierExtrapolation.of(Se2Group.INSTANCE);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.vector(1, 2, 3)));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> BezierExtrapolation.of(null));
   }
 }

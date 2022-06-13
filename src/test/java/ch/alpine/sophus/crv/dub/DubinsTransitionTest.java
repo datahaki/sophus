@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class DubinsTransitionTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     TransitionSpace transitionSpace = Serialization.copy(DubinsTransitionSpace.of(RealScalar.of(2), DubinsPathComparators.LENGTH));
     Tensor start = Tensors.vector(1, 2, 3);
     Tensor end = Tensors.vector(3, -8, 1);
@@ -32,7 +32,7 @@ class DubinsTransitionTest {
   }
 
   @Test
-  public void testTrivial() {
+  void testTrivial() {
     TransitionSpace transitionSpace = DubinsTransitionSpace.of(RealScalar.of(1), DubinsPathComparators.LENGTH);
     Tensor start = Tensors.vector(0, 0, 0);
     Tensor end = Tensors.vector(4, 0, 0);
@@ -42,7 +42,7 @@ class DubinsTransitionTest {
   }
 
   @Test
-  public void testTrivial2() {
+  void testTrivial2() {
     TransitionSpace transitionSpace = DubinsTransitionSpace.of(RealScalar.of(1), DubinsPathComparators.LENGTH);
     Tensor start = Tensors.vector(0, 0, 0);
     Tensor end = Tensors.vector(4, 0, 0);

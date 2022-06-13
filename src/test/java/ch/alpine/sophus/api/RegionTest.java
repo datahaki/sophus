@@ -15,7 +15,7 @@ class RegionTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Some some = new Some() {
       @Override
       public boolean single(Object s) {

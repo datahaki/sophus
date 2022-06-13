@@ -24,7 +24,7 @@ class ClothoidSolutionsTest {
   private static final int ATTEMPTS = 3;
 
   @Test
-  public void testS1Odd() {
+  void testS1Odd() {
     Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1), RealScalar.of(0.3));
     Search cs2 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(-0.1), RealScalar.of(0.3));
     Tensor sol1 = cs1.lambdas();
@@ -33,7 +33,7 @@ class ClothoidSolutionsTest {
   }
 
   @Test
-  public void testS2Even() {
+  void testS2Even() {
     // Search cs1 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(+0.1),
     // RealScalar.of(+0.3));
     // Search cs2 = CLOTHOID_SOLUTIONS.new Search(RealScalar.of(-0.1),
@@ -46,7 +46,7 @@ class ClothoidSolutionsTest {
   }
 
   @Test
-  public void testRandomS1Odd() {
+  void testRandomS1Odd() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
@@ -62,7 +62,7 @@ class ClothoidSolutionsTest {
   }
 
   @Test
-  public void testRandomS2Even() {
+  void testRandomS2Even() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
@@ -78,7 +78,7 @@ class ClothoidSolutionsTest {
   }
 
   @Test
-  public void testS1Period2Pi() {
+  void testS1Period2Pi() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
@@ -94,7 +94,7 @@ class ClothoidSolutionsTest {
   }
 
   @Test
-  public void testS1Period2PiMod() {
+  void testS1Period2PiMod() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
@@ -111,7 +111,7 @@ class ClothoidSolutionsTest {
   }
 
   @Test
-  public void testS1Period2PiMirror() {
+  void testS1Period2PiMirror() {
     Distribution distribution = UniformDistribution.of(-20, 20);
     for (int count = 0; count < ATTEMPTS; ++count) {
       Scalar s1 = RandomVariate.of(distribution);

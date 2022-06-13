@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class PolygonCentroidTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 2; n < 10; ++n) {
       Tensor centroid = PolygonCentroid.of(CirclePoints.of(n));
       Tolerance.CHOP.requireAllZero(centroid);
@@ -29,13 +29,13 @@ class PolygonCentroidTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     Tensor centroid = PolygonCentroid.of(Tensors.fromString("{{2, 3}}"));
     assertEquals(centroid, Tensors.vector(2, 3));
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Random random = new Random();
     for (int count = 0; count < 100; ++count) {
       Tensor poly1 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), 3 + random.nextInt(3), 2));
@@ -54,7 +54,7 @@ class PolygonCentroidTest {
   }
 
   @Test
-  public void testTranslated() {
+  void testTranslated() {
     for (int n = 3; n < 10; ++n) {
       Tensor shift = RandomVariate.of(UniformDistribution.unit(), 2);
       Tensor centroid = PolygonCentroid.of(Tensor.of(CirclePoints.of(n).stream().map(shift::add)));
@@ -63,7 +63,7 @@ class PolygonCentroidTest {
   }
 
   @Test
-  public void testSingleFail() {
+  void testSingleFail() {
     assertThrows(Exception.class, () -> PolygonCentroid.of(Tensors.fromString("{{2, 3, 4}}")));
   }
 }

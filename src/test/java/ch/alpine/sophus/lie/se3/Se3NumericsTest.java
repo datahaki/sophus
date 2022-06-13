@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se3NumericsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Se3Numerics se3Numerics1 = new Se3Numerics(RealScalar.of(1e-2));
     Se3Numerics se3Numerics2 = new Se3Numerics(RealScalar.of(0.9e-2));
     Tensor diff = se3Numerics1.vector().subtract(se3Numerics2.vector());

@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 
 class DoTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Supplier<Tensor> supplier = new Supplier<>() {
       int count = 0;
 

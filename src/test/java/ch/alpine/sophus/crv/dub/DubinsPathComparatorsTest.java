@@ -19,13 +19,13 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class DubinsPathComparatorsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertNotNull(DubinsPathComparators.LENGTH);
     assertNotNull(DubinsPathComparators.TOTAL_CURVATURE);
   }
 
   @Test
-  public void testValid() {
+  void testValid() {
     Distribution distribution = UniformDistribution.of(-3, 3);
     Tensor start = RandomVariate.of(distribution, 3);
     Tensor end = RandomVariate.of(distribution, 3);

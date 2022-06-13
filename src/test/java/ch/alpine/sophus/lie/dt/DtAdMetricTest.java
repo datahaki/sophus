@@ -22,7 +22,7 @@ class DtAdMetricTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     RandomSampleInterface rsi = new Dt1FRandomSample(ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
     Tensor m = RandomSample.of(rsi);
     DtAdMetric stAdMetric = new DtAdMetric(m);
@@ -37,7 +37,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testSt1ExpLog() {
+  void testSt1ExpLog() {
     Scalar u = RealScalar.of(7);
     Scalar v = RealScalar.of(3);
     Tensor inp = Tensors.of(u, v);
@@ -47,7 +47,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testSt1LogExp() {
+  void testSt1LogExp() {
     Scalar u = RealScalar.of(7);
     Scalar v = RealScalar.of(3);
     Tensor inp = Tensors.of(u, v);
@@ -57,7 +57,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testSt1ExpLogRandom() {
+  void testSt1ExpLogRandom() {
     for (int count = 0; count < 10; ++count) {
       Distribution distribution = NormalDistribution.standard();
       Tensor inp = Tensors.of( //
@@ -70,7 +70,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testSt1ExpLogSingular() {
+  void testSt1ExpLogSingular() {
     for (int count = 0; count < 10; ++count) {
       Distribution distribution = NormalDistribution.standard();
       Tensor inp = Tensors.of( //
@@ -83,7 +83,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testSt1Singular() {
+  void testSt1Singular() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = Tensors.vector(0, Math.random());
       Tensor xy = DtGroup.INSTANCE.exp(inp);
@@ -93,7 +93,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testExpLog() {
+  void testExpLog() {
     for (int count = 0; count < 10; ++count) {
       Scalar u = RealScalar.of(Math.random());
       Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
@@ -105,7 +105,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testLogExp() {
+  void testLogExp() {
     for (int count = 0; count < 10; ++count) {
       Scalar u = RealScalar.of(Math.random());
       Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
@@ -117,7 +117,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testSingular() {
+  void testSingular() {
     Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
     Tensor inp = Tensors.of(RealScalar.ZERO, v);
     Tensor xy = DtGroup.INSTANCE.exp(inp);
@@ -126,7 +126,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testLogInv() {
+  void testLogInv() {
     RandomSampleInterface rsi = new DtRandomSample(2, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
     Tensor lambda_t = RandomSample.of(rsi);
     DtGroupElement stGroupElement = DtGroup.INSTANCE.element(lambda_t);
@@ -139,7 +139,7 @@ class DtAdMetricTest {
   }
 
   @Test
-  public void testAdLog() {
+  void testAdLog() {
     for (int count = 0; count < 10; ++count) {
       RandomSampleInterface rsi = new DtRandomSample(2, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
       Tensor g = RandomSample.of(rsi);

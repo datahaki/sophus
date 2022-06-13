@@ -31,7 +31,7 @@ class ClothoidCurveTest {
   }
 
   @Test
-  public void testComparison() {
+  void testComparison() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 0.002);
     for (int count = 0; count < 100; ++count) {
@@ -47,7 +47,7 @@ class ClothoidCurveTest {
   }
 
   @Test
-  public void testDistinct() {
+  void testDistinct() {
     Tensor p = Array.zeros(3);
     Tensor q = Tensors.vector(-3.7, 0.3, 3.142);
     Tensor m1 = Clothoid1.INSTANCE.curve(p, q).apply(RationalScalar.HALF);

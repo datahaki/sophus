@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
 class StAlgebraTest {
   @Test
-  public void test5x3() {
+  void test5x3() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 3, 8);
     assertFalse(hsAlgebra.isHTrivial());
     assertEquals(hsAlgebra.dimM(), 9);
@@ -30,7 +30,7 @@ class StAlgebraTest {
   }
 
   @Test
-  public void test5x2Geodesic() {
+  void test5x2Geodesic() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 2, 8);
     assertFalse(hsAlgebra.isHTrivial());
     assertEquals(hsAlgebra.dimM(), 7);
@@ -43,7 +43,7 @@ class StAlgebraTest {
   }
 
   @Test
-  public void test5x2Bary() {
+  void test5x2Bary() {
     HsAlgebra hsAlgebra = StAlgebra.of(5, 2, 8);
     assertFalse(hsAlgebra.isHTrivial());
     assertEquals(hsAlgebra.dimM(), 7);
@@ -60,13 +60,13 @@ class StAlgebraTest {
   }
 
   @Test
-  public void testInteresting() {
+  void testInteresting() {
     StAlgebra.of(5, 5, 8);
     assertThrows(Exception.class, () -> StAlgebra.of(5, 6, 8));
   }
 
   @Test
-  public void testFails() {
+  void testFails() {
     assertThrows(Exception.class, () -> StAlgebra.of(5, -1, 8));
   }
 }

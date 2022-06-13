@@ -34,7 +34,7 @@ class HarborBiinvariantVectorTest {
   }
 
   @Test
-  public void testRn() {
+  void testRn() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = RnGroup.INSTANCE;
@@ -52,7 +52,7 @@ class HarborBiinvariantVectorTest {
   }
 
   @Test
-  public void testSe2C() {
+  void testSe2C() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = Se2CoveringGroup.INSTANCE;
@@ -74,7 +74,7 @@ class HarborBiinvariantVectorTest {
       { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);

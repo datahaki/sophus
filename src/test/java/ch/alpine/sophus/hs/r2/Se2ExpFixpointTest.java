@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2ExpFixpointTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor velocity = Tensors.fromString("{3[m*s^-1], .2[m*s^-1], 0.3[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
     for (Tensor _t : Subdivide.of(Quantity.of(-2.1, "s"), Quantity.of(10, "s"), 13)) {
@@ -27,7 +27,7 @@ class Se2ExpFixpointTest {
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0.3[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
     for (Tensor _t : Subdivide.of(Quantity.of(-5.1, "s"), Quantity.of(10, "s"), 17)) {
@@ -37,14 +37,14 @@ class Se2ExpFixpointTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity);
     assertFalse(optional.isPresent());
   }
 
   @Test
-  public void testEmptyChop() {
+  void testEmptyChop() {
     Tensor velocity = Tensors.fromString("{-3[m*s^-1], 1.2[m*s^-1], -0.00003[s^-1]}");
     Optional<Tensor> optional = Se2ExpFixpoint.of(velocity, Chop._03);
     assertFalse(optional.isPresent());

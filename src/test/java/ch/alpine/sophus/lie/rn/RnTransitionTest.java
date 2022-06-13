@@ -19,7 +19,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 class RnTransitionTest {
   @Test
-  public void testSampled() throws ClassNotFoundException, IOException {
+  void testSampled() throws ClassNotFoundException, IOException {
     Tensor start = Tensors.vector(1, 2);
     Tensor end = Tensors.vector(10, 2);
     RnTransition rnTransition = //
@@ -29,7 +29,7 @@ class RnTransitionTest {
   }
 
   @Test
-  public void testLinearized() {
+  void testLinearized() {
     Tensor start = Tensors.vector(1, 2);
     Tensor end = Tensors.vector(10, 2);
     RnTransition rnTransition = RnTransitionSpace.INSTANCE.connect(start, end);
@@ -38,7 +38,7 @@ class RnTransitionTest {
   }
 
   @Test
-  public void testWrapped() {
+  void testWrapped() {
     Tensor start = Tensors.vector(1, 2);
     Tensor end = Tensors.vector(10, 2);
     RnTransition rnTransition = RnTransitionSpace.INSTANCE.connect(start, end);
@@ -52,7 +52,7 @@ class RnTransitionTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     Tensor start = Tensors.vector(1, 2);
     Tensor end = Tensors.vector(10, 2);
     RnTransition rnTransition = RnTransitionSpace.INSTANCE.connect(start, end);

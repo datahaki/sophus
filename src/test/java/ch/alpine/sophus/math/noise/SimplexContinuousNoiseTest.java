@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class SimplexContinuousNoiseTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor noise = Tensors.vector(i -> DoubleScalar.of(10 * (1 + SimplexContinuousNoise.FUNCTION.at(0.1 * i, 0.1 + i))), 1000);
     Tensor bins = BinCounts.of(noise);
     assertEquals(bins.length(), 20);
@@ -33,13 +33,13 @@ class SimplexContinuousNoiseTest {
   }
 
   @Test
-  public void testExample() {
+  void testExample() {
     double value = SimplexContinuousNoise.FUNCTION.at(0.3, 300.3, -600.5);
     assertEquals(value, -0.12579872366423636);
   }
 
   @Test
-  public void testMulti1() {
+  void testMulti1() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Clip clip = Clips.absoluteOne();
     for (int index = 0; index < 1000; ++index) {
@@ -50,7 +50,7 @@ class SimplexContinuousNoiseTest {
   }
 
   @Test
-  public void testMulti3() {
+  void testMulti3() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Clip clip = Clips.absoluteOne();
     for (int index = 0; index < 1000; ++index) {
@@ -63,7 +63,7 @@ class SimplexContinuousNoiseTest {
   }
 
   @Test
-  public void testMulti4() {
+  void testMulti4() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     Clip clip = Clips.absoluteOne();
     for (int index = 0; index < 1000; ++index) {

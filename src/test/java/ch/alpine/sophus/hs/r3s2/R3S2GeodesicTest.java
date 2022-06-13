@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class R3S2GeodesicTest {
   @Test
-  public void testZero() {
+  void testZero() {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{8, 8, 8}, {0, 1, 0}}"), //
@@ -25,7 +25,7 @@ class R3S2GeodesicTest {
   }
 
   @Test
-  public void testCurve() {
+  void testCurve() {
     Tensor p = Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}");
     Tensor q = Tensors.fromString("{{8, 8, 8}, {0, 1, 0}}");
     ScalarTensorFunction curve = R3S2Geodesic.INSTANCE.curve(p, q);
@@ -36,7 +36,7 @@ class R3S2GeodesicTest {
   }
 
   @Test
-  public void testOne() {
+  void testOne() {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{8, 8, 8}, {0, 1, 0}}"), //
@@ -45,7 +45,7 @@ class R3S2GeodesicTest {
   }
 
   @Test
-  public void testHalfShift() {
+  void testHalfShift() {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{8, 8, 8}, {1, 0, 0}}"), //
@@ -54,7 +54,7 @@ class R3S2GeodesicTest {
   }
 
   @Test
-  public void testHalfRotate() {
+  void testHalfRotate() {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{1, 2, 3}, {0, 1, 0}}"), //
@@ -64,7 +64,7 @@ class R3S2GeodesicTest {
   }
 
   @Test
-  public void testHalfSome() {
+  void testHalfSome() {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{8, 8, 8}, {0, 1, 0}}"), //
@@ -76,7 +76,7 @@ class R3S2GeodesicTest {
   }
 
   @Test
-  public void testSphereRepro() {
+  void testSphereRepro() {
     Tensor n0 = UnitVector.of(3, 0);
     Tensor n1 = UnitVector.of(3, 1);
     Tensor p = Tensors.of(n0, n0);

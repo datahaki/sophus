@@ -34,20 +34,20 @@ class S2LoxodromeTest {
   }
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(S2Loxodrome.of(RealScalar.of(0.1)));
     Tensor tensor = Subdivide.of(-1, 100, 60).map(scalarTensorFunction);
     assertTrue(tensor.stream().allMatch(SnMemberQ.INSTANCE::test));
   }
 
   @Test
-  public void testParamZeo() {
+  void testParamZeo() {
     Tensor first = S2Loxodrome.of(0.3).apply(RealScalar.ZERO);
     assertEquals(first, UnitVector.of(3, 0));
   }
 
   @Test
-  public void testPrevious() {
+  void testPrevious() {
     Scalar angle = RandomVariate.of(NormalDistribution.standard());
     Scalar scalar = RandomVariate.of(NormalDistribution.standard());
     Tolerance.CHOP.requireClose( //

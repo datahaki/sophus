@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2CoveringIntegratorTest {
   @Test
-  public void testFullRotation() {
+  void testFullRotation() {
     Tensor g = Tensors.vector(10, 0, 0).unmodifiable();
     for (Tensor _x : Subdivide.of(-2, 10, 72)) {
       Tensor x = Tensors.of(_x, RealScalar.ZERO, Pi.TWO);
@@ -44,7 +44,7 @@ class Se2CoveringIntegratorTest {
   }
 
   @Test
-  public void testExpSubstitute() {
+  void testExpSubstitute() {
     Tensor mat = exp_of(1, 2, .3);
     Tensor vec = Se2CoveringIntegrator.INSTANCE.spin(Array.zeros(3), Tensors.vector(1, 2, .3));
     Tensor v0 = Se2CoveringGroup.INSTANCE.exp(Tensors.vector(1, 2, .3));
@@ -54,7 +54,7 @@ class Se2CoveringIntegratorTest {
   }
 
   @Test
-  public void testExpSubstitute2() {
+  void testExpSubstitute2() {
     for (int index = 0; index < 20; ++index) {
       Tensor rnd = RandomVariate.of(NormalDistribution.standard(), 3);
       Tensor mat = exp_of(rnd.Get(0), rnd.Get(1), rnd.Get(2));
@@ -72,7 +72,7 @@ class Se2CoveringIntegratorTest {
   }
 
   @Test
-  public void testUnits() {
+  void testUnits() {
     Tensor spin = Se2CoveringIntegrator.INSTANCE.spin( //
         Tensors.fromString("{1[m], 2[m], 3}"), //
         Tensors.fromString("{0.4[m], -0.3[m], 0.7}"));

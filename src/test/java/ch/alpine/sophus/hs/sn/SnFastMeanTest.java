@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnFastMeanTest {
   @Test
-  public void testSnNormalized() {
+  void testSnNormalized() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(1, 0.2);
     for (int d = 2; d < 6; ++d)

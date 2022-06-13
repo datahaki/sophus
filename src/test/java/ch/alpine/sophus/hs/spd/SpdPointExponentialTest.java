@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SpdPointExponentialTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
@@ -24,7 +24,7 @@ class SpdPointExponentialTest {
   }
 
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);

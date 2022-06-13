@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SoTransportTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     Tensor m = RandomVariate.of(distribution, 3, 3);
     Tensor ve = Transpose.of(m).subtract(m);

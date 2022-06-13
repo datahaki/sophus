@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class GardenCoordinateTest {
   @Test
-  public void testR1equiv() {
+  void testR1equiv() {
     // in R^d we have w^H = w^G
     // but not in R2 etc.
     Manifold manifold = RnGroup.INSTANCE;
@@ -37,7 +37,7 @@ class GardenCoordinateTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> GardenCoordinate.of(RnGroup.INSTANCE, null, HilbertMatrix.of(10, 3)));
   }
 }

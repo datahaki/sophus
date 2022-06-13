@@ -25,7 +25,7 @@ class Sl2GroupElementTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor vector = Tensors.vector(-2, 7, 3);
     Sl2GroupElement sl2GroupElement = Sl2Group.INSTANCE.element(vector);
     Sl2GroupElement inverse = sl2GroupElement.inverse();
@@ -34,7 +34,7 @@ class Sl2GroupElementTest {
   }
 
   @Test
-  public void testAdjointId() {
+  void testAdjointId() {
     Sl2GroupElement sl2GroupElement = Sl2Group.INSTANCE.element(Tensors.vector(0, 0, 1));
     Tensor matrix = adjoint(sl2GroupElement);
     ExactTensorQ.require(matrix);
@@ -42,7 +42,7 @@ class Sl2GroupElementTest {
   }
 
   @Test
-  public void testAdjointCombine() {
+  void testAdjointCombine() {
     Random random = new Random(3);
     RandomSampleInterface rsi = Sl2RandomSample.of( //
         DiscreteUniformDistribution.of(-10, 11), //
@@ -63,7 +63,7 @@ class Sl2GroupElementTest {
   }
 
   @Test
-  public void testFailZero() {
+  void testFailZero() {
     assertThrows(Exception.class, () -> Sl2Group.INSTANCE.element(Tensors.vector(1, 2, 0)));
   }
 }

@@ -24,7 +24,7 @@ import ch.alpine.tensor.qty.Quantity;
 
 class DubinsTransitionSpaceTest {
   @Test
-  public void testLengthUnitless() throws ClassNotFoundException, IOException {
+  void testLengthUnitless() throws ClassNotFoundException, IOException {
     Tensor start = Tensors.fromString("{1, 2}").append(Pi.HALF);
     Tensor end = Tensors.fromString("{2, 6, 0}");
     Transition transition = Serialization.copy(DubinsTransitionSpace.of(RealScalar.ONE, DubinsPathComparators.LENGTH).connect(start, end));
@@ -34,7 +34,7 @@ class DubinsTransitionSpaceTest {
   }
 
   @Test
-  public void testLengthUnits() {
+  void testLengthUnits() {
     Tensor start = Tensors.fromString("{1[m], 2[m]}").append(Pi.HALF);
     Tensor end = Tensors.fromString("{2[m], 6[m], 0}");
     Transition transition = DubinsTransitionSpace.of(Quantity.of(1, "m"), DubinsPathComparators.LENGTH).connect(start, end);
@@ -44,7 +44,7 @@ class DubinsTransitionSpaceTest {
   }
 
   @Test
-  public void testSamples() {
+  void testSamples() {
     Tensor start = Tensors.fromString("{2, 1, 0}");
     Tensor end = Tensors.fromString("{6, 1, 0}");
     TransitionSpace transitionSpace = DubinsTransitionSpace.of(RealScalar.ONE, DubinsPathComparators.LENGTH);
@@ -65,7 +65,7 @@ class DubinsTransitionSpaceTest {
   }
 
   @Test
-  public void testWrap() {
+  void testWrap() {
     Tensor start = Tensors.fromString("{2, 1, 0}");
     Tensor end = Tensors.fromString("{6, 1, 0}");
     TransitionSpace transitionSpace = DubinsTransitionSpace.of(RealScalar.ONE, DubinsPathComparators.LENGTH);
@@ -88,13 +88,13 @@ class DubinsTransitionSpaceTest {
   }
 
   @Test
-  public void testRadiusFail() {
+  void testRadiusFail() {
     assertThrows(Exception.class, () -> DubinsTransitionSpace.of(RealScalar.of(0.0), DubinsPathComparators.LENGTH));
     assertThrows(Exception.class, () -> DubinsTransitionSpace.of(RealScalar.of(-0.1), DubinsPathComparators.LENGTH));
   }
 
   @Test
-  public void testComparatorFail() {
+  void testComparatorFail() {
     DubinsTransitionSpace.of(RealScalar.of(1.0), DubinsPathComparators.LENGTH);
     assertThrows(Exception.class, () -> DubinsTransitionSpace.of(RealScalar.of(1.0), null));
   }

@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicFIR2Test {
   @Test
-  public void testTranslation() throws ClassNotFoundException, IOException {
+  void testTranslation() throws ClassNotFoundException, IOException {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(1, 1, 0);
     Tensor r = Tensors.vector(1, 2, 1);
@@ -40,7 +40,7 @@ class GeodesicFIR2Test {
   }
 
   @Test
-  public void testRotation() {
+  void testRotation() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(0, 0, 2);
     Scalar alpha = RealScalar.of(0.5);
@@ -51,7 +51,7 @@ class GeodesicFIR2Test {
   }
 
   @Test
-  public void testCombined() {
+  void testCombined() {
     Scalar alpha = RealScalar.of(0.5);
     TensorUnaryOperator causalFilter = //
         CausalFilter.of(() -> GeodesicFIR2.of(Se2Group.INSTANCE, alpha));

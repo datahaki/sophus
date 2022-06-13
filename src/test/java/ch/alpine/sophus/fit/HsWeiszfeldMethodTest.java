@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HsWeiszfeldMethodTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random(3);
     SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();

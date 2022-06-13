@@ -22,7 +22,7 @@ class SpdMemberQTest {
       Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 10; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       SpdMemberQ.INSTANCE.require(RandomSample.of(rsi));
@@ -30,7 +30,7 @@ class SpdMemberQTest {
   }
 
   @Test
-  public void testBiinvarianceSon() {
+  void testBiinvarianceSon() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(3);
     for (Biinvariants biinvariants : BIINVARIANTS)
@@ -53,7 +53,7 @@ class SpdMemberQTest {
   }
 
   @Test
-  public void testBiinvarianceGln() {
+  void testBiinvarianceGln() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(2);
     for (Biinvariants biinvariants : BIINVARIANTS) {

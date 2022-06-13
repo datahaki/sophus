@@ -17,7 +17,7 @@ import ch.alpine.tensor.red.Nest;
 
 class MSpline4CurveSubdivisionTest {
   @Test
-  public void testBivariate() {
+  void testBivariate() {
     CurveSubdivision curveSubdivision = MSpline4CurveSubdivision.of(RnBiinvariantMean.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
@@ -27,7 +27,7 @@ class MSpline4CurveSubdivisionTest {
   }
 
   @Test
-  public void testUnivariate() {
+  void testUnivariate() {
     CurveSubdivision curveSubdivision = MSpline4CurveSubdivision.of(RnBiinvariantMean.INSTANCE);
     Tensor tensor = curveSubdivision.string(UnitVector.of(5, 2));
     assertEquals(tensor, Tensors.fromString("{0, 1/16, 5/16, 5/8, 5/8, 5/16, 1/16, 0}"));

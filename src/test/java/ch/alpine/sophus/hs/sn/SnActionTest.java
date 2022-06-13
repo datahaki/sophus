@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnActionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar scalar = RealScalar.of(0.5);
     Tensor tensor = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"), //

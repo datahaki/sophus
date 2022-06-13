@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class DubinsPathGeneratorTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{" + Math.PI / 2 + "[m], 10[m], " + Math.PI / 2 + "[m]}"));
     Tensor g0 = Tensors.fromString("{0[m], 0[m], 0}").unmodifiable();
     ScalarTensorFunction scalarTensorFunction = dubinsPath.sampler(g0);
@@ -40,7 +40,7 @@ class DubinsPathGeneratorTest {
   }
 
   @Test
-  public void testZeroLength() {
+  void testZeroLength() {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{0[m], 0[m], 0[m]}"));
     Tensor g0 = Tensors.fromString("{1[m], 2[m], 3}").unmodifiable();
     assertTrue(Scalars.isZero(dubinsPath.length()));
@@ -49,7 +49,7 @@ class DubinsPathGeneratorTest {
   }
 
   @Test
-  public void testFail() throws ClassNotFoundException, IOException {
+  void testFail() throws ClassNotFoundException, IOException {
     DubinsPath dubinsPath = DubinsPath.of(DubinsType.LSR, Quantity.of(1, "m"), Tensors.fromString("{" + Math.PI / 2 + "[m], 10[m], " + Math.PI / 2 + "[m]}"));
     Tensor g0 = Tensors.fromString("{0[m], 0[m], 0}").unmodifiable();
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(dubinsPath.sampler(g0));

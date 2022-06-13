@@ -27,26 +27,26 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2GroupTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Se2GroupElement se2GroupElement = Se2Group.INSTANCE.element(Tensors.vector(1, 2, 2 * Math.PI + 3));
     Tensor tensor = se2GroupElement.combine(Tensors.vector(0, 0, 0));
     assertEquals(tensor, Tensors.vector(1, 2, 3));
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor split = Se2Group.INSTANCE.split(Tensors.vector(0, 0, 0), Tensors.vector(10, 0, 1), RealScalar.of(0.7));
     Chop._13.requireClose(split, Tensors.fromString("{7.071951896570488, -1.0688209919859546, 0.7}"));
   }
 
   @Test
-  public void testModPi() {
+  void testModPi() {
     Tensor split = Se2Group.INSTANCE.split(Tensors.vector(0, 0, 10), Tensors.vector(0, 0, 10), RealScalar.of(0.738));
     Chop._13.requireClose(split, Tensors.of(RealScalar.ZERO, RealScalar.ZERO, So2.MOD.apply(RealScalar.of(10))));
   }
 
   @Test
-  public void testBiinvariantMean() {
+  void testBiinvariantMean() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(-10, 8);
     Distribution wd = UniformDistribution.unit();
@@ -62,7 +62,7 @@ class Se2GroupTest {
   }
 
   @Test
-  public void testSimple3() {
+  void testSimple3() {
     int n = 5 + new Random().nextInt(5);
     Tensor sequence = RandomSample.of(Se2RandomSample.of(LogNormalDistribution.standard()), n);
     TensorUnaryOperator tuo = Biinvariants.HARBOR.distances(Se2Group.INSTANCE, sequence);
@@ -74,7 +74,7 @@ class Se2GroupTest {
   }
 
   @Test
-  public void testUnits() {
+  void testUnits() {
     Tensor p = Tensors.fromString("{4.9[m], 4.9[m], 0.9}");
     Tensor q = Tensors.fromString("{5.0[m], 5.0[m], 1.0}");
     Tensor r = Tensors.fromString("{5.1[m], 5.1[m], 1.1}");

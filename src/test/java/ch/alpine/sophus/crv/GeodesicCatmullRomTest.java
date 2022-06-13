@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicCatmullRomTest {
   @Test
-  public void testUniformInterpolatory() throws ClassNotFoundException, IOException {
+  void testUniformInterpolatory() throws ClassNotFoundException, IOException {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 3);
     TensorUnaryOperator centripedalKnotSpacing = KnotSpacing.uniform();
     Tensor knots = centripedalKnotSpacing.apply(control);
@@ -43,7 +43,7 @@ class GeodesicCatmullRomTest {
   }
 
   @Test
-  public void testCentripetalInterpolatory() {
+  void testCentripetalInterpolatory() {
     GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
     Tensor control = Tensors.empty();
     for (int index = 0; index < 5; index++)
@@ -58,14 +58,14 @@ class GeodesicCatmullRomTest {
   }
 
   @Test
-  public void testLengthFail() {
+  void testLengthFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 3, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
     assertThrows(Exception.class, () -> GeodesicCatmullRom.of(RnGroup.INSTANCE, knots, control));
   }
 
   @Test
-  public void testKnotsInconsistentFail() {
+  void testKnotsInconsistentFail() {
     Tensor control = RandomVariate.of(UniformDistribution.unit(), 5, 7);
     Tensor knots = KnotSpacing.uniform().apply(control);
     GeodesicCatmullRom.of(RnGroup.INSTANCE, knots, control);

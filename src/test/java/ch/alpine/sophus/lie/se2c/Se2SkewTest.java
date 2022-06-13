@@ -18,13 +18,13 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2SkewTest {
   @Test
-  public void testZero() {
+  void testZero() {
     Tensor tensor = Se2Skew.logflow(RealScalar.ZERO);
     assertEquals(tensor, IdentityMatrix.of(2));
   }
 
   @Test
-  public void testFunctionM() {
+  void testFunctionM() {
     for (Tensor _angle : Subdivide.of(-4, 4, 20)) {
       Scalar angle = (Scalar) _angle;
       Tensor m1 = Se2Skew.logflow(angle);
@@ -34,20 +34,20 @@ class Se2SkewTest {
   }
 
   @Test
-  public void testSingularity0() {
+  void testSingularity0() {
     Tensor tensor = Se2Skew.logflow(RealScalar.of(Double.MIN_VALUE));
     Chop._40.requireClose(tensor, IdentityMatrix.of(2));
   }
 
   @Test
-  public void testSingularityPi() {
+  void testSingularityPi() {
     Tensor tensor = Se2Skew.logflow(Pi.VALUE);
     Tensor matrix = Tensors.matrix(new Scalar[][] { { RealScalar.ZERO, Pi.HALF }, { Pi.HALF.negate(), RealScalar.ZERO } });
     Chop._14.requireClose(tensor, matrix);
   }
 
   @Test
-  public void testSe2Exp() {
+  void testSe2Exp() {
     Tensor xy = Tensors.vector(2, 3).unmodifiable();
     Scalar angle = RealScalar.of(0.2);
     Tensor csk = Se2Skew.logflow(angle);

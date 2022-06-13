@@ -21,7 +21,7 @@ import ch.alpine.tensor.mat.re.Det;
 
 class SoRandomSampleTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(SoRandomSample.of(n));
       for (int count = 0; count < 5; ++count) {
@@ -36,7 +36,7 @@ class SoRandomSampleTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     assertThrows(Exception.class, () -> SoRandomSample.of(0));
   }
 }

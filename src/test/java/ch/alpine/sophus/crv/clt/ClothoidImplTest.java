@@ -21,7 +21,7 @@ import ch.alpine.tensor.num.Pi;
 
 class ClothoidImplTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     LagrangeQuadratic lagrangeQuadratic = LagrangeQuadratic.interp(Pi.HALF, Pi.TWO, Pi.VALUE);
     for (ClothoidIntegration clothoidIntegration : ClothoidIntegrations.values()) {
       ClothoidIntegral clothoidIntegral = clothoidIntegration.clothoidIntegral(lagrangeQuadratic);
@@ -30,7 +30,7 @@ class ClothoidImplTest {
   }
 
   @Test
-  public void testProd() {
+  void testProd() {
     Scalar z = ComplexScalar.of(2, 3);
     Scalar a = ComplexScalar.of(5, 11);
     Tensor vector = Tensors.vector(5, 11);
@@ -42,7 +42,7 @@ class ClothoidImplTest {
   }
 
   @Test
-  public void testFinal() {
+  void testFinal() {
     assertTrue(Modifier.isFinal(ClothoidImpl.class.getModifiers()));
   }
 }

@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 class BiinvariantMeanExtrapolationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2));
@@ -30,7 +30,7 @@ class BiinvariantMeanExtrapolationTest {
   }
 
   @Test
-  public void testSeries() {
+  void testSeries() {
     TensorUnaryOperator tensorUnaryOperator = new BiinvariantMeanExtrapolation( //
         RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     Distribution distribution = DiscreteUniformDistribution.of(3, 12);

@@ -25,7 +25,7 @@ class SnRotationMatrixTest {
   private static final Distribution UNIFORM = NormalDistribution.standard();
 
   @Test
-  public void testMatch3D() {
+  void testMatch3D() {
     for (int count = 0; count < 20; ++count) {
       Tensor a = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
       Tensor b = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, 3));
@@ -42,7 +42,7 @@ class SnRotationMatrixTest {
   }
 
   @Test
-  public void testTargetNDim() {
+  void testTargetNDim() {
     for (int d = 2; d < 6; ++d)
       for (int count = 0; count < 10; ++count) {
         Tensor a = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, d));
@@ -57,7 +57,7 @@ class SnRotationMatrixTest {
   }
 
   @Test
-  public void testTargetSn() {
+  void testTargetSn() {
     for (int d = 1; d < 6; ++d) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(d);
       for (int count = 0; count < 10; ++count) {

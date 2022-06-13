@@ -14,14 +14,14 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class HnMemberQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 2; n < 10; ++n)
       HnMemberQ.INSTANCE.require(UnitVector.of(n, n - 1));
     assertFalse(HnMemberQ.INSTANCE.test(UnitVector.of(4, 1)));
   }
 
   @Test
-  public void testMove() {
+  void testMove() {
     for (int n = 2; n < 10; ++n) {
       Tensor x = RandomVariate.of(NormalDistribution.standard(), n, n);
       x = new TSopqProject(n - 1, 1).apply(x);

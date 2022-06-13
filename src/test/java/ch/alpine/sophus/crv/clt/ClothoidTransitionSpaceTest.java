@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class ClothoidTransitionSpaceTest {
   @Test
-  public void testLength() throws ClassNotFoundException, IOException {
+  void testLength() throws ClassNotFoundException, IOException {
     Tensor start = Tensors.fromString("{1[m], 1[m], 0}");
     Tensor end = Tensors.fromString("{2[m], 2[m]}").append(Pi.HALF);
     Transition transition = Serialization.copy(ClothoidTransitionSpace.ANALYTIC).connect(start, end);
@@ -36,7 +36,7 @@ class ClothoidTransitionSpaceTest {
   }
 
   @Test
-  public void testSamples() {
+  void testSamples() {
     Tensor start = Tensors.fromString("{1[m], 2[m], 1}");
     Tensor end = Tensors.fromString("{1[m], 6[m], 3}");
     Transition transition = ClothoidTransitionSpace.ANALYTIC.connect(start, end);
@@ -58,7 +58,7 @@ class ClothoidTransitionSpaceTest {
   }
 
   @Test
-  public void testWrap() {
+  void testWrap() {
     Tensor start = Tensors.fromString("{1[m], 2[m], 1}");
     Tensor end = Tensors.fromString("{1[m], 6[m], 3}");
     Transition transition = ClothoidTransitionSpace.ANALYTIC.connect(start, end);

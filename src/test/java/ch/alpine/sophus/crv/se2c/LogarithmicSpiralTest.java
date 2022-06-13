@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class LogarithmicSpiralTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarTensorFunction scalarTensorFunction = LogarithmicSpiral.of(2, 0.1759);
     Chop._12.requireClose(scalarTensorFunction.apply(RealScalar.ZERO), //
         Tensors.vector(2, 0, 1.3966775374758775));
@@ -21,7 +21,7 @@ class LogarithmicSpiralTest {
   }
 
   @Test
-  public void testScalars() {
+  void testScalars() {
     ScalarTensorFunction scalarTensorFunction = LogarithmicSpiral.of(RealScalar.of(2), RealScalar.of(0.1759));
     Chop._12.requireClose(scalarTensorFunction.apply(RealScalar.ZERO), //
         Tensors.vector(2, 0, 1.3966775374758775));
@@ -30,7 +30,7 @@ class LogarithmicSpiralTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> LogarithmicSpiral.of(RealScalar.of(2), null));
     assertThrows(Exception.class, () -> LogarithmicSpiral.of(null, RealScalar.of(2)));
   }

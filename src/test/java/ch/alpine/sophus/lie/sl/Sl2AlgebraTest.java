@@ -33,7 +33,7 @@ class Sl2AlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
   @Test
-  public void testBasisA() {
+  void testBasisA() {
     Distribution local = UniformDistribution.of(-0.3, 0.3);
     Tensor x = RandomVariate.of(local, 3);
     Tensor y = RandomVariate.of(local, 3);
@@ -65,7 +65,7 @@ class Sl2AlgebraTest {
   }
 
   @Test
-  public void testH() {
+  void testH() {
     LieAlgebra lieAlgebra = Sl2Algebra.INSTANCE;
     Tensor ad = lieAlgebra.ad();
     Tensor g = RandomVariate.of(distribution, ad.length());
@@ -79,7 +79,7 @@ class Sl2AlgebraTest {
   }
 
   @Test
-  public void testHe() {
+  void testHe() {
     LieAlgebra lieAlgebra = Sl2Algebra.INSTANCE;
     Tensor ad = lieAlgebra.ad();
     Tensor g1 = RandomVariate.of(distribution, ad.length());
@@ -94,7 +94,7 @@ class Sl2AlgebraTest {
   }
 
   @Test
-  public void testHeOnRn() {
+  void testHeOnRn() {
     LieAlgebra lieAlgebra = Sl2Algebra.INSTANCE;
     Tensor ad = lieAlgebra.ad();
     Tensor g = RandomVariate.of(distribution, ad.length());

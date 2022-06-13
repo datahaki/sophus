@@ -23,7 +23,7 @@ class GeodesicBSplineInterpolationTest {
   }
 
   @Test
-  public void testApplyRn() {
+  void testApplyRn() {
     Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(RnGroup.INSTANCE, 2, target);
@@ -33,7 +33,7 @@ class GeodesicBSplineInterpolationTest {
   }
 
   @Test
-  public void testMoveRn() {
+  void testMoveRn() {
     Tensor tensor = RandomVariate.of(DiscreteUniformDistribution.of(2, 100), 3, 5);
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(RnGroup.INSTANCE, 2, tensor);
@@ -50,7 +50,7 @@ class GeodesicBSplineInterpolationTest {
   }
 
   @Test
-  public void testH2a() {
+  void testH2a() {
     Tensor target = Tensors.fromString("{{0, 2}, {1, 2}, {2, 2}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
@@ -60,7 +60,7 @@ class GeodesicBSplineInterpolationTest {
   }
 
   @Test
-  public void testH2b() {
+  void testH2b() {
     Tensor target = Tensors.fromString("{{0, 1}, {1, 1}, {2, 1}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
@@ -70,7 +70,7 @@ class GeodesicBSplineInterpolationTest {
   }
 
   @Test
-  public void testH2c() {
+  void testH2c() {
     Tensor target = Tensors.fromString("{{0, 1}, {1, 1}, {2, 0.1}, {3, 1}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
@@ -80,7 +80,7 @@ class GeodesicBSplineInterpolationTest {
   }
 
   @Test
-  public void testH2d() {
+  void testH2d() {
     Tensor target = Tensors.fromString("{{2/5, 3/5}, {32/15, 77/60}, {15/4, 11/15}, {73/15, 71/30}, {13/2, 1/2}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);

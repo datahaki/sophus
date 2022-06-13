@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HsAdGeodesicTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = TriangularDistribution.with(0, 0.2);
     for (int n = 2; n < 5; ++n) {
       HsAdGeodesic hsAdGeodesic = new HsAdGeodesic(SnAlgebra.of(n));

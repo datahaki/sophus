@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class AdjointTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     Se2Group lieGroup = Se2Group.INSTANCE;
     Adjoint adjoint = new Adjoint(lieGroup, IdentityMatrix.of(3));
     Tensor g1 = Tensors.vector(1, 4, -2);

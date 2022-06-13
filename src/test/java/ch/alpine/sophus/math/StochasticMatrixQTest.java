@@ -12,17 +12,17 @@ import ch.alpine.tensor.sca.Chop;
 
 class StochasticMatrixQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     StochasticMatrixQ.requireRows(IdentityMatrix.of(3), Chop._08);
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     assertThrows(Exception.class, () -> StochasticMatrixQ.requireRows(RealScalar.ONE, Chop._08));
   }
 
   @Test
-  public void testVectorFail() {
+  void testVectorFail() {
     assertThrows(Exception.class, () -> StochasticMatrixQ.requireRows(Tensors.vector(1, 0, 0), Chop._08));
   }
 }

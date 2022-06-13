@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class DodgsonSabinCurveSubdivisionTest {
   @Test
-  public void testThree() {
+  void testThree() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2.2, 0.5);
     Tensor c = Tensors.vector(3, 1.5);
@@ -28,7 +28,7 @@ class DodgsonSabinCurveSubdivisionTest {
   }
 
   @Test
-  public void testFour() {
+  void testFour() {
     Tensor a = Tensors.vector(1, 1.1);
     Tensor b = Tensors.vector(2.2, 0.5);
     Tensor c = Tensors.vector(3, 1.5);
@@ -45,7 +45,7 @@ class DodgsonSabinCurveSubdivisionTest {
   }
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     for (int n = 3; n < 10; ++n)
       Chop._13.requireClose( //
           DodgsonSabinCurveSubdivision.INSTANCE.cyclic(CirclePoints.of(n)), //

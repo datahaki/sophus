@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class SnPerturbationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator snPerturbation = SnPerturbation.of(NormalDistribution.standard());
     Tensor p = UnitVector.of(3, 1);
     Tensor q = snPerturbation.apply(p);

@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class ArrowheadTest {
   @Test
-  public void testOriented() {
+  void testOriented() {
     Tensor polygon = Arrowhead.of(1);
     Scalar scalar = PolygonArea.of(polygon);
     assertEquals(scalar, RationalScalar.HALF);
@@ -27,17 +27,17 @@ class ArrowheadTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     ExactTensorQ.require(Arrowhead.of(RealScalar.ONE));
   }
 
   @Test
-  public void testLength() {
+  void testLength() {
     assertEquals(Arrowhead.of(6).length(), 3);
   }
 
   @Test
-  public void testMean() {
+  void testMean() {
     Tensor tensor = Mean.of(Arrowhead.of(2));
     assertEquals(tensor, tensor.map(Scalar::zero));
   }

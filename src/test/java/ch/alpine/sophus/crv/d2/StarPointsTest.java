@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class StarPointsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor polygon = StarPoints.of(4, RealScalar.ONE, RealScalar.of(0.3));
     assertEquals(polygon.length(), 8);
     Sign.requirePositive(PolygonArea.of(polygon));

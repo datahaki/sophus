@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se3AdjointTest {
   @Test
-  public void testForwardInverse() {
+  void testForwardInverse() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor g = Se3Matrix.of(Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3));
@@ -38,7 +38,7 @@ class Se3AdjointTest {
   }
 
   @Test
-  public void testForwardInsteadInverse() {
+  void testForwardInsteadInverse() {
     TensorUnaryOperator se3Adjoint = new Se3Adjoint(IdentityMatrix.of(3), Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = se3Adjoint.apply(Tensors.of(Tensors.vector(1, 0, 1), Tensors.vector(1, 0, 1))); // more forward and turn left
     assertEquals(tensor, Tensors.fromString("{{2, 0, 0}, {1, 0, 1}}")); // only rotation
@@ -46,7 +46,7 @@ class Se3AdjointTest {
   }
 
   @Test
-  public void testRotationSideLeft() {
+  void testRotationSideLeft() {
     TensorUnaryOperator se3Adjoint = new Se3Adjoint(IdentityMatrix.of(3), Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = se3Adjoint.apply(Tensors.of(Tensors.vector(1, 0, 0), Tensors.vector(0, 0, -1))); // more forward and turn right
     assertEquals(tensor, Tensors.fromString("{{0, 0, 0}, {0, 0, -1}}")); // only rotation
@@ -54,7 +54,7 @@ class Se3AdjointTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> Se3Adjoint.forward(Tensors.vector(1, 2, 3, 4)));
     assertThrows(Exception.class, () -> Se3Adjoint.forward(HilbertMatrix.of(4, 3)));
   }

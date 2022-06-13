@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 class LagrangeInterpolationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(-3, 7), 4, 7).unmodifiable();
     Interpolation interpolation = LagrangeInterpolation.of(RnGroup.INSTANCE, control);
     Tensor domain = Range.of(0, control.length());
@@ -27,7 +27,7 @@ class LagrangeInterpolationTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     Tensor control = RandomVariate.of(DiscreteUniformDistribution.of(-3, 7), 4, 2).unmodifiable();
     Interpolation interpolation = LagrangeInterpolation.of(RnGroup.INSTANCE, control);
     interpolation.get(Tensors.vector(1));

@@ -12,7 +12,7 @@ import ch.alpine.tensor.chq.ExactScalarQ;
 
 class ClothoidQuadraticExTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ClothoidQuadraticEx clothoidQuadratic = //
         new ClothoidQuadraticEx(RealScalar.of(2), RealScalar.of(-3), RealScalar.of(7));
     Scalar p0 = clothoidQuadratic.angle(RealScalar.ZERO);
@@ -24,7 +24,7 @@ class ClothoidQuadraticExTest {
   }
 
   @Test
-  public void testExamples() {
+  void testExamples() {
     ClothoidQuadraticEx clothoidQuadratic = //
         new ClothoidQuadraticEx(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
     Scalar angle = clothoidQuadratic.angle(RealScalar.of(11));

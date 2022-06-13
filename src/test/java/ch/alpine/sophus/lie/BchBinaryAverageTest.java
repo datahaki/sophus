@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BchBinaryAverageTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     Exponential exponential = Se2CoveringGroup.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.1);
     Tensor y = Tensors.vector(0.2, -0.1, 0.2);
@@ -37,7 +37,7 @@ class BchBinaryAverageTest {
   }
 
   @Test
-  public void testSo3() {
+  void testSo3() {
     Exponential exponential = So3Group.INSTANCE;
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
@@ -51,7 +51,7 @@ class BchBinaryAverageTest {
   }
 
   @Test
-  public void testS2() {
+  void testS2() {
     // TODO SOPHUS BCH test seems to be deactivated
     Tensor x = Tensors.vector(0.30, +0.15, 0);
     Tensor y = Tensors.vector(0.05, -0.35, 0);

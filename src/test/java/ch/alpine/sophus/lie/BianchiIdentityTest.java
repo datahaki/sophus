@@ -11,22 +11,22 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 
 class BianchiIdentityTest {
   @Test
-  public void testRequireTrivial() {
+  void testRequireTrivial() {
     BianchiIdentity.require(Array.zeros(4, 4, 4, 4));
   }
 
   @Test
-  public void testRank1Fail() {
+  void testRank1Fail() {
     assertThrows(Exception.class, () -> BianchiIdentity.of(Tensors.vector(1, 2, 3)));
   }
 
   @Test
-  public void testRank2Fail() {
+  void testRank2Fail() {
     assertThrows(Exception.class, () -> BianchiIdentity.of(HilbertMatrix.of(3, 3)));
   }
 
   @Test
-  public void testRank3Fail() {
+  void testRank3Fail() {
     assertThrows(Exception.class, () -> BianchiIdentity.of(Array.zeros(3, 3, 3)));
   }
 }

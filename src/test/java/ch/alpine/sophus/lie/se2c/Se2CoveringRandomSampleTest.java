@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class Se2CoveringRandomSampleTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     RandomSampleInterface randomSampleInterface = //
         Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
     Serialization.copy(randomSampleInterface);

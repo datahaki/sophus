@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GrExponentialTest {
   @Test
-  public void test0D() {
+  void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
@@ -49,7 +49,7 @@ class GrExponentialTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 0}}");
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
@@ -64,7 +64,7 @@ class GrExponentialTest {
   }
 
   @Test
-  public void testShift() {
+  void testShift() {
     Tensor x = RandomSample.of(new GrRandomSample(2, 1));
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
@@ -81,7 +81,7 @@ class GrExponentialTest {
 
   @ParameterizedTest
   @ValueSource(ints = { 4, 5, 6 })
-  public void testDesign(int n) {
+  void testDesign(int n) {
     int k = 3;
     Tensor x = RandomSample.of(new GrRandomSample(n, k));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
@@ -101,7 +101,7 @@ class GrExponentialTest {
   }
 
   @Test
-  public void testGrFail() {
+  void testGrFail() {
     Tensor x = Tensors.fromString("{{1, 1}, {0, 1}}");
     assertThrows(Exception.class, () -> new GrExponential(x));
   }

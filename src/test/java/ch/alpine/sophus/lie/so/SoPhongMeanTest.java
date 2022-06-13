@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class SoPhongMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int n = 7;
     Distribution distribution = UniformDistribution.of(-0.4, 0.4);
     Tensor sequence = Tensors.vector(i -> So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3)), n);
@@ -54,7 +54,7 @@ class SoPhongMeanTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     int n = 1;
     Distribution distribution = UniformDistribution.of(-0.4, 0.4);
     Tensor sequence = Tensors.vector(i -> So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3)), n);
@@ -89,7 +89,7 @@ class SoPhongMeanTest {
   }
 
   @Test
-  public void testTwoExactMidpoint() {
+  void testTwoExactMidpoint() {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
     Tensor p = So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3));
     Tensor q = So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3));
@@ -99,7 +99,7 @@ class SoPhongMeanTest {
   }
 
   @Test
-  public void testTwoMidpoint() {
+  void testTwoMidpoint() {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
     Tensor p = So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3));
     Tensor q = So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3));

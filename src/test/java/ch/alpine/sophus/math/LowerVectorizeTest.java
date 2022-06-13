@@ -14,13 +14,13 @@ import ch.alpine.tensor.spa.Normal;
 
 class LowerVectorizeTest {
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(), +0));
     assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(), -1));
   }
 
   @Test
-  public void testMatrixN1() {
+  void testMatrixN1() {
     Tensor matrix = Tensors.fromString("{{1,2,3}, {4,5,6}, {7,8,9}}");
     assertEquals(LowerVectorize.of(matrix, 1), Tensors.fromString("{1,2, 4,5,6, 7,8,9}"));
     assertEquals(LowerVectorize.of(matrix, 0), Tensors.fromString("{1, 4,5, 7,8,9}"));
@@ -28,19 +28,19 @@ class LowerVectorizeTest {
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     assertThrows(Exception.class, () -> LowerVectorize.of(Pi.VALUE, 0));
     assertThrows(Exception.class, () -> LowerVectorize.of(Pi.VALUE, -1));
   }
 
   @Test
-  public void testVectorFail() {
+  void testVectorFail() {
     assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(1, 2, 3), 0));
     assertThrows(Exception.class, () -> LowerVectorize.of(Tensors.vector(1, 2, 3), -1));
   }
 
   @Test
-  public void testRank3() {
+  void testRank3() {
     // assertThrows(Exception.class, () -> LowerVectorize.of(LeviCivitaTensor.of(3), 0));
     Tensor tensor = LowerVectorize.of(LeviCivitaTensor.of(3), 0);
     Normal.of(tensor);

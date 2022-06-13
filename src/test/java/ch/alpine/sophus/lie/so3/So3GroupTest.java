@@ -28,12 +28,12 @@ import ch.alpine.tensor.sca.Chop;
 
 class So3GroupTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(So3Group.INSTANCE);
   }
 
   @Test
-  public void testAdjoint() {
+  void testAdjoint() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
       Tensor v = So3TestHelper.spawn_so3();
@@ -45,7 +45,7 @@ class So3GroupTest {
   }
 
   @Test
-  public void testLinearGroup() {
+  void testLinearGroup() {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
       SoGroupElement so3GroupElement = So3Group.INSTANCE.element(g);
@@ -61,7 +61,7 @@ class So3GroupTest {
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor p = Rodrigues.vectorExp(Tensors.vector(1, 2, 3));
     Tensor q = Rodrigues.vectorExp(Tensors.vector(2, -1, 2));
     Tensor split = So3Group.INSTANCE.split(p, q, RationalScalar.HALF);
@@ -69,7 +69,7 @@ class So3GroupTest {
   }
 
   @Test
-  public void testEndPoints() {
+  void testEndPoints() {
     Distribution distribution = NormalDistribution.of(0, .3);
     for (int index = 0; index < 10; ++index) {
       Tensor p = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
@@ -80,7 +80,7 @@ class So3GroupTest {
   }
 
   @Test
-  public void testFailOrthogonal() {
+  void testFailOrthogonal() {
     assertThrows(Exception.class, () -> So3Group.INSTANCE.log(So3TestHelper.spawn_so3()));
   }
 }

@@ -13,12 +13,12 @@ import ch.alpine.tensor.ext.Serialization;
 
 class SnAngleTest {
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     Serialization.copy(new SnAngle(UnitVector.of(4, 2)));
   }
 
   @Test
-  public void testMemberQFail() {
+  void testMemberQFail() {
     assertThrows(Exception.class, () -> new SnAngle(Tensors.vector(1, 1)));
   }
 }

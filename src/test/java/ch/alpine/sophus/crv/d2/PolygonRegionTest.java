@@ -21,24 +21,24 @@ import ch.alpine.tensor.qty.Quantity;
 
 class PolygonRegionTest {
   @Test
-  public void testEmpty() throws ClassNotFoundException, IOException {
+  void testEmpty() throws ClassNotFoundException, IOException {
     PolygonRegion polygonRegion = Serialization.copy(new PolygonRegion(Tensors.of(Tensors.vector(1, 2))));
     polygonRegion.test(Tensors.vector(1, 2));
   }
 
   @Test
-  public void testFilter() {
+  void testFilter() {
     Optional<Tensor> optional = Stream.of(Array.zeros(2)).filter(new PolygonRegion(CirclePoints.of(3))).findAny();
     assertTrue(optional.isPresent());
   }
 
   @Test
-  public void testDimensionsFail() {
+  void testDimensionsFail() {
     assertThrows(Exception.class, () -> new PolygonRegion(Tensors.fromString("{{1,2,3}}")));
   }
 
   @Test
-  public void testInside() {
+  void testInside() {
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0, 0 }, //
         { 1, 0 }, //
@@ -53,7 +53,7 @@ class PolygonRegionTest {
   }
 
   @Test
-  public void testInsideQuantity() {
+  void testInsideQuantity() {
     ScalarUnaryOperator suo = s -> Quantity.of(s, "km");
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0, 0 }, //
@@ -69,7 +69,7 @@ class PolygonRegionTest {
   }
 
   @Test
-  public void testInsideEmpty() {
+  void testInsideEmpty() {
     Tensor polygon = Tensors.empty();
     assertFalse(OriginEnclosureQ.INSTANCE.test(polygon));
     assertFalse(FranklinPnpoly.isInside(polygon, Tensors.vector(0.5, .5)));

@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 
 class AveragingWeightsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(AveragingWeights.INSTANCE.origin(Tensors.vector(1, 2, 3)), Tensors.fromString("{1/3,1/3,1/3}"));
   }
 }

@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Clips;
 /** anchor == target */
 class LeveragesDistanceVectorTest {
   @Test
-  public void testRn() {
+  void testRn() {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     Manifold manifold = RnGroup.INSTANCE;
     TensorUnaryOperator w2 = Biinvariants.LEVERAGES.distances(manifold, sequence);
@@ -35,7 +35,7 @@ class LeveragesDistanceVectorTest {
   }
 
   @Test
-  public void testSn() {
+  void testSn() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     Manifold manifold = SnManifold.INSTANCE;
@@ -47,7 +47,7 @@ class LeveragesDistanceVectorTest {
   }
 
   @Test
-  public void testSe2() {
+  void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Manifold manifold = Se2Group.INSTANCE;
@@ -59,7 +59,7 @@ class LeveragesDistanceVectorTest {
   }
 
   @Test
-  public void testDistances() {
+  void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     BarycentricCoordinate w1 = HsCoordinates.of(manifold, LeveragesDistanceVector.INSTANCE);
@@ -71,7 +71,7 @@ class LeveragesDistanceVectorTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {

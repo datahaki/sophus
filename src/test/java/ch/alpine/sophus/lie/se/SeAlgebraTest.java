@@ -23,19 +23,19 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class SeAlgebraTest {
   @Test
-  public void testOne() {
+  void testOne() {
     LieAlgebra lieAlgebra = SeAlgebra.of(1);
     assertEquals(lieAlgebra.ad(), Array.zeros(1, 1, 1));
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     LieAlgebra lieAlgebra = SeAlgebra.of(4);
     assertEquals(lieAlgebra.ad().length(), 4 + 6);
   }
 
   @Test
-  public void testHs() {
+  void testHs() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     for (int n = 2; n < 5; ++n) {
@@ -60,7 +60,7 @@ class SeAlgebraTest {
   }
 
   @Test
-  public void testNFail() {
+  void testNFail() {
     assertThrows(Exception.class, () -> SeAlgebra.of(0));
     assertThrows(Exception.class, () -> SeAlgebra.of(-1));
   }

@@ -29,7 +29,7 @@ class BiinvariantMeanTest {
   }
 
   @Test
-  public void testRnSimple() {
+  void testRnSimple() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 7; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -44,7 +44,7 @@ class BiinvariantMeanTest {
   }
 
   @Test
-  public void testSe2CSimple() {
+  void testSe2CSimple() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 7; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 3);

@@ -28,7 +28,7 @@ class Se3GroupElementTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor R = Rodrigues.vectorExp(Tensors.vector(-1, -.2, .3));
     Tensor t = Tensors.vector(4, 5, 6);
     _check(R, t);

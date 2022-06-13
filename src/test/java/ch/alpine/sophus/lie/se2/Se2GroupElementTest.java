@@ -28,55 +28,55 @@ import ch.alpine.tensor.sca.Sign;
 
 class Se2GroupElementTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(1, 2, 3));
     Tensor tensor = element.combine(Tensors.vector(6, 7, 8));
     assertTrue(Sign.isNegative(tensor.Get(2)));
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(1, 2, 3));
     assertInstanceOf(Se2GroupElement.class, element.inverse());
   }
 
   @Test
-  public void testRotationFixpointSideLeft() {
+  void testRotationFixpointSideLeft() {
     Se2GroupElement element = (Se2GroupElement) Se2Group.INSTANCE.element(Tensors.vector(0, 1, 0)).inverse(); // "left rear wheel"
     Tensor tensor = element.adjoint(Tensors.vector(1, 0, 1)); // more forward and turn left
     Chop._13.requireClose(tensor, UnitVector.of(3, 2)); // only rotation
   }
 
   @Test
-  public void testRotationSideLeft() {
+  void testRotationSideLeft() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(0, 1, 0)); // "left rear wheel"
     Tensor tensor = element.adjoint(Tensors.vector(1, 0, -1)); // more forward and turn right
     Chop._13.requireClose(tensor, UnitVector.of(3, 2).negate()); // only rotation
   }
 
   @Test
-  public void testRotationFixpointSideRight() {
+  void testRotationFixpointSideRight() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(0, -1, 0)); // "right rear wheel"
     Tensor tensor = element.adjoint(Tensors.vector(1, 0, -1)); // more forward and turn right
     Chop._13.requireClose(tensor, Tensors.vector(2, 0, -1)); // rotate and translate
   }
 
   @Test
-  public void testRotationId() {
+  void testRotationId() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(0, 0, 2));
     Tensor tensor = element.adjoint(Tensors.vector(0, 0, 1));
     Chop._13.requireClose(tensor, UnitVector.of(3, 2)); // same rotation
   }
 
   @Test
-  public void testRotationTranslation() {
+  void testRotationTranslation() {
     Se2GroupElement element = Se2Group.INSTANCE.element(Tensors.vector(1, 0, Math.PI / 2));
     Tensor tensor = element.adjoint(Tensors.vector(0, 0, 1));
     Chop._13.requireClose(tensor, Tensors.vector(0, -1, 1));
   }
 
   @Test
-  public void testTranslate() {
+  void testTranslate() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Se2GroupElement element = Se2Group.INSTANCE.element(RandomVariate.of(distribution, 2).append(RealScalar.ZERO));
@@ -87,7 +87,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testComparison() {
+  void testComparison() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -99,7 +99,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testFwdInv() {
+  void testFwdInv() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -112,7 +112,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testNonCovering() {
+  void testNonCovering() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -127,7 +127,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor g = RandomVariate.of(distribution, 3);
@@ -143,7 +143,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testUnits() {
+  void testUnits() {
     TensorUnaryOperator se2Adjoint = Se2Group.INSTANCE.element(Tensors.fromString("{2[m], 3[m], 4}"))::adjoint;
     Tensor tensor = se2Adjoint.apply(Tensors.fromString("{7[m*s^-1], -5[m*s^-1], 1[s^-1]}"));
     Chop._13.requireClose(tensor, //
@@ -151,7 +151,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testLinearGroupSe2() {
+  void testLinearGroupSe2() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor g = RandomVariate.of(distribution, 3);
@@ -169,14 +169,14 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testDL() {
+  void testDL() {
     Se2GroupElement se2GroupElement = new Se2GroupElement(Tensors.vector(0, 0, Math.PI / 2));
     Tensor dL = se2GroupElement.dL(Tensors.vector(1, 0, 0));
     Chop._12.requireClose(dL, UnitVector.of(3, 1).negate());
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> Se2Adjoint.forward(RealScalar.ONE));
     assertThrows(Exception.class, () -> Se2Adjoint.forward(HilbertMatrix.of(3)));
     assertThrows(Exception.class, () -> Se2Adjoint.inverse(RealScalar.ONE));
@@ -184,7 +184,7 @@ class Se2GroupElementTest {
   }
 
   @Test
-  public void testDlNullFail() {
+  void testDlNullFail() {
     Se2GroupElement se2GroupElement = new Se2GroupElement(Tensors.vector(0, 0, Math.PI / 2));
     assertThrows(Exception.class, () -> se2GroupElement.dL(null));
   }

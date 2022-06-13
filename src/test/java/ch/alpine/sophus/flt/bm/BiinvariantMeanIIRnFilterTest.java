@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class BiinvariantMeanIIRnFilterTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int radius = 0; radius < 6; ++radius) {
       TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanIIRnFilter.of( //
           RnBiinvariantMean.INSTANCE, MonomialExtrapolationMask.INSTANCE, RnGroup.INSTANCE, radius, RationalScalar.HALF);
@@ -33,7 +33,7 @@ class BiinvariantMeanIIRnFilterTest {
   }
 
   @Test
-  public void testKernel() {
+  void testKernel() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values())
       for (int radius = 0; radius < 6; ++radius) {
         Function<Integer, Tensor> function = WindowSideExtrapolation.of(smoothingKernel.get());

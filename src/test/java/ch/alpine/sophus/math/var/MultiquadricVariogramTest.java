@@ -17,21 +17,21 @@ import ch.alpine.tensor.qty.Quantity;
 
 class MultiquadricVariogramTest {
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     ScalarUnaryOperator scalarUnaryOperator = Serialization.copy(MultiquadricVariogram.of(Quantity.of(1, "m")));
     Scalar scalar = scalarUnaryOperator.apply(Quantity.of(0.2, "m"));
     Tolerance.CHOP.requireClose(scalar, Scalars.fromString("1.019803902718557[m]"));
   }
 
   @Test
-  public void testQuantityZero() {
+  void testQuantityZero() {
     ScalarUnaryOperator scalarUnaryOperator = MultiquadricVariogram.of(Quantity.of(0, "m"));
     Scalar scalar = scalarUnaryOperator.apply(Quantity.of(0.2, "m"));
     Tolerance.CHOP.requireClose(scalar, Scalars.fromString("0.2[m]"));
   }
 
   @Test
-  public void testFailNonPositive() {
+  void testFailNonPositive() {
     assertThrows(Exception.class, () -> MultiquadricVariogram.of(RealScalar.of(-1)));
   }
 }

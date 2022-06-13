@@ -12,7 +12,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class LieProjectedLineDistanceTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     LieProjectedLineDistance lieProjectedLineDistance = //
         new LieProjectedLineDistance(Se2CoveringGroup.INSTANCE);
     TensorNorm tensorNorm = lieProjectedLineDistance.tensorNorm(Tensors.vector(1, 2, 3), Tensors.vector(2, 3, 4));

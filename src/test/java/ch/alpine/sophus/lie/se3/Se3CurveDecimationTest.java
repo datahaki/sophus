@@ -17,7 +17,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class Se3CurveDecimationTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     CurveDecimation curveDecimation = Serialization.copy(Se3CurveDecimation.of(RealScalar.of(0.3)));
     Tensor p = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.1, -.2, -.3)), Tensors.vector(4, 3, 7));
     // Se3GroupElement pe = new Se3GroupElement(p);

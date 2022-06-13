@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnPointNormTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = NormalDistribution.of(0, 1000);
     for (int d = 1; d < 5; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);

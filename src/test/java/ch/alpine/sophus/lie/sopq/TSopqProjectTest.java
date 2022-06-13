@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class TSopqProjectTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     TSopqProject tSopqProject = new TSopqProject(3, 2);
     Tensor x = RandomVariate.of(NormalDistribution.standard(), 5, 5);
     Tensor sopq = tSopqProject.apply(x);

@@ -34,7 +34,7 @@ class Se3ExponentialTest {
       TriangularDistribution.with(0, 0.2));
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor translation = Tensors.vector(1, 2, 3);
     Tensor input = Tensors.of( //
         translation, //
@@ -49,7 +49,7 @@ class Se3ExponentialTest {
   }
 
   @Test
-  public void testUnits() {
+  void testUnits() {
     Tensor input = Tensors.of( //
         Tensors.fromString("{1[m*s^-1], 2[m*s^-1], 3[m*s^-1]}"), //
         Tensors.vector(0.2, 0.3, -0.1));
@@ -67,7 +67,7 @@ class Se3ExponentialTest {
   // }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (int index = 0; index < 100; ++index) {
       Tensor input = RandomVariate.of(distribution, 2, 3);
@@ -78,7 +78,7 @@ class Se3ExponentialTest {
   }
 
   @Test
-  public void testZero() {
+  void testZero() {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
         Tensors.vector(0, 0, 0));
@@ -89,7 +89,7 @@ class Se3ExponentialTest {
   }
 
   @Test
-  public void testAlmostZero() {
+  void testAlmostZero() {
     Tensor input = Tensors.of( //
         Tensors.vector(1, 2, 3), //
         Tensors.vector(1e-15, 1e-15, -1e-15));
@@ -99,7 +99,7 @@ class Se3ExponentialTest {
   }
 
   @Test
-  public void testAdjointExp() {
+  void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int n = 1; n < 4; ++n)
@@ -114,7 +114,7 @@ class Se3ExponentialTest {
   }
 
   @Test
-  public void testAdjointLog() {
+  void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     for (int n = 1; n < 4; ++n)

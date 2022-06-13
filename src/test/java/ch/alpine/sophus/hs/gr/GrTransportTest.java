@@ -28,7 +28,7 @@ class GrTransportTest {
   public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     int n = 4;
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2);
     Tensor p = RandomSample.of(randomSampleInterface);
@@ -51,7 +51,7 @@ class GrTransportTest {
   }
 
   @Test
-  public void testFromOToP() {
+  void testFromOToP() {
     int n = 5;
     for (int k = 0; k <= n; ++k) {
       int fk = k;
@@ -69,7 +69,7 @@ class GrTransportTest {
   }
 
   @Test
-  public void testNonMemberFail() {
+  void testNonMemberFail() {
     int n = 5;
     for (int k = 1; k < n; ++k) {
       Distribution distribution = UniformDistribution.unit();

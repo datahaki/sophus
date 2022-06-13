@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.Dimensions;
 
 class RandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = RandomSample.of(BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.ONE), 6);
     assertEquals(Dimensions.of(tensor), Arrays.asList(6, 3));
   }

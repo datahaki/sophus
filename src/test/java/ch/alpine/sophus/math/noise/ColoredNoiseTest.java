@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class ColoredNoiseTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ColoredNoise coloredNoise = new ColoredNoise(1.2);
     DoubleSummaryStatistics doubleSummaryStatistics = //
         DoubleStream.generate(coloredNoise::nextValue) //

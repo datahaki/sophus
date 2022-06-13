@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class So3FastMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int n = 7;
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
     Tensor sequence = Tensors.vector(i -> So3Group.INSTANCE.exp(RandomVariate.of(distribution, 3)), n);

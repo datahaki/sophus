@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 class IterativeBiinvariantMeanTest {
   @Test
-  public void testSE2() {
+  void testSE2() {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
     Scalar rootOfTwo = Sqrt.of(TWO);
@@ -53,7 +53,7 @@ class IterativeBiinvariantMeanTest {
   // Tests form more groups however i think that e.g. HE1 could cause problems due to tensor of tensor structure.
 
   @Test
-  public void testSome() throws ClassNotFoundException, IOException {
+  void testSome() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;
     for (int length = 2; length < 8; ++length) {

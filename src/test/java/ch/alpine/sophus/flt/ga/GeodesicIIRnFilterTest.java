@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
 
 class GeodesicIIRnFilterTest {
   @Test
-  public void testTranslation() {
+  void testTranslation() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(1, 1, 0);
     Tensor r = q.add(q);
@@ -32,7 +32,7 @@ class GeodesicIIRnFilterTest {
   }
 
   @Test
-  public void testRotation() {
+  void testRotation() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(0, 0, 1);
     Tensor r = q.add(q);
@@ -47,7 +47,7 @@ class GeodesicIIRnFilterTest {
   }
 
   @Test
-  public void testCombined() {
+  void testCombined() {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(1, 1, 1);
     Tensor r = q.add(q);
@@ -62,7 +62,7 @@ class GeodesicIIRnFilterTest {
   }
 
   @Test
-  public void testLinear() {
+  void testLinear() {
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 0, 0}, {4, 0, 0}, {5, 0, 0}}");
     Scalar alpha = RealScalar.of(0.5);
     final int radius = 3;
@@ -73,7 +73,7 @@ class GeodesicIIRnFilterTest {
   }
 
   @Test
-  public void testOnlyMeasurement() {
+  void testOnlyMeasurement() {
     Tensor control = Tensors.fromString("{{0, 0.2, 0}, {1, 0, 0}, {2, 7, 0}, {3, 9, 0}, {3, 0, 0}, {-1, 0, -1}}");
     Scalar alpha = RealScalar.of(1);
     final int radius = 3;
@@ -84,7 +84,7 @@ class GeodesicIIRnFilterTest {
   }
 
   @Test
-  public void testOnlyPrediction() {
+  void testOnlyPrediction() {
     Tensor control = Tensors.fromString("{{0, 0.2, 0}, {1, 0, 0}, {2, 7, 0}, {3, 9, 0}, {3, 0, 0}, {-1, 0, -1}}");
     Scalar alpha = RealScalar.of(0);
     final int radius = 3;

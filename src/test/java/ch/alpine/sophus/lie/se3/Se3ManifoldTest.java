@@ -43,7 +43,7 @@ class Se3ManifoldTest {
       TriangularDistribution.with(0, 0.25));
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Random random = new Random(3);
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES) {
       int n = 7 + random.nextInt(4);
@@ -65,7 +65,7 @@ class Se3ManifoldTest {
   }
 
   @Test
-  public void testMeanRandom() {
+  void testMeanRandom() {
     Distribution distribution = NormalDistribution.of(4, 1);
     for (int n = 7; n < 13; ++n) {
       Tensor sequence = RandomSample.of(RSI_Se3, n);
@@ -79,7 +79,7 @@ class Se3ManifoldTest {
   }
 
   @Test
-  public void testRelativeRandom() {
+  void testRelativeRandom() {
     Random random = new Random(3);
     BiinvariantMean biinvariantMean = ITERATIVE_BIINVARIANT_MEAN;
     for (BarycentricCoordinate barycentricCoordinate : BII_COORDINATES) {

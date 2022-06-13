@@ -21,7 +21,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class TStProjectionTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(7);
     for (int n = 3; n < 6; ++n)
       for (int k = n - 2; k <= n; ++k) {

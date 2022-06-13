@@ -29,7 +29,7 @@ import ch.alpine.tensor.sca.win.HannWindow;
 
 class CenterFilterTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator centerFilter = new CenterFilter(geodesicCenter, 3);
     Tensor linear = Range.of(0, 10);
@@ -39,7 +39,7 @@ class CenterFilterTest {
   }
 
   @Test
-  public void testKernel3() {
+  void testKernel3() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 3);
     Tensor signal = UnitVector.of(9, 4);
@@ -49,7 +49,7 @@ class CenterFilterTest {
   }
 
   @Test
-  public void testKernel1() {
+  void testKernel1() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Tensor signal = UnitVector.of(5, 2);
@@ -59,7 +59,7 @@ class CenterFilterTest {
   }
 
   @Test
-  public void testS2() {
+  void testS2() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(SnManifold.INSTANCE, HannWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Distribution distribution = NormalDistribution.standard();
@@ -69,7 +69,7 @@ class CenterFilterTest {
   }
 
   @Test
-  public void testSo3() {
+  void testSo3() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(So3Group.INSTANCE, HammingWindow.FUNCTION);
     TensorUnaryOperator geodesicCenterFilter = new CenterFilter(geodesicCenter, 1);
     Distribution distribution = UniformDistribution.unit();
@@ -79,7 +79,7 @@ class CenterFilterTest {
   }
 
   @Test
-  public void testNegativeRadiusFail() {
+  void testNegativeRadiusFail() {
     TensorUnaryOperator geodesicCenter = GeodesicCenter.of(RnGroup.INSTANCE, BinomialWeights.INSTANCE);
     CenterFilter centerFilter = new CenterFilter(geodesicCenter, 0);
     assertEquals(centerFilter.radius(), 0);
@@ -87,7 +87,7 @@ class CenterFilterTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> new CenterFilter(null, 1));
   }
 }

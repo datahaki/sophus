@@ -23,7 +23,7 @@ import ch.alpine.tensor.red.Max;
 
 class WavefrontFormatTest {
   @Test
-  public void testBlender0() throws IOException {
+  void testBlender0() throws IOException {
     try (InputStream inputStream = getClass().getResource("/io/obj/blender0.obj").openStream()) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));
       assertEquals(wavefront.objects().size(), 2);
@@ -62,7 +62,7 @@ class WavefrontFormatTest {
   }
 
   @Test
-  public void testMathematica0() throws IOException {
+  void testMathematica0() throws IOException {
     try (InputStream inputStream = getClass().getResource("/io/obj/meshregionex2d.obj").openStream()) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));
       List<WavefrontObject> objects = wavefront.objects();

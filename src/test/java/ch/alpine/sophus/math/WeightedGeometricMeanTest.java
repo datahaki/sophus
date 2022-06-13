@@ -13,7 +13,7 @@ import ch.alpine.tensor.red.GeometricMean;
 
 class WeightedGeometricMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int n = 5;
     Distribution distribution = UniformDistribution.of(0.4, 10);
     Tensor sequence = RandomVariate.of(distribution, n, 3);

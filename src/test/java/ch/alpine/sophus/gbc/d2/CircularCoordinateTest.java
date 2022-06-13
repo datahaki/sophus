@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class CircularCoordinateTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int n = 5;
     Tensor circle = CirclePoints.of(n);
     Tensor noises = RandomVariate.of(UniformDistribution.of(-0.1, 0.1), n, 2);
@@ -24,7 +24,7 @@ class CircularCoordinateTest {
   }
 
   @Test
-  public void testHello() {
+  void testHello() {
     Distribution distribution = UniformDistribution.of(-10, 10);
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n, 2);

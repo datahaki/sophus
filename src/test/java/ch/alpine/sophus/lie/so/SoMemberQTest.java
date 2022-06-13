@@ -17,21 +17,21 @@ import ch.alpine.tensor.mat.re.Det;
 
 class SoMemberQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
     TSoMemberQ.INSTANCE.require(wedge);
     assertFalse(TSoMemberQ.INSTANCE.test(HilbertMatrix.of(3)));
   }
 
   @Test
-  public void testDet1() {
+  void testDet1() {
     Tensor nondet = DiagonalMatrix.of(1, 1, -1);
     assertEquals(Det.of(nondet), RealScalar.ONE.negate());
     assertFalse(SoMemberQ.INSTANCE.test(nondet));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> TSoMemberQ.INSTANCE.test(null));
   }
 }

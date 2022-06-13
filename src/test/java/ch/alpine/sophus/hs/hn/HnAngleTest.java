@@ -14,7 +14,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class HnAngleTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     HnAngle hnAngle = Serialization.copy(new HnAngle(UnitVector.of(4, 3)));
     assertTrue(Scalars.isZero(hnAngle.apply(UnitVector.of(4, 3))));
     assertThrows(Exception.class, () -> hnAngle.log(UnitVector.of(4, 2)));
@@ -22,7 +22,7 @@ class HnAngleTest {
   }
 
   @Test
-  public void testMemberFail() {
+  void testMemberFail() {
     assertThrows(Exception.class, () -> new HnAngle(UnitVector.of(4, 2)));
   }
 }

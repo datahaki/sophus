@@ -17,13 +17,13 @@ import ch.alpine.tensor.qty.Quantity;
 
 class MinimumSpanningTreeTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     List<IntUndirectedEdge> list = MinimumSpanningTree.of(Tensors.fromString("{{0, 1}, {1, 0}}"));
     assertEquals(list.size(), 1);
   }
 
   @Test
-  public void testHilbert() {
+  void testHilbert() {
     Tensor tensor = HilbertMatrix.of(10);
     List<IntUndirectedEdge> list = MinimumSpanningTree.of(tensor);
     assertEquals(list.size(), 9);
@@ -32,7 +32,7 @@ class MinimumSpanningTreeTest {
   }
 
   @Test
-  public void testHilbertQuantity() {
+  void testHilbertQuantity() {
     List<IntUndirectedEdge> list = MinimumSpanningTree.of(HilbertMatrix.of(10).map(s -> Quantity.of(s, "m")));
     assertEquals(list.size(), 9);
   }

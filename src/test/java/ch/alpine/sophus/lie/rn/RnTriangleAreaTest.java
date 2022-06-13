@@ -11,13 +11,13 @@ import ch.alpine.tensor.sca.Chop;
 
 class RnTriangleAreaTest {
   @Test
-  public void testSimple2D() {
+  void testSimple2D() {
     Scalar scalar = RnTriangleArea.of(Tensors.vector(10, 0), Tensors.vector(10, 1), Tensors.vector(11, 0));
     Chop._10.requireClose(scalar, RationalScalar.HALF);
   }
 
   @Test
-  public void testSimpleUnits() {
+  void testSimpleUnits() {
     ScalarUnaryOperator suo = s -> Quantity.of(s, "m");
     Scalar scalar = RnTriangleArea.of(Tensors.vector(10, 0).map(suo), Tensors.vector(10, 1).map(suo), Tensors.vector(11, 0).map(suo));
     Chop._10.requireClose(scalar, Quantity.of(RationalScalar.HALF, "m^2"));

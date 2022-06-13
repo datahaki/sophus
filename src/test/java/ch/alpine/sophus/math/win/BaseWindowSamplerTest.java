@@ -36,7 +36,7 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testConstant() {
+  void testConstant() {
     Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(DirichletWindow.FUNCTION);
     for (int radius = 0; radius < 5; ++radius) {
       Tensor tensor = uniformWindowSampler.apply(radius * 2 + 1);
@@ -47,14 +47,14 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testHann() {
+  void testHann() {
     Function<Integer, Tensor> centerWindowSampler = UniformWindowSampler.of(HannWindow.FUNCTION);
     ExactTensorQ.require(centerWindowSampler.apply(1));
     assertEquals(centerWindowSampler.apply(2), Tensors.vector(0.5, 0.5));
   }
 
   @Test
-  public void testAll() {
+  void testAll() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
       for (int radius = 0; radius < 5; ++radius) {
@@ -69,7 +69,7 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testSymmetric() {
+  void testSymmetric() {
     for (int size = 0; size < 5; ++size) {
       Tensor tensor = RandomVariate.of(NormalDistribution.standard(), 2, 3, 4);
       for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
@@ -81,7 +81,7 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testContinuity() {
+  void testContinuity() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Scalar scalar = smoothingKernel.get().apply(RationalScalar.HALF);
       String string = smoothingKernel.get() + "[1/2]=" + scalar;
@@ -94,7 +94,7 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
       assertThrows(Exception.class, () -> uniformWindowSampler.apply(0));
@@ -102,7 +102,7 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testAllFail() {
+  void testAllFail() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> centerWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
       assertThrows(Exception.class, () -> centerWindowSampler.apply(-1));
@@ -110,7 +110,7 @@ class BaseWindowSamplerTest {
   }
 
   @Test
-  public void testAllFailQuantity() {
+  void testAllFailQuantity() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values())
       assertThrows(Exception.class, () -> smoothingKernel.get().apply(Quantity.of(1, "s")));
   }

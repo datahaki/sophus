@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class LagrangeQuadraticTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     LagrangeQuadratic lagrangeQuadratic = //
         LagrangeQuadratic.interp(RealScalar.of(2), RealScalar.of(-3), RealScalar.of(7));
     Scalar p0 = lagrangeQuadratic.apply(RealScalar.ZERO);
@@ -31,7 +31,7 @@ class LagrangeQuadraticTest {
   }
 
   @Test
-  public void testExamples() {
+  void testExamples() {
     LagrangeQuadratic lagrangeQuadratic = //
         LagrangeQuadratic.interp(RealScalar.of(5), RealScalar.of(7), RealScalar.of(13));
     Scalar angle = lagrangeQuadratic.apply(RealScalar.of(11));
@@ -45,7 +45,7 @@ class LagrangeQuadraticTest {
   }
 
   @Test
-  public void testNeville() {
+  void testNeville() {
     ScalarUnaryOperator scalarUnaryOperator = InterpolatingPolynomial.of( //
         Tensors.vector(0, 0.5, 1)).scalarUnaryOperator(Tensors.vector(5, 7, 13));
     LagrangeQuadratic clothoidQuadratic = //

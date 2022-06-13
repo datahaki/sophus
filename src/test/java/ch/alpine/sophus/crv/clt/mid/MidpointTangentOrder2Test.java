@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class MidpointTangentOrder2Test {
   @Test
-  public void testSymmetry() {
+  void testSymmetry() {
     for (int count = 0; count < 100; ++count) {
       Scalar s1 = RandomVariate.of(NormalDistribution.standard());
       Scalar s2 = RandomVariate.of(NormalDistribution.standard());
@@ -27,7 +27,7 @@ class MidpointTangentOrder2Test {
   }
 
   @Test
-  public void testMathematicaSync() {
+  void testMathematicaSync() {
     Scalar scalar = MidpointTangentOrder2.INSTANCE.apply(RealScalar.of(1), RealScalar.of(2));
     Tolerance.CHOP.requireClose(scalar, RealScalar.of(-1.0754475703324808));
   }

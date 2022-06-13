@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class DubinsRadiusTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Clip clip = Clips.interval(0.3, 1.3);
     for (DubinsType dubinsType : DubinsType.values()) {
       Scalar maxRadius = DubinsRadius.getMax(Tensors.vector(1, 2, -1), dubinsType, clip);
@@ -20,7 +20,7 @@ class DubinsRadiusTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Clip clip = Clips.interval( //
         Quantity.of(0.3, "m"), //
         Quantity.of(1.3, "m"));

@@ -22,19 +22,19 @@ import ch.alpine.tensor.qty.Quantity;
 
 class RamerDouglasPeuckerTest {
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor tensor = Tensors.empty();
     assertEquals(RnCurveDecimation.of(RealScalar.of(1)).apply(tensor), tensor);
   }
 
   @Test
-  public void testPoints1() {
+  void testPoints1() {
     Tensor tensor = Tensors.matrix(new Number[][] { { 1, 1 } });
     assertEquals(RnCurveDecimation.of(RealScalar.of(1)).apply(tensor), tensor);
   }
 
   @Test
-  public void testPoints1copy() {
+  void testPoints1copy() {
     Tensor origin = Tensors.matrix(new Number[][] { { 1, 1 } });
     Tensor tensor = Tensors.matrix(new Number[][] { { 1, 1 } });
     Tensor result = RnCurveDecimation.of(RealScalar.of(1)).apply(tensor);
@@ -43,27 +43,27 @@ class RamerDouglasPeuckerTest {
   }
 
   @Test
-  public void testPoints2() {
+  void testPoints2() {
     Tensor tensor = Tensors.matrix(new Number[][] { { 1, 1 }, { 5, 2 } });
     assertEquals(RnCurveDecimation.of(RealScalar.of(1)).apply(tensor), tensor);
   }
 
   @Test
-  public void testPoints2same() {
+  void testPoints2same() {
     Tensor tensor = Tensors.matrix(new Number[][] { { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 } });
     Tensor result = RnCurveDecimation.of(RealScalar.of(1)).apply(tensor);
     assertEquals(result, Tensors.fromString("{{1, 1}, {1, 1}}"));
   }
 
   @Test
-  public void testPoints3a() {
+  void testPoints3a() {
     Tensor tensor = Tensors.matrix(new Number[][] { { 1, 1 }, { 1, 1 }, { 5, 2 } });
     Tensor result = RnCurveDecimation.of(RealScalar.of(0)).apply(tensor);
     assertEquals(result, Tensors.fromString("{{1, 1}, {5, 2}}"));
   }
 
   @Test
-  public void testPoints3() {
+  void testPoints3() {
     Tensor tensor = Tensors.matrix(new Number[][] { { 1, 1 }, { 3, 2 }, { 5, 2 } });
     assertEquals(RnCurveDecimation.of(RealScalar.of(1)).apply(tensor), //
         Tensors.matrixInt(new int[][] { { 1, 1 }, { 5, 2 } }));
@@ -71,7 +71,7 @@ class RamerDouglasPeuckerTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     int n = 20;
     Tensor tensor = Tensors.vector(i -> Tensors.vector(i, RandomVariate.of(NormalDistribution.standard()).number().doubleValue()), n);
     Tensor result = RnCurveDecimation.of(RealScalar.of(1)).apply(tensor);
@@ -81,25 +81,25 @@ class RamerDouglasPeuckerTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Tensor points = CirclePoints.of(100).map(value -> Quantity.of(value, "m"));
     Tensor tensor = RnCurveDecimation.of(Quantity.of(0.03, "m")).apply(points);
     assertEquals(tensor.length(), 17);
   }
 
   @Test
-  public void test3d() {
+  void test3d() {
     Tensor tensor = RnCurveDecimation.of(RealScalar.of(0.1)).apply(IdentityMatrix.of(3));
     assertEquals(tensor, IdentityMatrix.of(3));
   }
 
   @Test
-  public void testEpsilonFail() {
+  void testEpsilonFail() {
     assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(-.1)));
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Tensors.fromString("{{{1}, 2}, {{1}, 2}, {{1}, 2}}")));
     assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 3, 3)));
     assertThrows(Exception.class, () -> RnCurveDecimation.of(RealScalar.of(0.1)).apply(Array.zeros(3, 2, 4)));

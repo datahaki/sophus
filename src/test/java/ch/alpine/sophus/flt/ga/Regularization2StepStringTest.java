@@ -22,7 +22,7 @@ class Regularization2StepStringTest {
       Regularization2Step.string(RnGroup.INSTANCE, RationalScalar.of(1, 4));
 
   @Test
-  public void testLo() throws ClassNotFoundException, IOException {
+  void testLo() throws ClassNotFoundException, IOException {
     Tensor signal = Tensors.vector(1, 0, 0, 0, 0);
     Tensor tensor = Serialization.copy(STRING).apply(signal);
     ExactTensorQ.require(tensor);
@@ -32,7 +32,7 @@ class Regularization2StepStringTest {
   }
 
   @Test
-  public void testHi() {
+  void testHi() {
     Tensor signal = Tensors.vector(0, 0, 0, 0, 1);
     Tensor tensor = STRING.apply(signal);
     ExactTensorQ.require(tensor);
@@ -42,22 +42,22 @@ class Regularization2StepStringTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertEquals(STRING.apply(Tensors.empty()), Tensors.empty());
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     assertEquals(STRING.apply(Tensors.vector(2)), Tensors.vector(2));
   }
 
   @Test
-  public void testTuple() {
+  void testTuple() {
     assertEquals(STRING.apply(Tensors.vector(3, 2)), Tensors.vector(3, 2));
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator STRING = //
         Regularization2Step.string(RnGroup.INSTANCE, RationalScalar.of(1, 2));
     Tensor signal = Tensors.vector(1, 1, 1, 2, 1, 1, 1, 1, 1, 1);
@@ -67,7 +67,7 @@ class Regularization2StepStringTest {
   }
 
   @Test
-  public void testMatrix() {
+  void testMatrix() {
     TensorUnaryOperator STRING = //
         Regularization2Step.string(RnGroup.INSTANCE, RationalScalar.of(1, 2));
     Tensor signal = Tensors.fromString("{{1, 2}, {2, 2}, {3, 2}, {4, 2}, {3, 3}}");
@@ -77,7 +77,7 @@ class Regularization2StepStringTest {
   }
 
   @Test
-  public void testZero() {
+  void testZero() {
     Tensor signal = Tensors.vector(1, 1, 1, 2, 1, 1, 3, 1, 1, 1);
     Tensor tensor = Regularization2Step.string(RnGroup.INSTANCE, RealScalar.ZERO).apply(signal);
     ExactTensorQ.require(tensor);
@@ -85,7 +85,7 @@ class Regularization2StepStringTest {
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(RnGroup.INSTANCE, RationalScalar.HALF);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ZERO));
   }

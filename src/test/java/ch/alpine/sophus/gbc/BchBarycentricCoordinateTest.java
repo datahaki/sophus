@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BchBarycentricCoordinateTest {
   @Test
-  public void testSe2() {
+  void testSe2() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Random random = new Random(1);
     BinaryOperator<Tensor> bch = Se2Algebra.INSTANCE.bch(6);
@@ -47,7 +47,7 @@ class BchBarycentricCoordinateTest {
   }
 
   @Test
-  public void testSo3MeanRandom() {
+  void testSo3MeanRandom() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Random random = new Random(1);
     BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(6);

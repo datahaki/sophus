@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So3AlgebraTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = Rodrigues.vectorExp(x);
@@ -32,7 +32,7 @@ class So3AlgebraTest {
   }
 
   @Test
-  public void testAlg() {
+  void testAlg() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
     Random random = new Random();
@@ -54,7 +54,7 @@ class So3AlgebraTest {
   }
 
   @Test
-  public void testActionH() {
+  void testActionH() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     HsAlgebra hsAlgebra = new HsAlgebra(So3Algebra.INSTANCE.ad(), 2, 6);
     Tensor h = Join.of(Array.zeros(2), RandomVariate.of(distribution, 1));
@@ -72,7 +72,7 @@ class So3AlgebraTest {
   }
 
   @Test
-  public void testSo3H() {
+  void testSo3H() {
     Tensor so3 = So3Algebra.INSTANCE.ad();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Tensor g = RandomVariate.of(distribution, 3);
@@ -86,7 +86,7 @@ class So3AlgebraTest {
   }
 
   @Test
-  public void testSo3S2() {
+  void testSo3S2() {
     Tensor so3 = So3Algebra.INSTANCE.ad();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Tensor g = RandomVariate.of(distribution, 3);

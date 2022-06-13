@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.tri.Cos;
 
 class DifferentialSpeedTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     DifferentialSpeed ds = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(0.5));
     Scalar speed = RealScalar.of(+4.0);
     Scalar angle = RealScalar.of(+0.3);
@@ -32,7 +32,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testQuantityForward() {
+  void testQuantityForward() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
     DifferentialSpeed tireRearR = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset.negate());
@@ -52,7 +52,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testQuantityPair() {
+  void testQuantityPair() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
     DifferentialSpeed tireRearR = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset.negate());
@@ -76,7 +76,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testQuantityPairRadians() {
+  void testQuantityPairRadians() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
     DifferentialSpeed tireRearR = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset.negate());
@@ -102,7 +102,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testQuantityReverse() {
+  void testQuantityReverse() {
     Scalar y_offset = Quantity.of(0.5, "m");
     DifferentialSpeed tireRearL = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset);
     DifferentialSpeed tireRearR = DifferentialSpeed.fromSI(Quantity.of(1.2, "m"), y_offset.negate());
@@ -122,7 +122,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testStraight() {
+  void testStraight() {
     DifferentialSpeed dsL = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(+.5));
     DifferentialSpeed dsR = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(-.5));
     Scalar v = RealScalar.of(-4);
@@ -134,7 +134,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testOrthogonal() {
+  void testOrthogonal() {
     DifferentialSpeed dsL = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(+.5));
     DifferentialSpeed dsR = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(-.5));
     Scalar v = RealScalar.of(4);
@@ -145,7 +145,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testInverted() {
+  void testInverted() {
     DifferentialSpeed ds = DifferentialSpeed.fromSI(RealScalar.of(1.2), RealScalar.of(-.5));
     Scalar v = RealScalar.of(4);
     Scalar beta = RealScalar.of(+.3);
@@ -156,7 +156,7 @@ class DifferentialSpeedTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> DifferentialSpeed.fromSI(RealScalar.of(0.0), RealScalar.of(0.5)));
   }
 }

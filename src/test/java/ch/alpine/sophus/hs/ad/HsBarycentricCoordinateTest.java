@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.Tolerance;
 
 class HsBarycentricCoordinateTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random(3);
     for (int d = 2; d < 5; ++d) {
       HsAlgebra hsAlgebra = SnAlgebra.of(d);

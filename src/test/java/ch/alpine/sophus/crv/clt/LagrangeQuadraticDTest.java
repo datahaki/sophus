@@ -36,7 +36,7 @@ class LagrangeQuadraticDTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar b0 = RealScalar.of(0.7);
     Scalar bm = RealScalar.of(0.3);
     Scalar b1 = RealScalar.of(-0.82);
@@ -48,13 +48,13 @@ class LagrangeQuadraticDTest {
   }
 
   @Test
-  public void testZero() throws ClassNotFoundException, IOException {
+  void testZero() throws ClassNotFoundException, IOException {
     LagrangeQuadraticD lagrangeQuadraticD = Serialization.copy(new LagrangeQuadraticD(1e-9, 1e-10));
     assertTrue(lagrangeQuadraticD.isZero(Chop._08));
   }
 
   @Test
-  public void testIntegralAbs() {
+  void testIntegralAbs() {
     assertEquals(new LagrangeQuadraticD(+2, +2).integralAbs(), RealScalar.of(3));
     assertEquals(new LagrangeQuadraticD(-2, -2).integralAbs(), RealScalar.of(3));
     assertEquals(new LagrangeQuadraticD(-1, +2).integralAbs(), RationalScalar.HALF);
@@ -65,7 +65,7 @@ class LagrangeQuadraticDTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new LagrangeQuadraticD(null, RealScalar.ONE));
     assertThrows(Exception.class, () -> new LagrangeQuadraticD(RealScalar.ONE, null));
   }

@@ -17,21 +17,21 @@ import ch.alpine.tensor.qty.Quantity;
 
 class ThinPlateSplineVariogramTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarUnaryOperator scalarUnaryOperator = ThinPlateSplineVariogram.of(3);
     Scalar scalar = scalarUnaryOperator.apply(RealScalar.of(2));
     Tolerance.CHOP.requireClose(scalar, RealScalar.of(-1.621860432432657));
   }
 
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     ScalarUnaryOperator scalarUnaryOperator = Serialization.copy(new ThinPlateSplineVariogram(Quantity.of(1, "m")));
     Tolerance.CHOP.requireClose(scalarUnaryOperator.apply(Quantity.of(0.2, "m")), Scalars.fromString("-0.06437751649736402[m^2]"));
     Tolerance.CHOP.requireClose(scalarUnaryOperator.apply(Quantity.of(0.0, "m")), Scalars.fromString("0[m^2]"));
   }
 
   @Test
-  public void testFailNonPositive() {
+  void testFailNonPositive() {
     assertThrows(Exception.class, () -> new ThinPlateSplineVariogram(RealScalar.ZERO));
   }
 }

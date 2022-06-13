@@ -40,7 +40,7 @@ class KrigingTest {
   private static final Biinvariant[] SYMME = { MetricBiinvariant.EUCLIDEAN, Biinvariants.HARBOR };
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
@@ -70,7 +70,7 @@ class KrigingTest {
   }
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -88,7 +88,7 @@ class KrigingTest {
   }
 
   @Test
-  public void testScalarValued() throws ClassNotFoundException, IOException {
+  void testScalarValued() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
@@ -106,7 +106,7 @@ class KrigingTest {
   }
 
   @Test
-  public void testBarycentric() throws ClassNotFoundException, IOException {
+  void testBarycentric() throws ClassNotFoundException, IOException {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     ScalarUnaryOperator variogram = PowerVariogram.of(RealScalar.ONE, RealScalar.of(1.5));
@@ -130,7 +130,7 @@ class KrigingTest {
   }
 
   @Test
-  public void testQuantityAbsolute() {
+  void testQuantityAbsolute() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2));
     int n = 10;
@@ -146,7 +146,7 @@ class KrigingTest {
   }
 
   @Test
-  public void testQuantityBiinvariant() {
+  void testQuantityBiinvariant() {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     ScalarUnaryOperator variogram = ExponentialVariogram.of(3, 2);
     int n = 10;

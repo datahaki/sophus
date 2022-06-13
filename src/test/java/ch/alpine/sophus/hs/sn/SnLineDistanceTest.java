@@ -27,7 +27,7 @@ class SnLineDistanceTest {
   private static final Clip CLIP = Clips.positive(Pi.HALF);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int d = 2; d < 6; ++d) {
       Tensor p = UnitVector.of(d + 1, 0);
       Tensor q = UnitVector.of(d + 1, 1);
@@ -39,7 +39,7 @@ class SnLineDistanceTest {
   }
 
   @Test
-  public void testBounded() throws ClassNotFoundException, IOException {
+  void testBounded() throws ClassNotFoundException, IOException {
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
       for (int count = 0; count < 10; ++count) {
@@ -54,7 +54,7 @@ class SnLineDistanceTest {
   }
 
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     Distribution distribution = UniformDistribution.unit();
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
@@ -68,7 +68,7 @@ class SnLineDistanceTest {
   }
 
   @Test
-  public void testPointFail() {
+  void testPointFail() {
     assertThrows(Exception.class, () -> SnLineDistance.INSTANCE.tensorNorm(UnitVector.of(3, 1), UnitVector.of(3, 1)));
   }
 }

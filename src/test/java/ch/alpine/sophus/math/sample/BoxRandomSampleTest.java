@@ -21,7 +21,7 @@ import ch.alpine.tensor.red.Mean;
 
 class BoxRandomSampleTest {
   @Test
-  public void testSimple3D() {
+  void testSimple3D() {
     Tensor offset = Tensors.vector(2, 2, 3);
     Tensor width = Tensors.vector(1, 1, 1);
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(offset.subtract(width), offset.add(width));
@@ -31,7 +31,7 @@ class BoxRandomSampleTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     Tensor offset = Tensors.vector(2, 2, 3);
     Tensor width = Tensors.vector(1, 1, 1);
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(offset.subtract(width), offset.add(width));
@@ -40,7 +40,7 @@ class BoxRandomSampleTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Tensors.vector(1, 2, 3), Tensors.vector(3, 4, 8));
     RandomSampleInterface copy = Serialization.copy(randomSampleInterface);
     Tensor tensor = RandomSample.of(copy);
@@ -48,12 +48,12 @@ class BoxRandomSampleTest {
   }
 
   @Test
-  public void testDimensionFail() {
+  void testDimensionFail() {
     assertThrows(Exception.class, () -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3)));
   }
 
   @Test
-  public void testSignFail() {
+  void testSignFail() {
     assertThrows(Exception.class, () -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1)));
   }
 }

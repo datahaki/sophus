@@ -20,7 +20,7 @@ import ch.alpine.tensor.red.Mean;
 
 class CatmullClarkRefinementTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         Serialization.copy(new CatmullClarkRefinement(Se2CoveringBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.quads6());
@@ -29,7 +29,7 @@ class CatmullClarkRefinementTest {
   }
 
   @Test
-  public void testCube() {
+  void testCube() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     assertTrue(surfaceMesh.boundary().isEmpty());
     SurfaceMeshRefinement surfaceMeshRefinement = new CatmullClarkRefinement(RnBiinvariantMean.INSTANCE);

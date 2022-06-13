@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnExponentialTest {
   @Test
-  public void testExp() {
+  void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);
@@ -36,7 +36,7 @@ class HnExponentialTest {
   }
 
   @Test
-  public void testExpZero() {
+  void testExpZero() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 4; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);
@@ -54,7 +54,7 @@ class HnExponentialTest {
   }
 
   @Test
-  public void testLog() {
+  void testLog() {
     Random random = new Random(1);
     Distribution distribution = NormalDistribution.of(0, 5);
     for (int d = 1; d < 4; ++d)
@@ -79,7 +79,7 @@ class HnExponentialTest {
   }
 
   @Test
-  public void testLogZero() {
+  void testLogZero() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 4; ++d) {
@@ -94,7 +94,7 @@ class HnExponentialTest {
   }
 
   @Test
-  public void testSpecific() {
+  void testSpecific() {
     Tensor x = Tensors.vector(2, Math.sqrt(5));
     Tensor y = Tensors.vector(3, Math.sqrt(10));
     HnMemberQ.INSTANCE.require(x);

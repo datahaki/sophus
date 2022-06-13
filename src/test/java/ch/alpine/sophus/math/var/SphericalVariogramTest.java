@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SphericalVariogramTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     ScalarUnaryOperator variogram = Serialization.copy(SphericalVariogram.of(5, 3));
     Scalar lo = variogram.apply(RealScalar.of(4.9999));
     Scalar hi = variogram.apply(RealScalar.of(5.0001));
@@ -24,7 +24,7 @@ class SphericalVariogramTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     ScalarUnaryOperator variogram = SphericalVariogram.of(Quantity.of(2, "m"), Quantity.of(4, "s"));
     Scalar lo = variogram.apply(Quantity.of(1, "m"));
     Scalar hi = variogram.apply(Quantity.of(5, "m"));

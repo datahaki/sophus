@@ -22,7 +22,7 @@ class BSpline5CurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testCyclicMask() {
+  void testCyclicMask() {
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     Tensor tensor = curveSubdivision.cyclic(Tensors.vector(1, 0, 0, 0, 0, 0, 0));
     assertEquals(tensor, Tensors.fromString( //
@@ -30,7 +30,7 @@ class BSpline5CurveSubdivisionTest {
   }
 
   @Test
-  public void testString() {
+  void testString() {
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     for (int length = 3; length < 7; ++length) {
       Tensor tensor = curveSubdivision.cyclic(UnitVector.of(length, 2));
@@ -40,7 +40,7 @@ class BSpline5CurveSubdivisionTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Tensor curve = Tensors.vector();
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     assertEquals(curveSubdivision.string(curve), Tensors.empty());
@@ -48,7 +48,7 @@ class BSpline5CurveSubdivisionTest {
   }
 
   @Test
-  public void testSingleton() {
+  void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(CLOTHOID_BUILDER);
     assertEquals(curveSubdivision.cyclic(singleton), singleton);
@@ -56,7 +56,7 @@ class BSpline5CurveSubdivisionTest {
   }
 
   @Test
-  public void testTerminal() {
+  void testTerminal() {
     CurveSubdivision curveSubdivision = new BSpline5CurveSubdivision(RnGroup.INSTANCE);
     Clip clip = Clips.interval(1, 2);
     for (int length = 2; length < 7; ++length) {
@@ -67,7 +67,7 @@ class BSpline5CurveSubdivisionTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new BSpline5CurveSubdivision(null));
   }
 }

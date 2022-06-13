@@ -29,7 +29,7 @@ class RnHermite2SubdivisionTest {
       RnHermite2Subdivisions.manifold());
 
   @Test
-  public void testStringReverse() {
+  void testStringReverse() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -46,7 +46,7 @@ class RnHermite2SubdivisionTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Polynomial f0 = Polynomial.of(Tensors.vector(5, -3));
     Polynomial f1 = f0.derivative();
     Tensor domain = Range.of(0, 10);

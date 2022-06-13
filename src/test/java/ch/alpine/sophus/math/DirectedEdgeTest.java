@@ -11,7 +11,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class DirectedEdgeTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     IntDirectedEdge directedEdge = Serialization.copy(new IntDirectedEdge(2, 3));
     assertEquals(directedEdge.reverse(), new IntDirectedEdge(3, 2));
   }

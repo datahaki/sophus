@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class TSpdMemberQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 10; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor sim = RandomSample.of(rsi);

@@ -11,12 +11,12 @@ import ch.alpine.sophus.lie.rn.RnGroup;
 
 class Hermite2SubdivisionTest {
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     TestHelper.checkQuantity(Hermite2Subdivisions.standard(RnGroup.INSTANCE));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> Hermite2Subdivisions.standard(null));
   }
 }

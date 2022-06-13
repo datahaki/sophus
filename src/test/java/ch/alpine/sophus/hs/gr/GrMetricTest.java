@@ -35,20 +35,20 @@ class GrMetricTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor log = MatrixLog.of(IdentityMatrix.of(3));
     assertEquals(log, Array.zeros(3, 3));
   }
 
   @Test
-  public void testLog() {
+  void testLog() {
     Tensor log = MatrixLog.of(Tensors.fromString("{{1, 0.1}, {0.2, 1}}"));
     Chop._10.requireClose(log, //
         Tensors.fromString("{{-0.01010135365876013, 0.10067478275975056}, {0.20134956551950084, -0.01010135365875986}}"));
   }
 
   @Test
-  public void testDistance2d() {
+  void testDistance2d() {
     Tensor p = projection1(Tensors.vector(0.2, 0.5));
     Tensor q = projection1(Tensors.vector(0.3, -0.1));
     Scalar distance = GrMetric.INSTANCE.distance(p, q);
@@ -56,7 +56,7 @@ class GrMetricTest {
   }
 
   @Test
-  public void testDistance3d() {
+  void testDistance3d() {
     Tensor x = Tensors.vector(0.2, 0.5, 0.1);
     Tensor y = Tensors.vector(0.3, -0.1, 1.4);
     Tensor p = projection1(x);
@@ -66,7 +66,7 @@ class GrMetricTest {
   }
 
   @Test
-  public void testRandomSymmetry() {
+  void testRandomSymmetry() {
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
@@ -76,7 +76,7 @@ class GrMetricTest {
   }
 
   @Test
-  public void testFrobenius() {
+  void testFrobenius() {
     RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
@@ -86,7 +86,7 @@ class GrMetricTest {
   }
 
   @Test
-  public void testAntipodal() {
+  void testAntipodal() {
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
     GrMemberQ.INSTANCE.require(p);

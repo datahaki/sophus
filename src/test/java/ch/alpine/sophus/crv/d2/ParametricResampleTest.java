@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class ParametricResampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar threshold = RealScalar.of(33);
     Scalar ds = RealScalar.of(.3);
     Tensor points = Tensors.fromString("{{100, 0}, {100, 2}, {100, 3}, {10, 10}, {10, 10.2}, {10, 10.4}, {20, 40}}");
@@ -40,7 +40,7 @@ class ParametricResampleTest {
   }
 
   @Test
-  public void testDistances() {
+  void testDistances() {
     Scalar threshold = RealScalar.of(33);
     Scalar ds = RealScalar.of(.3);
     ParametricResample parametricResample = new ParametricResample(threshold, ds);
@@ -55,7 +55,7 @@ class ParametricResampleTest {
   }
 
   @Test
-  public void testMore() {
+  void testMore() {
     Scalar threshold = RealScalar.of(33);
     Scalar ds = RealScalar.of(.3);
     Tensor points = Tensors.fromString("{{10, -100}, {100, 0}, {100, 0.1}, {100, 0.2}, {100, 2}, {100, 2}, {100, 2}, {100, 3}, {100, 7}, {10, 10}}");

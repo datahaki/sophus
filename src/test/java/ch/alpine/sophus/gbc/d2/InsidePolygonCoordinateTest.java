@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class InsidePolygonCoordinateTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = //
           HsCoordinates.of(RnGroup.INSTANCE, new InsidePolygonCoordinate(ThreePointCoordinate.of(barycenter)));

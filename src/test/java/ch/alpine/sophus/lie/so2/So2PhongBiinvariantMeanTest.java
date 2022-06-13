@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class So2PhongBiinvariantMeanTest {
   @Test
-  public void testPermutations() {
+  void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Math.PI));
     for (int length = 1; length < 6; ++length) {
       // here, we hope that no antipodal points are generated

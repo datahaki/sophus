@@ -10,17 +10,17 @@ import ch.alpine.tensor.RealScalar;
 
 class GeodesicIIRnTest {
   @Test
-  public void testFailOpNull() {
+  void testFailOpNull() {
     assertThrows(Exception.class, () -> GeodesicIIRn.of(null, RnGroup.INSTANCE, 3, RealScalar.ONE));
   }
 
   @Test
-  public void testFailScalarNull() {
+  void testFailScalarNull() {
     assertThrows(Exception.class, () -> GeodesicIIRn.of(x -> x.get(0), RnGroup.INSTANCE, 3, null));
   }
 
   @Test
-  public void testFailGeodesicNull() {
+  void testFailGeodesicNull() {
     assertThrows(Exception.class, () -> GeodesicIIRn.of(x -> x.get(0), null, 3, RealScalar.ONE));
   }
 }

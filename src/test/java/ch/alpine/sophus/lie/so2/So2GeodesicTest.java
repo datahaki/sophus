@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So2GeodesicTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = So2Exponential.INSTANCE.exp(RealScalar.ONE);
     Tensor q = So2Exponential.INSTANCE.exp(RealScalar.of(2));
     Scalar split = So2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
@@ -26,7 +26,7 @@ class So2GeodesicTest {
   }
 
   @Test
-  public void testEndPoints() {
+  void testEndPoints() {
     Distribution distribution = UniformDistribution.unit();
     for (int index = 0; index < 10; ++index) {
       Tensor p = So2Exponential.INSTANCE.exp(RandomVariate.of(distribution));

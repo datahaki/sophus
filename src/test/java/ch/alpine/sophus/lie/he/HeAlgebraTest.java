@@ -24,7 +24,7 @@ class HeAlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);
 
   @Test
-  public void testHeH() {
+  void testHeH() {
     for (int n = 1; n <= 3; ++n) {
       LieAlgebra lieAlgebra = new HeAlgebra(n);
       Tensor ad = lieAlgebra.ad();
@@ -40,7 +40,7 @@ class HeAlgebraTest {
   }
 
   @Test
-  public void testHe() {
+  void testHe() {
     for (int n = 1; n <= 3; ++n) {
       LieAlgebra lieAlgebra = new HeAlgebra(n);
       Tensor ad = lieAlgebra.ad();
@@ -57,7 +57,7 @@ class HeAlgebraTest {
   }
 
   @Test
-  public void testHeOnRn() {
+  void testHeOnRn() {
     for (int n = 1; n <= 3; ++n) {
       LieAlgebra lieAlgebra = new HeAlgebra(n);
       Tensor ad = lieAlgebra.ad();
@@ -75,7 +75,7 @@ class HeAlgebraTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     assertThrows(Exception.class, () -> new HeAlgebra(0));
   }
 }

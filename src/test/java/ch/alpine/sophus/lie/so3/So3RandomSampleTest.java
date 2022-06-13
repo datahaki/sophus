@@ -13,7 +13,7 @@ import ch.alpine.tensor.mat.re.Det;
 
 class So3RandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int count = 0; count < 10; ++count) {
       Tensor matrix = RandomSample.of(So3RandomSample.INSTANCE);
       MatrixQ.requireSize(matrix, 3, 3);

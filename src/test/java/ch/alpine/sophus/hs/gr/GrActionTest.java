@@ -10,7 +10,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GrActionTest {
   @Test
-  public void testDecomp() {
+  void testDecomp() {
     int n = 5;
     for (int k = 1; k < n; ++k) {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);

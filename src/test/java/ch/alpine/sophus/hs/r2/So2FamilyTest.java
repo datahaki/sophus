@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So2FamilyTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     BijectionFamily bijectionFamily = new So2Family(s -> RealScalar.of(5).subtract(s));
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 100; ++index) {
@@ -32,7 +32,7 @@ class So2FamilyTest {
   }
 
   @Test
-  public void testReverse() {
+  void testReverse() {
     BijectionFamily bijectionFamily = new So2Family(s -> RealScalar.of(1.2).multiply(s));
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 100; ++index) {
@@ -44,7 +44,7 @@ class So2FamilyTest {
   }
 
   @Test
-  public void testForwardSe2() {
+  void testForwardSe2() {
     R2RigidFamily rigidFamily = new So2Family(s -> s);
     Tensor matrix = rigidFamily.forward_se2(RealScalar.ONE);
     assertTrue(OrthogonalMatrixQ.of(matrix, Chop._14));

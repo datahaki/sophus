@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicInterpolationTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Tensor sequence = Tensors.fromString("{{1, 2, 3}, {4, 3, 2}, {5, -1, 2.5}}");
     Interpolation interpolation = //
         Serialization.copy(GeodesicInterpolation.of(Se2CoveringGroup.INSTANCE, sequence));

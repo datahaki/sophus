@@ -14,7 +14,7 @@ import ch.alpine.tensor.red.Mean;
 
 class GeodesicMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int radius = 0; radius <= 5; ++radius) {
       TensorUnaryOperator geodesicMean = GeodesicMean.of(RnGroup.INSTANCE);
       Tensor input = Range.of(0, 2 * radius + 1);
@@ -24,7 +24,7 @@ class GeodesicMeanTest {
   }
 
   @Test
-  public void testMultiRadius() {
+  void testMultiRadius() {
     for (int radius = 0; radius < 5; ++radius) {
       TensorUnaryOperator geodesicMean = GeodesicMean.of(RnGroup.INSTANCE);
       Tensor input = UnitVector.of(2 * radius + 1, radius);

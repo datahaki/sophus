@@ -11,7 +11,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 
 class HilbertCurveTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ExactTensorQ.require(HilbertCurve.of(0));
     for (int n = 1; n < 4; ++n) {
       ExactTensorQ.require(HilbertCurve.of(n));
@@ -20,12 +20,12 @@ class HilbertCurveTest {
   }
 
   @Test
-  public void testSmall() {
+  void testSmall() {
     assertEquals(HilbertCurve.of(0), Tensors.fromString("{{1, 1}}"));
   }
 
   @Test
-  public void testNegativeFail() {
+  void testNegativeFail() {
     assertThrows(Exception.class, () -> HilbertCurve.of(-1));
     assertThrows(Exception.class, () -> HilbertPolygon.of(-1));
   }

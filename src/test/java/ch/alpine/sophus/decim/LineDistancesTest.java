@@ -15,7 +15,7 @@ import ch.alpine.tensor.qty.Quantity;
 
 class LineDistancesTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (LineDistances lineDistances : LineDistances.values()) {
       CurveDecimation curveDecimation = CurveDecimation.of( //
           lineDistances.supply(Se2Group.INSTANCE), RealScalar.of(0.4));
@@ -25,7 +25,7 @@ class LineDistancesTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     for (LineDistances lineDistances : LineDistances.values()) {
       CurveDecimation curveDecimation = CurveDecimation.of( //
           lineDistances.supply(RnGroup.INSTANCE), Quantity.of(0.7, "m"));

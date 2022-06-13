@@ -13,19 +13,19 @@ import ch.alpine.tensor.alg.Range;
 
 class DecibelTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar scalar = Decibel.FUNCTION.apply(RealScalar.of(100));
     assertEquals(scalar, RealScalar.of(40));
   }
 
   @Test
-  public void testVector() {
+  void testVector() {
     Tensor tensor = Decibel.of(Range.of(1, 100));
     assertEquals(tensor.length(), 99);
   }
 
   @Test
-  public void testNegativeInfinity() {
+  void testNegativeInfinity() {
     Scalar scalar = Decibel.FUNCTION.apply(RealScalar.ZERO);
     assertEquals(scalar, DoubleScalar.NEGATIVE_INFINITY);
   }

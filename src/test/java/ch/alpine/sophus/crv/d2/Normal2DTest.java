@@ -22,7 +22,7 @@ import ch.alpine.tensor.red.Total;
 
 class Normal2DTest {
   @Test
-  public void testStringLength() {
+  void testStringLength() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = RandomVariate.of(distribution, count, 2);
@@ -32,7 +32,7 @@ class Normal2DTest {
   }
 
   @Test
-  public void testStringUnit() {
+  void testStringUnit() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = RandomVariate.of(distribution, count, 2);
@@ -44,7 +44,7 @@ class Normal2DTest {
   }
 
   @Test
-  public void testStringZerosLength() {
+  void testStringZerosLength() {
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = Array.zeros(count, 2);
       Tensor string = Normal2D.string(tensor);
@@ -54,7 +54,7 @@ class Normal2DTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Distribution distribution = TriangularDistribution.with(Quantity.of(0, "m"), Quantity.of(1, "m"));
     {
       int n = 0;
@@ -70,7 +70,7 @@ class Normal2DTest {
   }
 
   @Test
-  public void testTriple() {
+  void testTriple() {
     Distribution distribution = TriangularDistribution.with(Quantity.of(0, "m"), Quantity.of(1, "m"));
     assertThrows(Exception.class, () -> Normal2D.string(RandomVariate.of(distribution, 1, 3)));
   }

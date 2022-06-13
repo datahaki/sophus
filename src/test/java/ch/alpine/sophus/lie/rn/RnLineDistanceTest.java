@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class RnLineDistanceTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     LineDistance lineDistance = RnLineDistance.INSTANCE;
     TensorNorm tensorNorm = lineDistance.tensorNorm(Tensors.vector(10, 0), Tensors.vector(10, 20));
     Scalar norm = tensorNorm.norm(Tensors.vector(30, 100));
@@ -29,7 +29,7 @@ class RnLineDistanceTest {
   }
 
   @Test
-  public void testConsistent() {
+  void testConsistent() {
     LineDistance lineDistance1 = RnLineDistance.INSTANCE;
     LineDistance lineDistance2 = new HsLineDistance(RnGroup.INSTANCE);
     Distribution distribution = NormalDistribution.of(3, 2);

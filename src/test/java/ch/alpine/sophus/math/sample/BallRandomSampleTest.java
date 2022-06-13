@@ -29,7 +29,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class BallRandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor center = Tensors.vector(10, 20, 30, 40);
     Scalar radius = RealScalar.of(2);
     RandomSampleInterface rsi = BallRandomSample.of(center, radius);
@@ -38,7 +38,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void test1D() {
+  void test1D() {
     Tensor center = Tensors.vector(15);
     Scalar radius = RealScalar.of(3);
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(center, radius);
@@ -50,7 +50,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void testSimple2D() {
+  void testSimple2D() {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.ONE);
     for (int count = 0; count < 100; ++count) {
       Tensor loc = RandomSample.of(diskRandomSample);
@@ -60,7 +60,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void testQuantity2D() {
+  void testQuantity2D() {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.fromString("{10[m], 20[m]}"), Quantity.of(2, "m"));
     Tensor tensor = RandomSample.of(diskRandomSample);
     ScalarUnaryOperator scalarUnaryOperator = QuantityMagnitude.SI().in("m");
@@ -68,7 +68,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void test3DZeroRadius() {
+  void test3DZeroRadius() {
     Tensor center = Tensors.vector(10, 20, 3);
     Scalar radius = RealScalar.of(0.0);
     RandomSampleInterface randomSampleInterface = BallRandomSample.of(center, radius);
@@ -76,7 +76,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.fromString("{10[m], 20[m], -5[m]}"), Quantity.of(2, "m"));
     Tensor tensor = RandomSample.of(randomSampleInterface);
@@ -85,7 +85,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void testR3S2Geodesic() {
+  void testR3S2Geodesic() {
     Random random = new Random(7);
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
@@ -100,7 +100,7 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void testRotationMatrix3D() {
+  void testRotationMatrix3D() {
     for (int index = 0; index < 50; ++index) {
       RandomSampleInterface randomSampleInterface = //
           BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
@@ -113,34 +113,34 @@ class BallRandomSampleTest {
   }
 
   @Test
-  public void testLarge() {
+  void testLarge() {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Array.zeros(10), RealScalar.ONE);
     RandomSample.of(randomSampleInterface);
   }
 
   @Test
-  public void testCenterEmptyFail() {
+  void testCenterEmptyFail() {
     assertThrows(Exception.class, () -> BallRandomSample.of(Tensors.empty(), Quantity.of(2, "m")));
   }
 
   @Test
-  public void testRadiusNegative2Fail() {
+  void testRadiusNegative2Fail() {
     assertThrows(Exception.class, () -> BallRandomSample.of(Tensors.vector(1, 2), RealScalar.of(-1)));
   }
 
   @Test
-  public void testRadiusNegative3Fail() {
+  void testRadiusNegative3Fail() {
     assertThrows(Exception.class, () -> BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.of(-1)));
   }
 
   @Test
-  public void testCenterScalarFail() {
+  void testCenterScalarFail() {
     assertThrows(Exception.class, () -> BallRandomSample.of(RealScalar.ONE, RealScalar.ONE));
   }
 
   @Test
-  public void testCenterScalarZeroFail() {
+  void testCenterScalarZeroFail() {
     assertThrows(Exception.class, () -> BallRandomSample.of(RealScalar.ONE, RealScalar.ZERO));
   }
 }

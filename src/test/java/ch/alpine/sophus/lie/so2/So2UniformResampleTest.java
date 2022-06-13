@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class So2UniformResampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = So2UniformResample.of(RealScalar.of(0.1));
     Tensor tensor = curveSubdivision.string(Subdivide.of(0, 10, 20));
     Scalar variance = Variance.ofVector(Differences.of(tensor));

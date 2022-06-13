@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class LieDifferencesTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
     LieDifferences lieDifferences = //
@@ -39,7 +39,7 @@ class LieDifferencesTest {
   }
 
   @Test
-  public void testPairFunction() {
+  void testPairFunction() {
     Distribution distribution = UniformDistribution.unit();
     RandomSampleInterface randomSampleInterface = Se2RandomSample.of(distribution);
     LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
@@ -53,7 +53,7 @@ class LieDifferencesTest {
   }
 
   @Test
-  public void testSe3() {
+  void testSe3() {
     Distribution distribution = NormalDistribution.of(0, .1);
     Tensor tensor = Tensors.empty();
     for (int index = 0; index < 10; ++index)
@@ -64,7 +64,7 @@ class LieDifferencesTest {
   }
 
   @Test
-  public void testLieGroupNullFail() {
+  void testLieGroupNullFail() {
     assertThrows(Exception.class, () -> new LieDifferences(null));
   }
 }

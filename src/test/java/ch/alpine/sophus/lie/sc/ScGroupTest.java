@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class ScGroupTest {
   @Test
-  public void testSimple1() {
+  void testSimple1() {
     Distribution distribution = UniformDistribution.of(-500, 500);
     for (int count = 0; count < 100; ++count) {
       Tensor x = RandomVariate.of(distribution, 1);
@@ -33,7 +33,7 @@ class ScGroupTest {
       new MetricCoordinate(NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor sequence = Tensors.vector(2, 4).map(Tensors::of);
     Tensor target = Tensors.vector(1);
     Tensor weights = INSTANCE.weights(sequence, target);
@@ -42,7 +42,7 @@ class ScGroupTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     for (int n = 4; n < 10; ++n) {
       Distribution distribution = ExponentialDistribution.of(1);
       Tensor sequence = RandomVariate.of(distribution, n, 1);

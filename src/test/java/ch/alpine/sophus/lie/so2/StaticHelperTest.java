@@ -12,13 +12,13 @@ import ch.alpine.tensor.Tensors;
 
 class StaticHelperTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     StaticHelper.rangeQ(Tensors.vector(1, 2, 3));
     assertThrows(Exception.class, () -> StaticHelper.rangeQ(Tensors.vector(1, 2, 7)));
   }
 
   @Test
-  public void testPackageVisibility() {
+  void testPackageVisibility() {
     assertFalse(Modifier.isPublic(StaticHelper.class.getModifiers()));
   }
 }

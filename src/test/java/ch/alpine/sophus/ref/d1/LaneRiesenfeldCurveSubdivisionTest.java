@@ -18,7 +18,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testDeg1() {
+  void testDeg1() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 1);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
     assertEquals(string, Tensors.fromString("{1, 3/2, 2, 5/2, 3, 7/2, 4}"));
@@ -26,7 +26,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testDeg2() {
+  void testDeg2() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 2);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
     assertEquals(string, Tensors.fromString("{5/4, 7/4, 9/4, 11/4, 13/4, 15/4}"));
@@ -34,7 +34,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testDeg3() {
+  void testDeg3() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 3);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
     assertEquals(string, Tensors.fromString("{1, 3/2, 2, 5/2, 3, 7/2, 4}"));
@@ -42,7 +42,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testDeg4() {
+  void testDeg4() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 4);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
     assertEquals(string, Tensors.fromString("{5/4, 7/4, 9/4, 11/4, 13/4, 15/4}"));
@@ -50,7 +50,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testDeg5() {
+  void testDeg5() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 5);
     Tensor string = curveSubdivision.string(Tensors.vector(1, 2, 3, 4));
     assertEquals(string, Tensors.fromString("{1, 3/2, 2, 5/2, 3, 7/2, 4}"));
@@ -58,7 +58,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testCyc2() {
+  void testCyc2() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 2);
     Tensor cyclic = curveSubdivision.cyclic(Tensors.vector(1, 2, 3, 4));
     assertEquals(cyclic, Tensors.fromString("{5/4, 7/4, 9/4, 11/4, 13/4, 15/4, 13/4, 7/4}"));
@@ -66,7 +66,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testCyc3() {
+  void testCyc3() {
     CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 3);
     CurveSubdivision curveSubdivisiom = new BSpline3CurveSubdivision(RnGroup.INSTANCE);
     Tensor tensor = Tensors.vector(1, 2, 3, 4);
@@ -77,7 +77,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     for (int degree = 1; degree < 4; ++degree) {
       CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(CLOTHOID_BUILDER, degree);
       assertEquals(curveSubdivision.cyclic(Tensors.empty()), Tensors.empty());
@@ -86,7 +86,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testSingleton() {
+  void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     for (int degree = 1; degree < 4; ++degree) {
       CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(CLOTHOID_BUILDER, degree);
@@ -96,7 +96,7 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testDegMatrix() {
+  void testDegMatrix() {
     for (int degree = 1; degree < 6; ++degree) {
       CurveSubdivision curveSubdivision = LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, degree);
       for (int length = 0; length < 10; ++length) {
@@ -108,12 +108,12 @@ class LaneRiesenfeldCurveSubdivisionTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> LaneRiesenfeldCurveSubdivision.of(null, 3));
   }
 
   @Test
-  public void testDegreeFail() {
+  void testDegreeFail() {
     assertThrows(Exception.class, () -> LaneRiesenfeldCurveSubdivision.of(RnGroup.INSTANCE, 0));
   }
 }

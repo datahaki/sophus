@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Sl2GroupTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Sl2GroupElement sl2GroupElement = Sl2Group.INSTANCE.element(Tensors.vector(8, 64, 4));
     Tensor inverse = sl2GroupElement.inverse().toCoordinate();
     ExactTensorQ.require(inverse);
@@ -31,7 +31,7 @@ class Sl2GroupTest {
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     Tensor x = Tensors.fromString("{{2, 3}, {4, -2}}");
     Tensor exp = Sl2Group.INSTANCE.exp(x);
     Chop._10.requireClose(exp, MatrixExp.of(x));
@@ -41,7 +41,7 @@ class Sl2GroupTest {
   }
 
   @Test
-  public void testNegativeDelta() {
+  void testNegativeDelta() {
     Tensor x = Tensors.fromString("{{2, -3}, {4, -2}}");
     Tensor exp = Sl2Group.INSTANCE.exp(x);
     Chop._10.requireClose(exp, MatrixExp.of(x));
@@ -51,14 +51,14 @@ class Sl2GroupTest {
   }
 
   @Test
-  public void testId() {
+  void testId() {
     Tensor g = IdentityMatrix.of(2).negate();
     Tensor log = Sl2Group.INSTANCE.log(g);
     Tolerance.CHOP.requireClose(log, HodgeDual.of(Pi.VALUE, 2));
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor x = RandomVariate.of(distribution, 2, 2);

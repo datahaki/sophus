@@ -18,7 +18,7 @@ import ch.alpine.tensor.red.FirstPosition;
 
 class TriQuadLinearRefinementTest {
   @Test
-  public void testSe2CSimple() throws ClassNotFoundException, IOException {
+  void testSe2CSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         Serialization.copy(new TriQuadLinearRefinement(Se2CoveringBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.quads6());
@@ -27,7 +27,7 @@ class TriQuadLinearRefinementTest {
   }
 
   @Test
-  public void testRnSimple() throws ClassNotFoundException, IOException {
+  void testRnSimple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         Serialization.copy(new TriQuadLinearRefinement(RnBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.quads5());
@@ -37,7 +37,7 @@ class TriQuadLinearRefinementTest {
   }
 
   @Test
-  public void testR3Simple() throws ClassNotFoundException, IOException {
+  void testR3Simple() throws ClassNotFoundException, IOException {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         Serialization.copy(new TriQuadLinearRefinement(RnBiinvariantMean.INSTANCE));
     SurfaceMesh surfaceMesh = surfaceMeshRefinement.refine(SurfaceMeshExamples.unitQuad());

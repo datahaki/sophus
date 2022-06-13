@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnAlgebraTest {
   @Test
-  public void testProperty() {
+  void testProperty() {
     for (int d = 2; d < 5; ++d) {
       HsAlgebra hsAlgebra = SnAlgebra.of(d);
       assertFalse(hsAlgebra.isHTrivial());
@@ -38,7 +38,7 @@ class SnAlgebraTest {
   }
 
   @Test
-  public void testBiinvariantMean() {
+  void testBiinvariantMean() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(-0.2, 1);
     for (int d = 2; d < 5; ++d) {

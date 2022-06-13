@@ -65,7 +65,7 @@ class Se2CoveringManifoldTest {
       Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
 
   @Test
-  public void test4Exact() {
+  void test4Exact() {
     Distribution distribution = UniformDistribution.unit();
     final int n = 4;
     Random random = new Random(1);
@@ -82,7 +82,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testLinearReproduction() {
+  void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
@@ -99,7 +99,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
@@ -126,13 +126,13 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     for (BarycentricCoordinate barycentricCoordinate : ALL_COORDINATES)
       assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }
 
   @Test
-  public void testLagrange() {
+  void testLagrange() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     int n = 4 + random.nextInt(4);
@@ -154,7 +154,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     int n = 4 + random.nextInt(4);
@@ -172,7 +172,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testProjection() {
+  void testProjection() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
@@ -206,7 +206,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testProjectionIntoAdInvariant() {
+  void testProjectionIntoAdInvariant() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
@@ -244,7 +244,7 @@ class Se2CoveringManifoldTest {
       AD_INVAR };
 
   @Test
-  public void testA4Exact() {
+  void testA4Exact() {
     // Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES) {
@@ -261,7 +261,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testALinearReproduction() {
+  void testALinearReproduction() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
@@ -278,7 +278,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testARandom() {
+  void testARandom() {
     Random random = new Random();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
@@ -305,7 +305,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testDiagonalNorm() {
+  void testDiagonalNorm() {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor _beta : betas) {
       Scalar beta = (Scalar) _beta;
@@ -323,7 +323,7 @@ class Se2CoveringManifoldTest {
   }
 
   @Test
-  public void testANullFail() {
+  void testANullFail() {
     for (BarycentricCoordinate barycentricCoordinate : BIINVARIANT_COORDINATES)
       assertThrows(Exception.class, () -> barycentricCoordinate.weights(null, null));
   }

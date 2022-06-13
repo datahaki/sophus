@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class AmplifiersTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     List<TensorUnaryOperator> list = Arrays.asList( //
         Amplifiers.EXP.supply(3), Amplifiers.EXP.supply(5), //
         Amplifiers.RAMP.supply(3), Amplifiers.RAMP.supply(5), //

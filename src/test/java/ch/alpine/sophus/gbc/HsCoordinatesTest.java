@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HsCoordinatesTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = Serialization.copy( //
           HsCoordinates.of(RnGroup.INSTANCE, ThreePointCoordinate.of(barycenter)));

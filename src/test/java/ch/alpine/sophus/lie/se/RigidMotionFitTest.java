@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.N;
 
 class RigidMotionFitTest {
   @Test
-  public void testExact() throws ClassNotFoundException, IOException {
+  void testExact() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.standard();
     Tensor skew3 = Cross.skew3(Tensors.vector(-.1, .2, .3));
     Tensor rotation = OrthogonalMatrixQ.require(MatrixExp.of(skew3));
@@ -47,7 +47,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testWeights() throws ClassNotFoundException, IOException {
+  void testWeights() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     Tensor skew3 = Cross.skew3(Tensors.vector(-.1, .2, .3));
@@ -70,7 +70,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testRandom() {
+  void testRandom() {
     Distribution distribution = NormalDistribution.standard();
     Distribution dist_weights = ExponentialDistribution.of(1);
     for (int d = 2; d < 6; ++d) {
@@ -85,7 +85,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testIdentityFail() {
+  void testIdentityFail() {
     Distribution dist_weights = ExponentialDistribution.of(2);
     for (int d = 2; d < 6; ++d) {
       for (int n = d + 1; n < 11; ++n) {
@@ -100,7 +100,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     Tensor points = Tensors.of(Tensors.vector(1, 2, 3));
     RigidMotionFit rigidMotionFit = RigidMotionFit.of(points, points);
     Chop._10.requireClose(rigidMotionFit.rotation(), IdentityMatrix.of(3));
@@ -108,7 +108,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testFormatFail() {
+  void testFormatFail() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
     Tensor target = RandomVariate.of(distribution, 7, 3);
@@ -117,7 +117,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
     Tensor target = RandomVariate.of(distribution, 6, 3);
@@ -126,7 +126,7 @@ class RigidMotionFitTest {
   }
 
   @Test
-  public void testNegativeOk() {
+  void testNegativeOk() {
     Distribution distribution = NormalDistribution.standard();
     Tensor points = RandomVariate.of(distribution, 6, 3);
     Tensor target = RandomVariate.of(distribution, 6, 3);

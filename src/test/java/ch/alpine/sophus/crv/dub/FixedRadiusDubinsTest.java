@@ -20,26 +20,26 @@ import ch.alpine.tensor.qty.Quantity;
 
 class FixedRadiusDubinsTest {
   @Test
-  public void testTest() {
+  void testTest() {
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(Tensors.vector(10, 2, Math.PI / 2), RealScalar.of(1));
     assertEquals(dubinsPathGenerator.stream().count(), 4);
   }
 
   @Test
-  public void testUnits() {
+  void testUnits() {
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(Tensors.fromString("{10[m], 2[m]}").append(Pi.HALF), Quantity.of(1, "m"));
     assertEquals(dubinsPathGenerator.stream().count(), 4);
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(Tensors.vector(10, 2, Math.PI / 2), RealScalar.of(1));
     DubinsPathGenerator copy = Serialization.copy(dubinsPathGenerator);
     assertEquals(copy.stream().count(), 4);
   }
 
   @Test
-  public void testMin2() {
+  void testMin2() {
     for (int count = 0; count < 100; ++count) {
       Tensor tensor = RandomVariate.of(NormalDistribution.standard(), 3);
       DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(tensor, RealScalar.of(0.1));
@@ -48,7 +48,7 @@ class FixedRadiusDubinsTest {
   }
 
   @Test
-  public void testNegativeFail() {
+  void testNegativeFail() {
     assertThrows(Exception.class, () -> FixedRadiusDubins.of(Tensors.vector(1, 2, 3), RealScalar.of(-0.1)));
   }
 }

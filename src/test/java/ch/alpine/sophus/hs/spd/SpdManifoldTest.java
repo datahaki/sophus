@@ -40,7 +40,7 @@ class SpdManifoldTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Random random = new Random();
     int d = 2;
     int fail = 0;
@@ -61,7 +61,7 @@ class SpdManifoldTest {
   }
 
   @Test
-  public void testLagrangeProperty() {
+  void testLagrangeProperty() {
     Random random = new Random();
     int d = 2;
     int len = 5 + random.nextInt(3);
@@ -79,7 +79,7 @@ class SpdManifoldTest {
   }
 
   @Test
-  public void testFlipMidpoint() {
+  void testFlipMidpoint() {
     RandomSampleInterface spd = new Spd0RandomSample(3, NormalDistribution.standard());
     Tensor p = RandomSample.of(spd);
     Tensor q = RandomSample.of(spd);
@@ -88,7 +88,7 @@ class SpdManifoldTest {
   }
 
   @Test
-  public void testSplit() {
+  void testSplit() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
@@ -101,7 +101,7 @@ class SpdManifoldTest {
   }
 
   @Test
-  public void testIdentity() {
+  void testIdentity() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);

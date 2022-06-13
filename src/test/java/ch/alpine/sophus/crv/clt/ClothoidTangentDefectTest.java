@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class ClothoidTangentDefectTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tolerance.CHOP.requireClose( //
         ClothoidTangentDefect.of(+1.2, 0.5).defect(RealScalar.of(0.2)), //
         RealScalar.of(-2.1006943560956515));
@@ -28,7 +28,7 @@ class ClothoidTangentDefectTest {
   }
 
   @Test
-  public void testZeroApx() {
+  void testZeroApx() {
     Distribution distribution = UniformDistribution.of(-0.5, 0.5);
     for (int count = 0; count < 100; ++count) {
       Scalar s1 = RandomVariate.of(distribution);
@@ -40,7 +40,7 @@ class ClothoidTangentDefectTest {
   }
 
   @Test
-  public void testZeros() {
+  void testZeros() {
     ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(RealScalar.ZERO, RealScalar.ZERO);
     clothoidTangentDefect.defect(RealScalar.of(0.1));
   }

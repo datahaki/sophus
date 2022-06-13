@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class HalfWindowSamplerTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count <= 10; ++count) {
@@ -33,7 +33,7 @@ class HalfWindowSamplerTest {
   }
 
   @Test
-  public void testSpecific() {
+  void testSpecific() {
     Function<Integer, Tensor> function = HalfWindowSampler.of(BartlettWindow.FUNCTION);
     assertEquals(function.apply(1), Tensors.fromString("{1}"));
     assertEquals(function.apply(2), Tensors.fromString("{1/3, 2/3}"));
@@ -41,7 +41,7 @@ class HalfWindowSamplerTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(HannWindow.FUNCTION);
     Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(HannWindow.FUNCTION);
     for (int length = 1; length < 3; ++length) {
@@ -52,7 +52,7 @@ class HalfWindowSamplerTest {
   }
 
   @Test
-  public void testNumeric() {
+  void testNumeric() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(smoothingKernel.get());
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
@@ -65,7 +65,7 @@ class HalfWindowSamplerTest {
   }
 
   @Test
-  public void testMemo() {
+  void testMemo() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = HalfWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count <= 5; ++count) {
@@ -78,7 +78,7 @@ class HalfWindowSamplerTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     Function<Integer, Tensor> function = HalfWindowSampler.of(HannWindow.FUNCTION);
     assertThrows(Exception.class, () -> function.apply(0));
   }

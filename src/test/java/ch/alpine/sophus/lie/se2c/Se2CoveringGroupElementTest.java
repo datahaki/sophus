@@ -36,7 +36,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testCirc() {
+  void testCirc() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -50,7 +50,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -62,7 +62,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testInverseCirc() {
+  void testInverseCirc() {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -74,7 +74,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testIntegrator() {
+  void testIntegrator() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(distribution, 3);
@@ -88,7 +88,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Tensor oth = Tensors.fromString("{-.3[m], 0.8[m], -0.5}");
     Se2CoveringGroupElement se2GroupAction = new Se2CoveringGroupElement(xya);
@@ -99,7 +99,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testMatrixAction() {
+  void testMatrixAction() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int index = 0; index < 10; ++index) {
       Tensor xya1 = RandomVariate.of(distribution, 3);
@@ -111,14 +111,14 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testNoWrap() {
+  void testNoWrap() {
     Se2CoveringGroupElement element = new Se2CoveringGroupElement(Tensors.vector(1, 2, 3));
     Tensor tensor = element.combine(Tensors.vector(6, 7, 8));
     assertTrue(Sign.isPositive(tensor.Get(2)));
   }
 
   @Test
-  public void testInverseTensor() {
+  void testInverseTensor() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Se2CoveringGroupElement element = new Se2CoveringGroupElement(xya);
     Tensor coordin = element.inverse().toCoordinate();
@@ -130,7 +130,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testAdjointCombine() {
+  void testAdjointCombine() {
     for (int count = 0; count < 10; ++count) {
       Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
       LieGroupElement ga = Se2CoveringGroup.INSTANCE.element(a);
@@ -145,7 +145,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testDLNumeric() {
+  void testDLNumeric() {
     Tensor g = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Tensor x = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Scalar h = RealScalar.of(1e-6);
@@ -159,7 +159,7 @@ class Se2CoveringGroupElementTest {
   }
 
   @Test
-  public void testDRDL_ad() {
+  void testDRDL_ad() {
     Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     // LieGroupElement ga =
     Se2CoveringGroup.INSTANCE.element(a);

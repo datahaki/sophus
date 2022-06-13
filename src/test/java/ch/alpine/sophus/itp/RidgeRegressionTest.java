@@ -20,7 +20,7 @@ class RidgeRegressionTest {
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
 
   @Test
-  public void testSe2C() {
+  void testSe2C() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     RidgeRegression ridgeRegression = new RidgeRegression(manifold);

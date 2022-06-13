@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2ForwardActionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor xya = Tensors.vector(1, 2, 3);
     TensorUnaryOperator tuo = new Se2ForwardAction(xya);
     Tensor p = Tensors.vector(6, -9, 1);
@@ -35,7 +35,7 @@ class Se2ForwardActionTest {
   }
 
   @Test
-  public void testSome() {
+  void testSome() {
     Tensor u = Tensors.vector(1.2, 0, 0.75);
     Tensor m = Se2Matrix.of(Se2CoveringGroup.INSTANCE.exp(u));
     Tensor p = Tensors.vector(-2, 3);
@@ -47,7 +47,7 @@ class Se2ForwardActionTest {
   }
 
   @Test
-  public void testPureSe2() {
+  void testPureSe2() {
     Distribution distribution = NormalDistribution.standard();
     Tensor p = RandomVariate.of(distribution, 3);
     Tensor q = RandomVariate.of(distribution, 3);
@@ -57,7 +57,7 @@ class Se2ForwardActionTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     TensorUnaryOperator forward = se2Bijection.forward();
     TensorUnaryOperator copy = Serialization.copy(forward);

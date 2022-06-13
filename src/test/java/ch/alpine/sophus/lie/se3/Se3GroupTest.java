@@ -11,17 +11,17 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class Se3GroupTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Se3Group.INSTANCE.element(IdentityMatrix.of(4));
   }
 
   @Test
-  public void testVectorFail() {
+  void testVectorFail() {
     assertThrows(Exception.class, () -> Se3Group.INSTANCE.element(UnitVector.of(4, 1)));
   }
 
   @Test
-  public void testMatrixFail() {
+  void testMatrixFail() {
     assertThrows(Exception.class, () -> Se3Group.INSTANCE.element(HilbertMatrix.of(3)));
   }
 }

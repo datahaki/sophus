@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class ClothoidBuildersTest {
   @Test
-  public void testCurvature() {
+  void testCurvature() {
     Distribution distribution = UniformDistribution.unit();
     Tensor p = RandomVariate.of(distribution, 3);
     Tensor q = RandomVariate.of(distribution, 3);
@@ -22,7 +22,7 @@ class ClothoidBuildersTest {
   }
 
   @Test
-  public void testValuesSize() {
+  void testValuesSize() {
     assertTrue(2 <= ClothoidBuilders.values().length);
   }
 }

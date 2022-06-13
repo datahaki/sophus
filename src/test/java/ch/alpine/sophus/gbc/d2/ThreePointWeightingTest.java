@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class ThreePointWeightingTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertThrows(Exception.class, () -> new ThreePointWeighting(null));
   }
 }

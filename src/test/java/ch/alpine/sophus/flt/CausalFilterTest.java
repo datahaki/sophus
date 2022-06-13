@@ -27,7 +27,7 @@ import ch.alpine.tensor.sca.win.DirichletWindow;
 
 class CausalFilterTest {
   @Test
-  public void testIIR1() throws ClassNotFoundException, IOException {
+  void testIIR1() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")
     TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of( //
         (Supplier<TensorUnaryOperator> & Serializable) //
@@ -45,7 +45,7 @@ class CausalFilterTest {
   }
 
   @Test
-  public void testIIR2a() throws ClassNotFoundException, IOException {
+  void testIIR2a() throws ClassNotFoundException, IOException {
     @SuppressWarnings("unchecked")
     TensorUnaryOperator causalFilter = Serialization.copy(CausalFilter.of(//
         (Supplier<TensorUnaryOperator> & Serializable) //
@@ -55,7 +55,7 @@ class CausalFilterTest {
   }
 
   @Test
-  public void testIIR2b() {
+  void testIIR2b() {
     TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(RnGroup.INSTANCE, DirichletWindow.FUNCTION);
     TensorUnaryOperator causalFilter = GeodesicIIRnFilter.of(geodesicExtrapolation, RnGroup.INSTANCE, 2, RationalScalar.HALF);
     Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
@@ -63,7 +63,7 @@ class CausalFilterTest {
   }
 
   @Test
-  public void testFIR2() {
+  void testFIR2() {
     TensorUnaryOperator causalFilter = CausalFilter.of(() -> GeodesicFIR2.of(RnGroup.INSTANCE, RationalScalar.HALF));
     {
       Tensor tensor = causalFilter.apply(UnitVector.of(10, 0));
@@ -78,7 +78,7 @@ class CausalFilterTest {
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> CausalFilter.of(null));
   }
 }

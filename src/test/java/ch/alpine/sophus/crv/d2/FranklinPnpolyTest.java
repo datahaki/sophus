@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class FranklinPnpolyTest {
   @Test
-  public void testVisibility() {
+  void testVisibility() {
     assertEquals(FranklinPnpoly.class.getModifiers() & 1, 0);
   }
 }

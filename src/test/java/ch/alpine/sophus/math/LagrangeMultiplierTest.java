@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class LagrangeMultiplierTest {
   @Test
-  public void testLagrange() {
+  void testLagrange() {
     int n = 7;
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     Tensor eqs = RandomVariate.of(distribution, 3, n);
@@ -38,7 +38,7 @@ class LagrangeMultiplierTest {
   }
 
   @Test
-  public void testLagrangeCholeskyFail() {
+  void testLagrangeCholeskyFail() {
     int n = 8;
     int r = 1;
     Distribution distribution = ExponentialDistribution.of(1);
@@ -58,7 +58,7 @@ class LagrangeMultiplierTest {
   }
 
   @Test
-  public void testLagrange1Fail() {
+  void testLagrange1Fail() {
     Tensor eqs = RandomVariate.of(NormalDistribution.standard(), 3, 10);
     Tensor target = RandomVariate.of(NormalDistribution.standard(), 9);
     Tensor rhs = RandomVariate.of(NormalDistribution.standard(), 3);
@@ -66,7 +66,7 @@ class LagrangeMultiplierTest {
   }
 
   @Test
-  public void testLagrange2Fail() {
+  void testLagrange2Fail() {
     Tensor eqs = RandomVariate.of(NormalDistribution.standard(), 3, 10);
     Tensor target = RandomVariate.of(NormalDistribution.standard(), 10);
     Tensor rhs = RandomVariate.of(NormalDistribution.standard(), 2);

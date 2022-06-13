@@ -23,7 +23,7 @@ class SoGroupElementTest {
   private static final LieGroup LIE_GROUP = SoGroup.INSTANCE;
 
   @Test
-  public void testBlub() {
+  void testBlub() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
     SoGroupElement.of(orth).combine(matr);
@@ -31,7 +31,7 @@ class SoGroupElementTest {
   }
 
   @Test
-  public void testAdjoint() {
+  void testAdjoint() {
     Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     SoGroupElement so3GroupElement = SoGroupElement.of(orth);
     Tensor vector = So3TestHelper.spawn_so3();
@@ -40,7 +40,7 @@ class SoGroupElementTest {
   }
 
   @Test
-  public void testAdjointExp() {
+  void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int count = 0; count < 10; ++count) {
@@ -54,7 +54,7 @@ class SoGroupElementTest {
   }
 
   @Test
-  public void testAdjointLog() {
+  void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     Random random = new Random(3);
@@ -70,37 +70,37 @@ class SoGroupElementTest {
   }
 
   @Test
-  public void testCombine() {
+  void testCombine() {
     LieGroupElement lieGroupElement = LIE_GROUP.element(So3TestHelper.spawn_So3());
     for (int count = 0; count < 100; ++count)
       lieGroupElement = LIE_GROUP.element(lieGroupElement.combine(So3TestHelper.spawn_So3()));
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     so3GroupElement.inverse();
     assertThrows(Exception.class, () -> so3GroupElement.combine(HilbertMatrix.of(3)));
   }
 
   @Test
-  public void testDetNegFail() {
+  void testDetNegFail() {
     assertThrows(Exception.class, () -> SoGroupElement.of(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test
-  public void testDetNegCombineFail() {
+  void testDetNegCombineFail() {
     SoGroupElement so3GroupElement = SoGroupElement.of(IdentityMatrix.of(3));
     assertThrows(Exception.class, () -> so3GroupElement.combine(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> SoGroupElement.of(HilbertMatrix.of(3)));
   }
 
   @Test
-  public void testSize4Ok() {
+  void testSize4Ok() {
     SoGroupElement.of(IdentityMatrix.of(4));
   }
 }

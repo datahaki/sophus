@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class THnMemberQTest {
   @Test
-  public void testProject() throws ClassNotFoundException, IOException {
+  void testProject() throws ClassNotFoundException, IOException {
     Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(NormalDistribution.standard(), 3));
     HnMemberQ.INSTANCE.require(x);
     Tensor v = RandomVariate.of(NormalDistribution.standard(), 4);
@@ -33,7 +33,7 @@ class THnMemberQTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new THnMemberQ(null));
   }
 }

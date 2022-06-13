@@ -9,13 +9,13 @@ import ch.alpine.sophus.lie.so3.So3Group;
 
 class SubdivideTransportTest {
   @Test
-  public void testSubdivideFail() {
+  void testSubdivideFail() {
     assertThrows(Exception.class, () -> SubdivideTransport.of( //
         new PoleLadder(So3Group.INSTANCE), So3Group.INSTANCE, 0));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> SubdivideTransport.of(null, So3Group.INSTANCE, 2));
     assertThrows(Exception.class, () -> SubdivideTransport.of(new PoleLadder(So3Group.INSTANCE), null, 2));
   }

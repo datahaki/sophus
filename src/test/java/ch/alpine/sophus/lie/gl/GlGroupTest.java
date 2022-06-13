@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.Tolerance;
 
 class GlGroupTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     GlGroupElement element = GlGroup.INSTANCE.element(RotationMatrix.of(RealScalar.of(0.24)));
     Tensor tensor = element.inverse().combine(RotationMatrix.of(RealScalar.of(0.24)));
     Tolerance.CHOP.requireClose(tensor, IdentityMatrix.of(2));

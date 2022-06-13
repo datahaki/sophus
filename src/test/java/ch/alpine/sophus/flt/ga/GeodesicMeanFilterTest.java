@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Unitize;
 
 class GeodesicMeanFilterTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int radius = 0; radius < 4; ++radius) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
       Tensor tensor = Tensors.vector(1, 2, 3, 4, 6, 7);
@@ -28,7 +28,7 @@ class GeodesicMeanFilterTest {
   }
 
   @Test
-  public void testRadiusOne() {
+  void testRadiusOne() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, 1);
     Tensor tensor = UnitVector.of(10, 5);
     Tensor result = tensorUnaryOperator.apply(tensor);
@@ -38,7 +38,7 @@ class GeodesicMeanFilterTest {
   }
 
   @Test
-  public void testMultiRadius() {
+  void testMultiRadius() {
     for (int radius = 0; radius < 5; ++radius) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
       Tensor tensor = UnitVector.of(2 * radius + 1, radius);
@@ -50,7 +50,7 @@ class GeodesicMeanFilterTest {
   }
 
   @Test
-  public void testBiUnits() {
+  void testBiUnits() {
     int radius = 2;
     TensorUnaryOperator tensorUnaryOperator = GeodesicMeanFilter.of(RnGroup.INSTANCE, radius);
     Tensor tensor = Tensors.vector(0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0);

@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.win.DirichletWindow;
 
 class WindowSideExtrapolationTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Function<Integer, Tensor> function = WindowSideExtrapolation.of(DirichletWindow.FUNCTION);
     Tensor tensor = function.apply(4);
     ExactTensorQ.require(tensor);

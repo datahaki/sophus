@@ -27,13 +27,13 @@ class BSpline2CurveSubdivisionTest {
   private static final CurveSubdivision CURVE_SUBDIVISION = new BSpline2CurveSubdivision(RnGroup.INSTANCE);
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     Tensor cyclic = CURVE_SUBDIVISION.cyclic(Tensors.vector(1, 2, 3, 4));
     assertEquals(cyclic, Tensors.fromString("{5/4, 7/4, 9/4, 11/4, 13/4, 15/4, 13/4, 7/4}"));
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
     Tensor actual = CURVE_SUBDIVISION.cyclic(tensor);
@@ -43,14 +43,14 @@ class BSpline2CurveSubdivisionTest {
   }
 
   @Test
-  public void testString() {
+  void testString() {
     Tensor string = CURVE_SUBDIVISION.string(Tensors.vector(10, 11.));
     assertEquals(string, Tensors.vector(10.25, 10.75));
     assertFalse(ExactTensorQ.of(string));
   }
 
   @Test
-  public void testStringTwo() {
+  void testStringTwo() {
     Tensor curve = Tensors.vector(0, 1);
     Tensor refined = CURVE_SUBDIVISION.string(curve);
     assertEquals(refined, Tensors.fromString("{1/4, 3/4}"));
@@ -58,7 +58,7 @@ class BSpline2CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringOne() {
+  void testStringOne() {
     Tensor curve = Tensors.vector(1);
     Tensor refined = CURVE_SUBDIVISION.string(curve);
     assertEquals(refined, Tensors.fromString("{1}"));
@@ -66,7 +66,7 @@ class BSpline2CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringEmpty() {
+  void testStringEmpty() {
     Tensor curve = Tensors.vector();
     Tensor refined = CURVE_SUBDIVISION.string(curve);
     assertTrue(Tensors.isEmpty(refined));
@@ -74,7 +74,7 @@ class BSpline2CurveSubdivisionTest {
   }
 
   @Test
-  public void testCyclicEmpty() {
+  void testCyclicEmpty() {
     Tensor curve = Tensors.vector();
     Tensor refined = CURVE_SUBDIVISION.cyclic(curve);
     assertTrue(Tensors.isEmpty(refined));
@@ -82,7 +82,7 @@ class BSpline2CurveSubdivisionTest {
   }
 
   @Test
-  public void testStringRange() {
+  void testStringRange() {
     int length = 9;
     Tensor curve = Range.of(0, length + 1);
     Tensor refined = CURVE_SUBDIVISION.string(curve);
@@ -92,21 +92,21 @@ class BSpline2CurveSubdivisionTest {
   }
 
   @Test
-  public void testSingleton() {
+  void testSingleton() {
     Tensor singleton = Tensors.of(Tensors.vector(1, 2, 3));
     assertEquals(CURVE_SUBDIVISION.cyclic(singleton), singleton);
     assertEquals(CURVE_SUBDIVISION.string(singleton), singleton);
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = new BSpline2CurveSubdivision(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> new BSpline2CurveSubdivision(null));
   }
 }

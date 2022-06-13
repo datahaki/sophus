@@ -10,7 +10,7 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 
 class ConstantRandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = HilbertMatrix.of(2, 3);
     RandomSampleInterface randomSampleInterface = new ConstantRandomSample(tensor);
     assertEquals(RandomSample.of(randomSampleInterface), tensor);

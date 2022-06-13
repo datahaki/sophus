@@ -24,7 +24,7 @@ class HeGroupElementTest {
   private static final LieGroup LIE_GROUP = HeGroup.INSTANCE;
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     Tensor et = Tensors.fromString("{{0, 0}, {0, 0}, 0}");
     Tensor at = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(at);
@@ -34,7 +34,7 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testCombine() {
+  void testCombine() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
     Tensor b_t = Tensors.fromString("{{6, 7}, {8, 9}, 10}");
@@ -49,7 +49,7 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testAdjoint1() {
+  void testAdjoint1() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     Tensor b_t = Tensors.fromString("{{6, 7}, {0, 0}, 10}");
     HeGroupElement a = new HeGroupElement(a_t);
@@ -59,7 +59,7 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testAdjoint2() {
+  void testAdjoint2() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     Tensor b_t = Tensors.fromString("{{0, 0}, {6, 7}, 9}");
     HeGroupElement a = new HeGroupElement(a_t);
@@ -69,7 +69,7 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testAdjointExp() {
+  void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int n = 1; n < 10; ++n) {
@@ -84,7 +84,7 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testAdjointLog() {
+  void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     for (int n = 1; n < 10; ++n) {
@@ -100,7 +100,7 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testAdInverse() {
+  void testAdInverse() {
     RandomSampleInterface rsi = new HeRandomSample(2, UniformDistribution.of(Clips.absolute(10)));
     for (int count = 0; count < 10; ++count) {
       Tensor g = RandomSample.of(rsi);
@@ -111,13 +111,13 @@ class HeGroupElementTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> new HeGroupElement(Tensors.of(HilbertMatrix.of(3), Tensors.vector(1, 2, 3), RealScalar.ONE)));
     assertThrows(Exception.class, () -> new HeGroupElement(Tensors.of(Tensors.vector(1, 2, 3), HilbertMatrix.of(3), RealScalar.ONE)));
   }
 
   @Test
-  public void testDlNullFail() {
+  void testDlNullFail() {
     Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
     assertThrows(Exception.class, () -> a.dL(null));

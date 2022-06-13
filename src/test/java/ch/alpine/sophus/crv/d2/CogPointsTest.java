@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class CogPointsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor polygon = CogPoints.of(10, RealScalar.of(10.2), RealScalar.of(3.2));
     assertEquals(Dimensions.of(polygon), Arrays.asList(40, 2));
     Sign.requirePositive(PolygonArea.of(polygon));
@@ -24,7 +24,7 @@ class CogPointsTest {
   }
 
   @Test
-  public void testToggled() {
+  void testToggled() {
     Tensor tensor = CogPoints.of(10, RealScalar.of(10.2), RealScalar.of(30.2));
     assertEquals(Dimensions.of(tensor), Arrays.asList(40, 2));
     Tensor convex = ConvexHull.of(tensor);

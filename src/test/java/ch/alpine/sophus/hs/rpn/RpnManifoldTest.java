@@ -28,7 +28,7 @@ class RpnManifoldTest {
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = GbcHelper.barycentrics(RpnManifold.INSTANCE);
 
   @Test
-  public void testSpecific() {
+  void testSpecific() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
       for (int count = 0; count < 10; ++count) {
@@ -46,7 +46,7 @@ class RpnManifoldTest {
   }
 
   @Test
-  public void testRp1Linear() {
+  void testRp1Linear() {
     Random random = new Random(3);
     Distribution distribution = UniformDistribution.of(0, Math.PI / 4);
     for (int n = 2; n < 5; ++n)

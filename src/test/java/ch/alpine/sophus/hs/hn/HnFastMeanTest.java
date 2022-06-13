@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnFastMeanTest {
   @Test
-  public void testAffine1Fail() {
+  void testAffine1Fail() {
     BiinvariantMean biinvariantMean = HnFastMean.INSTANCE;
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
@@ -34,7 +34,7 @@ class HnFastMeanTest {
   }
 
   @Test
-  public void testAffine2Fail() {
+  void testAffine2Fail() {
     BiinvariantMean biinvariantMean = HnManifold.INSTANCE.biinvariantMean(Chop._12);
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
@@ -44,7 +44,7 @@ class HnFastMeanTest {
   }
 
   @Test
-  public void testBiinvariant() {
+  void testBiinvariant() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     for (int d = 2; d < 4; ++d) {
@@ -76,7 +76,7 @@ class HnFastMeanTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> HnManifold.INSTANCE.biinvariantMean(null));
   }
 }

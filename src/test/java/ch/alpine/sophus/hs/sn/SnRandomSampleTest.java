@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnRandomSampleTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     for (int dimension = 0; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(SnRandomSample.of(dimension));
       Tensor tensor = RandomSample.of(randomSampleInterface);
@@ -28,12 +28,12 @@ class SnRandomSampleTest {
   }
 
   @Test
-  public void testS1() {
+  void testS1() {
     assertEquals(SnRandomSample.of(1), S1RandomSample.INSTANCE);
   }
 
   @Test
-  public void testSNegFail() {
+  void testSNegFail() {
     assertThrows(Exception.class, () -> SnRandomSample.of(-1));
   }
 }

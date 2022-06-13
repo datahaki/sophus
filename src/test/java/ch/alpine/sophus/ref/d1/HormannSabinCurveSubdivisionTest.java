@@ -21,7 +21,7 @@ import ch.alpine.tensor.red.Nest;
 
 class HormannSabinCurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE);
     ScalarUnaryOperator operator = Rationalize.withDenominatorLessEquals(100);
     Tensor tensor = CirclePoints.of(4).map(operator);
@@ -36,21 +36,21 @@ class HormannSabinCurveSubdivisionTest {
   }
 
   @Test
-  public void testDefault() {
+  void testDefault() {
     CurveSubdivision cs0 = HormannSabinCurveSubdivision.of(RnGroup.INSTANCE);
     CurveSubdivision cs1 = HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE);
     assertEquals(cs0.string(UnitVector.of(10, 5)), cs1.string(UnitVector.of(10, 5)));
   }
 
   @Test
-  public void testSplit2Hi() {
+  void testSplit2Hi() {
     CurveSubdivision cs0 = HormannSabinCurveSubdivision.of(RnGroup.INSTANCE);
     CurveSubdivision cs1 = HormannSabinCurveSubdivision.split2(RnGroup.INSTANCE);
     assertEquals(cs0.string(UnitVector.of(10, 5)), cs1.string(UnitVector.of(10, 5)));
   }
 
   @Test
-  public void testString() {
+  void testString() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1, 2, 3);
     Tensor string = curveSubdivision.string(vector);
@@ -59,7 +59,7 @@ class HormannSabinCurveSubdivisionTest {
   }
 
   @Test
-  public void testStringTwo() {
+  void testStringTwo() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(0, 1);
     Tensor string = curveSubdivision.string(vector);
@@ -68,7 +68,7 @@ class HormannSabinCurveSubdivisionTest {
   }
 
   @Test
-  public void testStringOne() {
+  void testStringOne() {
     CurveSubdivision curveSubdivision = HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE);
     Tensor vector = Tensors.vector(3);
     Tensor string = curveSubdivision.string(vector);
@@ -77,7 +77,7 @@ class HormannSabinCurveSubdivisionTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     TensorUnaryOperator fps = HormannSabinCurveSubdivision.split3(RnGroup.INSTANCE)::cyclic;
     TensorUnaryOperator copy = Serialization.copy(fps);
     assertEquals(copy.apply(CirclePoints.of(10)), fps.apply(CirclePoints.of(10)));

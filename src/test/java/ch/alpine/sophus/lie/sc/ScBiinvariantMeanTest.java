@@ -15,13 +15,13 @@ import ch.alpine.tensor.sca.Chop;
 
 class ScBiinvariantMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor scalar = ScBiinvariantMean.INSTANCE.mean(Tensors.vector(1, 2, 3).map(Tensors::of), Tensors.fromString("{1/3, 1/3, 1/3}"));
     Chop._10.requireClose(scalar, Tensors.vector(1.8171205928321397));
   }
 
   @Test
-  public void testGeometricMean() {
+  void testGeometricMean() {
     Distribution distribution = ExponentialDistribution.of(1);
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n);

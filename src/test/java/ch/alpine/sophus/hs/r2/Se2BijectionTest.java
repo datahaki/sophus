@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2BijectionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Bijection bijection = new Se2Bijection(Tensors.vector(2, 3, .3));
     Tensor vector = Tensors.vector(0.32, -0.98);
     Tensor sameor = bijection.inverse().apply(bijection.forward().apply(vector));
@@ -26,7 +26,7 @@ class Se2BijectionTest {
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     Tensor matrix = se2Bijection.forward_se2();
     Tensor se2inv = Inverse.of(matrix);
@@ -39,7 +39,7 @@ class Se2BijectionTest {
   }
 
   @Test
-  public void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() throws ClassNotFoundException, IOException {
     Se2Bijection se2Bijection = new Se2Bijection(Tensors.vector(2, -3, 1.3));
     Se2Bijection copy = Serialization.copy(se2Bijection);
     Tensor vector = Tensors.vector(0.32, -0.98);

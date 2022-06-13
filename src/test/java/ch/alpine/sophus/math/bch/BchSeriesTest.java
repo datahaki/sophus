@@ -26,7 +26,7 @@ class BchSeriesTest {
       SoAlgebra.of(5) };
 
   @Test
-  public void test6() throws ClassNotFoundException, IOException {
+  void test6() throws ClassNotFoundException, IOException {
     for (LieAlgebra lieAlgebra : LIE_ALGEBRAS) {
       Tensor ad = lieAlgebra.ad();
       BchSeries6 bchSeries6 = Serialization.copy(new BchSeries6(ad));
@@ -39,7 +39,7 @@ class BchSeriesTest {
   }
 
   @Test
-  public void test8() {
+  void test8() {
     for (LieAlgebra lieAlgebra : LIE_ALGEBRAS) {
       Tensor ad = lieAlgebra.ad();
       BchSeries8 bchSeries8 = new BchSeries8(ad);
@@ -52,7 +52,7 @@ class BchSeriesTest {
   }
 
   @Test
-  public void testQuad() {
+  void testQuad() {
     for (LieAlgebra lieAlgebra : LIE_ALGEBRAS) {
       Tensor ad = lieAlgebra.ad();
       int n = ad.length();

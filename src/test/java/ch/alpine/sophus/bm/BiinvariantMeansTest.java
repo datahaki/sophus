@@ -10,12 +10,12 @@ import ch.alpine.tensor.Tensors;
 
 class BiinvariantMeansTest {
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> BiinvariantMeans.of(null, Tensors.vector(1)));
   }
 
   @Test
-  public void testNonAffineFail() {
+  void testNonAffineFail() {
     assertThrows(Exception.class, () -> BiinvariantMeans.of(So2CoveringBiinvariantMean.INSTANCE, Tensors.vector(1, 1, 1)));
   }
 }

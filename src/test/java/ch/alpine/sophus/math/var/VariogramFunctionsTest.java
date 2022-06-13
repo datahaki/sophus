@@ -8,7 +8,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 class VariogramFunctionsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (VariogramFunctions variograms : VariogramFunctions.values()) {
       ScalarUnaryOperator suo = variograms.of(RealScalar.ONE);
       suo.toString();

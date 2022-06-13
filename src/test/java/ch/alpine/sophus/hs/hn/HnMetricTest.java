@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 class HnMetricTest {
   @Test
-  public void testZero() {
+  void testZero() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
@@ -30,7 +30,7 @@ class HnMetricTest {
   }
 
   @Test
-  public void testPositive() {
+  void testPositive() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
@@ -41,7 +41,7 @@ class HnMetricTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);
@@ -53,7 +53,7 @@ class HnMetricTest {
   }
 
   @Test
-  public void testConsistent() {
+  void testConsistent() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));

@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class RnAffineCoordinateTest {
   @Test
-  public void testMean() {
+  void testMean() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 3; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
@@ -36,7 +36,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testExact() {
+  void testExact() {
     Distribution distribution = DiscreteUniformDistribution.of(-1000, 1000);
     for (int n = 3; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
@@ -48,7 +48,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testUnity() {
+  void testUnity() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 3; n < 10; ++n) {
       Tensor points = RandomVariate.of(distribution, n, n - 1);
@@ -60,7 +60,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testPoints() {
+  void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
@@ -71,7 +71,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testWeights() {
+  void testWeights() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = AffineWrap.of(RnGroup.INSTANCE);
     for (int d = 2; d < 5; ++d)
@@ -88,7 +88,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testZeros() {
+  void testZeros() {
     Distribution distribution = UniformDistribution.unit();
     for (int d = 2; d < 5; ++d)
       for (int n = 5; n < 10; ++n) {
@@ -102,7 +102,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testSmallN() {
+  void testSmallN() {
     Distribution distribution = UniformDistribution.unit();
     for (int n = 1; n < 3; ++n) {
       Tensor points = RandomVariate.of(distribution, n, 2);
@@ -113,7 +113,7 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testSinglePoint() {
+  void testSinglePoint() {
     Tensor sequence = Tensors.fromString("{{1, 2, 3}}");
     TensorUnaryOperator tensorUnaryOperator = RnAffineCoordinate.of(sequence);
     Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(1, 2, 4));
@@ -121,12 +121,12 @@ class RnAffineCoordinateTest {
   }
 
   @Test
-  public void testVectorFail() {
+  void testVectorFail() {
     assertThrows(Exception.class, () -> RnAffineCoordinate.of(Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
-  public void testEmptyFail() {
+  void testEmptyFail() {
     assertThrows(Exception.class, () -> RnAffineCoordinate.of(Tensors.empty()));
   }
 }

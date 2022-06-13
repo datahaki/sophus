@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class AckermannSteeringTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0.4, "m"));
     AckermannSteering asR = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(-0.4, "m"));
     Scalar delta = RealScalar.of(0.2);
@@ -29,14 +29,14 @@ class AckermannSteeringTest {
   }
 
   @Test
-  public void testId() {
+  void testId() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0, "m"));
     Scalar delta = RealScalar.of(0.2);
     assertEquals(asL.angle(delta), delta);
   }
 
   @Test
-  public void testPair() {
+  void testPair() {
     AckermannSteering asL = new AckermannSteering(Quantity.of(1, "m"), Quantity.of(+0.4, "m"));
     Scalar delta = RealScalar.of(0.2);
     Tensor pair = asL.pair(delta);
@@ -46,7 +46,7 @@ class AckermannSteeringTest {
   }
 
   @Test
-  public void testUnits() {
+  void testUnits() {
     ScalarUnaryOperator suo = UnitSystem.SI();
     AckermannSteering asL = new AckermannSteering(suo.apply(Quantity.of(1, "m")), suo.apply(Quantity.of(+40, "cm")));
     Scalar delta = RealScalar.of(0.2);

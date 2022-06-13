@@ -17,14 +17,14 @@ import ch.alpine.tensor.sca.tri.ArcSinh;
 
 class H2MetricTest {
   @Test
-  public void testTrivial() {
+  void testTrivial() {
     Tensor p = Tensors.vector(-Math.random(), Math.random());
     Scalar actual = H2Metric.INSTANCE.distance(p, p);
     assertEquals(RealScalar.ZERO, actual);
   }
 
   @Test
-  public void testYAxis() {
+  void testYAxis() {
     Tensor p = Tensors.vector(2, 1 + Math.random());
     Tensor q = Tensors.vector(2, 7 + Math.random());
     // ---
@@ -34,7 +34,7 @@ class H2MetricTest {
   }
 
   @Test
-  public void testXAxis() {
+  void testXAxis() {
     Tensor p = Tensors.vector(1 + Math.random(), 3);
     Tensor q = Tensors.vector(7 + Math.random(), 3);
     // ---
@@ -45,7 +45,7 @@ class H2MetricTest {
   }
 
   @Test
-  public void testNegativeY() {
+  void testNegativeY() {
     Tensor p = Tensors.vector(1, 3);
     Tensor q = Tensors.vector(2, -Math.random());
     assertThrows(Exception.class, () -> H2Metric.INSTANCE.distance(p, q));

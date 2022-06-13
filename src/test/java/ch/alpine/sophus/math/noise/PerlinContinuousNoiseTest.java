@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.BinCounts;
 
 class PerlinContinuousNoiseTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor noise = Tensors.vector(i -> DoubleScalar.of(10 * (1 + PerlinContinuousNoise.FUNCTION.at(1.6, .1 * i, .1 + i))), 1000);
     Tensor bins = BinCounts.of(noise);
     assertEquals(bins.length(), 18);
@@ -27,7 +27,7 @@ class PerlinContinuousNoiseTest {
   }
 
   @Test
-  public void testExample() {
+  void testExample() {
     double value = PerlinContinuousNoise.FUNCTION.at(0.3, 300.3, -600.5);
     assertEquals(value, 0.04274652592000538);
   }

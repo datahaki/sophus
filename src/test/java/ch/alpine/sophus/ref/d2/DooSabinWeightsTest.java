@@ -9,7 +9,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class DooSabinWeightsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 3; n <= 12; ++n) {
       Tensor w = DooSabinWeights.INSTANCE.apply(n);
       AffineQ.require(w, Chop._08);

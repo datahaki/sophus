@@ -25,7 +25,7 @@ class DtGroupTest {
   private static final LieGroup LIE_GROUP = DtGroup.INSTANCE;
 
   @Test
-  public void testSt1Inverse() {
+  void testSt1Inverse() {
     Tensor p = Tensors.fromString("{3, {6, 3}}");
     Tensor id = Tensors.fromString("{1, {0, 0}}");
     DtGroupElement pE = DtGroup.INSTANCE.element(p);
@@ -35,7 +35,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testSt1Combine() {
+  void testSt1Combine() {
     Tensor p = Tensors.fromString("{3, {6, 1}}");
     DtGroupElement pE = DtGroup.INSTANCE.element(p);
     Tensor q = Tensors.fromString("{2, {8, 5}}");
@@ -43,7 +43,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testAdjointExp() {
+  void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
     // g.Exp[x] == Exp[Ad(g).x].g
     for (int n = 1; n < 10; ++n) {
@@ -59,7 +59,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testAdjointLog() {
+  void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
     for (int n = 1; n < 10; ++n) {
@@ -75,7 +75,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testSt1Simple() {
+  void testSt1Simple() {
     Tensor p = Tensors.vector(5, 1);
     Tensor q = Tensors.vector(10, 0);
     Scalar lambda = RealScalar.of(0.7);
@@ -84,19 +84,19 @@ class DtGroupTest {
   }
 
   @Test
-  public void testSt1Zero() {
+  void testSt1Zero() {
     Tensor split = DtGroup.INSTANCE.split(Tensors.vector(5, 1), Tensors.vector(10, 0), RealScalar.of(0));
     Chop._13.requireClose(split, Tensors.vector(5, 1));
   }
 
   @Test
-  public void testSt1One() {
+  void testSt1One() {
     Tensor split = DtGroup.INSTANCE.split(Tensors.vector(5, 1), Tensors.vector(10, 0), RealScalar.of(1));
     Chop._13.requireClose(split, Tensors.vector(10, 0));
   }
 
   @Test
-  public void testSt1General() {
+  void testSt1General() {
     Tensor p = Tensors.vector(3, 6);
     Tensor q = Tensors.vector(4, 10);
     Clip clip_l = Clips.interval(3, 4);
@@ -109,7 +109,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = Tensors.of(RealScalar.of(5), Tensors.vector(1, 0, 2));
     Tensor q = Tensors.of(RealScalar.of(10), Tensors.vector(7, -3, 2));
     Tensor split = DtGroup.INSTANCE.split(p, q, RealScalar.of(0.7));
@@ -117,7 +117,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testZero() {
+  void testZero() {
     Tensor p = Tensors.of(RealScalar.of(5), Tensors.vector(1, 0, 2));
     Tensor q = Tensors.of(RealScalar.of(10), Tensors.vector(7, -3, 2));
     Tensor split = DtGroup.INSTANCE.split(p, q, RealScalar.of(0));
@@ -125,7 +125,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testOne() {
+  void testOne() {
     Tensor p = Tensors.of(RealScalar.of(5), Tensors.vector(1, 0, 2));
     Tensor q = Tensors.of(RealScalar.of(10), Tensors.vector(7, -3, 2));
     Tensor split = DtGroup.INSTANCE.split(p, q, RealScalar.of(1));
@@ -133,7 +133,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testGeneral() {
+  void testGeneral() {
     Tensor p = Tensors.of(RealScalar.of(3), Tensors.vector(6, -2));
     Tensor q = Tensors.of(RealScalar.of(4), Tensors.vector(10, 3));
     Clip clip_l = Clips.interval(3, 4);
@@ -148,7 +148,7 @@ class DtGroupTest {
   }
 
   @Test
-  public void testBiinvariantMean() {
+  void testBiinvariantMean() {
     Tensor p = Tensors.fromString("{1, {2, 3}}");
     Tensor q = Tensors.fromString("{2, {3, 1}}");
     Tensor domain = Subdivide.of(0, 1, 10);

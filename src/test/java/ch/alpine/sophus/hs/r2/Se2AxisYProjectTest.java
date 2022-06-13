@@ -27,19 +27,19 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2AxisYProjectTest {
   @Test
-  public void testEx1() {
+  void testEx1() {
     Scalar t = Se2AxisYProject.of(Tensors.vector(1, 0, 0.3)).apply(Tensors.vector(10, 0));
     Chop._12.requireClose(t, RealScalar.of(4.163485907994182));
   }
 
   @Test
-  public void testEx2() {
+  void testEx2() {
     Scalar t = Se2AxisYProject.of(Tensors.vector(1, 0, 0.3)).apply(Tensors.vector(10, 3));
     Chop._12.requireClose(t, RealScalar.of(5.124917769722165));
   }
 
   @Test
-  public void testEx2NegU() {
+  void testEx2NegU() {
     double speed = -1;
     Tensor u = Tensors.vector(1 * speed, 0, 0.3 * speed);
     Tensor p = Tensors.vector(-10, 3);
@@ -52,7 +52,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testEx2Neg() {
+  void testEx2Neg() {
     Tensor u = Tensors.vector(1, 0, 0.3);
     Tensor p = Tensors.vector(-10, 3);
     Scalar t = Se2AxisYProject.of(u).apply(p);
@@ -64,25 +64,25 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testEx3() {
+  void testEx3() {
     Scalar t = Se2AxisYProject.of(Tensors.vector(1, 0, 0.0)).apply(Tensors.vector(10, 3));
     Chop._12.requireClose(t, RealScalar.of(10));
   }
 
   @Test
-  public void testEx4() {
+  void testEx4() {
     Scalar t = Se2AxisYProject.of(Tensors.vector(2, 0, 0.0)).apply(Tensors.vector(10, 3));
     Chop._12.requireClose(t, RealScalar.of(5));
   }
 
   @Test
-  public void testEx4NegU() {
+  void testEx4NegU() {
     Scalar t = Se2AxisYProject.of(Tensors.vector(-2, 0, 0.0)).apply(Tensors.vector(10, 3));
     Chop._12.requireClose(t, RealScalar.of(-5));
   }
 
   @Test
-  public void testEx4Neg() {
+  void testEx4Neg() {
     Tensor u = Tensors.vector(2, 0, 0);
     Tensor p = Tensors.vector(-10, 3);
     Scalar t = Se2AxisYProject.of(u).apply(p);
@@ -94,7 +94,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testEps1() {
+  void testEps1() {
     Tensor u = Tensors.vector(2, 0, Double.MIN_VALUE);
     Scalar t = Se2AxisYProject.of(u).apply(Tensors.vector(10, 3));
     assertFalse(Scalars.isZero(u.Get(2)));
@@ -102,7 +102,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testEps2() {
+  void testEps2() {
     Tensor u = Tensors.vector(2, 0, -Double.MIN_VALUE);
     Scalar t = Se2AxisYProject.of(u).apply(Tensors.vector(10, 3));
     assertFalse(Scalars.isZero(u.Get(2)));
@@ -110,28 +110,28 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testZeroSpeedNonZeroPos() {
+  void testZeroSpeedNonZeroPos() {
     Tensor u = Tensors.vector(0, 0, 0);
     Scalar t = Se2AxisYProject.of(u).apply(Tensors.vector(10, 3));
     assertEquals(t, DoubleScalar.POSITIVE_INFINITY);
   }
 
   @Test
-  public void testZeroSpeedNonZeroPos2() {
+  void testZeroSpeedNonZeroPos2() {
     Tensor u = Tensors.vector(0, 0, 0);
     Scalar t = Se2AxisYProject.of(u).apply(Tensors.vector(-10, 3));
     assertEquals(t, DoubleScalar.POSITIVE_INFINITY.negate());
   }
 
   @Test
-  public void testZeroSpeedZeroPos() {
+  void testZeroSpeedZeroPos() {
     Tensor u = Tensors.vector(0, 0, 0);
     Scalar t = Se2AxisYProject.of(u).apply(Tensors.vector(0, 3));
     assertEquals(t, RealScalar.ZERO);
   }
 
   @Test
-  public void testCheck() {
+  void testCheck() {
     RandomSampleInterface rsi = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.of(10));
     for (int index = 0; index < 100; ++index) {
       Tensor u = Tensors.vector(0.9, 0, 0.3);
@@ -144,7 +144,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testCheck2() {
+  void testCheck2() {
     RandomSampleInterface rsi = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.of(10));
     for (int index = 0; index < 100; ++index) {
       Tensor u = Tensors.vector(1.1, 0, 1.3);
@@ -157,7 +157,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testCheckZero() {
+  void testCheckZero() {
     RandomSampleInterface rsi = BallRandomSample.of(Tensors.vector(0, 0), RealScalar.of(10));
     for (int index = 0; index < 100; ++index) {
       Tensor u = Tensors.vector(2, 0, 0);
@@ -170,7 +170,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testUnitsNormal() {
+  void testUnitsNormal() {
     // [m*s^-1], 0.0, (rate*speed)[rad*s^-1]
     Tensor u = Tensors.fromString("{1.1[m*s^-1], 0, 1.3[s^-1]}"); // SI
     Tensor p = Tensors.fromString("{2.1[m], 0.7[m]}");
@@ -182,7 +182,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testUnitsBeZero() {
+  void testUnitsBeZero() {
     // [m*s^-1], 0.0, (rate*speed)[rad*s^-1]
     Tensor u = Tensors.fromString("{1.1[m*s^-1], 0, 0[s^-1]}"); // SI
     Tensor p = Tensors.fromString("{2.1[m], 0.7[m]}");
@@ -192,7 +192,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testUnitsBeZeroVxZero1() {
+  void testUnitsBeZeroVxZero1() {
     // [m*s^-1], 0.0, (rate*speed)[rad*s^-1]
     Tensor u = Tensors.fromString("{0.0[m*s^-1], 0, 0[s^-1]}"); // SI
     Tensor p = Tensors.fromString("{2.1[m], 0.7[m]}");
@@ -202,7 +202,7 @@ class Se2AxisYProjectTest {
   }
 
   @Test
-  public void testUnitsBeZeroVxZero2() {
+  void testUnitsBeZeroVxZero2() {
     // [m*s^-1], 0.0, (rate*speed)[rad*s^-1]
     Tensor u = Tensors.fromString("{0.0[m*s^-1], 0, 0[s^-1]}"); // SI
     Tensor p = Tensors.fromString("{0.0[m], 0.7[m]}");

@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class PolygonAreaTest {
   @Test
-  public void testAreaTriangle() {
+  void testAreaTriangle() {
     Tensor poly = Tensors.fromString("{{1, 1}, {2, 1}, {1, 2}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, RationalScalar.HALF);
@@ -29,7 +29,7 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testAreaCube() {
+  void testAreaCube() {
     Tensor poly = Tensors.fromString("{{1, 1}, {2, 1}, {2, 2}, {1, 2}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, RealScalar.ONE);
@@ -37,13 +37,13 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testAreaEmpty() {
+  void testAreaEmpty() {
     Scalar area = PolygonArea.of(Tensors.empty());
     assertEquals(area, RealScalar.ZERO);
   }
 
   @Test
-  public void testAreaLine() {
+  void testAreaLine() {
     Tensor poly = Tensors.fromString("{{1, 1}, {2, 1}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, RealScalar.ZERO);
@@ -51,7 +51,7 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testAreaPoint() {
+  void testAreaPoint() {
     Tensor poly = Tensors.fromString("{{1, 1}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, RealScalar.ZERO);
@@ -59,7 +59,7 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testAreaTriangleUnit() {
+  void testAreaTriangleUnit() {
     Tensor poly = Tensors.fromString("{{1[m], 1[m]}, {2[m], 1[m]}, {1[m], 2[m]}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, Scalars.fromString("1/2[m^2]"));
@@ -67,7 +67,7 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testAreaCubeUnit() {
+  void testAreaCubeUnit() {
     Tensor poly = Tensors.fromString("{{1[cm], 1[cm]}, {2[cm], 1[cm]}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, Scalars.fromString("0[cm^2]"));
@@ -75,19 +75,19 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testAreaCirclePoints() {
+  void testAreaCirclePoints() {
     Scalar area = PolygonArea.of(CirclePoints.of(100));
     Chop._02.requireClose(area, Pi.VALUE);
   }
 
   @Test
-  public void testAreaCirclePointsReverse() {
+  void testAreaCirclePointsReverse() {
     Scalar area = PolygonArea.of(Reverse.of(CirclePoints.of(100)));
     Chop._02.requireClose(area, Pi.VALUE.negate());
   }
 
   @Test
-  public void testArea1Unit() {
+  void testArea1Unit() {
     Tensor poly = Tensors.fromString("{{1[m], 1[m]}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, Scalars.fromString("0[m^2]"));
@@ -95,7 +95,7 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testArea2Unit() {
+  void testArea2Unit() {
     Tensor poly = Tensors.fromString("{{1[m], 1[m]}, {2[m], 1[m]}}");
     Scalar area = PolygonArea.of(poly);
     assertEquals(area, Scalars.fromString("0[m^2]"));
@@ -103,12 +103,12 @@ class PolygonAreaTest {
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     assertThrows(Exception.class, () -> PolygonArea.of(RealScalar.ONE));
   }
 
   @Test
-  public void testFailMatrix() {
+  void testFailMatrix() {
     assertThrows(Exception.class, () -> PolygonArea.of(HilbertMatrix.of(3)));
   }
 }

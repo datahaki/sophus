@@ -11,14 +11,14 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
 
 class GeodesicCenterMidSeededTest {
   @Test
-  public void testSplitsEvenFail() {
+  void testSplitsEvenFail() {
     Splits splits = new GeodesicCenterMidSeeded.Splits(UniformWindowSampler.of(GaussianWindow.FUNCTION));
     splits.apply(5);
     assertThrows(Exception.class, () -> splits.apply(4));
   }
 
   @Test
-  public void testSplitsNullFail() {
+  void testSplitsNullFail() {
     assertThrows(Exception.class, () -> new GeodesicCenterMidSeeded.Splits(null));
   }
 }

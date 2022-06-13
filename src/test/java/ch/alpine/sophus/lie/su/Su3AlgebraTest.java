@@ -19,7 +19,7 @@ import ch.alpine.tensor.spa.SparseArray;
 
 class Su3AlgebraTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Su3Algebra su3Algebra = Su3Algebra.INSTANCE;
     Tensor ad = su3Algebra.ad();
     // System.out.println(ad);
@@ -32,7 +32,7 @@ class Su3AlgebraTest {
   }
 
   @Test
-  public void testHermitian() {
+  void testHermitian() {
     Su3Algebra.INSTANCE.basis().stream().forEach(HermitianMatrixQ::require);
     Tensor tensor = Tensor.of(Su3Algebra.INSTANCE.basis().stream().map(Trace::of));
     Chop.NONE.requireAllZero(tensor);

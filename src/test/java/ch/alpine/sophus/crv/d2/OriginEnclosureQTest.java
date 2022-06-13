@@ -23,7 +23,7 @@ import ch.alpine.tensor.qty.Unit;
 
 class OriginEnclosureQTest {
   @Test
-  public void testInsidePlain() {
+  void testInsidePlain() {
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
         { 1, 0 }, //
@@ -38,7 +38,7 @@ class OriginEnclosureQTest {
   }
 
   @Test
-  public void testInsidePlainQuantity() {
+  void testInsidePlainQuantity() {
     ScalarUnaryOperator suo = Scalars.attach(Unit.of("km"));
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
@@ -54,7 +54,7 @@ class OriginEnclosureQTest {
   }
 
   @Test
-  public void testSome() {
+  void testSome() {
     Tensor asd = Tensors.vector(2, 3, 4, 5);
     asd.set(RealScalar.of(8), 1);
     assertEquals(asd.Get(1), RealScalar.of(8));
@@ -67,12 +67,12 @@ class OriginEnclosureQTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> OriginEnclosureQ.INSTANCE.test(IdentityMatrix.of(4)));
   }
 
   @Test
-  public void testCPointers() {
+  void testCPointers() {
     {
       String wer = "asdf";
       String wer2 = wer;
@@ -88,7 +88,7 @@ class OriginEnclosureQTest {
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     assertThrows(Exception.class, () -> FranklinPnpoly.isInside(RealScalar.of(2), Tensors.vector(0.5, .5)));
   }
 }

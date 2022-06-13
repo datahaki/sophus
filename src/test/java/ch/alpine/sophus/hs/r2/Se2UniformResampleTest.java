@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2UniformResampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = Tensors.of(Tensors.vector(5, 0, Math.PI / 2), Tensors.vector(5, 9, Math.PI / 2), Tensors.vector(5, 12, Math.PI / 2));
     CurveSubdivision curveSubdivision = Se2UniformResample.of(RealScalar.of(2));
     Tensor uniform = curveSubdivision.string(tensor);
@@ -26,7 +26,7 @@ class Se2UniformResampleTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> Se2UniformResample.of(null));
   }
 }

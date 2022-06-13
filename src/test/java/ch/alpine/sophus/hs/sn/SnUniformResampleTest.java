@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnUniformResampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar spacing = Pi.VALUE.divide(RealScalar.of(10));
     CurveSubdivision curveSubdivision = SnUniformResample.of(spacing);
     Tensor tensor = Tensors.fromString("{{1, 0}, {0, 1}, {-1, 0}}");

@@ -29,7 +29,7 @@ import ch.alpine.tensor.qty.Unit;
 
 class PowerVariogramTest {
   @Test
-  public void testFitQuantity() throws ClassNotFoundException, IOException {
+  void testFitQuantity() throws ClassNotFoundException, IOException {
     Distribution distributionX = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(2, "m"));
     int n = 10;
     int d = 3;
@@ -56,7 +56,7 @@ class PowerVariogramTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     try {
       PowerVariogram.of(1, 2);
       // fail();
@@ -66,7 +66,7 @@ class PowerVariogramTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertThrows(Exception.class, () -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
   }
 }

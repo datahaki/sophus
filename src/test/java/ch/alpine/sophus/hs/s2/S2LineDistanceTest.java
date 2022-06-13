@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class S2LineDistanceTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     TensorNorm tensorNorm = Serialization.copy(S2LineDistance.INSTANCE.tensorNorm(Tensors.vector(1, 0, 0), Tensors.vector(0, 1, 0)));
     Chop._12.requireZero(tensorNorm.norm(Tensors.vector(-1, 0, 0)));
     Chop._12.requireClose(tensorNorm.norm(Tensors.vector(0, 0, +1)), Pi.HALF);
@@ -33,7 +33,7 @@ class S2LineDistanceTest {
   }
 
   @Test
-  public void testS2Match() {
+  void testS2Match() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
@@ -46,7 +46,7 @@ class S2LineDistanceTest {
   }
 
   @Test
-  public void testS2Midpoint() {
+  void testS2Midpoint() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Distribution distribution = UniformDistribution.unit();
     for (int count = 0; count < 10; ++count) {
@@ -59,7 +59,7 @@ class S2LineDistanceTest {
   }
 
   @Test
-  public void testS2Cross() {
+  void testS2Cross() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);

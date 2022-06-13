@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class S2ManifoldTest {
   @Test
-  public void testTangentSpace() {
+  void testTangentSpace() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);
@@ -28,7 +28,7 @@ class S2ManifoldTest {
   }
 
   @Test
-  public void testExp() {
+  void testExp() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     for (int count = 0; count < 10; ++count) {
       Tensor p = RandomSample.of(randomSampleInterface);

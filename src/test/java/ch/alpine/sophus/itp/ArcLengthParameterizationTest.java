@@ -17,7 +17,7 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 
 class ArcLengthParameterizationTest {
   @Test
-  public void testSimpleR2String() {
+  void testSimpleR2String() {
     ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(Tensors.vector(1, 1, 1, 1), RnGroup.INSTANCE, Range.of(0, 5));
     assertEquals(ExactTensorQ.require(scalarTensorFunction.apply(RealScalar.ZERO)), RealScalar.of(0));
     assertEquals(ExactTensorQ.require(scalarTensorFunction.apply(RationalScalar.HALF)), RealScalar.of(2));
@@ -27,17 +27,17 @@ class ArcLengthParameterizationTest {
   }
 
   @Test
-  public void testFailLength() {
+  void testFailLength() {
     assertThrows(Exception.class, () -> ArcLengthParameterization.of(Tensors.vector(1, 2, 3), RnGroup.INSTANCE, Tensors.vector(1, 2, 3)));
   }
 
   @Test
-  public void testFailNonVector() {
+  void testFailNonVector() {
     assertThrows(Exception.class, () -> ArcLengthParameterization.of(HilbertMatrix.of(3), RnGroup.INSTANCE, Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> ArcLengthParameterization.of(Tensors.vector(1, 2, 3), null, Tensors.vector(1, 2, 3, 4)));
   }
 }

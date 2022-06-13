@@ -21,7 +21,7 @@ import ch.alpine.tensor.spa.Normal;
 
 class Se2AlgebraTest {
   @Test
-  public void testFromMatrices() {
+  void testFromMatrices() {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
     Tensor ad = Se2Algebra.INSTANCE.ad();
     assertEquals(ad, matrixAlgebra.ad());
@@ -30,7 +30,7 @@ class Se2AlgebraTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor ad = Tensors.fromString( //
         "{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}");
     ExactTensorQ.require(Se2Algebra.INSTANCE.ad());
@@ -38,7 +38,7 @@ class Se2AlgebraTest {
   }
 
   @Test
-  public void testSe2ExpExpLog() {
+  void testSe2ExpExpLog() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
     Tensor y = RandomVariate.of(distribution, 3);
@@ -51,7 +51,7 @@ class Se2AlgebraTest {
   }
 
   @Test
-  public void testSe2Log() {
+  void testSe2Log() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
     Tensor y = RandomVariate.of(distribution, 3);
@@ -63,7 +63,7 @@ class Se2AlgebraTest {
   }
 
   @Test
-  public void testHsFails() {
+  void testHsFails() {
     assertThrows(Exception.class, () -> new HsAlgebra(Se2Algebra.INSTANCE.ad(), 1, 6));
   }
 }

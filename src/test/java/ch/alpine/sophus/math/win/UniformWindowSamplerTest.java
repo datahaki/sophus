@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class UniformWindowSamplerTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count <= 10; ++count) {
@@ -37,7 +37,7 @@ class UniformWindowSamplerTest {
   }
 
   @Test
-  public void testGaussian() {
+  void testGaussian() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(GaussianWindow.FUNCTION);
     Tensor apply = function.apply(5);
     Chop._12.requireClose(apply, Tensors.vector( //
@@ -49,7 +49,7 @@ class UniformWindowSamplerTest {
   }
 
   @Test
-  public void testMemoUnmodifiable() {
+  void testMemoUnmodifiable() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       Function<Integer, Tensor> function = UniformWindowSampler.of(smoothingKernel.get());
       for (int count = 1; count < 5; ++count) {
@@ -62,7 +62,7 @@ class UniformWindowSamplerTest {
   }
 
   @Test
-  public void testDirichlet() {
+  void testDirichlet() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(DirichletWindow.FUNCTION);
     Tensor MIDPOINT = Tensors.of(RationalScalar.HALF, RationalScalar.HALF);
     assertEquals(function.apply(2), MIDPOINT);
@@ -70,13 +70,13 @@ class UniformWindowSamplerTest {
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     Function<Integer, Tensor> function = UniformWindowSampler.of(HannWindow.FUNCTION);
     assertThrows(Exception.class, () -> function.apply(0));
   }
 
   @Test
-  public void testFailNull() {
+  void testFailNull() {
     assertThrows(Exception.class, () -> UniformWindowSampler.of(null));
   }
 }

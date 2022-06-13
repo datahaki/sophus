@@ -13,7 +13,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class RnGroupElementTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     RnGroupElement rnGroupElement = new RnGroupElement(Tensors.vector(1, 2, 3));
     Tensor result = rnGroupElement.combine(Tensors.vector(4, -2, -7));
     assertEquals(result, Tensors.vector(5, 0, -4));
@@ -21,7 +21,7 @@ class RnGroupElementTest {
   }
 
   @Test
-  public void testAdjoint() {
+  void testAdjoint() {
     RnGroupElement rnGroupElement = new RnGroupElement(Tensors.vector(-1, 0, 2));
     assertEquals(Tensor.of(IdentityMatrix.of(3).stream().map(rnGroupElement::adjoint)), IdentityMatrix.of(3));
     assertEquals(rnGroupElement.dL(HilbertMatrix.of(5)), HilbertMatrix.of(5));

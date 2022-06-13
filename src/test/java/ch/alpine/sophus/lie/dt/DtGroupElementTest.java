@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class DtGroupElementTest {
   @Test
-  public void testSt1Inverse() {
+  void testSt1Inverse() {
     Tensor p = Tensors.vector(3, 6);
     Tensor id = Tensors.vector(1, 0);
     DtGroupElement pE = DtGroup.INSTANCE.element(p);
@@ -23,7 +23,7 @@ class DtGroupElementTest {
   }
 
   @Test
-  public void testSt1Combine() {
+  void testSt1Combine() {
     Tensor p = Tensors.vector(3, 6);
     DtGroupElement pE = DtGroup.INSTANCE.element(p);
     Tensor q = Tensors.vector(2, 8);
@@ -31,7 +31,7 @@ class DtGroupElementTest {
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     Tensor id = Tensors.of(RealScalar.ONE, Tensors.vector(0, 0, 0, 0));
     for (int count = 0; count < 100; ++count) {
       Scalar lambda = RealScalar.of(Math.random() + 0.001);
@@ -43,7 +43,7 @@ class DtGroupElementTest {
   }
 
   @Test
-  public void testCombine() {
+  void testCombine() {
     Scalar lambda = RealScalar.of(2);
     Tensor t = Tensors.vector(0, 1, -2);
     Tensor p = Tensors.of(lambda, t);
@@ -55,7 +55,7 @@ class DtGroupElementTest {
   }
 
   @Test
-  public void testAdjoint() {
+  void testAdjoint() {
     DtGroupElement pE = DtGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
     Tensor adjoint = pE.adjoint(Tensors.fromString("{2, {5, 7, 8}}"));
     assertEquals(adjoint, Tensors.fromString("{2, {18, 24, 26}}"));
@@ -64,20 +64,20 @@ class DtGroupElementTest {
 
   // checks that lambda is required to be positive
   @Test
-  public void testLambdaNonPositiveFail() {
+  void testLambdaNonPositiveFail() {
     assertThrows(Exception.class, () -> DtGroup.INSTANCE.element(Tensors.vector(0, 5)));
     assertThrows(Exception.class, () -> DtGroup.INSTANCE.element(Tensors.vector(-1, 5)));
   }
 
   @Test
-  public void testCombineFail() {
+  void testCombineFail() {
     DtGroupElement pE = DtGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
     assertThrows(Exception.class, () -> pE.combine(Tensors.fromString("{0, {1, 2, 3}}")));
     assertThrows(Exception.class, () -> pE.combine(Tensors.fromString("{1, {1, 2, 3, 4}}")));
   }
 
   @Test
-  public void testDlNullFail() {
+  void testDlNullFail() {
     DtGroupElement pE = DtGroup.INSTANCE.element(Tensors.fromString("{4, {1, 2, 3}}"));
     assertThrows(Exception.class, () -> pE.dL(null));
   }

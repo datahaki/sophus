@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class So2CoveringBiinvariantMeanTest {
   @Test
-  public void testPermutations() {
+  void testPermutations() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
     Distribution shifted = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
@@ -45,25 +45,25 @@ class So2CoveringBiinvariantMeanTest {
   }
 
   @Test
-  public void testSpecific() {
+  void testSpecific() {
     Scalar scalar = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.vector(3, 4), Tensors.vector(0.5, 0.5));
     Chop._12.requireClose(scalar, RealScalar.of(3.5));
   }
 
   @Test
-  public void testAntipodal() {
+  void testAntipodal() {
     Scalar mean = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(mean, RealScalar.of(0.3141592653589793));
   }
 
   @Test
-  public void testFailFar() {
+  void testFailFar() {
     Scalar mean = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.VALUE, Pi.VALUE.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(mean, RealScalar.of(0.6283185307179586));
   }
 
   @Test
-  public void testFailTensor() {
+  void testFailTensor() {
     assertThrows(Exception.class, () -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1))));
   }
 }

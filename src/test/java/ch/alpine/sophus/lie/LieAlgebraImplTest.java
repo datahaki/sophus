@@ -37,7 +37,7 @@ class LieAlgebraImplTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(he1());
     BinaryOperator<Tensor> bch = lieAlgebraImpl.bch(20);
     Tensor z = bch.apply(Tensors.vector(1, 2, 3), Tensors.vector(4, -3, -8));
@@ -54,7 +54,7 @@ class LieAlgebraImplTest {
       Sl2Algebra.INSTANCE };
 
   @Test
-  public void testSign() {
+  void testSign() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Random random = new Random();
     for (LieAlgebra hsAlgebra : HS_ALGEBRAS) {

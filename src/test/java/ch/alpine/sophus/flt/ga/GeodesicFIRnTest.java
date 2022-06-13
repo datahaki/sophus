@@ -15,7 +15,7 @@ import ch.alpine.tensor.red.Mean;
 
 class GeodesicFIRnTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor s0 = Tensors.vector(1, 2, 3);
     Tensor s1 = Tensors.vector(2, 2, 0);
     Tensor s2 = Tensors.vector(3, 3, 3);

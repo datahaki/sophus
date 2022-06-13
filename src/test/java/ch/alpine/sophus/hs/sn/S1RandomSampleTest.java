@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Dimensions;
 
 class S1RandomSampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = RandomSample.of(S1RandomSample.INSTANCE, 10);
     assertEquals(Dimensions.of(tensor), Arrays.asList(10, 2));
   }

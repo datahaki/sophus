@@ -14,19 +14,19 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2CoveringMetricTest {
   @Test
-  public void testPlanar() {
+  void testPlanar() {
     Scalar scalar = Se2CoveringMetric.INSTANCE.distance(Tensors.vector(1, 1, 0), Tensors.vector(4, 5, 0));
     assertEquals(scalar, RealScalar.of(5));
   }
 
   @Test
-  public void testTurn() {
+  void testTurn() {
     Scalar scalar = Se2CoveringMetric.INSTANCE.distance(Tensors.vector(1, 2, 3), Tensors.vector(1, 2, 7));
     Chop._14.requireClose(scalar, RealScalar.of(4));
   }
 
   @Test
-  public void testMiddle() {
+  void testMiddle() {
     Tensor p = Tensors.vector(1, .7, 2);
     Tensor q = Tensors.vector(2, .3, 3.3);
     Scalar dq = Se2CoveringMetric.INSTANCE.distance(p, q);

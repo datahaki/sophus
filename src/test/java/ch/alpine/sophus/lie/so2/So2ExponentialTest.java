@@ -12,7 +12,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class So2ExponentialTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = UniformDistribution.unit();
     Scalar alpha = RandomVariate.of(distribution);
     assertEquals(alpha, So2Exponential.INSTANCE.log(So2Exponential.INSTANCE.exp(alpha)));

@@ -13,14 +13,14 @@ import ch.alpine.tensor.mat.Tolerance;
 
 class SnTransportTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     TensorUnaryOperator tensorUnaryOperator = SnTransport.INSTANCE.shift(UnitVector.of(3, 0), UnitVector.of(3, 1));
     Tolerance.CHOP.requireClose(tensorUnaryOperator.apply(UnitVector.of(3, 1)), UnitVector.of(3, 0).negate());
     Tolerance.CHOP.requireClose(tensorUnaryOperator.apply(UnitVector.of(3, 2)), UnitVector.of(3, 2));
   }
 
   @Test
-  public void testFlip() {
+  void testFlip() {
     Tensor p = RandomSample.of(SnRandomSample.of(3));
     Tensor q = RandomSample.of(SnRandomSample.of(3));
     SnExponential snExponential = new SnExponential(p);
@@ -30,7 +30,7 @@ class SnTransportTest {
   }
 
   @Test
-  public void testTangentFail() {
+  void testTangentFail() {
     TensorUnaryOperator tensorUnaryOperator = SnTransport.INSTANCE.shift(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(UnitVector.of(3, 0)));
   }

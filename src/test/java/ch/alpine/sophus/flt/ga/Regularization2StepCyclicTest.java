@@ -19,7 +19,7 @@ class Regularization2StepCyclicTest {
       Regularization2Step.cyclic(RnGroup.INSTANCE, RationalScalar.of(1, 4));
 
   @Test
-  public void testLo() {
+  void testLo() {
     Tensor signal = Tensors.vector(1, 0, 0, 0, 0);
     Tensor tensor = CYCLIC.apply(signal);
     assertEquals(tensor, Tensors.fromString("{3/4, 1/8, 0, 0, 1/8}"));
@@ -28,7 +28,7 @@ class Regularization2StepCyclicTest {
   }
 
   @Test
-  public void testHi() {
+  void testHi() {
     Tensor signal = Tensors.vector(0, 0, 0, 0, 1);
     Tensor tensor = CYCLIC.apply(signal);
     assertEquals(tensor, Tensors.fromString("{1/8, 0, 0, 1/8, 3/4}"));
@@ -37,24 +37,24 @@ class Regularization2StepCyclicTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertEquals(CYCLIC.apply(Tensors.empty()), Tensors.empty());
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     assertEquals(CYCLIC.apply(Tensors.vector(3)), Tensors.vector(3));
   }
 
   @Test
-  public void testTuple() {
+  void testTuple() {
     Tensor tensor = CYCLIC.apply(Tensors.vector(3, 2));
     ExactTensorQ.require(tensor);
     assertEquals(tensor, Tensors.fromString("{11/4, 9/4}"));
   }
 
   @Test
-  public void testZero() {
+  void testZero() {
     Tensor signal = Tensors.vector(1, 1, 1, 2, 1, 1, 3, 1, 1, 1);
     Tensor tensor = Regularization2Step.cyclic(RnGroup.INSTANCE, RealScalar.ZERO).apply(signal);
     ExactTensorQ.require(tensor);
@@ -62,7 +62,7 @@ class Regularization2StepCyclicTest {
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.cyclic(RnGroup.INSTANCE, RationalScalar.HALF);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(RealScalar.ZERO));
   }

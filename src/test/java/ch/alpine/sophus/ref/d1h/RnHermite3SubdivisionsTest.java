@@ -24,7 +24,7 @@ class RnHermite3SubdivisionsTest {
       RnHermite3Subdivisions.a2());
 
   @Test
-  public void testString() {
+  void testString() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     for (HermiteSubdivision hermiteSubdivision : LIST) {
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
@@ -35,7 +35,7 @@ class RnHermite3SubdivisionsTest {
   }
 
   @Test
-  public void testStringReverse() {
+  void testStringReverse() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -52,7 +52,7 @@ class RnHermite3SubdivisionsTest {
   }
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 0}, {0, -1}, {-1/2, 1}}");
     for (HermiteSubdivision hermiteSubdivision : LIST) {
       TensorIteration tensorIteration = hermiteSubdivision.cyclic(RealScalar.ONE, control);
@@ -63,7 +63,7 @@ class RnHermite3SubdivisionsTest {
   }
 
   @Test
-  public void testPolynomialReproduction() {
+  void testPolynomialReproduction() {
     for (HermiteSubdivision hermiteSubdivision : LIST)
       TestHelper.checkP(1, hermiteSubdivision);
   }

@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HnPhongMeanTest {
   @Test
-  public void testMidpoint() {
+  void testMidpoint() {
     Distribution distribution = NormalDistribution.of(0, 10);
     for (int d = 1; d < 6; ++d) {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
@@ -29,7 +29,7 @@ class HnPhongMeanTest {
   }
 
   @Test
-  public void testAffineFail() {
+  void testAffineFail() {
     Tensor x = HnWeierstrassCoordinate.toPoint(Tensors.vector(0, 0));
     Tensor y = HnWeierstrassCoordinate.toPoint(Tensors.vector(1, 0));
     HnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));

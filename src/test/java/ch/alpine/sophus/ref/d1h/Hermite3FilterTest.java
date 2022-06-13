@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Hermite3FilterTest {
   @Test
-  public void testR1PolynomialReproduction() {
+  void testR1PolynomialReproduction() {
     Tensor coeffs = Tensors.vector(1, 3, -2, 3);
     Polynomial f0 = Polynomial.of(coeffs);
     Polynomial f1 = f0.derivative();
@@ -39,7 +39,7 @@ class Hermite3FilterTest {
   }
 
   @Test
-  public void testSe2ConstantReproduction() {
+  void testSe2ConstantReproduction() {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     HermiteFilter hermiteFilter = //
         new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER);
@@ -49,7 +49,7 @@ class Hermite3FilterTest {
   }
 
   @Test
-  public void testSe2LinearReproduction() {
+  void testSe2LinearReproduction() {
     Tensor pg = Tensors.vector(1, 2, 3);
     Tensor pv = Tensors.vector(0.3, -0.2, -0.1);
     Tensor control = Tensors.empty();

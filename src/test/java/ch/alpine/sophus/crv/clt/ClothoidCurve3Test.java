@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class ClothoidCurve3Test {
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Tensor p1 = Tensors.fromString("{2[m], 3[m], 1}");
     Tensor q1 = Tensors.fromString("{4[m], 7[m], 2}");
     Tensor r1 = new ClothoidCurve3(p1, q1).apply(RationalScalar.HALF);
@@ -26,7 +26,7 @@ class ClothoidCurve3Test {
   }
 
   @Test
-  public void testPreserve() {
+  void testPreserve() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);

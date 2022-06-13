@@ -17,49 +17,49 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 
 class SixPointCurveSubdivisionTest {
   @Test
-  public void testP1() {
+  void testP1() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor p1 = spcs.center(RealScalar.ONE, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO);
     assertEquals(p1, RationalScalar.of(3, 256));
   }
 
   @Test
-  public void testP2() {
+  void testP2() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor p1 = spcs.center(RealScalar.ZERO, RealScalar.ONE, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO);
     assertEquals(p1, RationalScalar.of(-25, 256));
   }
 
   @Test
-  public void testP3() {
+  void testP3() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor p1 = spcs.center(RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO);
     assertEquals(p1, RationalScalar.of(150, 256));
   }
 
   @Test
-  public void testP4() {
+  void testP4() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor p1 = spcs.center(RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE, RealScalar.ZERO, RealScalar.ZERO);
     assertEquals(p1, RationalScalar.of(150, 256));
   }
 
   @Test
-  public void testP5() {
+  void testP5() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor p1 = spcs.center(RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE, RealScalar.ZERO);
     assertEquals(p1, RationalScalar.of(-25, 256));
   }
 
   @Test
-  public void testP6() {
+  void testP6() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor p1 = spcs.center(RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE);
     assertEquals(p1, RationalScalar.of(3, 256));
   }
 
   @Test
-  public void testString5() {
+  void testString5() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor string = spcs.string(Tensors.vector(1, 0, 0, 0, 0));
     Scalar scalar = string.Get(4);
@@ -68,7 +68,7 @@ class SixPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testString6() {
+  void testString6() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor string = spcs.string(Tensors.vector(1, 0, 0, 0, 0, 0));
     Scalar scalar = string.Get(5);
@@ -77,7 +77,7 @@ class SixPointCurveSubdivisionTest {
   }
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     SixPointCurveSubdivision spcs = new SixPointCurveSubdivision(RnGroup.INSTANCE);
     Tensor cyclic = spcs.cyclic(Tensors.vector(1, 0, 0, 0, 0, 0));
     Tensor expected = Tensors.fromString("{1, 75/128, 0, -25/256, 0, 3/256, 0, 3/256, 0, -25/256, 0, 75/128}");

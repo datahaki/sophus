@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class CurvatureCombTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor points = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}}");
     Tensor tensor = CurvatureComb.of(points, RealScalar.ONE.negate(), false);
     String string = "{{-0.7071067811865474, 0.7071067811865474}, {1, 2}, {2.7071067811865475, 0.7071067811865474}}";
@@ -31,13 +31,13 @@ class CurvatureCombTest {
   }
 
   @Test
-  public void testCirclePoints() {
+  void testCirclePoints() {
     for (int n = 3; n < 10; ++n)
       Tolerance.CHOP.requireAllZero(Total.of(CurvatureComb.cyclic(CirclePoints.of(n))));
   }
 
   @Test
-  public void testStringLength() {
+  void testStringLength() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = RandomVariate.of(distribution, count, 2);
@@ -47,13 +47,13 @@ class CurvatureCombTest {
   }
 
   @Test
-  public void testCircle() {
+  void testCircle() {
     Tensor tensor = CurvatureComb.of(CirclePoints.of(4), RealScalar.ONE.negate(), true);
     Chop._14.requireClose(tensor, CirclePoints.of(4).multiply(RealScalar.of(2)));
   }
 
   @Test
-  public void testString() {
+  void testString() {
     Tensor tensor = CurvatureComb.string(Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}}"));
     String format = "{{-0.7071067811865474, 0.7071067811865474}, {0, 1}, {0.7071067811865474, 0.7071067811865474}}";
     Tensor result = Tensors.fromString(format).negate();
@@ -61,33 +61,33 @@ class CurvatureCombTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertTrue(Tensors.isEmpty(CurvatureComb.of(Tensors.empty(), RealScalar.of(2), true)));
     assertTrue(Tensors.isEmpty(CurvatureComb.of(Tensors.empty(), RealScalar.of(2), false)));
     assertEquals(CurvatureComb.cyclic(Tensors.empty()), Tensors.empty());
   }
 
   @Test
-  public void testOne() {
+  void testOne() {
     Tensor tensor = CurvatureComb.of(Tensors.fromString("{{1, 2}}"), RealScalar.of(2), false);
     assertEquals(tensor, Tensors.fromString("{{1, 2}}"));
   }
 
   @Test
-  public void testTwo() {
+  void testTwo() {
     Tensor tensor = CurvatureComb.of(Tensors.fromString("{{1, 2}, {4, 5}}"), RealScalar.of(2), false);
     assertEquals(tensor, Tensors.fromString("{{1, 2}, {4, 5}}"));
   }
 
   @Test
-  public void testZeros() {
+  void testZeros() {
     Tensor tensor = Array.zeros(10, 2);
     assertEquals(tensor, CurvatureComb.of(tensor, RealScalar.of(2), false));
     assertEquals(tensor, CurvatureComb.of(tensor, RealScalar.of(2), true));
   }
 
   @Test
-  public void testQuantity() {
+  void testQuantity() {
     Distribution distribution = NormalDistribution.of(Quantity.of(0, "m"), Quantity.of(1, "m"));
     Tensor p = RandomVariate.of(distribution, 2);
     Tensor q = RandomVariate.of(distribution, 2);
@@ -100,7 +100,7 @@ class CurvatureCombTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     Tensor points = Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 0, 0}}");
     assertThrows(Exception.class, () -> CurvatureComb.of(points, RealScalar.ONE, false));
   }

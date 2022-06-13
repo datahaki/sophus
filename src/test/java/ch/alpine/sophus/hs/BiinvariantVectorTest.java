@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.Round;
 
 class BiinvariantVectorTest {
   @Test
-  public void testSimpleR2() {
+  void testSimpleR2() {
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 10, 3);
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
     Manifold manifold = RnGroup.INSTANCE;
@@ -78,7 +78,7 @@ class BiinvariantVectorTest {
   }
 
   @Test
-  public void testSe2CAnchorIsTarget() {
+  void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
@@ -90,7 +90,7 @@ class BiinvariantVectorTest {
   }
 
   @Test
-  public void testSe2AnchorIsTarget() {
+  void testSe2AnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2Group.INSTANCE;
     for (int count = 4; count < 10; ++count) {
@@ -102,7 +102,7 @@ class BiinvariantVectorTest {
   }
 
   @Test
-  public void testSnCAnchorIsTarget() {
+  void testSnCAnchorIsTarget() {
     Manifold manifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 4; ++dimension) {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);

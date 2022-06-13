@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2CoveringDifferencesTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);
     LieDifferences INSTANCE = new LieDifferences(Se2CoveringGroup.INSTANCE);

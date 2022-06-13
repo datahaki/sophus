@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicIIR1Test {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     GeodesicIIR1 geodesicIIR1 = //
         Serialization.copy(new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0.5)));
     // irc=0.0[s^-2]
@@ -40,7 +40,7 @@ class GeodesicIIR1Test {
   }
 
   @Test
-  public void testInitialized() {
+  void testInitialized() {
     GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0.5));
     geodesicIIR1.apply(Quantity.of(0, "s^-2"));
     // irc=0.0[s^-2]
@@ -64,18 +64,18 @@ class GeodesicIIR1Test {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     GeodesicIIR1 geodesicIIR1 = new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0.2));
     assertThrows(Exception.class, () -> geodesicIIR1.apply(null));
   }
 
   @Test
-  public void testZeroFail() {
+  void testZeroFail() {
     assertThrows(Exception.class, () -> new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(0)));
   }
 
   @Test
-  public void testLargeFail() {
+  void testLargeFail() {
     assertThrows(Exception.class, () -> new GeodesicIIR1(RnGroup.INSTANCE, RealScalar.of(1.01)));
   }
 }

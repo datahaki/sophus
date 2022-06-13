@@ -21,7 +21,7 @@ import ch.alpine.tensor.qty.Quantity;
 
 class RnTransitionSpaceTest {
   @Test
-  public void testLength() throws ClassNotFoundException, IOException {
+  void testLength() throws ClassNotFoundException, IOException {
     Tensor start = Tensors.fromString("{1[m], 2[m]}");
     Tensor end = Tensors.fromString("{1[m], 6[m]}");
     Transition transition = Serialization.copy(RnTransitionSpace.INSTANCE).connect(start, end);
@@ -32,7 +32,7 @@ class RnTransitionSpaceTest {
   }
 
   @Test
-  public void testSamples() {
+  void testSamples() {
     Tensor start = Tensors.fromString("{1[m], 2[m]}");
     Tensor end = Tensors.fromString("{1[m], 6[m]}");
     Transition transition = RnTransitionSpace.INSTANCE.connect(start, end);
@@ -53,7 +53,7 @@ class RnTransitionSpaceTest {
   }
 
   @Test
-  public void testWrap() {
+  void testWrap() {
     Tensor start = Tensors.fromString("{1[m], 2[m]}");
     Tensor end = Tensors.fromString("{1[m], 6[m]}");
     Transition transition = RnTransitionSpace.INSTANCE.connect(start, end);

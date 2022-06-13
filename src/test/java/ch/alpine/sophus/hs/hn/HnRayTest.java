@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class HnRayTest {
   @Test
-  public void testExp() {
+  void testExp() {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor xn = RandomVariate.of(distribution, d);

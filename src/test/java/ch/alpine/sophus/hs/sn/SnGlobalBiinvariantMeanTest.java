@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnGlobalBiinvariantMeanTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = NormalDistribution.standard();
     for (int dim = 2; dim < 5; ++dim)
       for (int length = 1; length < 10; ++length) {

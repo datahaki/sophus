@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GeodesicCatmullClarkSubdivisionTest {
   @Test
-  public void testQuad() {
+  void testQuad() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
         new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor quad = CirclePoints.of(4);
@@ -28,7 +28,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testEdgeCorner() {
+  void testEdgeCorner() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor quad = Tensors.vector(1, 0, 0, 0, 0, 0);
     Tensor mid1 = catmullClarkSubdivision.quad(quad.get(0), quad.get(1), quad.get(2), quad.get(3));
@@ -40,7 +40,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testEdgeCentral1() {
+  void testEdgeCentral1() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor quad = Tensors.vector(0, 0, 1, 0, 0, 0);
     Tensor mid1 = catmullClarkSubdivision.quad(quad.get(0), quad.get(1), quad.get(2), quad.get(3));
@@ -52,7 +52,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testEdgeCentral2() {
+  void testEdgeCentral2() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor quad = Tensors.vector(0, 0, 0, 1, 0, 0);
     Tensor mid1 = catmullClarkSubdivision.quad(quad.get(0), quad.get(1), quad.get(2), quad.get(3));
@@ -64,7 +64,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testCenterCorner() {
+  void testCenterCorner() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor quad = Tensors.vector(1, 0, 0, 0, 0, 0, 0, 0, 0);
     Tensor mid00 = catmullClarkSubdivision.quad(quad.get(0), quad.get(1), quad.get(3), quad.get(4));
@@ -82,7 +82,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testRefine() {
+  void testRefine() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor grid = Tensors.fromString("{{0, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 0, 1}}");
     Tensor refine = catmullClarkSubdivision.refine(grid);
@@ -91,7 +91,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testRefineX() {
+  void testRefineX() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor grid = Tensors.fromString("{{0, 1}, {0, 1}, {0, 1}}");
     Tensor refine = Nest.of(catmullClarkSubdivision::refine, grid, 2);
@@ -100,7 +100,7 @@ class GeodesicCatmullClarkSubdivisionTest {
   }
 
   @Test
-  public void testRefineY() {
+  void testRefineY() {
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(RnGroup.INSTANCE);
     Tensor grid = Tensors.fromString("{{0, 0}, {1, 1}, {2, 2}}");
     Tensor refine = Nest.of(catmullClarkSubdivision::refine, grid, 2);

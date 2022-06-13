@@ -24,7 +24,7 @@ class CurveSubdivisionTest {
   }
 
   @Test
-  public void testSymmetric() {
+  void testSymmetric() {
     Distribution distribution = UniformDistribution.of(-2, 3);
     for (int length = 0; length < 10; ++length) {
       Tensor tensor = RandomVariate.of(distribution, length, 2);
@@ -60,7 +60,7 @@ class CurveSubdivisionTest {
   };
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
       assertThrows(Exception.class, () -> curveSubdivision.string(null));
       assertThrows(Exception.class, () -> curveSubdivision.cyclic(null));
@@ -68,7 +68,7 @@ class CurveSubdivisionTest {
   }
 
   @Test
-  public void testScalarFail() {
+  void testScalarFail() {
     for (CurveSubdivision curveSubdivision : CURVE_SUBDIVISIONS) {
       assertThrows(Exception.class, () -> curveSubdivision.string(Pi.HALF));
       assertThrows(Exception.class, () -> curveSubdivision.cyclic(Pi.VALUE));

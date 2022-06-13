@@ -18,7 +18,7 @@ class HnTransportTest {
   private static final HsTransport POLE_LADDER = new PoleLadder(HnManifold.INSTANCE);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     int d = 3;
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
     Tensor x = RandomVariate.of(distribution, d);
@@ -35,7 +35,7 @@ class HnTransportTest {
   }
 
   @Test
-  public void testNonMemberFail() {
+  void testNonMemberFail() {
     int d = 3;
     Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
     Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));

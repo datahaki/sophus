@@ -17,7 +17,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class LowerVectorize0_2NormTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 10; ++n) {
       Tensor matrix = Symmetrize.of(RandomVariate.of(UniformDistribution.unit(), n, n));
       Scalar n1 = FrobeniusNorm.of(matrix);
@@ -27,7 +27,7 @@ class LowerVectorize0_2NormTest {
   }
 
   @Test
-  public void testLengthFail() {
+  void testLengthFail() {
     assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Pi.VALUE));
     assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector()));
     assertThrows(Exception.class, () -> LowerVectorize0_2Norm.INSTANCE.norm(Tensors.vector(1, 2)));
@@ -35,7 +35,7 @@ class LowerVectorize0_2NormTest {
   }
 
   @Test
-  public void testRequireTriangleNumber() {
+  void testRequireTriangleNumber() {
     LowerVectorize0_2Norm.requireTriangleNumber(1);
     LowerVectorize0_2Norm.requireTriangleNumber(3);
     LowerVectorize0_2Norm.requireTriangleNumber(6);

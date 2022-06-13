@@ -10,7 +10,7 @@ import ch.alpine.tensor.io.ResourceData;
 
 class PlyFormatTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     assertEquals(surfaceMesh.vrt.length(), 8);
     assertEquals(surfaceMesh.faces().size(), 6);

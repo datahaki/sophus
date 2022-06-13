@@ -24,7 +24,7 @@ import ch.alpine.tensor.qty.Quantity;
 
 class Hermite1SubdivisionTest {
   @Test
-  public void testJetScalar() {
+  void testJetScalar() {
     HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnGroup.INSTANCE);
     Polynomial polynomial = Polynomial.of(Tensors.vector(2, 1, 3, 4));
     Polynomial derivative = polynomial.derivative();
@@ -46,7 +46,7 @@ class Hermite1SubdivisionTest {
   }
 
   @Test
-  public void testJetQuantity() {
+  void testJetQuantity() {
     ScalarUnaryOperator lift = s -> Quantity.of(s, "s");
     HermiteSubdivision hermiteSubdivision = Hermite1Subdivisions.standard(RnGroup.INSTANCE);
     Polynomial polynomial = Polynomial.of(Tensors.fromString("{2[m],3[m*s^-1],1[m*s^-2],4[m*s^-3]}"));
@@ -69,12 +69,12 @@ class Hermite1SubdivisionTest {
   }
 
   @Test
-  public void testQuantity() throws ClassNotFoundException, IOException {
+  void testQuantity() throws ClassNotFoundException, IOException {
     TestHelper.checkQuantity(Hermite1Subdivisions.standard(RnGroup.INSTANCE));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> Hermite1Subdivisions.standard(null));
   }
 }

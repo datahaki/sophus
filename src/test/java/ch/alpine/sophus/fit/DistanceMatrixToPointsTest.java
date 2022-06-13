@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class DistanceMatrixToPointsTest {
   @Test
-  public void testRankEuclidean() {
+  void testRankEuclidean() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(2));
     for (int d = 0; d < 4; ++d) {
@@ -35,7 +35,7 @@ class DistanceMatrixToPointsTest {
   }
 
   @Test
-  public void testUnit() {
+  void testUnit() {
     Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(2));
     for (int d = 0; d < 4; ++d) {

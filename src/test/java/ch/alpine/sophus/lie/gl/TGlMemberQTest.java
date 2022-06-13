@@ -10,7 +10,7 @@ import ch.alpine.tensor.alg.Array;
 
 class TGlMemberQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertTrue(TGlMemberQ.INSTANCE.test(Array.zeros(2, 2)));
     assertFalse(TGlMemberQ.INSTANCE.test(Array.zeros(2, 3)));
   }

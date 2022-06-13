@@ -15,7 +15,7 @@ import ch.alpine.tensor.alg.Dimensions;
 
 class So3UniformResampleTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = So3UniformResample.of(RealScalar.ONE);
     Tensor vector = Tensors.vector(l -> So3TestHelper.spawn_So3(), 20);
     Tensor string = curveSubdivision.string(vector);

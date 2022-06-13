@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class LeveragesCoordinateTest {
   @Test
-  public void testR1equiv() {
+  void testR1equiv() {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.
     Manifold manifold = RnGroup.INSTANCE;
@@ -41,7 +41,7 @@ class LeveragesCoordinateTest {
   }
 
   @Test
-  public void testDiagonalNorm() {
+  void testDiagonalNorm() {
     Distribution distribution = NormalDistribution.of(0, 0.2);
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
@@ -60,7 +60,7 @@ class LeveragesCoordinateTest {
   }
 
   @Test
-  public void testSe2() {
+  void testSe2() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
     BarycentricCoordinate targetCoordinate = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, variogram);

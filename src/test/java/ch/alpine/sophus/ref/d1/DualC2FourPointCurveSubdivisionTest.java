@@ -15,27 +15,27 @@ import ch.alpine.tensor.red.Total;
 
 class DualC2FourPointCurveSubdivisionTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     CurveSubdivision curveSubdivision = DualC2FourPointCurveSubdivision.cubic(RnGroup.INSTANCE);
     Tensor cyclic = curveSubdivision.cyclic(UnitVector.of(10, 1));
     assertEquals(Total.of(cyclic), RealScalar.of(2));
   }
 
   @Test
-  public void testSpecs() {
+  void testSpecs() {
     CurveSubdivision curveSubdivision = DualC2FourPointCurveSubdivision.cubic(RnGroup.INSTANCE);
     Tensor cyclic = curveSubdivision.cyclic(UnitVector.of(6, 3));
     assertEquals(cyclic, Tensors.fromString("{0, 0, -5/128, -7/128, 35/128, 105/128, 105/128, 35/128, -7/128, -5/128, 0, 0}"));
   }
 
   @Test
-  public void testTightest() {
+  void testTightest() {
     CurveSubdivision curveSubdivision = DualC2FourPointCurveSubdivision.tightest(RnGroup.INSTANCE);
     curveSubdivision.cyclic(UnitVector.of(4, 2));
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> DualC2FourPointCurveSubdivision.cubic(null));
     assertThrows(Exception.class, () -> DualC2FourPointCurveSubdivision.tightest(null));
   }

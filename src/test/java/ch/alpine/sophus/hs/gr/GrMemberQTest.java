@@ -16,7 +16,7 @@ import ch.alpine.tensor.lie.TensorProduct;
 
 class GrMemberQTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int n = 5;
     Tensor x = RandomSample.of(new GrRandomSample(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
@@ -24,7 +24,7 @@ class GrMemberQTest {
   }
 
   @Test
-  public void testVectorProject() {
+  void testVectorProject() {
     for (int n = 1; n < 6; ++n) {
       Tensor normal = RandomSample.of(SnRandomSample.of(n));
       Tensor x = TensorProduct.of(normal, normal);
@@ -33,7 +33,7 @@ class GrMemberQTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> GrMemberQ.INSTANCE.test(null));
   }
 }

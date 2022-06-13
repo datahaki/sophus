@@ -23,7 +23,7 @@ class So3BiinvariantMeanTest {
       GbcHelper.barycentrics(So3Group.INSTANCE);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor sequence = Tensors.of( //
         Rodrigues.vectorExp(Tensors.vector(+1 + 0.3, 0, 0)), //
         Rodrigues.vectorExp(Tensors.vector(+0 + 0.3, 0, 0)), //
@@ -35,7 +35,7 @@ class So3BiinvariantMeanTest {
   }
 
   @Test
-  public void testConvergence() {
+  void testConvergence() {
     Random random = new Random();
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
@@ -50,7 +50,7 @@ class So3BiinvariantMeanTest {
   }
 
   @Test
-  public void testConvergenceExact() {
+  void testConvergenceExact() {
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     int n = 4;
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {

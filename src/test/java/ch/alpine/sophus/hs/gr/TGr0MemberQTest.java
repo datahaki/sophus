@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class TGr0MemberQTest {
   @Test
-  public void testSimple21() {
+  void testSimple21() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(2, 1);
     assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 1}, {1, 0}}")));
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 1}, {2, 0}}")));
@@ -25,14 +25,14 @@ class TGr0MemberQTest {
   }
 
   @Test
-  public void testSimple31() {
+  void testSimple31() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(3, 1);
     assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
   }
 
   @Test
-  public void testSimple32() {
+  void testSimple32() {
     TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(3, 2);
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 1}, {1, 0}}")));
     assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
@@ -40,7 +40,7 @@ class TGr0MemberQTest {
   }
 
   @Test
-  public void testRandom32() {
+  void testRandom32() {
     int n = 3;
     Distribution distribution = UniformDistribution.unit();
     for (int k = 0; k <= n; ++k) {
@@ -54,7 +54,7 @@ class TGr0MemberQTest {
   }
 
   @Test
-  public void testRandom52() {
+  void testRandom52() {
     int n = 5;
     Distribution distribution = UniformDistribution.unit();
     for (int k = 0; k <= n; ++k) {

@@ -11,7 +11,7 @@ import ch.alpine.tensor.num.Pi;
 
 class So2GroupElementTest {
   @Test
-  public void testInverse() {
+  void testInverse() {
     So2GroupElement so2GroupElement = new So2GroupElement(RealScalar.ONE);
     Scalar scalar = so2GroupElement.inverse().combine(RealScalar.ONE);
     assertEquals(scalar, RealScalar.ZERO);
@@ -19,7 +19,7 @@ class So2GroupElementTest {
   }
 
   @Test
-  public void testAdjoint() {
+  void testAdjoint() {
     So2GroupElement so2GroupElement = new So2GroupElement(RealScalar.ONE);
     assertEquals(so2GroupElement.adjoint(Pi.VALUE), Pi.VALUE);
     assertEquals(so2GroupElement.dL(RealScalar.of(3)), RealScalar.of(3));

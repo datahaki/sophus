@@ -11,7 +11,7 @@ import ch.alpine.tensor.lie.Quaternion;
 
 class CornerTangentTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
@@ -24,7 +24,7 @@ class CornerTangentTest {
   }
 
   @Test
-  public void testImFail1() {
+  void testImFail1() {
     Quaternion qi = Quaternion.of(1, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
@@ -32,7 +32,7 @@ class CornerTangentTest {
   }
 
   @Test
-  public void testImFail2() {
+  void testImFail2() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(1, 1, 8, 2);
     Quaternion qk = Quaternion.of(0, 5, -2, 0);
@@ -40,7 +40,7 @@ class CornerTangentTest {
   }
 
   @Test
-  public void testImFail3() {
+  void testImFail3() {
     Quaternion qi = Quaternion.of(0, 2, 3, 4);
     Quaternion qj = Quaternion.of(0, 1, 8, 2);
     Quaternion qk = Quaternion.of(1, 5, -2, 0);

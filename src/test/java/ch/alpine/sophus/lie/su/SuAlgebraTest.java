@@ -14,7 +14,7 @@ import ch.alpine.tensor.red.Trace;
 
 class SuAlgebraTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = SuAlgebra.of(n);
       lieAlgebra.basis().forEach(AntihermitianMatrixQ::require);

@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2MatrixTest {
   @Test
-  public void testSimple1() {
+  void testSimple1() {
     Tensor matrix = Se2Matrix.of(Tensors.vector(2, 3, 4));
     assertEquals(matrix.get(2), Tensors.vector(0, 0, 1));
     Scalar det = Det.of(matrix);
@@ -27,7 +27,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void test2PiModLogExp() {
+  void test2PiModLogExp() {
     for (int n = -5; n <= 5; ++n) {
       double value = 1 + 2 * Math.PI * n;
       Tensor g = Tensors.vector(2, 3, value);
@@ -39,7 +39,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void test2PiModExpLog() {
+  void test2PiModExpLog() {
     for (int n = -5; n <= 5; ++n) {
       double value = 1 + 2 * Math.PI * n;
       Tensor x = Tensors.vector(2, 3, value);
@@ -50,7 +50,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void testLog() {
+  void testLog() {
     Distribution distribution = UniformDistribution.of(-25, 25);
     for (int index = 0; index < 10; ++index) {
       Tensor x = RandomVariate.of(distribution, 3);
@@ -61,7 +61,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void testExp() {
+  void testExp() {
     Distribution distribution = UniformDistribution.of(-25, 25);
     for (int index = 0; index < 10; ++index) {
       Tensor g = RandomVariate.of(distribution, 3);
@@ -72,7 +72,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void testLog0() {
+  void testLog0() {
     Distribution distribution = UniformDistribution.of(-5, 5);
     for (int index = 0; index < 10; ++index) {
       Tensor x = RandomVariate.of(distribution, 2).append(RealScalar.ZERO);
@@ -83,7 +83,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void testFromMatrix() {
+  void testFromMatrix() {
     Tensor x = Tensors.vector(2, 3, .5);
     Tensor matrix = Se2Matrix.of(x);
     Tensor y = Se2Matrix.toVector(matrix);
@@ -91,7 +91,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void testFromMatrix1() {
+  void testFromMatrix1() {
     Tensor x = Tensors.vector(2, 3, 3.5);
     Tensor matrix = Se2Matrix.of(x);
     Tensor y = Se2Matrix.toVector(matrix);
@@ -99,7 +99,7 @@ class Se2MatrixTest {
   }
 
   @Test
-  public void testG0() {
+  void testG0() {
     Tensor u = Tensors.vector(1.2, 0, 0);
     Tensor m = Se2CoveringGroup.INSTANCE.exp(u);
     assertEquals(m, u);

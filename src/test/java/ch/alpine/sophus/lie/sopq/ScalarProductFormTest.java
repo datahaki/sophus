@@ -10,7 +10,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class ScalarProductFormTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(ScalarProductForm.of(0, 3), DiagonalMatrix.of(-1, -1, -1));
     assertEquals(ScalarProductForm.of(3, 0), IdentityMatrix.of(3));
     assertEquals(ScalarProductForm.of(1, 2), DiagonalMatrix.of(+1, -1, -1));

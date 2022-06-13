@@ -29,13 +29,13 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class GeodesicExtrapolationTest {
   @Test
-  public void testEmptyFail() {
+  void testEmptyFail() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGroup.INSTANCE, DirichletWindow.FUNCTION);
     assertThrows(Exception.class, () -> tensorUnaryOperator.apply(Tensors.empty()));
   }
 
   @Test
-  public void testDirichlet() {
+  void testDirichlet() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGroup.INSTANCE, DirichletWindow.FUNCTION);
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(12));
@@ -60,7 +60,7 @@ class GeodesicExtrapolationTest {
   }
 
   @Test
-  public void testMonomial() {
+  void testMonomial() {
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGroup.INSTANCE, MonomialExtrapolationMask.INSTANCE);
     {
       Tensor tensor = tensorUnaryOperator.apply(Tensors.vector(12));
@@ -85,7 +85,7 @@ class GeodesicExtrapolationTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGroup.INSTANCE, smoothingKernel.get());
       for (int index = 2; index < 10; ++index) {
@@ -95,7 +95,7 @@ class GeodesicExtrapolationTest {
   }
 
   @Test
-  public void testSingle() {
+  void testSingle() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values()) {
       TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(RnGroup.INSTANCE, smoothingKernel.get());
       Tolerance.CHOP.requireClose(tensorUnaryOperator.apply(Tensors.vector(10)), RealScalar.of(10));
@@ -103,14 +103,14 @@ class GeodesicExtrapolationTest {
   }
 
   @Test
-  public void testSplits2() {
+  void testSplits2() {
     Tensor mask = Tensors.vector(0.5, 0.5);
     Tensor result = GeodesicExtrapolation.Splits.of(mask);
     assertEquals(Tensors.vector(2), result);
   }
 
   @Test
-  public void testElaborate() {
+  void testElaborate() {
     Function<Integer, Tensor> halfWindowSampler = HalfWindowSampler.of(GaussianWindow.FUNCTION);
     Tensor mask = halfWindowSampler.apply(7);
     assertEquals(mask.length(), 7);
@@ -122,30 +122,30 @@ class GeodesicExtrapolationTest {
   }
 
   @Test
-  public void testNoExtrapolation() {
+  void testNoExtrapolation() {
     Tensor mask = Tensors.vector(1);
     Tensor result = GeodesicExtrapolation.Splits.of(mask);
     assertEquals(Tensors.vector(1), result);
   }
 
   @Test
-  public void testAffinityFail() {
+  void testAffinityFail() {
     Tensor mask = Tensors.vector(0.5, 0.8);
     assertThrows(Exception.class, () -> GeodesicExtrapolation.Splits.of(mask));
   }
 
   @Test
-  public void testNullFail1() {
+  void testNullFail1() {
     assertThrows(Exception.class, () -> GeodesicExtrapolation.of(null, Sin.FUNCTION));
   }
 
   @Test
-  public void testNullFailITF() {
+  void testNullFailITF() {
     assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Group.INSTANCE, (Function<Integer, Tensor>) null));
   }
 
   @Test
-  public void testNullFailSUO() {
+  void testNullFailSUO() {
     assertThrows(Exception.class, () -> GeodesicExtrapolation.of(Se2Group.INSTANCE, (ScalarUnaryOperator) null));
   }
 }

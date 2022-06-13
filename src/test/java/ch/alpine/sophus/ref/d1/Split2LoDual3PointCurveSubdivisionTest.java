@@ -17,14 +17,14 @@ class Split2LoDual3PointCurveSubdivisionTest {
       Split2LoDual3PointCurveSubdivision.of(RnGroup.INSTANCE, RationalScalar.of(1, 3), RationalScalar.of(1, 4));
 
   @Test
-  public void testCyclic() {
+  void testCyclic() {
     Tensor cyclic = CURVE_SUBDIVISION.cyclic(Tensors.vector(1, 2, 3, 4));
     assertEquals(cyclic, Tensors.fromString("{11/4, 9/4, 7/4, 9/4, 11/4, 13/4, 11/4, 9/4}"));
     ExactTensorQ.require(cyclic);
   }
 
   @Test
-  public void testString() {
+  void testString() {
     Tensor string = CURVE_SUBDIVISION.string(Tensors.vector(1, 2, 3, 4));
     assertEquals(string, Tensors.fromString("{5/4, 7/4, 9/4, 11/4, 13/4, 15/4}"));
     ExactTensorQ.require(string);

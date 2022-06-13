@@ -15,25 +15,25 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class EulerSpiralTest {
   @Test
-  public void testSpecific() {
+  void testSpecific() {
     Tensor xya = EulerSpiral.FUNCTION.apply(RealScalar.of(0.3));
     Tolerance.CHOP.requireClose(xya, Tensors.vector(0.2994009760520471, 0.014116998006574732, 0.1413716694115407));
   }
 
   @Test
-  public void testAngle() {
+  void testAngle() {
     Tensor xya = EulerSpiral.FUNCTION.apply(RealScalar.of(Math.sqrt(2 / Math.PI)));
     Tolerance.CHOP.requireClose(xya, Tensors.vector(0.721705924292615, 0.24755828765159393, 1));
   }
 
   @Test
-  public void testWindings() {
+  void testWindings() {
     Tensor xya = EulerSpiral.FUNCTION.apply(RealScalar.of(5));
     Tolerance.CHOP.requireClose(xya, Tensors.vector(0.563631188704011, 0.4991913819171182, 39.269908169872416));
   }
 
   @Test
-  public void testAntiSymmetry() {
+  void testAntiSymmetry() {
     Distribution distribution = UniformDistribution.of(-100, 100);
     for (int count = 0; count < 100; ++count) {
       Scalar scalar = RandomVariate.of(distribution);

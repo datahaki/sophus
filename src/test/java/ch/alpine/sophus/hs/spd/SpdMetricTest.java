@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 class SpdMetricTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int n = 1; n < 6; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor g = RandomSample.of(rsi);
@@ -33,7 +33,7 @@ class SpdMetricTest {
   }
 
   @Test
-  public void testSymmetryAndInvariance() {
+  void testSymmetryAndInvariance() {
     for (int n = 1; n < 6; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
@@ -53,7 +53,7 @@ class SpdMetricTest {
   }
 
   @Test
-  public void testLogExp() {
+  void testLogExp() {
     for (int n = 1; n < 4; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
@@ -65,7 +65,7 @@ class SpdMetricTest {
   }
 
   @Test
-  public void testScalarProd() {
+  void testScalarProd() {
     for (int n = 1; n < 6; ++n) {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);

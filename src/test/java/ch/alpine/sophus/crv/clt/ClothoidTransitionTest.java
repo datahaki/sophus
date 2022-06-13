@@ -29,7 +29,7 @@ class ClothoidTransitionTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Tensor start = Tensors.vector(1, 2, 3);
     Tensor end = Tensors.vector(4, 1, 5);
     ClothoidTransition clothoidTransition = Serialization.copy(ClothoidTransition.of(CLOTHOID_BUILDER, start, end));
@@ -39,14 +39,14 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  public void testLog2Int() {
+  void testLog2Int() {
     int value = 1024;
     int bit = 31 - Integer.numberOfLeadingZeros(value);
     assertEquals(bit, 10);
   }
 
   @Test
-  public void testWrapped() {
+  void testWrapped() {
     Tensor start = Tensors.vector(2, 3, 3);
     Tensor end = Tensors.vector(4, 1, 5);
     ClothoidTransition clothoidTransition = ClothoidTransition.of(CLOTHOID_BUILDER, start, end);
@@ -56,7 +56,7 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  public void testSingularPoint() {
+  void testSingularPoint() {
     Tensor start = Tensors.vector(0, 0, 0);
     Tensor end = Tensors.vector(0, 0, 0);
     Clothoid clothoid = CLOTHOID_BUILDER.curve(start, end);
@@ -71,7 +71,7 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  public void testSamples2() {
+  void testSamples2() {
     Tensor start = Tensors.vector(0, 0, 0);
     Tensor end = Tensors.vector(4, 0, 0);
     ClothoidTransition clothoidTransition = ClothoidTransition.of(CLOTHOID_BUILDER, start, end);
@@ -81,7 +81,7 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  public void testSamplesSteps() {
+  void testSamplesSteps() {
     Tensor start = Tensors.vector(1, 2, 3);
     Tensor end = Tensors.vector(4, 1, 5);
     ClothoidTransition clothoidTransition = ClothoidTransition.of(CLOTHOID_BUILDER, start, end);
@@ -100,7 +100,7 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  public void testLinearize() {
+  void testLinearize() {
     Clothoid clothoid = CLOTHOID_BUILDER.curve( //
         Tensors.fromString("{0.3[m], 1[m], 0}"), Tensors.fromString("{2[m], 2[m], .3}"));
     ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoid);
@@ -109,7 +109,7 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  public void testFails() {
+  void testFails() {
     Tensor start = Tensors.vector(1, 2, 3);
     Tensor end = Tensors.vector(4, 1, 5);
     ClothoidTransition clothoidTransition = ClothoidTransition.of(CLOTHOID_BUILDER, start, end);

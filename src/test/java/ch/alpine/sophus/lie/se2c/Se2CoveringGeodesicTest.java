@@ -16,14 +16,14 @@ import ch.alpine.tensor.sca.Chop;
 
 class Se2CoveringGeodesicTest {
   @Test
-  public void testArticle() {
+  void testArticle() {
     Tensor tensor = Se2CoveringGroup.INSTANCE.split( //
         Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RealScalar.of(0.7));
     Chop._14.requireClose(tensor, Tensors.fromString("{4.483830852817113, 3.2143505344919467, 5.1}"));
   }
 
   @Test
-  public void testCenter() {
+  void testCenter() {
     // mathematica gives: {2.26033, -0.00147288, 0.981748}
     Tensor p = Tensors.vector(2.017191762967754, -0.08474511292102775, 0.9817477042468103);
     Tensor q = Tensors.vector(2.503476971090440, +0.08179934782700435, 0.9817477042468102);
@@ -43,7 +43,7 @@ class Se2CoveringGeodesicTest {
   }
 
   @Test
-  public void testBiinvariantMean() {
+  void testBiinvariantMean() {
     Distribution distribution = UniformDistribution.of(-3, 8);
     Distribution wd = UniformDistribution.unit();
     int success = 0;

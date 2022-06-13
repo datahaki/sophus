@@ -27,6 +27,7 @@ import ch.alpine.tensor.mat.qr.QRMathematica;
  * by Helga Baum, 2005
  * 
  * Reference: geomstats */
+// TODO SOPHUS ALG implementation incomplete
 public class StExponential implements Exponential, Serializable {
   private final Tensor p;
   private final TStMemberQ tStMemberQ;
@@ -63,7 +64,6 @@ public class StExponential implements Exponential, Serializable {
 
   @Override
   public Tensor log(Tensor q) {
-    // TODO
     throw new UnsupportedOperationException();
   }
 

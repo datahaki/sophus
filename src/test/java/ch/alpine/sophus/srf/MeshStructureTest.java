@@ -18,7 +18,7 @@ import ch.alpine.tensor.io.ResourceData;
 
 class MeshStructureTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
     MeshStructure meshStructure = new MeshStructure(surfaceMesh);
     {
@@ -38,7 +38,7 @@ class MeshStructureTest {
   }
 
   @Test
-  public void testSome() {
+  void testSome() {
     SurfaceMeshRefinement surfaceMeshRefinement = //
         new DooSabinRefinement(RnBiinvariantMean.INSTANCE);
     SurfaceMesh surfaceMesh = SurfaceMeshExamples.mixed7();
@@ -46,7 +46,7 @@ class MeshStructureTest {
   }
 
   @Test
-  public void testSimple2() {
+  void testSimple2() {
     SurfaceMesh surfaceMesh = SurfaceMeshExamples.mixed7();
     assertEquals(surfaceMesh.vrt.get(3), Tensors.vector(2, 2, 0));
     assertEquals(Tensors.vectorInt(surfaceMesh.face(0)), Tensors.vectorInt(0, 2, 3, 1));

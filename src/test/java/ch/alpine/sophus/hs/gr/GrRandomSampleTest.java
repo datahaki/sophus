@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class GrRandomSampleTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     for (int k = 1; k < 5; ++k) {
       RandomSampleInterface grRandomSample = Serialization.copy(new GrRandomSample(k + 3, k));
       Tensor x = RandomSample.of(grRandomSample);
@@ -28,7 +28,7 @@ class GrRandomSampleTest {
   }
 
   @Test
-  public void testNN() throws ClassNotFoundException, IOException {
+  void testNN() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(new GrRandomSample(n, n));
       Tensor x = RandomSample.of(randomSampleInterface);
@@ -38,7 +38,7 @@ class GrRandomSampleTest {
   }
 
   @Test
-  public void testN0() {
+  void testN0() {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 0);
       for (int k = 0; k < 3; ++k) {
@@ -51,7 +51,7 @@ class GrRandomSampleTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> new GrRandomSample(-3, 2));
     assertThrows(Exception.class, () -> new GrRandomSample(3, 4));
   }

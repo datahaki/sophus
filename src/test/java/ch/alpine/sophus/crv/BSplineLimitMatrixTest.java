@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class BSplineLimitMatrixTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (int degree = 0; degree < 5; ++degree)
       for (int n = 1; n < 10; ++n) {
         Tensor tensor = BSplineLimitMatrix.string(n, degree);
@@ -26,7 +26,7 @@ class BSplineLimitMatrixTest {
   }
 
   @Test
-  public void testNonPositiveFail() {
+  void testNonPositiveFail() {
     assertThrows(Exception.class, () -> BSplineLimitMatrix.string(0, 2));
     assertThrows(Exception.class, () -> BSplineLimitMatrix.string(-1, 2));
   }

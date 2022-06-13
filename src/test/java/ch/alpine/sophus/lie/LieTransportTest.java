@@ -18,7 +18,7 @@ class LieTransportTest {
   private static final Distribution DISTRIBUTION = UniformDistribution.of(-10, 10);
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor p = RandomVariate.of(DISTRIBUTION, 3);
     Tensor q = RandomVariate.of(DISTRIBUTION, 3);
     Tensor v = RandomVariate.of(DISTRIBUTION, 3);
@@ -33,7 +33,7 @@ class LieTransportTest {
   }
 
   @Test
-  public void testSubdivide() {
+  void testSubdivide() {
     Tensor p = RandomVariate.of(DISTRIBUTION, 3);
     Tensor q = RandomVariate.of(DISTRIBUTION, 3);
     Tensor v = RandomVariate.of(DISTRIBUTION, 3);

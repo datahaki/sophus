@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class GardenDistanceVectorTest {
   @Test
-  public void testRn1() throws ClassNotFoundException, IOException {
+  void testRn1() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = RnGroup.INSTANCE;
     for (int length = 5; length < 10; ++length) {
@@ -40,7 +40,7 @@ class GardenDistanceVectorTest {
   }
 
   @Test
-  public void testSn1() {
+  void testSn1() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Manifold manifold = SnManifold.INSTANCE;
     for (int length = 4; length < 10; ++length) {
@@ -52,7 +52,7 @@ class GardenDistanceVectorTest {
   }
 
   @Test
-  public void testSe2C() {
+  void testSe2C() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int length = 5; length < 10; ++length) {
@@ -64,7 +64,7 @@ class GardenDistanceVectorTest {
   }
 
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(manifold, Tensors.empty());
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
@@ -72,7 +72,7 @@ class GardenDistanceVectorTest {
   }
 
   @Test
-  public void testSingleton() {
+  void testSingleton() {
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     TensorUnaryOperator tensorUnaryOperator = GardenDistanceVector.of(manifold, Tensors.fromString("{{2,3,4}}"));
     Tensor result = tensorUnaryOperator.apply(Tensors.vector(1, 2, 3));
@@ -80,7 +80,7 @@ class GardenDistanceVectorTest {
   }
 
   @Test
-  public void testNullFail() {
+  void testNullFail() {
     assertThrows(Exception.class, () -> GardenDistanceVector.of(null, Tensors.empty()));
   }
 }
