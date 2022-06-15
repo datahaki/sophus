@@ -51,7 +51,7 @@ class LieGroupTest {
     Tensor m2 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.4)), Tensors.vector(11, 21, 31));
     LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
     Tensor tensor = lieDifferences.apply(Tensors.of(m1, m2));
-    assertEquals(Dimensions.of(tensor), Arrays.asList(1, 2, 3));
+    assertEquals(Dimensions.of(tensor), Arrays.asList(1, 6));
   }
 
   @Test

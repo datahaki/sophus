@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.he;
 
 import java.io.IOException;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
@@ -60,17 +61,18 @@ class HeManifoldTest {
 
   @Test
   void testAffineBiinvariant() throws ClassNotFoundException, IOException {
+    Random random = new Random(1);
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = 2 * n + 2; length < 2 * n + 10; ++length) {
         RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
-        Tensor sequence = RandomSample.of(rsi, length);
-        Tensor mean1 = RandomSample.of(rsi);
+        Tensor sequence = RandomSample.of(rsi, random, length);
+        Tensor mean1 = RandomSample.of(rsi, random);
         Tensor weights = barycentricCoordinate.weights(sequence, mean1);
         Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
         Chop._08.requireClose(mean1, mean2);
         // ---
-        Tensor shift = RandomSample.of(rsi);
+        Tensor shift = RandomSample.of(rsi, random);
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
           Chop._04.requireClose(weights, //
               barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));

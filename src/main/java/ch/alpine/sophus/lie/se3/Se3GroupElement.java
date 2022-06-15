@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.se3;
 
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.lie.Cross;
@@ -49,10 +49,10 @@ public class Se3GroupElement implements LieGroupElement {
 
   @Override // from LieGroupElement
   public Tensor adjoint(Tensor u_w) {
-    Tensor u = u_w.get(0); // translation
-    Tensor w = u_w.get(1); // rotation
+    Tensor u = u_w.extract(0, 3); // translation
+    Tensor w = u_w.extract(3, 6); // rotation
     Tensor rw = R.dot(w);
-    return Tensors.of( //
+    return Join.of( //
         R.dot(u).add(Cross.of(t, rw)), //
         rw);
   }

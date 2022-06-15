@@ -1,4 +1,4 @@
-name: mvn test
+name: mvn test with JDK 17
 on:
   push:
     paths:
@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: mvn install tensor 107
+      - name: mvn install tensor
         working-directory: .
         run: |
           cd ..

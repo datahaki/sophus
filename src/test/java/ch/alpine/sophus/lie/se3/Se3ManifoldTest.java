@@ -73,7 +73,7 @@ class Se3ManifoldTest {
       Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
       assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
       Tensor defect = new MeanDefect(sequence, weights, Se3Group.INSTANCE.exponential(mean)).tangent();
-      assertEquals(Dimensions.of(defect), Arrays.asList(2, 3));
+      assertEquals(Dimensions.of(defect), Arrays.asList(6));
       Chop._08.requireAllZero(defect);
     }
   }

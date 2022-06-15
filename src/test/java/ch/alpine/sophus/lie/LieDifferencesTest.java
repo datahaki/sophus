@@ -60,7 +60,7 @@ class LieDifferencesTest {
       tensor.append(Se3Matrix.of( //
           Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
     LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
-    assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 2, 3));
+    assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 6));
   }
 
   @Test

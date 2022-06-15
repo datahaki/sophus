@@ -10,8 +10,7 @@ import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -38,6 +37,8 @@ import ch.alpine.tensor.sca.Chop;
 public enum Se3Group implements LieGroup {
   INSTANCE;
 
+  /** @param g element from Lie Group SE3 as 4x4 affine matrix
+   * @return */
   @Override // from LieGroup
   public Se3GroupElement element(Tensor g) {
     return new Se3GroupElement(g);
@@ -47,8 +48,8 @@ public enum Se3Group implements LieGroup {
 
   @Override // from Exponential
   public Tensor exp(Tensor u_w) {
-    Tensor u = u_w.get(0); // translation
-    Tensor w = u_w.get(1); // rotation
+    Tensor u = u_w.extract(0, 3); // translation
+    Tensor w = u_w.extract(3, 6); // rotation
     Scalar theta = Vector2Norm.of(w);
     Tensor wx = Cross.skew3(w);
     Tensor wx2 = wx.dot(wx);
@@ -61,6 +62,13 @@ public enum Se3Group implements LieGroup {
 
   @Override // from Exponential
   public Tensor log(Tensor g) {
+    return vectorLog(g);
+  }
+
+  /** @param g matrix of dimensions 4 x 4
+   * @return vector of length 6 */
+  @Override // from Exponential
+  public Tensor vectorLog(Tensor g) {
     Tensor R = Se3Matrix.rotation(g);
     Tensor wx = Rodrigues.INSTANCE.log(R);
     Tensor w = Rodrigues.vectorize(wx);
@@ -69,15 +77,7 @@ public enum Se3Group implements LieGroup {
     Se3Numerics se3Numerics = new Se3Numerics(theta);
     Tensor Vi = ID3.subtract(wx.multiply(RationalScalar.HALF)).add(wx2.multiply(se3Numerics.D));
     Tensor t = Se3Matrix.translation(g);
-    // TODO SOPHUS return matrix in se3
-    return Tensors.of(Vi.dot(t), w);
-  }
-
-  /** @param g matrix of dimensions 4 x 4
-   * @return vector of length 6 */
-  @Override // from Exponential
-  public Tensor vectorLog(Tensor g) {
-    return Flatten.of(log(g));
+    return Join.of(Vi.dot(t), w);
   }
 
   @Override // from GeodesicSpace
