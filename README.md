@@ -11,30 +11,29 @@ The library was developed with the following objectives in mind
 
 ## Algorithms
 
-##### Homogeneous Spaces
-
 * biinvariant distance vectors
-* biinvariant barycentric coordinates, also iterative
-* biinvariant mean
+* biinvariant barycentric coordinates, iterative coordinates
+* biinvariant mean, spatial median
 * filtering (using geodesic averages, biinvariant mean)
 * parallel transport: pole ladder, schild's ladder
-* spatial median
 * kriging
 * Bézier-, spline-, radial basis function interpolation
-* curve subdivision
-* Hermite subdivision
-
-##### Lie Groups
-
-* Baker Campbell Hausdorff
-
+* curve subdivision, Hermite curve subdivision
+* clothoid
+* Dubins path
+* barycentric coordinates for polygons: mean value, discrete harmonic, ...
+* Ramer-Douglas-Peucker algorithm for curve decimation 
+* Graham scan for convex hull in the plane
+* rigid motion fit, sphere fit
+* Baker Campbell Hausdorff formula
+* Clifford algebra, geometric product
 
 ## Manifolds
 
 ##### Homogeneous Spaces
 
-* n-dimensional sphere `S^n`
-* n-dimensional hyperbolic space `H^n`
+* n-dimensional sphere $S^n$
+* n-dimensional hyperbolic space $H^n$
 * Grassmann manifold `Gr(n,k)`
 * n-dimensional projective space `RP^n`
 * symmetric positive definite matrices `SPD(n)`
@@ -44,18 +43,8 @@ The library was developed with the following objectives in mind
 
 * Euclidean space `R^n`
 * Heisenberg group `He(n)`
+* Special orthogonal group `SO(n)`
 * Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(3)`
-
-## Special Features
-
-* clothoid
-* Dubins path
-* barycentric coordinates for polygons: mean value, discrete harmonic, ...
-* Ramer-Douglas-Peucker algorithm for curve decimation 
-* Graham scan for convex hull in the plane
-* rigid motion fit
-* sphere fit
-* Clifford algebra, geometric product
 
 ---
 
@@ -121,7 +110,7 @@ for an example set of six points in the plane.
 ![image](https://user-images.githubusercontent.com/4012178/109415610-f0280f80-79b9-11eb-97ba-e56105bae5be.png)
 
 **Figure:** Applications of biinvariant distance vectors and weightings: a) classification task in the Lie group
-SE(2), b) kriging function f:RP^2 → R on the real projective space based on four control points with associated values, c) smooth domain transfer [0, 1]^2 ⊂ R^2 → SE(2) based on control points of the form p_i = (px_i , py_i ) ∈ R^2 mapped to q_i = (px_i, py_i, θ_i) ∈ SE(2) for i=1, ..., 6.
+SE(2), b) kriging function $f:RP^2 → R$ on the real projective space based on four control points with associated values, c) smooth domain transfer $[0, 1]^2 ⊂ R^2 → SE(2)$ based on control points of the form $p_i = (px_i , py_i ) ∈ R^2$ mapped to $q_i = (px_i, py_i, θ_i) ∈ SE(2)$ for $i=1, ..., 6$.
 
 
 ---
