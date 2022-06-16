@@ -70,7 +70,7 @@ class HeManifoldTest {
         Tensor mean1 = RandomSample.of(rsi, random);
         Tensor weights = barycentricCoordinate.weights(sequence, mean1);
         Tensor mean2 = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
-        Chop._08.requireClose(mean1, mean2);
+        Chop._06.requireClose(mean1, mean2);
         // ---
         Tensor shift = RandomSample.of(rsi, random);
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))

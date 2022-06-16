@@ -11,6 +11,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -48,6 +49,7 @@ public enum Se3Group implements LieGroup {
 
   @Override // from Exponential
   public Tensor exp(Tensor u_w) {
+    VectorQ.requireLength(u_w, 6);
     Tensor u = u_w.extract(0, 3); // translation
     Tensor w = u_w.extract(3, 6); // rotation
     Scalar theta = Vector2Norm.of(w);

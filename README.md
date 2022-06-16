@@ -2,7 +2,7 @@
 
 # ch.alpine.sophus
 
-Library for non-linear geometry computations in Java 17, version `0.1.0`
+Library for non-linear geometry computations in Java 17.
 
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
@@ -145,10 +145,11 @@ Jan Hakenberg, Oliver Brinkmann, Joel Gächter
 
 ## Integration
 
-Specify `repository` and `dependency` of the tensor library in the `pom.xml` file of your maven project:
+From time to time, a version is deployed and made available for maven integration. Specify `repository` and `dependency` of the tensor library in the `pom.xml` file of your maven project:
 
 ```xml
 <repositories>
+  <!-- other repositories -->
   <repository>
     <id>sophus-mvn-repo</id>
     <url>https://raw.github.com/datahaki/sophus/mvn-repo/</url>
@@ -160,16 +161,18 @@ Specify `repository` and `dependency` of the tensor library in the `pom.xml` fil
 </repositories>
 
 <dependencies>
+  <!-- other dependencies -->
   <dependency>
     <groupId>ch.alpine</groupId>
     <artifactId>sophus</artifactId>
-    <version>0.1.0</version>
+    <version>0.0.9</version>
   </dependency>
 </dependencies>
 ```
 
 The source code is attached to every release.
 
+The branch `master` always contains the latest features for Java 17, and does not correspond to the most recent deployed version generally.
 ---
 
 ## References
