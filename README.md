@@ -41,7 +41,7 @@ The library was developed with the following objectives in mind
 
 ##### Lie Groups
 
-* Euclidean space $\R^n$
+* Euclidean space $R^n$
 * Heisenberg group `He(n)`
 * Special orthogonal group `SO(n)`
 * Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(3)`
@@ -111,12 +111,12 @@ for an example set of six points in the plane.
 
 **Figure:** Applications of biinvariant distance vectors and weightings: a) classification task in the Lie group SE(2),
 b) kriging function
-$f:RP^2 \rightarrow \R$
+$f:RP^2 \rightarrow R$
 on the real projective space based on four control points with associated values,
 c) smooth domain transfer
-$[0, 1]^2 \subset \R^2 \rightarrow SE(2)$
+$[0, 1]^2 \subset R^2 \rightarrow SE(2)$
 based on control points of the form
-$p_i = (px_i , py_i ) \in \R^2$
+$p_i = (px_i , py_i ) \in R^2$
 mapped to
 $q_i = (px_i, py_i, θ_i) \in SE(2)$
 for
@@ -130,7 +130,7 @@ $i=1, ..., 6$.
 
 ![loops5](https://user-images.githubusercontent.com/4012178/51076078-3c0d8280-1694-11e9-9857-2166598c09b2.png)
 
-B-Spline curves in `SE(2)` produced by DeBoor Algorithm or curve subdivision produce curves in the planar subspace $\R^2$ with appealing curvature.
+B-Spline curves in `SE(2)` produced by DeBoor Algorithm or curve subdivision produce curves in the planar subspace $R^2$ with appealing curvature.
 
 ##### Smoothing using Geodesic Averages
 
@@ -154,9 +154,18 @@ Jan Hakenberg, Oliver Brinkmann, Joel Gächter
 
 ## Integration
 
-From time to time, a version is deployed and made available for maven integration. Specify `repository` and `dependency` of the tensor library in the `pom.xml` file of your maven project:
+From time to time, a version is deployed and made available for maven integration. Specify `repository` and `dependency` of the library `sophus` in the `pom.xml` file of your maven project:
 
 ```xml
+<dependencies>
+  <!-- other dependencies -->
+  <dependency>
+    <groupId>ch.alpine</groupId>
+    <artifactId>sophus</artifactId>
+    <version>0.0.9</version>
+  </dependency>
+</dependencies>
+
 <repositories>
   <!-- other repositories -->
   <repository>
@@ -168,20 +177,12 @@ From time to time, a version is deployed and made available for maven integratio
     </snapshots>
   </repository>
 </repositories>
-
-<dependencies>
-  <!-- other dependencies -->
-  <dependency>
-    <groupId>ch.alpine</groupId>
-    <artifactId>sophus</artifactId>
-    <version>0.0.9</version>
-  </dependency>
-</dependencies>
 ```
 
 The source code is attached to every release.
 
 The branch `master` always contains the latest features for Java 17, and does not correspond to the most recent deployed version generally.
+
 ---
 
 ## References
