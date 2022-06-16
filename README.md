@@ -41,7 +41,7 @@ The library was developed with the following objectives in mind
 
 ##### Lie Groups
 
-* Euclidean space `R^n`
+* Euclidean space $\R^n$
 * Heisenberg group `He(n)`
 * Special orthogonal group `SO(n)`
 * Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(3)`
@@ -109,9 +109,18 @@ for an example set of six points in the plane.
 
 ![image](https://user-images.githubusercontent.com/4012178/109415610-f0280f80-79b9-11eb-97ba-e56105bae5be.png)
 
-**Figure:** Applications of biinvariant distance vectors and weightings: a) classification task in the Lie group
-SE(2), b) kriging function $f:RP^2 → R$ on the real projective space based on four control points with associated values, c) smooth domain transfer $[0, 1]^2 ⊂ R^2 → SE(2)$ based on control points of the form $p_i = (px_i , py_i ) ∈ R^2$ mapped to $q_i = (px_i, py_i, θ_i) ∈ SE(2)$ for $i=1, ..., 6$.
-
+**Figure:** Applications of biinvariant distance vectors and weightings: a) classification task in the Lie group SE(2),
+b) kriging function
+$f:RP^2 \rightarrow \R$
+on the real projective space based on four control points with associated values,
+c) smooth domain transfer
+$[0, 1]^2 \subset \R^2 \rightarrow SE(2)$
+based on control points of the form
+$p_i = (px_i , py_i ) \in \R^2$
+mapped to
+$q_i = (px_i, py_i, θ_i) \in SE(2)$
+for
+$i=1, ..., 6$.
 
 ---
 
@@ -121,7 +130,7 @@ SE(2), b) kriging function $f:RP^2 → R$ on the real projective space based on 
 
 ![loops5](https://user-images.githubusercontent.com/4012178/51076078-3c0d8280-1694-11e9-9857-2166598c09b2.png)
 
-B-Spline curves in `SE(2)` produced by DeBoor Algorithm or curve subdivision produce curves in the planar subspace `R^2` with appealing curvature.
+B-Spline curves in `SE(2)` produced by DeBoor Algorithm or curve subdivision produce curves in the planar subspace $\R^2$ with appealing curvature.
 
 ##### Smoothing using Geodesic Averages
 
