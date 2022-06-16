@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.dt;
+package ch.alpine.sophus.lie.td;
 
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
@@ -8,12 +8,12 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.mat.IdentityMatrix;
 
-public class DtAdMetric implements TensorMetric {
-  private final DtGroupElement stGroupElement;
+public class TdAdMetric implements TensorMetric {
+  private final TdGroupElement stGroupElement;
   private final Tensor B;
 
-  public DtAdMetric(Tensor m) {
-    stGroupElement = DtGroup.INSTANCE.element(m).inverse();
+  public TdAdMetric(Tensor m) {
+    stGroupElement = TdGroup.INSTANCE.element(m).inverse();
     Scalar l = stGroupElement.lambda();
     Scalar t = (Scalar) stGroupElement.t();
     B = Reverse.of(IdentityMatrix.of(2)); // B has to be Ad(m^-1) invariant
@@ -24,7 +24,7 @@ public class DtAdMetric implements TensorMetric {
 
   @Override // from TensorMetric
   public Scalar distance(Tensor m, Tensor x) {
-    Tensor v = DtGroup.INSTANCE.log(stGroupElement.combine(x));
+    Tensor v = TdGroup.INSTANCE.log(stGroupElement.combine(x));
     return (Scalar) B.dot(v).dot(v);
   }
 

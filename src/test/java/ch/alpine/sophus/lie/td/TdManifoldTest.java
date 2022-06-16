@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.dt;
+package ch.alpine.sophus.lie.td;
 
 import java.io.IOException;
 import java.util.Random;
@@ -20,9 +20,9 @@ import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-class DtManifoldTest {
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(DtGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(DtGroup.INSTANCE);
+class TdManifoldTest {
+  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(TdGroup.INSTANCE);
+  private static final BarycentricCoordinate AFFINE = AffineWrap.of(TdGroup.INSTANCE);
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
       // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //
@@ -35,11 +35,11 @@ class DtManifoldTest {
       for (int n = 1; n < 3; ++n)
         for (int length = n + 2; length < n + 8; ++length) {
           int fn = n;
-          RandomSampleInterface rsi = new DtRandomSample(fn, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
+          RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), fn, ExponentialDistribution.standard());
           Tensor sequence = RandomSample.of(rsi, random, length);
           Tensor mean1 = RandomSample.of(rsi, random);
           Tensor weights = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+          Tensor mean2 = TdBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._06.requireClose(mean1, mean2);
           // ---
           Tensor shift = RandomSample.of(rsi, random);
@@ -56,11 +56,11 @@ class DtManifoldTest {
       for (int n = 1; n < 3; ++n)
         for (int length = n + 2; length < n + 8; ++length) {
           barycentricCoordinate = Serialization.copy(barycentricCoordinate);
-          RandomSampleInterface rsi = new DtRandomSample(n, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
+          RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
           Tensor sequence = RandomSample.of(rsi, random, length);
           Tensor mean1 = RandomSample.of(rsi, random);
           Tensor weights = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = DtBiinvariantMean.INSTANCE.mean(sequence, weights);
+          Tensor mean2 = TdBiinvariantMean.INSTANCE.mean(sequence, weights);
           Chop._08.requireClose(mean1, mean2); // linear reproduction
           // ---
           Tensor shift = RandomSample.of(rsi, random);
@@ -75,10 +75,10 @@ class DtManifoldTest {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
     for (int n = 1; n < 3; ++n)
       for (int length = n + 2; length < n + 8; ++length) {
-        RandomSampleInterface rsi = new DtRandomSample(n, ExponentialDistribution.standard(), UniformDistribution.of(-1, 1));
+        RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
         Tensor sequence = RandomSample.of(rsi, length);
         Tensor constant = AveragingWeights.of(length);
-        Tensor center = DtBiinvariantMean.INSTANCE.mean(sequence, constant);
+        Tensor center = TdBiinvariantMean.INSTANCE.mean(sequence, constant);
         Tensor weights = barycentricCoordinate.weights(sequence, center);
         Tolerance.CHOP.requireClose(weights, constant);
       }

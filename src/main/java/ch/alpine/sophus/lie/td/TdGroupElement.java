@@ -1,12 +1,14 @@
 // code by ob
-package ch.alpine.sophus.lie.dt;
+package ch.alpine.sophus.lie.td;
 
 import java.io.Serializable;
 
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Append;
+import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.sca.Sign;
 
 /** element of (n + 1)-dimensional Scaling and Translations group
@@ -20,25 +22,25 @@ import ch.alpine.tensor.sca.Sign;
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.27, Section 4.1, 2012:
  * 
- * @see DtGroup */
-public class DtGroupElement implements LieGroupElement, Serializable {
-  private final Scalar lambda;
+ * @see TdGroup */
+public class TdGroupElement implements LieGroupElement, Serializable {
   private final Tensor t;
+  private final Scalar lambda;
 
   /** @param lambda_t of the form {lambda, t}
    * @throws Exception if lambda is not strictly positive */
-  public DtGroupElement(Tensor lambda_t) {
-    this(Sign.requirePositive(lambda_t.Get(0)), lambda_t.get(1));
+  public TdGroupElement(Tensor t_lambda) {
+    this(Drop.tail(t_lambda, 1), Last.of(t_lambda));
   }
 
-  private DtGroupElement(Scalar lambda, Tensor t) {
-    this.lambda = lambda;
+  private TdGroupElement(Tensor t, Scalar lambda) {
     this.t = t;
+    this.lambda = Sign.requirePositive(lambda);
   }
 
   @Override // from LieGroupElement
   public Tensor toCoordinate() {
-    return Tensors.of(lambda, t);
+    return Append.of(t, lambda);
   }
 
   public Scalar lambda() {
@@ -50,26 +52,26 @@ public class DtGroupElement implements LieGroupElement, Serializable {
   }
 
   @Override // from LieGroupElement
-  public DtGroupElement inverse() {
-    return new DtGroupElement( //
-        lambda.reciprocal(), //
-        t.divide(lambda.negate()));
+  public TdGroupElement inverse() {
+    return new TdGroupElement( //
+        t.divide(lambda.negate()), //
+        lambda.reciprocal());
   }
 
   @Override // from LieGroupElement
-  public Tensor combine(Tensor lambda_t) {
-    DtGroupElement dtGroupElement = new DtGroupElement(lambda_t);
-    return Tensors.of( //
-        dtGroupElement.lambda.multiply(lambda), //
-        dtGroupElement.t.multiply(lambda).add(t));
+  public Tensor combine(Tensor t_lambda) {
+    TdGroupElement tdGroupElement = new TdGroupElement(t_lambda);
+    return Append.of( //
+        tdGroupElement.t.multiply(lambda).add(t), //
+        tdGroupElement.lambda.multiply(lambda));
   }
 
   @Override // from LieGroupElement
-  public Tensor adjoint(Tensor dlambda_dt) {
-    Scalar dlambda = dlambda_dt.Get(0);
-    return Tensors.of( //
-        dlambda, //
-        dlambda_dt.get(1).multiply(lambda).subtract(t.multiply(dlambda)));
+  public Tensor adjoint(Tensor dt_dlambda) {
+    Scalar dlambda = Last.of(dt_dlambda);
+    return Append.of( //
+        Drop.tail(dt_dlambda, 1).multiply(lambda).subtract(t.multiply(dlambda)), //
+        dlambda);
   }
 
   @Override // from LieGroupElement

@@ -10,7 +10,7 @@ import ch.alpine.tensor.red.GeometricMean;
 /** 1-parameter Scaling Group (R+, *)
  * 
  * @see GeometricMean
- * @see DtBiinvariantMean
+ * @see TdBiinvariantMean
  * @see WeightedGeometricMean */
 public enum ScBiinvariantMean implements BiinvariantMean {
   INSTANCE;

@@ -1,12 +1,15 @@
 // code by ob
-package ch.alpine.sophus.lie.dt;
+package ch.alpine.sophus.lie.td;
+
+import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.Append;
+import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
@@ -14,7 +17,7 @@ import ch.alpine.tensor.sca.exp.Expc;
 import ch.alpine.tensor.sca.exp.Log;
 import ch.alpine.tensor.sca.exp.Logc;
 
-/** (n+1)-dimensional Dilation and Translations group
+/** (n+1)-dimensional Translations and Dilation group
  * 
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.25, Section 4.1:
@@ -27,8 +30,8 @@ import ch.alpine.tensor.sca.exp.Logc;
  * For these reasons, this is a highly pedagogical case."
  * 
  * Regarding log function:
- * If log(g) == {dl, dt}
- * then log(inv(g)) == {-dl, -dt}
+ * If log(g) == {dt, dl}
+ * then log(inv(g)) == {-dt, -dl}
  * 
  * Reference 1:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
@@ -44,39 +47,41 @@ import ch.alpine.tensor.sca.exp.Logc;
  * 
  * Another reference for ST is "Deep Compositing Using Lie Algebras" by Tom Duff. The article
  * parameterizes the group differently with the scaling coefficient alpha := 1 - lambda */
-public enum DtGroup implements LieGroup {
+public enum TdGroup implements LieGroup {
   INSTANCE;
 
   @Override // from LieGroup
-  public DtGroupElement element(Tensor lambda_t) {
-    return new DtGroupElement(lambda_t);
+  public TdGroupElement element(Tensor t_lambda) {
+    return new TdGroupElement(t_lambda);
   }
 
   @Override // from Exponential
-  public Tensor exp(Tensor dlambda_dt) {
-    Scalar dl = dlambda_dt.Get(0);
-    return Tensors.of( //
-        Exp.FUNCTION.apply(dl), //
-        dlambda_dt.get(1).multiply(Expc.FUNCTION.apply(dl)));
+  public Tensor exp(Tensor dt_dlambda) {
+    Scalar dl = Last.of(dt_dlambda);
+    return Append.of( //
+        Drop.tail(dt_dlambda, 1).multiply(Expc.FUNCTION.apply(dl)), //
+        Exp.FUNCTION.apply(dl));
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor lambda_t) {
-    Scalar lambda = Sign.requirePositive(lambda_t.Get(0));
+  public Tensor log(Tensor t_lambda) {
+    return vectorLog(t_lambda);
+  }
+
+  @Override // from Exponential
+  public Tensor vectorLog(Tensor t_lambda) {
+    TdMemberQ.INSTANCE.require(t_lambda);
+    Scalar lambda = Sign.requirePositive(Last.of(t_lambda));
     Scalar log_l = Log.FUNCTION.apply(lambda);
-    return Tensors.of( //
-        log_l, //
+    return Append.of( //
         /* there is a typo in Reference 1 (!) */
-        lambda_t.get(1).multiply(Logc.FUNCTION.apply(lambda)));
+        Drop.tail(t_lambda, 1).multiply(Logc.FUNCTION.apply(lambda)), //
+        log_l);
   }
 
-  @Override // from Exponential
-  public Tensor vectorLog(Tensor lambda_t) {
-    return Flatten.of(log(lambda_t));
-  }
-
-  @Override
+  @Override // from HomogeneousSpace
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return DtBiinvariantMean.INSTANCE;
+    Objects.requireNonNull(chop);
+    return TdBiinvariantMean.INSTANCE;
   }
 }
