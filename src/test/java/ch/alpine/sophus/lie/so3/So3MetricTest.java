@@ -21,7 +21,7 @@ class So3MetricTest {
   @Test
   void testSimple() {
     Tensor vector = Tensors.vector(0.2, 0.5, 0.3);
-    Scalar distance = So3Metric.INSTANCE.distance( //
+    Scalar distance = So3Group.INSTANCE.distance( //
         Rodrigues.vectorExp(Tensors.vector(0, 0, 0)), //
         Rodrigues.vectorExp(vector));
     Chop._15.requireClose(distance, Vector2Norm.of(vector));
@@ -33,6 +33,6 @@ class So3MetricTest {
     Tensor p = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     Tensor q = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     OrthogonalMatrixQ.require(p);
-    assertThrows(Exception.class, () -> So3Metric.INSTANCE.distance(p, q));
+    assertThrows(Exception.class, () -> So3Group.INSTANCE.distance(p, q));
   }
 }

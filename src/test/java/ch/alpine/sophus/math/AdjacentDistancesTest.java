@@ -9,7 +9,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.rn.RnMetric;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 class AdjacentDistancesTest {
   @Test
   void testR2() throws ClassNotFoundException, IOException {
-    Tensor tensor = Serialization.copy(new AdjacentDistances(RnMetric.INSTANCE)) //
+    Tensor tensor = Serialization.copy(new AdjacentDistances(RnGroup.INSTANCE)) //
         .apply(Tensors.fromString("{{1, 2}, {2, 2}, {2, 4}}"));
     assertEquals(ExactTensorQ.require(tensor), Tensors.vector(1, 2));
   }
@@ -33,7 +33,7 @@ class AdjacentDistancesTest {
 
   @Test
   void testR2Single() {
-    Tensor tensor = new AdjacentDistances(RnMetric.INSTANCE).apply(Tensors.fromString("{{1, 2}}"));
+    Tensor tensor = new AdjacentDistances(RnGroup.INSTANCE).apply(Tensors.fromString("{{1, 2}}"));
     assertEquals(tensor, Tensors.empty());
   }
 
@@ -44,6 +44,6 @@ class AdjacentDistancesTest {
 
   @Test
   void testScalarFail() {
-    assertThrows(Exception.class, () -> new AdjacentDistances(RnMetric.INSTANCE).apply(Pi.HALF));
+    assertThrows(Exception.class, () -> new AdjacentDistances(RnGroup.INSTANCE).apply(Pi.HALF));
   }
 }

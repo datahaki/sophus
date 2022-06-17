@@ -11,7 +11,6 @@ import ch.alpine.sophus.fit.PowerVariogramFit;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.lie.rn.RnMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -45,7 +44,7 @@ class PowerVariogramTest {
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
-      PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnMetric.INSTANCE, sequence, values, RealScalar.ONE));
+      PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnGroup.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       TensorUnaryOperator weightingInterface = //
           MetricBiinvariant.EUCLIDEAN.var_dist(RnGroup.INSTANCE, variogram, sequence);
@@ -67,6 +66,6 @@ class PowerVariogramTest {
 
   @Test
   void testEmpty() {
-    assertThrows(Exception.class, () -> PowerVariogramFit.fit(RnMetric.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
+    assertThrows(Exception.class, () -> PowerVariogramFit.fit(RnGroup.INSTANCE, Tensors.empty(), Tensors.empty(), RealScalar.of(1.5)));
   }
 }

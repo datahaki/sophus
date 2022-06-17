@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdManifold;
-import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
@@ -107,9 +106,9 @@ class ReducingMeanTest {
       Tensor m2 = bm.mean(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.argmax(SpdManifold.INSTANCE, Chop._10);
       Tensor mE0 = biinvariantMean.mean(sequence, weights);
-      Scalar d0 = SpdMetric.INSTANCE.distance(m0, mE0);
-      Scalar d1 = SpdMetric.INSTANCE.distance(m1, mE0);
-      Scalar d2 = SpdMetric.INSTANCE.distance(m2, mE0);
+      Scalar d0 = SpdManifold.INSTANCE.distance(m0, mE0);
+      Scalar d1 = SpdManifold.INSTANCE.distance(m1, mE0);
+      Scalar d2 = SpdManifold.INSTANCE.distance(m2, mE0);
       assertTrue(Scalars.lessThan(d1, d0));
       // assertTrue(
       Scalars.lessThan(d2, d1);

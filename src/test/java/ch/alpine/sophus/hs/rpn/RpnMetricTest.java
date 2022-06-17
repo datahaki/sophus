@@ -9,7 +9,7 @@ import ch.alpine.tensor.mat.Tolerance;
 class RpnMetricTest {
   @Test
   void testSimple() {
-    Tolerance.CHOP.requireZero(RpnMetric.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(+10, 0, 0)));
-    Tolerance.CHOP.requireZero(RpnMetric.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(-10, 0, 0)));
+    Tolerance.CHOP.requireZero(RpnManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(+10, 0, 0)));
+    Tolerance.CHOP.requireZero(RpnManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(-10, 0, 0)));
   }
 }

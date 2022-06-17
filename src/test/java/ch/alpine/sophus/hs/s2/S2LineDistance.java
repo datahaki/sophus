@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.sn.SnMetric;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Cross;
@@ -30,7 +30,7 @@ public enum S2LineDistance implements LineDistance {
 
     @Override // from TensorNorm
     public Scalar norm(Tensor r) {
-      return Abs.between(Pi.HALF, SnMetric.INSTANCE.distance(cross, r));
+      return Abs.between(Pi.HALF, SnManifold.INSTANCE.distance(cross, r));
     }
   }
 }

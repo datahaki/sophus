@@ -3,11 +3,13 @@ package ch.alpine.sophus.lie.rn;
 
 import java.util.Objects;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
@@ -17,8 +19,10 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * in Euclidean space
  * the exponential function is the identity
- * the logarithm function is the identity */
-public enum RnGroup implements LieGroup {
+ * the logarithm function is the identity
+ * 
+ * Euclidean vector metric */
+public enum RnGroup implements LieGroup, TensorMetric {
   INSTANCE;
 
   @Override // from LieGroup
@@ -51,5 +55,10 @@ public enum RnGroup implements LieGroup {
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
     return RnBiinvariantMean.INSTANCE;
+  }
+
+  @Override // from TensorMetric
+  public Scalar distance(Tensor p, Tensor q) {
+    return Vector2Norm.between(p, q);
   }
 }

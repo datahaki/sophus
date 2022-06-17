@@ -38,11 +38,11 @@ class SpdMetricTest {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
-      Scalar pq = SpdMetric.INSTANCE.distance(p, q);
-      Scalar qp = SpdMetric.INSTANCE.distance(q, p);
+      Scalar pq = SpdManifold.INSTANCE.distance(p, q);
+      Scalar qp = SpdManifold.INSTANCE.distance(q, p);
       Chop._06.requireClose(pq, qp);
       Tensor v = RandomVariate.of(NormalDistribution.standard(), n, n);
-      Scalar v_pq = SpdMetric.INSTANCE.distance( //
+      Scalar v_pq = SpdManifold.INSTANCE.distance( //
           BasisTransform.ofForm(p, v), //
           BasisTransform.ofForm(q, v));
       Chop._06.requireClose(pq, v_pq);
@@ -73,7 +73,7 @@ class SpdMetricTest {
       Exponential exponential = new SpdExponential(p);
       Tensor w1 = exponential.log(q);
       Scalar r1 = Sqrt.FUNCTION.apply(new SpdRiemann(p).scalarProd(w1, w1));
-      Scalar r2 = SpdMetric.INSTANCE.distance(p, q);
+      Scalar r2 = SpdManifold.INSTANCE.distance(p, q);
       Chop._06.requireClose(r1, r2);
     }
   }

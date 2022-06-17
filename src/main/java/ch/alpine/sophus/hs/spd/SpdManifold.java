@@ -1,11 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.sca.Chop;
@@ -31,8 +33,12 @@ import ch.alpine.tensor.sca.Chop;
  * by Nir Sharon, Uri Itai
  * 
  * Riemannian Variance Filtering: An Independent Filtering Scheme for Statistical
- * Tests on Manifold-valued Data */
-public enum SpdManifold implements HomogeneousSpace {
+ * Tests on Manifold-valued Data
+ * 
+ * Reference:
+ * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
+ * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 82 */
+public enum SpdManifold implements HomogeneousSpace, TensorMetric {
   INSTANCE;
 
   @Override // from Manifold
@@ -53,5 +59,10 @@ public enum SpdManifold implements HomogeneousSpace {
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.reduce(SpdManifold.INSTANCE, chop);
+  }
+
+  @Override // from TensorMetric
+  public Scalar distance(Tensor p, Tensor q) {
+    return new SpdExponential(p).distance(q);
   }
 }

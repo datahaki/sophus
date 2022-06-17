@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Group;
-import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -40,15 +39,15 @@ class SoPhongMeanTest {
     {
       Tensor mE0 = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE0);
-      Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
-      Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);
+      Scalar d0E = So3Group.INSTANCE.distance(m0, mE0);
+      Scalar d1E = So3Group.INSTANCE.distance(m1, mE0);
       d0E.add(d1E);
     }
     {
       Tensor mE1 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE1);
-      Scalar d0E = So3Metric.INSTANCE.distance(m0, mE1);
-      Scalar d1E = So3Metric.INSTANCE.distance(m1, mE1);
+      Scalar d0E = So3Group.INSTANCE.distance(m0, mE1);
+      Scalar d1E = So3Group.INSTANCE.distance(m1, mE1);
       d0E.add(d1E);
     }
   }
@@ -73,16 +72,16 @@ class SoPhongMeanTest {
     {
       Tensor mE0 = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE0);
-      Scalar d0E = So3Metric.INSTANCE.distance(m0, mE0);
-      Scalar d1E = So3Metric.INSTANCE.distance(m1, mE0);
+      Scalar d0E = So3Group.INSTANCE.distance(m0, mE0);
+      Scalar d1E = So3Group.INSTANCE.distance(m1, mE0);
       Tolerance.CHOP.requireZero(d0E);
       Tolerance.CHOP.requireZero(d1E);
     }
     {
       Tensor mE1 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
       OrthogonalMatrixQ.require(mE1);
-      Scalar d0E = So3Metric.INSTANCE.distance(m0, mE1);
-      Scalar d1E = So3Metric.INSTANCE.distance(m1, mE1);
+      Scalar d0E = So3Group.INSTANCE.distance(m0, mE1);
+      Scalar d1E = So3Group.INSTANCE.distance(m1, mE1);
       Tolerance.CHOP.requireZero(d0E);
       Tolerance.CHOP.requireZero(d1E);
     }

@@ -42,8 +42,8 @@ class SpdPhongMeanTest {
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.argmax(SpdManifold.INSTANCE, Chop._10);
       Tensor mE0 = biinvariantMean.mean(sequence, weights);
-      Scalar d0 = SpdMetric.INSTANCE.distance(m0, mE0);
-      Scalar d1 = SpdMetric.INSTANCE.distance(m1, mE0);
+      Scalar d0 = SpdManifold.INSTANCE.distance(m0, mE0);
+      Scalar d1 = SpdManifold.INSTANCE.distance(m1, mE0);
       assertTrue(Scalars.lessThan(d1, d0));
     }
   }

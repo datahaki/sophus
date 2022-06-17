@@ -31,9 +31,9 @@ class So3FastMeanTest {
     Tensor m2 = So3FastMean.INSTANCE.mean(sequence, weights);
     Tensor mE = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
     Tensor distances = Tensors.of( //
-        So3Metric.INSTANCE.distance(mE, m2), //
-        So3Metric.INSTANCE.distance(mE, m1), //
-        So3Metric.INSTANCE.distance(mE, m0));
+        So3Group.INSTANCE.distance(mE, m2), //
+        So3Group.INSTANCE.distance(mE, m1), //
+        So3Group.INSTANCE.distance(mE, m0));
     OrderedQ.require(distances);
   }
 }

@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.rpn;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.hs.sn.SnMetric;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -17,14 +18,18 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.Sin;
 
-/** Reference:
+/** real projective plane
+ * 
+ * Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
 // TODO SOPHUS possibly share baseclass with SnManifold extend
-public enum RpnManifold implements HomogeneousSpace {
+public enum RpnManifold implements HomogeneousSpace, TensorMetric {
   INSTANCE;
 
   @Override // from Manifold
@@ -40,7 +45,7 @@ public enum RpnManifold implements HomogeneousSpace {
   @Override
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
     // TODO SOPHUS ALG or duplicate with SnManifold
-    Scalar a = SnMetric.INSTANCE.distance(p, q);
+    Scalar a = SnManifold.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();
     if (Tolerance.CHOP.isClose(a, Pi.VALUE))
@@ -54,4 +59,11 @@ public enum RpnManifold implements HomogeneousSpace {
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.argmax(this, chop);
   }
+  
+  @Override // from TensorMetric
+  public Scalar distance(Tensor x, Tensor y) {
+    Scalar d_xy = VectorAngle.of(x, y).orElseThrow();
+    return Min.of(d_xy, Pi.VALUE.subtract(d_xy));
+  }
+
 }

@@ -10,6 +10,6 @@ public enum SnUniformResample {
   /** @param spacing positive
    * @return */
   public static CurveSubdivision of(Scalar spacing) {
-    return UniformResample.of(SnMetric.INSTANCE, SnManifold.INSTANCE, spacing);
+    return UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, spacing);
   }
 }

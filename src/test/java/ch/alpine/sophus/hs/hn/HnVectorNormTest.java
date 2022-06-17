@@ -24,7 +24,7 @@ class HnVectorNormTest {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       VectorQ.requireLength(p, d + 1);
-      Scalar distance = HnMetric.INSTANCE.distance(p, q); // uses HnAngle
+      Scalar distance = HnManifold.INSTANCE.distance(p, q); // uses HnAngle
       Tensor log_hn = HnManifold.INSTANCE.exponential(p).log(q);
       VectorQ.requireLength(log_hn, d + 1);
       Scalar norm = HnVectorNorm.of(log_hn);

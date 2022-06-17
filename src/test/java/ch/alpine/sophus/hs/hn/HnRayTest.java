@@ -26,7 +26,7 @@ class HnRayTest {
       Tolerance.CHOP.requireZero(LBilinearForm.between(x, v));
       Tensor y = hnRay.shoot(v, RandomVariate.of(distribution));
       HnMemberQ.INSTANCE.require(y);
-      Scalar dxy = HnMetric.INSTANCE.distance(x, y);
+      Scalar dxy = HnManifold.INSTANCE.distance(x, y);
       Sign.requirePositiveOrZero(dxy);
     }
   }

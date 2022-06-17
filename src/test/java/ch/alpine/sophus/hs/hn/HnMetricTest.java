@@ -23,7 +23,7 @@ class HnMetricTest {
     Distribution distribution = NormalDistribution.standard();
     for (int d = 1; d < 5; ++d) {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      Scalar dxy = HnMetric.INSTANCE.distance(x, x);
+      Scalar dxy = HnManifold.INSTANCE.distance(x, x);
       Chop._06.requireZero(dxy);
       assertTrue(Scalars.isZero(Imag.FUNCTION.apply(dxy)));
     }
@@ -35,7 +35,7 @@ class HnMetricTest {
     for (int d = 1; d < 5; ++d) {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor y = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      Scalar dxy = HnMetric.INSTANCE.distance(x, y);
+      Scalar dxy = HnManifold.INSTANCE.distance(x, y);
       Sign.requirePositiveOrZero(dxy);
     }
   }
@@ -58,7 +58,7 @@ class HnMetricTest {
     for (int d = 1; d < 5; ++d) {
       Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      Scalar distance = HnMetric.INSTANCE.distance(p, q);
+      Scalar distance = HnManifold.INSTANCE.distance(p, q);
       Tensor v = HnManifold.INSTANCE.exponential(p).log(q);
       new THnMemberQ(p).require(v);
       Scalar vn1 = Sqrt.FUNCTION.apply(LBilinearForm.normSquared(v));

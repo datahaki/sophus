@@ -37,9 +37,9 @@ class SnMetricTest {
 
   @Test
   void testSimple() {
-    Chop._12.requireClose(SnMetric.INSTANCE.distance(UnitVector.of(3, 0), UnitVector.of(3, 1)), Pi.HALF);
-    Chop._12.requireClose(SnMetric.INSTANCE.distance(UnitVector.of(3, 0), UnitVector.of(3, 2)), Pi.HALF);
-    Chop._12.requireClose(SnMetric.INSTANCE.distance(UnitVector.of(3, 1), UnitVector.of(3, 2)), Pi.HALF);
+    Chop._12.requireClose(SnManifold.INSTANCE.distance(UnitVector.of(3, 0), UnitVector.of(3, 1)), Pi.HALF);
+    Chop._12.requireClose(SnManifold.INSTANCE.distance(UnitVector.of(3, 0), UnitVector.of(3, 2)), Pi.HALF);
+    Chop._12.requireClose(SnManifold.INSTANCE.distance(UnitVector.of(3, 1), UnitVector.of(3, 2)), Pi.HALF);
   }
 
   @Test
@@ -48,7 +48,7 @@ class SnMetricTest {
     for (int count = 0; count < 100; ++count) {
       Tensor p = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
       Tensor q = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, 3));
-      Scalar a1 = SnMetric.INSTANCE.distance(p, q);
+      Scalar a1 = SnManifold.INSTANCE.distance(p, q);
       Scalar a2 = _check(p, q);
       Chop._12.requireClose(a1, a2);
       Scalar norm = Vector2Norm.of(new SnExponential(p).log(q));
@@ -88,7 +88,7 @@ class SnMetricTest {
 
   @Test
   void testMemberQFail() {
-    assertThrows(Exception.class, () -> SnMetric.INSTANCE.distance(Tensors.vector(1, 0), Tensors.vector(1, 1)));
-    assertThrows(Exception.class, () -> SnMetric.INSTANCE.distance(Tensors.vector(1, 1), Tensors.vector(1, 0)));
+    assertThrows(Exception.class, () -> SnManifold.INSTANCE.distance(Tensors.vector(1, 0), Tensors.vector(1, 1)));
+    assertThrows(Exception.class, () -> SnManifold.INSTANCE.distance(Tensors.vector(1, 1), Tensors.vector(1, 0)));
   }
 }

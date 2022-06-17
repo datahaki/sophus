@@ -20,7 +20,7 @@ class SnUniformResampleTest {
     CurveSubdivision curveSubdivision = SnUniformResample.of(spacing);
     Tensor tensor = Tensors.fromString("{{1, 0}, {0, 1}, {-1, 0}}");
     Tensor string = curveSubdivision.string(tensor);
-    Tensor distances = new AdjacentDistances(SnMetric.INSTANCE).apply(string);
+    Tensor distances = new AdjacentDistances(SnManifold.INSTANCE).apply(string);
     Scalar variance = Variance.ofVector(distances);
     Chop._20.requireAllZero(variance);
   }

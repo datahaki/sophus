@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
@@ -10,8 +11,12 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
-/** hyperboloid model with fast midpoint computation */
-public enum HnManifold implements HomogeneousSpace {
+/** hyperboloid model with fast midpoint computation 
+ * 
+ * Reference:
+   * "Metric Spaces of Non-Positive Curvature"
+   * by Martin R. Bridson, Andre Haefliger, 1999 */
+public enum HnManifold implements HomogeneousSpace, TensorMetric {
   INSTANCE;
 
   @Override // from Manifold
@@ -38,5 +43,10 @@ public enum HnManifold implements HomogeneousSpace {
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.of(this, chop, HnPhongMean.INSTANCE);
+  }
+
+  @Override // from TensorMetric
+  public Scalar distance(Tensor p, Tensor q) {
+    return new HnAngle(p).apply(q);
   }
 }
