@@ -28,9 +28,8 @@ public class UniformResample implements CurveSubdivision, Serializable {
    * @return
    * @see RnUniformResample
    * @see Se2UniformResample */
-//  public static CurveSubdivision of((TensorMetric & BinaryAverage) tensorMetric, Scalar spacing) {
-    
-//  }
+  // public static CurveSubdivision of((TensorMetric & BinaryAverage) tensorMetric, Scalar spacing) {
+  // }
   public static CurveSubdivision of(TensorMetric tensorMetric, BinaryAverage binaryAverage, Scalar spacing) {
     return new UniformResample( //
         Objects.requireNonNull(tensorMetric), //

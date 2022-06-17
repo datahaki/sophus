@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.LinearSolve;
@@ -38,7 +40,7 @@ import ch.alpine.tensor.sca.Chop;
  * Reference:
  * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
  * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 82 */
-public enum SpdManifold implements HomogeneousSpace, TensorMetric {
+public enum SpdManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
   @Override // from Manifold
@@ -64,5 +66,10 @@ public enum SpdManifold implements HomogeneousSpace, TensorMetric {
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return new SpdExponential(p).distance(q);
+  }
+
+  @Override // from MetricManifold
+  public Biinvariant biinvariant() {
+    return MetricBiinvariant.VECTORIZE0;
   }
 }

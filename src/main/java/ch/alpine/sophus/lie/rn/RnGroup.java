@@ -3,8 +3,10 @@ package ch.alpine.sophus.lie.rn;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -22,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
  * the logarithm function is the identity
  * 
  * Euclidean vector metric */
-public enum RnGroup implements LieGroup, TensorMetric {
+public enum RnGroup implements LieGroup, MetricManifold {
   INSTANCE;
 
   @Override // from LieGroup
@@ -60,5 +62,10 @@ public enum RnGroup implements LieGroup, TensorMetric {
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return Vector2Norm.between(p, q);
+  }
+
+  @Override // from MetricManifold
+  public Biinvariant biinvariant() {
+    return MetricBiinvariant.EUCLIDEAN;
   }
 }

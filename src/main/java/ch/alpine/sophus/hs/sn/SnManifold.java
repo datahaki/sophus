@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -32,7 +34,7 @@ import ch.alpine.tensor.sca.tri.Sin;
  * 
  * @see SnAngle
  * @see VectorAngle */
-public enum SnManifold implements HomogeneousSpace, TensorMetric {
+public enum SnManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
   @Override // from Manifold
@@ -90,5 +92,10 @@ public enum SnManifold implements HomogeneousSpace, TensorMetric {
   @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
     return new SnAngle(p).apply(q);
+  }
+
+  @Override // from ManifoldDisplay
+  public Biinvariant biinvariant() {
+    return MetricBiinvariant.EUCLIDEAN;
   }
 }

@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.rpn;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.RealScalar;
@@ -29,7 +31,7 @@ import ch.alpine.tensor.sca.tri.Sin;
  * Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
 // TODO SOPHUS possibly share baseclass with SnManifold extend
-public enum RpnManifold implements HomogeneousSpace, TensorMetric {
+public enum RpnManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
   @Override // from Manifold
@@ -59,11 +61,15 @@ public enum RpnManifold implements HomogeneousSpace, TensorMetric {
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.argmax(this, chop);
   }
-  
+
   @Override // from TensorMetric
   public Scalar distance(Tensor x, Tensor y) {
     Scalar d_xy = VectorAngle.of(x, y).orElseThrow();
     return Min.of(d_xy, Pi.VALUE.subtract(d_xy));
   }
 
+  @Override // from ManifoldDisplay
+  public Biinvariant biinvariant() {
+    return MetricBiinvariant.EUCLIDEAN;
+  }
 }
