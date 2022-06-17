@@ -17,14 +17,17 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.red.Mean;
+import ch.alpine.tensor.sca.Clips;
 
 class BoxRandomSampleTest {
   @Test
   void testSimple3D() {
     Tensor offset = Tensors.vector(2, 2, 3);
     Tensor width = Tensors.vector(1, 1, 1);
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(offset.subtract(width), offset.add(width));
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBounds.of(offset.subtract(width), offset.add(width)));
     Tensor samples = RandomSample.of(randomSampleInterface, 100);
     Scalars.compare(Vector2Norm.of(Mean.of(samples).subtract(offset)), RealScalar.of(0.1));
     assertEquals(Dimensions.of(samples), Arrays.asList(100, 3));
@@ -34,14 +37,15 @@ class BoxRandomSampleTest {
   void testSingle() {
     Tensor offset = Tensors.vector(2, 2, 3);
     Tensor width = Tensors.vector(1, 1, 1);
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(offset.subtract(width), offset.add(width));
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBounds.of(offset.subtract(width), offset.add(width)));
     Tensor rand = RandomSample.of(randomSampleInterface);
     assertEquals(Dimensions.of(rand), Arrays.asList(3));
   }
 
   @Test
   void testSerializable() throws ClassNotFoundException, IOException {
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Tensors.vector(1, 2, 3), Tensors.vector(3, 4, 8));
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of( //
+        Clips.interval(1, 3), Clips.interval(2, 4), Clips.interval(3, 8)));
     RandomSampleInterface copy = Serialization.copy(randomSampleInterface);
     Tensor tensor = RandomSample.of(copy);
     VectorQ.requireLength(tensor, 3);
@@ -49,11 +53,11 @@ class BoxRandomSampleTest {
 
   @Test
   void testDimensionFail() {
-    assertThrows(Exception.class, () -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> BoxRandomSample.of(CoordinateBounds.of(Tensors.vector(1, 2), Tensors.vector(1, 2, 3))));
   }
 
   @Test
   void testSignFail() {
-    assertThrows(Exception.class, () -> BoxRandomSample.of(Tensors.vector(1, 2), Tensors.vector(2, 1)));
+    assertThrows(Exception.class, () -> BoxRandomSample.of(CoordinateBounds.of(Tensors.vector(1, 2), Tensors.vector(2, 1))));
   }
 }

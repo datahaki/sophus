@@ -23,12 +23,14 @@ import ch.alpine.tensor.alg.RotateLeft;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
 
 class ThreePointCoordinateTest {
@@ -84,7 +86,8 @@ class ThreePointCoordinateTest {
     Tensor polygon1 = Tensors.fromString("{{1, 1}, {5, 1}, {3, 5}, {2, 5}}");
     PolygonRegion polygonRegion = new PolygonRegion(polygon1);
     Tensor polygon2 = polygon1.multiply(factor);
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(Tensors.vector(0, 0), Tensors.vector(5, 5));
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of( //
+        Clips.positive(5), Clips.positive(5)));
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = r2(barycenter);
       // TensorUnaryOperator function1 = powerCoordinates.weights(polygon1);

@@ -4,6 +4,7 @@ package ch.alpine.sophus.lie.sc;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
@@ -18,11 +19,13 @@ public enum ScGroup implements LieGroup {
 
   @Override // from Exponential
   public Tensor exp(Tensor x) {
+    VectorQ.require(x);
     return x.map(Exp.FUNCTION);
   }
 
   @Override // from Exponential
   public Tensor log(Tensor g) {
+    VectorQ.require(g);
     return g.map(Log.FUNCTION);
   }
 

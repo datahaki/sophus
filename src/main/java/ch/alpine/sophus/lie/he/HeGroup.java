@@ -5,11 +5,7 @@ import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.tensor.RationalScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.sca.Chop;
 
 /** (2*n+1)-dimensional Heisenberg group */
@@ -23,29 +19,17 @@ public enum HeGroup implements LieGroup {
 
   @Override // from Exponential
   public Tensor exp(Tensor uvw) {
-    Tensor u = uvw.get(0);
-    Tensor v = uvw.get(1);
-    Scalar w = uvw.Get(2);
-    return Tensors.of( //
-        u, //
-        v, //
-        w.add(u.dot(v).multiply(RationalScalar.HALF)));
+    return HeFormat.of(uvw).exp().toCoordinate();
   }
 
   @Override // from Exponential
   public Tensor log(Tensor xyz) {
-    Tensor x = xyz.get(0);
-    Tensor y = xyz.get(1);
-    Scalar z = xyz.Get(2);
-    return Tensors.of( //
-        x, //
-        y, //
-        z.subtract(x.dot(y).multiply(RationalScalar.HALF)));
+    return vectorLog(xyz);
   }
 
   @Override // from Exponential
   public Tensor vectorLog(Tensor xyz) {
-    return Flatten.of(log(xyz));
+    return HeFormat.of(xyz).log().toCoordinate();
   }
 
   @Override

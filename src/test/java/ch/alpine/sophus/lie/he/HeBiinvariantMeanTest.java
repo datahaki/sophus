@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 class HeBiinvariantMeanTest {
   @Test
   void testTrivial() {
-    Tensor element = Tensors.fromString("{{1}, {1}, 1}");
+    Tensor element = Tensors.fromString("{1, 1, 1}");
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -27,7 +27,7 @@ class HeBiinvariantMeanTest {
 
   @Test
   void testTrivialHe3() {
-    Tensor element = Tensors.fromString("{{1}, {1}, 1}");
+    Tensor element = Tensors.fromString("{1, 1, 1}");
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -37,8 +37,7 @@ class HeBiinvariantMeanTest {
 
   @Test
   void testTrivialHe5() {
-    Tensor p = Tensors.vector(1, 2);
-    Tensor element = Tensors.of(p, p, RealScalar.ONE);
+    Tensor element = Tensors.vector(1, 2, 1, 2, 1);
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -48,45 +47,45 @@ class HeBiinvariantMeanTest {
 
   @Test
   void testSimpleHe3() {
-    Tensor element = Tensors.fromString("{{1}, {1}, 1}");
+    Tensor element = Tensors.fromString("{1, 1, 1}");
     Tensor sequence = Tensors.of(element, element.add(element), element.add(element).add(element));
     Tensor weights = Tensors.vector(0.2, 0.6, 0.2);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Tensor expected = Tensors.fromString("{{2}, {2}, 1.8}");
+    Tensor expected = Tensors.fromString("{2, 2, 1.8}");
     Chop._12.requireClose(actual, expected);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
   void testSimplelHe5() {
-    Tensor p = Tensors.vector(1, 2);
-    Tensor element = Tensors.of(p, p, RealScalar.ONE);
+    Tensor element = Tensors.vector(1, 2, 1, 2, 1);
     Tensor sequence = Tensors.of(element, element.add(element), element.add(element).add(element));
     Tensor weights = Tensors.vector(0.2, 0.6, 0.2);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Tensor expected = Tensors.fromString("{{2.0, 4.0}, {2.0, 4.0}, 1.0}");
-    assertEquals(actual.get(0), actual.get(1));
+    Tensor expected = Tensors.fromString("{2.0, 4.0, 2.0, 4.0, 1.0}");
+    HeFormat heFormat = HeFormat.of(actual);
+    assertEquals(heFormat.x(), heFormat.y());
     Chop._12.requireClose(actual, expected);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
   void testInverse() {
-    HeGroupElement p = new HeGroupElement(Tensors.fromString("{{1, 2}, {3, 4}, 5}"));
+    HeGroupElement p = new HeGroupElement(Tensors.fromString("{1, 2, 3, 4, 5}"));
     HeGroupElement pinv = p.inverse();
     // ---
     Tensor sequence = Tensors.of(p.toCoordinate(), pinv.toCoordinate());
     Tensor weights = Tensors.vector(0.5, 0.5);
     Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
-    Tensor identity = Tensors.fromString("{{0, 0}, {0, 0}, 0}");
+    Tensor identity = Tensors.fromString("{0, 0, 0, 0, 0}");
     assertEquals(identity, actual);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
   void testBiinvariantMean1() {
-    Tensor p = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
-    Tensor q = Tensors.fromString("{{-3, 6}, {-2, 8}, -9}");
+    Tensor p = Tensors.fromString("{1, 2, 3, 4, 5}");
+    Tensor q = Tensors.fromString("{-3, 6, -2, 8, -9}");
     Tensor domain = Subdivide.of(-1, 1, 10);
     Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
@@ -97,8 +96,8 @@ class HeBiinvariantMeanTest {
 
   @Test
   void testBiinvariantMean2() {
-    Tensor p = Tensors.fromString("{{1}, {4}, 5}");
-    Tensor q = Tensors.fromString("{{-3}, {6}, -9}");
+    Tensor p = Tensors.fromString("{1, 4, 5}");
+    Tensor q = Tensors.fromString("{-3, 6, -9}");
     Tensor domain = Subdivide.of(0, 2, 11);
     Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //

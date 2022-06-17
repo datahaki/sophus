@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie.he;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.PackageTestAccess;
 
 /** @param sequence of (x, y, z) points in He(n) of shape ((x1, ..., xm), (y1, ..., ym), z)
@@ -23,18 +22,18 @@ public enum HeBiinvariantMean implements BiinvariantMean {
 
   @PackageTestAccess
   static Tensor xydot(Tensor sequence) {
-    return Tensor.of(sequence.stream().map(xyz -> xyz.get(0).dot(xyz.get(1))));
+    return Tensor.of(sequence.stream() //
+        .map(HeFormat::of) //
+        .map(xyz -> xyz.x().dot(xyz.y())));
   }
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    Tensor ws = weights.dot(sequence);
-    Tensor xMean = ws.get(0);
-    Tensor yMean = ws.get(1);
+    HeFormat heFormat = HeFormat.of(weights.dot(sequence));
+    Tensor xMean = heFormat.x();
+    Tensor yMean = heFormat.y();
     Tensor xyMean = weights.dot(xydot(sequence));
-    return Tensors.of( //
-        xMean, //
-        yMean, //
-        ws.Get(2).add(xMean.dot(yMean).subtract(xyMean).multiply(RationalScalar.HALF)));
+    return heFormat.with( //
+        heFormat.z().add(xMean.dot(yMean).subtract(xyMean).multiply(RationalScalar.HALF)));
   }
 }

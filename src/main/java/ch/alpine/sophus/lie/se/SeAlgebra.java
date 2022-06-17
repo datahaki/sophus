@@ -15,7 +15,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
 
 /** Careful:
- * does not match {@link Se3Algebra} in the special case when n == 3
+ * TODO SOPHUS does not match {@link Se3Algebra} in the special case when n == 3
  * 
  * @see SoAlgebra */
 public class SeAlgebra implements LieAlgebra, Serializable {

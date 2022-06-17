@@ -6,7 +6,6 @@ import java.util.Random;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -22,9 +21,6 @@ public class HeRandomSample implements RandomSampleInterface, Serializable {
 
   @Override
   public Tensor randomSample(Random random) {
-    return Tensors.of( //
-        RandomVariate.of(distribution, n), //
-        RandomVariate.of(distribution, n), //
-        RandomVariate.of(distribution)); // element
+    return RandomVariate.of(distribution, random, 2 * n + 1); // element
   }
 }

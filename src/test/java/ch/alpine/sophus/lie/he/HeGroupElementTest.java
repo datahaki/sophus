@@ -25,9 +25,10 @@ class HeGroupElementTest {
 
   @Test
   void testInverse() {
-    Tensor et = Tensors.fromString("{{0, 0}, {0, 0}, 0}");
-    Tensor at = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
+    Tensor et = Tensors.fromString("{0, 0, 0, 0, 0}");
+    Tensor at = Tensors.fromString("{1, 2, 3, 4, 5}");
     HeGroupElement a = new HeGroupElement(at);
+    assertEquals(a.toCoordinate(), at);
     HeGroupElement b = a.inverse();
     Tensor result = b.combine(at);
     assertEquals(result, et);
@@ -35,12 +36,12 @@ class HeGroupElementTest {
 
   @Test
   void testCombine() {
-    Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
+    Tensor a_t = Tensors.fromString("{1, 2, 3, 4, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
-    Tensor b_t = Tensors.fromString("{{6, 7}, {8, 9}, 10}");
+    Tensor b_t = Tensors.fromString("{6, 7, 8, 9, 10}");
     Tensor ab_t = a.combine(b_t);
     ExactTensorQ.require(ab_t);
-    assertEquals(ab_t, Tensors.fromString("{{7, 9}, {11, 13}, 41}"));
+    assertEquals(ab_t, Tensors.fromString("{7, 9, 11, 13, 41}"));
     HeGroupElement ab = new HeGroupElement(ab_t);
     Tensor a_r = ab.combine(new HeGroupElement(b_t).inverse().toCoordinate());
     assertEquals(a_r, a_t);
@@ -50,21 +51,21 @@ class HeGroupElementTest {
 
   @Test
   void testAdjoint1() {
-    Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
-    Tensor b_t = Tensors.fromString("{{6, 7}, {0, 0}, 10}");
+    Tensor a_t = Tensors.fromString("{1, 2, 3, 4, 5}");
+    Tensor b_t = Tensors.fromString("{6, 7, 0, 0, 10}");
     HeGroupElement a = new HeGroupElement(a_t);
     Tensor tensor = a.adjoint(b_t);
-    assertEquals(tensor, Tensors.fromString("{{6, 7}, {0, 0}, -3*6-4*7+10}"));
+    assertEquals(tensor, Tensors.fromString("{6, 7, 0, 0, -3*6-4*7+10}"));
     ExactTensorQ.require(tensor);
   }
 
   @Test
   void testAdjoint2() {
-    Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
-    Tensor b_t = Tensors.fromString("{{0, 0}, {6, 7}, 9}");
+    Tensor a_t = Tensors.fromString("{1, 2, 3, 4, 5}");
+    Tensor b_t = Tensors.fromString("{0, 0, 6, 7, 9}");
     HeGroupElement a = new HeGroupElement(a_t);
     Tensor tensor = a.adjoint(b_t);
-    assertEquals(tensor, Tensors.fromString("{{0, 0}, {6, 7}, 1*6+2*7+9}"));
+    assertEquals(tensor, Tensors.fromString("{0, 0, 6, 7, 1*6+2*7+9}"));
     ExactTensorQ.require(tensor);
   }
 
@@ -118,7 +119,7 @@ class HeGroupElementTest {
 
   @Test
   void testDlNullFail() {
-    Tensor a_t = Tensors.fromString("{{1, 2}, {3, 4}, 5}");
+    Tensor a_t = Tensors.fromString("{1, 2, 3, 4, 5}");
     HeGroupElement a = new HeGroupElement(a_t);
     assertThrows(Exception.class, () -> a.dL(null));
   }

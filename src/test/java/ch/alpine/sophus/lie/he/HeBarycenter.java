@@ -15,20 +15,21 @@ import ch.alpine.tensor.mat.re.LinearSolve;
   private final Tensor lhs;
 
   public HeBarycenter(Tensor sequence) {
-    Tensor tX = Transpose.of(sequence.get(Tensor.ALL, 0));
-    Tensor tY = Transpose.of(sequence.get(Tensor.ALL, 1));
+    Tensor tX = Transpose.of(Tensor.of(sequence.stream().map(HeFormat::of).map(HeFormat::x)));
+    Tensor tY = Transpose.of(Tensor.of(sequence.stream().map(HeFormat::of).map(HeFormat::y)));
     lhs = Join.of(tX, tY);
     Tensor tensor = HeBiinvariantMean.xydot(sequence);
-    Tensor z = sequence.get(Tensor.ALL, 2);
+    Tensor z = Tensor.of(sequence.stream().map(HeFormat::of).map(HeFormat::z));
     lhs.append(z.subtract(tensor.multiply(RationalScalar.HALF)));
     lhs.append(Tensors.vector(l -> RealScalar.ONE, sequence.length()));
   }
 
   @Override
   public Tensor apply(Tensor mean) {
-    Tensor mXY = mean.get(0).dot(mean.get(1));
-    Tensor rhs = Join.of(mean.get(0), mean.get(1));
-    rhs.append(mean.Get(2).subtract(mXY.multiply(RationalScalar.HALF)));
+    HeFormat heFormat = HeFormat.of(mean);
+    Tensor mXY = heFormat.x().dot(heFormat.y());
+    Tensor rhs = Join.of(heFormat.x(), heFormat.y());
+    rhs.append(heFormat.z().subtract(mXY.multiply(RationalScalar.HALF)));
     rhs.append(RealScalar.ONE);
     return LinearSolve.of(lhs, rhs);
   }

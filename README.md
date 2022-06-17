@@ -4,6 +4,8 @@
 
 Library for non-linear geometry computations in Java 17.
 
+![](https://github.com/datahaki/sophus/actions/workflows/mvn_test.yml/badge.svg)
+
 The library was developed with the following objectives in mind
 * trajectory design for autonomous robots
 * suitable for use in safety-critical real-time systems

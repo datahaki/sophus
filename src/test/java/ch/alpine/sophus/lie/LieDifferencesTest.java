@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2RandomSample;
@@ -61,6 +62,44 @@ class LieDifferencesTest {
           Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
     LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 6));
+  }
+
+  @Test
+  void testSe2Simple() throws ClassNotFoundException, IOException {
+    Tensor p1 = Tensors.vector(0, 0, -Math.PI);
+    Tensor p2 = Tensors.vector(0, 0, +Math.PI);
+    LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
+    Tensor tensor = Serialization.copy(lieDifferences).apply(Tensors.of(p1, p2));
+    assertEquals(Dimensions.of(tensor), Arrays.asList(1, 3));
+    Chop._14.requireClose(tensor.get(0), Tensors.vector(0, 0, 0));
+  }
+
+  @Test
+  void testSe2() {
+    Distribution distribution = UniformDistribution.unit();
+    Tensor tensor = RandomSample.of(Se2RandomSample.of(distribution), 10);
+    LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
+    assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 3));
+  }
+
+  @Test
+  void testSe3Simple() {
+    Tensor m1 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.2, -0.3, 0.4)), Tensors.vector(10, 20, 30));
+    Tensor m2 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.4)), Tensors.vector(11, 21, 31));
+    LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
+    Tensor tensor = lieDifferences.apply(Tensors.of(m1, m2));
+    assertEquals(Dimensions.of(tensor), Arrays.asList(1, 6));
+  }
+
+  @Test
+  void testHeSimple() throws ClassNotFoundException, IOException {
+    Distribution distribution = NormalDistribution.standard();
+    int n = 10;
+    int d = 3;
+    Tensor elements = RandomVariate.of(distribution, n, d * 2 + 1);
+    LieDifferences lieDifferences = new LieDifferences(HeGroup.INSTANCE);
+    Tensor differences = Serialization.copy(lieDifferences).apply(elements);
+    assertEquals(differences.length(), n - 1);
   }
 
   @Test
