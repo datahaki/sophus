@@ -3,7 +3,7 @@ package ch.alpine.sophus.gbc;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.hs.BiinvariantVectorFunction;
+import ch.alpine.sophus.dv.BiinvariantVectorFunction;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;

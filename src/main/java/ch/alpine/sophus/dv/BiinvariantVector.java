@@ -1,9 +1,8 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.dv.HarborBiinvariantVector;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;

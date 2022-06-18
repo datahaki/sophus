@@ -8,10 +8,10 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.HarborBiinvariant;
-import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.dv.HarborBiinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;

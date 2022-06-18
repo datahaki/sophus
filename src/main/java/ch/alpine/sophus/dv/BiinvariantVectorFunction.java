@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import ch.alpine.tensor.Tensor;
 

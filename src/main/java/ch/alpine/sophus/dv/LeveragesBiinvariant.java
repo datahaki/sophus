@@ -1,11 +1,12 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.dv.LeveragesDistanceVector;
 import ch.alpine.sophus.gbc.LagrangeCoordinates;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
+import ch.alpine.sophus.hs.HsGenesis;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -24,12 +25,12 @@ public class LeveragesBiinvariant extends BiinvariantBase {
 
   @Override // from Biinvariant
   public TensorUnaryOperator distances(Tensor sequence) {
-    return HsGenesis.wrap(hsDesign, LeveragesDistanceVector.INSTANCE, sequence);
+    return HsGenesis.wrap(hsDesign(), LeveragesDistanceVector.INSTANCE, sequence);
   }
 
   @Override // from Biinvariant
   public TensorUnaryOperator coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
-    return HsGenesis.wrap(hsDesign, new LeveragesGenesis(variogram), sequence);
+    return HsGenesis.wrap(hsDesign(), new LeveragesGenesis(variogram), sequence);
   }
 
   @Override // from Biinvariant

@@ -7,11 +7,11 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.GardenBiinvariant;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.GardenBiinvariant;
+import ch.alpine.sophus.dv.LeveragesBiinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;

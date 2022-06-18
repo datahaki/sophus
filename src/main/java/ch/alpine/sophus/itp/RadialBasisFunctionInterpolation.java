@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
-import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;

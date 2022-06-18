@@ -7,8 +7,8 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;

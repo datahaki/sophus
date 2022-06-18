@@ -49,15 +49,16 @@ class SpdManifoldTest {
 
   @Test
   void testSimple() {
-    Random random = new Random(1);
+    Random random1 = new Random();
     int d = 2;
     int fail = 0;
-    int len = 5 + random.nextInt(3);
+    int len = 5 + random1.nextInt(3);
     RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
-    Tensor sequence = RandomSample.of(rsi, len);
+    Random random = new Random();
+    Tensor sequence = RandomSample.of(rsi, random, len);
     for (BarycentricCoordinate barycentricCoordinate : list())
       try {
-        Tensor point = RandomSample.of(rsi);
+        Tensor point = RandomSample.of(rsi, random);
         Tensor weights = barycentricCoordinate.weights(sequence, point);
         AffineQ.require(weights, Chop._08);
         Tensor spd = SpdManifold.INSTANCE.biinvariantMean(Chop._10).mean(sequence, weights);
@@ -65,6 +66,7 @@ class SpdManifoldTest {
       } catch (Exception exception) {
         ++fail;
       }
+    // System.out.println(fail);
     assertTrue(fail < 4);
   }
 

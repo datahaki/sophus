@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
-import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

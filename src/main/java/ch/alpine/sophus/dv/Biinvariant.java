@@ -1,6 +1,7 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;

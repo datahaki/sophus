@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.GardenBiinvariant;
-import ch.alpine.sophus.hs.HarborBiinvariant;
+import ch.alpine.sophus.dv.GardenBiinvariant;
+import ch.alpine.sophus.dv.HarborBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;

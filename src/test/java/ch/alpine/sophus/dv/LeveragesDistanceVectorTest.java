@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;

@@ -9,8 +9,8 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HarborBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.HarborBiinvariant;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;

@@ -1,8 +1,11 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import java.util.EnumMap;
 import java.util.Map;
+
+import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.MetricManifold;
 
 public enum Biinvariants {
   METRIC, //

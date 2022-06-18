@@ -8,11 +8,11 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import java.io.IOException;
 import java.util.Map;

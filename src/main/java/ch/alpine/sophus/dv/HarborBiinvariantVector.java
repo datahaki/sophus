@@ -4,7 +4,6 @@ package ch.alpine.sophus.dv;
 import java.io.Serializable;
 
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.hs.BiinvariantVectorFunction;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.FrobeniusNorm;

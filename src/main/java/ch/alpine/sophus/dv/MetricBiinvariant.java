@@ -1,11 +1,15 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.gbc.LagrangeCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.hs.Genesis;
+import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.HsGenesis;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.gr.GrExponential;
 import ch.alpine.sophus.hs.spd.SpdExponential;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;

@@ -9,10 +9,10 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.sopq.TSopqProject;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;

@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;

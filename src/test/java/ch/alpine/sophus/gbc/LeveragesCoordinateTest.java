@@ -3,10 +3,10 @@ package ch.alpine.sophus.gbc;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.dv.LeveragesBiinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;

@@ -1,10 +1,12 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.dv;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnGroup;

@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.GardenBiinvariant;
-import ch.alpine.sophus.hs.HarborBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.GardenBiinvariant;
+import ch.alpine.sophus.dv.HarborBiinvariant;
+import ch.alpine.sophus.dv.LeveragesBiinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
