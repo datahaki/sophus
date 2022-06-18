@@ -2,6 +2,7 @@
 package ch.alpine.sophus.itp;
 
 import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -26,31 +27,33 @@ public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
    * @param sequence of points
    * @param values
    * @return */
-  public static TensorUnaryOperator of(TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values) {
+  public static TensorUnaryOperator of(Sedarim tensorUnaryOperator, Tensor sequence, Tensor values) {
     return new RadialBasisFunctionInterpolation(tensorUnaryOperator, sequence, values);
   }
 
   /** @param tensorUnaryOperator
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of(TensorUnaryOperator tensorUnaryOperator, Tensor sequence) {
+  // TODO GENESIS!?
+  public static TensorUnaryOperator of(Sedarim tensorUnaryOperator, Tensor sequence) {
     return of(tensorUnaryOperator, sequence, IdentityMatrix.of(sequence.length()));
   }
 
   // ---
-  private final TensorUnaryOperator tensorUnaryOperator;
+  private final Sedarim tensorUnaryOperator;
   private final Tensor weights;
 
   private RadialBasisFunctionInterpolation( //
-      TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values) {
+      Sedarim tensorUnaryOperator, Tensor sequence, Tensor values) {
     this.tensorUnaryOperator = tensorUnaryOperator;
     weights = LeastSquares.of( //
-        Tensor.of(sequence.stream().map(tensorUnaryOperator)), // distance matrix as in Kriging
+        Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder)), // distance matrix as in Kriging
         values);
   }
 
   @Override
   public Tensor apply(Tensor point) {
-    return tensorUnaryOperator.apply(point).dot(weights);
+    // TODO SOPHUS API check design
+    return tensorUnaryOperator.sunder(point).dot(weights);
   }
 }

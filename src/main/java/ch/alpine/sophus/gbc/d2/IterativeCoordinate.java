@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.Objects;
 import java.util.OptionalInt;
 
-import ch.alpine.sophus.gbc.AffineCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;

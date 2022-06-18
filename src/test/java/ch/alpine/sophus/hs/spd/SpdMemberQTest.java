@@ -44,12 +44,12 @@ class SpdMemberQTest {
         RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
         Tensor sequence = RandomSample.of(rsi, len);
         Tensor mL = RandomSample.of(rsi);
-        Tensor weights1 = biinvariant.coordinate(InversePowerVariogram.of(2), sequence).apply(mL);
+        Tensor weights1 = biinvariant.coordinate(InversePowerVariogram.of(2), sequence).sunder(mL);
         // ---
         Tensor g = RandomSample.of(SoRandomSample.of(n), random);
         Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
         Tensor mR = BasisTransform.ofForm(mL, g);
-        Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).apply(mR);
+        Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).sunder(mR);
         Chop._02.requireClose(weights1, weights2);
       }
   }
@@ -65,12 +65,12 @@ class SpdMemberQTest {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor sequence = RandomSample.of(rsi, random, len);
       Tensor mL = RandomSample.of(rsi, random);
-      Tensor weights1 = biinvariant.coordinate(InversePowerVariogram.of(2), sequence).apply(mL);
+      Tensor weights1 = biinvariant.coordinate(InversePowerVariogram.of(2), sequence).sunder(mL);
       // ---
       Tensor g = RandomVariate.of(NormalDistribution.standard(), random, n, n);
       Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
       Tensor mR = BasisTransform.ofForm(mL, g);
-      Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).apply(mR);
+      Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).sunder(mR);
       Chop._02.requireClose(weights1, weights2);
     }
   }

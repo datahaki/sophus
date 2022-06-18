@@ -81,11 +81,11 @@ class HarborBiinvariantVectorTest {
       for (int n = 4; n < 10; ++n) {
         Tensor points = RandomVariate.of(distributiox, n, 3);
         Tensor xya = RandomVariate.of(distribution, 3);
-        Tensor distances = biinvariant.distances(points).apply(xya);
+        Tensor distances = biinvariant.distances(points).sunder(xya);
         Tensor shift = RandomVariate.of(distribution, 3);
         for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
           Chop._05.requireClose(distances, //
-              biinvariant.distances(tensorMapping.slash(points)).apply(tensorMapping.apply(xya)));
+              biinvariant.distances(tensorMapping.slash(points)).sunder(tensorMapping.apply(xya)));
       }
   }
 }

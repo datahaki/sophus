@@ -75,11 +75,11 @@ class GrManifoldTest {
     Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
     Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
     for (Biinvariant biinvariant : biinvariants) {
-      Tensor w_o = biinvariant.coordinate(variogram, seq_o).apply(pnt_o);
+      Tensor w_o = biinvariant.coordinate(variogram, seq_o).sunder(pnt_o);
       GrAction grAction = new GrAction(RandomSample.of(SoRandomSample.of(n), random));
       Tensor seq_l = Tensor.of(seq_o.stream().map(grAction));
       Tensor pnt_l = grAction.apply(pnt_o);
-      Tensor w_l = biinvariant.coordinate(variogram, seq_l).apply(pnt_l);
+      Tensor w_l = biinvariant.coordinate(variogram, seq_l).sunder(pnt_l);
       Chop._06.requireClose(w_o, w_l);
     }
   }

@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.sn.SnPhongMean;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.itp.CrossAveraging;
@@ -18,7 +19,6 @@ import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -35,9 +35,9 @@ class BiinvariantTest {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
     Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
-    TensorUnaryOperator weightingInterface = Serialization.copy(biinvariant.distances(sequence));
+    Sedarim weightingInterface = Serialization.copy(biinvariant.distances(sequence));
     Tensor point = RandomVariate.of(distribution, 3);
-    Tensor weights = weightingInterface.apply(point);
+    Tensor weights = weightingInterface.sunder(point);
     weights.map(QuantityMagnitude.singleton("m"));
   }
 
@@ -47,8 +47,8 @@ class BiinvariantTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
-      TensorUnaryOperator weightingInterface = biinvariant.distances(sequence);
-      weightingInterface.apply(RandomVariate.of(distribution, 3));
+      Sedarim weightingInterface = biinvariant.distances(sequence);
+      weightingInterface.sunder(RandomVariate.of(distribution, 3));
     }
   }
 
@@ -58,9 +58,9 @@ class BiinvariantTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
-      TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
+      Sedarim tensorUnaryOperator = Serialization.copy( //
           biinvariant.weighting(InversePowerVariogram.of(2), sequence));
-      Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
+      Tensor vector = tensorUnaryOperator.sunder(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
   }
@@ -71,9 +71,9 @@ class BiinvariantTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
-      TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
+      Sedarim tensorUnaryOperator = Serialization.copy( //
           biinvariant.coordinate(InversePowerVariogram.of(2), sequence));
-      Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
+      Tensor vector = tensorUnaryOperator.sunder(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
   }
@@ -86,13 +86,13 @@ class BiinvariantTest {
       Distribution distribution = NormalDistribution.standard();
       int n = 4 + random.nextInt(4);
       Tensor sequence = RandomVariate.of(distribution, random, n, 3);
-      TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
+      Sedarim tensorUnaryOperator = Serialization.copy( //
           biinvariant.weighting(InversePowerVariogram.of(2), sequence));
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);
       // TODO SOPHUS SN PHONG !?
-      Tensor evaluate = new CrossAveraging(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
+      Tensor evaluate = new CrossAveraging(tensorUnaryOperator::sunder, SnPhongMean.INSTANCE, values).apply(point);
       VectorQ.requireLength(evaluate, 5);
     }
   }

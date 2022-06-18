@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.math.AffineQ;

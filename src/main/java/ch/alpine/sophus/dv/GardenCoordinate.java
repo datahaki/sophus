@@ -1,25 +1,24 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.dv.GardenDistanceVector;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 
 /** Reference:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public class GardenCoordinate implements TensorUnaryOperator {
+/* package */ class GardenCoordinate implements Sedarim {
   /** @param manifold
    * @param variogram
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of( //
+  public static Sedarim of( //
       Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
     return new GardenCoordinate(manifold, Objects.requireNonNull(variogram), sequence);
   }
@@ -27,22 +26,22 @@ public class GardenCoordinate implements TensorUnaryOperator {
   // ---
   private final HsDesign hsDesign;
   private final ScalarUnaryOperator variogram;
-  private final TensorUnaryOperator distances;
+  private final Sedarim distances;
   private final Tensor sequence;
 
   private GardenCoordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(manifold);
     this.variogram = variogram;
-    distances = GardenDistanceVector.of(manifold, sequence);
+    distances = new GardenDistanceVector(manifold, sequence);
     this.sequence = sequence;
   }
 
   @Override
-  public Tensor apply(Tensor point) {
+  public Tensor sunder(Tensor point) {
     // building influence matrix at point is warranted since the mahalanobis forms
     // exist only at sequence points
     return StaticHelper.barycentric( //
         hsDesign.matrix(sequence, point), //
-        NormalizeTotal.FUNCTION.apply(distances.apply(point).map(variogram))); // point as input to target
+        NormalizeTotal.FUNCTION.apply(distances.sunder(point).map(variogram))); // point as input to target
   }
 }

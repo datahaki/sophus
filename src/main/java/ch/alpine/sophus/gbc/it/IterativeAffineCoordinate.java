@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
 
-import ch.alpine.sophus.gbc.AffineCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

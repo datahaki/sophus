@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.sopq.TSopqProject;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -56,9 +56,9 @@ class HnFastMeanTest {
         Tensor sequence = //
             Tensors.vector(i -> HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, n - 1)), d + 10);
         Tensor point = HnWeierstrassCoordinate.toPoint(Mean.of(sequence).extract(0, d));
-        TensorUnaryOperator tensorUnaryOperator = //
+        Sedarim tensorUnaryOperator = //
             biinvariant.coordinate(variogram, sequence);
-        Tensor w1 = tensorUnaryOperator.apply(point);
+        Tensor w1 = tensorUnaryOperator.sunder(point);
         Tensor mean = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(sequence, w1);
         Chop._06.requireClose(mean, point);
         Tensor x = RandomVariate.of(NormalDistribution.standard(), random, n, n);
@@ -66,7 +66,7 @@ class HnFastMeanTest {
         HnAction hnAction = new HnAction(MatrixExp.of(x));
         Tensor seq_l = Tensor.of(sequence.stream().map(hnAction));
         Tensor pnt_l = hnAction.apply(point);
-        Tensor w2 = biinvariant.coordinate(variogram, seq_l).apply(pnt_l);
+        Tensor w2 = biinvariant.coordinate(variogram, seq_l).sunder(pnt_l);
         Tensor m2 = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(seq_l, w2);
         Chop._06.requireClose(m2, pnt_l);
         Chop._06.requireClose(w1, w2);

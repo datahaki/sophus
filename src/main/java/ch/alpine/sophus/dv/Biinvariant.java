@@ -2,9 +2,9 @@
 package ch.alpine.sophus.dv;
 
 import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** list of biinvariant weightings and barycentric coordinates regardless whether a
  * biinvariant metric exists on the manifold.
@@ -17,22 +17,22 @@ public interface Biinvariant {
 
   /** @param sequence
    * @return operator that maps a point to a vector of relative distances to the elements in the given sequence */
-  TensorUnaryOperator distances(Tensor sequence);
+  Sedarim distances(Tensor sequence);
 
   /** @param variogram
    * @param sequence
    * @return distance vector with entries subject to given variogram */
-  TensorUnaryOperator var_dist(ScalarUnaryOperator variogram, Tensor sequence);
+  Sedarim var_dist(ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param variogram
    * @param sequence
    * @return distance vector with entries subject to given variogram normalized to sum up to 1 */
-  TensorUnaryOperator weighting(ScalarUnaryOperator variogram, Tensor sequence);
+  Sedarim weighting(ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param variogram
    * @param sequence
    * @return operator that provides barycentric coordinates */
-  TensorUnaryOperator coordinate(ScalarUnaryOperator variogram, Tensor sequence);
+  Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence);
 
   /** barycentric coordinate solution of Lagrange multiplier system
    * 
@@ -40,5 +40,5 @@ public interface Biinvariant {
    * @param variogram
    * @param sequence
    * @return operator that provides barycentric coordinates */
-  TensorUnaryOperator lagrainate(ScalarUnaryOperator variogram, Tensor sequence);
+  Sedarim lagrainate(ScalarUnaryOperator variogram, Tensor sequence);
 }

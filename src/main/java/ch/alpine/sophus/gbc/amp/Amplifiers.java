@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc.amp;
 
-import ch.alpine.sophus.gbc.AveragingWeights;
+import ch.alpine.sophus.dv.AveragingWeights;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

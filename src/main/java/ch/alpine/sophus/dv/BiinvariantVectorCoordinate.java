@@ -1,23 +1,22 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.dv.BiinvariantVectorFunction;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public record BiinvariantVectorCoordinate( //
     BiinvariantVectorFunction biinvariantVectorFunction, ScalarUnaryOperator variogram) //
-    implements TensorUnaryOperator {
+    implements Sedarim {
   public BiinvariantVectorCoordinate {
     Objects.requireNonNull(biinvariantVectorFunction);
     Objects.requireNonNull(variogram);
   }
 
   @Override
-  public Tensor apply(Tensor point) {
+  public Tensor sunder(Tensor point) {
     return biinvariantVectorFunction.biinvariantVector(point).coordinate(variogram);
   }
 }

@@ -4,18 +4,15 @@ package ch.alpine.sophus.dv;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.sophus.gbc.LagrangeCoordinates;
-import ch.alpine.sophus.gbc.MetricCoordinate;
 import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.HsGenesis;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.gr.GrExponential;
 import ch.alpine.sophus.hs.spd.SpdExponential;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 
 /** left-invariant (biinvariant only if a biinvariant metric exists)
@@ -53,22 +50,20 @@ public class MetricBiinvariant extends BiinvariantBase {
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator distances(Tensor sequence) {
-    Objects.requireNonNull(manifold);
+  public Sedarim distances(Tensor sequence) {
     Objects.requireNonNull(sequence);
-    return point -> Tensor.of(new HsDesign(manifold).stream(sequence, point) //
+    return point -> Tensor.of(hsDesign().stream(sequence, point) //
         .map(tensorNorm::norm));
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
+  public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
     Genesis genesis = new MetricCoordinate(new InverseDistanceWeighting(variogram, tensorNorm::norm));
     return HsGenesis.wrap(hsDesign(), genesis, sequence);
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator lagrainate(ScalarUnaryOperator variogram, Tensor sequence) {
-    Objects.requireNonNull(manifold);
+  public Sedarim lagrainate(ScalarUnaryOperator variogram, Tensor sequence) {
     Objects.requireNonNull(variogram);
     Objects.requireNonNull(sequence);
     return point -> {

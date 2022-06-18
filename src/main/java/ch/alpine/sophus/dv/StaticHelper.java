@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;

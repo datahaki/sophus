@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.PowerVariogram;
@@ -39,9 +40,9 @@ class RadialBasisFunctionInterpolationTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values())
       for (VariogramFunctions variograms : vars) {
-        TensorUnaryOperator weightingInterface = biinvariant.weighting(variograms.of(RealScalar.TWO), sequence);
+        Sedarim weightingInterface = biinvariant.weighting(variograms.of(RealScalar.TWO), sequence);
         TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-            RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values));
+            RadialBasisFunctionInterpolation.of(weightingInterface::sunder, sequence, values));
         int index = random.nextInt(sequence.length());
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._08.requireClose(tensor, values.get(index));
@@ -57,7 +58,7 @@ class RadialBasisFunctionInterpolationTest {
     Tensor values = RandomVariate.of(distribution, random, n, 2);
     Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
-      TensorUnaryOperator weightingInterface = biinvariant.var_dist(PowerVariogram.of(1, 2), sequence);
+      Sedarim weightingInterface = biinvariant.var_dist(PowerVariogram.of(1, 2), sequence);
       TensorUnaryOperator tensorUnaryOperator = //
           RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values);
       for (int index = 0; index < sequence.length(); ++index) {
@@ -74,8 +75,8 @@ class RadialBasisFunctionInterpolationTest {
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
-      TensorUnaryOperator weightingInterface = biinvariant.weighting(PowerVariogram.of(1, 2), sequence);
-      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface, sequence);
+      Sedarim weightingInterface = biinvariant.weighting(PowerVariogram.of(1, 2), sequence);
+      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface::sunder, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._05.requireClose(tensor, UnitVector.of(n, index));

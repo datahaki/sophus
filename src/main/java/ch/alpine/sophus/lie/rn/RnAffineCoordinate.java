@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
-import ch.alpine.sophus.gbc.AffineCoordinate;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

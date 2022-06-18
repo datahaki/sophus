@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.gbc.AffineWrap;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.GbcHelper;
+import ch.alpine.sophus.dv.AffineWrap;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
+import ch.alpine.sophus.dv.GbcHelper;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.gl.GlGroup;

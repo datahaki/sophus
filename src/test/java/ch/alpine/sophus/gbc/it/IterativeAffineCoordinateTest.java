@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
-import ch.alpine.sophus.gbc.AffineCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

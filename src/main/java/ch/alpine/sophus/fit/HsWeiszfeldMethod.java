@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.gbc.AveragingWeights;
+import ch.alpine.sophus.dv.AveragingWeights;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
@@ -25,14 +25,14 @@ import ch.alpine.tensor.sca.Chop;
  * @param biinvariantMean
  * @param weightingInterface for instance {@link InverseDistanceWeighting}
  * @param chop */
-public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, TensorUnaryOperator weightingInterface, Chop chop) //
+public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, Sedarim genesis, Chop chop) //
     implements SpatialMedian, Serializable {
 
   private static final int MAX_ITERATIONS = 512;
   // ---
   public HsWeiszfeldMethod {
     Objects.requireNonNull(biinvariantMean);
-    Objects.requireNonNull(weightingInterface);
+    Objects.requireNonNull(genesis);
     Objects.requireNonNull(chop);
   }
 
@@ -50,7 +50,7 @@ public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, TensorUnaryOper
     Tensor equalw = AveragingWeights.of(sequence.length());
     Tensor point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(equalw)));
     for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
-      Tensor weights = weightingInterface.apply(point);
+      Tensor weights = genesis.sunder(point);
       if (chop.isClose(point, point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(weights)))))
         return Optional.of(point);
     }

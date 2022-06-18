@@ -1,10 +1,8 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.dv.LeveragesBiinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -38,8 +36,8 @@ class LeveragesCoordinateTest {
       Tensor sequence = RandomVariate.of(distribution, length, 1);
       Tensor origin = RandomVariate.of(distribution, 1);
       Chop._08.requireClose( //
-          metricBiinvariant.weighting(variogram, sequence).apply(origin), //
-          leveragesBiinvariant.weighting(variogram, sequence).apply(origin));
+          metricBiinvariant.weighting(variogram, sequence).sunder(origin), //
+          leveragesBiinvariant.weighting(variogram, sequence).sunder(origin));
     }
   }
 

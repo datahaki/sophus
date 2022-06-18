@@ -11,10 +11,11 @@ import java.util.function.BinaryOperator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.GbcHelper;
-import ch.alpine.sophus.gbc.HarborCoordinate;
-import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.dv.GbcHelper;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -25,7 +26,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
@@ -82,11 +82,12 @@ class Se2CoveringGroupTest {
           fail();
         }
       }
+      Biinvariant biinvariant = Biinvariants.HARBOR.create(Se2CoveringGroup.INSTANCE);
       for (int exp = 0; exp < 3; ++exp) {
-        TensorUnaryOperator gr1 = HarborCoordinate.of(new HsDesign(Se2CoveringGroup.INSTANCE), Power.function(exp), sequence);
-        TensorUnaryOperator gr2 = HarborCoordinate.of(new HsDesign(Se2CoveringGroup.INSTANCE), Power.function(exp), all);
-        Tensor w1 = gr1.apply(point);
-        Tensor w2 = gr2.apply(one);
+        Sedarim gr1 = biinvariant.coordinate(Power.function(exp), sequence);
+        Sedarim gr2 = biinvariant.coordinate(Power.function(exp), all);
+        Tensor w1 = gr1.sunder(point);
+        Tensor w2 = gr2.sunder(one);
         Chop._10.requireClose(w1, w2);
       }
     }
@@ -97,9 +98,10 @@ class Se2CoveringGroupTest {
     Random random = new Random();
     int n = 5 + random.nextInt(5);
     Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
-    TensorUnaryOperator grCoordinate = HarborCoordinate.of(new HsDesign(Se2CoveringGroup.INSTANCE), InversePowerVariogram.of(2), sequence);
+    Biinvariant biinvariant = Biinvariants.HARBOR.create(Se2CoveringGroup.INSTANCE);
+    Sedarim grCoordinate = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
     Tensor point = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
-    Tensor weights = grCoordinate.apply(point);
+    Tensor weights = grCoordinate.sunder(point);
     Tensor mean = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
     Chop._05.requireClose(point, mean);
   }

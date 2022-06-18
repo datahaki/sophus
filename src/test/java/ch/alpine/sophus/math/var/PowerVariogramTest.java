@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.fit.PowerVariogramFit;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
@@ -17,7 +18,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.pdf.Distribution;
@@ -39,16 +39,16 @@ class PowerVariogramTest {
     Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     {
       ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
-      TensorUnaryOperator weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
+      Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
+      Kriging kriging = Kriging.interpolation(weightingInterface::sunder, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
     {
       PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnGroup.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
-      TensorUnaryOperator weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
+      Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
+      Kriging kriging = Kriging.regression(weightingInterface::sunder, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }

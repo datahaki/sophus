@@ -3,7 +3,7 @@ package ch.alpine.sophus.gbc.d2;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.gbc.HsCoordinates;
+import ch.alpine.sophus.dv.HsCoordinates;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 

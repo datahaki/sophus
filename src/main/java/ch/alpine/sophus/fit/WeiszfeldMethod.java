@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import ch.alpine.sophus.gbc.AveragingWeights;
+import ch.alpine.sophus.dv.AveragingWeights;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

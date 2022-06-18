@@ -19,13 +19,13 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
   public static ScalarTensorFunction of(Tensor knots, ScalarUnaryOperator variogram) {
     MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
-        metricBiinvariant.coordinate(variogram, knots.map(Tensors::of)));
+        metricBiinvariant.coordinate(variogram, knots.map(Tensors::of))::sunder);
   }
 
   public static ScalarTensorFunction la(Tensor knots, ScalarUnaryOperator variogram) {
     MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
-        metricBiinvariant.lagrainate(variogram, knots.map(Tensors::of)));
+        metricBiinvariant.lagrainate(variogram, knots.map(Tensors::of))::sunder);
   }
 
   // ---
@@ -37,6 +37,7 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
 
   @Override
   public Tensor apply(Scalar scalar) {
+    // TODO SOPHUS WHUT !?
     return tensorUnaryOperator.apply(Tensors.of(scalar));
   }
 }

@@ -9,9 +9,9 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.gbc.AffineWrap;
-import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
+import ch.alpine.sophus.dv.AffineWrap;
+import ch.alpine.sophus.dv.AveragingWeights;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.LieGroupOps;

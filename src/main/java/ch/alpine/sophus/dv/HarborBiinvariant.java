@@ -1,11 +1,10 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
-import ch.alpine.sophus.gbc.HarborCoordinate;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** bi-invariant
  * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
@@ -15,13 +14,13 @@ public class HarborBiinvariant extends BiinvariantBase {
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator distances(Tensor sequence) {
+  public Sedarim distances(Tensor sequence) {
     BiinvariantVectorFunction biinvariantVectorFunction = HarborBiinvariantVector.of(hsDesign(), sequence);
     return point -> biinvariantVectorFunction.biinvariantVector(point).vector();
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
-    return HarborCoordinate.of(hsDesign(), variogram, sequence);
+  public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
+    return new BiinvariantVectorCoordinate(HarborBiinvariantVector.of(hsDesign(), sequence), variogram);
   }
 }

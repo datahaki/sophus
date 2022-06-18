@@ -6,8 +6,8 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.GbcHelper;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
+import ch.alpine.sophus.dv.GbcHelper;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.Tolerance;

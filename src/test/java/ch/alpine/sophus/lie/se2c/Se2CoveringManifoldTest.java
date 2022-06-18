@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.GbcHelper;
-import ch.alpine.sophus.gbc.HsCoordinates;
-import ch.alpine.sophus.gbc.LeveragesCoordinate;
-import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.dv.AveragingWeights;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
+import ch.alpine.sophus.dv.GbcHelper;
+import ch.alpine.sophus.dv.HsCoordinates;
+import ch.alpine.sophus.dv.LeveragesCoordinate;
+import ch.alpine.sophus.dv.MetricCoordinate;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroup;

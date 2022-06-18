@@ -3,13 +3,11 @@ package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.gbc.LagrangeCoordinates;
-import ch.alpine.sophus.gbc.LeveragesGenesis;
 import ch.alpine.sophus.hs.HsGenesis;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 
 /** bi-invariant
@@ -24,18 +22,17 @@ public class LeveragesBiinvariant extends BiinvariantBase {
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator distances(Tensor sequence) {
+  public Sedarim distances(Tensor sequence) {
     return HsGenesis.wrap(hsDesign(), LeveragesDistanceVector.INSTANCE, sequence);
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
+  public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
     return HsGenesis.wrap(hsDesign(), new LeveragesGenesis(variogram), sequence);
   }
 
   @Override // from Biinvariant
-  public TensorUnaryOperator lagrainate(ScalarUnaryOperator variogram, Tensor sequence) {
-    Objects.requireNonNull(manifold);
+  public Sedarim lagrainate(ScalarUnaryOperator variogram, Tensor sequence) {
     Objects.requireNonNull(variogram);
     Objects.requireNonNull(sequence);
     return point -> {

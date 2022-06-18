@@ -9,7 +9,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.gbc.LeveragesGenesis;
+import ch.alpine.sophus.dv.LeveragesGenesis;
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.hs.ad.HsBarycentricCoordinate;
 import ch.alpine.sophus.hs.ad.HsBiinvariantMean;

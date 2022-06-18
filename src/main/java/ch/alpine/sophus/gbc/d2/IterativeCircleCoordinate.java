@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import ch.alpine.sophus.gbc.AffineCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.hs.Genesis;
 
 /** iterative affine coordinates generally produce non-negative weights after fewer

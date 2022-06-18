@@ -8,11 +8,12 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.HsCoordinates;
 import ch.alpine.sophus.dv.MetricBiinvariant;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
@@ -20,7 +21,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.Distribution;
@@ -71,11 +71,11 @@ class InverseDistanceWeightingTest {
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator shw = biinvariant.weighting(InversePowerVariogram.of(1), points);
+        Sedarim shw = biinvariant.weighting(InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         Tensor weights1 = barycentricCoordinate.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);
-        Tensor weights2 = shw.apply(x);
+        Tensor weights2 = shw.sunder(x);
         Chop._10.requireClose(weights1, weights2);
       }
   }

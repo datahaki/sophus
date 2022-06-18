@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.gbc.AveragingWeights;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.HsCoordinates;
+import ch.alpine.sophus.dv.AveragingWeights;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
+import ch.alpine.sophus.dv.HsCoordinates;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;

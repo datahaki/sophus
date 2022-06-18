@@ -1,10 +1,9 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.dv.LeveragesDistanceVector;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;

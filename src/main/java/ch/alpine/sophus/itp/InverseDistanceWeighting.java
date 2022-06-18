@@ -19,6 +19,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * <p>Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
+// TODO SOPHUS API this can be achieved via Biinvarint
 public record InverseDistanceWeighting(ScalarUnaryOperator variogram, TensorScalarFunction tensorScalarFunction) //
     implements Genesis, Serializable {
   /** @param variogram

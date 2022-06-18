@@ -3,7 +3,7 @@ package ch.alpine.sophus.math;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.gbc.AveragingWeights;
+import ch.alpine.sophus.dv.AveragingWeights;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;

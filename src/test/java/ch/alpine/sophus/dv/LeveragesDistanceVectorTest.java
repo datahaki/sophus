@@ -3,10 +3,9 @@ package ch.alpine.sophus.dv;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -15,7 +14,6 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -28,10 +26,10 @@ class LeveragesDistanceVectorTest {
     Tensor sequence = RandomVariate.of(UniformDistribution.unit(), 10, 3);
     Manifold manifold = RnGroup.INSTANCE;
     LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(manifold);
-    TensorUnaryOperator w2 = leveragesBiinvariant.distances(sequence);
+    Sedarim w2 = leveragesBiinvariant.distances(sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(UniformDistribution.unit(), 3);
-      w2.apply(point);
+      w2.sunder(point);
     }
   }
 
@@ -41,10 +39,10 @@ class LeveragesDistanceVectorTest {
     Tensor sequence = RandomSample.of(randomSampleInterface, 10);
     Manifold manifold = SnManifold.INSTANCE;
     LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(manifold);
-    TensorUnaryOperator w2 = leveragesBiinvariant.distances(sequence);
+    Sedarim w2 = leveragesBiinvariant.distances(sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomSample.of(randomSampleInterface);
-      w2.apply(point);
+      w2.sunder(point);
     }
   }
 
@@ -54,10 +52,10 @@ class LeveragesDistanceVectorTest {
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Manifold manifold = Se2Group.INSTANCE;
     LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(manifold);
-    TensorUnaryOperator w2 = leveragesBiinvariant.distances(sequence);
+    Sedarim w2 = leveragesBiinvariant.distances(sequence);
     for (int count = 0; count < 10; ++count) {
       Tensor point = RandomVariate.of(distribution, 3);
-      w2.apply(point);
+      w2.sunder(point);
     }
   }
 

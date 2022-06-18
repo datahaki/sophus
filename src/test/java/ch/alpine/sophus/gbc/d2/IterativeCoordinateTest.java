@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
-import ch.alpine.sophus.gbc.BarycentricCoordinate;
-import ch.alpine.sophus.gbc.HsCoordinates;
-import ch.alpine.sophus.gbc.LeveragesGenesis;
-import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.dv.BarycentricCoordinate;
+import ch.alpine.sophus.dv.HsCoordinates;
+import ch.alpine.sophus.dv.LeveragesGenesis;
+import ch.alpine.sophus.dv.MetricCoordinate;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.s2.S2Exponential;

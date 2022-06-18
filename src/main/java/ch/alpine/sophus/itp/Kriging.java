@@ -3,6 +3,7 @@ package ch.alpine.sophus.itp;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.LagrangeMultiplier;
 import ch.alpine.sophus.math.var.ExponentialVariogram;
 import ch.alpine.sophus.math.var.PowerVariogram;
@@ -14,7 +15,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.pi.PseudoInverse;
@@ -46,7 +46,7 @@ public class Kriging implements Serializable {
    * @param covariance symmetric matrix
    * @return */
   public static Kriging regression( //
-      TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
+      Sedarim tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
     return of(tensorUnaryOperator, sequence, values, covariance);
   }
 
@@ -54,7 +54,7 @@ public class Kriging implements Serializable {
    * @param sequence of points
    * @param values vector or matrix associated to points in given sequence
    * @return */
-  public static Kriging interpolation(TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values) {
+  public static Kriging interpolation(Sedarim tensorUnaryOperator, Tensor sequence, Tensor values) {
     int n = values.length();
     // TODO SOPHUS UNIT Array.zeros(n, n) may not be sufficiently generic
     return regression(tensorUnaryOperator, sequence, values, Array.zeros(n, n));
@@ -65,7 +65,8 @@ public class Kriging implements Serializable {
    * @param tensorUnaryOperator
    * @param sequence of points
    * @return */
-  public static Kriging barycentric(TensorUnaryOperator tensorUnaryOperator, Tensor sequence) {
+  // TODO Genesis
+  public static Kriging barycentric(Sedarim tensorUnaryOperator, Tensor sequence) {
     return interpolation( //
         tensorUnaryOperator, //
         sequence, //
@@ -79,9 +80,9 @@ public class Kriging implements Serializable {
    * @param covariance
    * @return */
   public static Kriging of( //
-      TensorUnaryOperator tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
+      Sedarim tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
     // symmetric distance matrix eq (3.7.13)
-    Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
+    Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder));
     SymmetricMatrixQ.require(vardst);
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
     Scalar one = Quantity.of(RealScalar.ONE, Unprotect.getUnitUnique(matrix));
@@ -96,12 +97,12 @@ public class Kriging implements Serializable {
   }
 
   // ---
-  private final TensorUnaryOperator tensorUnaryOperator;
+  private final Sedarim tensorUnaryOperator;
   private final Scalar one;
   private final Tensor weights;
   private final Tensor inverse;
 
-  private Kriging(TensorUnaryOperator tensorUnaryOperator, Scalar one, Tensor weights, Tensor inverse) {
+  private Kriging(Sedarim tensorUnaryOperator, Scalar one, Tensor weights, Tensor inverse) {
     this.tensorUnaryOperator = tensorUnaryOperator;
     this.one = one;
     this.weights = weights;
@@ -109,7 +110,7 @@ public class Kriging implements Serializable {
   }
 
   private Tensor vs(Tensor point) {
-    return tensorUnaryOperator.apply(point).append(one);
+    return tensorUnaryOperator.sunder(point).append(one);
   }
 
   /** @param point

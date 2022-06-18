@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -72,7 +71,7 @@ class LagrangeCoordinateTest {
     ExactTensorQ.require(point);
     // does not produce equal weights
     MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
-    metricBiinvariant.lagrainate(InversePowerVariogram.of(2), sequence).apply(point);
+    metricBiinvariant.lagrainate(InversePowerVariogram.of(2), sequence).sunder(point);
   }
 
   @Test

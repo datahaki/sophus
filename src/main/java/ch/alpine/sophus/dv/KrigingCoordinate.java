@@ -1,20 +1,20 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class KrigingCoordinate implements TensorUnaryOperator {
+public class KrigingCoordinate implements Sedarim {
   /** @param tensorUnaryOperator
    * @param hsDesign
    * @param sequence
    * @return */
-  public static TensorUnaryOperator of( //
-      TensorUnaryOperator tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
+  public static Sedarim of( //
+      Sedarim tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
     return new KrigingCoordinate(tensorUnaryOperator, hsDesign, sequence);
   }
 
@@ -24,14 +24,14 @@ public class KrigingCoordinate implements TensorUnaryOperator {
   private final Tensor sequence;
 
   private KrigingCoordinate( //
-      TensorUnaryOperator tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
+      Sedarim tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
     this.hsDesign = Objects.requireNonNull(hsDesign);
     this.kriging = Kriging.barycentric(tensorUnaryOperator, sequence);
     this.sequence = sequence;
   }
 
   @Override
-  public Tensor apply(Tensor point) {
+  public Tensor sunder(Tensor point) {
     return StaticHelper.barycentric( //
         hsDesign.matrix(sequence, point), //
         kriging.estimate(point));

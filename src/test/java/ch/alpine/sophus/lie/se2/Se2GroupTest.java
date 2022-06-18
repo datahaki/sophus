@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.HarborBiinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
@@ -18,7 +19,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -67,8 +67,8 @@ class Se2GroupTest {
     int n = 5 + new Random().nextInt(5);
     Tensor sequence = RandomSample.of(Se2RandomSample.of(LogNormalDistribution.standard()), n);
     Biinvariant biinvariant = new HarborBiinvariant(Se2Group.INSTANCE);
-    TensorUnaryOperator tuo = biinvariant.distances(sequence);
-    Tensor matrix = Tensor.of(sequence.stream().map(tuo));
+    Sedarim tuo = biinvariant.distances(sequence);
+    Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
     assertEquals(Dimensions.of(matrix), Arrays.asList(n, n));
     assertTrue(SymmetricMatrixQ.of(matrix));
     // matrix entry i,j contains frobenius norm between

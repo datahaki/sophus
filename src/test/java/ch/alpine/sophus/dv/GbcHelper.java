@@ -1,11 +1,6 @@
 // code by jph
-package ch.alpine.sophus.gbc;
+package ch.alpine.sophus.dv;
 
-import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.GardenBiinvariant;
-import ch.alpine.sophus.dv.HarborBiinvariant;
-import ch.alpine.sophus.dv.LeveragesBiinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -18,7 +13,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return biinvariant.lagrainate(variogram, sequence).apply(point);
+        return biinvariant.lagrainate(variogram, sequence).sunder(point);
       }
     };
   }
@@ -27,7 +22,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return HarborCoordinate.of(hsDesign, variogram, sequence).apply(point);
+        return new HarborBiinvariant(hsDesign.manifold()).coordinate(variogram, sequence).sunder(point);
       }
     };
   }
@@ -36,7 +31,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return GardenCoordinate.of(manifold, variogram, sequence).apply(point);
+        return Biinvariants.GARDEN.create(manifold).coordinate(variogram, sequence).sunder(point);
       }
     };
   }
@@ -47,7 +42,7 @@ public enum GbcHelper {
       public Tensor weights(Tensor sequence, Tensor point) {
         return InverseCoordinate.of( //
             biinvariant.distances(sequence), //
-            biinvariant.hsDesign(), sequence).apply(point);
+            biinvariant.hsDesign(), sequence).sunder(point);
       }
     };
   }
@@ -58,7 +53,7 @@ public enum GbcHelper {
       public Tensor weights(Tensor sequence, Tensor point) {
         return KrigingCoordinate.of( //
             biinvariant.distances(sequence), //
-            biinvariant.hsDesign(), sequence).apply(point);
+            biinvariant.hsDesign(), sequence).sunder(point);
       }
     };
   }
