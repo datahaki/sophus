@@ -16,7 +16,7 @@ public class AdjacentDistances extends AdjacentReduce {
     this.tensorMetric = Objects.requireNonNull(tensorMetric);
   }
 
-  @Override
+  @Override // from AdjacentReduce
   protected Tensor reduce(Tensor prev, Tensor next) {
     return tensorMetric.distance(prev, next);
   }

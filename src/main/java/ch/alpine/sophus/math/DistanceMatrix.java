@@ -13,6 +13,7 @@ import ch.alpine.tensor.mat.UpperEvaluation;
  * <a href="https://reference.wolfram.com/language/ref/DistanceMatrix.html">DistanceMatrix</a>
  * 
  * @see Outer */
+// TODO SOPHUS API not used in sophus
 public enum DistanceMatrix {
   ;
   /** @param sequence of length n

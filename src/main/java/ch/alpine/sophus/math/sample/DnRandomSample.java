@@ -25,7 +25,7 @@ public class DnRandomSample implements RandomSampleInterface, Serializable {
     this.list = list;
   }
 
-  @Override
+  @Override // from RandomSampleInterface
   public Tensor randomSample(Random random) {
     return Tensor.of(list.stream() //
         .map(distribution -> RandomVariate.of(distribution, random)));

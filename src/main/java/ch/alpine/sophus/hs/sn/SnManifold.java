@@ -40,18 +40,18 @@ public enum SnManifold implements HomogeneousSpace, MetricManifold {
     return new SnExponential(point);
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public Tensor flip(Tensor p, Tensor q) {
     Tensor r = p.multiply((Scalar) p.dot(q));
     return r.add(r).subtract(q);
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public Tensor midpoint(Tensor p, Tensor q) {
     return Vector2Norm.NORMALIZE.apply(p.add(q));
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public HsTransport hsTransport() {
     return SnTransport.INSTANCE;
   }
@@ -82,7 +82,7 @@ public enum SnManifold implements HomogeneousSpace, MetricManifold {
    * Reference:
    * "Spherical averages and applications to spherical splines and interpolation"
    * by S. R. Buss, J. P. Fillmore, 2001 */
-  @Override
+  @Override // from HomogeneousSpace
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.of(SnManifold.INSTANCE, chop, SnPhongMean.INSTANCE);
   }

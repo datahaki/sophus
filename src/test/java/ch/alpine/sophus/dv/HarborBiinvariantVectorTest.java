@@ -40,9 +40,9 @@ class HarborBiinvariantVectorTest {
     int length = 4 + random.nextInt(6);
     Tensor sequence = RandomVariate.of(distribution, length, 3);
     Tensor point = RandomVariate.of(distribution, 3);
-    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(hsDesign, sequence);
+    BiinvariantVectorFunction d1 = new HarborBiinvariant(manifold).biinvariantVectorFunction(sequence);
     BiinvariantVectorFunction d2 = norm2(manifold, sequence);
-    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(hsDesign, sequence);
+    BiinvariantVectorFunction d3 = new CupolaBiinvariant(manifold).biinvariantVectorFunction(sequence);
     BiinvariantVector v1 = d1.biinvariantVector(point);
     BiinvariantVector v2 = d2.biinvariantVector(point);
     BiinvariantVector v3 = d3.biinvariantVector(point);
@@ -59,9 +59,9 @@ class HarborBiinvariantVectorTest {
     int length = 4 + random.nextInt(4);
     Tensor sequence = RandomVariate.of(distribution, length, 3);
     Tensor point = RandomVariate.of(distribution, 3);
-    BiinvariantVectorFunction d1 = HarborBiinvariantVector.of(new HsDesign(manifold), sequence);
+    BiinvariantVectorFunction d1 = new HarborBiinvariant(manifold).biinvariantVectorFunction(sequence);
     BiinvariantVectorFunction d2 = norm2(manifold, sequence);
-    BiinvariantVectorFunction d3 = CupolaBiinvariantVector.of(hsDesign, sequence);
+    BiinvariantVectorFunction d3 = new CupolaBiinvariant(manifold).biinvariantVectorFunction(sequence);
     BiinvariantVector v1 = d1.biinvariantVector(point);
     BiinvariantVector v2 = d2.biinvariantVector(point);
     BiinvariantVector v3 = d3.biinvariantVector(point);

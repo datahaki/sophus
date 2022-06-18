@@ -41,7 +41,7 @@ public class StExponential implements Exponential, Serializable {
     tStMemberQ = new TStMemberQ(p);
   }
 
-  @Override
+  @Override // from Exponential
   public Tensor exp(Tensor v) {
     tStMemberQ.require(v);
     Tensor vt = Transpose.of(v);
@@ -62,12 +62,12 @@ public class StExponential implements Exponential, Serializable {
     return Transpose.of(design.dot(fp).add(qrDecomposition.getQ().dot(fq)));
   }
 
-  @Override
+  @Override // from Exponential
   public Tensor log(Tensor q) {
     throw new UnsupportedOperationException();
   }
 
-  @Override
+  @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     throw new UnsupportedOperationException();
   }

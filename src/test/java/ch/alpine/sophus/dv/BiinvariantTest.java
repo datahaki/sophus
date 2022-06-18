@@ -91,7 +91,7 @@ class BiinvariantTest {
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);
-      // TODO SOPHUS SN PHONG !?
+      // the use of snphong mean is not a mistake
       Tensor evaluate = new CrossAveraging(tensorUnaryOperator::sunder, SnPhongMean.INSTANCE, values).apply(point);
       VectorQ.requireLength(evaluate, 5);
     }
