@@ -2,6 +2,7 @@
 package ch.alpine.sophus.dv;
 
 import ch.alpine.sophus.hs.BiinvariantVectorFunction;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.gr.GrMetric;
 import ch.alpine.tensor.Tensor;
@@ -15,6 +16,6 @@ public enum CupolaBiinvariantVector {
    * @param sequence
    * @return */
   public static BiinvariantVectorFunction of(Manifold manifold, Tensor sequence) {
-    return new InfluenceBiinvariantVector(manifold, sequence, GrMetric.INSTANCE);
+    return new InfluenceBiinvariantVector(new HsDesign(manifold), sequence, GrMetric.INSTANCE);
   }
 }

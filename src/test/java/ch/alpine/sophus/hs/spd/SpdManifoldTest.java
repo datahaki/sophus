@@ -11,6 +11,7 @@ import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.LeveragesCoordinate;
 import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -30,12 +31,12 @@ class SpdManifoldTest {
   public static final BarycentricCoordinate[] list() {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
-        HsCoordinates.of(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(1))), //
-        HsCoordinates.of(SpdManifold.INSTANCE, MetricCoordinate.of(InversePowerVariogram.of(2))), //
+        new HsCoordinates(new HsDesign(SpdManifold.INSTANCE), MetricCoordinate.of(InversePowerVariogram.of(1))), //
+        new HsCoordinates(new HsDesign(SpdManifold.INSTANCE), MetricCoordinate.of(InversePowerVariogram.of(2))), //
         // LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
         // LeveragesCoordinate.slow(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
-        LeveragesCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(1)), //
-        LeveragesCoordinate.of(SpdManifold.INSTANCE, InversePowerVariogram.of(2)), //
+        LeveragesCoordinate.of(new HsDesign(SpdManifold.INSTANCE), InversePowerVariogram.of(1)), //
+        LeveragesCoordinate.of(new HsDesign(SpdManifold.INSTANCE), InversePowerVariogram.of(2)), //
     };
   }
 

@@ -1,0 +1,26 @@
+// code by jph
+package ch.alpine.sophus.hs;
+
+import ch.alpine.sophus.dv.GardenDistanceVector;
+import ch.alpine.sophus.gbc.GardenCoordinate;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.api.TensorUnaryOperator;
+
+/** bi-invariant
+ * results in a symmetric distance matrix -> can use for kriging */
+public class GardenBiinvariant extends BiinvariantBase {
+  public GardenBiinvariant(Manifold manifold) {
+    super(manifold);
+  }
+
+  @Override // from Biinvariant
+  public TensorUnaryOperator distances(Tensor sequence) {
+    return GardenDistanceVector.of(manifold, sequence);
+  }
+
+  @Override // from Biinvariant
+  public TensorUnaryOperator coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
+    return GardenCoordinate.of(manifold, variogram, sequence);
+  }
+}

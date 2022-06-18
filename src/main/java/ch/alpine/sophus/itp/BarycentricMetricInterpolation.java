@@ -11,18 +11,21 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** for comparison with {@link BarycentricRationalInterpolation} */
+// TODO SOPHUS strange functionality because very specific!
 public class BarycentricMetricInterpolation implements ScalarTensorFunction {
   /** @param knots
    * @param variogram
    * @return */
   public static ScalarTensorFunction of(Tensor knots, ScalarUnaryOperator variogram) {
+    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
-        MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, variogram, knots.map(Tensors::of)));
+        metricBiinvariant.coordinate(variogram, knots.map(Tensors::of)));
   }
 
   public static ScalarTensorFunction la(Tensor knots, ScalarUnaryOperator variogram) {
+    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
-        MetricBiinvariant.EUCLIDEAN.lagrainate(RnGroup.INSTANCE, variogram, knots.map(Tensors::of)));
+        metricBiinvariant.lagrainate(variogram, knots.map(Tensors::of)));
   }
 
   // ---

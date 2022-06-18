@@ -9,7 +9,8 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.HarborBiinvariant;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
@@ -65,7 +66,8 @@ class Se2GroupTest {
   void testSimple3() {
     int n = 5 + new Random().nextInt(5);
     Tensor sequence = RandomSample.of(Se2RandomSample.of(LogNormalDistribution.standard()), n);
-    TensorUnaryOperator tuo = Biinvariants.HARBOR.distances(Se2Group.INSTANCE, sequence);
+    Biinvariant biinvariant = new HarborBiinvariant(Se2Group.INSTANCE);
+    TensorUnaryOperator tuo = biinvariant.distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     assertEquals(Dimensions.of(matrix), Arrays.asList(n, n));
     assertTrue(SymmetricMatrixQ.of(matrix));

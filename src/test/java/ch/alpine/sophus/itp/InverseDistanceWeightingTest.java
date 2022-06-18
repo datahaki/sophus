@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
+import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -32,7 +34,7 @@ class InverseDistanceWeightingTest {
   @Test
   void testSimple() {
     BarycentricCoordinate barycentricCoordinate = //
-        HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
@@ -40,7 +42,7 @@ class InverseDistanceWeightingTest {
   @Test
   void testExact() {
     BarycentricCoordinate barycentricCoordinate = //
-        HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     Tensor weights = barycentricCoordinate.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
     ExactTensorQ.require(weights);
     assertEquals(weights, UnitVector.of(2, 1));
@@ -50,7 +52,7 @@ class InverseDistanceWeightingTest {
   void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = //
-        HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(2)));
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
       for (int index = 0; index < p1.length(); ++index) {
@@ -63,12 +65,13 @@ class InverseDistanceWeightingTest {
   @Test
   void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    BarycentricCoordinate barycentricCoordinate = //
-        Serialization.copy(HsCoordinates.of(RnGroup.INSTANCE, new InverseDistanceWeighting(InversePowerVariogram.of(1))));
+    BarycentricCoordinate barycentricCoordinate = Serialization.copy( //
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(1))));
+    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);
-        TensorUnaryOperator shw = MetricBiinvariant.EUCLIDEAN.weighting(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
+        TensorUnaryOperator shw = biinvariant.weighting(InversePowerVariogram.of(1), points);
         Tensor x = RandomVariate.of(distribution, d);
         Tensor weights1 = barycentricCoordinate.weights(points, x);
         Chop._10.requireClose(Total.ofVector(weights1), RealScalar.ONE);

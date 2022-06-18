@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -32,10 +33,9 @@ class BiinvariantTest {
   @Test
   void testAbsolute() throws ClassNotFoundException, IOException {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
+    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
-    TensorUnaryOperator weightingInterface = Serialization.copy( //
-        biinvariant.distances(RnGroup.INSTANCE, sequence));
+    TensorUnaryOperator weightingInterface = Serialization.copy(biinvariant.distances(sequence));
     Tensor point = RandomVariate.of(distribution, 3);
     Tensor weights = weightingInterface.apply(point);
     weights.map(QuantityMagnitude.singleton("m"));
@@ -44,10 +44,10 @@ class BiinvariantTest {
   @Test
   void testBiinvariant() {
     Distribution distribution = NormalDistribution.of(Quantity.of(1, "m"), Quantity.of(2, "m"));
-    for (Biinvariant biinvariant : Biinvariants.values()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
+    for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = RandomVariate.of(distribution, 10, 3);
-      TensorUnaryOperator weightingInterface = //
-          biinvariant.distances(RnGroup.INSTANCE, sequence);
+      TensorUnaryOperator weightingInterface = biinvariant.distances(sequence);
       weightingInterface.apply(RandomVariate.of(distribution, 3));
     }
   }
@@ -55,10 +55,11 @@ class BiinvariantTest {
   @Test
   void testWeighting() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
-    for (Biinvariant biinvariant : Biinvariants.values()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
+    for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-          biinvariant.weighting(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence));
+          biinvariant.weighting(InversePowerVariogram.of(2), sequence));
       Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
@@ -67,10 +68,11 @@ class BiinvariantTest {
   @Test
   void testCoordinate() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
-    for (Biinvariant biinvariant : Biinvariants.values()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
+    for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-          biinvariant.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence));
+          biinvariant.coordinate(InversePowerVariogram.of(2), sequence));
       Tensor vector = tensorUnaryOperator.apply(RandomVariate.of(distribution, 3));
       Chop._08.requireClose(Total.ofVector(vector), RealScalar.ONE);
     }
@@ -79,15 +81,17 @@ class BiinvariantTest {
   @Test
   void testSimplePD() throws ClassNotFoundException, IOException {
     Random random = new Random();
-    for (Biinvariant biinvariant : Biinvariants.values()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(Se2CoveringGroup.INSTANCE);
+    for (Biinvariant biinvariant : map.values()) {
       Distribution distribution = NormalDistribution.standard();
       int n = 4 + random.nextInt(4);
       Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-          biinvariant.weighting(Se2CoveringGroup.INSTANCE, InversePowerVariogram.of(2), sequence));
+          biinvariant.weighting(InversePowerVariogram.of(2), sequence));
       RandomSampleInterface randomSampleInterface = SnRandomSample.of(4);
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);
+      // TODO SOPHUS SN PHONG !?
       Tensor evaluate = new CrossAveraging(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
       VectorQ.requireLength(evaluate, 5);
     }

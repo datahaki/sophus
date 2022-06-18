@@ -2,7 +2,7 @@
 package ch.alpine.sophus.gbc;
 
 import ch.alpine.sophus.dv.HarborBiinvariantVector;
-import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -21,7 +21,7 @@ public enum HarborCoordinate {
    * @param variogram for instance power to minus two
    * @param sequence */
   public static TensorUnaryOperator of( //
-      Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new BiinvariantVectorCoordinate(HarborBiinvariantVector.of(manifold, sequence), variogram);
+      HsDesign hsDesign, ScalarUnaryOperator variogram, Tensor sequence) {
+    return new BiinvariantVectorCoordinate(HarborBiinvariantVector.of(hsDesign, sequence), variogram);
   }
 }

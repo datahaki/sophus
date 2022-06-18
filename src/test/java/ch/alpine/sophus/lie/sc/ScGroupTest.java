@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.math.NormWeighting;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
@@ -28,8 +29,8 @@ class ScGroupTest {
     }
   }
 
-  public static final BarycentricCoordinate INSTANCE = HsCoordinates.of( //
-      ScGroup.INSTANCE, //
+  public static final BarycentricCoordinate INSTANCE = new HsCoordinates( //
+      new HsDesign(ScGroup.INSTANCE), //
       new MetricCoordinate(NormWeighting.of(ScVectorNorm.INSTANCE, InversePowerVariogram.of(1))));
 
   @Test

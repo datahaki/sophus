@@ -67,6 +67,7 @@ public enum So3Group implements LieGroup, MetricManifold {
   public Scalar distance(Tensor p, Tensor q) {
     return Vector2Norm.of(Rodrigues.INSTANCE.vectorLog(LinearSolve.of(p, q)));
   }
+
   @Override // from TensorNorm
   public Scalar norm(Tensor v) {
     return Vector2Norm.of(v);

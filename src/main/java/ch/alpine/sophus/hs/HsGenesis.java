@@ -14,8 +14,8 @@ public enum HsGenesis {
    * @param genesis
    * @param sequence non-null
    * @return */
-  public static TensorUnaryOperator wrap(Manifold manifold, Genesis genesis, Tensor sequence) {
-    BarycentricCoordinate barycentricCoordinate = HsCoordinates.of(manifold, genesis);
+  public static TensorUnaryOperator wrap(HsDesign hsDesign, Genesis genesis, Tensor sequence) {
+    BarycentricCoordinate barycentricCoordinate = new HsCoordinates(hsDesign, genesis);
     Objects.requireNonNull(sequence);
     return point -> barycentricCoordinate.weights(sequence, point);
   }

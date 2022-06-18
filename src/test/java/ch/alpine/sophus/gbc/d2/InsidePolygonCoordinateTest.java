@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.DoubleScalar;
@@ -23,7 +24,7 @@ class InsidePolygonCoordinateTest {
   void testSimple() {
     for (Barycenter barycenter : Barycenter.values()) {
       BarycentricCoordinate barycentricCoordinate = //
-          HsCoordinates.of(RnGroup.INSTANCE, new InsidePolygonCoordinate(ThreePointCoordinate.of(barycenter)));
+          new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InsidePolygonCoordinate(ThreePointCoordinate.of(barycenter)));
       for (int n = 3; n < 10; ++n) {
         Tensor w1 = barycentricCoordinate.weights(CirclePoints.of(n), Array.zeros(2));
         Chop._08.requireClose(w1, AveragingWeights.of(n));

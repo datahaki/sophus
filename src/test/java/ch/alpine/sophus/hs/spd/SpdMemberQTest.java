@@ -1,10 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -18,9 +21,8 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class SpdMemberQTest {
-  private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { //
-      Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
-
+  // private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { //
+  // Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
   @Test
   void testSimple() {
     for (int n = 1; n < 10; ++n) {
@@ -33,21 +35,21 @@ class SpdMemberQTest {
   void testBiinvarianceSon() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(3);
-    for (Biinvariants biinvariants : BIINVARIANTS)
-      if (!biinvariants.equals(Biinvariants.CUPOLA) || n < 4) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(SpdManifold.INSTANCE);
+    for (Entry<Biinvariants, Biinvariant> entry : map.entrySet())
+      if (!entry.getKey().equals(Biinvariants.CUPOLA) || n < 4) {
+        Biinvariant biinvariant = entry.getValue();
         int count = 1 + random.nextInt(3);
         int len = n * (n + 1) / 2 + count;
         RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
         Tensor sequence = RandomSample.of(rsi, len);
         Tensor mL = RandomSample.of(rsi);
-        Tensor weights1 = biinvariants.coordinate( //
-            SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
+        Tensor weights1 = biinvariant.coordinate(InversePowerVariogram.of(2), sequence).apply(mL);
         // ---
         Tensor g = RandomSample.of(SoRandomSample.of(n), random);
         Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
         Tensor mR = BasisTransform.ofForm(mL, g);
-        Tensor weights2 = biinvariants.coordinate( //
-            SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
+        Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).apply(mR);
         Chop._02.requireClose(weights1, weights2);
       }
   }
@@ -56,20 +58,19 @@ class SpdMemberQTest {
   void testBiinvarianceGln() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(2);
-    for (Biinvariants biinvariants : BIINVARIANTS) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(SpdManifold.INSTANCE);
+    for (Biinvariant biinvariants : map.values()) {
       int count = 1 + random.nextInt(3);
       int len = n * (n + 1) / 2 + count;
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor sequence = RandomSample.of(rsi, random, len);
       Tensor mL = RandomSample.of(rsi, random);
-      Tensor weights1 = biinvariants.coordinate( //
-          SpdManifold.INSTANCE, InversePowerVariogram.of(2), sequence).apply(mL);
+      Tensor weights1 = biinvariants.coordinate(InversePowerVariogram.of(2), sequence).apply(mL);
       // ---
       Tensor g = RandomVariate.of(NormalDistribution.standard(), random, n, n);
       Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
       Tensor mR = BasisTransform.ofForm(mL, g);
-      Tensor weights2 = biinvariants.coordinate( //
-          SpdManifold.INSTANCE, InversePowerVariogram.of(2), sR).apply(mR);
+      Tensor weights2 = biinvariants.coordinate(InversePowerVariogram.of(2), sR).apply(mR);
       Chop._02.requireClose(weights1, weights2);
     }
   }

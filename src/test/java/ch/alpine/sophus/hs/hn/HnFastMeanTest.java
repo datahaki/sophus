@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.hn;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Map;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -47,18 +48,16 @@ class HnFastMeanTest {
   void testBiinvariant() {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(HnManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d + 1;
-      for (Biinvariant biinvariant : new Biinvariant[] { //
-          HnMetricBiinvariant.INSTANCE, //
-          Biinvariants.LEVERAGES, //
-          Biinvariants.GARDEN }) {
+      for (Biinvariant biinvariant : map.values()) {
         ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
         Tensor sequence = //
             Tensors.vector(i -> HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, n - 1)), d + 10);
         Tensor point = HnWeierstrassCoordinate.toPoint(Mean.of(sequence).extract(0, d));
         TensorUnaryOperator tensorUnaryOperator = //
-            biinvariant.coordinate(HnManifold.INSTANCE, variogram, sequence);
+            biinvariant.coordinate(variogram, sequence);
         Tensor w1 = tensorUnaryOperator.apply(point);
         Tensor mean = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(sequence, w1);
         Chop._06.requireClose(mean, point);
@@ -67,7 +66,7 @@ class HnFastMeanTest {
         HnAction hnAction = new HnAction(MatrixExp.of(x));
         Tensor seq_l = Tensor.of(sequence.stream().map(hnAction));
         Tensor pnt_l = hnAction.apply(point);
-        Tensor w2 = biinvariant.coordinate(HnManifold.INSTANCE, variogram, seq_l).apply(pnt_l);
+        Tensor w2 = biinvariant.coordinate(variogram, seq_l).apply(pnt_l);
         Tensor m2 = HnManifold.INSTANCE.biinvariantMean(Chop._08).mean(seq_l, w2);
         Chop._06.requireClose(m2, pnt_l);
         Chop._06.requireClose(w1, w2);

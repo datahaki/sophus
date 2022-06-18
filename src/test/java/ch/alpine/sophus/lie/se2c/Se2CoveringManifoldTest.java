@@ -57,8 +57,8 @@ class Se2CoveringManifoldTest {
       GbcHelper.biinvariant(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate[] QUANTITY_COORDINATES = //
       GbcHelper.biinvariant_quantity(Se2CoveringGroup.INSTANCE);
-  private static final BarycentricCoordinate AD_INVAR = HsCoordinates.of( //
-      Se2CoveringGroup.INSTANCE, //
+  private static final BarycentricCoordinate AD_INVAR = new HsCoordinates( //
+      new HsDesign(Se2CoveringGroup.INSTANCE), //
       new MetricCoordinate( //
           NormWeighting.of(new Se2CoveringTarget(Vector2NormSquared::of, RealScalar.ONE), InversePowerVariogram.of(1))));
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
@@ -310,7 +310,7 @@ class Se2CoveringManifoldTest {
     for (Tensor _beta : betas) {
       Scalar beta = (Scalar) _beta;
       // BarycentricCoordinate bc0 = LeveragesCoordinate.slow(Se2CoveringManifold.INSTANCE, InversePowerVariogram.of(beta));
-      BarycentricCoordinate bc1 = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeveragesCoordinate.of(new HsDesign(Se2CoveringGroup.INSTANCE), InversePowerVariogram.of(beta));
       for (int n = 4; n < 10; ++n) {
         Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
         Tensor mean = RandomSample.of(RANDOM_SAMPLE_INTERFACE);

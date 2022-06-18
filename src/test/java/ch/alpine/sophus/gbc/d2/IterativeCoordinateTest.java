@@ -185,7 +185,7 @@ class IterativeCoordinateTest {
         for (Genesis genesis : GENESIS)
           for (int k = 0; k < 3; ++k) {
             BarycentricCoordinate barycentricCoordinate = //
-                HsCoordinates.of(S2Manifold.INSTANCE, new IterativeCoordinate(genesis, k));
+                new HsCoordinates(new HsDesign(S2Manifold.INSTANCE), new IterativeCoordinate(genesis, k));
             Tensor weights = barycentricCoordinate.weights(sequence, point);
             MeanDefect meanDefect = new MeanDefect(sequence, weights, new S2Exponential(point));
             Tensor tangent = meanDefect.tangent();

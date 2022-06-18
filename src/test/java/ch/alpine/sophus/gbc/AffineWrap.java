@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 
 /** biinvariant generalized barycentric coordinates that do not satisfy the Lagrange property
@@ -13,6 +14,6 @@ public enum AffineWrap {
   /** @param manifold
    * @return biinvariant generalized barycentric coordinates */
   public static BarycentricCoordinate of(Manifold manifold) {
-    return HsCoordinates.of(manifold, AffineCoordinate.INSTANCE);
+    return new HsCoordinates(new HsDesign(manifold), AffineCoordinate.INSTANCE);
   }
 }

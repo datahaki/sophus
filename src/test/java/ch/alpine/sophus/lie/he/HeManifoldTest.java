@@ -12,6 +12,7 @@ import ch.alpine.sophus.gbc.AveragingWeights;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.HsCoordinates;
 import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.NormWeighting;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -28,7 +29,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class HeManifoldTest {
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeGroup.INSTANCE);
-  public static final BarycentricCoordinate INSTANCE = HsCoordinates.of(HeGroup.INSTANCE, new MetricCoordinate( //
+  public static final BarycentricCoordinate INSTANCE = new HsCoordinates(new HsDesign(HeGroup.INSTANCE), new MetricCoordinate( //
       NormWeighting.of( //
           new HeTarget(Vector2Norm::of, RealScalar.ONE), //
           InversePowerVariogram.of(1))));

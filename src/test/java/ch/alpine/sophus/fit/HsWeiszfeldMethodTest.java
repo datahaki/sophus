@@ -23,10 +23,11 @@ class HsWeiszfeldMethodTest {
     Random random = new Random(3);
     SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
+    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 2; n < 20; n += 4) {
         Tensor sequence = RandomVariate.of(distribution, random, n, d);
-        TensorUnaryOperator create = MetricBiinvariant.EUCLIDEAN.weighting(RnGroup.INSTANCE, InversePowerVariogram.of(1), sequence);
+        TensorUnaryOperator create = metricBiinvariant.weighting(InversePowerVariogram.of(1), sequence);
         SpatialMedian sm1 = new HsWeiszfeldMethod( //
             RnBiinvariantMean.INSTANCE, //
             create, //

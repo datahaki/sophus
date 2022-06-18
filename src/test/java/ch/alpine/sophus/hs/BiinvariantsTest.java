@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -14,40 +13,40 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 
 class BiinvariantsTest {
-  @ParameterizedTest
-  @EnumSource(Biinvariants.class)
-  void testDistanceSequenceNullFail(Biinvariant biinvariant) {
-    assertThrows(Exception.class, () -> biinvariant.distances(RnGroup.INSTANCE, null));
+  @Test
+  void testDistanceSequenceNullFail() {
+    for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
+      assertThrows(Exception.class, () -> biinvariant.distances(null));
   }
 
-  @ParameterizedTest
-  @EnumSource(Biinvariants.class)
-  void testVarDistVariogramNullFail(Biinvariant biinvariant) {
-    assertThrows(Exception.class, () -> biinvariant.var_dist(RnGroup.INSTANCE, null, Tensors.empty()));
+  @Test
+  void testVarDistVariogramNullFail() {
+    for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
+      assertThrows(Exception.class, () -> biinvariant.var_dist(null, Tensors.empty()));
   }
 
-  @ParameterizedTest
-  @EnumSource(Biinvariants.class)
-  void testWeightingVariogramNullFail(Biinvariant biinvariant) {
-    assertThrows(Exception.class, () -> biinvariant.weighting(RnGroup.INSTANCE, null, Tensors.empty()));
+  @Test
+  void testWeightingVariogramNullFail() {
+    for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
+      assertThrows(Exception.class, () -> biinvariant.weighting(null, Tensors.empty()));
   }
 
-  @ParameterizedTest
-  @EnumSource(Biinvariants.class)
-  void testCoordinateVariogramNullFail(Biinvariant biinvariant) {
-    assertThrows(Exception.class, () -> biinvariant.coordinate(RnGroup.INSTANCE, null, Tensors.empty()));
+  @Test
+  void testCoordinateVariogramNullFail() {
+    for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
+      assertThrows(Exception.class, () -> biinvariant.coordinate(null, Tensors.empty()));
   }
 
-  @ParameterizedTest
-  @EnumSource(Biinvariants.class)
-  void testCoordinateSequenceNullFail(Biinvariant biinvariant) {
-    assertThrows(Exception.class, () -> biinvariant.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(2), null));
+  @Test
+  void testCoordinateSequenceNullFail() {
+    for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
+      assertThrows(Exception.class, () -> biinvariant.coordinate(InversePowerVariogram.of(2), null));
   }
 
-  @ParameterizedTest
-  @EnumSource(Biinvariants.class)
-  void testSerializationFail(Biinvariant biinvariant) throws ClassNotFoundException, IOException {
+  @Test
+  void testSerializationFail() throws ClassNotFoundException, IOException {
     // in earlier versions, the instance used to be non-serializable
-    Serialization.copy(biinvariant.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(2), Tensors.empty()));
+    for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
+      Serialization.copy(biinvariant.coordinate(InversePowerVariogram.of(2), Tensors.empty()));
   }
 }

@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.GardenBiinvariant;
+import ch.alpine.sophus.hs.HarborBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
@@ -24,6 +25,8 @@ class GardenCoordinateTest {
     // in R^d we have w^H = w^G
     // but not in R2 etc.
     Manifold manifold = RnGroup.INSTANCE;
+    GardenBiinvariant gardenBiinvariant = new GardenBiinvariant(manifold);
+    HarborBiinvariant harborBiinvariant = new HarborBiinvariant(manifold);
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int d = 1; d < 5; ++d)
@@ -31,8 +34,8 @@ class GardenCoordinateTest {
         Tensor sequence = RandomVariate.of(distribution, n, d);
         Tensor origin = RandomVariate.of(distribution, d);
         Chop._08.requireClose( //
-            Biinvariants.GARDEN.weighting(manifold, variogram, sequence).apply(origin), //
-            Biinvariants.HARBOR.weighting(manifold, variogram, sequence).apply(origin));
+            gardenBiinvariant.weighting(variogram, sequence).apply(origin), //
+            harborBiinvariant.weighting(variogram, sequence).apply(origin));
       }
   }
 

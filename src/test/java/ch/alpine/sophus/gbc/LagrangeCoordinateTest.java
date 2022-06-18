@@ -71,7 +71,8 @@ class LagrangeCoordinateTest {
     Tensor point = Mean.of(sequence);
     ExactTensorQ.require(point);
     // does not produce equal weights
-    MetricBiinvariant.EUCLIDEAN.lagrainate(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence).apply(point);
+    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    metricBiinvariant.lagrainate(InversePowerVariogram.of(2), sequence).apply(point);
   }
 
   @Test

@@ -3,7 +3,8 @@ package ch.alpine.sophus.gbc;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -29,14 +30,16 @@ class LeveragesCoordinateTest {
     // in R1 we have W^ID = w^IL
     // but not in R2 etc.
     Manifold manifold = RnGroup.INSTANCE;
+    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(manifold);
+    LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(manifold);
     ScalarUnaryOperator variogram = s -> s;
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.TWO));
     for (int length = 3; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 1);
       Tensor origin = RandomVariate.of(distribution, 1);
       Chop._08.requireClose( //
-          MetricBiinvariant.EUCLIDEAN.weighting(manifold, variogram, sequence).apply(origin), //
-          Biinvariants.LEVERAGES.weighting(manifold, variogram, sequence).apply(origin));
+          metricBiinvariant.weighting(variogram, sequence).apply(origin), //
+          leveragesBiinvariant.weighting(variogram, sequence).apply(origin));
     }
   }
 
@@ -46,7 +49,7 @@ class LeveragesCoordinateTest {
     Tensor betas = RandomVariate.of(UniformDistribution.of(1, 2), 4);
     for (Tensor beta_ : betas) {
       Scalar beta = (Scalar) beta_;
-      BarycentricCoordinate bc1 = LeveragesCoordinate.of(SnManifold.INSTANCE, InversePowerVariogram.of(beta));
+      BarycentricCoordinate bc1 = LeveragesCoordinate.of(new HsDesign(SnManifold.INSTANCE), InversePowerVariogram.of(beta));
       for (int d = 3; d < 7; ++d) {
         Tensor mean = UnitVector.of(d, 0);
         for (int n = d + 1; n < d + 3; ++n) {
@@ -63,7 +66,7 @@ class LeveragesCoordinateTest {
   void testSe2() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     ScalarUnaryOperator variogram = s -> s;
-    BarycentricCoordinate targetCoordinate = LeveragesCoordinate.of(Se2CoveringGroup.INSTANCE, variogram);
+    BarycentricCoordinate targetCoordinate = LeveragesCoordinate.of(new HsDesign(Se2CoveringGroup.INSTANCE), variogram);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);

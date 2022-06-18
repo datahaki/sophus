@@ -6,7 +6,10 @@ import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
+import ch.alpine.sophus.math.LowerVectorize0_2Norm;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
@@ -35,7 +38,7 @@ import ch.alpine.tensor.sca.Chop;
  * Gr(n, 1) ~ S^(n - 1) / {+-1}
  * 
  * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2) */
-public enum GrManifold implements HomogeneousSpace {
+public enum GrManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
   @Override // from Manifold
@@ -51,5 +54,16 @@ public enum GrManifold implements HomogeneousSpace {
   @Override
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.reduce(this, chop);
+  }
+
+  @Override
+  public Scalar distance(Tensor p, Tensor q) {
+    // TODO SOPHUS
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Scalar norm(Tensor v) {
+    return LowerVectorize0_2Norm.INSTANCE.norm(v);
   }
 }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.fit.PowerVariogramFit;
+import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -35,10 +36,10 @@ class PowerVariogramTest {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
+    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     {
       ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
-      TensorUnaryOperator weightingInterface = //
-          MetricBiinvariant.EUCLIDEAN.var_dist(RnGroup.INSTANCE, variogram, sequence);
+      TensorUnaryOperator weightingInterface = biinvariant.var_dist(variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
@@ -46,8 +47,7 @@ class PowerVariogramTest {
     {
       PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnGroup.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
-      TensorUnaryOperator weightingInterface = //
-          MetricBiinvariant.EUCLIDEAN.var_dist(RnGroup.INSTANCE, variogram, sequence);
+      TensorUnaryOperator weightingInterface = biinvariant.var_dist(variogram, sequence);
       Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);

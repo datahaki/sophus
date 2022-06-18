@@ -15,8 +15,10 @@ import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
 import ch.alpine.sophus.gbc.GbcHelper;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.hs.HarborBiinvariant;
+import ch.alpine.sophus.hs.LeveragesBiinvariant;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
@@ -87,12 +89,12 @@ class RnGroupTest {
   void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
+    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor x = RandomVariate.of(distribution, n);
-      TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(1), points);
       Tensor weights = tensorUnaryOperator.apply(x);
       Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
       Chop._06.requireClose(x, y);
@@ -103,11 +105,11 @@ class RnGroupTest {
   void testLagrangeProperty() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
+    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
-      TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(1), points);
       Chop._10.requireClose(Tensor.of(points.stream().map(tensorUnaryOperator)), IdentityMatrix.of(length));
     }
   }
@@ -116,12 +118,12 @@ class RnGroupTest {
   void testQuantity() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
+    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
       Tensor x = RandomVariate.of(distribution, n);
-      TensorUnaryOperator tensorUnaryOperator = //
-          MetricBiinvariant.EUCLIDEAN.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(1), points);
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(1), points);
       Tensor weights = tensorUnaryOperator.apply(x);
       Tensor y = RnBiinvariantMean.INSTANCE.mean(points, weights);
       Chop._06.requireClose(x, y);
@@ -218,13 +220,17 @@ class RnGroupTest {
     int d = 2;
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
-    for (Biinvariant biinvariant : new Biinvariant[] { MetricBiinvariant.EUCLIDEAN, Biinvariants.HARBOR }) {
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.distances(RnGroup.INSTANCE, sequence);
+    Manifold manifold = RnGroup.INSTANCE;
+    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(manifold);
+    HarborBiinvariant harborBiinvariant = new HarborBiinvariant(manifold);
+    for (Biinvariant biinvariant : new Biinvariant[] { metricBiinvariant, harborBiinvariant }) {
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.distances(sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       SymmetricMatrixQ.require(vardst);
     }
+    LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(manifold);
     {
-      TensorUnaryOperator tensorUnaryOperator = Biinvariants.LEVERAGES.distances(RnGroup.INSTANCE, sequence);
+      TensorUnaryOperator tensorUnaryOperator = leveragesBiinvariant.distances(sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator));
       assertFalse(SymmetricMatrixQ.of(vardst));
     }

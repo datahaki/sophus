@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -15,7 +16,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
   public static void main(String[] args) {
     Manifold manifold = RnGroup.INSTANCE;
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    BarycentricCoordinate c1 = LeveragesCoordinate.of(manifold, variogram);
+    BarycentricCoordinate c1 = LeveragesCoordinate.of(new HsDesign(manifold), variogram);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {
