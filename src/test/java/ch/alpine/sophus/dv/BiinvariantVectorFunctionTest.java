@@ -1,8 +1,11 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +16,16 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 
-class InfluenceBiinvariantVectorTest {
+class BiinvariantVectorFunctionTest {
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
-    InfluenceBiinvariantVector influenceBiinvariantVector = new InfluenceBiinvariantVector( //
+    BiinvariantVectorFunction influenceBiinvariantVector = new BiinvariantVectorFunction( //
         new HsDesign(RnGroup.INSTANCE), Tensors.empty(), (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
     Serialization.copy(influenceBiinvariantVector);
+  }
+
+  @Test
+  void testNonPublic() {
+    assertFalse(Modifier.isPublic(BiinvariantVectorFunction.class.getModifiers()));
   }
 }

@@ -70,9 +70,10 @@ class RadialBasisFunctionInterpolationTest {
 
   @Test
   void testBarycentric() {
+    Random random = new Random(1);
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
-    Tensor sequence = RandomVariate.of(distribution, n, 3);
+    Tensor sequence = RandomVariate.of(distribution, random, n, 3);
     Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Sedarim weightingInterface = biinvariant.weighting(PowerVariogram.of(1, 2), sequence);
@@ -81,7 +82,7 @@ class RadialBasisFunctionInterpolationTest {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._05.requireClose(tensor, UnitVector.of(n, index));
         // ---
-        Tensor point = RandomVariate.of(distribution, 3);
+        Tensor point = RandomVariate.of(distribution, random, 3);
         Tensor weights = tensorUnaryOperator.apply(point);
         AffineQ.require(weights, Chop._08);
       }

@@ -28,7 +28,7 @@ class HarborBiinvariantVectorTest {
    * @param sequence
    * @return */
   public static BiinvariantVectorFunction norm2(Manifold manifold, Tensor sequence) {
-    return new InfluenceBiinvariantVector(new HsDesign(manifold), sequence, (x, y) -> Matrix2Norm.of(x.subtract(y)));
+    return new BiinvariantVectorFunction(new HsDesign(manifold), sequence, (x, y) -> Matrix2Norm.of(x.subtract(y)));
   }
 
   @Test
