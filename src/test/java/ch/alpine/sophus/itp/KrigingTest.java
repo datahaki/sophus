@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.dv.HarborBiinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -141,9 +139,8 @@ class KrigingTest {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Sedarim weightingInterface = //
-        new MetricBiinvariant(RnGroup.INSTANCE).var_dist(variogram, sequence);
-    Kriging kriging = Kriging.interpolation(weightingInterface::sunder, sequence, values);
+    Sedarim sedarim = Biinvariants.METRIC.of(RnGroup.INSTANCE).var_dist(variogram, sequence);
+    Kriging kriging = Kriging.interpolation(sedarim::sunder, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
@@ -158,7 +155,7 @@ class KrigingTest {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     // Map<Biinvariants, Biinvariant> map = Biinvariants.kriging();
-    Biinvariant biinvariant = new HarborBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.HARBOR.of(RnGroup.INSTANCE);
     // for (Biinvariant biinvariant : map.values())
     {
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);

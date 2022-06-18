@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.dv.HsCoordinates;
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -67,7 +67,7 @@ class InverseDistanceWeightingTest {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     BarycentricCoordinate barycentricCoordinate = Serialization.copy( //
         new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(1))));
-    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);

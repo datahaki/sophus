@@ -82,7 +82,7 @@ class Se2CoveringGroupTest {
           fail();
         }
       }
-      Biinvariant biinvariant = Biinvariants.HARBOR.create(Se2CoveringGroup.INSTANCE);
+      Biinvariant biinvariant = Biinvariants.HARBOR.of(Se2CoveringGroup.INSTANCE);
       for (int exp = 0; exp < 3; ++exp) {
         Sedarim gr1 = biinvariant.coordinate(Power.function(exp), sequence);
         Sedarim gr2 = biinvariant.coordinate(Power.function(exp), all);
@@ -98,7 +98,7 @@ class Se2CoveringGroupTest {
     Random random = new Random();
     int n = 5 + random.nextInt(5);
     Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
-    Biinvariant biinvariant = Biinvariants.HARBOR.create(Se2CoveringGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.HARBOR.of(Se2CoveringGroup.INSTANCE);
     Sedarim grCoordinate = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
     Tensor point = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
     Tensor weights = grCoordinate.sunder(point);

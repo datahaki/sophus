@@ -8,7 +8,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 /** bi-invariant
  * results in a symmetric distance matrix -> can use for kriging */
-public class GardenBiinvariant extends BiinvariantBase {
+/* package */ class GardenBiinvariant extends BiinvariantBase {
   public GardenBiinvariant(Manifold manifold) {
     super(manifold);
   }

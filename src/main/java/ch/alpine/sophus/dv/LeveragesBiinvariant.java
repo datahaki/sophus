@@ -16,7 +16,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * Reference:
  * "Biinvariant Generalized Barycentric Coordinates on Lie Groups"
  * by Jan Hakenberg, 2020 */
-public class LeveragesBiinvariant extends BiinvariantBase {
+/* package */ class LeveragesBiinvariant extends BiinvariantBase {
   public LeveragesBiinvariant(Manifold manifold) {
     super(manifold);
   }

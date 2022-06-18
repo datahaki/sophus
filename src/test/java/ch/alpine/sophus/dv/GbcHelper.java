@@ -31,7 +31,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return Biinvariants.GARDEN.create(manifold).coordinate(variogram, sequence).sunder(point);
+        return Biinvariants.GARDEN.of(manifold).coordinate(variogram, sequence).sunder(point);
       }
     };
   }

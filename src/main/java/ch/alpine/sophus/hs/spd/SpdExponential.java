@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.RationalScalar;
@@ -31,8 +30,6 @@ import ch.alpine.tensor.mat.ex.MatrixSqrt;
  * 
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020 p.27
- * 
- * use with {@link MetricBiinvariant#VECTORIZE0}
  * 
  * @see MatrixExp
  * @see MatrixLog

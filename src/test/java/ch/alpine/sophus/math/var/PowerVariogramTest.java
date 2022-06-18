@@ -8,7 +8,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.fit.PowerVariogramFit;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.Kriging;
@@ -36,7 +36,7 @@ class PowerVariogramTest {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     {
       ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);

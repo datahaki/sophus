@@ -10,7 +10,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
@@ -132,7 +132,7 @@ class HnManifoldTest {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     HomogeneousSpace manifold = HnManifold.INSTANCE;
-    Biinvariant biinvariant = Serialization.copy(new MetricBiinvariant(manifold));
+    Biinvariant biinvariant = Serialization.copy(Biinvariants.METRIC.of(manifold));
     for (int d = 1; d < 5; ++d) {
       int n = d + 1;
       ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
@@ -160,7 +160,7 @@ class HnManifoldTest {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     HomogeneousSpace manifold = HnManifold.INSTANCE;
-    Biinvariant biinvariant = new MetricBiinvariant(manifold);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(manifold);
     for (int d = 1; d < 5; ++d) {
       int n = d + 1;
       ScalarUnaryOperator variogram = InversePowerVariogram.of(2);

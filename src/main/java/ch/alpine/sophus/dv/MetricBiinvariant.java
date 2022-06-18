@@ -31,19 +31,14 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * for alternative implementations
  * 
  * @see HnMetricBiinvariant */
-public class MetricBiinvariant extends BiinvariantBase {
+/* package */ class MetricBiinvariant extends BiinvariantBase {
   /** Careful: not suitable for {@link SpdExponential}, and {@link GrExponential}
    * because these implementations drop coefficients of the log in the vectorLog
    * implementation. that means the scalar product on the subspace would have to be
-   * adapted.
-   * 
-   * scalar product has diagonal of all ones, i.e. [1, 1, ..., 1] */
-  // public static final Biinvariant EUCLIDEAN = new MetricBiinvariant(Vector2Norm::of);
-  // /** for {@link SpdExponential}, and {@link GrExponential} */
-  // public static final Biinvariant VECTORIZE0 = new MetricBiinvariant(LowerVectorize0_2Norm.INSTANCE::norm);
+   * adapted. */
   private final TensorNorm tensorNorm;
 
-  /** @param tensorScalarFunction norm */
+  /** @param manifold that is instance of {@link TensorNorm} */
   public MetricBiinvariant(Manifold manifold) {
     super(manifold);
     tensorNorm = (TensorNorm) manifold;

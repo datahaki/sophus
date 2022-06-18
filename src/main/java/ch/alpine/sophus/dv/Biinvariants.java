@@ -3,44 +3,28 @@ package ch.alpine.sophus.dv;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
 
 public enum Biinvariants {
-  METRIC {
-    @Override
-    public Biinvariant create(Manifold manifold) {
-      return new MetricBiinvariant(manifold);
-    }
-  },
-  LEVERAGES {
-    @Override
-    public Biinvariant create(Manifold manifold) {
-      return new LeveragesBiinvariant(manifold);
-    }
-  },
-  GARDEN {
-    @Override
-    public Biinvariant create(Manifold manifold) {
-      return new GardenBiinvariant(manifold);
-    }
-  },
-  HARBOR {
-    @Override
-    public Biinvariant create(Manifold manifold) {
-      return new HarborBiinvariant(manifold);
-    }
-  },
-  CUPOLA {
-    @Override
-    public Biinvariant create(Manifold manifold) {
-      return new CupolaBiinvariant(manifold);
-    }
-  }, //
+  METRIC(MetricBiinvariant::new), //
+  LEVERAGES(LeveragesBiinvariant::new), //
+  GARDEN(GardenBiinvariant::new), //
+  HARBOR(HarborBiinvariant::new), //
+  CUPOLA(CupolaBiinvariant::new), //
   ;
 
-  public abstract Biinvariant create(Manifold manifold);
+  private final Function<Manifold, Biinvariant> supplier;
+
+  private Biinvariants(Function<Manifold, Biinvariant> supplier) {
+    this.supplier = supplier;
+  }
+
+  public Biinvariant of(Manifold manifold) {
+    return supplier.apply(manifold);
+  }
 
   public static Map<Biinvariants, Biinvariant> all(Manifold manifold) {
     Map<Biinvariants, Biinvariant> map = magic4(manifold);
@@ -51,15 +35,15 @@ public enum Biinvariants {
 
   public static Map<Biinvariants, Biinvariant> magic4(Manifold manifold) {
     Map<Biinvariants, Biinvariant> map = magic3(manifold);
-    map.put(CUPOLA, CUPOLA.create(manifold));
+    map.put(CUPOLA, CUPOLA.of(manifold));
     return map;
   }
 
   public static Map<Biinvariants, Biinvariant> magic3(Manifold manifold) {
     Map<Biinvariants, Biinvariant> map = new EnumMap<>(Biinvariants.class);
-    map.put(LEVERAGES, LEVERAGES.create(manifold));
-    map.put(GARDEN, GARDEN.create(manifold));
-    map.put(HARBOR, HARBOR.create(manifold));
+    map.put(LEVERAGES, LEVERAGES.of(manifold));
+    map.put(GARDEN, GARDEN.of(manifold));
+    map.put(HARBOR, HARBOR.of(manifold));
     return map;
   }
 

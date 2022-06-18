@@ -15,10 +15,8 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.AffineWrap;
 import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.dv.GbcHelper;
-import ch.alpine.sophus.dv.HarborBiinvariant;
-import ch.alpine.sophus.dv.LeveragesBiinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
@@ -92,7 +90,7 @@ class RnGroupTest {
   void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
-    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
@@ -108,7 +106,7 @@ class RnGroupTest {
   void testLagrangeProperty() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
-    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
@@ -121,7 +119,7 @@ class RnGroupTest {
   void testQuantity() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
@@ -224,14 +222,14 @@ class RnGroupTest {
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
     Manifold manifold = RnGroup.INSTANCE;
-    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(manifold);
-    HarborBiinvariant harborBiinvariant = new HarborBiinvariant(manifold);
+    Biinvariant metricBiinvariant = Biinvariants.METRIC.of(manifold);
+    Biinvariant harborBiinvariant = Biinvariants.HARBOR.of(manifold);
     for (Biinvariant biinvariant : new Biinvariant[] { metricBiinvariant, harborBiinvariant }) {
       Sedarim tensorUnaryOperator = biinvariant.distances(sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder));
       SymmetricMatrixQ.require(vardst);
     }
-    LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(manifold);
+    Biinvariant leveragesBiinvariant = Biinvariants.LEVERAGES.of(manifold);
     {
       Sedarim tensorUnaryOperator = leveragesBiinvariant.distances(sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder));

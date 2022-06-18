@@ -8,7 +8,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 /** bi-invariant
  * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
-public class HarborBiinvariant extends BiinvariantBase {
+/* package */ class HarborBiinvariant extends BiinvariantBase {
   public HarborBiinvariant(Manifold manifold) {
     super(manifold);
   }

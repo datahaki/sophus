@@ -9,7 +9,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 /** bi-invariant
  * results in a symmetric distance matrix -> can use for kriging and minimum spanning tree */
-public class CupolaBiinvariant extends BiinvariantBase {
+/* package */ class CupolaBiinvariant extends BiinvariantBase {
   public CupolaBiinvariant(Manifold manifold) {
     super(manifold);
   }

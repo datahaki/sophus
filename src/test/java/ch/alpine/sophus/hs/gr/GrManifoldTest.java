@@ -9,9 +9,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.GardenBiinvariant;
-import ch.alpine.sophus.dv.LeveragesBiinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
@@ -73,9 +71,9 @@ class GrManifoldTest {
   void testBiinvariance() {
     Manifold manifold = GrManifold.INSTANCE;
     Biinvariant[] biinvariants = new Biinvariant[] { //
-        new MetricBiinvariant(manifold), //
-        new LeveragesBiinvariant(manifold), //
-        new GardenBiinvariant(manifold) };
+        Biinvariants.METRIC.of(manifold), //
+        Biinvariants.LEVERAGES.of(manifold), //
+        Biinvariants.GARDEN.of(manifold) };
     Random random = new Random();
     int n = 3 + random.nextInt(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);

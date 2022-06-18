@@ -5,7 +5,8 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -23,11 +24,11 @@ class HsWeiszfeldMethodTest {
     Random random = new Random(3);
     SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
-    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 2; n < 20; n += 4) {
         Tensor sequence = RandomVariate.of(distribution, random, n, d);
-        Sedarim create = metricBiinvariant.weighting(InversePowerVariogram.of(1), sequence);
+        Sedarim create = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
         SpatialMedian sm1 = new HsWeiszfeldMethod(RnBiinvariantMean.INSTANCE, create, Tolerance.CHOP);
         Tensor p1 = sm1.uniform(sequence).get();
         Tensor p2 = sm2.uniform(sequence).get();

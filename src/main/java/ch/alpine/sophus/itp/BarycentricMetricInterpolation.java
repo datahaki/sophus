@@ -1,7 +1,8 @@
 // code by jph
 package ch.alpine.sophus.itp;
 
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -17,15 +18,15 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
    * @param variogram
    * @return */
   public static ScalarTensorFunction of(Tensor knots, ScalarUnaryOperator variogram) {
-    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
-        metricBiinvariant.coordinate(variogram, knots.map(Tensors::of))::sunder);
+        biinvariant.coordinate(variogram, knots.map(Tensors::of))::sunder);
   }
 
   public static ScalarTensorFunction la(Tensor knots, ScalarUnaryOperator variogram) {
-    MetricBiinvariant metricBiinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
-        metricBiinvariant.lagrainate(variogram, knots.map(Tensors::of))::sunder);
+        biinvariant.lagrainate(variogram, knots.map(Tensors::of))::sunder);
   }
 
   // ---

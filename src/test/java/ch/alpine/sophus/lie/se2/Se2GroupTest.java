@@ -10,7 +10,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.HarborBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -66,7 +66,7 @@ class Se2GroupTest {
   void testSimple3() {
     int n = 5 + new Random().nextInt(5);
     Tensor sequence = RandomSample.of(Se2RandomSample.of(LogNormalDistribution.standard()), n);
-    Biinvariant biinvariant = new HarborBiinvariant(Se2Group.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.HARBOR.of(Se2Group.INSTANCE);
     Sedarim tuo = biinvariant.distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
     assertEquals(Dimensions.of(matrix), Arrays.asList(n, n));
