@@ -22,10 +22,13 @@ public enum Biinvariants {
     this.supplier = supplier;
   }
 
+  /** @param manifold
+   * @return */
   public Biinvariant of(Manifold manifold) {
     return supplier.apply(manifold);
   }
 
+  // ---
   public static Map<Biinvariants, Biinvariant> all(Manifold manifold) {
     Map<Biinvariants, Biinvariant> map = magic4(manifold);
     if (manifold instanceof MetricManifold)
@@ -47,11 +50,12 @@ public enum Biinvariants {
     return map;
   }
 
+  /** @param manifold
+   * @return instances of biinvariant that result in symmetric distance matrices */
   public static Map<Biinvariants, Biinvariant> kriging(Manifold manifold) {
     Map<Biinvariants, Biinvariant> map = new EnumMap<>(Biinvariants.class);
     if (manifold instanceof MetricManifold)
       map.put(METRIC, new MetricBiinvariant(manifold));
-    // TODO SOPHUS Garden?!
     map.put(HARBOR, new HarborBiinvariant(manifold));
     return map;
   }

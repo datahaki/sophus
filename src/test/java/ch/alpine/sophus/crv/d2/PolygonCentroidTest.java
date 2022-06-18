@@ -36,10 +36,10 @@ class PolygonCentroidTest {
 
   @Test
   void testRandom() {
-    Random random = new Random();
+    Random random = new Random(3);
     for (int count = 0; count < 100; ++count) {
-      Tensor poly1 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), 3 + random.nextInt(3), 2));
-      Tensor poly2 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), 3 + random.nextInt(3), 2));
+      Tensor poly1 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
+      Tensor poly2 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
       Tensor r12 = PolygonClip.of(poly1).apply(poly2);
       Tensor r21 = PolygonClip.of(poly2).apply(poly1);
       if (r12.length() != r21.length()) {

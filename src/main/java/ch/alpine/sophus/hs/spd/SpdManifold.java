@@ -52,12 +52,12 @@ public enum SpdManifold implements HomogeneousSpace, MetricManifold {
     return p.dot(LinearSolve.of(q, p));
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public HsTransport hsTransport() {
     return SpdTransport.INSTANCE;
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.reduce(SpdManifold.INSTANCE, chop);
   }
@@ -69,6 +69,7 @@ public enum SpdManifold implements HomogeneousSpace, MetricManifold {
 
   @Override // from TensorNorm
   public Scalar norm(Tensor v) {
+    // TODO SOPHUS this is not in-sync with distance!
     return LowerVectorize0_2Norm.INSTANCE.norm(v);
   }
 }
