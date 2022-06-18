@@ -56,7 +56,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
   }
 
   public Genesis coordinate(ScalarUnaryOperator variogram) {
-    return levers -> StaticHelper.barycentric(levers, norms(levers, variogram));
+    return levers -> StaticHelper.barycentric(levers, normed(levers, variogram));
   }
 
   @Override // from Biinvariant
@@ -65,13 +65,12 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
     Objects.requireNonNull(sequence);
     return point -> {
       Tensor levers = hsDesign().matrix(sequence, point);
-      return LagrangeCoordinates.of( //
-          levers, //
-          NormalizeTotal.FUNCTION.apply(norms(levers, variogram)));
+      return LagrangeCoordinates.of(levers, normed(levers, variogram));
     };
   }
 
-  private Tensor norms(Tensor levers, ScalarUnaryOperator variogram) {
-    return Tensor.of(levers.stream().map(tensorNorm::norm).map(variogram));
+  private Tensor normed(Tensor levers, ScalarUnaryOperator variogram) {
+    // the normalization is necessary to compensate for division by zero
+    return NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream().map(tensorNorm::norm).map(variogram)));
   }
 }

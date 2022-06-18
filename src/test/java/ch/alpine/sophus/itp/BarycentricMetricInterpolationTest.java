@@ -3,7 +3,6 @@ package ch.alpine.sophus.itp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -18,8 +17,6 @@ import ch.alpine.tensor.sca.Chop;
 
 class BarycentricMetricInterpolationTest {
   @Test
-  @Disabled
-  // TODO SOPHUS
   void testSimpleBa() {
     ScalarTensorFunction scalarTensorFunction = //
         BarycentricMetricInterpolation.of(Tensors.vector(1, 2, 4), InversePowerVariogram.of(2));
