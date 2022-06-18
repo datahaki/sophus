@@ -79,10 +79,10 @@ class HeGroupTest {
   }
 
   private static final BarycentricCoordinate AFFINE = AffineWrap.of(HeGroup.INSTANCE);
-  public static final BarycentricCoordinate INSTANCE = new HsCoordinates(new HsDesign(HeGroup.INSTANCE), new MetricCoordinate( //
-      NormWeighting.of( //
-          new HeTarget(Vector2Norm::of, RealScalar.ONE), //
-          InversePowerVariogram.of(1))));
+  public static final BarycentricCoordinate INSTANCE = new HsCoordinates(new HsDesign(HeGroup.INSTANCE), //
+      new MetricCoordinate( //
+          NormWeighting.of(new HeTarget(Vector2Norm::of, RealScalar.ONE), //
+              InversePowerVariogram.of(1))));
   private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
       // LeveragesCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(1)), //
       // LeveragesCoordinate.slow(HeManifold.INSTANCE, InversePowerVariogram.of(2)), //

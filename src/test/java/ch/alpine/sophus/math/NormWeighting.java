@@ -9,6 +9,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 
+/** ONLY FOR TESTING */
 public class NormWeighting implements Genesis {
   /** @param tensorNorm non-null
    * @param */

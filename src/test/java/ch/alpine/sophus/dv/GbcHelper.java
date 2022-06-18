@@ -3,6 +3,7 @@ package ch.alpine.sophus.dv;
 
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -63,8 +64,8 @@ public enum GbcHelper {
         lagrainate_of(new MetricBiinvariant(manifold), InversePowerVariogram.of(2)), //
         lagrainate_of(new LeveragesBiinvariant(manifold), InversePowerVariogram.of(2)), //
         lagrainate_of(new GardenBiinvariant(manifold), InversePowerVariogram.of(2)), //
-        new HsCoordinates(new HsDesign(manifold), MetricCoordinate.of(InversePowerVariogram.of(1))), //
-        new HsCoordinates(new HsDesign(manifold), MetricCoordinate.of(InversePowerVariogram.of(2))), //
+        new HsCoordinates(new HsDesign(manifold), new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(1))), //
+        new HsCoordinates(new HsDesign(manifold), new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2))), //
         gardenCoordinate_of(manifold, InversePowerVariogram.of(1)), //
         gardenCoordinate_of(manifold, InversePowerVariogram.of(2)), //
         // LeveragesCoordinate.slow(vectorLogManifold, InversePowerVariogram.of(1)), //
