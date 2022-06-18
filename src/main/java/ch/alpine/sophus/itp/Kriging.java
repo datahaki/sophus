@@ -40,49 +40,42 @@ import ch.alpine.tensor.qty.Quantity;
 public class Kriging implements Serializable {
   /** Gaussian process regression
    * 
-   * @param tensorUnaryOperator
+   * @param sedarim
    * @param sequence
    * @param values vector or matrix
    * @param covariance symmetric matrix
    * @return */
-  public static Kriging regression( //
-      Sedarim tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
-    return of(tensorUnaryOperator, sequence, values, covariance);
+  public static Kriging regression(Sedarim sedarim, Tensor sequence, Tensor values, Tensor covariance) {
+    return of(sedarim, sequence, values, covariance);
   }
 
-  /** @param tensorUnaryOperator
+  /** @param sedarim
    * @param sequence of points
    * @param values vector or matrix associated to points in given sequence
    * @return */
-  public static Kriging interpolation(Sedarim tensorUnaryOperator, Tensor sequence, Tensor values) {
+  public static Kriging interpolation(Sedarim sedarim, Tensor sequence, Tensor values) {
     int n = values.length();
     // TODO SOPHUS UNIT Array.zeros(n, n) may not be sufficiently generic
-    return regression(tensorUnaryOperator, sequence, values, Array.zeros(n, n));
+    return regression(sedarim, sequence, values, Array.zeros(n, n));
   }
 
   /** uses unit vectors as target values
    * 
-   * @param tensorUnaryOperator
+   * @param sedarim
    * @param sequence of points
    * @return */
-  // TODO Genesis
-  public static Kriging barycentric(Sedarim tensorUnaryOperator, Tensor sequence) {
-    return interpolation( //
-        tensorUnaryOperator, //
-        sequence, //
-        IdentityMatrix.of(sequence.length()) // unit vectors as values
-    );
+  public static Kriging barycentric(Sedarim sedarim, Tensor sequence) {
+    return interpolation(sedarim, sequence, IdentityMatrix.of(sequence.length()));
   }
 
-  /** @param tensorUnaryOperator
+  /** @param sedarim
    * @param sequence
    * @param values vector or matrix
    * @param covariance
    * @return */
-  public static Kriging of( //
-      Sedarim tensorUnaryOperator, Tensor sequence, Tensor values, Tensor covariance) {
+  public static Kriging of(Sedarim sedarim, Tensor sequence, Tensor values, Tensor covariance) {
     // symmetric distance matrix eq (3.7.13)
-    Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder));
+    Tensor vardst = Tensor.of(sequence.stream().map(sedarim::sunder));
     SymmetricMatrixQ.require(vardst);
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
     Scalar one = Quantity.of(RealScalar.ONE, Unprotect.getUnitUnique(matrix));
@@ -93,24 +86,24 @@ public class Kriging implements Serializable {
     // System.out.println(Pretty.of(lagrangeMultiplier.matrix().map(Round._1)));
     Tensor inverse = PseudoInverse.of(lagrangeMultiplier.matrix());
     Tensor weights = inverse.dot(lagrangeMultiplier.b());
-    return new Kriging(tensorUnaryOperator, one, weights, inverse);
+    return new Kriging(sedarim, one, weights, inverse);
   }
 
   // ---
-  private final Sedarim tensorUnaryOperator;
+  private final Sedarim sedarim;
   private final Scalar one;
   private final Tensor weights;
   private final Tensor inverse;
 
-  private Kriging(Sedarim tensorUnaryOperator, Scalar one, Tensor weights, Tensor inverse) {
-    this.tensorUnaryOperator = tensorUnaryOperator;
+  private Kriging(Sedarim sedarim, Scalar one, Tensor weights, Tensor inverse) {
+    this.sedarim = sedarim;
     this.one = one;
     this.weights = weights;
     this.inverse = inverse;
   }
 
   private Tensor vs(Tensor point) {
-    return tensorUnaryOperator.sunder(point).append(one);
+    return sedarim.sunder(point).append(one);
   }
 
   /** @param point

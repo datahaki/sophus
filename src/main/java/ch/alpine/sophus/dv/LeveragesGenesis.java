@@ -23,7 +23,6 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
- * @see LeveragesDistanceVector
  * @see LeveragesCoordinate
  * 
  * @param for instance InversePowerVariogram */

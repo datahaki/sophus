@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensor;
 
 public enum HsGenesis {
   ;
-  /** @param manifold
+  /** @param hsDesign
    * @param genesis
    * @param sequence non-null
    * @return */

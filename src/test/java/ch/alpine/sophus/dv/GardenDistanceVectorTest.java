@@ -2,8 +2,10 @@
 package ch.alpine.sophus.dv;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 
 import org.junit.jupiter.api.Test;
 
@@ -76,5 +78,10 @@ class GardenDistanceVectorTest {
     Sedarim tensorUnaryOperator = new GardenDistanceVector(manifold, Tensors.fromString("{{2,3,4}}"));
     Tensor result = tensorUnaryOperator.sunder(Tensors.vector(1, 2, 3));
     assertEquals(result, Tensors.vector(0));
+  }
+
+  @Test
+  void testNonPublic() {
+    assertFalse(Modifier.isPublic(GardenDistanceVector.class.getModifiers()));
   }
 }

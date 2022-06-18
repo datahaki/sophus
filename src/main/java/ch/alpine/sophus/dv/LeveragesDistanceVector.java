@@ -21,7 +21,7 @@ import ch.alpine.tensor.mat.gr.Mahalanobis;
  * 
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
-public enum LeveragesDistanceVector implements Genesis {
+/* package */ enum LeveragesDistanceVector implements Genesis {
   INSTANCE;
 
   @Override // from Genesis

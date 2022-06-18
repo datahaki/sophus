@@ -37,7 +37,13 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * Gr(n, 1) ~ S^(n - 1) / {+-1}
  * 
- * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2) */
+ * The first Grassmann manifold that is not isomorphic to a projective space is Gr(4, 2)
+ * 
+ * distance(p, q) == FrobeniusNorm[new GrExponential(p).log(q)]
+ * 
+ * Reference:
+ * "Geometric mean and geodesic regression on Grassmannians"
+ * E. Batzies, K. Hueper, L. Machado, F. Silva Leite by 2015 */
 public enum GrManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
@@ -56,10 +62,9 @@ public enum GrManifold implements HomogeneousSpace, MetricManifold {
     return IterativeBiinvariantMean.reduce(this, chop);
   }
 
-  @Override
+  @Override // from TensorMetric
   public Scalar distance(Tensor p, Tensor q) {
-    // TODO SOPHUS
-    throw new UnsupportedOperationException();
+    return norm(new GrExponential(p).vectorLog(q));
   }
 
   @Override

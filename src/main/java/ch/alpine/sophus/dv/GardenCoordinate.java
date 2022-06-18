@@ -14,24 +14,18 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020 */
 /* package */ class GardenCoordinate implements Sedarim {
-  /** @param manifold
-   * @param variogram
-   * @param sequence
-   * @return */
-  public static Sedarim of( //
-      Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
-    return new GardenCoordinate(manifold, Objects.requireNonNull(variogram), sequence);
-  }
-
-  // ---
   private final HsDesign hsDesign;
   private final ScalarUnaryOperator variogram;
   private final Sedarim distances;
   private final Tensor sequence;
 
-  private GardenCoordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  /** @param manifold
+   * @param variogram
+   * @param sequence
+   * @return */
+  public GardenCoordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(manifold);
-    this.variogram = variogram;
+    this.variogram = Objects.requireNonNull(variogram);
     distances = new GardenDistanceVector(manifold, sequence);
     this.sequence = sequence;
   }

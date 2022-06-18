@@ -25,14 +25,14 @@ import ch.alpine.tensor.sca.Chop;
  * @param biinvariantMean
  * @param weightingInterface for instance {@link InverseDistanceWeighting}
  * @param chop */
-public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, Sedarim genesis, Chop chop) //
+public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, Sedarim sedarim, Chop chop) //
     implements SpatialMedian, Serializable {
 
   private static final int MAX_ITERATIONS = 512;
   // ---
   public HsWeiszfeldMethod {
     Objects.requireNonNull(biinvariantMean);
-    Objects.requireNonNull(genesis);
+    Objects.requireNonNull(sedarim);
     Objects.requireNonNull(chop);
   }
 
@@ -50,7 +50,7 @@ public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, Sedarim genesis
     Tensor equalw = AveragingWeights.of(sequence.length());
     Tensor point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(equalw)));
     for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
-      Tensor weights = genesis.sunder(point);
+      Tensor weights = sedarim.sunder(point);
       if (chop.isClose(point, point = biinvariantMean.mean(sequence, NormalizeTotal.FUNCTION.apply(unaryOperator.apply(weights)))))
         return Optional.of(point);
     }

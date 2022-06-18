@@ -9,24 +9,16 @@ import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.Tensor;
 
 public class KrigingCoordinate implements Sedarim {
-  /** @param tensorUnaryOperator
-   * @param hsDesign
-   * @param sequence
-   * @return */
-  public static Sedarim of( //
-      Sedarim tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
-    return new KrigingCoordinate(tensorUnaryOperator, hsDesign, sequence);
-  }
-
-  // ---
   private final HsDesign hsDesign;
   private final Kriging kriging;
   private final Tensor sequence;
 
-  private KrigingCoordinate( //
-      Sedarim tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
+  /** @param sedarim
+   * @param hsDesign
+   * @param sequence */
+  public KrigingCoordinate(Sedarim sedarim, HsDesign hsDesign, Tensor sequence) {
     this.hsDesign = Objects.requireNonNull(hsDesign);
-    this.kriging = Kriging.barycentric(tensorUnaryOperator, sequence);
+    this.kriging = Kriging.barycentric(sedarim, sequence);
     this.sequence = sequence;
   }
 

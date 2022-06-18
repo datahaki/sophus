@@ -3,7 +3,7 @@ package ch.alpine.sophus.dv;
 
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.hs.gr.GrMetric;
+import ch.alpine.sophus.hs.gr.GrManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
@@ -17,7 +17,7 @@ public class CupolaBiinvariant extends BiinvariantBase {
   @Override // from Biinvariant
   public Sedarim distances(Tensor sequence) {
     BiinvariantVectorFunction biinvariantVectorFunction = //
-        new InfluenceBiinvariantVector(hsDesign(), sequence, GrMetric.INSTANCE);
+        new InfluenceBiinvariantVector(hsDesign(), sequence, GrManifold.INSTANCE);
     return point -> biinvariantVectorFunction.biinvariantVector(point).vector();
   }
 

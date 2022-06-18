@@ -67,7 +67,7 @@ public enum Biinvariants {
     Map<Biinvariants, Biinvariant> map = new EnumMap<>(Biinvariants.class);
     if (manifold instanceof MetricManifold)
       map.put(METRIC, new MetricBiinvariant(manifold));
-    // TODO Garden?!
+    // TODO SOPHUS Garden?!
     map.put(HARBOR, new HarborBiinvariant(manifold));
     return map;
   }

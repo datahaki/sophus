@@ -27,22 +27,22 @@ public abstract class BiinvariantBase implements Biinvariant, Serializable {
 
   @Override // from Biinvariant
   public final Sedarim var_dist(ScalarUnaryOperator variogram, Tensor sequence) {
-    Sedarim tensorUnaryOperator = distances(sequence);
+    Sedarim sedarim = distances(sequence);
     Objects.requireNonNull(variogram);
-    return point -> tensorUnaryOperator.sunder(point).map(variogram);
+    return point -> sedarim.sunder(point).map(variogram);
   }
 
   @Override // from Biinvariant
   public final Sedarim weighting(ScalarUnaryOperator variogram, Tensor sequence) {
-    Sedarim tensorUnaryOperator = var_dist(variogram, sequence);
-    return point -> NormalizeTotal.FUNCTION.apply(tensorUnaryOperator.sunder(point));
+    Sedarim sedarim = var_dist(variogram, sequence);
+    return point -> NormalizeTotal.FUNCTION.apply(sedarim.sunder(point));
   }
 
   @Override // from Biinvariant
   public Sedarim lagrainate(ScalarUnaryOperator variogram, Tensor sequence) {
-    Sedarim tensorUnaryOperator = weighting(variogram, sequence);
+    Sedarim sedarim = weighting(variogram, sequence);
     return point -> LagrangeCoordinates.of( //
         hsDesign().matrix(sequence, point), // TODO SOPHUS ALG levers are computed twice
-        tensorUnaryOperator.sunder(point)); // target
+        sedarim.sunder(point)); // target
   }
 }

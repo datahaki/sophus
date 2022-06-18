@@ -8,26 +8,18 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.re.Inverse;
 
 public class InverseCoordinate implements Sedarim {
-  /** @param tensorUnaryOperator
-   * @param manifold
-   * @param sequence
-   * @return */
-  public static Sedarim of( //
-      Sedarim tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
-    return new InverseCoordinate(tensorUnaryOperator, hsDesign, sequence);
-  }
-
-  // ---
-  private final Sedarim tensorUnaryOperator;
+  private final Sedarim sedarim;
   private final Tensor weights;
   private final HsDesign hsDesign;
   private final Tensor sequence;
 
-  private InverseCoordinate( //
-      Sedarim tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
+  /** @param sedarim
+   * @param manifold
+   * @param sequence */
+  public InverseCoordinate(Sedarim sedarim, HsDesign hsDesign, Tensor sequence) {
     this.hsDesign = hsDesign;
-    this.tensorUnaryOperator = tensorUnaryOperator;
-    Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder)));
+    this.sedarim = sedarim;
+    Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(sedarim::sunder)));
     weights = Inverse.of(vardst);
     this.sequence = sequence;
   }
@@ -36,7 +28,6 @@ public class InverseCoordinate implements Sedarim {
   public Tensor sunder(Tensor point) {
     return StaticHelper.barycentric( //
         hsDesign.matrix(sequence, point), //
-        // TODO SOPHUS check! ?
-        tensorUnaryOperator.sunder(point).dot(weights));
+        sedarim.sunder(point).dot(weights));
   }
 }

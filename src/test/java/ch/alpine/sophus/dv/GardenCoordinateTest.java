@@ -1,7 +1,10 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.lang.reflect.Modifier;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +42,11 @@ class GardenCoordinateTest {
 
   @Test
   void testNullFail() {
-    assertThrows(Exception.class, () -> GardenCoordinate.of(RnGroup.INSTANCE, null, HilbertMatrix.of(10, 3)));
+    assertThrows(Exception.class, () -> new GardenCoordinate(RnGroup.INSTANCE, null, HilbertMatrix.of(10, 3)));
+  }
+
+  @Test
+  void testNonPublic() {
+    assertFalse(Modifier.isPublic(GardenCoordinate.class.getModifiers()));
   }
 }

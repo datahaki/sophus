@@ -23,37 +23,35 @@ import ch.alpine.tensor.mat.pi.LeastSquares;
  * @see Biinvariant
  * @see Kriging */
 public class RadialBasisFunctionInterpolation implements TensorUnaryOperator {
-  /** @param tensorUnaryOperator to compute distance vector of a given point to the points in sequence
+  /** @param sedarim to compute distance vector of a given point to the points in sequence
    * @param sequence of points
    * @param values
    * @return */
-  public static TensorUnaryOperator of(Sedarim tensorUnaryOperator, Tensor sequence, Tensor values) {
-    return new RadialBasisFunctionInterpolation(tensorUnaryOperator, sequence, values);
+  public static TensorUnaryOperator of(Sedarim sedarim, Tensor sequence, Tensor values) {
+    return new RadialBasisFunctionInterpolation(sedarim, sequence, values);
   }
 
-  /** @param tensorUnaryOperator
+  /** @param sedarim
    * @param sequence
    * @return */
-  // TODO GENESIS!?
-  public static TensorUnaryOperator of(Sedarim tensorUnaryOperator, Tensor sequence) {
-    return of(tensorUnaryOperator, sequence, IdentityMatrix.of(sequence.length()));
+  public static TensorUnaryOperator of(Sedarim sedarim, Tensor sequence) {
+    // TODO SOPHUS IMPL can be improved since no need dotting with id-matrix
+    return of(sedarim, sequence, IdentityMatrix.of(sequence.length()));
   }
 
   // ---
-  private final Sedarim tensorUnaryOperator;
+  private final Sedarim sedarim;
   private final Tensor weights;
 
-  private RadialBasisFunctionInterpolation( //
-      Sedarim tensorUnaryOperator, Tensor sequence, Tensor values) {
-    this.tensorUnaryOperator = tensorUnaryOperator;
+  private RadialBasisFunctionInterpolation(Sedarim sedarim, Tensor sequence, Tensor values) {
+    this.sedarim = sedarim;
     weights = LeastSquares.of( //
-        Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder)), // distance matrix as in Kriging
+        Tensor.of(sequence.stream().map(sedarim::sunder)), // distance matrix as in Kriging
         values);
   }
 
   @Override
   public Tensor apply(Tensor point) {
-    // TODO SOPHUS API check design
-    return tensorUnaryOperator.sunder(point).dot(weights);
+    return sedarim.sunder(point).dot(weights);
   }
 }

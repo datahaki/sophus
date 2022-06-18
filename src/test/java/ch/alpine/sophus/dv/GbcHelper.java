@@ -40,7 +40,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return InverseCoordinate.of( //
+        return new InverseCoordinate( //
             biinvariant.distances(sequence), //
             biinvariant.hsDesign(), sequence).sunder(point);
       }
@@ -51,7 +51,7 @@ public enum GbcHelper {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return KrigingCoordinate.of( //
+        return new KrigingCoordinate( //
             biinvariant.distances(sequence), //
             biinvariant.hsDesign(), sequence).sunder(point);
       }

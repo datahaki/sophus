@@ -35,7 +35,7 @@ import ch.alpine.tensor.mat.gr.Mahalanobis;
     }
   }
 
-  @Override
+  @Override // from Sedarim
   public Tensor sunder(Tensor point) {
     AtomicInteger atomicInteger = new AtomicInteger();
     return Tensor.of(array.stream() //

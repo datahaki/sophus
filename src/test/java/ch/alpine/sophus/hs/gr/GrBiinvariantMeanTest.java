@@ -37,7 +37,7 @@ class GrBiinvariantMeanTest {
     Tensor sequence = Tensors.of(p);
     for (int iter = 0; iter < 10; ++iter) {
       Tensor q = RandomSample.of(randomSampleInterface);
-      Scalar distance = GrMetric.INSTANCE.distance(p, q);
+      Scalar distance = GrManifold.INSTANCE.distance(p, q);
       if (Scalars.lessThan(distance, maxDist))
         sequence.append(q);
     }
@@ -46,7 +46,7 @@ class GrBiinvariantMeanTest {
     assertThrows(Exception.class, () -> BIINVARIANT_MEAN.mean(sequence, RandomVariate.of(distribution, n)));
     Tensor point = BIINVARIANT_MEAN.mean(sequence, weights);
     GrMemberQ.INSTANCE.require(point);
-    GrMetric.INSTANCE.distance(p, point);
+    GrManifold.INSTANCE.distance(p, point);
     {
       Tensor g = RandomSample.of(SoRandomSample.of(4));
       GrAction grAction = new GrAction(g);

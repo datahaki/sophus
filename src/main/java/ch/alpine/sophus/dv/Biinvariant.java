@@ -36,7 +36,6 @@ public interface Biinvariant {
 
   /** barycentric coordinate solution of Lagrange multiplier system
    * 
-   * 
    * @param variogram
    * @param sequence
    * @return operator that provides barycentric coordinates */

@@ -71,7 +71,7 @@ public class SPatch implements Sedarim {
     return Tensor.of(ls.stream().map(this::embed));
   }
 
-  @Override
+  @Override // from Sedarim
   public Tensor sunder(Tensor xy) {
     Tensor levers = Tensor.of(v.stream().map(p -> p.subtract(xy)));
     Tensor coords = genesis.origin(levers);

@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.lang.reflect.Modifier;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsDesign;
@@ -81,5 +85,10 @@ class LeveragesDistanceVectorTest {
       BarycentricCoordinate barycentricCoordinate = new HsCoordinates(new HsDesign(manifold), LeveragesDistanceVector.INSTANCE);
       barycentricCoordinate.weights(sequence, point);
     }
+  }
+
+  @Test
+  void testNonPublic() {
+    assertFalse(Modifier.isPublic(LeveragesDistanceVector.class.getModifiers()));
   }
 }

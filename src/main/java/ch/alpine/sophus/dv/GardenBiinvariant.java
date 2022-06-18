@@ -20,6 +20,6 @@ public class GardenBiinvariant extends BiinvariantBase {
 
   @Override // from Biinvariant
   public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
-    return GardenCoordinate.of(manifold, variogram, sequence);
+    return new GardenCoordinate(manifold, variogram, sequence);
   }
 }
