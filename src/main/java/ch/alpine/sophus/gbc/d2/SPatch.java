@@ -2,6 +2,7 @@
 package ch.alpine.sophus.gbc.d2;
 
 import ch.alpine.sophus.hs.Genesis;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -11,7 +12,6 @@ import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Tuples;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.FirstPosition;
 
@@ -19,7 +19,7 @@ import ch.alpine.tensor.red.FirstPosition;
  * "Multi-Sided Patches via Barycentric Coordinates"
  * by Scott Schaefer in the book
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics" */
-public class SPatch implements TensorUnaryOperator {
+public class SPatch implements Sedarim {
   /** @param n
    * @param genesis
    * @param d
@@ -72,7 +72,7 @@ public class SPatch implements TensorUnaryOperator {
   }
 
   @Override
-  public Tensor apply(Tensor xy) {
+  public Tensor sunder(Tensor xy) {
     Tensor levers = Tensor.of(v.stream().map(p -> p.subtract(xy)));
     Tensor coords = genesis.origin(levers);
     Tensor matrix = Array.zeros(n, ls.length());

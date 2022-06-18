@@ -34,7 +34,7 @@ class SPatchTest {
       }
     }
     for (Tensor xy : RandomVariate.of(UniformDistribution.of(-1, 1), 40, 2)) {
-      Tensor weights = sPatch.apply(xy);
+      Tensor weights = sPatch.sunder(xy);
       Tolerance.CHOP.requireClose(Total.ofVector(weights), RealScalar.ONE);
       Tensor embed = sPatch.getEmbed();
       Tolerance.CHOP.requireClose(weights.dot(embed), xy);
