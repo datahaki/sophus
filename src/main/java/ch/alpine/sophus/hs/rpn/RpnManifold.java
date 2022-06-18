@@ -3,11 +3,9 @@ package ch.alpine.sophus.hs.rpn;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -68,8 +66,8 @@ public enum RpnManifold implements HomogeneousSpace, MetricManifold {
     return Min.of(d_xy, Pi.VALUE.subtract(d_xy));
   }
 
-  @Override // from ManifoldDisplay
-  public Biinvariant biinvariant() {
-    return MetricBiinvariant.EUCLIDEAN;
+  @Override // from TensorNorm
+  public Scalar norm(Tensor v) {
+    return Vector2Norm.of(v);
   }
 }

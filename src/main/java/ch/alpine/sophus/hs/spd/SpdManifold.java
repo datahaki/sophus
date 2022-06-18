@@ -3,12 +3,11 @@ package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.MetricManifold;
+import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.LinearSolve;
@@ -68,8 +67,8 @@ public enum SpdManifold implements HomogeneousSpace, MetricManifold {
     return new SpdExponential(p).distance(q);
   }
 
-  @Override // from MetricManifold
-  public Biinvariant biinvariant() {
-    return MetricBiinvariant.VECTORIZE0;
+  @Override // from TensorNorm
+  public Scalar norm(Tensor v) {
+    return LowerVectorize0_2Norm.INSTANCE.norm(v);
   }
 }

@@ -3,11 +3,9 @@ package ch.alpine.sophus.hs.sn;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -94,8 +92,8 @@ public enum SnManifold implements HomogeneousSpace, MetricManifold {
     return new SnAngle(p).apply(q);
   }
 
-  @Override // from ManifoldDisplay
-  public Biinvariant biinvariant() {
-    return MetricBiinvariant.EUCLIDEAN;
+  @Override // from TensorNorm
+  public Scalar norm(Tensor v) {
+    return Vector2Norm.of(v);
   }
 }

@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.hn;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
@@ -11,6 +10,7 @@ import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Ramp;
 
 /** hyperboloid model with fast midpoint computation
  * 
@@ -51,8 +51,8 @@ public enum HnManifold implements HomogeneousSpace, MetricManifold {
     return new HnAngle(p).apply(q);
   }
 
-  @Override // from MetricManifold
-  public Biinvariant biinvariant() {
-    return HnMetricBiinvariant.INSTANCE;
+  @Override // from TensorNorm
+  public Scalar norm(Tensor v) {
+    return HnHypot.of(v, Ramp.FUNCTION);
   }
 }

@@ -4,8 +4,6 @@ package ch.alpine.sophus.lie.rn;
 import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
@@ -64,8 +62,8 @@ public enum RnGroup implements LieGroup, MetricManifold {
     return Vector2Norm.between(p, q);
   }
 
-  @Override // from MetricManifold
-  public Biinvariant biinvariant() {
-    return MetricBiinvariant.EUCLIDEAN;
+  @Override // from TensorNorm
+  public Scalar norm(Tensor v) {
+    return Vector2Norm.of(v);
   }
 }

@@ -2,7 +2,11 @@
 package ch.alpine.sophus.hs;
 
 import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.api.TensorNorm;
 
-public interface MetricManifold extends TensorMetric {
-  Biinvariant biinvariant();
+/** distance between two points
+ * 
+ * norm of tangent vector */
+public interface MetricManifold extends TensorMetric, TensorNorm {
+  // ---
 }
