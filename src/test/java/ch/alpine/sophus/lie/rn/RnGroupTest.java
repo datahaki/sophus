@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
@@ -103,6 +104,7 @@ class RnGroupTest {
   }
 
   @Test
+  @Disabled
   void testLagrangeProperty() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();

@@ -4,6 +4,7 @@ package ch.alpine.sophus.dv;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorNorm;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.gr.GrExponential;
@@ -49,12 +50,13 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 
   @Override // from Biinvariant
   public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
-    Objects.requireNonNull(variogram);
     Objects.requireNonNull(sequence);
-    return point -> {
-      Tensor levers = hsDesign().matrix(sequence, point);
-      return StaticHelper.barycentric(levers, norms(levers, variogram));
-    };
+    Objects.requireNonNull(variogram);
+    return point -> coordinate(variogram).origin(hsDesign().matrix(sequence, point));
+  }
+
+  public Genesis coordinate(ScalarUnaryOperator variogram) {
+    return levers -> StaticHelper.barycentric(levers, norms(levers, variogram));
   }
 
   @Override // from Biinvariant

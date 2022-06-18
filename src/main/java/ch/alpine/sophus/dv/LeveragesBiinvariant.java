@@ -43,7 +43,11 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 
   @Override // from Biinvariant
   public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
-    return HsGenesis.wrap(hsDesign(), new LeveragesGenesis(variogram), sequence);
+    return HsGenesis.wrap(hsDesign(), coordinate(variogram), sequence);
+  }
+
+  public Genesis coordinate(ScalarUnaryOperator variogram) {
+    return new LeveragesGenesis(variogram);
   }
 
   @Override // from Biinvariant

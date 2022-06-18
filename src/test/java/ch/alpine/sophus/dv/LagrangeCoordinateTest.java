@@ -36,7 +36,7 @@ class LagrangeCoordinateTest {
   void testReal() throws ClassNotFoundException, IOException {
     Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of);
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
-    Genesis idc = new MetricCoordinate(idw);
+    Genesis idc = new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2));
     for (int d = 1; d < 4; ++d)
       for (int n = 5; n < 10; ++n) {
         Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, d);

@@ -5,10 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.itp.InverseDistanceWeighting;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** partition of unity
  * linear reproduction
@@ -53,12 +52,10 @@ public record MetricCoordinate(Genesis genesis) implements Genesis, Serializable
    * Distance may depend on sequence! In that case only the correct sequence
    * should be passed to the function {@link #weights(Tensor, Tensor)}!
    * 
-   * @param genesis operator with design matrix as input
-   * @return */
-  /** @param variogram for example InversePowerVariogram.of(2)
-   * @return */
+   * @param variogram for example InversePowerVariogram.of(2)
+   * @return genesis operator with design matrix as input */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return new MetricCoordinate(new InverseDistanceWeighting(variogram, Vector2Norm::of));
+    return new MetricBiinvariant(RnGroup.INSTANCE).coordinate(variogram);
   }
 
   private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);
