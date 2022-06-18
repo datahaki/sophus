@@ -51,7 +51,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
     Objects.requireNonNull(variogram);
     Objects.requireNonNull(sequence);
     return point -> {
-      Tensor levers = hsDesign().matrix(sequence, sequence);
+      Tensor levers = hsDesign().matrix(sequence, point);
       Tensor target = NormalizeTotal.FUNCTION.apply(origin(levers).map(variogram));
       return LagrangeCoordinates.of(levers, target);
     };

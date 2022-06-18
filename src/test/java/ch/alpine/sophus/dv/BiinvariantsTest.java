@@ -14,6 +14,11 @@ import ch.alpine.tensor.ext.Serialization;
 
 class BiinvariantsTest {
   @Test
+  void testSerializable() throws ClassNotFoundException, IOException {
+    Serialization.copy(Biinvariants.all(RnGroup.INSTANCE));
+  }
+
+  @Test
   void testDistanceSequenceNullFail() {
     for (Biinvariant biinvariant : Biinvariants.all(RnGroup.INSTANCE).values())
       assertThrows(Exception.class, () -> biinvariant.distances(null));
