@@ -12,6 +12,8 @@ import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.dv.HsCoordinates;
+import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -23,7 +25,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -32,8 +33,8 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
 class InverseDistanceWeightingTest {
-  private static final InverseDistanceWeighting INVERSE_DISTANCE_WEIGHTING = //
-      new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of);
+  private static final Genesis INVERSE_DISTANCE_WEIGHTING = //
+      new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2));
 
   @Test
   void testSimple() {
@@ -71,7 +72,8 @@ class InverseDistanceWeightingTest {
   void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     BarycentricCoordinate barycentricCoordinate = Serialization.copy( //
-        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(1), Vector2Norm::of)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), //
+            new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(1))));
     Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
@@ -87,6 +89,6 @@ class InverseDistanceWeightingTest {
 
   @Test
   void testFail() {
-    assertThrows(Exception.class, () -> new InverseDistanceWeighting(null, Vector2Norm::of));
+    assertThrows(Exception.class, () -> new MetricBiinvariant(RnGroup.INSTANCE).weighting(null));
   }
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -17,7 +16,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.d.NegativeBinomialDistribution;
@@ -34,7 +32,7 @@ class LagrangeCoordinateTest {
 
   @Test
   void testReal() throws ClassNotFoundException, IOException {
-    Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of);
+    Genesis idw = new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2));
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
     Genesis idc = new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2));
     for (int d = 1; d < 4; ++d)
@@ -47,7 +45,7 @@ class LagrangeCoordinateTest {
 
   @Test
   void testComplex() throws ClassNotFoundException, IOException {
-    Genesis idw = new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of);
+    Genesis idw = new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2));
     Genesis genesis = Serialization.copy(new LagrangeCoordinate(idw));
     for (int d = 1; d < 4; ++d)
       for (int n = 5; n < 10; ++n) {

@@ -29,7 +29,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * for alternative implementations
  * 
  * @see HnMetricBiinvariant */
-/* package */ class MetricBiinvariant extends BiinvariantBase {
+public class MetricBiinvariant extends BiinvariantBase {
   /** Careful: not suitable for {@link SpdExponential}, and {@link GrExponential}
    * because these implementations drop coefficients of the log in the vectorLog
    * implementation. that means the scalar product on the subspace would have to be
@@ -48,6 +48,21 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
     return point -> Tensor.of(hsDesign().stream(sequence, point).map(tensorNorm::norm));
   }
 
+  /** Inverse Distance Weighting does not reproduce linear functions in general. Therefore,
+   * Inverse distance weights <b>do not</b> fall in the category of generalized barycentric
+   * coordinates.
+   * 
+   * <p>Reference:
+   * "A two-dimensional interpolation function for irregularly-spaced data"
+   * by Donald Shepard, 1968 */
+  public Genesis weighting(ScalarUnaryOperator variogram) {
+    Objects.requireNonNull(variogram);
+    // the normalization is necessary to compensate for division by zero
+    return levers -> NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
+        .map(tensorNorm::norm) //
+        .map(variogram)));
+  }
+
   @Override // from Biinvariant
   public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
     Objects.requireNonNull(sequence);
@@ -56,7 +71,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
   }
 
   public Genesis coordinate(ScalarUnaryOperator variogram) {
-    return levers -> StaticHelper.barycentric(levers, normed(levers, variogram));
+    return levers -> StaticHelper.barycentric(levers, weighting(variogram).origin(levers));
   }
 
   @Override // from Biinvariant
@@ -65,12 +80,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
     Objects.requireNonNull(sequence);
     return point -> {
       Tensor levers = hsDesign().matrix(sequence, point);
-      return LagrangeCoordinates.of(levers, normed(levers, variogram));
+      return LagrangeCoordinates.of(levers, weighting(variogram).origin(levers));
     };
-  }
-
-  private Tensor normed(Tensor levers, ScalarUnaryOperator variogram) {
-    // the normalization is necessary to compensate for division by zero
-    return NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream().map(tensorNorm::norm).map(variogram)));
   }
 }

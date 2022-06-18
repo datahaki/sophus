@@ -9,12 +9,12 @@ import java.util.Deque;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
-import ch.alpine.sophus.itp.InverseDistanceWeighting;
+import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
@@ -25,7 +25,8 @@ class IterativeTargetCoordinateTest {
   void testSimple() {
     int count = 0;
     IterativeTargetCoordinate genesis = //
-        new IterativeTargetCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of), RealScalar.ONE, 100);
+        new IterativeTargetCoordinate( //
+            new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), RealScalar.ONE, 100);
     for (int n = 5; n < 20; ++n) {
       Tensor levers = RandomVariate.of(NormalDistribution.standard(), n, 2);
       if (OriginEnclosureQ.isInsideConvexHull(levers)) {
