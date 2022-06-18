@@ -23,6 +23,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -31,10 +32,14 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
 class InverseDistanceWeightingTest {
+  private static final InverseDistanceWeighting INVERSE_DISTANCE_WEIGHTING = //
+      new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of);
+
   @Test
   void testSimple() {
+    // inverseDistanceWeighting
     BarycentricCoordinate barycentricCoordinate = //
-        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), INVERSE_DISTANCE_WEIGHTING);
     Tensor weights = barycentricCoordinate.weights(Tensors.vector(1, 3).map(Tensors::of), RealScalar.of(2).map(Tensors::of));
     assertEquals(weights, Tensors.of(RationalScalar.HALF, RationalScalar.HALF));
   }
@@ -42,7 +47,7 @@ class InverseDistanceWeightingTest {
   @Test
   void testExact() {
     BarycentricCoordinate barycentricCoordinate = //
-        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), INVERSE_DISTANCE_WEIGHTING);
     Tensor weights = barycentricCoordinate.weights(Tensors.fromString("{{2}, {3}}"), Tensors.vector(3));
     ExactTensorQ.require(weights);
     assertEquals(weights, UnitVector.of(2, 1));
@@ -52,7 +57,7 @@ class InverseDistanceWeightingTest {
   void testPoints() {
     Distribution distribution = UniformDistribution.unit();
     BarycentricCoordinate barycentricCoordinate = //
-        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(2)));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), INVERSE_DISTANCE_WEIGHTING);
     for (int n = 5; n < 10; ++n) {
       Tensor p1 = RandomVariate.of(distribution, n, 2);
       for (int index = 0; index < p1.length(); ++index) {
@@ -66,7 +71,7 @@ class InverseDistanceWeightingTest {
   void testQuantity() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
     BarycentricCoordinate barycentricCoordinate = Serialization.copy( //
-        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(1))));
+        new HsCoordinates(new HsDesign(RnGroup.INSTANCE), new InverseDistanceWeighting(InversePowerVariogram.of(1), Vector2Norm::of)));
     Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
@@ -82,6 +87,6 @@ class InverseDistanceWeightingTest {
 
   @Test
   void testFail() {
-    assertThrows(Exception.class, () -> new InverseDistanceWeighting(null));
+    assertThrows(Exception.class, () -> new InverseDistanceWeighting(null, Vector2Norm::of));
   }
 }

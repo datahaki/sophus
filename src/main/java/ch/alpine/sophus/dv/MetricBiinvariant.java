@@ -4,13 +4,10 @@ package ch.alpine.sophus.dv;
 import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.hs.HsGenesis;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.gr.GrExponential;
 import ch.alpine.sophus.hs.spd.SpdExponential;
-import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -47,14 +44,17 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
   @Override // from Biinvariant
   public Sedarim distances(Tensor sequence) {
     Objects.requireNonNull(sequence);
-    return point -> Tensor.of(hsDesign().stream(sequence, point) //
-        .map(tensorNorm::norm));
+    return point -> Tensor.of(hsDesign().stream(sequence, point).map(tensorNorm::norm));
   }
 
   @Override // from Biinvariant
   public Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
-    Genesis genesis = new MetricCoordinate(new InverseDistanceWeighting(variogram, tensorNorm::norm));
-    return HsGenesis.wrap(hsDesign(), genesis, sequence);
+    Objects.requireNonNull(variogram);
+    Objects.requireNonNull(sequence);
+    return point -> {
+      Tensor levers = hsDesign().matrix(sequence, point);
+      return StaticHelper.barycentric(levers, norms(levers, variogram));
+    };
   }
 
   @Override // from Biinvariant
@@ -65,9 +65,11 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
       Tensor levers = hsDesign().matrix(sequence, point);
       return LagrangeCoordinates.of( //
           levers, //
-          NormalizeTotal.FUNCTION.apply(Tensor.of(levers.stream() //
-              .map(tensorNorm::norm) //
-              .map(variogram))));
+          NormalizeTotal.FUNCTION.apply(norms(levers, variogram)));
     };
+  }
+
+  private Tensor norms(Tensor levers, ScalarUnaryOperator variogram) {
+    return Tensor.of(levers.stream().map(tensorNorm::norm).map(variogram));
   }
 }

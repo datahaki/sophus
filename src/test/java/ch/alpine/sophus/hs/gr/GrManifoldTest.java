@@ -74,12 +74,13 @@ class GrManifoldTest {
         Biinvariants.METRIC.of(manifold), //
         Biinvariants.LEVERAGES.of(manifold), //
         Biinvariants.GARDEN.of(manifold) };
-    Random random = new Random();
-    int n = 3 + random.nextInt(2);
+    Random random1 = new Random();
+    int n = 3 + random1.nextInt(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    int k = 1 + random.nextInt(n - 1);
+    int k = 1 + random1.nextInt(n - 1);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     int d = k * (n - k);
+    Random random = new Random(1);
     Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
     Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
     for (Biinvariant biinvariant : biinvariants) {

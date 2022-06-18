@@ -11,7 +11,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 /** immutable
  * 
  * @see HarborBiinvariantVector */
-public record BiinvariantVector(InfluenceMatrix influenceMatrix, Tensor vector) implements Serializable {
+/* package */ record BiinvariantVector(InfluenceMatrix influenceMatrix, Tensor vector) implements Serializable {
   /** @return vector of affine weights */
   public Tensor weighting(ScalarUnaryOperator variogram) {
     return NormalizeTotal.FUNCTION.apply(vector.map(variogram));

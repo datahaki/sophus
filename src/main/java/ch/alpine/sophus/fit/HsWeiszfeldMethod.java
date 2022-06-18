@@ -9,7 +9,6 @@ import java.util.function.UnaryOperator;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.AveragingWeights;
 import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.red.Times;
@@ -23,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
  * by Amir Beck, Shoham Sabach
  * 
  * @param biinvariantMean
- * @param weightingInterface for instance {@link InverseDistanceWeighting}
+ * @param weightingInterface for instance InverseDistanceWeighting
  * @param chop */
 public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, Sedarim sedarim, Chop chop) //
     implements SpatialMedian, Serializable {

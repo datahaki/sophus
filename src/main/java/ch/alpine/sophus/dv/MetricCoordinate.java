@@ -8,6 +8,7 @@ import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** partition of unity
  * linear reproduction
@@ -57,7 +58,7 @@ public record MetricCoordinate(Genesis genesis) implements Genesis, Serializable
   /** @param variogram for example InversePowerVariogram.of(2)
    * @return */
   public static Genesis of(ScalarUnaryOperator variogram) {
-    return new MetricCoordinate(new InverseDistanceWeighting(variogram));
+    return new MetricCoordinate(new InverseDistanceWeighting(variogram, Vector2Norm::of));
   }
 
   private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);
@@ -81,7 +82,7 @@ public record MetricCoordinate(Genesis genesis) implements Genesis, Serializable
     Objects.requireNonNull(genesis);
   }
 
-  @Override // from BarycentricCoordinate
+  @Override // from Genesis
   public Tensor origin(Tensor levers) {
     return StaticHelper.barycentric(levers, genesis.origin(levers));
   }

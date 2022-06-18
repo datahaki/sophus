@@ -1,7 +1,10 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.lang.reflect.Modifier;
 
 import org.junit.jupiter.api.Test;
 
@@ -115,5 +118,10 @@ class BiinvariantVectorTest {
         assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(sigma_inverse, Chop._08));
       }
     }
+  }
+
+  @Test
+  void testNonPublic() {
+    assertFalse(Modifier.isPublic(BiinvariantVector.class.getModifiers()));
   }
 }
