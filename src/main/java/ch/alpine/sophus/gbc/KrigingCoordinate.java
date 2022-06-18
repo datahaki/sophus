@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.gbc;
 
+import java.util.Objects;
+
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.Tensor;
@@ -23,7 +25,7 @@ public class KrigingCoordinate implements TensorUnaryOperator {
 
   private KrigingCoordinate( //
       TensorUnaryOperator tensorUnaryOperator, HsDesign hsDesign, Tensor sequence) {
-    this.hsDesign = hsDesign;
+    this.hsDesign = Objects.requireNonNull(hsDesign);
     this.kriging = Kriging.barycentric(tensorUnaryOperator, sequence);
     this.sequence = sequence;
   }

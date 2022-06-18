@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.HarborBiinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -156,8 +157,10 @@ class KrigingTest {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Map<Biinvariants, Biinvariant> map = Biinvariants.kriging(RnGroup.INSTANCE);
-    for (Biinvariant biinvariant : map.values()) {
+    // Map<Biinvariants, Biinvariant> map = Biinvariants.kriging();
+    Biinvariant biinvariant = new HarborBiinvariant(RnGroup.INSTANCE);
+    // for (Biinvariant biinvariant : map.values())
+    {
       TensorUnaryOperator weightingInterface = biinvariant.var_dist(variogram, sequence);
       Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));

@@ -51,7 +51,7 @@ import ch.alpine.tensor.sca.Unitize;
 
 class Se2CoveringManifoldTest {
   private static final BarycentricCoordinate[] ALL_COORDINATES = //
-      GbcHelper.barycentrics(Se2CoveringGroup.INSTANCE);
+      GbcHelper.biinvariant(Se2CoveringGroup.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //
       GbcHelper.biinvariant(Se2CoveringGroup.INSTANCE);

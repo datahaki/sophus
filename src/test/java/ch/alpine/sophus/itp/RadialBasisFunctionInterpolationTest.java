@@ -27,7 +27,6 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class RadialBasisFunctionInterpolationTest {
-  // public static final Biinvariant[] PDA = { Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR };
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
@@ -37,7 +36,7 @@ class RadialBasisFunctionInterpolationTest {
     Tensor values = RandomVariate.of(distribution, random, n, 2);
     VariogramFunctions[] vars = { VariogramFunctions.POWER, VariogramFunctions.INVERSE_POWER, VariogramFunctions.GAUSSIAN,
         VariogramFunctions.INVERSE_MULTIQUADRIC };
-    Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
+    Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values())
       for (VariogramFunctions variograms : vars) {
         TensorUnaryOperator weightingInterface = biinvariant.weighting(variograms.of(RealScalar.TWO), sequence);
@@ -56,7 +55,7 @@ class RadialBasisFunctionInterpolationTest {
     Random random = new Random(1);
     Tensor sequence = RandomVariate.of(distribution, random, n, 3);
     Tensor values = RandomVariate.of(distribution, random, n, 2);
-    Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
+    Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       TensorUnaryOperator weightingInterface = biinvariant.var_dist(PowerVariogram.of(1, 2), sequence);
       TensorUnaryOperator tensorUnaryOperator = //
@@ -73,7 +72,7 @@ class RadialBasisFunctionInterpolationTest {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     Tensor sequence = RandomVariate.of(distribution, n, 3);
-    Map<Biinvariants, Biinvariant> map = Biinvariants.all(RnGroup.INSTANCE);
+    Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       TensorUnaryOperator weightingInterface = biinvariant.weighting(PowerVariogram.of(1, 2), sequence);
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface, sequence);

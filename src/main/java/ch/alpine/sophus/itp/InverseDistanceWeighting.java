@@ -19,14 +19,19 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * <p>Reference:
  * "A two-dimensional interpolation function for irregularly-spaced data"
  * by Donald Shepard, 1968 */
-public record InverseDistanceWeighting( //
-    ScalarUnaryOperator variogram, //
-    TensorScalarFunction tensorScalarFunction) implements Genesis, Serializable {
+public record InverseDistanceWeighting(ScalarUnaryOperator variogram, TensorScalarFunction tensorScalarFunction) //
+    implements Genesis, Serializable {
   /** @param variogram
    * @return
    * @see InversePowerVariogram */
+  @Deprecated // TODO SOPHUS probably depr
   public InverseDistanceWeighting(ScalarUnaryOperator variogram) {
-    this(Objects.requireNonNull(variogram), Vector2Norm::of);
+    this(variogram, Vector2Norm::of);
+  }
+
+  public InverseDistanceWeighting {
+    Objects.requireNonNull(variogram);
+    Objects.requireNonNull(tensorScalarFunction);
   }
 
   @Override // from Genesis

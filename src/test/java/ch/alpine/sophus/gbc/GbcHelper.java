@@ -14,11 +14,11 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 public enum GbcHelper {
   ;
-  public static BarycentricCoordinate lagrainate_of(Biinvariant biinvariants, ScalarUnaryOperator variogram) {
+  public static BarycentricCoordinate lagrainate_of(Biinvariant biinvariant, ScalarUnaryOperator variogram) {
     return new BarycentricCoordinate() {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
-        return biinvariants.lagrainate(variogram, sequence).apply(point);
+        return biinvariant.lagrainate(variogram, sequence).apply(point);
       }
     };
   }

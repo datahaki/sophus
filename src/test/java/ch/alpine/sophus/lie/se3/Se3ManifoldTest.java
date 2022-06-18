@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.Clips;
 class Se3ManifoldTest {
   private static final IterativeBiinvariantMean ITERATIVE_BIINVARIANT_MEAN = //
       IterativeBiinvariantMean.argmax(Se3Group.INSTANCE, Chop._12);
-  private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.barycentrics(Se3Group.INSTANCE);
+  private static final BarycentricCoordinate[] ALL_COORDINATES = GbcHelper.biinvariant(Se3Group.INSTANCE);
   private static final BarycentricCoordinate[] BII_COORDINATES = //
       GbcHelper.biinvariant(Se3Group.INSTANCE);
   private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se3Group.INSTANCE);

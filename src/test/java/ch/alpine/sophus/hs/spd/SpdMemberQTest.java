@@ -58,19 +58,19 @@ class SpdMemberQTest {
   void testBiinvarianceGln() {
     Random random = new Random(4);
     int n = 2 + random.nextInt(2);
-    Map<Biinvariants, Biinvariant> map = Biinvariants.all(SpdManifold.INSTANCE);
-    for (Biinvariant biinvariants : map.values()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.magic4(SpdManifold.INSTANCE);
+    for (Biinvariant biinvariant : map.values()) {
       int count = 1 + random.nextInt(3);
       int len = n * (n + 1) / 2 + count;
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor sequence = RandomSample.of(rsi, random, len);
       Tensor mL = RandomSample.of(rsi, random);
-      Tensor weights1 = biinvariants.coordinate(InversePowerVariogram.of(2), sequence).apply(mL);
+      Tensor weights1 = biinvariant.coordinate(InversePowerVariogram.of(2), sequence).apply(mL);
       // ---
       Tensor g = RandomVariate.of(NormalDistribution.standard(), random, n, n);
       Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
       Tensor mR = BasisTransform.ofForm(mL, g);
-      Tensor weights2 = biinvariants.coordinate(InversePowerVariogram.of(2), sR).apply(mR);
+      Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).apply(mR);
       Chop._02.requireClose(weights1, weights2);
     }
   }
