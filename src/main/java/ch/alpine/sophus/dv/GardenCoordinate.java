@@ -21,8 +21,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 
   /** @param manifold
    * @param variogram
-   * @param sequence
-   * @return */
+   * @param sequence */
   public GardenCoordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(manifold);
     this.variogram = Objects.requireNonNull(variogram);

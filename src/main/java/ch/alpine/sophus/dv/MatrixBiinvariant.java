@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
-import java.io.Serializable;
+import java.util.Objects;
 
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.Manifold;
@@ -9,7 +9,6 @@ import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.PackageTestAccess;
-import ch.alpine.tensor.nrm.FrobeniusNorm;
 
 /** matrices are projection matrices, i.e. from the grassmann-manifold */
 /* package */ abstract class MatrixBiinvariant extends BiinvariantBase implements TensorMetric {
@@ -25,6 +24,7 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 
   @Override // from Biinvariant
   public final Sedarim coordinate(ScalarUnaryOperator variogram, Tensor sequence) {
+    Objects.requireNonNull(variogram);
     BiinvariantVectorFunction biinvariantVectorFunction = biinvariantVectorFunction(sequence);
     return point -> biinvariantVectorFunction.biinvariantVector(point).coordinate(variogram);
   }
@@ -38,7 +38,6 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
    * by Jan Hakenberg, 2020 */
   @PackageTestAccess
   final BiinvariantVectorFunction biinvariantVectorFunction(Tensor sequence) {
-    return new InfluenceBiinvariantVector( //
-        hsDesign(), sequence, (TensorMetric & Serializable) (x, y) -> FrobeniusNorm.between(x, y));
+    return new InfluenceBiinvariantVector(hsDesign(), sequence, this);
   }
 }

@@ -1,12 +1,9 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import java.lang.reflect.Modifier;
-
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
@@ -67,7 +64,8 @@ class LeveragesDistanceVectorTest {
   void testDistances() {
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = Se2CoveringGroup.INSTANCE;
-    BarycentricCoordinate w1 = new HsCoordinates(new HsDesign(manifold), LeveragesDistanceVector.INSTANCE);
+    Genesis genesis = new LeveragesBiinvariant(manifold);
+    BarycentricCoordinate w1 = new HsCoordinates(new HsDesign(manifold), genesis);
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
@@ -78,17 +76,13 @@ class LeveragesDistanceVectorTest {
   @Test
   void testSimple() {
     Manifold manifold = Se2CoveringGroup.INSTANCE;
+    Genesis genesis = new LeveragesBiinvariant(manifold);
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     for (int length = 4; length < 10; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      BarycentricCoordinate barycentricCoordinate = new HsCoordinates(new HsDesign(manifold), LeveragesDistanceVector.INSTANCE);
+      BarycentricCoordinate barycentricCoordinate = new HsCoordinates(new HsDesign(manifold), genesis);
       barycentricCoordinate.weights(sequence, point);
     }
-  }
-
-  @Test
-  void testNonPublic() {
-    assertFalse(Modifier.isPublic(LeveragesDistanceVector.class.getModifiers()));
   }
 }

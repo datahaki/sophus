@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -13,7 +14,8 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
   ;
   public static void main(String[] args) {
     Manifold manifold = RnGroup.INSTANCE;
-    BarycentricCoordinate w1 = new HsCoordinates(new HsDesign(manifold), LeveragesDistanceVector.INSTANCE);
+    Genesis genesis = new LeveragesBiinvariant(manifold);
+    BarycentricCoordinate w1 = new HsCoordinates(new HsDesign(manifold), genesis);
     Timing t1 = Timing.stopped();
     Timing t2 = Timing.stopped();
     for (int count = 0; count < 1000; ++count) {
