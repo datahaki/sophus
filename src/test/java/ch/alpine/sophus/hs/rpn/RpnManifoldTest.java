@@ -15,6 +15,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
@@ -57,5 +58,11 @@ class RpnManifoldTest {
         Tensor point = RpnManifold.INSTANCE.biinvariantMean(Chop._14).mean(sequence, weights);
         Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
       }
+  }
+
+  @Test
+  void testDistance() {
+    Tolerance.CHOP.requireZero(RpnManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(+10, 0, 0)));
+    Tolerance.CHOP.requireZero(RpnManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(-10, 0, 0)));
   }
 }

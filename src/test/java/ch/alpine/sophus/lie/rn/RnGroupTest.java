@@ -10,6 +10,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorMapping;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.gbc.AffineWrap;
 import ch.alpine.sophus.gbc.BarycentricCoordinate;
@@ -25,12 +26,14 @@ import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.mat.HilbertMatrix;
@@ -239,6 +242,14 @@ class RnGroupTest {
   @Test
   void testFailNull() {
     assertThrows(Exception.class, () -> RnGroup.INSTANCE.element(null));
+  }
+
+  @Test
+  void testMetric() {
+    TensorMetric tensorMetric = RnGroup.INSTANCE;
+    Scalar scalar = tensorMetric.distance(Tensors.vector(1, 2, 3), Tensors.vector(1 + 3, 2 + 4, 3));
+    assertEquals(scalar, RealScalar.of(5));
+    ExactScalarQ.require(scalar);
   }
   // public void testFailMatrix() {
   // try {
