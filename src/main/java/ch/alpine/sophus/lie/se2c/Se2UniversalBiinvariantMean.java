@@ -6,9 +6,9 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.ScalarBiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.lie.ScalarBiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

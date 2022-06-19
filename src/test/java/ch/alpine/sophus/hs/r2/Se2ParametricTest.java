@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

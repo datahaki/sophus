@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
-import ch.alpine.sophus.api.Metric;
+import ch.alpine.sophus.math.api.Metric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.lie.Quaternion;

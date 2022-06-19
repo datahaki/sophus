@@ -2,7 +2,6 @@
 package ch.alpine.sophus.hs.r3;
 
 import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.math.LagrangeMultiplier;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -13,6 +12,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.itp.Fit;
 import ch.alpine.tensor.lie.Cross;
+import ch.alpine.tensor.mat.pi.LagrangeMultiplier;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Mean;
@@ -55,7 +55,7 @@ public enum MinTriangleAreaSquared implements Genesis {
     Tensor Aeqs = ConstantArray.of(RealScalar.ONE, 1, n);
     Tensor brhs = Tensors.of(RealScalar.ONE);
     /* LeastSquares.usingSvd is required, i.e. linear solve does not work */
-    Tensor sol = new LagrangeMultiplier(Aeye, btar, Aeqs, brhs).usingSvd();
+    Tensor sol = new LagrangeMultiplier(Aeye, Aeqs).usingSvd(btar, brhs);
     /* normalize total for improved numerics */
     return NormalizeTotal.FUNCTION.apply(sol);
   }

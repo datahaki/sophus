@@ -4,8 +4,8 @@ package ch.alpine.sophus.lie.td;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.lie.LieGroupOps;
+import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;

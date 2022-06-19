@@ -4,7 +4,6 @@ package ch.alpine.sophus.itp;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.LagrangeMultiplier;
 import ch.alpine.sophus.math.var.ExponentialVariogram;
 import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.sophus.math.var.SphericalVariogram;
@@ -17,6 +16,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.mat.pi.LagrangeMultiplier;
 import ch.alpine.tensor.mat.pi.PseudoInverse;
 import ch.alpine.tensor.qty.Quantity;
 
@@ -82,10 +82,10 @@ public class Kriging implements Serializable {
     int n = matrix.length();
     Tensor rhs = Tensors.of(values.get(0).map(Scalar::zero));
     LagrangeMultiplier lagrangeMultiplier = //
-        new LagrangeMultiplier(matrix, values, ConstantArray.of(one, 1, n), rhs);
+        new LagrangeMultiplier(matrix, ConstantArray.of(one, 1, n));
     // System.out.println(Pretty.of(lagrangeMultiplier.matrix().map(Round._1)));
     Tensor inverse = PseudoInverse.of(lagrangeMultiplier.matrix());
-    Tensor weights = inverse.dot(lagrangeMultiplier.b());
+    Tensor weights = inverse.dot(lagrangeMultiplier.b(values, rhs));
     return new Kriging(sedarim, one, weights, inverse);
   }
 

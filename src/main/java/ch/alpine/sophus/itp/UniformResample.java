@@ -4,10 +4,10 @@ package ch.alpine.sophus.itp;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.r2.Se2UniformResample;
 import ch.alpine.sophus.lie.rn.RnUniformResample;
 import ch.alpine.sophus.math.AdjacentDistances;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

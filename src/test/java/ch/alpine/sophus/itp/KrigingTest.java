@@ -7,7 +7,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Sedarim;
@@ -15,6 +14,7 @@ import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.sophus.math.var.ExponentialVariogram;
 import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.tensor.RealScalar;

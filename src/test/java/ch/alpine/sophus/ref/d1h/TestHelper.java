@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.math.Do;
+import ch.alpine.sophus.math.api.TensorIteration;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

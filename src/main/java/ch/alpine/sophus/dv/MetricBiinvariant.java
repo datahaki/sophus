@@ -3,12 +3,12 @@ package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.gr.GrExponential;
 import ch.alpine.sophus.hs.spd.SpdExponential;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;

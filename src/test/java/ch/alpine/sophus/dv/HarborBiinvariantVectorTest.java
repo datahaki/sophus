@@ -8,12 +8,12 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.pdf.Distribution;

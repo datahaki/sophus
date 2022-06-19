@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorNorm;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Scalar;

@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.decim.HsLineDistance;
 import ch.alpine.sophus.decim.LineDistance;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -3,9 +3,9 @@ package ch.alpine.sophus.hs.hn;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

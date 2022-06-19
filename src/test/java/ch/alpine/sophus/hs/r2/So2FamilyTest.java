@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.BijectionFamily;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.math.api.BijectionFamily;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

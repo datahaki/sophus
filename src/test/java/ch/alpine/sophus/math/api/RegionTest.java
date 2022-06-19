@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.api;
+package ch.alpine.sophus.math.api;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

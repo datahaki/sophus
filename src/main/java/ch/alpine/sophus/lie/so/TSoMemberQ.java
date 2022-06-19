@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import ch.alpine.sophus.api.MemberQ;
+import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.sca.Chop;

@@ -8,7 +8,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
-import ch.alpine.sophus.lie.ScalarBiinvariantMean;
+import ch.alpine.sophus.bm.ScalarBiinvariantMean;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

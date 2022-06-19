@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
-import ch.alpine.sophus.api.MemberQ;
+import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;

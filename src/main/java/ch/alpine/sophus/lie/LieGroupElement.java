@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import ch.alpine.sophus.api.GroupElement;
+import ch.alpine.sophus.math.api.GroupElement;
 import ch.alpine.tensor.Tensor;
 
 /** interface of an element of a Lie-group

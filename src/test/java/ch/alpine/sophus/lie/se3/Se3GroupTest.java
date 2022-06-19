@@ -10,7 +10,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
@@ -21,6 +20,7 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RationalScalar;

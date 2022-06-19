@@ -3,7 +3,7 @@ package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;

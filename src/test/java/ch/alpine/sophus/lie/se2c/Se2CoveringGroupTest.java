@@ -10,7 +10,6 @@ import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -18,6 +17,7 @@ import ch.alpine.sophus.dv.GbcHelper;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;

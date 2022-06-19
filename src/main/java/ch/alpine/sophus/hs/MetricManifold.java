@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.api.TensorNorm;
+import ch.alpine.sophus.math.api.TensorMetric;
+import ch.alpine.sophus.math.api.TensorNorm;
 
 /** distance between two points
  * 

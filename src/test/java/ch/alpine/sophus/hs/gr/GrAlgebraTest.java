@@ -4,6 +4,8 @@ package ch.alpine.sophus.hs.gr;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -21,6 +23,7 @@ import ch.alpine.tensor.spa.SparseArray;
 class GrAlgebraTest {
   @Test
   void testSimple() {
+    Random random = new Random(2);
     HsAlgebra hsAlgebra = GrAlgebra.of(5, 2, 6);
     assertInstanceOf(SparseArray.class, hsAlgebra.ad());
     int n = 6;
@@ -28,7 +31,7 @@ class GrAlgebraTest {
     assertEquals(hsAlgebra.dimH(), 1 + 3);
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     HsBarycentricCoordinate hsBarycentricCoordinate = new HsBarycentricCoordinate(hsAlgebra, LeveragesGenesis.DEFAULT);
-    Tensor sequence = RandomVariate.of(distribution, n + 2, n);
+    Tensor sequence = RandomVariate.of(distribution, random, n + 2, n);
     Tensor x = RandomVariate.of(distribution, n);
     Tensor weights = hsBarycentricCoordinate.weights(sequence, x);
     BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);

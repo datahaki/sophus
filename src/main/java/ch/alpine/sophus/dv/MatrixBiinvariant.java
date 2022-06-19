@@ -3,9 +3,9 @@ package ch.alpine.sophus.dv;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.PackageTestAccess;

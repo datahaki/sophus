@@ -9,8 +9,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.AffineWrap;
 import ch.alpine.sophus.dv.BarycentricCoordinate;
@@ -22,6 +20,8 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.api.TensorMapping;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

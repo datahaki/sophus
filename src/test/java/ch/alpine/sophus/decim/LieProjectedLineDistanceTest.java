@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Serialization;
 

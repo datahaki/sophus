@@ -4,8 +4,8 @@ package ch.alpine.sophus.hs.gr;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.MemberQ;
 import ch.alpine.sophus.lie.MatrixBracket;
+import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;

@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.sopq;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.MemberQ;
+import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.sca.Chop;

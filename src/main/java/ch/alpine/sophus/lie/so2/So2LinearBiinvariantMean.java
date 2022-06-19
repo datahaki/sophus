@@ -1,7 +1,7 @@
 // code by ob, jph
 package ch.alpine.sophus.lie.so2;
 
-import ch.alpine.sophus.lie.ScalarBiinvariantMean;
+import ch.alpine.sophus.bm.ScalarBiinvariantMean;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

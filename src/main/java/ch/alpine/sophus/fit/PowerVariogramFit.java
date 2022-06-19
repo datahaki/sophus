@@ -3,7 +3,7 @@ package ch.alpine.sophus.fit;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.sophus.math.var.PowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

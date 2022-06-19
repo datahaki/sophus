@@ -9,7 +9,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.dv.AffineWrap;
 import ch.alpine.sophus.dv.BarycentricCoordinate;
@@ -19,6 +18,7 @@ import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.lie.gl.GlGroupElement;
 import ch.alpine.sophus.lie.so.SoGroupElement;
+import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.decim;
 
-import ch.alpine.sophus.api.TensorNorm;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Tensor;
 
 @FunctionalInterface

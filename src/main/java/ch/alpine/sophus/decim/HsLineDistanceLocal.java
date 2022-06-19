@@ -3,8 +3,8 @@ package ch.alpine.sophus.decim;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;

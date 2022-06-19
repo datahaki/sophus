@@ -3,7 +3,7 @@ package ch.alpine.sophus.math;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Differences;

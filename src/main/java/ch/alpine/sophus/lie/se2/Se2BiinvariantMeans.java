@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.se2;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.BiinvariantMeans;
-import ch.alpine.sophus.lie.ScalarBiinvariantMean;
+import ch.alpine.sophus.bm.ScalarBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2UniversalBiinvariantMean;
 import ch.alpine.sophus.lie.so2.So2FilterBiinvariantMean;
 import ch.alpine.sophus.lie.so2.So2LinearBiinvariantMean;

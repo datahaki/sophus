@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.math.api.TensorMetric;
 
 public interface MetricSpace {
   /** @return distance operator that gives distance between two points p and q
