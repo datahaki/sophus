@@ -16,7 +16,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 /* package */ class GardenCoordinate implements Sedarim {
   private final HsDesign hsDesign;
   private final ScalarUnaryOperator variogram;
-  private final Sedarim distances;
+  private final Sedarim sedarim; // distances
   private final Tensor sequence;
 
   /** @param manifold
@@ -25,7 +25,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
   public GardenCoordinate(Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
     hsDesign = new HsDesign(manifold);
     this.variogram = Objects.requireNonNull(variogram);
-    distances = new GardenDistanceVector(manifold, sequence);
+    sedarim = new GardenDistanceVector(manifold, sequence);
     this.sequence = sequence;
   }
 
@@ -35,6 +35,6 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
     // exist only at sequence points
     return StaticHelper.barycentric( //
         hsDesign.matrix(sequence, point), //
-        NormalizeTotal.FUNCTION.apply(distances.sunder(point).map(variogram))); // point as input to target
+        NormalizeTotal.FUNCTION.apply(sedarim.sunder(point).map(variogram))); // point as input to target
   }
 }

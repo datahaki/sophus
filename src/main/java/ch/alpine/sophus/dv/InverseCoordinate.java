@@ -8,15 +8,15 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.re.Inverse;
 
 public class InverseCoordinate implements Sedarim {
+  private final HsDesign hsDesign;
   private final Sedarim sedarim;
   private final Tensor weights;
-  private final HsDesign hsDesign;
   private final Tensor sequence;
 
   /** @param sedarim
    * @param manifold
    * @param sequence */
-  public InverseCoordinate(Sedarim sedarim, HsDesign hsDesign, Tensor sequence) {
+  public InverseCoordinate(HsDesign hsDesign, Sedarim sedarim, Tensor sequence) {
     this.hsDesign = hsDesign;
     this.sedarim = sedarim;
     Tensor vardst = SymmetricMatrixQ.require(Tensor.of(sequence.stream().map(sedarim::sunder)));

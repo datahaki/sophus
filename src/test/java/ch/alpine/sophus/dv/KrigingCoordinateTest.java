@@ -12,16 +12,16 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 class KrigingCoordinateTest {
   @Test
   void testNull1Fail() {
-    assertThrows(Exception.class, () -> new KrigingCoordinate(t -> t, new HsDesign(RnGroup.INSTANCE), null));
+    assertThrows(Exception.class, () -> new KrigingCoordinate(new HsDesign(RnGroup.INSTANCE), t -> t, null));
   }
 
   @Test
   void testNull2Fail() {
-    assertThrows(Exception.class, () -> new KrigingCoordinate(null, new HsDesign(RnGroup.INSTANCE), IdentityMatrix.of(4)));
+    assertThrows(Exception.class, () -> new KrigingCoordinate(new HsDesign(RnGroup.INSTANCE), null, IdentityMatrix.of(4)));
   }
 
   @Test
   void testNull3Fail() {
-    assertThrows(Exception.class, () -> new KrigingCoordinate(t -> t, null, IdentityMatrix.of(4)));
+    assertThrows(Exception.class, () -> new KrigingCoordinate(null, t -> t, IdentityMatrix.of(4)));
   }
 }

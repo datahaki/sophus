@@ -16,7 +16,7 @@ public class KrigingCoordinate implements Sedarim {
   /** @param sedarim
    * @param hsDesign
    * @param sequence */
-  public KrigingCoordinate(Sedarim sedarim, HsDesign hsDesign, Tensor sequence) {
+  public KrigingCoordinate(HsDesign hsDesign, Sedarim sedarim, Tensor sequence) {
     this.hsDesign = Objects.requireNonNull(hsDesign);
     this.kriging = Kriging.barycentric(sedarim, sequence);
     this.sequence = sequence;

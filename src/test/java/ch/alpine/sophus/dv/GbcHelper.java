@@ -42,8 +42,9 @@ public enum GbcHelper {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return new InverseCoordinate( //
+            biinvariant.hsDesign(), //
             biinvariant.distances(sequence), //
-            biinvariant.hsDesign(), sequence).sunder(point);
+            sequence).sunder(point);
       }
     };
   }
@@ -53,8 +54,9 @@ public enum GbcHelper {
       @Override
       public Tensor weights(Tensor sequence, Tensor point) {
         return new KrigingCoordinate( //
+            biinvariant.hsDesign(), //
             biinvariant.distances(sequence), //
-            biinvariant.hsDesign(), sequence).sunder(point);
+            sequence).sunder(point);
       }
     };
   }
