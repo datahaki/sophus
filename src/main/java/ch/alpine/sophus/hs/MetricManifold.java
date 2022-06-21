@@ -9,4 +9,5 @@ import ch.alpine.sophus.math.api.TensorNorm;
  * norm of tangent vector */
 public interface MetricManifold extends TensorMetric, TensorNorm {
   // ---
+  // TODO SOPHUS specify whether norm takes vectorLog or log as input!
 }

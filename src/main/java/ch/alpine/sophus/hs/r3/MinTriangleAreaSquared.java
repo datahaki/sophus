@@ -10,7 +10,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.ext.PackageTestAccess;
-import ch.alpine.tensor.itp.Fit;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.mat.pi.LagrangeMultiplier;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -25,9 +24,7 @@ import ch.alpine.tensor.red.ScalarSummaryStatistics;
  * "Polygon Laplacian Made Simple"
  * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020
  * 
- * Remark: the matrix also appears in Kriging
- * 
- * @see Fit#lagrange(Tensor, Tensor, Tensor, Tensor) */
+ * Remark: the matrix also appears in Kriging */
 public enum MinTriangleAreaSquared implements Genesis {
   INSTANCE;
 
