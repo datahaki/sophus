@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.Genesis;
@@ -14,7 +13,7 @@ import ch.alpine.tensor.Tensor;
  * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020
  * 
  * @param genesis for instance InverseDistanceWeighting.of(InversePowerVariogram.of(2)) */
-public record LagrangeCoordinate(Genesis genesis) implements Genesis, Serializable {
+public record LagrangeCoordinate(Genesis genesis) implements Genesis {
   public LagrangeCoordinate {
     Objects.requireNonNull(genesis);
   }

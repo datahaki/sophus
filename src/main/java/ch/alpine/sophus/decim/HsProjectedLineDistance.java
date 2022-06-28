@@ -24,7 +24,7 @@ public class HsProjectedLineDistance implements LineDistance, Serializable {
     return new NormImpl(beg, end);
   }
 
-  private class NormImpl implements TensorNorm, Serializable {
+  private class NormImpl implements TensorNorm {
     private final Tensor beg;
     private final Tensor end;
 

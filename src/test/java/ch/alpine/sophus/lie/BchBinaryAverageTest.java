@@ -32,7 +32,7 @@ class BchBinaryAverageTest {
     Scalar lambda = RealScalar.of(0.3);
     GeodesicSpace hsGeodesic = Se2CoveringGroup.INSTANCE;
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
-    Tensor cmp = BchBinaryAverage.of(Se2Algebra.INSTANCE.bch(6)).split(x, y, lambda);
+    Tensor cmp = new BchBinaryAverage(Se2Algebra.INSTANCE.bch(6)).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
   }
 
@@ -46,7 +46,7 @@ class BchBinaryAverageTest {
     Scalar lambda = RealScalar.of(0.3);
     GeodesicSpace hsGeodesic = So3Group.INSTANCE;
     Tensor res = exponential.log(hsGeodesic.split(mX, mY, lambda));
-    Tensor cmp = BchBinaryAverage.of(So3Algebra.INSTANCE.bch(6)).split(x, y, lambda);
+    Tensor cmp = new BchBinaryAverage(So3Algebra.INSTANCE.bch(6)).split(x, y, lambda);
     Chop._08.requireClose(res, cmp);
   }
 
@@ -70,7 +70,7 @@ class BchBinaryAverageTest {
     mz.map(Scalar::zero);
     for (int d = 1; d < 7; ++d) {
       BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(d);
-      Tensor cmp = BchBinaryAverage.of(bch).split(x, y, lambda);
+      Tensor cmp = new BchBinaryAverage(bch).split(x, y, lambda);
       cmp.map(Scalar::zero);
       // System.out.println(cmp);
       // System.out.println(mz);

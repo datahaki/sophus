@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs.s2;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.math.api.TensorNorm;
@@ -21,7 +19,7 @@ public enum S2LineDistance implements LineDistance {
     return new S2Line(p, q);
   }
 
-  private class S2Line implements TensorNorm, Serializable {
+  private class S2Line implements TensorNorm {
     private final Tensor cross;
 
     public S2Line(Tensor p, Tensor q) {

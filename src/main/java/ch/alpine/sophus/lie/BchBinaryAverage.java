@@ -2,29 +2,16 @@
 package ch.alpine.sophus.lie;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.function.BinaryOperator;
 
-import ch.alpine.tensor.Scalar;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.itp.BinaryAverage;
+import ch.alpine.tensor.api.ScalarTensorFunction;
 
-// TODO SOPHUS implement as GeoSpace!
-public class BchBinaryAverage implements BinaryAverage, Serializable {
-  /** @param bch non-null */
-  public static BinaryAverage of(BinaryOperator<Tensor> bch) {
-    return new BchBinaryAverage(Objects.requireNonNull(bch));
-  }
-
-  // ---
-  private final BinaryOperator<Tensor> bch;
-
-  private BchBinaryAverage(BinaryOperator<Tensor> bch) {
-    this.bch = bch;
-  }
-
-  @Override // from BinaryAverage
-  public Tensor split(Tensor p, Tensor q, Scalar scalar) {
-    return bch.apply(p, bch.apply(p.negate(), q).multiply(scalar));
+public record BchBinaryAverage(BinaryOperator<Tensor> bch) implements GeodesicSpace, Serializable {
+  @Override // from GeodesicSpace
+  public ScalarTensorFunction curve(Tensor p, Tensor q) {
+    Tensor log_pq = bch.apply(p.negate(), q);
+    return scalar -> bch.apply(p, log_pq.multiply(scalar));
   }
 }

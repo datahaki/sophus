@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs.hn;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.math.api.TensorNorm;
@@ -18,7 +16,7 @@ public enum HnLineDistance implements LineDistance {
     return new Inner(p, q);
   }
 
-  private class Inner implements TensorNorm, Serializable {
+  private class Inner implements TensorNorm {
     private final Exponential exponential;
     private final Tensor v_pq;
 

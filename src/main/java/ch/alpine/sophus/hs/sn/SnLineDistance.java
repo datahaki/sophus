@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Scalar;
@@ -22,7 +20,7 @@ public enum SnLineDistance implements LineDistance {
     return new TensorNormImpl(p, q);
   }
 
-  private static class TensorNormImpl implements TensorNorm, Serializable {
+  private static class TensorNormImpl implements TensorNorm {
     private final Tensor m;
 
     public TensorNormImpl(Tensor p, Tensor q) {

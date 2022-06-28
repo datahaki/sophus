@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +18,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:
  * weighting satisfies barycentric equation but do not necessarily sum up to one. */
-public record ThreePointWeighting(ThreePointScaling threePointScaling) implements Genesis, Serializable {
+public record ThreePointWeighting(ThreePointScaling threePointScaling) implements Genesis {
   public ThreePointWeighting {
     Objects.requireNonNull(threePointScaling);
   }

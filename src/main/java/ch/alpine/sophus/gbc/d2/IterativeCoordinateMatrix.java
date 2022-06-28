@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
@@ -19,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020
  * 
  * @param k non-negative */
-public record IterativeCoordinateMatrix(int k) implements Genesis, Serializable {
+public record IterativeCoordinateMatrix(int k) implements Genesis {
   public IterativeCoordinateMatrix {
     Integers.requirePositiveOrZero(k);
   }

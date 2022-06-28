@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
@@ -13,7 +12,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 /** @see InsideConvexHullCoordinate
  * 
  * @param genesis that evaluates polygon coordinates at zero (0, 0) */
-public record InsidePolygonCoordinate(Genesis genesis) implements Genesis, Serializable {
+public record InsidePolygonCoordinate(Genesis genesis) implements Genesis {
   public InsidePolygonCoordinate {
     Objects.requireNonNull(genesis);
   }

@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.math.api.TensorNorm;
@@ -14,7 +13,7 @@ import ch.alpine.tensor.sca.Sign;
 
 /** Careful: this is not a norm but an ad-invariant, degenerate scalar product + offset
  * that results in biinvariant barycentric coordinates */
-public class HeTarget implements TensorNorm, Serializable {
+public class HeTarget implements TensorNorm {
   private final TensorNorm tensorNorm;
   private final Scalar offset;
 

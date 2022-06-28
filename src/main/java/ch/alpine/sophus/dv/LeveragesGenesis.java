@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.Genesis;
@@ -26,7 +25,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * @see LeveragesCoordinate
  * 
  * @param for instance InversePowerVariogram */
-public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis, Serializable {
+public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis {
   public static final Genesis DEFAULT = new LeveragesGenesis(InversePowerVariogram.of(2));
 
   public LeveragesGenesis {

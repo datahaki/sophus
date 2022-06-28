@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.gbc.d2;
 
-import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
@@ -23,7 +22,7 @@ import ch.alpine.tensor.red.Times;
  * 
  * @param genesis for instance {@link ThreePointCoordinate}, or {@link AffineCoordinate}
  * @param k non-negative */
-public record IterativeCoordinate(Genesis genesis, int k) implements Genesis, Serializable {
+public record IterativeCoordinate(Genesis genesis, int k) implements Genesis {
   public IterativeCoordinate {
     Objects.requireNonNull(genesis);
     Integers.requirePositiveOrZero(k);

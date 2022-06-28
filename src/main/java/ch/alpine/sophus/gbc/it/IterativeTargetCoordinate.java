@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.gbc.it;
 
-import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
@@ -21,7 +20,7 @@ import ch.alpine.tensor.sca.Chop;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
 // TODO SOPHUS can be made record (as IterativeAffineCoordinate)
-public class IterativeTargetCoordinate implements GenesisDeque, Serializable {
+public class IterativeTargetCoordinate implements GenesisDeque {
   public static final Chop CHOP = Tolerance.CHOP;
   // ---
   private final Genesis genesis;

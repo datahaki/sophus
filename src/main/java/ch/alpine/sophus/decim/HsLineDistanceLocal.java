@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.decim;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.Scalar;
@@ -10,7 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public record HsLineDistanceLocal(Exponential exponential, Tensor normal) implements TensorNorm, Serializable {
+public record HsLineDistanceLocal(Exponential exponential, Tensor normal) implements TensorNorm {
   /** @param tensor of the lie group
    * @return element of the lie algebra */
   public Tensor project(Tensor tensor) {

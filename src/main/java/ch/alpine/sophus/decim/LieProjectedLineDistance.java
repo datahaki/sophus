@@ -22,7 +22,7 @@ public record LieProjectedLineDistance(LieGroup lieGroup) implements LineDistanc
     return new NormImpl(beg, end);
   }
 
-  private class NormImpl implements TensorNorm, Serializable {
+  private class NormImpl implements TensorNorm {
     private final LieGroupElement lieBeg;
     private final LieGroupElement lieInv;
     private final Tensor normal;

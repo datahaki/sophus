@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.gbc.it;
 
-import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
@@ -18,7 +17,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.red.Times;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
-public record IterativeAffineCoordinate(TensorUnaryOperator amplifier, int k) implements GenesisDeque, Serializable {
+public record IterativeAffineCoordinate(TensorUnaryOperator amplifier, int k) implements GenesisDeque {
 
   private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
   // ---
