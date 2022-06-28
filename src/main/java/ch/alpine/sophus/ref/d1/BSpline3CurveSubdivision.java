@@ -23,7 +23,7 @@ public class BSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivision i
     this.geodesicSpace = Objects.requireNonNull(geodesicSpace);
   }
 
-  @Override // from MidpointInterface
+  @Override // from GeodesicSpace
   public final Tensor midpoint(Tensor p, Tensor q) { // point between p and q
     return geodesicSpace.midpoint(p, q);
   }

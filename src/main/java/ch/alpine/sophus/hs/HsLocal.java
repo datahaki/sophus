@@ -3,8 +3,7 @@ package ch.alpine.sophus.hs;
 
 import ch.alpine.tensor.Tensor;
 
-// TODO SOPHUS possibly merge
-public interface HomogeneousSpaceOld {
+public interface HsLocal {
   /** @param g
    * @param m
    * @return resulting point in manifold when g acts on point m */

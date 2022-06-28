@@ -27,7 +27,7 @@ public final class MSpline3CurveSubdivision extends RefiningBSpline3CurveSubdivi
     center = BiinvariantMeans.of(biinvariantMean, MASK_CENTER);
   }
 
-  @Override // from MidpointInterface
+  @Override // from GeodesicSpace
   public Tensor midpoint(Tensor q, Tensor r) {
     return middle.apply(Unprotect.byRef(q, r));
   }

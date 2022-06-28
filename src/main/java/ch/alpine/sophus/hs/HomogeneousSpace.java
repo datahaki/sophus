@@ -35,7 +35,7 @@ public interface HomogeneousSpace extends GeodesicSpace, Manifold {
     return scalar -> exponential.exp(log.multiply(scalar));
   }
 
-  @Override // from MidpointInterface
+  @Override // from GeodesicSpace
   default Tensor midpoint(Tensor p, Tensor q) {
     return exponential(p).midpoint(q);
   }

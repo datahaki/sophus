@@ -11,12 +11,6 @@ public enum LineDistances {
       return new HsLineDistance(homogeneousSpace);
     }
   },
-  MIDPOINT {
-    @Override
-    public LineDistance supply(HomogeneousSpace homogeneousSpace) {
-      return HsMidpointLineDistance.of(homogeneousSpace);
-    }
-  },
   SYMMETRIZED {
     @Override
     public LineDistance supply(HomogeneousSpace homogeneousSpace) {

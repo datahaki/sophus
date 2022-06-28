@@ -11,7 +11,6 @@ import ch.alpine.tensor.io.Put;
  * A = << "samples.txt"; ListPlot[A, AspectRatio -> 1] */
 /* package */ enum BallRandomSampleDemo {
   ;
-  // TODO SOPHUS TEST make this into a test and check for "equal" number of points in 2 different squares/boxes
   public static void main(String[] args) throws Exception {
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.vector(1, 1), RealScalar.of(2));

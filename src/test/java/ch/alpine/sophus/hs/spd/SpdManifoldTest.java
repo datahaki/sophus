@@ -187,7 +187,7 @@ class SpdManifoldTest {
     Scalar d1 = SpdManifold.INSTANCE.distance(p, q);
     Tensor v = SpdManifold.INSTANCE.exponential(p).vectorLog(q);
     Scalar d2 = SpdManifold.INSTANCE.norm(v);
-    // TODO SOPHUS TEST
+    // TODO SOPHUS TEST inconsistency
     // Tolerance.CHOP.requireClose(d1, d2);
   }
 }
