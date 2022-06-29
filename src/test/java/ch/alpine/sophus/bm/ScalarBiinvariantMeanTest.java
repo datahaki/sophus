@@ -1,11 +1,10 @@
 // code by jph
-package ch.alpine.sophus.lie;
+package ch.alpine.sophus.bm;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.bm.ScalarBiinvariantMean;
 import ch.alpine.sophus.lie.so2.So2LinearBiinvariantMean;
 import ch.alpine.sophus.lie.so2.So2PhongBiinvariantMean;
 import ch.alpine.tensor.RealScalar;

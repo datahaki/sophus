@@ -10,6 +10,7 @@ import ch.alpine.tensor.Tensor;
  * 
  * exponential at neutral element */
 // TODO SOPHUS API should give LieAlgebra with ad (since this is implied from basis/group action)
+// .. and vectorLog implies basis
 public interface LieGroup extends HomogeneousSpace, Exponential {
   /** function produces an instance of a lie group element from a given tensor
    * 

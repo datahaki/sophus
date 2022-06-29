@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie.se2c;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import ch.alpine.sophus.math.api.TensorNorm;
@@ -12,7 +11,7 @@ import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.sca.Sign;
 
 /** only for testing ad-invariance */
-public class Se2CoveringTarget implements TensorNorm, Serializable {
+public class Se2CoveringTarget implements TensorNorm {
   private final TensorNorm tensorNorm;
   private final Scalar offset;
 

@@ -179,6 +179,7 @@ class SpdManifoldTest {
     }
   }
 
+  @SuppressWarnings("unused")
   @Test
   void testDistance() {
     RandomSampleInterface randomSampleInterface = new Spd0RandomSample(3, NormalDistribution.of(0, 0.2));

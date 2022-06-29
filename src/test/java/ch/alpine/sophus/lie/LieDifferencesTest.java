@@ -13,6 +13,7 @@ import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2RandomSample;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.sophus.lie.so3.Rodrigues;
@@ -100,6 +101,16 @@ class LieDifferencesTest {
     LieDifferences lieDifferences = new LieDifferences(HeGroup.INSTANCE);
     Tensor differences = Serialization.copy(lieDifferences).apply(elements);
     assertEquals(differences.length(), n - 1);
+  }
+
+  @Test
+  void testSe2Covering() {
+    Tensor p1 = Tensors.vector(0, 0, -Math.PI);
+    Tensor p2 = Tensors.vector(0, 0, +Math.PI);
+    LieDifferences INSTANCE = new LieDifferences(Se2CoveringGroup.INSTANCE);
+    Tensor tensor = INSTANCE.apply(Tensors.of(p1, p2));
+    assertEquals(Dimensions.of(tensor), Arrays.asList(1, 3));
+    Chop._14.requireClose(tensor.get(0), Tensors.vector(0, 0, Math.PI * 2));
   }
 
   @Test

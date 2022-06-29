@@ -18,22 +18,17 @@ import ch.alpine.tensor.mat.sv.SingularValueDecomposition;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.sca.Chop;
 
-/** attempts to produce positive weights for levers with zero in convex hull */
-// TODO SOPHUS can be made record (as IterativeAffineCoordinate)
-public class IterativeTargetCoordinate implements GenesisDeque {
-  public static final Chop CHOP = Tolerance.CHOP;
-  // ---
-  private final Genesis genesis;
-  // private final Scalar beta;
-  private final int k;
+/** attempts to produce positive weights for levers with zero in convex hull
+ * 
+ * @param genesis
+ * @param beta
+ * @param k */
+public record IterativeTargetCoordinate(Genesis genesis, Scalar beta, int k) implements GenesisDeque {
 
-  /** @param genesis
-   * @param beta
-   * @param k */
-  public IterativeTargetCoordinate(Genesis genesis, Scalar beta, int k) {
-    this.genesis = Objects.requireNonNull(genesis);
-    // this.beta = beta;
-    this.k = Integers.requirePositiveOrZero(k);
+  public static final Chop CHOP = Tolerance.CHOP;
+  public IterativeTargetCoordinate {
+    Objects.requireNonNull(genesis);
+    Integers.requirePositiveOrZero(k);
   }
 
   @Override

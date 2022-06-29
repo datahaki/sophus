@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.ext.Serialization;
 
-class UndirectedEdgeTest {
+class IntUndirectedEdgeTest {
   @Test
   void testSimple() {
     IntUndirectedEdge undirectedEdge = new IntUndirectedEdge(2, 3);
