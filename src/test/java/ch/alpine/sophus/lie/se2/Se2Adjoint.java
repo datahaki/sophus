@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.se2;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.tri.Cos;
@@ -36,7 +36,7 @@ import ch.alpine.tensor.sca.tri.Sin;
   /** @param element from Lie Group SE2 as coordinates {x, y, omega} */
   private Se2Adjoint(Tensor xya) {
     if (xya.length() != 3)
-      throw TensorRuntimeException.of(xya);
+      throw Throw.of(xya);
     px = xya.Get(0);
     py = xya.Get(1);
     Scalar al = xya.Get(2);

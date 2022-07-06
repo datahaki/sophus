@@ -8,7 +8,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
@@ -52,7 +52,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
       _sequence = Tensor.of(sequence.stream().map(hsAlgebra.action(hsAlgebra.lift(next))));
       prev = next;
     }
-    throw TensorRuntimeException.of(sequence, weights);
+    throw Throw.of(sequence, weights);
   }
 
   private Tensor mean_negate(Tensor sequence, Tensor weights, Tensor mean_negate) {
@@ -64,6 +64,6 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
       sequence = Tensor.of(sequence.stream().map(tuo));
       mean_negate = tuo.apply(mean_negate);
     }
-    throw TensorRuntimeException.of(sequence, weights);
+    throw Throw.of(sequence, weights);
   }
 }

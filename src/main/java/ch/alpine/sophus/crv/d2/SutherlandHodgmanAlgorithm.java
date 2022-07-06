@@ -7,7 +7,7 @@ import java.io.Serializable;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
@@ -91,7 +91,7 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
     Tensor pq = p.subtract(q);
     Scalar den = Det2D.of(ab, pq);
     if (Chop._40.isZero(den))
-      throw TensorRuntimeException.of(a, b, p, q);
+      throw Throw.of(a, b, p, q);
     return pq.multiply(Det2D.of(ab, a)).add(ab.multiply(Det2D.of(p, pq))).divide(den);
   }
 }

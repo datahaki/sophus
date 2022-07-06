@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.hn;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 
 public enum HnSeries {
@@ -27,6 +27,6 @@ public enum HnSeries {
       if (c.equals(c.add(xk)))
         return Tensors.of(c, s);
     }
-    throw TensorRuntimeException.of(x);
+    throw Throw.of(x);
   }
 }

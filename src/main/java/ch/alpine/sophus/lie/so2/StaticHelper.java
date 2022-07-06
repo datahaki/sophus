@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.so2;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.ScalarSummaryStatistics;
 
@@ -18,7 +18,7 @@ import ch.alpine.tensor.red.ScalarSummaryStatistics;
         .map(Scalar.class::cast) //
         .collect(ScalarSummaryStatistics.collector());
     if (Scalars.lessEquals(Pi.VALUE, scalarSummaryStatistics.getClip().width()))
-      throw TensorRuntimeException.of(sequence);
+      throw Throw.of(sequence);
     return sequence;
   }
 }

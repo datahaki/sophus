@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.Integers;
@@ -24,7 +24,7 @@ public class GeodesicCatmullRom implements ScalarTensorFunction {
    * @param control points of length >= 4 */
   public static GeodesicCatmullRom of(BinaryAverage binaryAverage, Tensor knots, Tensor control) {
     if (control.length() < 4)
-      throw TensorRuntimeException.of(control);
+      throw Throw.of(control);
     return new GeodesicCatmullRom( //
         Objects.requireNonNull(binaryAverage), //
         VectorQ.require(knots), //

@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.r3;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.nrm.Hypot;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
@@ -26,7 +26,7 @@ public enum NylanderPower {
    * @return */
   public static Tensor of(Tensor vector, Scalar exponent) {
     if (vector.length() != 3)
-      throw TensorRuntimeException.of(vector, exponent);
+      throw Throw.of(vector, exponent);
     Scalar x = vector.Get(0);
     Scalar y = vector.Get(1);
     Scalar z = vector.Get(2);

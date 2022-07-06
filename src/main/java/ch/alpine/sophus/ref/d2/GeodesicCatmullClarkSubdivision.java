@@ -1,8 +1,8 @@
 // code by jphrray
 package ch.alpine.sophus.ref.d2;
 
+import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
@@ -81,7 +81,7 @@ public class GeodesicCatmullClarkSubdivision {
             geodesicSpace.split(eds, cen, RationalScalar.of(1, 5)), //
             RationalScalar.of(5, 4));
       }
-    Tensor tensor = Tensor.of(Stream.of(array).map(Unprotect::byRef));
+    Tensor tensor = Tensor.of(Arrays.stream(array).map(Unprotect::byRef));
     /** assign border top bottom */
     tensor.set(curveSubdivision.string(grid.get(0)), 0);
     tensor.set(curveSubdivision.string(grid.get(rows - 1)), outr - 1);

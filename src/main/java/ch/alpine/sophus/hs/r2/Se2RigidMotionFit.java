@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.r2;
 import ch.alpine.sophus.lie.se.RigidMotionFit;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.sca.tri.ArcTan;
@@ -17,7 +17,7 @@ public enum Se2RigidMotionFit {
   public static Tensor of(Tensor points, Tensor target) {
     if (Unprotect.dimension1Hint(points) == 2)
       return of(RigidMotionFit.of(points, target));
-    throw TensorRuntimeException.of(points);
+    throw Throw.of(points);
   }
 
   /** @param points with dimensions N x 2

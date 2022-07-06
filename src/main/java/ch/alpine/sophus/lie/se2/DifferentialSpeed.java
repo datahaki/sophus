@@ -6,7 +6,7 @@ import java.io.Serializable;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
@@ -28,7 +28,7 @@ public class DifferentialSpeed implements Serializable {
    * @param y_offset distance from center of rear axis to tire */
   public static DifferentialSpeed fromSI(Scalar x_front, Scalar y_offset) {
     if (Scalars.isZero(x_front))
-      throw TensorRuntimeException.of(x_front, y_offset);
+      throw Throw.of(x_front, y_offset);
     return new DifferentialSpeed(y_offset.divide(x_front));
   }
 

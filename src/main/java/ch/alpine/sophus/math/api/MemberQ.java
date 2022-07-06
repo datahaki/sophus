@@ -2,7 +2,7 @@
 package ch.alpine.sophus.math.api;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 
 /** membership status of given tensor
  * 
@@ -19,6 +19,6 @@ public interface MemberQ extends Region<Tensor> {
   default Tensor require(Tensor tensor) {
     if (test(tensor))
       return tensor;
-    throw TensorRuntimeException.of(tensor);
+    throw Throw.of(tensor);
   }
 }

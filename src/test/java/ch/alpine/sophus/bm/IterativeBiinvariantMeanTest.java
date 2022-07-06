@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
@@ -54,17 +55,18 @@ class IterativeBiinvariantMeanTest {
 
   @Test
   void testSome() throws ClassNotFoundException, IOException {
+    Random random = new Random(2);
     Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;
     for (int length = 2; length < 8; ++length) {
-      Tensor sequence = RandomVariate.of(UniformDistribution.unit(), length, 3);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
+      Tensor sequence = RandomVariate.of(UniformDistribution.unit(), random, length, 3);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, length));
       Tensor actual = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
       IterativeBiinvariantMean biinvariantMeanImplicit = //
           Serialization.copy(IterativeBiinvariantMean.argmax(Se2CoveringGroup.INSTANCE, Chop._12));
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
-        Tolerance.CHOP.requireClose(actual, result.orElseThrow());
+        Chop._06.requireClose(actual, result.orElseThrow());
         ++success;
       }
     }

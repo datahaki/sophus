@@ -5,7 +5,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.Cross;
@@ -63,7 +63,7 @@ public enum Rodrigues implements Exponential {
       Scalar sinc = Sinc.FUNCTION.apply(theta(q));
       return q.subtract(Transpose.of(q)).divide(sinc.add(sinc));
     }
-    throw TensorRuntimeException.of(q);
+    throw Throw.of(q);
   }
 
   private static Scalar theta(Tensor matrix) {

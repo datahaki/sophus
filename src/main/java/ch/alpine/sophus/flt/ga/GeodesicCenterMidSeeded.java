@@ -12,7 +12,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -63,7 +63,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     @PackageTestAccess
     static Tensor of(Tensor mask) {
       if (Integers.isEven(mask.length()))
-        throw TensorRuntimeException.of(mask);
+        throw Throw.of(mask);
       SymmetricVectorQ.require(mask);
       int radius = (mask.length() - 1) / 2;
       Tensor halfmask = Tensors.vector(i -> i.equals(radius) //
@@ -92,7 +92,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
     if (Integers.isEven(tensor.length()))
-      throw TensorRuntimeException.of(tensor);
+      throw Throw.of(tensor);
     // spatial neighborhood we want to consider for centering
     int radius = (tensor.length() - 1) / 2;
     Tensor splits = function.apply(tensor.length());

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.math;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.VectorQ;
 
@@ -30,6 +30,6 @@ public enum SymmetricVectorQ {
   public static Tensor require(Tensor vector) {
     if (of(vector))
       return vector;
-    throw TensorRuntimeException.of(vector);
+    throw Throw.of(vector);
   }
 }

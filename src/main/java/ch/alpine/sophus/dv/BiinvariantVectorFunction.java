@@ -2,8 +2,8 @@
 package ch.alpine.sophus.dv;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.math.api.TensorMetric;
@@ -44,6 +44,6 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
     Tensor matrix = influenceMatrix.matrix();
     return new BiinvariantVector( //
         influenceMatrix, //
-        Tensor.of(Stream.of(influence).map(x -> tensorMetric.distance(x, matrix))));
+        Tensor.of(Arrays.stream(influence).map(x -> tensorMetric.distance(x, matrix))));
   }
 }

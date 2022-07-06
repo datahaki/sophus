@@ -16,7 +16,7 @@ import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
@@ -130,12 +130,12 @@ public class HsAlgebra implements HsLocal, Serializable {
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero))
-      throw TensorRuntimeException.of(ad);
+      throw Throw.of(ad);
     if (!ad.block(List.of(0, dim_m, dim_m), List.of(dim_m, dim_h, dim_h)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero))
-      throw TensorRuntimeException.of(ad);
+      throw Throw.of(ad);
   }
 
   /** @return whether [h, m] subset m, i.e. h cap [h, m] = {0} */

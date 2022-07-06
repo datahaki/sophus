@@ -4,6 +4,7 @@
 package ch.alpine.sophus.crv.dub;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -49,7 +50,7 @@ public class FixedRadiusDubins implements DubinsPathGenerator, Serializable {
 
   @Override // from DubinsPathGenerator
   public Stream<DubinsPath> stream() {
-    return Stream.of(DubinsType.values()).map(this::create).flatMap(Optional::stream);
+    return Arrays.stream(DubinsType.values()).map(this::create).flatMap(Optional::stream);
   }
 
   private Optional<DubinsPath> create(DubinsType type) {

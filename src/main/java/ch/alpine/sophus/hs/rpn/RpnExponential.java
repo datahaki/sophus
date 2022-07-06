@@ -9,7 +9,7 @@ import ch.alpine.sophus.hs.sn.TSnMemberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
     tSnMemberQ = new TSnMemberQ(x);
     projection = Projection.on(x);
     if (x.length() < 2)
-      throw TensorRuntimeException.of(x);
+      throw Throw.of(x);
   }
 
   @Override // from Exponential

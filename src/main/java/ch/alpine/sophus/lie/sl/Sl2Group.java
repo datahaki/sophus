@@ -8,7 +8,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.lie.HodgeDual;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -58,7 +58,7 @@ public enum Sl2Group implements LieGroup {
       return LOG_ID_NEGATE;
     Tensor log = MatrixLog.of(g);
     if (Scalars.lessEquals(Trace.of(g), TWO_NEGATE))
-      throw TensorRuntimeException.of(g);
+      throw Throw.of(g);
     // TODO SOPHUS ALG move check to test are and remove here
     Chop._04.requireClose(g, exp(log));
     return log;

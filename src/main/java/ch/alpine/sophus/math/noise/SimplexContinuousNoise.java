@@ -4,7 +4,7 @@ package ch.alpine.sophus.math.noise;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorScalarFunction;
 
 /** A speed-improved simplex noise algorithm for 2D, 3D and 4D in Java.
@@ -443,7 +443,7 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
         vector.Get(1).number().doubleValue(), //
         vector.Get(2).number().doubleValue(), //
         vector.Get(3).number().doubleValue()));
-    default -> throw TensorRuntimeException.of(vector);
+    default -> throw Throw.of(vector);
     };
   }
 }

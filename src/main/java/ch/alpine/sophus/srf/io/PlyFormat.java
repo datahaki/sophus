@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.srf.io;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Scalars;
@@ -30,10 +30,10 @@ public enum PlyFormat {
     }
     SurfaceMesh surfaceMesh = new SurfaceMesh();
     for (int index = 0; index < vn; ++index)
-      surfaceMesh.addVert(Tensor.of(Stream.of(iterator.next().split(SEPARATOR)) //
+      surfaceMesh.addVert(Tensor.of(Arrays.stream(iterator.next().split(SEPARATOR)) //
           .map(Scalars::fromString)));
     for (int index = 0; index < fn; ++index)
-      surfaceMesh.addFace(Stream.of(iterator.next().split(SEPARATOR)) //
+      surfaceMesh.addFace(Arrays.stream(iterator.next().split(SEPARATOR)) //
           .skip(1) //
           .mapToInt(Integer::parseInt) //
           .toArray());

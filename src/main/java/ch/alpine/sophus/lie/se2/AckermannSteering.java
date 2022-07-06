@@ -7,7 +7,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.tri.ArcTan;
@@ -30,7 +30,7 @@ public class AckermannSteering implements Serializable {
    * @param y_offset distance from center of axis to tire */
   public AckermannSteering(Scalar x_front, Scalar y_offset) {
     if (Scalars.isZero(x_front))
-      throw TensorRuntimeException.of(x_front, y_offset);
+      throw Throw.of(x_front, y_offset);
     factor = y_offset.divide(x_front);
   }
 

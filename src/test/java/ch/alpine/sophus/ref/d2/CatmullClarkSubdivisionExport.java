@@ -10,7 +10,7 @@ import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
@@ -71,7 +71,7 @@ enum CatmullClarkSubdivisionExport {
     Scalar z = Sqrt.of(RealScalar.ONE.subtract(x.multiply(x)).subtract(y.multiply(y)));
     if (z instanceof RealScalar)
       return Tensors.of(x, y, z);
-    throw TensorRuntimeException.of(z);
+    throw Throw.of(z);
   }
 
   private static Tensor r3s2_sphere() {

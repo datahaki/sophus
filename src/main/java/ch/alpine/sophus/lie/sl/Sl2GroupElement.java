@@ -6,7 +6,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
 
@@ -22,7 +22,7 @@ public class Sl2GroupElement implements LieGroupElement {
   public static Sl2GroupElement create(Tensor vector) {
     Scalar a3 = vector.Get(2);
     if (Scalars.isZero(a3))
-      throw TensorRuntimeException.of(vector);
+      throw Throw.of(vector);
     Scalar a1 = vector.Get(0);
     Scalar a2 = vector.Get(1);
     return new Sl2GroupElement(a1, a2, a3);
