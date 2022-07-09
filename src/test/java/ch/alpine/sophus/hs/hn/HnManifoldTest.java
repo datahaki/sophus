@@ -132,7 +132,7 @@ class HnManifoldTest {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     HomogeneousSpace manifold = HnManifold.INSTANCE;
-    Biinvariant biinvariant = Serialization.copy(Biinvariants.METRIC.of(manifold));
+    Biinvariant biinvariant = Serialization.copy(Biinvariants.METRIC.ofSafe(manifold));
     for (int d = 1; d < 5; ++d) {
       int n = d + 1;
       ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
@@ -160,7 +160,7 @@ class HnManifoldTest {
     Random random = new Random(40);
     Distribution distribution = TrapezoidalDistribution.of(-2, -1, 1, 2);
     HomogeneousSpace manifold = HnManifold.INSTANCE;
-    Biinvariant biinvariant = Biinvariants.METRIC.of(manifold);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(manifold);
     for (int d = 1; d < 5; ++d) {
       int n = d + 1;
       ScalarUnaryOperator variogram = InversePowerVariogram.of(2);

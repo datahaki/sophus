@@ -18,13 +18,13 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
    * @param variogram
    * @return */
   public static ScalarTensorFunction of(Tensor knots, ScalarUnaryOperator variogram) {
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
         biinvariant.coordinate(variogram, knots.map(Tensors::of))::sunder);
   }
 
   public static ScalarTensorFunction la(Tensor knots, ScalarUnaryOperator variogram) {
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     return new BarycentricMetricInterpolation( //
         biinvariant.lagrainate(variogram, knots.map(Tensors::of))::sunder);
   }

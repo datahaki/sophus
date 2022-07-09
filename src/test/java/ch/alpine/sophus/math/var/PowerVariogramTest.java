@@ -36,7 +36,7 @@ class PowerVariogramTest {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     {
       ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);

@@ -139,7 +139,7 @@ class KrigingTest {
     Tensor sequence = RandomVariate.of(distributionX, n, d);
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
-    Sedarim sedarim = Biinvariants.METRIC.of(RnGroup.INSTANCE).var_dist(variogram, sequence);
+    Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).var_dist(variogram, sequence);
     Kriging kriging = Kriging.interpolation(sedarim::sunder, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
@@ -155,7 +155,7 @@ class KrigingTest {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     // Map<Biinvariants, Biinvariant> map = Biinvariants.kriging();
-    Biinvariant biinvariant = Biinvariants.HARBOR.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.HARBOR.ofSafe(RnGroup.INSTANCE);
     // for (Biinvariant biinvariant : map.values())
     {
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);

@@ -69,7 +69,7 @@ class MetricBiinvariantTest {
     BarycentricCoordinate barycentricCoordinate = Serialization.copy( //
         new HsCoordinates(new HsDesign(RnGroup.INSTANCE), //
             new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(1))));
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     for (int d = 2; d < 6; ++d)
       for (int n = d + 1; n < 10; ++n) {
         Tensor points = RandomVariate.of(distribution, n, d);

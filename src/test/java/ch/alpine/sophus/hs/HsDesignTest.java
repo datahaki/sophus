@@ -4,6 +4,8 @@ package ch.alpine.sophus.hs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -78,10 +80,11 @@ class HsDesignTest {
 
   @Test
   void testSe2C() {
+    Random random = new Random(1);
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
-      Tensor sequence = RandomVariate.of(distribution, count, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, count, 3);
       for (Tensor point : sequence) {
         Tensor design = new HsDesign(manifold).matrix(sequence, point);
         Mahalanobis mahalanobis = new Mahalanobis(design);

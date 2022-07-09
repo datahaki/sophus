@@ -66,7 +66,7 @@ class Se2GroupTest {
   void testSimple3() {
     int n = 5 + new Random().nextInt(5);
     Tensor sequence = RandomSample.of(Se2RandomSample.of(LogNormalDistribution.standard()), n);
-    Biinvariant biinvariant = Biinvariants.HARBOR.of(Se2Group.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.HARBOR.ofSafe(Se2Group.INSTANCE);
     Sedarim tuo = biinvariant.distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
     assertEquals(Dimensions.of(matrix), Arrays.asList(n, n));

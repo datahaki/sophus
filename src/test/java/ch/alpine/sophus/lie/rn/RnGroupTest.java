@@ -90,7 +90,7 @@ class RnGroupTest {
   void testLinearReproduction() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
@@ -106,7 +106,7 @@ class RnGroupTest {
   void testLagrangeProperty() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.unit();
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
@@ -119,7 +119,7 @@ class RnGroupTest {
   void testQuantity() {
     Random random = new Random();
     Distribution distribution = UniformDistribution.of(Quantity.of(-1, "m"), Quantity.of(+1, "m"));
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     for (int n = 2; n < 6; ++n) {
       int length = n + 1 + random.nextInt(3);
       Tensor points = RandomVariate.of(distribution, length, n);
@@ -222,14 +222,14 @@ class RnGroupTest {
     int n = 5;
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), n, d);
     Manifold manifold = RnGroup.INSTANCE;
-    Biinvariant metricBiinvariant = Biinvariants.METRIC.of(manifold);
-    Biinvariant harborBiinvariant = Biinvariants.HARBOR.of(manifold);
+    Biinvariant metricBiinvariant = Biinvariants.METRIC.ofSafe(manifold);
+    Biinvariant harborBiinvariant = Biinvariants.HARBOR.ofSafe(manifold);
     for (Biinvariant biinvariant : new Biinvariant[] { metricBiinvariant, harborBiinvariant }) {
       Sedarim tensorUnaryOperator = biinvariant.distances(sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder));
       SymmetricMatrixQ.require(vardst);
     }
-    Biinvariant leveragesBiinvariant = Biinvariants.LEVERAGES.of(manifold);
+    Biinvariant leveragesBiinvariant = Biinvariants.LEVERAGES.ofSafe(manifold);
     {
       Sedarim tensorUnaryOperator = leveragesBiinvariant.distances(sequence);
       Tensor vardst = Tensor.of(sequence.stream().map(tensorUnaryOperator::sunder));

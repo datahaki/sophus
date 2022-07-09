@@ -24,7 +24,7 @@ class HsWeiszfeldMethodTest {
     Random random = new Random(3);
     SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
-    Biinvariant biinvariant = Biinvariants.METRIC.of(RnGroup.INSTANCE);
+    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     for (int d = 2; d < 5; ++d)
       for (int n = 2; n < 20; n += 4) {
         Tensor sequence = RandomVariate.of(distribution, random, n, d);

@@ -71,9 +71,9 @@ class GrManifoldTest {
   void testBiinvariance() {
     Manifold manifold = GrManifold.INSTANCE;
     Biinvariant[] biinvariants = new Biinvariant[] { //
-        Biinvariants.METRIC.of(manifold), //
-        Biinvariants.LEVERAGES.of(manifold), //
-        Biinvariants.GARDEN.of(manifold) };
+        Biinvariants.METRIC.ofSafe(manifold), //
+        Biinvariants.LEVERAGES.ofSafe(manifold), //
+        Biinvariants.GARDEN.ofSafe(manifold) };
     Random random1 = new Random();
     int n = 3 + random1.nextInt(2);
     ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
