@@ -4,8 +4,8 @@ package ch.alpine.sophus.hs.hn;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Throw;
 
 public enum HnSeries {
   ;

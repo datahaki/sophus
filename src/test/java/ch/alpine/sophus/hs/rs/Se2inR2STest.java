@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.Tolerance;
 
 class Se2inR2STest {
   @ParameterizedTest
-  @EnumSource(Se2inR2S.class)
+  @EnumSource
   void test(Se2inR2S se2inR2S) {
     Tensor p = Tensors.vector(0, 0, 0);
     Tensor q = Tensors.vector(2, 0, 0);

@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 
 class RnSBezierSplitTest {
   @ParameterizedTest
-  @EnumSource(RnSBezierSplit.class)
+  @EnumSource
   void test(RnSBezierSplit rnSBezierSplit) {
     Tensor pv0 = Tensors.fromString("{{0,0},{0,1}}");
     Tensor pv1 = Tensors.fromString("{{2,0},{0,1}}");

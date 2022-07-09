@@ -2,8 +2,8 @@
 package ch.alpine.sophus.lie.se2;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /* package */ class Se2AdjointComp implements TensorUnaryOperator {
