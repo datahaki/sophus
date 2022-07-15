@@ -66,11 +66,11 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
             tensor.append(q);
             belonh.append(belong.get(j));
           }
-        } else
-          if (isInside(a, b, p)) {
-            tensor.append(intersection(a, b, p, q));
-            belonh.append(RealScalar.ONE);
-          }
+        } else //
+        if (isInside(a, b, p)) {
+          tensor.append(intersection(a, b, p, q));
+          belonh.append(RealScalar.ONE);
+        }
       }
       belong = belonh;
     }

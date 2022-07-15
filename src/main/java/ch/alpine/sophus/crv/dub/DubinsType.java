@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.crv.dub;
 
 import ch.alpine.tensor.RealScalar;
