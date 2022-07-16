@@ -40,9 +40,9 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
    * @param theta
    * @param omega
    * @return */
-  public static RnHermite3Subdivision of(HermiteHiParam hermiteHiParam) {
-    Scalar theta = hermiteHiParam.theta;
-    Scalar omega = hermiteHiParam.omega;
+  public static RnHermite3Subdivision of(HermiteHiConfig hermiteHiParam) {
+    Scalar theta = hermiteHiParam.theta();
+    Scalar omega = hermiteHiParam.omega();
     Tensor ARP = Tensors.of( //
         Tensors.of(theta, theta.multiply(RationalScalar.HALF)), //
         Tensors.of(omega.multiply(RationalScalar.of(+3, 2)), omega.multiply(RationalScalar.HALF)));
@@ -61,7 +61,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
    * 
    * @return */
   public static RnHermite3Subdivision standard() {
-    return of(HermiteHiParam.STANDARD);
+    return of(HermiteHiConfig.STANDARD);
   }
 
   private static final HermiteSubdivision A1 = //

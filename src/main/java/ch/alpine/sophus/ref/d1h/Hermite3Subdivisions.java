@@ -67,9 +67,9 @@ public enum Hermite3Subdivisions {
    * @param omega
    * @return */
   public static Hermite3Subdivision of( //
-      HomogeneousSpace homogeneousSpace, Chop chop, HermiteHiParam hermiteHiParam) {
-    Scalar theta = hermiteHiParam.theta;
-    Scalar omega = hermiteHiParam.omega;
+      HomogeneousSpace homogeneousSpace, Chop chop, HermiteHiConfig hermiteHiParam) {
+    Scalar theta = hermiteHiParam.theta();
+    Scalar omega = hermiteHiParam.omega();
     return _create(homogeneousSpace, chop, //
         Tensors.of(theta, RealScalar.ONE.subtract(theta.add(theta)), theta), //
         RationalScalar.of(-1, 8), RationalScalar.of(3, 4), RationalScalar.of(-1, 8), //
@@ -84,7 +84,7 @@ public enum Hermite3Subdivisions {
    * @param homogeneousSpace
    * @throws Exception if either parameters is null */
   public static Hermite3Subdivision of(HomogeneousSpace homogeneousSpace, Chop chop) {
-    return of(homogeneousSpace, chop, HermiteHiParam.STANDARD);
+    return of(homogeneousSpace, chop, HermiteHiConfig.STANDARD);
   }
 
   // ---

@@ -34,9 +34,9 @@ public enum Hermite2Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, HermiteLoParam hermiteLoParam) {
-    Scalar lambda = hermiteLoParam.lambda;
-    Scalar mu = hermiteLoParam.mu;
+  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, HermiteLoConfig hermiteLoParam) {
+    Scalar lambda = hermiteLoParam.lambda();
+    Scalar mu = hermiteLoParam.mu();
     Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
     Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -70,7 +70,7 @@ public enum Hermite2Subdivisions {
    * @return
    * @see Hermite1Subdivision */
   public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
-    return of(homogeneousSpace, HermiteLoParam.STANDARD);
+    return of(homogeneousSpace, HermiteLoConfig.STANDARD);
   }
 
   // ---
@@ -84,6 +84,6 @@ public enum Hermite2Subdivisions {
    * @param homogeneousSpace
    * @return */
   public static HermiteSubdivision manifold(HomogeneousSpace homogeneousSpace) {
-    return of(homogeneousSpace, HermiteLoParam.MANIFOLD);
+    return of(homogeneousSpace, HermiteLoConfig.MANIFOLD);
   }
 }
