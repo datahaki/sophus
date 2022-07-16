@@ -19,8 +19,6 @@ import ch.alpine.tensor.Scalar;
 public enum Hermite1Subdivisions {
   ;
   private static final Scalar _1_4 = RationalScalar.of(1, 4);
-  private static final Scalar N1_8 = RationalScalar.of(-1, 8);
-  private static final Scalar N1_2 = RationalScalar.of(-1, 2);
 
   /** References:
    * "Scalar and Hermite subdivision schemes"
@@ -41,12 +39,12 @@ public enum Hermite1Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, HermiteLoParam hermiteLoParam) {
     return new Hermite1Subdivision( //
         homogeneousSpace, //
-        lambda, //
-        RealScalar.ONE.subtract(mu).multiply(RationalScalar.HALF), //
-        mu.multiply(_1_4));
+        hermiteLoParam.lambda, //
+        RealScalar.ONE.subtract(hermiteLoParam.mu).multiply(RationalScalar.HALF), //
+        hermiteLoParam.mu.multiply(_1_4));
   }
 
   /** lambda == -1/8
@@ -60,6 +58,6 @@ public enum Hermite1Subdivisions {
    * @param hsTransport
    * @return */
   public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
-    return of(homogeneousSpace, N1_8, N1_2);
+    return of(homogeneousSpace, HermiteLoParam.STANDARD);
   }
 }

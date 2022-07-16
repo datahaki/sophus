@@ -13,10 +13,6 @@ import ch.alpine.tensor.red.Times;
 public enum Hermite2Subdivisions {
   ;
   private static final Scalar _1_8 = RationalScalar.of(1, 8);
-  private static final Scalar N1_8 = RationalScalar.of(-1, 8);
-  private static final Scalar N1_2 = RationalScalar.of(-1, 2);
-  private static final Scalar N1_5 = RationalScalar.of(-1, 5);
-  private static final Scalar _9_10 = RationalScalar.of(9, 10);
 
   /** References:
    * "de Rham Transform of a Hermite Subdivision Scheme"
@@ -38,7 +34,9 @@ public enum Hermite2Subdivisions {
    * @param lambda
    * @param mu
    * @return */
-  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, Scalar lambda, Scalar mu) {
+  public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, HermiteLoParam hermiteLoParam) {
+    Scalar lambda = hermiteLoParam.lambda;
+    Scalar mu = hermiteLoParam.mu;
     Scalar an2_11 = RealScalar.TWO.add(Times.of(RealScalar.of(4), lambda, RealScalar.ONE.subtract(mu)));
     Scalar an2_12 = Times.of(RealScalar.TWO, lambda, RealScalar.TWO.add(mu));
     Scalar an2_21 = Polynomial.of(Tensors.vector(4, -2, -2)).apply(mu);
@@ -72,7 +70,7 @@ public enum Hermite2Subdivisions {
    * @return
    * @see Hermite1Subdivision */
   public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
-    return of(homogeneousSpace, N1_8, N1_2);
+    return of(homogeneousSpace, HermiteLoParam.STANDARD);
   }
 
   // ---
@@ -86,6 +84,6 @@ public enum Hermite2Subdivisions {
    * @param homogeneousSpace
    * @return */
   public static HermiteSubdivision manifold(HomogeneousSpace homogeneousSpace) {
-    return of(homogeneousSpace, N1_5, _9_10);
+    return of(homogeneousSpace, HermiteLoParam.MANIFOLD);
   }
 }

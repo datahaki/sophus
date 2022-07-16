@@ -21,6 +21,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
     Graphics2D graphics = bufferedImage.createGraphics();
     graphics.setColor(Color.WHITE);
     graphics.fillRect(0, 0, size, size);
+    graphics.dispose();
     return bufferedImage;
   }
 

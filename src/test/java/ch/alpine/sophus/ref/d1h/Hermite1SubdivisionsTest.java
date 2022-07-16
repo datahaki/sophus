@@ -30,7 +30,7 @@ class Hermite1SubdivisionsTest {
     Scalar mu = RationalScalar.of(-1, 3);
     TestHelper.check( //
         RnHermite1Subdivisions.of(lambda, mu), //
-        Hermite1Subdivisions.of(RnGroup.INSTANCE, lambda, mu));
+        Hermite1Subdivisions.of(RnGroup.INSTANCE, new HermiteLoParam(lambda, mu)));
   }
 
   @Test

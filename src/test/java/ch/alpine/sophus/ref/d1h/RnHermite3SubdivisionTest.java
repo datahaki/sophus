@@ -59,17 +59,17 @@ class RnHermite3SubdivisionTest {
   @Test
   void testPolynomialReproduction() {
     TestHelper.checkP(3, RnHermite3Subdivisions.standard());
-    HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of( //
+    HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of(new HermiteHiParam( //
         RationalScalar.of(+2, 157), //
-        RationalScalar.of(-3, 43));
+        RationalScalar.of(-3, 43)));
     TestHelper.checkP(3, hermiteSubdivision);
   }
 
   @Test
   void testPolynomialReproductionMore() {
-    HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of( //
+    HermiteSubdivision hermiteSubdivision = RnHermite3Subdivisions.of(new HermiteHiParam( //
         RationalScalar.of(+3, 157), //
-        RationalScalar.of(-5, 43));
+        RationalScalar.of(-5, 43)));
     Polynomial f0 = Polynomial.of(Tensors.vector(2, -7, 4, -3));
     Polynomial f1 = f0.derivative();
     Tensor domain = Range.of(0, 10);
@@ -103,7 +103,7 @@ class RnHermite3SubdivisionTest {
   @Test
   void testSpecialCase() {
     RnHermite3Subdivision rnHermite3Subdivision = //
-        RnHermite3Subdivisions.of(RealScalar.ZERO, RealScalar.ZERO);
+        RnHermite3Subdivisions.of(new HermiteHiParam(RealScalar.ZERO, RealScalar.ZERO));
     assertEquals(Array.zeros(2, 2), ExactTensorQ.require(rnHermite3Subdivision.ARP));
     assertEquals(DiagonalMatrix.of(1, 0.5), ExactTensorQ.require(rnHermite3Subdivision.ARQ));
     assertEquals(Array.zeros(2, 2), ExactTensorQ.require(rnHermite3Subdivision.ARR));

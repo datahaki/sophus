@@ -28,10 +28,9 @@ class Hermite3SubdivisionsTest {
 
   @Test
   void testTension() {
-    Scalar theta = RationalScalar.of(2, 157);
-    Scalar omega = RationalScalar.of(1, 9);
-    HermiteSubdivision hermiteSubdivision = Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP, theta, omega);
-    TestHelper.check(RnHermite3Subdivisions.of(theta, omega), hermiteSubdivision);
+    HermiteHiParam hermiteHiParam = new HermiteHiParam(RationalScalar.of(2, 157), RationalScalar.of(1, 9));
+    HermiteSubdivision hermiteSubdivision = Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP, hermiteHiParam);
+    TestHelper.check(RnHermite3Subdivisions.of(hermiteHiParam), hermiteSubdivision);
     TestHelper.checkP(3, hermiteSubdivision);
   }
 
@@ -40,9 +39,9 @@ class Hermite3SubdivisionsTest {
     Scalar theta = RealScalar.ZERO;
     Scalar omega = RealScalar.ZERO;
     TestHelper.check(Hermite1Subdivisions.standard(RnGroup.INSTANCE), //
-        Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP, theta, omega));
+        Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP, new HermiteHiParam(theta, omega)));
     TestHelper.check(Hermite1Subdivisions.standard(RnGroup.INSTANCE), //
-        Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP, theta, omega));
+        Hermite3Subdivisions.of(RnGroup.INSTANCE, Tolerance.CHOP, new HermiteHiParam(theta, omega)));
   }
 
   @Test
