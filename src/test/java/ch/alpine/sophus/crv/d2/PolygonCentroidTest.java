@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -38,8 +38,8 @@ class PolygonCentroidTest {
   void testRandom() {
     Random random = new Random(3);
     for (int count = 0; count < 100; ++count) {
-      Tensor poly1 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
-      Tensor poly2 = ConvexHull.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
+      Tensor poly1 = ConvexHull2D.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
+      Tensor poly2 = ConvexHull2D.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
       Tensor r12 = PolygonClip.of(poly1).apply(poly2);
       Tensor r21 = PolygonClip.of(poly2).apply(poly1);
       if (r12.length() != r21.length()) {

@@ -8,7 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.sca.Sign;
 
 // TODO SOPHUS API generally, the files in this package currently dont all belong in this package together...
@@ -43,6 +43,6 @@ public enum OriginEnclosureQ implements MemberQ {
   /** @param levers
    * @return whether origin is inside convex span of given levers */
   public static boolean isInsideConvexHull(Tensor levers) {
-    return INSTANCE.test(ConvexHull.of(levers));
+    return INSTANCE.test(ConvexHull2D.of(levers));
   }
 }

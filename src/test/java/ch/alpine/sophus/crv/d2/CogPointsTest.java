@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.sca.Sign;
 
 class CogPointsTest {
@@ -19,7 +19,7 @@ class CogPointsTest {
     Tensor polygon = CogPoints.of(10, RealScalar.of(10.2), RealScalar.of(3.2));
     assertEquals(Dimensions.of(polygon), Arrays.asList(40, 2));
     Sign.requirePositive(PolygonArea.of(polygon));
-    Tensor convex = ConvexHull.of(polygon);
+    Tensor convex = ConvexHull2D.of(polygon);
     assertEquals(Dimensions.of(convex), Arrays.asList(20, 2));
   }
 
@@ -27,7 +27,7 @@ class CogPointsTest {
   void testToggled() {
     Tensor tensor = CogPoints.of(10, RealScalar.of(10.2), RealScalar.of(30.2));
     assertEquals(Dimensions.of(tensor), Arrays.asList(40, 2));
-    Tensor convex = ConvexHull.of(tensor);
+    Tensor convex = ConvexHull2D.of(tensor);
     assertEquals(Dimensions.of(convex), Arrays.asList(20, 2));
   }
 }
