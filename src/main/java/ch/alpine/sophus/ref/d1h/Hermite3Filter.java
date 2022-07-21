@@ -41,8 +41,8 @@ public class Hermite3Filter implements HermiteFilter {
 
   private class Control {
     private Tensor control;
-    private Scalar cgk;
-    private Scalar cvk;
+    private final Scalar cgk;
+    private final Scalar cvk;
 
     private Control(Scalar delta, Tensor control) {
       this.control = control;

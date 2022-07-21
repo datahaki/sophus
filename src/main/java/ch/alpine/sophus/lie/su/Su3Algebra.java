@@ -25,7 +25,7 @@ public enum Su3Algebra implements LieAlgebra {
   private final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.of(1, 3));
   private final Tensor ad;
 
-  private Su3Algebra() {
+  Su3Algebra() {
     ad = new MatrixAlgebra(basis()).ad();
   }
 

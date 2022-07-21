@@ -13,7 +13,7 @@ public enum ClothoidIntegrations implements ClothoidIntegration {
 
   private final Function<LagrangeQuadratic, ClothoidIntegral> function;
 
-  private ClothoidIntegrations(Function<LagrangeQuadratic, ClothoidIntegral> function) {
+  ClothoidIntegrations(Function<LagrangeQuadratic, ClothoidIntegral> function) {
     this.function = function;
   }
 

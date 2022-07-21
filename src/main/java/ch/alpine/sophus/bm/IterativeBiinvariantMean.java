@@ -53,7 +53,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * converges to exact mean.
    * 
    * @see IterativeBiinvariantMean */
-  private static enum ArgMaxSelection implements BiinvariantMean {
+  private enum ArgMaxSelection implements BiinvariantMean {
     INSTANCE;
 
     @Override // from BiinvariantMean

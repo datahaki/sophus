@@ -44,7 +44,7 @@ public enum Se2BiinvariantMeans implements BiinvariantMean {
   private final BiinvariantMean biinvariantMean;
 
   /** @param scalarBiinvariantMean */
-  private Se2BiinvariantMeans(ScalarBiinvariantMean scalarBiinvariantMean) {
+  Se2BiinvariantMeans(ScalarBiinvariantMean scalarBiinvariantMean) {
     biinvariantMean = Se2UniversalBiinvariantMean.se2(scalarBiinvariantMean);
   }
 

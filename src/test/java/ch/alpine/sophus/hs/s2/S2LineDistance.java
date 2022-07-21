@@ -19,7 +19,7 @@ public enum S2LineDistance implements LineDistance {
     return new S2Line(p, q);
   }
 
-  private class S2Line implements TensorNorm {
+  private static class S2Line implements TensorNorm {
     private final Tensor cross;
 
     public S2Line(Tensor p, Tensor q) {

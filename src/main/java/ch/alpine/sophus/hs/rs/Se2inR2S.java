@@ -15,7 +15,7 @@ public enum Se2inR2S implements GeodesicSpace {
 
   private final RnSBezierSplit rnSBezierSplit;
 
-  private Se2inR2S(RnSBezierSplit rnSBezierSplit) {
+  Se2inR2S(RnSBezierSplit rnSBezierSplit) {
     this.rnSBezierSplit = rnSBezierSplit;
   }
 

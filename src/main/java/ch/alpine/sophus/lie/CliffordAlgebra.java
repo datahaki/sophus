@@ -30,17 +30,17 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.spa.SparseArray;
 
 /** geometric algebra
- * 
+ *
  * <p>Remark:
  * Cl(0, 1) is algebra-isomorphic to the complex scalars
  * Cl(0, 2) is algebra-isomorphic to the quaternions
- * 
+ *
  * <p>Careful:
  * the memory use of the representation of Cl(p, q) in the implementation is in
  * the order of (2 ^ (p+q)) ^ 3.
- * 
+ *
  * <p>Reference:
- * https://en.wikipedia.org/wiki/Clifford_algebra */
+ * <a href="https://en.wikipedia.org/wiki/Clifford_algebra">Clifford algebra</a> */
 public class CliffordAlgebra implements Serializable {
   private static final Scalar[] SIGN = { //
       RealScalar.ONE, //

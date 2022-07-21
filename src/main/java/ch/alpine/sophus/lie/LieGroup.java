@@ -19,12 +19,12 @@ public interface LieGroup extends HomogeneousSpace, Exponential {
   LieGroupElement element(Tensor tensor);
 
   @Override // from Manifold
-  public default Exponential exponential(Tensor point) {
+  default Exponential exponential(Tensor point) {
     return new LieExponential(this, point);
   }
 
   @Override // from HomogeneousSpace
-  public default HsTransport hsTransport() {
+  default HsTransport hsTransport() {
     return LieTransport.INSTANCE;
   }
 }

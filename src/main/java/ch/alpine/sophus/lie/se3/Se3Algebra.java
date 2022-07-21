@@ -16,7 +16,7 @@ public enum Se3Algebra implements LieAlgebra {
   private final Tensor basis;
   private final Tensor ad;
 
-  private Se3Algebra() {
+  Se3Algebra() {
     basis = Tensors.of( //
         Tensors.fromString("{{0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"), //
         Tensors.fromString("{{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}}"), //

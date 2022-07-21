@@ -25,10 +25,10 @@ import ch.alpine.tensor.sca.InvertUnlessZero;
  * G1 - Tangent, curvature is discontinuous, example: Dubins path
  * G2 - Curvature, curvature is continuous but not regular, cubic B-spline
  * G3 - Curvature is regular
- * 
+ *
  * source:
- * http://www.aliasworkbench.com/theoryBuilders/images/CombPlot4.jpg
- * 
+ * <a href="http://www.aliasworkbench.com/theoryBuilders/images/CombPlot4.jpg">CombPlot4</a>
+ *
  * @see Curvature2D */
 public enum CurvatureComb {
   ;

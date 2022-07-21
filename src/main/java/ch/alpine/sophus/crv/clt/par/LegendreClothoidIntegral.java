@@ -57,7 +57,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
   public Scalar normalized(Scalar t) {
     Scalar il = il(t);
     Scalar ir = ir(t);
-    /** ratio z enforces interpolation of terminal points
+    /* ratio z enforces interpolation of terminal points
      * t == 0 -> (0, 0)
      * t == 1 -> (1, 0) */
     return il.divide(il.add(ir));

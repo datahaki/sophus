@@ -13,7 +13,7 @@ public enum ClothoidTransitionSpace implements TransitionSpace {
 
   private final ClothoidBuilder clothoidBuilder;
 
-  private ClothoidTransitionSpace(ClothoidBuilder clothoidBuilder) {
+  ClothoidTransitionSpace(ClothoidBuilder clothoidBuilder) {
     this.clothoidBuilder = clothoidBuilder;
   }
 

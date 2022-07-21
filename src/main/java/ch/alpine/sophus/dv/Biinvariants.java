@@ -20,7 +20,7 @@ public enum Biinvariants {
   public static final List<Biinvariants> FAST = List.of(METRIC, LEVERAGES, GARDEN);
   private final Function<Manifold, Biinvariant> supplier;
 
-  private Biinvariants(Function<Manifold, Biinvariant> supplier) {
+  Biinvariants(Function<Manifold, Biinvariant> supplier) {
     this.supplier = supplier;
   }
 

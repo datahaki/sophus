@@ -40,8 +40,8 @@ public record CatmullClarkRefinement(BiinvariantMean biinvariantMean) //
         Tensor weights = Tensors.reserve(2 * n + 1);
         // weights are from "Figure 7" in Warren/Schaefer
         Scalar ga = RationalScalar.of(1, 4);
-        Scalar al = RationalScalar.of(1, 4 * n);
-        Scalar be = RationalScalar.of(1, 2 * n);
+        Scalar al = RationalScalar.of(1, 4L * n);
+        Scalar be = RationalScalar.of(1, 2L * n);
         for (IntDirectedEdge intDirectedEdge : list) {
           sequence.append(out.vrt.get(out.face(intDirectedEdge.i())[(intDirectedEdge.j() + 1) % 4]));
           sequence.append(out.vrt.get(out.face(intDirectedEdge.i())[(intDirectedEdge.j() + 2) % 4]));

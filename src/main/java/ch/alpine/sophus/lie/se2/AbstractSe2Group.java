@@ -13,10 +13,10 @@ import ch.alpine.tensor.sca.tri.Tan;
 
 /** Hint:
  * The angular coordinate is not automatically mapped to [-pi, pi).
- * 
+ *
  * References:
- * http://vixra.org/abs/1807.0463
- * https://www.youtube.com/watch?v=2vDciaUgL4E */
+ * <a href="http://vixra.org/abs/1807.0463">1807.0463</a>
+ * <a href="https://www.youtube.com/watch?v=2vDciaUgL4E">video</a> */
 public abstract class AbstractSe2Group implements LieGroup {
   private static final Scalar HALF = RealScalar.of(0.5);
 

@@ -30,7 +30,7 @@ public enum KullbackLeiblerDivergence implements TensorMetric {
     SymmetricMatrixQ.require(p2);
     Tensor s1 = p1.dot(Inverse.of(p2));
     Tensor s2 = p2.dot(Inverse.of(p1));
-    return Trace.of(s1.add(s2)).subtract(RealScalar.of(2 * p1.length()));
+    return Trace.of(s1.add(s2)).subtract(RealScalar.of(2L * p1.length()));
   }
 
   /** the implementation is from the paper from Shinohara et al.

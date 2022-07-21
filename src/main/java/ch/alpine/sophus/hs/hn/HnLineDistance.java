@@ -16,7 +16,7 @@ public enum HnLineDistance implements LineDistance {
     return new Inner(p, q);
   }
 
-  private class Inner implements TensorNorm {
+  private static class Inner implements TensorNorm {
     private final Exponential exponential;
     private final Tensor v_pq;
 

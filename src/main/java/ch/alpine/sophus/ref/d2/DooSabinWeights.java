@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.tri.Cos;
   static Tensor numeric(int n) {
     Tensor w = Range.of(1, n).multiply(Pi.TWO).divide(RealScalar.of(n));
     Tensor p = Cos.of(w).multiply(RealScalar.TWO).map(s -> s.add(RealScalar.of(3)));
-    return Join.of(Tensors.vector(n + 5), p).divide(RealScalar.of(4 * n));
+    return Join.of(Tensors.vector(n + 5), p).divide(RealScalar.of(4L * n));
   }
 
   private static Tensor vector(int n) {

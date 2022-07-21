@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 class RegionTest {
   @FunctionalInterface
-  public static interface Some {
-    public boolean single(Object s);
+  public interface Some {
+    boolean single(Object s);
   }
 
   @Test

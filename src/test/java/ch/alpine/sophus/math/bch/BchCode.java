@@ -13,7 +13,7 @@ import ch.alpine.tensor.num.Denominator;
 import ch.alpine.tensor.num.Numerator;
 import ch.alpine.tensor.sca.Sign;
 
-/** https://en.wikipedia.org/wiki/Jacobi_identity */
+/** <a href="https://en.wikipedia.org/wiki/Jacobi_identity">Jacobi identity</a> */
 public enum BchCode {
   ;
   public static void main(String[] args) {

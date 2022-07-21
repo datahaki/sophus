@@ -19,7 +19,7 @@ public enum ClothoidDistance implements TensorMetric, TensorNorm {
 
   private final ClothoidBuilder clothoidBuilder;
 
-  private ClothoidDistance(ClothoidBuilder clothoidBuilder) {
+  ClothoidDistance(ClothoidBuilder clothoidBuilder) {
     this.clothoidBuilder = clothoidBuilder;
   }
 

@@ -16,7 +16,7 @@ public record SymmetricLineDistance(LineDistance lineDistance) implements LineDi
         lineDistance.tensorNorm(beg, end), //
         lineDistance.tensorNorm(end, beg));
   }
-  private static record NormImpl(TensorNorm tensorNorm1, TensorNorm tensorNorm2) //
+  private record NormImpl(TensorNorm tensorNorm1, TensorNorm tensorNorm2) //
       implements TensorNorm {
     @Override
     public Scalar norm(Tensor index) {

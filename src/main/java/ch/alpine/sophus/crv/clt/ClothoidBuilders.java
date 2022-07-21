@@ -20,7 +20,7 @@ public enum ClothoidBuilders {
 
   private final ClothoidBuilder clothoidBuilder;
 
-  private ClothoidBuilders(ClothoidQuadratic clothoidQuadratic, ClothoidIntegration clothoidIntegration) {
+  ClothoidBuilders(ClothoidQuadratic clothoidQuadratic, ClothoidIntegration clothoidIntegration) {
     this.clothoidBuilder = new ClothoidBuilderImpl(clothoidQuadratic, clothoidIntegration);
   }
 

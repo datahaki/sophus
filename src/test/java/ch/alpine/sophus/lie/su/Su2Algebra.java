@@ -15,7 +15,7 @@ public enum Su2Algebra implements LieAlgebra {
 
   private final MatrixAlgebra matrixAlgebra;
 
-  private Su2Algebra() {
+  Su2Algebra() {
     matrixAlgebra = new MatrixAlgebra(basis());
   }
 
