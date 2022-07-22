@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.ref.d1;
 
+import ch.alpine.sophus.hs.r2.SignedCurvature2D;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -8,7 +9,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.Cross;
-import ch.alpine.tensor.lie.r2.SignedCurvature2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.red.Times;

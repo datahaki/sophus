@@ -4,6 +4,7 @@ package ch.alpine.sophus.crv.d2;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.hs.r2.Det2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -12,7 +13,6 @@ import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.PackageTestAccess;
-import ch.alpine.tensor.lie.r2.Det2D;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 

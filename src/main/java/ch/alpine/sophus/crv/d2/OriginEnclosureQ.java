@@ -2,13 +2,13 @@
 // adapted from PNPOLY - Point Inclusion in Polygon Test W. Randolph Franklin (WRF)
 package ch.alpine.sophus.crv.d2;
 
+import ch.alpine.sophus.hs.r2.ConvexHull2D;
 import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.sca.Sign;
 
 // TODO SOPHUS API generally, the files in this package currently dont all belong in this package together...

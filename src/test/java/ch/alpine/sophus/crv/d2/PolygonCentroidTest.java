@@ -9,10 +9,10 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.hs.r2.ConvexHull2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;

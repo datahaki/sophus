@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.sophus.hs.Genesis;
+import ch.alpine.sophus.hs.r2.Det2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -13,7 +14,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.lie.r2.Det2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** Three-point homogeneous weights:
