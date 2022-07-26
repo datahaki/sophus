@@ -101,6 +101,6 @@ public class GeodesicBSplineFunction extends BSplineFunction {
 
   @Override
   protected int bound(int index) {
-    return Math.min(Math.max(0, index), last);
+    return Integers.clip(0, last).applyAsInt(index);
   }
 }

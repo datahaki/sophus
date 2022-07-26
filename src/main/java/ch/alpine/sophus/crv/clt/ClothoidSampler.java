@@ -7,6 +7,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.InverseCDF;
 import ch.alpine.tensor.pdf.c.EqualizingDistribution;
@@ -36,7 +37,7 @@ public enum ClothoidSampler {
       return UnitVector.of(2, 1);
     Scalar scalar = Sqrt.FUNCTION.apply(lagrangeQuadraticD.integralAbs().divide(minResolution)).multiply(clothoid.length());
     int intervals = Ceiling.intValueExact(scalar);
-    Tensor uniform = Subdivide.of(_0, _1, Math.min(Math.max(1, intervals), MAX_INTERVALS));
+    Tensor uniform = Subdivide.of(_0, _1, Integers.clip(1, MAX_INTERVALS).applyAsInt(intervals));
     InverseCDF inverseCDF = (InverseCDF) EqualizingDistribution.fromUnscaledPDF( //
         uniform.map(lagrangeQuadraticD).map(Abs.FUNCTION).map(Sqrt.FUNCTION));
     return uniform.map(inverseCDF::quantile).divide(DoubleScalar.of(uniform.length()));
