@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.se2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -116,7 +116,7 @@ class Se2AdjointTest {
       TensorUnaryOperator se2Adjoint = Se2Adjoint.forward(g);
       Tensor u_w = RandomVariate.of(distribution, 3);
       Tensor out = se2Adjoint.apply(u_w);
-      assertEquals(Dimensions.of(out), Arrays.asList(3));
+      assertEquals(Dimensions.of(out), List.of(3));
       Tensor g_i = new Se2GroupElement(g).inverse().combine(Array.zeros(3));
       TensorUnaryOperator se2Inverse = Se2Adjoint.forward(g_i);
       Tensor apply = se2Inverse.apply(out);

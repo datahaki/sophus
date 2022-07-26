@@ -36,8 +36,8 @@ import ch.alpine.tensor.Tensors;
     String[] nodes = line.split(" +");
     Tensor iv = Tensors.empty();
     Tensor in = Tensors.empty();
-    for (int index = 0; index < nodes.length; ++index) {
-      String[] node = StaticHelper.slash(nodes[index]);
+    for (String s : nodes) {
+      String[] node = StaticHelper.slash(s);
       iv.append(RealScalar.of(Integer.parseInt(node[0]) - 1));
       if (!node[2].isEmpty())
         in.append(RealScalar.of(Integer.parseInt(node[2]) - 1));

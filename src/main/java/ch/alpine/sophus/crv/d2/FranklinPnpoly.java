@@ -2,8 +2,6 @@
 // adapted from PNPOLY - Point Inclusion in Polygon Test W. Randolph Franklin (WRF)
 package ch.alpine.sophus.crv.d2;
 
-import java.util.Iterator;
-
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -23,9 +21,7 @@ import ch.alpine.tensor.alg.Last;
       return false;
     boolean c = false;
     Tensor prev = Last.of(polygon);
-    Iterator<Tensor> iterator = polygon.iterator();
-    while (iterator.hasNext()) {
-      Tensor next = iterator.next();
+    for (Tensor next : polygon) {
       Scalar py = prev.Get(1);
       Scalar ny = next.Get(1);
       if (Scalars.lessThan(ty, ny) != Scalars.lessThan(ty, py)) {

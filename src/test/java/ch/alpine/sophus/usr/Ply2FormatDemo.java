@@ -3,7 +3,6 @@ package ch.alpine.sophus.usr;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,7 +14,7 @@ import ch.alpine.tensor.io.Export;
 
 public enum Ply2FormatDemo {
   ;
-  public static void main(String[] args) throws FileNotFoundException, IOException {
+  public static void main(String[] args) throws IOException {
     File file = HomeDirectory.file("doraemon.ply2");
     try (InputStream inputStream = new FileInputStream(file)) {
       SurfaceMesh surfaceMesh = Ply2Format.parse(ReadLine.of(inputStream));

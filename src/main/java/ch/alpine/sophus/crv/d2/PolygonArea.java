@@ -2,8 +2,6 @@
 // inspired by https://www.mathopenref.com/coordpolygonarea.html
 package ch.alpine.sophus.crv.d2;
 
-import java.util.Iterator;
-
 import ch.alpine.sophus.hs.r2.Det2D;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -25,9 +23,8 @@ public enum PolygonArea {
       return RealScalar.ZERO;
     Tensor prev = Last.of(polygon);
     Scalar sum = Det2D.of(prev, prev);
-    Iterator<Tensor> iterator = polygon.iterator();
-    while (iterator.hasNext())
-      sum = sum.add(Det2D.of(prev, prev = iterator.next()));
+    for (Tensor tensor : polygon)
+      sum = sum.add(Det2D.of(prev, prev = tensor));
     return sum.multiply(RationalScalar.HALF);
   }
 }

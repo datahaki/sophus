@@ -35,7 +35,7 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 class SpdManifoldTest {
-  public static final BarycentricCoordinate[] list() {
+  public static BarycentricCoordinate[] list() {
     // return GbcHelper.barycentrics(SpdManifold.INSTANCE);
     return new BarycentricCoordinate[] { //
         new HsCoordinates(new HsDesign(SpdManifold.INSTANCE), MetricCoordinate.of(InversePowerVariogram.of(1))), //

@@ -35,7 +35,6 @@ import ch.alpine.tensor.io.GifAnimationWriter;
         Tensor matrix = Parallelize.matrix(So3ExponentialDemo::function, RES, RES);
         animationWriter.write(Raster.of(matrix, ColorDataGradients.CLASSIC));
       }
-      animationWriter.close();
     }
   }
 }

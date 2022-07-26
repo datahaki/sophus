@@ -31,12 +31,9 @@ import ch.alpine.tensor.sca.tri.ArcTan;
  * <a href="https://en.wikipedia.org/wiki/Graham_scan">Graham scan</a> */
 /* package */ enum GrahamScan {
   ;
-  private static final Comparator<Tensor> MINY_MINX = new Comparator<>() {
-    @Override
-    public int compare(Tensor p1, Tensor p2) {
-      int cmp = Scalars.compare(p1.Get(1), p2.Get(1));
-      return cmp != 0 ? cmp : Scalars.compare(p1.Get(0), p2.Get(0));
-    }
+  private static final Comparator<Tensor> MINY_MINX = (p1, p2) -> {
+    int cmp = Scalars.compare(p1.Get(1), p2.Get(1));
+    return cmp != 0 ? cmp : Scalars.compare(p1.Get(0), p2.Get(0));
   };
 
   /** The Java API recommends to use ArrayDeque instead of Stack. However,
@@ -51,16 +48,13 @@ import ch.alpine.tensor.sca.tri.ArcTan;
       return Tensors.empty();
     VectorQ.requireLength(list.get(0), 2);
     final Tensor point0 = Collections.min(list, MINY_MINX);
-    Collections.sort(list, new Comparator<>() {
-      @Override
-      public int compare(Tensor p1, Tensor p2) {
-        Tensor d10 = p1.subtract(point0);
-        Tensor d20 = p2.subtract(point0);
-        int cmp = Scalars.compare( //
-            ArcTan.of(d10.Get(0), d10.Get(1)), //
-            ArcTan.of(d20.Get(0), d20.Get(1)));
-        return cmp != 0 ? cmp : MINY_MINX.compare(p1, p2);
-      }
+    list.sort((p1, p2) -> {
+      Tensor d10 = p1.subtract(point0);
+      Tensor d20 = p2.subtract(point0);
+      int cmp = Scalars.compare( //
+          ArcTan.of(d10.Get(0), d10.Get(1)), //
+          ArcTan.of(d20.Get(0), d20.Get(1)));
+      return cmp != 0 ? cmp : MINY_MINX.compare(p1, p2);
     });
     // ArrayDeque::stream is reverse of Stack::stream
     Stack<Tensor> stack = new Stack<>();

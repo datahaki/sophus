@@ -5,60 +5,34 @@ import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 public enum GbcHelper {
   ;
   public static BarycentricCoordinate lagrainate_of(Biinvariant biinvariant, ScalarUnaryOperator variogram) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return biinvariant.lagrainate(variogram, sequence).sunder(point);
-      }
-    };
+    return (sequence, point) -> biinvariant.lagrainate(variogram, sequence).sunder(point);
   }
 
   public static BarycentricCoordinate harborCoordinate_of(HsDesign hsDesign, ScalarUnaryOperator variogram) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return new HarborBiinvariant(hsDesign.manifold()).coordinate(variogram, sequence).sunder(point);
-      }
-    };
+    return (sequence, point) -> new HarborBiinvariant(hsDesign.manifold()).coordinate(variogram, sequence).sunder(point);
   }
 
   public static BarycentricCoordinate gardenCoordinate_of(Manifold manifold, ScalarUnaryOperator variogram) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return Biinvariants.GARDEN.ofSafe(manifold).coordinate(variogram, sequence).sunder(point);
-      }
-    };
+    return (sequence, point) -> Biinvariants.GARDEN.ofSafe(manifold).coordinate(variogram, sequence).sunder(point);
   }
 
   public static BarycentricCoordinate inversCoordinate_of(Biinvariant biinvariant) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return new InverseCoordinate( //
-            biinvariant.hsDesign(), //
-            biinvariant.distances(sequence), //
-            sequence).sunder(point);
-      }
-    };
+    return (sequence, point) -> new InverseCoordinate( //
+        biinvariant.hsDesign(), //
+        biinvariant.distances(sequence), //
+        sequence).sunder(point);
   }
 
   public static BarycentricCoordinate kriginCoordinate_of(Biinvariant biinvariant) {
-    return new BarycentricCoordinate() {
-      @Override
-      public Tensor weights(Tensor sequence, Tensor point) {
-        return new KrigingCoordinate( //
-            biinvariant.hsDesign(), //
-            biinvariant.distances(sequence), //
-            sequence).sunder(point);
-      }
-    };
+    return (sequence, point) -> new KrigingCoordinate( //
+        biinvariant.hsDesign(), //
+        biinvariant.distances(sequence), //
+        sequence).sunder(point);
   }
 
   public static BarycentricCoordinate[] barycentrics(Manifold manifold) { //

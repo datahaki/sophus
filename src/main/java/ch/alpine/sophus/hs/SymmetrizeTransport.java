@@ -24,13 +24,7 @@ public record SymmetrizeTransport(HsTransport hsTransport) implements HsTranspor
     return new Rung(hsTransport.shift(orig, dest));
   }
 
-  private static class Rung implements TensorUnaryOperator {
-    private final TensorUnaryOperator tensorUnaryOperator;
-
-    public Rung(TensorUnaryOperator tensorUnaryOperator) {
-      this.tensorUnaryOperator = tensorUnaryOperator;
-    }
-
+  private record Rung(TensorUnaryOperator tensorUnaryOperator) implements TensorUnaryOperator {
     @Override
     public Tensor apply(Tensor vector) {
       Tensor pt1 = tensorUnaryOperator.apply(vector);

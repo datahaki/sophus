@@ -233,8 +233,8 @@ public class ConvexHull3D {
 
   private HalfEdge findHalfEdge(Vertex tail, Vertex head) {
     // brute force ... OK, since setHull is not used much
-    for (Iterator<Face> iterator = faces.iterator(); iterator.hasNext();) {
-      HalfEdge halfEdge = iterator.next().findEdge(tail, head);
+    for (Face face : faces) {
+      HalfEdge halfEdge = face.findEdge(tail, head);
       if (halfEdge != null)
         return halfEdge;
     }
@@ -325,8 +325,7 @@ public class ConvexHull3D {
   public void triangulate() {
     Scalar minArea = Times.of(RealScalar.of(1000), charLength, DOUBLE_PREC);
     newFaces.clear();
-    for (Iterator<Face> iterator = faces.iterator(); iterator.hasNext();) {
-      Face face = iterator.next();
+    for (Face face : faces) {
       if (face.mark == Face.VISIBLE) {
         face.triangulate(newFaces, minArea);
         // splitFace (face);
@@ -606,8 +605,7 @@ public class ConvexHull3D {
   public int[][] getFaces(int indexFlags) {
     int[][] allFaces = new int[faces.size()][];
     int k = 0;
-    for (Iterator<Face> iterator = faces.iterator(); iterator.hasNext();) {
-      Face face = iterator.next();
+    for (Face face : faces) {
       allFaces[k] = new int[face.numVertices()];
       getFaceIndices(allFaces[k], face, indexFlags);
       k++;
@@ -783,8 +781,7 @@ public class ConvexHull3D {
     newFaces.clear();
     HalfEdge hedgeSidePrev = null;
     HalfEdge hedgeSideBegin = null;
-    for (Iterator<HalfEdge> iterator = horizon.iterator(); iterator.hasNext();) {
-      HalfEdge horizonHe = iterator.next();
+    for (HalfEdge horizonHe : horizon) {
       HalfEdge hedgeSide = addAdjoiningFace(eyeVtx, horizonHe);
       if (debug) {
         System.out.println("new face: " + hedgeSide.face.getVertexString());
@@ -937,8 +934,7 @@ public class ConvexHull3D {
   private boolean checkFaces(Scalar tol, PrintStream ps) {
     // check edge convexity
     boolean convex = true;
-    for (Iterator<Face> iterator = faces.iterator(); iterator.hasNext();) {
-      Face face = iterator.next();
+    for (Face face : faces) {
       if (face.mark == Face.VISIBLE) {
         if (!checkFaceConvexity(face, tol, ps)) {
           convex = false;
@@ -991,8 +987,7 @@ public class ConvexHull3D {
     // check point inclusion
     for (int i = 0; i < numPoints; i++) {
       Vector3d pnt = pointBuffer[i].pnt;
-      for (Iterator<Face> iterator = faces.iterator(); iterator.hasNext();) {
-        Face face = iterator.next();
+      for (Face face : faces) {
         if (face.mark == Face.VISIBLE) {
           dist = face.distanceToPlane(pnt);
           if (Scalars.lessThan(pointTol, dist)) { // dist > pointTol

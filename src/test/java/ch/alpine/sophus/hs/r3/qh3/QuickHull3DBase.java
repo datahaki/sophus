@@ -273,14 +273,12 @@ class QuickHull3DBase {
     }
     // translate face indices back into original indices
     int[] vtxIndices = hull.getVertexPointIndices();
-    for (int j = 0; j < faceIndices.length; j++) {
-      int[] idxs = faceIndices[j];
+    for (int[] idxs : faceIndices) {
       for (int k = 0; k < idxs.length; k++) {
         idxs[k] = vtxIndices[idxs[k]];
       }
     }
-    for (int i = 0; i < checkFaces.length; i++) {
-      int[] cf = checkFaces[i];
+    for (int[] cf : checkFaces) {
       int j;
       for (j = 0; j < faceIndices.length; j++) {
         if (faceIndices[j] != null) {
@@ -292,8 +290,8 @@ class QuickHull3DBase {
       }
       if (j == faceIndices.length) {
         String s = "";
-        for (int k = 0; k < cf.length; k++) {
-          s += cf[k] + " ";
+        for (int value : cf) {
+          s += value + " ";
         }
         throw new Exception("Error: face " + s + " not found");
       }
@@ -434,8 +432,7 @@ class QuickHull3DBase {
     Scalar[] xcoords = ScalarArray.ofVector(Array.zeros(coords.length));
     singleTest(coords, checkFaces);
     if (testRotation) {
-      for (int i = 0; i < rpyList.length; i++) {
-        double[] rpy = rpyList[i];
+      for (double[] rpy : rpyList) {
         rotateCoords(xcoords, coords, //
             Math.toRadians(rpy[0]), //
             Math.toRadians(rpy[1]), //

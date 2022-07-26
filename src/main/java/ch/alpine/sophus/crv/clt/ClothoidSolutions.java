@@ -15,7 +15,8 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Real;
 import ch.alpine.tensor.sca.Sign;
 
-public class ClothoidSolutions implements Serializable {
+/** @param probes -min == max for tests to pass */
+public record ClothoidSolutions(Tensor probes) implements Serializable {
   private static final Chop CHOP = Chop._08;
 
   /** @param clip
@@ -32,9 +33,6 @@ public class ClothoidSolutions implements Serializable {
   }
 
   // ---
-  /** -min == max for tests to pass */
-  public final Tensor probes;
-
   public ClothoidSolutions(Tensor probes) {
     this.probes = probes.unmodifiable();
   }

@@ -39,9 +39,7 @@ public enum Amplifiers {
     public TensorUnaryOperator supply(Scalar sigma) {
       Sign.requirePositive(sigma);
       ScalarUnaryOperator suo = scalar -> Exp.FUNCTION.apply(Min.of(scalar, scalar.zero()).multiply(sigma));
-      return weights -> {
-        return weights.map(suo);
-      };
+      return weights -> weights.map(suo);
     }
   },
   RAMP {

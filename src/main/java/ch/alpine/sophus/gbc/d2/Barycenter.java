@@ -63,5 +63,5 @@ public enum Barycenter implements ThreePointScaling {
     public Tensor scale(Tensor dif, Scalar nrm) {
       return dif;
     }
-  };
+  }
 }

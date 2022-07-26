@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ class GeodesicCenterTest {
       Distribution distribution = UniformDistribution.unit();
       Tensor sequence = RandomVariate.of(distribution, 7, 3);
       Tensor tensor = tensorUnaryOperator.apply(sequence);
-      assertEquals(Dimensions.of(tensor), Arrays.asList(3));
+      assertEquals(Dimensions.of(tensor), List.of(3));
     }
   }
 

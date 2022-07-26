@@ -23,5 +23,4 @@ public enum ClothoidComparators implements Comparator<Clothoid> {
           Abs.FUNCTION.apply(clothoid2.curvature().head()));
     }
   }, //
-  ;
 }

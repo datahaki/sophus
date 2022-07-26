@@ -4,7 +4,7 @@ package ch.alpine.sophus.flt.bm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ class BiinvariantMeanCenterTest {
       for (int count = 1; count < 10; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, 3);
         Tensor tensor = tensorUnaryOperator.apply(sequence);
-        assertEquals(Dimensions.of(tensor), Arrays.asList(3));
+        assertEquals(Dimensions.of(tensor), List.of(3));
       }
     }
   }

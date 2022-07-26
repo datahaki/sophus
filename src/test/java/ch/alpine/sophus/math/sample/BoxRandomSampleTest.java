@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,7 @@ class BoxRandomSampleTest {
     Tensor width = Tensors.vector(1, 1, 1);
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBounds.of(offset.subtract(width), offset.add(width)));
     Tensor rand = RandomSample.of(randomSampleInterface);
-    assertEquals(Dimensions.of(rand), Arrays.asList(3));
+    assertEquals(Dimensions.of(rand), List.of(3));
   }
 
   @Test

@@ -16,12 +16,7 @@ class RegionTest {
 
   @Test
   void testSimple() {
-    Some some = new Some() {
-      @Override
-      public boolean single(Object s) {
-        return false;
-      }
-    };
+    Some some = s -> false;
     Optional<Integer> optional = Stream.of(3).filter(some::single).findAny();
     assertFalse(optional.isPresent());
   }

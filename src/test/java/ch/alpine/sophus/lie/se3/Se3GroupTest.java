@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -205,7 +206,7 @@ class Se3GroupTest {
       Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
       assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
       Tensor defect = new MeanDefect(sequence, weights, Se3Group.INSTANCE.exponential(mean)).tangent();
-      assertEquals(Dimensions.of(defect), Arrays.asList(6));
+      assertEquals(Dimensions.of(defect), List.of(6));
       Chop._08.requireAllZero(defect);
     }
   }

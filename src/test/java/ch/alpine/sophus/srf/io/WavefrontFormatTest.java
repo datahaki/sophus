@@ -50,7 +50,7 @@ class WavefrontFormatTest {
         WavefrontObject wavefrontObject = objects.get(1);
         List<Integer> list = wavefrontObject.faces().stream() //
             .map(Tensor::length).distinct().collect(Collectors.toList());
-        assertEquals(list, Arrays.asList(4));
+        assertEquals(list, List.of(4));
         assertTrue(MatrixQ.of(wavefront.normals()));
         Tensor normals = wavefrontObject.normals();
         Tensor faces = wavefrontObject.faces();

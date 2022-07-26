@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -134,7 +134,7 @@ class Se2GroupElementTest {
       TensorUnaryOperator se2Adjoint = Se2Group.INSTANCE.element(g)::adjoint;
       Tensor u_w = RandomVariate.of(distribution, 3);
       Tensor out = se2Adjoint.apply(u_w);
-      assertEquals(Dimensions.of(out), Arrays.asList(3));
+      assertEquals(Dimensions.of(out), List.of(3));
       Tensor g_i = new Se2GroupElement(g).inverse().combine(Array.zeros(3));
       TensorUnaryOperator se2Inverse = Se2Group.INSTANCE.element(g_i)::adjoint;
       Tensor apply = se2Inverse.apply(out);

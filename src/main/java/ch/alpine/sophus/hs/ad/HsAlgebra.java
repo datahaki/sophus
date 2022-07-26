@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BinaryOperator;
-import java.util.stream.Collectors;
 
 import ch.alpine.sophus.hs.HsLocal;
 import ch.alpine.sophus.hs.HsPair;
@@ -175,7 +174,7 @@ public class HsAlgebra implements HsLocal, Serializable {
         for (int k = 0; k < dim_h; ++k)
           if (Scalars.nonZero(coeffs.Get(dim_m + k)))
             list.add(coeffs.Get(dim_m + k) + "*h" + k);
-        array.set(StringScalar.of(list.stream().collect(Collectors.joining("+"))), i, j);
+        array.set(StringScalar.of(String.join("+", list)), i, j);
       }
     }
     System.out.println(Pretty.of(array));

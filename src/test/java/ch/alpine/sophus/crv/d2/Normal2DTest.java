@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -59,7 +60,7 @@ class Normal2DTest {
     {
       int n = 0;
       Tensor result = Normal2D.string(RandomVariate.of(distribution, n, 2));
-      assertEquals(Dimensions.of(result), Arrays.asList(n));
+      assertEquals(Dimensions.of(result), List.of(n));
       Total.of(result);
     }
     for (int n = 1; n < 5; ++n) {

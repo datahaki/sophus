@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.crv.d2;
 
-import java.util.Iterator;
-
 import ch.alpine.sophus.hs.r2.Det2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -27,9 +25,7 @@ public enum PolygonCentroid {
       return VectorQ.requireLength(Mean.of(polygon), 2);
     Tensor prev = Last.of(polygon);
     Tensor contrib = Tensors.empty();
-    Iterator<Tensor> iterator = polygon.iterator();
-    while (iterator.hasNext()) {
-      Tensor next = iterator.next();
+    for (Tensor next : polygon) {
       contrib.append(prev.add(next).multiply(Det2D.of(prev, next)));
       prev = next;
     }

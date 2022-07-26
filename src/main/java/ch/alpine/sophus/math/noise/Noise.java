@@ -24,8 +24,6 @@ package ch.alpine.sophus.math.noise;
         157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, //
         29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180 };
     // ---
-    if (value.length != 256)
-      throw new RuntimeException("corrupted");
     System.arraycopy(value, 0, perm, 0, value.length);
     System.arraycopy(value, 0, perm, value.length, value.length);
     for (int i = 0; i < 512; ++i)
