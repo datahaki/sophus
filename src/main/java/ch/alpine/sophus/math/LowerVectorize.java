@@ -24,7 +24,7 @@ public enum LowerVectorize {
    * @throws Exception if given tensor is not a tensor of rank at least 2 */
   public static Tensor of(Tensor tensor, int index) {
     if (TensorRank.of(tensor) < 2)
-      throw Throw.of(tensor);
+      throw new Throw(tensor);
     AtomicInteger atomicInteger = new AtomicInteger(index + 1);
     return Tensor.of(tensor.stream() //
         .flatMap(row -> row.stream().limit(atomicInteger.getAndIncrement())));

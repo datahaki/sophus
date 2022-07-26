@@ -310,7 +310,7 @@ class QuickHull3DBase {
       hull.triangulate();
     }
     if (!hull.check(System.out)) {
-      throw Throw.of("");
+      throw new Throw("");
     }
     if (checkFaces != null) {
       explicitFaceCheck(hull, checkFaces);
@@ -367,7 +367,7 @@ class QuickHull3DBase {
       }
     }
     if (!xhull.check(System.out)) {
-      throw Throw.of("");
+      throw new Throw("");
     }
   }
 
@@ -415,13 +415,13 @@ class QuickHull3DBase {
       System.out.println("Got no exception");
       System.out.println("Input pnts:");
       printCoords(coords);
-      throw Throw.of("");
+      throw new Throw("");
     } else if (ex.getMessage() == null || !ex.getMessage().equals(msg)) {
       System.out.println("Expected exception " + msg);
       System.out.println("Got exception " + ex.getMessage());
       System.out.println("Input pnts:");
       printCoords(coords);
-      throw Throw.of("");
+      throw new Throw("");
     }
   }
 

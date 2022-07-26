@@ -12,7 +12,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   /** @param element from Lie Group SE2 as coordinates {x, y, omega} */
   public Se2AdjointComp(Tensor xya) {
     if (xya.length() != 3)
-      throw Throw.of(xya);
+      throw new Throw(xya);
     matrix = Se2Matrix.of(Tensors.of( //
         xya.get(1), // t2
         xya.get(0).negate(), // -t1

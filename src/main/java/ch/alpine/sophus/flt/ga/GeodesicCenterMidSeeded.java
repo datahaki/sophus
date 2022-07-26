@@ -63,7 +63,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
     @PackageTestAccess
     static Tensor of(Tensor mask) {
       if (Integers.isEven(mask.length()))
-        throw Throw.of(mask);
+        throw new Throw(mask);
       SymmetricVectorQ.require(mask);
       int radius = (mask.length() - 1) / 2;
       Tensor halfmask = Tensors.vector(i -> i.equals(radius) //
@@ -92,7 +92,7 @@ public class GeodesicCenterMidSeeded implements TensorUnaryOperator {
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
     if (Integers.isEven(tensor.length()))
-      throw Throw.of(tensor);
+      throw new Throw(tensor);
     // spatial neighborhood we want to consider for centering
     int radius = (tensor.length() - 1) / 2;
     Tensor splits = function.apply(tensor.length());

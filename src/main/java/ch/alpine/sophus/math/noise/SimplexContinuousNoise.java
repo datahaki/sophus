@@ -441,7 +441,7 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
         vector.Get(1).number().doubleValue(), //
         vector.Get(2).number().doubleValue(), //
         vector.Get(3).number().doubleValue()));
-    default -> throw Throw.of(vector);
+    default -> throw new Throw(vector);
     };
   }
 }

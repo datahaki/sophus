@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
     tSnMemberQ = new TSnMemberQ(x);
     projection = Projection.on(x);
     if (x.length() < 2)
-      throw Throw.of(x);
+      throw new Throw(x);
   }
 
   @Override // from Exponential

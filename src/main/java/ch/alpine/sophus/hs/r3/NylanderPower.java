@@ -26,7 +26,7 @@ public enum NylanderPower {
    * @return */
   public static Tensor of(Tensor vector, Scalar exponent) {
     if (vector.length() != 3)
-      throw Throw.of(vector, exponent);
+      throw new Throw(vector, exponent);
     Scalar x = vector.Get(0);
     Scalar y = vector.Get(1);
     Scalar z = vector.Get(2);

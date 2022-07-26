@@ -18,7 +18,7 @@ import ch.alpine.tensor.red.ScalarSummaryStatistics;
         .map(Scalar.class::cast) //
         .collect(ScalarSummaryStatistics.collector());
     if (Scalars.lessEquals(Pi.VALUE, scalarSummaryStatistics.getClip().width()))
-      throw Throw.of(sequence);
+      throw new Throw(sequence);
     return sequence;
   }
 }

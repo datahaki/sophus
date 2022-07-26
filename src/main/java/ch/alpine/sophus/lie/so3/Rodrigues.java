@@ -63,7 +63,7 @@ public enum Rodrigues implements Exponential {
       Scalar sinc = Sinc.FUNCTION.apply(theta(q));
       return q.subtract(Transpose.of(q)).divide(sinc.add(sinc));
     }
-    throw Throw.of(q);
+    throw new Throw(q);
   }
 
   private static Scalar theta(Tensor matrix) {

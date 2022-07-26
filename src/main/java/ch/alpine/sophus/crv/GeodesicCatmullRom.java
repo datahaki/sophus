@@ -24,7 +24,7 @@ public class GeodesicCatmullRom implements ScalarTensorFunction {
    * @param control points of length >= 4 */
   public static GeodesicCatmullRom of(BinaryAverage binaryAverage, Tensor knots, Tensor control) {
     if (control.length() < 4)
-      throw Throw.of(control);
+      throw new Throw(control);
     return new GeodesicCatmullRom( //
         Objects.requireNonNull(binaryAverage), //
         VectorQ.require(knots), //

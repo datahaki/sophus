@@ -30,6 +30,6 @@ public enum SymmetricVectorQ {
   public static Tensor require(Tensor vector) {
     if (of(vector))
       return vector;
-    throw Throw.of(vector);
+    throw new Throw(vector);
   }
 }

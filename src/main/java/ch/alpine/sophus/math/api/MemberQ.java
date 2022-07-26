@@ -19,6 +19,6 @@ public interface MemberQ extends Region<Tensor> {
   default Tensor require(Tensor tensor) {
     if (test(tensor))
       return tensor;
-    throw Throw.of(tensor);
+    throw new Throw(tensor);
   }
 }

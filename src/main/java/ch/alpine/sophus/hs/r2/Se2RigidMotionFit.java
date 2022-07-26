@@ -17,7 +17,7 @@ public enum Se2RigidMotionFit {
   public static Tensor of(Tensor points, Tensor target) {
     if (Unprotect.dimension1Hint(points) == 2)
       return of(RigidMotionFit.of(points, target));
-    throw Throw.of(points);
+    throw new Throw(points);
   }
 
   /** @param points with dimensions N x 2

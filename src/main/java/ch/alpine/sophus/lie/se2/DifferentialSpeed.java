@@ -28,7 +28,7 @@ public class DifferentialSpeed implements Serializable {
    * @param y_offset distance from center of rear axis to tire */
   public static DifferentialSpeed fromSI(Scalar x_front, Scalar y_offset) {
     if (Scalars.isZero(x_front))
-      throw Throw.of(x_front, y_offset);
+      throw new Throw(x_front, y_offset);
     return new DifferentialSpeed(y_offset.divide(x_front));
   }
 

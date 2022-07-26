@@ -91,7 +91,7 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
     Tensor pq = p.subtract(q);
     Scalar den = Det2D.of(ab, pq);
     if (Chop._40.isZero(den))
-      throw Throw.of(a, b, p, q);
+      throw new Throw(a, b, p, q);
     return pq.multiply(Det2D.of(ab, a)).add(ab.multiply(Det2D.of(p, pq))).divide(den);
   }
 }

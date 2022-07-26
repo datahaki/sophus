@@ -130,12 +130,12 @@ public class HsAlgebra implements HsLocal, Serializable {
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero))
-      throw Throw.of(ad);
+      throw new Throw(ad);
     if (!ad.block(List.of(0, dim_m, dim_m), List.of(dim_m, dim_h, dim_h)) //
         .flatten(-1) //
         .map(Scalar.class::cast) //
         .allMatch(Scalars::isZero))
-      throw Throw.of(ad);
+      throw new Throw(ad);
   }
 
   /** @return whether [h, m] subset m, i.e. h cap [h, m] = {0} */

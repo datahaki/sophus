@@ -70,7 +70,7 @@ public enum SnManifold implements HomogeneousSpace, MetricManifold {
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();
     if (Tolerance.CHOP.isClose(a, Pi.VALUE))
-      throw Throw.of(p, q); // when p == -q
+      throw new Throw(p, q); // when p == -q
     return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
         Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
         Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));

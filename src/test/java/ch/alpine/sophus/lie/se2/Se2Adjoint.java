@@ -36,7 +36,7 @@ import ch.alpine.tensor.sca.tri.Sin;
   /** @param element from Lie Group SE2 as coordinates {x, y, omega} */
   private Se2Adjoint(Tensor xya) {
     if (xya.length() != 3)
-      throw Throw.of(xya);
+      throw new Throw(xya);
     px = xya.Get(0);
     py = xya.Get(1);
     Scalar al = xya.Get(2);

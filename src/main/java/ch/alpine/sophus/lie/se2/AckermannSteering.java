@@ -30,7 +30,7 @@ public class AckermannSteering implements Serializable {
    * @param y_offset distance from center of axis to tire */
   public AckermannSteering(Scalar x_front, Scalar y_offset) {
     if (Scalars.isZero(x_front))
-      throw Throw.of(x_front, y_offset);
+      throw new Throw(x_front, y_offset);
     factor = y_offset.divide(x_front);
   }
 

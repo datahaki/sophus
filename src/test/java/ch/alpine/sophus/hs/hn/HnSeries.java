@@ -27,6 +27,6 @@ public enum HnSeries {
       if (c.equals(c.add(xk)))
         return Tensors.of(c, s);
     }
-    throw Throw.of(x);
+    throw new Throw(x);
   }
 }

@@ -121,7 +121,7 @@ class Face {
       he = he.next;
     } while (he != halfEdge);
     if (numv != numVerts) {
-      throw Throw.of("face " + getVertexString() + " numVerts=" + numVerts + " should be " + numv);
+      throw new Throw("face " + getVertexString() + " numVerts=" + numVerts + " should be " + numv);
     }
   }
 
@@ -307,24 +307,24 @@ class Face {
     Scalar maxd = RealScalar.ZERO;
     int numv = 0;
     if (numVerts < 3) {
-      throw Throw.of("degenerate face: " + getVertexString());
+      throw new Throw("degenerate face: " + getVertexString());
     }
     do {
       HalfEdge hedgeOpp = hedge.getOpposite();
       if (hedgeOpp == null) {
-        throw Throw.of("face " + getVertexString() + ": " + "unreflected half edge " + hedge.getVertexString());
+        throw new Throw("face " + getVertexString() + ": " + "unreflected half edge " + hedge.getVertexString());
       } else if (hedgeOpp.getOpposite() != hedge) {
-        throw Throw.of("face " + getVertexString() + ": " + "opposite half edge " + hedgeOpp.getVertexString() + " has opposite "
+        throw new Throw("face " + getVertexString() + ": " + "opposite half edge " + hedgeOpp.getVertexString() + " has opposite "
             + hedgeOpp.getOpposite().getVertexString());
       }
       if (hedgeOpp.head() != hedge.tail() || hedge.head() != hedgeOpp.tail()) {
-        throw Throw.of("face " + getVertexString() + ": " + "half edge " + hedge.getVertexString() + " reflected by " + hedgeOpp.getVertexString());
+        throw new Throw("face " + getVertexString() + ": " + "half edge " + hedge.getVertexString() + " reflected by " + hedgeOpp.getVertexString());
       }
       Face oppFace = hedgeOpp.face;
       if (oppFace == null) {
-        throw Throw.of("face " + getVertexString() + ": " + "no face on half edge " + hedgeOpp.getVertexString());
+        throw new Throw("face " + getVertexString() + ": " + "no face on half edge " + hedgeOpp.getVertexString());
       } else if (oppFace.mark == DELETED) {
-        throw Throw.of("face " + getVertexString() + ": " + "opposite face " + oppFace.getVertexString() + " not on hull");
+        throw new Throw("face " + getVertexString() + ": " + "opposite face " + oppFace.getVertexString() + " not on hull");
       }
       Scalar d = Abs.FUNCTION.apply(distanceToPlane(hedge.head().pnt));
       if (Scalars.lessThan(maxd, d)) { // d > maxd
@@ -334,7 +334,7 @@ class Face {
       hedge = hedge.next;
     } while (hedge != halfEdge);
     if (numv != numVerts) {
-      throw Throw.of("face " + getVertexString() + " numVerts=" + numVerts + " should be " + numv);
+      throw new Throw("face " + getVertexString() + " numVerts=" + numVerts + " should be " + numv);
     }
   }
 
