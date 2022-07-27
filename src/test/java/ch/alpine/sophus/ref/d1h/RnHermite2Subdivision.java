@@ -16,27 +16,17 @@ import ch.alpine.tensor.sca.Chop;
 
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * implementation for R^n
+ *
+ * @param ALP A(+0)
+ * @param ALQ A(-2)
+ * @param AHP A(+1)
+ * @param AHQ A(-1)
  * 
  * @see BSpline2CurveSubdivision */
-/* package */ class RnHermite2Subdivision implements HermiteSubdivision {
-  private static final Tensor DIAG = DiagonalMatrix.of(RealScalar.ONE, RationalScalar.HALF);
-  // ---
-  final Tensor ALP;
-  final Tensor ALQ;
-  // ---
-  final Tensor AHP;
-  final Tensor AHQ;
+/* package */ record RnHermite2Subdivision(Tensor ALP, Tensor ALQ, Tensor AHP, Tensor AHQ) //
+    implements HermiteSubdivision {
 
-  /** @param ALP A(+0)
-   * @param ALQ A(-2)
-   * @param AHP A(+1)
-   * @param AHQ A(-1) */
-  public RnHermite2Subdivision(Tensor ALP, Tensor ALQ, Tensor AHP, Tensor AHQ) {
-    this.ALP = ALP;
-    this.ALQ = ALQ;
-    this.AHP = AHP;
-    this.AHQ = AHQ;
-  }
+  private static final Tensor DIAG = DiagonalMatrix.of(RealScalar.ONE, RationalScalar.HALF);
 
   @Override // from HermiteSubdivision
   public TensorIteration string(Scalar delta, Tensor control) {
@@ -49,7 +39,6 @@ import ch.alpine.tensor.sca.Chop;
     Chop.NONE.requireClose(delta, RealScalar.ONE);
     return new Control(control).new CyclicIteration();
   }
-
   private class Control {
     private Tensor control;
     private int k = 0;

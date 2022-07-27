@@ -11,10 +11,7 @@ import ch.alpine.tensor.Tensor;
 
 /** Reference: U. Reif slides
  * 
- * maps to SE(2) or SE(2) Covering
- * 
- * @param p vector of the form {px, py, pa}
- * @param q vector of the form {qx, qy, qa} */
+ * maps to SE(2) or SE(2) Covering */
 public final class ClothoidBuilderImpl implements ClothoidBuilder, Serializable {
   private final ClothoidQuadratic clothoidQuadratic;
   private final ClothoidIntegration clothoidIntegration;

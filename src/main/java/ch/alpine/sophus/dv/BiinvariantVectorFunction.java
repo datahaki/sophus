@@ -23,8 +23,9 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
   private final TensorMetric tensorMetric;
   private final Tensor[] influence;
 
-  /** @param manifold
-   * @param sequence */
+  /** @param hsDesign
+   * @param sequence
+   * @param tensorMetric */
   public BiinvariantVectorFunction(HsDesign hsDesign, Tensor sequence, TensorMetric tensorMetric) {
     this.hsDesign = hsDesign;
     this.sequence = sequence;

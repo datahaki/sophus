@@ -10,8 +10,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 /** the parameters define the coordinate bounds of the axis-aligned box
  * from which the samples are drawn
  * 
- * @param min lower-left
- * @param max upper-right
  * @see CoordinateBoundingBox */
 public enum BoxRandomSample {
   ;

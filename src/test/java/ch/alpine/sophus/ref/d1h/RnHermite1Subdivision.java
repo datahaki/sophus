@@ -15,28 +15,24 @@ import ch.alpine.tensor.sca.Chop;
 
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * reproduces polynomials of up to degree 3
- * 
+ * <p>
  * implementation for R^n
- * 
+ * <p>
  * References:
  * "A family of Hermite interpolants by bisection algorithms", 1992,
  * by Merrien
- * 
+ * <p>
  * "de Rham Transform of a Hermite Subdivision Scheme", 2007
  * by Dubuc, Merrien, p.9, with lambda == 1/8, mu == 3/2
  * [in the paper the signs of the matrix entries seem to be incorrect]
+ *
+ * @param AMP
+ * @param AMQ
  * 
  * @see BSpline1CurveSubdivision */
-/* package */ class RnHermite1Subdivision implements HermiteSubdivision {
-  private static final Tensor DIAG = DiagonalMatrix.of(RealScalar.ONE, RationalScalar.HALF);
-  // ---
-  final Tensor AMP;
-  final Tensor AMQ;
+/* package */ record RnHermite1Subdivision(Tensor AMP, Tensor AMQ) implements HermiteSubdivision {
 
-  public RnHermite1Subdivision(Tensor AMP, Tensor AMQ) {
-    this.AMP = AMP;
-    this.AMQ = AMQ;
-  }
+  private static final Tensor DIAG = DiagonalMatrix.of(RealScalar.ONE, RationalScalar.HALF);
 
   @Override // from HermiteSubdivision
   public TensorIteration string(Scalar delta, Tensor control) {
@@ -49,7 +45,6 @@ import ch.alpine.tensor.sca.Chop;
     Chop.NONE.requireClose(delta, RealScalar.ONE);
     return new Control(control).new CyclicIteration();
   }
-
   private class Control {
     private Tensor control;
     private int k = 0;
