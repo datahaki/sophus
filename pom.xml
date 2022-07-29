@@ -20,6 +20,11 @@
 			<artifactId>tensor</artifactId>
 			<version>1.0.7</version>
 		</dependency>
+		<dependency>
+			<groupId>ch.alpine</groupId>
+			<artifactId>qhull3d</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -47,6 +52,14 @@
 		<repository>
 			<id>tensor-mvn-repo</id>
 			<url>https://raw.github.com/datahaki/tensor/mvn-repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>qhull3d-mvn-repo</id>
+			<url>https://raw.github.com/datahaki/qhull3d/mvn-repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
