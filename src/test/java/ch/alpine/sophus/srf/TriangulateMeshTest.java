@@ -12,7 +12,7 @@ import ch.alpine.tensor.io.ResourceData;
 class TriangulateMeshTest {
   @Test
   void testSimple() {
-    SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
+    SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/ch/alpine/sophus/mesh/unitcube.ply"));
     surfaceMesh = TriangulateMesh.of(surfaceMesh);
     assertTrue(surfaceMesh.boundary().isEmpty());
     assertEquals(surfaceMesh.faces().size(), 12);

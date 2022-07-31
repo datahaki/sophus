@@ -16,7 +16,7 @@ import ch.alpine.tensor.red.Mean;
 class DooSabinRefinementTest {
   @Test
   void testCube() {
-    SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
+    SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/ch/alpine/sophus/mesh/unitcube.ply"));
     SurfaceMeshRefinement surfaceMeshRefinement = new DooSabinRefinement(RnBiinvariantMean.INSTANCE);
     SurfaceMesh refine1 = surfaceMeshRefinement.refine(surfaceMesh);
     assertEquals(refine1.vrt.flatten(-1).distinct().count(), 4); // 0 1/4 3/4 1

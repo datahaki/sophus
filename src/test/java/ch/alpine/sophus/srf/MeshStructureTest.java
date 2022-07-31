@@ -19,7 +19,7 @@ import ch.alpine.tensor.io.ResourceData;
 class MeshStructureTest {
   @Test
   void testSimple() {
-    SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/io/mesh/unitcube.ply"));
+    SurfaceMesh surfaceMesh = PlyFormat.parse(ResourceData.lines("/ch/alpine/sophus/mesh/unitcube.ply"));
     MeshStructure meshStructure = new MeshStructure(surfaceMesh);
     {
       List<IntDirectedEdge> list = meshStructure.ring(new IntDirectedEdge(0, 3));

@@ -24,7 +24,7 @@ import ch.alpine.tensor.red.Max;
 class WavefrontFormatTest {
   @Test
   void testBlender0() throws IOException {
-    try (InputStream inputStream = getClass().getResource("/io/obj/blender0.obj").openStream()) {
+    try (InputStream inputStream = getClass().getResource("/ch/alpine/sophus/obj/blender0.obj").openStream()) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));
       assertEquals(wavefront.objects().size(), 2);
       assertEquals(wavefront.objects().get(0).name(), "Cylinder");
@@ -63,7 +63,7 @@ class WavefrontFormatTest {
 
   @Test
   void testMathematica0() throws IOException {
-    try (InputStream inputStream = getClass().getResource("/io/obj/meshregionex2d.obj").openStream()) {
+    try (InputStream inputStream = getClass().getResource("/ch/alpine/sophus/obj/meshregionex2d.obj").openStream()) {
       Wavefront wavefront = WavefrontFormat.parse(ReadLine.of(inputStream));
       List<WavefrontObject> objects = wavefront.objects();
       assertEquals(objects.size(), 1);
