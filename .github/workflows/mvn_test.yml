@@ -24,13 +24,6 @@ jobs:
           git clone https://github.com/datahaki/tensor.git
           cd tensor
           mvn clean install -DskipTests=true
-      - name: mvn install qhull3d
-        working-directory: .
-        run: |
-          cd ..
-          git clone https://github.com/datahaki/qhull3d.git
-          cd qhull3d
-          mvn clean install -DskipTests=true
       - name: mvn test
         working-directory: .
         run: mvn test -B
