@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.r3;
 import java.util.List;
 
 import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
+import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.ResourceData;
 
@@ -15,7 +16,7 @@ public enum PlatonicSolid {
 
   private final int faceCount;
   private final int faceShape;
-  private final Tensor vertices = ResourceData.of("/ch/alpine/sophus/" + name().toLowerCase() + ".csv");
+  private final Tensor vertices = ResourceData.of("/ch/alpine/sophus/" + name().toLowerCase() + ".csv").unmodifiable();
 
   PlatonicSolid(int faceCount, int faceShape) {
     this.faceCount = faceCount;
@@ -36,5 +37,12 @@ public enum PlatonicSolid {
 
   public List<int[]> faces() {
     return ConvexHull3D.of(vertices);
+  }
+
+  public SurfaceMesh surfaceMesh() {
+    SurfaceMesh surfaceMesh = new SurfaceMesh();
+    surfaceMesh.vrt = vertices();
+    faces().forEach(surfaceMesh::addFace);
+    return surfaceMesh;
   }
 }
