@@ -40,9 +40,6 @@ public enum PlatonicSolid {
   }
 
   public SurfaceMesh surfaceMesh() {
-    SurfaceMesh surfaceMesh = new SurfaceMesh();
-    surfaceMesh.vrt = vertices();
-    faces().forEach(surfaceMesh::addFace);
-    return surfaceMesh;
+    return new SurfaceMesh(vertices(), faces());
   }
 }

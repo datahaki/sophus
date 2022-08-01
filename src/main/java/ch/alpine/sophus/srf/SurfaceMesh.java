@@ -17,8 +17,18 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
 
 public class SurfaceMesh implements Serializable {
-  public Tensor vrt = Tensors.empty();
-  private final List<int[]> faces = new ArrayList<>();
+  public Tensor vrt;
+  private final List<int[]> faces;
+
+  public SurfaceMesh() {
+    vrt = Tensors.empty();
+    faces = new ArrayList<>();
+  }
+
+  public SurfaceMesh(Tensor vertices, List<int[]> faces) {
+    this.vrt = vertices;
+    this.faces = faces;
+  }
 
   /** @param tensor
    * @return index of tensor in list of vertices */

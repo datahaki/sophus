@@ -9,15 +9,12 @@ import java.util.List;
 public enum TriangulateMesh {
   ;
   public static SurfaceMesh of(SurfaceMesh surfaceMesh) {
-    SurfaceMesh out = new SurfaceMesh();
-    out.vrt = surfaceMesh.vrt.copy();
-    faces(surfaceMesh).forEach(out::addFace);
-    return out;
+    return new SurfaceMesh(surfaceMesh.vrt.copy(), faces(surfaceMesh.faces()));
   }
 
-  public static List<int[]> faces(SurfaceMesh surfaceMesh) {
-    List<int[]> list = new ArrayList<>();
-    for (int[] face : surfaceMesh.faces()) {
+  public static List<int[]> faces(List<int[]> faces) {
+    List<int[]> list = new ArrayList<>(faces.size());
+    for (int[] face : faces) {
       if (3 < face.length) {
         int limit = face.length - 1;
         for (int i = 1; i < limit; ++i)

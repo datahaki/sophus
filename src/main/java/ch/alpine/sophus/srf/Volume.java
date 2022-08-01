@@ -13,7 +13,7 @@ public enum Volume {
   ;
   public static Scalar of(SurfaceMesh surfaceMesh) {
     Scalar scalar = RealScalar.ZERO;
-    for (int[] triangle : TriangulateMesh.faces(surfaceMesh)) {
+    for (int[] triangle : TriangulateMesh.faces(surfaceMesh.faces())) {
       Tensor mat = Tensor.of(Arrays.stream(triangle).mapToObj(surfaceMesh.vrt::get));
       scalar = scalar.add(Det.of(mat));
     }
