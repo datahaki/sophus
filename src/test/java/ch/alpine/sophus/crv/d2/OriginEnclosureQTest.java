@@ -3,6 +3,7 @@ package ch.alpine.sophus.crv.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -77,13 +78,13 @@ class OriginEnclosureQTest {
       String wer = "asdf";
       String wer2 = wer;
       wer = "987345"; // does not change wer2
-      assertFalse(wer.equals(wer2));
+      assertNotEquals(wer2, wer);
     }
     {
       Tensor wo = Tensors.vector(2, 3, 4, 5);
       Tensor wo2 = wo;
       wo = Tensors.vector(9, 9); // does not change wo2
-      assertFalse(wo.equals(wo2));
+      assertNotEquals(wo, wo2);
     }
   }
 

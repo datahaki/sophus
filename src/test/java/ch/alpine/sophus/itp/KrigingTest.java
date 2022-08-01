@@ -54,7 +54,7 @@ class KrigingTest {
       Tensor covariance = DiagonalMatrix.with(ConstantArray.of(RealScalar.of(0.02), n));
       Sedarim tensorUnaryOperator1 = //
           biinvariant.var_dist(powerVariogram, points);
-      Kriging kriging1 = Kriging.regression(tensorUnaryOperator1::sunder, points, values, covariance);
+      Kriging kriging1 = Kriging.regression(tensorUnaryOperator1, points, values, covariance);
       Tensor est1 = kriging1.estimate(xya);
       Scalar var1 = kriging1.variance(xya);
       Tensor shift = RandomVariate.of(distribution, 3);
@@ -62,7 +62,7 @@ class KrigingTest {
         Tensor all = tensorMapping.slash(points);
         Sedarim tensorUnaryOperatorL = //
             biinvariant.var_dist(powerVariogram, all);
-        Kriging krigingL = Kriging.regression(tensorUnaryOperatorL::sunder, all, values, covariance);
+        Kriging krigingL = Kriging.regression(tensorUnaryOperatorL, all, values, covariance);
         Tensor one = tensorMapping.apply(xya);
         Chop._10.requireClose(est1, krigingL.estimate(one));
         Chop._10.requireClose(var1, krigingL.variance(one));
@@ -80,7 +80,7 @@ class KrigingTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.kriging(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface::sunder, sequence, values));
+      Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
         Tolerance.CHOP.requireClose(tensor, values.get(index));
@@ -98,7 +98,7 @@ class KrigingTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.kriging(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface::sunder, sequence, values));
+      Kriging kriging = Serialization.copy(Kriging.interpolation(weightingInterface, sequence, values));
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = kriging.estimate(sequence.get(index));
         Tolerance.CHOP.requireClose(tensor, values.get(index));
@@ -117,7 +117,7 @@ class KrigingTest {
       Tensor sequence = RandomVariate.of(distribution, n, d);
       for (Biinvariant biinvariant : map.values()) {
         Sedarim tensorUnaryOperator = Serialization.copy(biinvariant.var_dist(variogram, sequence));
-        Kriging kriging = Serialization.copy(Kriging.barycentric(tensorUnaryOperator::sunder, sequence));
+        Kriging kriging = Serialization.copy(Kriging.barycentric(tensorUnaryOperator, sequence));
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor tensor = kriging.estimate(sequence.get(index));
           Chop._08.requireClose(tensor, UnitVector.of(n, index));
@@ -140,7 +140,7 @@ class KrigingTest {
     Distribution distributionY = NormalDistribution.of(Quantity.of(0, "s"), Quantity.of(2, "s"));
     Tensor values = RandomVariate.of(distributionY, n);
     Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).var_dist(variogram, sequence);
-    Kriging kriging = Kriging.interpolation(sedarim::sunder, sequence, values);
+    Kriging kriging = Kriging.interpolation(sedarim, sequence, values);
     Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
     QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
   }
@@ -159,7 +159,7 @@ class KrigingTest {
     // for (Biinvariant biinvariant : map.values())
     {
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Kriging.interpolation(weightingInterface::sunder, sequence, values);
+      Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar apply = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(apply);
     }

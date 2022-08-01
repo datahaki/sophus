@@ -8,7 +8,7 @@ import ch.alpine.tensor.sca.Chop;
 
 /** in geomstats, the corresponding function is "regularize"
  * 
- * @see HnGeodesic */
+ * @see HnManifold */
 public enum HnProjection implements TensorUnaryOperator {
   INSTANCE;
 

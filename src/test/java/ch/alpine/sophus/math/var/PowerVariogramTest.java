@@ -40,7 +40,7 @@ class PowerVariogramTest {
     {
       ScalarUnaryOperator variogram = Serialization.copy(new ExponentialVariogram(Quantity.of(3, "m"), RealScalar.of(2)));
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Kriging.interpolation(weightingInterface::sunder, sequence, values);
+      Kriging kriging = Kriging.interpolation(weightingInterface, sequence, values);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }
@@ -48,7 +48,7 @@ class PowerVariogramTest {
       PowerVariogram variogram = Serialization.copy(PowerVariogramFit.fit(RnGroup.INSTANCE, sequence, values, RealScalar.ONE));
       Tensor covariance = DiagonalMatrix.of(n, Quantity.of(1, "s^2"));
       Sedarim weightingInterface = biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Kriging.regression(weightingInterface::sunder, sequence, values, covariance);
+      Kriging kriging = Kriging.regression(weightingInterface, sequence, values, covariance);
       Scalar value = (Scalar) kriging.estimate(RandomVariate.of(distributionX, d));
       QuantityMagnitude.singleton(Unit.of("s")).apply(value);
     }

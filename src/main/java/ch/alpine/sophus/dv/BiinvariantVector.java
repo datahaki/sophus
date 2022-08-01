@@ -10,7 +10,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
 
 /** immutable
  * 
- * @see HarborBiinvariantVector */
+ * @see HarborBiinvariant */
 /* package */ record BiinvariantVector(InfluenceMatrix influenceMatrix, Tensor vector) implements Serializable {
   /** @return vector of affine weights */
   public Tensor weighting(ScalarUnaryOperator variogram) {

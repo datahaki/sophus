@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.gr.Mahalanobis;
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 
- * @see HarborBiinvariantVector */
+ * @see HarborBiinvariant */
 /* package */ class GardenDistanceVector implements Sedarim {
   private final List<Exponential> tangentSpaces;
   private final List<Mahalanobis> array;

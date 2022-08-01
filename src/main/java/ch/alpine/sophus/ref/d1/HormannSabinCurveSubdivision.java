@@ -27,7 +27,7 @@ public enum HormannSabinCurveSubdivision {
   // ---
   private static final Scalar OMEGA = RationalScalar.of(1, 32);
 
-  /** @param geodesicInterface
+  /** @param binaryAverage
    * @return three-point scheme */
   public static CurveSubdivision split3(BinaryAverage binaryAverage) {
     Scalar omega = OMEGA;

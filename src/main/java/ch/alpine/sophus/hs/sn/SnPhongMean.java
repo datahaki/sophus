@@ -5,7 +5,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-/** Phong projection is faster than {@link SnBiinvariantMean}.
+/** Phong projection is faster than {@link SnManifold}.
  * However, Phong projection is not the inverse to inverse distance coordinates.
  * 
  * Reference:

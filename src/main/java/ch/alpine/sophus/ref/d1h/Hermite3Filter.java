@@ -22,7 +22,6 @@ public class Hermite3Filter implements HermiteFilter {
   private final BiinvariantMean biinvariantMean;
 
   /** @param lieGroup
-   * @param exponential
    * @param biinvariantMean
    * @throws Exception if either parameters is null */
   public Hermite3Filter(LieGroup lieGroup, BiinvariantMean biinvariantMean) {

@@ -92,7 +92,7 @@ class BiinvariantTest {
       Tensor values = RandomSample.of(randomSampleInterface, random, n);
       Tensor point = RandomVariate.of(distribution, random, 3);
       // the use of snphong mean is not a mistake
-      Tensor evaluate = new CrossAveraging(tensorUnaryOperator::sunder, SnPhongMean.INSTANCE, values).apply(point);
+      Tensor evaluate = new CrossAveraging(tensorUnaryOperator, SnPhongMean.INSTANCE, values).apply(point);
       VectorQ.requireLength(evaluate, 5);
     }
   }

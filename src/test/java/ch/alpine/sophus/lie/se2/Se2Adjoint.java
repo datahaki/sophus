@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.tri.Sin;
   private final Scalar ca;
   private final Scalar sa;
 
-  /** @param element from Lie Group SE2 as coordinates {x, y, omega} */
+  /** @param xya element from Lie Group SE2 as coordinates {x, y, omega} */
   private Se2Adjoint(Tensor xya) {
     if (xya.length() != 3)
       throw new Throw(xya);

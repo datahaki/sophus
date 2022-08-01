@@ -6,7 +6,7 @@ import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.tensor.Tensor;
 
-/** Phong mean with 1-step correction towards {@link HnBiinvariantMean}
+/** Phong mean with 1-step correction towards {@link HnManifold}
  * 
  * @see SnFastMean */
 public enum HnFastMean implements BiinvariantMean {

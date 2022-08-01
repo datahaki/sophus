@@ -47,7 +47,7 @@ public class SPatch implements Sedarim {
     ls = Tensor.of(tensor.stream().filter(OrderedQ::of));
   }
 
-  /** @param values e.g. (0,2,0,0,0)
+  /** @param rep e.g. (0,2,0,0,0)
    * @return */
   public int basis(Tensor rep) {
     return FirstPosition.of(getLs(), Sort.of(rep)).getAsInt();

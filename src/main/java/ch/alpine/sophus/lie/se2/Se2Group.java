@@ -11,9 +11,7 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * References:
  * http://vixra.org/abs/1807.0463
- * https://www.youtube.com/watch?v=2vDciaUgL4E
- * 
- * @see Se2Skew */
+ * https://www.youtube.com/watch?v=2vDciaUgL4E */
 public class Se2Group extends AbstractSe2Group implements Serializable {
   public static final Se2Group INSTANCE = new Se2Group();
 

@@ -42,7 +42,7 @@ class Se2RigidMotionFitTest {
       Tensor points = RandomVariate.of(distribution, random, n, 2);
       Tensor xya = RandomVariate.of(distribution, random, 3);
       Se2ForwardAction se2ForwardAction = new Se2ForwardAction(xya);
-      Tensor target = Tensor.of(points.stream().map(se2ForwardAction::apply));
+      Tensor target = Tensor.of(points.stream().map(se2ForwardAction));
       Tensor rigidMotionFit = Se2RigidMotionFit.of(points, target);
       Chop._04.requireClose(xya, rigidMotionFit); // Chop_08 is insufficient
       Tensor rigidMotionFi2 = Se2RigidMotionFit.of(points, target, AveragingWeights.of(n));

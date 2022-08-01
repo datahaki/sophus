@@ -24,7 +24,7 @@ import ch.alpine.tensor.nrm.NormalizeTotal;
  * 
  * @see LeveragesCoordinate
  * 
- * @param for instance InversePowerVariogram */
+ * @param variogram for instance InversePowerVariogram */
 public record LeveragesGenesis(ScalarUnaryOperator variogram) implements Genesis {
   public static final Genesis DEFAULT = new LeveragesGenesis(InversePowerVariogram.of(2));
 

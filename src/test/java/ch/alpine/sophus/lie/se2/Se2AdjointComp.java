@@ -9,7 +9,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 /* package */ class Se2AdjointComp implements TensorUnaryOperator {
   private final Tensor matrix;
 
-  /** @param element from Lie Group SE2 as coordinates {x, y, omega} */
+  /** @param xya element from Lie Group SE2 as coordinates {x, y, omega} */
   public Se2AdjointComp(Tensor xya) {
     if (xya.length() != 3)
       throw new Throw(xya);

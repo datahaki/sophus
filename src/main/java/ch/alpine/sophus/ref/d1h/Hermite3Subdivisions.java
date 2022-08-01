@@ -63,8 +63,8 @@ public enum Hermite3Subdivisions {
    * "Computations show that the Hermite scheme is C4 for omega in [-0.12, -0.088]
    * 
    * @param homogeneousSpace
-   * @param theta
-   * @param omega
+   * @param chop
+   * @param hermiteHiParam
    * @return */
   public static Hermite3Subdivision of( //
       HomogeneousSpace homogeneousSpace, Chop chop, HermiteHiConfig hermiteHiParam) {
@@ -82,6 +82,7 @@ public enum Hermite3Subdivisions {
   /** default with theta == 1/128 and omega == -1/16
    * 
    * @param homogeneousSpace
+   * @param chop
    * @throws Exception if either parameters is null */
   public static Hermite3Subdivision of(HomogeneousSpace homogeneousSpace, Chop chop) {
     return of(homogeneousSpace, chop, HermiteHiConfig.STANDARD);

@@ -15,17 +15,12 @@ import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.tri.ArcTan;
 
 public class Se2AxisYProject implements TensorScalarFunction {
-  private static class MapSingular implements TensorScalarFunction {
+  /** @param unit --- */
+  private record MapSingular(Unit unit) implements TensorScalarFunction {
     private static final Scalar[] SIGNUM = { //
         DoubleScalar.NEGATIVE_INFINITY, //
         RealScalar.ZERO, //
         DoubleScalar.POSITIVE_INFINITY };
-    // ---
-    private final Unit unit;
-
-    MapSingular(Unit unit) {
-      this.unit = unit;
-    }
 
     @Override
     public Scalar apply(Tensor p) {
@@ -36,7 +31,6 @@ public class Se2AxisYProject implements TensorScalarFunction {
   }
 
   /** @param u == {vx, 0, rate} with units {[m*s^-1], ?, [s^-1]}
-   * @param p == {px, py} with units {[m], [m]}
    * @return time to arrival of a point on the y axis that is subject to flow x to reach p.
    * negative return values are also possible. */
   public static TensorScalarFunction of(Tensor u) {

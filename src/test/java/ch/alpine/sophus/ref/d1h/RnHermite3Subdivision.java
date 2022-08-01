@@ -41,10 +41,7 @@ import ch.alpine.tensor.sca.Chop;
 
   /** "Construction of Hermite subdivision schemes reproducing polynomials", 2017
    * Example 3.7, eq. 28, p. 572
-   * by Byeongseon Jeong, Jungho Yoon
-   * 
-   * @param theta
-   * @param omega */
+   * by Byeongseon Jeong, Jungho Yoon */
   public RnHermite3Subdivision(Tensor AMP, Tensor AMQ, Tensor ARP, Tensor ARQ, Tensor ARR) {
     this.AMP = AMP;
     this.AMQ = AMQ;

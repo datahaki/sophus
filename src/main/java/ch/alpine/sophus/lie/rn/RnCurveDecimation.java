@@ -13,8 +13,7 @@ import ch.alpine.tensor.Scalar;
  * However, the worst-case complexity is O(n^2). */
 public enum RnCurveDecimation {
   ;
-  /** @param dimensions
-   * @param epsilon
+  /** @param epsilon
    * @return */
   public static CurveDecimation of(Scalar epsilon) {
     return CurveDecimation.of(RnGroup.INSTANCE, epsilon);

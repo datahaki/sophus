@@ -50,7 +50,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
       return of(function.apply(t));
     }
 
-    /** @param causal affine mask
+    /** @param mask affine
      * @return Tensor [i1, ..., in, e] with i being interpolatory weights and e the extrapolation weight
      * @throws Exception if mask is not affine */
     @PackageTestAccess

@@ -18,7 +18,6 @@ public final class LieGroupBSplineInterpolation extends AbstractBSplineInterpola
   private final LieGroup lieGroup;
 
   /** @param lieGroup
-   * @param geodesicSpace corresponding to lie group
    * @param degree of underlying b-spline
    * @param target */
   public LieGroupBSplineInterpolation(LieGroup lieGroup, int degree, Tensor target) {

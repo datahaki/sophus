@@ -36,8 +36,7 @@ public enum Hermite1Subdivisions {
    * by Conti, Merrien, Romani, 2015, p. 11, H1[lambda, mu]
    * 
    * @param homogeneousSpace
-   * @param lambda
-   * @param mu
+   * @param hermiteLoParam
    * @return */
   public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, HermiteLoConfig hermiteLoParam) {
     return new Hermite1Subdivision( //
@@ -55,7 +54,6 @@ public enum Hermite1Subdivisions {
    * by Byeongseon Jeong, Jungho Yoon, 2017
    * 
    * @param homogeneousSpace
-   * @param hsTransport
    * @return */
   public static HermiteSubdivision standard(HomogeneousSpace homogeneousSpace) {
     return of(homogeneousSpace, HermiteLoConfig.STANDARD);

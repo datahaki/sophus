@@ -37,8 +37,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
    * 
    * polynomial reproduction up to degree 3
    * 
-   * @param theta
-   * @param omega
+   * @param hermiteHiParam
    * @return */
   public static RnHermite3Subdivision of(HermiteHiConfig hermiteHiParam) {
     Scalar theta = hermiteHiParam.theta();

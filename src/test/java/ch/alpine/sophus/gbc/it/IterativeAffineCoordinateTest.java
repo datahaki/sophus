@@ -1,10 +1,7 @@
 // code by jph
 package ch.alpine.sophus.gbc.it;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Deque;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,11 +38,5 @@ class IterativeAffineCoordinateTest {
         }
       }
     }
-  }
-
-  @Test
-  void testArraysList() {
-    List<Object> list = List.of();
-    assertEquals(list.size(), 0);
   }
 }

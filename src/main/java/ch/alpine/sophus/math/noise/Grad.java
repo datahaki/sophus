@@ -3,12 +3,13 @@ package ch.alpine.sophus.math.noise;
 
 /** class extracted from {@link SimplexContinuousNoise} */
 /* package */ class Grad {
-  double x, y, z, w;
+  private final double x;
+  private final double y;
+  private final double z;
+  private final double w;
 
   Grad(double x, double y, double z) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
+    this(x, y, z, 0.0);
   }
 
   Grad(double x, double y, double z, double w) {

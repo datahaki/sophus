@@ -13,8 +13,8 @@ public class InverseCoordinate implements Sedarim {
   private final Tensor weights;
   private final Tensor sequence;
 
-  /** @param sedarim
-   * @param manifold
+  /** @param hsDesign
+   * @param sedarim
    * @param sequence */
   public InverseCoordinate(HsDesign hsDesign, Sedarim sedarim, Tensor sequence) {
     this.hsDesign = hsDesign;

@@ -42,7 +42,7 @@ class RadialBasisFunctionInterpolationTest {
       for (VariogramFunctions variograms : vars) {
         Sedarim weightingInterface = biinvariant.weighting(variograms.of(RealScalar.TWO), sequence);
         TensorUnaryOperator tensorUnaryOperator = Serialization.copy( //
-            RadialBasisFunctionInterpolation.of(weightingInterface::sunder, sequence, values));
+            RadialBasisFunctionInterpolation.of(weightingInterface, sequence, values));
         int index = random.nextInt(sequence.length());
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._08.requireClose(tensor, values.get(index));
@@ -77,7 +77,7 @@ class RadialBasisFunctionInterpolationTest {
     Map<Biinvariants, Biinvariant> map = Biinvariants.magic3(RnGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Sedarim weightingInterface = biinvariant.weighting(PowerVariogram.of(1, 2), sequence);
-      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface::sunder, sequence);
+      TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of(weightingInterface, sequence);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor tensor = tensorUnaryOperator.apply(sequence.get(index));
         Chop._05.requireClose(tensor, UnitVector.of(n, index));

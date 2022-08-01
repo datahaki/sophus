@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.tri.Sinhc;
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016
  * 
- * @see HnGeodesic */
+ * @see HnManifold */
 public class HnExponential implements Exponential, Serializable {
   private final Tensor p;
   private final HnAngle hnAngle;

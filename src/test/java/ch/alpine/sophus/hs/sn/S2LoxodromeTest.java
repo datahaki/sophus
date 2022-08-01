@@ -37,7 +37,7 @@ class S2LoxodromeTest {
   void testSimple() throws ClassNotFoundException, IOException {
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(S2Loxodrome.of(RealScalar.of(0.1)));
     Tensor tensor = Subdivide.of(-1, 100, 60).map(scalarTensorFunction);
-    assertTrue(tensor.stream().allMatch(SnMemberQ.INSTANCE::test));
+    assertTrue(tensor.stream().allMatch(SnMemberQ.INSTANCE));
   }
 
   @Test

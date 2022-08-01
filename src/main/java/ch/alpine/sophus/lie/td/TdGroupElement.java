@@ -27,7 +27,7 @@ public class TdGroupElement implements LieGroupElement, Serializable {
   private final Tensor t;
   private final Scalar lambda;
 
-  /** @param lambda_t of the form {lambda, t}
+  /** @param t_lambda of the form {lambda, t}
    * @throws Exception if lambda is not strictly positive */
   public TdGroupElement(Tensor t_lambda) {
     this(Drop.tail(t_lambda, 1), Last.of(t_lambda));

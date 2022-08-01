@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
  * by Amir Beck, Shoham Sabach
  * 
  * @param biinvariantMean
- * @param weightingInterface for instance InverseDistanceWeighting
+ * @param sedarim for instance InverseDistanceWeighting
  * @param chop */
 public record HsWeiszfeldMethod(BiinvariantMean biinvariantMean, Sedarim sedarim, Chop chop) //
     implements SpatialMedian, Serializable {

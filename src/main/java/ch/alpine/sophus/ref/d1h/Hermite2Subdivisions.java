@@ -31,8 +31,7 @@ public enum Hermite2Subdivisions {
    * by Conti, Huening, 2018, p. 14
    * 
    * @param homogeneousSpace
-   * @param lambda
-   * @param mu
+   * @param hermiteLoParam
    * @return */
   public static HermiteSubdivision of(HomogeneousSpace homogeneousSpace, HermiteLoConfig hermiteLoParam) {
     Scalar lambda = hermiteLoParam.lambda();

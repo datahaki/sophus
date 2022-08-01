@@ -14,7 +14,7 @@ public enum Se2Matrix {
   ;
   /** maps a vector from the group SE2 to a matrix in SE2
    * 
-   * @param g = {px, py, angle}
+   * @param xya = {px, py, angle}
    * @return matrix with dimensions 3x3
    * <pre>
    * [+Ca -Sa px]

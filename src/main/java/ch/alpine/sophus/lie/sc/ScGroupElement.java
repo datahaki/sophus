@@ -8,7 +8,7 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.red.Times;
 
 public class ScGroupElement implements LieGroupElement {
-  /** @param value
+  /** @param tensor
    * @return
    * @throws Exception if value is not strictly positive */
   public static ScGroupElement of(Tensor tensor) {
