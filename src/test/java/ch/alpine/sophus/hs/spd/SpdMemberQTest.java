@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.dv.Biinvariant;
@@ -23,12 +25,11 @@ import ch.alpine.tensor.sca.Chop;
 class SpdMemberQTest {
   // private static final Biinvariants[] BIINVARIANTS = new Biinvariants[] { //
   // Biinvariants.LEVERAGES, Biinvariants.GARDEN, Biinvariants.HARBOR, Biinvariants.CUPOLA };
-  @Test
-  void testSimple() {
-    for (int n = 1; n < 10; ++n) {
-      RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
-      SpdMemberQ.INSTANCE.require(RandomSample.of(rsi));
-    }
+  @RepeatedTest(10)
+  void testSimple(RepetitionInfo repetitionInfo) {
+    int n = repetitionInfo.getCurrentRepetition();
+    RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
+    SpdMemberQ.INSTANCE.require(RandomSample.of(rsi));
   }
 
   @Test
@@ -73,5 +74,14 @@ class SpdMemberQTest {
       Tensor weights2 = biinvariant.coordinate(InversePowerVariogram.of(2), sR).sunder(mR);
       Chop._02.requireClose(weights1, weights2);
     }
+  }
+
+  @Test
+  void testProj() {
+    RandomSampleInterface rsi = //
+        new Spd0RandomSample(3, TriangularDistribution.with(0, 1));
+    Tensor matrix = RandomSample.of(rsi);
+    Tensor projct = SpdMemberQ.project(matrix);
+    Chop._08.requireClose(matrix, projct);
   }
 }

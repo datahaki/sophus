@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -20,19 +22,17 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
 
 class SoRandomSampleTest {
-  @Test
-  void testSimple() throws ClassNotFoundException, IOException {
-    for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = Serialization.copy(SoRandomSample.of(n));
-      for (int count = 0; count < 5; ++count) {
-        Tensor tensor = RandomSample.of(randomSampleInterface);
-        Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
-        OrthogonalMatrixQ.require(tensor);
-        MatrixQ.requireSize(tensor, n, n);
-        Tensor log = MatrixLog.of(tensor);
-        AntisymmetricMatrixQ.require(log);
-      }
-    }
+  @RepeatedTest(7)
+  void testSimple(RepetitionInfo repetitionInfo) throws ClassNotFoundException, IOException {
+    int n = repetitionInfo.getCurrentRepetition();
+    RandomSampleInterface randomSampleInterface = // 
+        Serialization.copy(SoRandomSample.of(n));
+    Tensor tensor = RandomSample.of(randomSampleInterface);
+    Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
+    OrthogonalMatrixQ.require(tensor);
+    MatrixQ.requireSize(tensor, n, n);
+    Tensor log = MatrixLog.of(tensor);
+    AntisymmetricMatrixQ.require(log);
   }
 
   @Test

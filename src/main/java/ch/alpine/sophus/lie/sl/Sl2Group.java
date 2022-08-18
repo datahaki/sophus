@@ -59,7 +59,7 @@ public enum Sl2Group implements LieGroup {
     Tensor log = MatrixLog.of(g);
     if (Scalars.lessEquals(Trace.of(g), TWO_NEGATE))
       throw new Throw(g);
-    // TODO SOPHUS ALG move check to test are and remove here
+    // TODO SOPHUS ALG move check to test area and remove here
     Chop._04.requireClose(g, exp(log));
     return log;
   }
