@@ -1,12 +1,13 @@
+// code by jph
 package ch.alpine.sophus.hs.r3;
 
 import java.util.List;
 
-import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.ResourceData;
 
+// TODO SOPHUS document
 public enum PlatonicSolid {
   TETRAHEDRON(4, 3),
   CUBE(6, 4),

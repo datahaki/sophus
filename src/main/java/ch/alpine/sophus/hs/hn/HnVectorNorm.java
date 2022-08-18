@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Ramp;
  * 
  * "Metric Spaces of Non-Positive Curvature"
  * by Martin R. Bridson, Andre Haefliger, 1999 */
-public enum HnVectorNorm {
+/* package */ enum HnVectorNorm {
   ;
   public static final TensorUnaryOperator NORMALIZE = Normalize.with(HnVectorNorm::of);
 

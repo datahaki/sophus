@@ -7,6 +7,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricManifold;
+import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
@@ -19,29 +20,30 @@ import ch.alpine.tensor.sca.Ramp;
  * by Martin R. Bridson, Andre Haefliger, 1999 */
 public enum HnManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
+  // private final HsTransport hsTransport = ;
 
   @Override // from Manifold
   public Exponential exponential(Tensor p) {
     return new HnExponential(p);
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public Tensor flip(Tensor p, Tensor q) {
     Scalar nxy = LBilinearForm.between(p, q).negate();
     return p.add(p).multiply(nxy).subtract(q);
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public Tensor midpoint(Tensor p, Tensor q) {
     return HnProjection.INSTANCE.apply(p.add(q));
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public HsTransport hsTransport() {
-    return HnTransport.INSTANCE;
+    return new PoleLadder(this);
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public BiinvariantMean biinvariantMean(Chop chop) {
     return IterativeBiinvariantMean.of(this, chop, HnPhongMean.INSTANCE);
   }

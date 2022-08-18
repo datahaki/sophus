@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.hn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.FiniteTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -181,5 +183,30 @@ class HnManifoldTest {
       Chop._06.requireClose(m2, pnt_l);
       Chop._06.requireClose(w1, w2);
     }
+  }
+  
+  @Test
+  void testTransport() {
+    int d = 3;
+    Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
+    Tensor x = RandomVariate.of(distribution, d);
+    Tensor p = HnWeierstrassCoordinate.toPoint(x);
+    Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+    TensorUnaryOperator s1 = HnManifold.INSTANCE.hsTransport().shift(p, q);
+    Tensor vpq = new HnExponential(p).log(q);
+    Tensor vqp = s1.apply(vpq).negate();
+    Tensor exp = new HnExponential(q).exp(vqp);
+    Chop._08.requireClose(p, exp);
+  }
+
+  @Test
+  void testNonMemberFail() {
+    int d = 3;
+    Distribution distribution = TrapezoidalDistribution.of(-3, -1, 1, 3);
+    Tensor p = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+    Tensor q = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
+    TensorUnaryOperator shift = HnManifold.INSTANCE.hsTransport().shift(p, q);
+    Tensor v = RandomVariate.of(distribution, d + 1);
+    assertThrows(Exception.class, () -> shift.apply(v));
   }
 }

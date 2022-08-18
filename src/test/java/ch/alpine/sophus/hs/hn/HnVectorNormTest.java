@@ -30,7 +30,7 @@ class HnVectorNormTest {
       Scalar norm = HnVectorNorm.of(log_hn);
       Chop._08.requireClose(distance, norm);
       Tensor r = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
-      TensorUnaryOperator tuo = HnTransport.INSTANCE.shift(p, r);
+      TensorUnaryOperator tuo = HnManifold.INSTANCE.hsTransport().shift(p, r);
       Tensor tv = tuo.apply(log_hn);
       assertFalse(new THnMemberQ(p).test(tv));
       new THnMemberQ(r).require(tv);

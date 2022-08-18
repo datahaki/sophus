@@ -9,6 +9,7 @@ import ch.alpine.tensor.Tensor;
 /** Phong mean with 1-step correction towards {@link HnManifold}
  * 
  * @see SnFastMean */
+@Deprecated
 public enum HnFastMean implements BiinvariantMean {
   INSTANCE;
 

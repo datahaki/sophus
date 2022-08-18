@@ -9,7 +9,7 @@ import ch.alpine.tensor.sca.Chop;
 /** in geomstats, the corresponding function is "regularize"
  * 
  * @see HnManifold */
-public enum HnProjection implements TensorUnaryOperator {
+/* package */ enum HnProjection implements TensorUnaryOperator {
   INSTANCE;
 
   private static final TensorUnaryOperator NORMALIZE = Normalize.with(HnPointNorm.INSTANCE, Chop._08);

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs.r3.qh3;
+package ch.alpine.sophus.hs.r3;
 
 import java.util.List;
 
