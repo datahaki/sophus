@@ -15,11 +15,11 @@ import ch.alpine.tensor.mat.re.Inverse;
  * new LinearGroupElement(LinearSolve.of(a, b))
  * 
  * So3Geodesic */
-public class GlGroupElement implements LieGroupElement, Serializable {
+/* package */ class GlGroupElement implements LieGroupElement, Serializable {
   /** @param matrix square and invertible
    * @return
    * @throws Exception if given matrix is not invertible */
-  public static GlGroupElement of(Tensor matrix) {
+  public static LieGroupElement of(Tensor matrix) {
     return new GlGroupElement(matrix, Inverse.of(matrix));
   }
 

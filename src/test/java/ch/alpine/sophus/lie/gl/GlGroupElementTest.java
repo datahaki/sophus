@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -28,7 +29,7 @@ class GlGroupElementTest {
   void testSimple() {
     int n = 5;
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), n, n);
-    GlGroupElement linearGroupElement = GlGroupElement.of(matrix);
+    LieGroupElement linearGroupElement = GlGroupElement.of(matrix);
     Tensor result = linearGroupElement.inverse().combine(matrix);
     Chop._10.requireClose(result, IdentityMatrix.of(n));
   }
@@ -36,8 +37,8 @@ class GlGroupElementTest {
   @Test
   void testSerializable() throws ClassNotFoundException, IOException {
     Tensor tensor = DiagonalMatrix.of(1, 2, 3);
-    GlGroupElement linearGroupElement = GlGroupElement.of(tensor);
-    GlGroupElement copy = Serialization.copy(linearGroupElement);
+    LieGroupElement linearGroupElement = GlGroupElement.of(tensor);
+    LieGroupElement copy = Serialization.copy(linearGroupElement);
     Tensor result = copy.inverse().combine(tensor);
     assertEquals(result, IdentityMatrix.of(3));
   }
@@ -49,7 +50,7 @@ class GlGroupElementTest {
       Tensor g = RandomVariate.of(distribution, 3);
       Tensor uvw = RandomVariate.of(distribution, 3);
       Tensor adjoint = new Se2GroupElement(g).adjoint(uvw);
-      GlGroupElement linearGroupElement = GlGroupElement.of(Se2Matrix.of(g));
+      LieGroupElement linearGroupElement = GlGroupElement.of(Se2Matrix.of(g));
       assertEquals(linearGroupElement.toCoordinate(), Se2Matrix.of(g));
       Tensor X = Tensors.matrix(new Scalar[][] { //
           { RealScalar.ZERO, uvw.Get(2).negate(), uvw.Get(0) }, //
@@ -75,7 +76,7 @@ class GlGroupElementTest {
 
   @Test
   void testAdjointFail() {
-    GlGroupElement linearGroupElement = GlGroupElement.of(IdentityMatrix.of(5));
+    LieGroupElement linearGroupElement = GlGroupElement.of(IdentityMatrix.of(5));
     assertThrows(Exception.class, () -> linearGroupElement.adjoint(Tensors.vector(1, 2, 3, 4, 5)));
   }
 
@@ -86,7 +87,7 @@ class GlGroupElementTest {
 
   @Test
   void testCombineNonSquareFail() {
-    GlGroupElement linearGroupElement = GlGroupElement.of(DiagonalMatrix.of(1, 2));
+    LieGroupElement linearGroupElement = GlGroupElement.of(DiagonalMatrix.of(1, 2));
     assertThrows(Exception.class, () -> linearGroupElement.combine(HilbertMatrix.of(2, 3)));
     assertThrows(Exception.class, () -> linearGroupElement.combine(Tensors.vector(1, 2)));
   }

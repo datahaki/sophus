@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Sign;
 
 /** Careful: this is not a norm but an ad-invariant, degenerate scalar product + offset
  * that results in biinvariant barycentric coordinates */
-public class HeTarget implements TensorNorm {
+/* package */ class HeTarget implements TensorNorm {
   private final TensorNorm tensorNorm;
   private final Scalar offset;
 

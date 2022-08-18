@@ -16,7 +16,6 @@ import ch.alpine.sophus.dv.GbcHelper;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.gl.GlGroup;
-import ch.alpine.sophus.lie.gl.GlGroupElement;
 import ch.alpine.sophus.lie.so.SoGroupElement;
 import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.tensor.RationalScalar;
@@ -63,7 +62,7 @@ class So3GroupTest {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3();
       SoGroupElement so3GroupElement = So3Group.INSTANCE.element(g);
-      GlGroupElement linearGroupElement = GlGroup.INSTANCE.element(g);
+      LieGroupElement linearGroupElement = GlGroup.INSTANCE.element(g);
       Tensor v = So3TestHelper.spawn_so3();
       Tolerance.CHOP.requireClose( //
           so3GroupElement.adjoint(v), //

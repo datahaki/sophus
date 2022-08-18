@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.gl;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -20,7 +21,7 @@ public enum GlGroup implements LieGroup {
   INSTANCE;
 
   @Override // from LieGroup
-  public GlGroupElement element(Tensor matrix) {
+  public LieGroupElement element(Tensor matrix) {
     return GlGroupElement.of(matrix);
   }
 
