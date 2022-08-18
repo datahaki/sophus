@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.ext.Lists;
 
 /* package */ class WavefrontImpl implements Wavefront, Serializable {
   private final Tensor vertices = Tensors.empty();
@@ -44,6 +45,6 @@ import ch.alpine.tensor.Tensors;
   private WavefrontObject object() {
     if (objects.isEmpty())
       objects.add(new WavefrontObjectImpl(null));
-    return objects.get(objects.size() - 1);
+    return Lists.last(objects);
   }
 }

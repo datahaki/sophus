@@ -16,6 +16,7 @@ import ch.alpine.sophus.hs.r3.PlatonicSolid;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.RotateLeft;
+import ch.alpine.tensor.ext.Lists;
 
 class SimplexDTest {
   @ParameterizedTest
@@ -25,7 +26,7 @@ class SimplexDTest {
     Collections.shuffle(faces);
     Set<Tensor> set = SimplexD.of(faces.subList(0, faces.size() - 1));
     assertEquals(set.size(), platonicSolid.faceShape());
-    int[] last = faces.get(faces.size() - 1);
+    int[] last = Lists.last(faces);
     Tensor v = Tensors.vectorInt(last);
     for (int i = 0; i < v.length(); ++i)
       assertTrue(set.remove(RotateLeft.of(v, i).extract(0, 2)));
