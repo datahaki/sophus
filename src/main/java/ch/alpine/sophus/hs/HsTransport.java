@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.sophus.hs.spd.SpdTransport;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -17,7 +16,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 @FunctionalInterface
 public interface HsTransport {
   /** the operator may take tangent vectors represented by matrices as input,
-   * see for instance {@link SpdTransport}
+   * see for instance SpdTransport
    * 
    * @param orig point
    * @param dest point

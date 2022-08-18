@@ -8,11 +8,9 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.tri.ArcCos;
 
 /** maps a point q to the (angular) distance from base point p */
-public class SnAngle implements TensorScalarFunction {
-  private final Tensor x;
-
-  public SnAngle(Tensor x) {
-    this.x = SnMemberQ.INSTANCE.require(x);
+public record SnAngle(Tensor x) implements TensorScalarFunction {
+  public SnAngle {
+    SnMemberQ.INSTANCE.require(x);
   }
 
   @Override

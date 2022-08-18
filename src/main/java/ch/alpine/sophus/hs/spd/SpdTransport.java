@@ -15,7 +15,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * by Nicolas Guigui, Xavier Pennec, 2020 p.27
  * 
  * @see PoleLadder */
-public enum SpdTransport implements HsTransport {
+/* package */ enum SpdTransport implements HsTransport {
   INSTANCE;
 
   @Override // from HsTransport

@@ -7,14 +7,7 @@ import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.MatrixDotTranspose;
 
 /** Reference: geomstats */
-public class TStProjection implements TensorUnaryOperator {
-  private final Tensor p;
-
-  /** @param p */
-  public TStProjection(Tensor p) {
-    this.p = p;
-  }
-
+public record TStProjection(Tensor p) implements TensorUnaryOperator {
   @Override
   public Tensor apply(Tensor v) {
     return v.subtract(Symmetrize.of(MatrixDotTranspose.of(p, v)).dot(p));

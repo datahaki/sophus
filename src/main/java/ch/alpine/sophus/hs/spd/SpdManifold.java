@@ -59,7 +59,7 @@ public enum SpdManifold implements HomogeneousSpace, MetricManifold {
 
   @Override // from HomogeneousSpace
   public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.reduce(SpdManifold.INSTANCE, chop);
+    return IterativeBiinvariantMean.reduce(this, chop);
   }
 
   @Override // from TensorMetric

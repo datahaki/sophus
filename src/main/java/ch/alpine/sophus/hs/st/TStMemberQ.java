@@ -10,14 +10,7 @@ import ch.alpine.tensor.mat.MatrixDotTranspose;
 import ch.alpine.tensor.sca.Chop;
 
 /** Reference: geomstats */
-public class TStMemberQ implements MemberQ, Serializable {
-  private final Tensor p;
-
-  /** @param p */
-  public TStMemberQ(Tensor p) {
-    this.p = p;
-  }
-
+public record TStMemberQ(Tensor p) implements MemberQ, Serializable {
   @Override // from MemberQ
   public boolean test(Tensor v) {
     return AntisymmetricMatrixQ.of(MatrixDotTranspose.of(p, v), Chop._06);

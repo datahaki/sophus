@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -20,7 +21,7 @@ public enum SnEulerAngle {
    * @param angles vector of length n
    * @return vector of length n + 1 */
   public static Tensor of(Tensor angles) {
-    return Fold.of(SnEulerAngle::operator, Tensors.vector(1), angles);
+    return Fold.of(SnEulerAngle::operator, Tensors.of(RealScalar.ONE), angles);
   }
 
   private static Tensor operator(Tensor tensor, Tensor angle) {

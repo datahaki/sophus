@@ -184,7 +184,7 @@ class HnManifoldTest {
       Chop._06.requireClose(w1, w2);
     }
   }
-  
+
   @Test
   void testTransport() {
     int d = 3;
