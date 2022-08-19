@@ -26,7 +26,7 @@ class StExponentialTest {
     Random random = new Random(4);
     for (int n = 3; n < 6; ++n)
       for (int k = n - 2; k <= n; ++k) {
-        RandomSampleInterface randomSampleInterface = StRandomSample.of(n, k);
+        RandomSampleInterface randomSampleInterface = new StRandomSample(n, k);
         Tensor p = RandomSample.of(randomSampleInterface, random);
         StMemberQ.INSTANCE.require(p);
         TStProjection tStProjection = new TStProjection(p);

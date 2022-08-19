@@ -10,6 +10,8 @@ import ch.alpine.tensor.mat.MatrixDotTranspose;
 public record TStProjection(Tensor p) implements TensorUnaryOperator {
   @Override
   public Tensor apply(Tensor v) {
+    // implementation identical to geomstats except that p and v are
+    // the transposed versions of the corresponding variable in geomstats
     return v.subtract(Symmetrize.of(MatrixDotTranspose.of(p, v)).dot(p));
   }
 }

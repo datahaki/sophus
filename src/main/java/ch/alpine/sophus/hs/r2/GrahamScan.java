@@ -62,7 +62,7 @@ import ch.alpine.tensor.sca.tri.ArcTan;
     int k1 = 1;
     Tensor point1 = null; // find point1 different from point0
     for (Tensor point : list.subList(k1, list.size())) {
-      if (!point0.equals(point)) { // should Chop.08 be used for consistency with chop below ?
+      if (!chop.isClose(point0, point)) {
         point1 = point;
         break;
       }
@@ -73,7 +73,7 @@ import ch.alpine.tensor.sca.tri.ArcTan;
     ++k1;
     // find point not co-linear with point0 and point1
     for (Tensor point : list.subList(k1, list.size()))
-      if (Scalars.isZero(ccw(point0, point1, point))) // ... also here ?
+      if (chop.isZero(ccw(point0, point1, point)))
         ++k1;
       else
         break;

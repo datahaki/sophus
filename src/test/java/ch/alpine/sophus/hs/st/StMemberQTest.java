@@ -12,7 +12,7 @@ class StMemberQTest {
   void testSimple() {
     for (int n = 3; n < 6; ++n)
       for (int k = n - 2; k <= n; ++k) {
-        RandomSampleInterface randomSampleInterface = StRandomSample.of(n, k);
+        RandomSampleInterface randomSampleInterface = new StRandomSample(n, k);
         Tensor matrix = RandomSample.of(randomSampleInterface);
         StMemberQ.INSTANCE.require(matrix);
       }

@@ -25,7 +25,7 @@ class TStProjectionTest {
     Random random = new Random(7);
     for (int n = 3; n < 6; ++n)
       for (int k = n - 2; k <= n; ++k) {
-        RandomSampleInterface randomSampleInterface = StRandomSample.of(n, k);
+        RandomSampleInterface randomSampleInterface = new StRandomSample(n, k);
         Tensor x = RandomSample.of(randomSampleInterface, random);
         StMemberQ.INSTANCE.require(x);
         TStProjection tStProjection = Serialization.copy(new TStProjection(x));
