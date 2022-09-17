@@ -8,8 +8,8 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.AbstractInterpolation;
 import ch.alpine.tensor.itp.BinaryAverage;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
 import ch.alpine.tensor.itp.Interpolation;
+import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 /** implementation uses knots 0, 1, 2, ...
  * 

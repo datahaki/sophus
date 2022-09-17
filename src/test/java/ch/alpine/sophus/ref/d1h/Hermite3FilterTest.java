@@ -19,8 +19,8 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.ply.Polynomial;
 
 class Hermite3FilterTest {
   @Test

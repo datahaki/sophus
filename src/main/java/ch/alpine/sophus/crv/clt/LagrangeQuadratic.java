@@ -6,7 +6,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.FiniteScalarQ;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
+import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 /** Reference: U. Reif slide 8/32
  * 

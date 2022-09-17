@@ -29,7 +29,7 @@ public enum SoMemberQ implements MemberQ {
   public static Tensor project(Tensor x) {
     // TODO SOPHUS should be special case of StProjection
     Tensor xtx = Transpose.of(x).dot(x);
-    // TODO SOPHUS use ofSymmetric 
+    // TODO SOPHUS use ofSymmetric
     MatrixSqrt matrixSqrt = MatrixSqrt.of(xtx);
     Tensor result = x.dot(matrixSqrt.sqrt_inverse());
     Scalar det = Det.of(result);

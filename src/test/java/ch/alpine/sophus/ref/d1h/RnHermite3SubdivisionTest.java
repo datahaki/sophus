@@ -17,10 +17,10 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.DiagonalMatrix;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.ply.Polynomial;
 
 class RnHermite3SubdivisionTest {
   @Test

@@ -7,9 +7,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.num.Boole;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
+import ch.alpine.tensor.sca.ply.Polynomial;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sinc;
 

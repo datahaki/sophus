@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.ExactScalarQ;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
+import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 class MonomialExtrapolationMaskTest {
   @Test

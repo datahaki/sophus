@@ -25,7 +25,7 @@ class SoRandomSampleTest {
   @RepeatedTest(7)
   void testSimple(RepetitionInfo repetitionInfo) throws ClassNotFoundException, IOException {
     int n = repetitionInfo.getCurrentRepetition();
-    RandomSampleInterface randomSampleInterface = // 
+    RandomSampleInterface randomSampleInterface = //
         Serialization.copy(SoRandomSample.of(n));
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);

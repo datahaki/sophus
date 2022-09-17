@@ -19,8 +19,8 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.jet.JetScalar;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.sca.ply.Polynomial;
 
 class Hermite1SubdivisionTest {
   @Test

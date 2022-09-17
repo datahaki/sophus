@@ -15,10 +15,10 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
+import ch.alpine.tensor.sca.ply.Polynomial;
 
 class BiinvariantMeanExtrapolationTest {
   @Test

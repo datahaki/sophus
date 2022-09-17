@@ -9,8 +9,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.ply.Polynomial;
 
 /** Reference:
  * Eq (15.9.6) "Gaussian Process Regression" in NR, 2007

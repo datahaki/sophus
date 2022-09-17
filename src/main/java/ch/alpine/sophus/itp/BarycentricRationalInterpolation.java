@@ -13,9 +13,9 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.ScalarArray;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.sca.InvertUnlessZero;
+import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 /** affine weights that satisfy the barycentric equation, i.e. reproduce linear functions
  * 

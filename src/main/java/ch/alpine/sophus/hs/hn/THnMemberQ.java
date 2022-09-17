@@ -24,7 +24,7 @@ public class THnMemberQ implements MemberQ, Serializable {
 
   /** projection is idempotent
    * 
-   * @param v TODO need to specify input
+   * @param v TODO SOPHUS DOC need to specify input
    * @return projection of v to plane orthogonal to base point x */
   public Tensor project(Tensor v) {
     return v.add(p.multiply(LBilinearForm.between(p, v)));

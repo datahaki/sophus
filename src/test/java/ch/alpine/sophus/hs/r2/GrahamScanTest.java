@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.r2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -88,9 +88,9 @@ class GrahamScanTest {
     Distribution distribution = NormalDistribution.of(0.0, variance);
     Tensor tensor = RandomVariate.of(distribution, 5, 2);
     Tensor hull = ConvexHull2D.of(tensor);
-    assertEquals(Dimensions.of(hull), Arrays.asList(2, 2));
+    assertEquals(Dimensions.of(hull), List.of(1, 2));
     tensor = RandomVariate.of(distribution, 200, 2);
     hull = ConvexHull2D.of(tensor);
-    assertEquals(Dimensions.of(hull), Arrays.asList(2, 2));
+    assertEquals(Dimensions.of(hull), List.of(1, 2));
   }
 }

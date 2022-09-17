@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
+import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 /** the implementation uses quadratic extrapolation at the boundaries
  * the weighting is in linear space
