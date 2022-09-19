@@ -6,8 +6,8 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.sca.Imag;
-import ch.alpine.tensor.sca.Real;
+import ch.alpine.tensor.sca.Im;
+import ch.alpine.tensor.sca.Re;
 import ch.alpine.tensor.sca.erf.Erf;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -46,10 +46,10 @@ public class ClothoidTangentDefect implements ScalarUnaryOperator {
   }
 
   public Scalar defect(Scalar lam) {
-    return Real.FUNCTION.apply(apply(lam));
+    return Re.FUNCTION.apply(apply(lam));
   }
 
   public Scalar signum(Scalar lam) {
-    return Imag.FUNCTION.apply(apply(lam));
+    return Im.FUNCTION.apply(apply(lam));
   }
 }

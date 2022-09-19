@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.d.NegativeBinomialDistribution;
 import ch.alpine.tensor.red.Entrywise;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Imag;
+import ch.alpine.tensor.sca.Im;
 
 class LagrangeCoordinateTest {
   private static void _check(Tensor levers, Tensor weights) {
@@ -54,7 +54,7 @@ class LagrangeCoordinateTest {
             RandomVariate.of(NormalDistribution.standard(), n, d));
         {
           Tensor weights = idw.origin(levers);
-          Tolerance.CHOP.allZero(Imag.of(weights));
+          Tolerance.CHOP.allZero(Im.of(weights));
         }
         {
           Tensor weights = genesis.origin(levers);

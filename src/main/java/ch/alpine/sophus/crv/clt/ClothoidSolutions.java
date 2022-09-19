@@ -12,7 +12,7 @@ import ch.alpine.tensor.itp.FindRoot;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
-import ch.alpine.tensor.sca.Real;
+import ch.alpine.tensor.sca.Re;
 import ch.alpine.tensor.sca.Sign;
 
 /** @param probes -min == max for tests to pass */
@@ -45,12 +45,12 @@ public record ClothoidSolutions(Tensor probes) implements Serializable {
 
     public Search(Scalar s1, Scalar s2) {
       ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(s1, s2);
-      ScalarUnaryOperator function = s -> Real.FUNCTION.apply(clothoidTangentDefect.apply(s));
+      ScalarUnaryOperator function = s -> Re.FUNCTION.apply(clothoidTangentDefect.apply(s));
       FindRoot findRoot = FindRoot.of(function, CHOP);
       Tensor defects = probes.map(clothoidTangentDefect);
       // System.out.println("defects=");
       // defects.stream().forEach(System.out::println);
-      defects_real = defects.map(Real.FUNCTION);
+      defects_real = defects.map(Re.FUNCTION);
       // Tensor defects_imag = defects.map(Imag.FUNCTION);
       boolean prev = Sign.isPositive(defects_real.Get(0));
       for (int index = 1; index < probes.length(); ++index) {

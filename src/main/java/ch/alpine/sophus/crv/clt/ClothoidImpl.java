@@ -14,8 +14,8 @@ import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.Imag;
-import ch.alpine.tensor.sca.Real;
+import ch.alpine.tensor.sca.Im;
+import ch.alpine.tensor.sca.Re;
 
 /** maps to SE(2) or SE(2) Covering
  * 
@@ -79,8 +79,8 @@ import ch.alpine.tensor.sca.Real;
    * @return vector of length 2 with real entries corresponding to real and imag of result */
   @PackageTestAccess
   static Tensor prod(Scalar z, Tensor vector) {
-    Scalar zr = Real.FUNCTION.apply(z);
-    Scalar zi = Imag.FUNCTION.apply(z);
+    Scalar zr = Re.FUNCTION.apply(z);
+    Scalar zi = Im.FUNCTION.apply(z);
     Scalar v0 = vector.Get(0);
     Scalar v1 = vector.Get(1);
     return Tensors.of( //

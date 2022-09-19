@@ -34,7 +34,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TrapezoidalDistribution;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Imag;
+import ch.alpine.tensor.sca.Im;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
@@ -86,7 +86,7 @@ class HnManifoldTest {
       Tensor x = HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, d));
       Scalar dxy = HnManifold.INSTANCE.distance(x, x);
       Chop._06.requireZero(dxy);
-      assertTrue(Scalars.isZero(Imag.FUNCTION.apply(dxy)));
+      assertTrue(Scalars.isZero(Im.FUNCTION.apply(dxy)));
     }
   }
 

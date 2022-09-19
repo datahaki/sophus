@@ -34,9 +34,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Imag;
+import ch.alpine.tensor.sca.Im;
 import ch.alpine.tensor.sca.N;
-import ch.alpine.tensor.sca.Real;
+import ch.alpine.tensor.sca.Re;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.spa.Nnz;
 import ch.alpine.tensor.spa.SparseArray;
@@ -71,18 +71,18 @@ class CliffordAlgebraTest {
     Scalar cx = ComplexScalar.of(2, 5);
     Scalar cy = ComplexScalar.of(1, -3);
     Scalar cm = cx.multiply(cy);
-    assertEquals(Real.of(cm), m.Get(0));
-    assertEquals(Imag.of(cm), m.Get(1));
+    assertEquals(Re.of(cm), m.Get(0));
+    assertEquals(Im.of(cm), m.Get(1));
     Scalar ce = Exp.FUNCTION.apply(cx);
     Tensor xe = cliffordAlgebra.exp(x);
-    Chop._10.requireClose(Real.of(ce), xe.Get(0));
-    Chop._10.requireClose(Imag.of(ce), xe.Get(1));
+    Chop._10.requireClose(Re.of(ce), xe.Get(0));
+    Chop._10.requireClose(Im.of(ce), xe.Get(1));
     Scalar cr = cx.reciprocal();
     Tensor xr = cliffordAlgebra.reciprocal(x);
     ExactTensorQ.require(cr);
     ExactTensorQ.require(xr);
-    assertEquals(Real.of(cr), xr.Get(0));
-    assertEquals(Imag.of(cr), xr.Get(1));
+    assertEquals(Re.of(cr), xr.Get(0));
+    assertEquals(Im.of(cr), xr.Get(1));
   }
 
   @Test

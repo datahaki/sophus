@@ -11,8 +11,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.sca.Imag;
-import ch.alpine.tensor.sca.Real;
+import ch.alpine.tensor.sca.Im;
+import ch.alpine.tensor.sca.Re;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** original implementation */
@@ -57,8 +57,8 @@ import ch.alpine.tensor.sca.pow.Sqrt;
       Scalar ret_p = p0.add(il.multiply(d).divide(il.add(ir)));
       Scalar ret_a = clothoidQuadraticEx.angle(t).add(da);
       return Tensors.of( //
-          Real.FUNCTION.apply(ret_p), //
-          Imag.FUNCTION.apply(ret_p), //
+          Re.FUNCTION.apply(ret_p), //
+          Im.FUNCTION.apply(ret_p), //
           ret_a);
     };
   }
