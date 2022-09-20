@@ -40,21 +40,22 @@ public class KMeans {
     this.seeds = seeds.copy();
   }
 
-  public Tensor iterate() {
+  public void iterate() {
     Tensor tensor = Transpose.of(Tensor.of(seeds.stream().map(sedarim::sunder)));
     List<Integer> list = tensor.stream().map(ArgMin::of).collect(Collectors.toList());
     partition = Array.of(i -> Tensors.empty(), seeds.length());
     AtomicInteger atomicInteger = new AtomicInteger();
     sequence.stream().forEach(point -> partition.set(entry -> entry.append(point), list.get(atomicInteger.getAndIncrement())));
-    // int sum = partition.stream().mapToInt(Tensor::length).sum();
-    // System.out.println("sum="+sum);
     seeds = Tensor.of(partition.stream() //
         .filter(subset -> 0 < subset.length()) //
         .map(subset -> biinvariantMean.mean(subset, ConstantArray.of(RationalScalar.of(1, subset.length()), subset.length()))));
-    return seeds;
   }
 
   public Tensor partition() {
     return partition;
+  }
+
+  public Tensor seeds() {
+    return seeds;
   }
 }
