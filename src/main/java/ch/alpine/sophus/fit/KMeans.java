@@ -56,6 +56,6 @@ public class KMeans {
   }
 
   public Tensor seeds() {
-    return seeds;
+    return seeds.unmodifiable();
   }
 }
