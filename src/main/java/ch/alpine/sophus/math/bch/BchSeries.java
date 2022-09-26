@@ -17,7 +17,7 @@ import ch.alpine.tensor.red.Total;
 /* package */ abstract class BchSeries implements SeriesInterface, Serializable {
   protected final Tensor ad;
 
-  public BchSeries(Tensor ad) {
+  protected BchSeries(Tensor ad) {
     this.ad = JacobiIdentity.require(ad);
   }
 

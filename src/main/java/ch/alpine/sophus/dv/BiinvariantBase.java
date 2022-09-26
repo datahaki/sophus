@@ -15,7 +15,7 @@ public abstract class BiinvariantBase implements Biinvariant, Serializable {
   protected final Manifold manifold;
   private final HsDesign hsDesign;
 
-  public BiinvariantBase(Manifold manifold) {
+  protected BiinvariantBase(Manifold manifold) {
     this.manifold = manifold;
     hsDesign = new HsDesign(manifold);
   }

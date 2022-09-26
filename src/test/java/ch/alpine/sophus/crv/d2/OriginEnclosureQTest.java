@@ -9,17 +9,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Unit;
 
 class OriginEnclosureQTest {
@@ -38,9 +39,18 @@ class OriginEnclosureQTest {
     }
   }
 
+  /** @param unit non-null
+   * @return operator that maps a scalar to the quantity with value
+   * of given scalar and given unit
+   * @throws Exception if given unit is null */
+  public static ScalarUnaryOperator attach(Unit unit) {
+    Objects.requireNonNull(unit);
+    return scalar -> Quantity.of(scalar, unit);
+  }
+
   @Test
   void testInsidePlainQuantity() {
-    ScalarUnaryOperator suo = Scalars.attach(Unit.of("km"));
+    ScalarUnaryOperator suo = attach(Unit.of("km"));
     Tensor polygon = Tensors.matrix(new Number[][] { //
         { 0.1, 0.1 }, //
         { 1, 0 }, //

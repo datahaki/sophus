@@ -36,7 +36,7 @@ class KMeansTest {
         RnBiinvariantMean.INSTANCE, //
         sequence);
     kMeans.setSeeds(RandomVariate.of(NormalDistribution.standard(), n, 2));
-    for (int i = 0; i < 10; ++i) 
+    for (int i = 0; i < 10; ++i)
       kMeans.iterate();
     Tensor partition = kMeans.partition();
     int sum = partition.stream().mapToInt(Tensor::length).sum();

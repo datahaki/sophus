@@ -163,7 +163,7 @@ public class HsAlgebra implements HsLocal, Serializable {
   }
 
   public void printTable() {
-    Tensor array = Array.fill(() -> StringScalar.EMPTY, dim_g, dim_g);
+    Tensor array = Array.same(StringScalar.EMPTY, dim_g, dim_g);
     for (int i = 0; i < dim_g; ++i) {
       for (int j = 0; j < dim_g; ++j) {
         Tensor coeffs = ad.dot(UnitVector.of(dim_g, i)).dot(UnitVector.of(dim_g, j));

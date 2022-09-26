@@ -12,7 +12,7 @@ import ch.alpine.tensor.ext.PackageTestAccess;
 
 /** matrices are projection matrices, i.e. from the grassmann-manifold */
 /* package */ abstract class MatrixBiinvariant extends BiinvariantBase implements TensorMetric {
-  public MatrixBiinvariant(Manifold manifold) {
+  protected MatrixBiinvariant(Manifold manifold) {
     super(manifold);
   }
 

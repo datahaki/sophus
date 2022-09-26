@@ -25,7 +25,7 @@ public abstract class Dual3PointCurveSubdivision implements CurveSubdivision, Se
   protected final BinaryAverage binaryAverage;
 
   /** @param binaryAverage non-null */
-  public Dual3PointCurveSubdivision(BinaryAverage binaryAverage) {
+  protected Dual3PointCurveSubdivision(BinaryAverage binaryAverage) {
     this.binaryAverage = Objects.requireNonNull(binaryAverage);
   }
 

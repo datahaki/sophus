@@ -12,7 +12,7 @@ public abstract class AbstractTransition implements Transition, Serializable {
   private final Tensor end;
   private final Scalar length;
 
-  public AbstractTransition(Tensor start, Tensor end, Scalar length) {
+  protected AbstractTransition(Tensor start, Tensor end, Scalar length) {
     this.start = start;
     this.end = end;
     this.length = length;
