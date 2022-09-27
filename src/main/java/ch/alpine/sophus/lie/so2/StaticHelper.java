@@ -6,7 +6,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.red.ScalarSummaryStatistics;
+import ch.alpine.tensor.red.MinMax;
 
 /* package */ enum StaticHelper {
   ;
@@ -14,10 +14,10 @@ import ch.alpine.tensor.red.ScalarSummaryStatistics;
    * @return given sequence
    * @throws Exception if span of entries exceeds or equals pi */
   public static Tensor rangeQ(Tensor sequence) {
-    ScalarSummaryStatistics scalarSummaryStatistics = sequence.stream() //
+    MinMax minMax = sequence.stream() //
         .map(Scalar.class::cast) //
-        .collect(ScalarSummaryStatistics.collector());
-    if (Scalars.lessEquals(Pi.VALUE, scalarSummaryStatistics.getClip().width()))
+        .collect(MinMax.collector());
+    if (Scalars.lessEquals(Pi.VALUE, minMax.getClip().width()))
       throw new Throw(sequence);
     return sequence;
   }
