@@ -7,6 +7,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.MinMax;
+import ch.alpine.tensor.sca.Clip;
 
 /* package */ enum StaticHelper {
   ;
@@ -14,10 +15,10 @@ import ch.alpine.tensor.red.MinMax;
    * @return given sequence
    * @throws Exception if span of entries exceeds or equals pi */
   public static Tensor rangeQ(Tensor sequence) {
-    MinMax minMax = sequence.stream() //
+    Clip clip = sequence.stream() //
         .map(Scalar.class::cast) //
-        .collect(MinMax.collector());
-    if (Scalars.lessEquals(Pi.VALUE, minMax.getClip().width()))
+        .collect(MinMax.toClip());
+    if (Scalars.lessEquals(Pi.VALUE, clip.width()))
       throw new Throw(sequence);
     return sequence;
   }
