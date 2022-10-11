@@ -93,7 +93,7 @@ public class HsAlgebra implements HsLocal, Serializable {
     public final Tensor h;
 
     public Decomp(HsPair hsPair) {
-      for (int count = 0; count < MAX_ITERATIONS; ++count) {
+      for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
         if (Chop._14.allZero(hsPair.g().extract(dim_m, dim_g))) {
           m = hsPair.g().extract(0, dim_m);
           h = hsPair.h();
@@ -163,7 +163,7 @@ public class HsAlgebra implements HsLocal, Serializable {
   }
 
   public void printTable() {
-    Tensor array = Array.same(StringScalar.EMPTY, dim_g, dim_g);
+    Tensor array = Array.same(StringScalar.empty(), dim_g, dim_g);
     for (int i = 0; i < dim_g; ++i) {
       for (int j = 0; j < dim_g; ++j) {
         Tensor coeffs = ad.dot(UnitVector.of(dim_g, i)).dot(UnitVector.of(dim_g, j));

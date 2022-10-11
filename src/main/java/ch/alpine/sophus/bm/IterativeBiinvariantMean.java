@@ -84,7 +84,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @return approximate biinvariant mean, or empty if convergence fail */
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
     Tensor shifted = initialGuess.mean(sequence, weights); // initial guess
-    for (int count = 0; count < MAX_ITERATIONS; ++count) {
+    for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
       MeanDefect meanDefect = new MeanDefect(sequence, weights, homogeneousSpace.exponential(shifted));
       shifted = meanDefect.shifted();
       if (chop.allZero(meanDefect.tangent()))

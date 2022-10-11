@@ -45,7 +45,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
     AffineQ.require(weights);
     Tensor _sequence = sequence;
     Tensor prev = Array.zeros(hsAlgebra.dimM());
-    for (int count = 0; count < MAX_ITERATIONS; ++count) {
+    for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
       Tensor next = mean_negate(_sequence, weights, prev);
       if (chop.isClose(prev, next))
         return next.negate();
@@ -56,7 +56,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
   }
 
   private Tensor mean_negate(Tensor sequence, Tensor weights, Tensor mean_negate) {
-    for (int count = 0; count < MAX_ITERATIONS; ++count) {
+    for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
       Tensor defect = RnBiinvariantMean.INSTANCE.mean(sequence, weights).negate();
       if (chop.allZero(defect))
         return mean_negate;
