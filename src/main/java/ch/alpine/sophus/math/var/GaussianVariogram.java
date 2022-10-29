@@ -3,6 +3,7 @@ package ch.alpine.sophus.math.var;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.BinningMethod;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
@@ -30,6 +31,6 @@ public record GaussianVariogram(Scalar r0) implements ScalarUnaryOperator {
 
   @Override // from Object
   public String toString() {
-    return String.format("GaussianVariogram[%s]", r0);
+    return MathematicaFormat.concise("GaussianVariogram", r0);
   }
 }

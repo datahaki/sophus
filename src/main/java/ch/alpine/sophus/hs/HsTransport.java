@@ -10,8 +10,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * 
  * General methods are {@link PoleLadder} and {@link SchildLadder}.
  * 
- * TODO SOPHUS the implementation of parallel transport of tensors of higher rank is deferred
- * 
  * @see BasisTransform */
 @FunctionalInterface
 public interface HsTransport {

@@ -27,7 +27,7 @@ public abstract class TripleReduceExtrapolation implements TensorUnaryOperator {
   @Override
   public final Tensor apply(Tensor points) {
     int length = points.length();
-    // TODO SOPHUS ALG for length <= 2 might not produce the right units
+    // TODO SOPHUS UNIT for length <= 2 might not produce the right units
     Tensor vector = Array.zeros(length);
     if (2 < length) {
       Iterator<Tensor> iterator = points.iterator();

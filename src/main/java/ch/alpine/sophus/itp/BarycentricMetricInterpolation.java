@@ -12,7 +12,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 /** for comparison with {@link BarycentricRationalInterpolation} */
-// TODO SOPHUS strange functionality because very specific!
 public class BarycentricMetricInterpolation implements ScalarTensorFunction {
   /** @param knots
    * @param variogram
@@ -36,7 +35,7 @@ public class BarycentricMetricInterpolation implements ScalarTensorFunction {
 
   @Override
   public Tensor apply(Scalar scalar) {
-    // TODO SOPHUS WHUT !?
+    // QUEST SOPHUS review entire class and document
     return sedarim.sunder(Tensors.of(scalar));
   }
 }

@@ -19,7 +19,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
  * The implementation is used in external libraries.
  * 
  * see RnPointcloudRegion which uses a nd-map */
-// TODO SOPHUS ALG use distance vectors instead
+// TODO SOPHUS EASY ALG use distance vectors instead
 public record MetricPointcloudDistance(Tensor points, TensorMetric tensorMetric) implements TensorScalarFunction {
   public MetricPointcloudDistance {
     Objects.requireNonNull(points);

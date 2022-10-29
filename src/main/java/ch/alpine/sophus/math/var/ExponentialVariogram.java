@@ -6,6 +6,7 @@ import java.util.Objects;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
 
@@ -35,6 +36,6 @@ public record ExponentialVariogram(Scalar a, Scalar b) implements ScalarUnaryOpe
 
   @Override // from Object
   public String toString() {
-    return String.format("ExponentialVariogram[%s, %s]", a, b);
+    return MathematicaFormat.concise("ExponentialVariogram", a,b);
   }
 }

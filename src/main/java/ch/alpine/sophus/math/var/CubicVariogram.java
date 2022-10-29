@@ -2,5 +2,5 @@
 package ch.alpine.sophus.math.var;
 
 class CubicVariogram {
-  // TODO SOPHUS ALG CubicVariogram
+  // ...
 }

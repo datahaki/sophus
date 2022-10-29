@@ -9,6 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.ply.Polynomial;
 
@@ -58,6 +59,6 @@ public class SphericalVariogram implements ScalarUnaryOperator {
 
   @Override // from Object
   public String toString() {
-    return String.format("SphericalVariogram[%s, %s]", a, b);
+    return MathematicaFormat.concise("SphericalVariogram", a, b);
   }
 }

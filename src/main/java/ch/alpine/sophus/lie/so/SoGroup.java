@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.so;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.math.LowerVectorize;
@@ -38,9 +39,8 @@ public enum SoGroup implements LieGroup {
     return LowerVectorize.of(log(matrix), -1);
   }
 
-  @Override
+  @Override // from HomogeneousSpace
   public BiinvariantMean biinvariantMean(Chop chop) {
-    // TODO SOPHUS ALG probably not the best
-    return SoPhongMean.INSTANCE;
+    return IterativeBiinvariantMean.of(INSTANCE, chop, SoPhongMean.INSTANCE);
   }
 }

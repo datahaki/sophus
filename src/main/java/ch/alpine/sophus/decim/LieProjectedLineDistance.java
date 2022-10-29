@@ -14,6 +14,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
 // TODO SOPHUS at least discuss
+@Deprecated
 public record LieProjectedLineDistance(LieGroup lieGroup) implements LineDistance, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
 

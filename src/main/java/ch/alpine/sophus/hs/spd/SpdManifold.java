@@ -69,7 +69,7 @@ public enum SpdManifold implements HomogeneousSpace, MetricManifold {
 
   @Override // from TensorNorm
   public Scalar norm(Tensor v) {
-    // TODO SOPHUS this is not in-sync with distance!
+    // FIXME SOPHUS this is not in-sync with distance!
     return LowerVectorize0_2Norm.INSTANCE.norm(v);
   }
 }

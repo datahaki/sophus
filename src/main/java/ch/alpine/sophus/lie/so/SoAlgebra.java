@@ -12,6 +12,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.io.MathematicaFormat;
 
 /** Careful:
  * does not match {@link So3Algebra} in the special case when n == 3 */
@@ -60,6 +61,6 @@ public class SoAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public String toString() {
-    return String.format("SoAlgebra[%d]", n);
+    return MathematicaFormat.concise("SoAlgebra", n);
   }
 }

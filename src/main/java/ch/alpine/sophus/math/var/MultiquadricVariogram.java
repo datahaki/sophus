@@ -4,6 +4,7 @@ package ch.alpine.sophus.math.var;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -49,6 +50,6 @@ public class MultiquadricVariogram implements ScalarUnaryOperator {
 
   @Override // from Object
   public final String toString() {
-    return String.format("MultiquadricVariogram[%s]", r0);
+    return MathematicaFormat.concise("MultiquadricVariogram", r0);
   }
 }

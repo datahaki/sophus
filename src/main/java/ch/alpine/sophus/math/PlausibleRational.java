@@ -11,7 +11,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Rationalize;
 import ch.alpine.tensor.qty.Quantity;
 
-// TODO SOPHUS API highly experimental
+// EXPERIMENTAL
 public enum PlausibleRational implements ScalarUnaryOperator {
   FUNCTION;
 

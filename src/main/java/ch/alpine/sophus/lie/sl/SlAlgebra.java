@@ -12,6 +12,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.io.MathematicaFormat;
 
 public class SlAlgebra implements LieAlgebra, Serializable {
   private static final Cache<Integer, LieAlgebra> CACHE = Cache.of(SlAlgebra::new, 8);
@@ -69,6 +70,6 @@ public class SlAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public String toString() {
-    return String.format("SlAlgebra[%d]", n);
+    return MathematicaFormat.concise("SlAlgebra", n);
   }
 }

@@ -28,7 +28,6 @@ import ch.alpine.tensor.sca.tri.Sin;
  * 
  * Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
-// TODO SOPHUS possibly share baseclass with SnManifold extend
 public enum RpnManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
@@ -44,7 +43,7 @@ public enum RpnManifold implements HomogeneousSpace, MetricManifold {
 
   @Override
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    // TODO SOPHUS ALG or duplicate with SnManifold
+    // TODO SOPHUS ALG duplicate with SnManifold, possibly share baseclass with SnManifold extend
     Scalar a = SnManifold.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
       return scalar -> p.copy();

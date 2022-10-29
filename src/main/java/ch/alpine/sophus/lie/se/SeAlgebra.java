@@ -13,6 +13,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.io.MathematicaFormat;
 
 /** Careful:
  * TODO SOPHUS does not match {@link Se3Algebra} in the special case when n == 3
@@ -65,6 +66,6 @@ public class SeAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public String toString() {
-    return String.format("SeAlgebra[%d]", n);
+    return MathematicaFormat.concise("SeAlgebra", n);
   }
 }

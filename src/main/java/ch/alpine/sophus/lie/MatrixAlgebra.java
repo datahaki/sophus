@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.mat.re.MatrixRank;
@@ -58,6 +59,6 @@ public class MatrixAlgebra implements Serializable {
 
   @Override // from Object
   public String toString() {
-    return String.format("MatrixAlgebra[dim=%d, Nnz[ad]=%d]", ad().length(), Nnz.of((SparseArray) ad));
+    return MathematicaFormat.concise("MatrixAlgebra", ad(), Nnz.of((SparseArray) ad));
   }
 }

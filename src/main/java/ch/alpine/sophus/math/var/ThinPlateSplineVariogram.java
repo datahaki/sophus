@@ -5,6 +5,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.BinningMethod;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Log;
@@ -40,6 +41,6 @@ public record ThinPlateSplineVariogram(Scalar r0) implements ScalarUnaryOperator
 
   @Override // from Object
   public String toString() {
-    return String.format("ThinPlateSplineVariogram[%s]", r0);
+    return MathematicaFormat.concise("ThinPlateSplineVariogram", r0);
   }
 }

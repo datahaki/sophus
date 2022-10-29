@@ -6,6 +6,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.sca.pow.Power;
 
 /** Does not work properly with units?
@@ -45,6 +46,6 @@ public class InversePowerVariogram implements ScalarUnaryOperator {
 
   @Override // from Object
   public String toString() {
-    return String.format("InversePowerVariogram[%s]", power);
+    return MathematicaFormat.concise("InversePowerVariogram", power);
   }
 }
