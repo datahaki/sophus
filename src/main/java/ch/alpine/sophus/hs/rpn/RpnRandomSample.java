@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.rpn;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -28,7 +28,7 @@ public class RpnRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     Tensor tensor = randomSampleInterface.randomSample(random);
     tensor.set(Abs.FUNCTION, tensor.length() - 1);
     return tensor;

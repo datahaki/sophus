@@ -3,6 +3,7 @@ package ch.alpine.sophus.dv;
 
 import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class BchBarycentricCoordinateTest {
   @Test
   void testSe2() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     BinaryOperator<Tensor> bch = Se2Algebra.INSTANCE.bch(6);
     // System.out.println(bch.getClass().getSimpleName());
     Tensor ad = Se2Algebra.INSTANCE.ad();
@@ -50,7 +51,7 @@ class BchBarycentricCoordinateTest {
   @Test
   void testSo3MeanRandom() {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     BinaryOperator<Tensor> bch = So3Algebra.INSTANCE.bch(6);
     Tensor ad = So3Algebra.INSTANCE.ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);

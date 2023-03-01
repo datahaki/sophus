@@ -2,6 +2,7 @@
 package ch.alpine.sophus.fit;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ import ch.alpine.tensor.sca.Chop;
 class HsWeiszfeldMethodTest {
   @Test
   void testSimple() {
-    Random random = new Random(3);
+    RandomGenerator random = new Random(3);
     SpatialMedian sm2 = new WeiszfeldMethod(Tolerance.CHOP);
     Distribution distribution = NormalDistribution.standard();
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);

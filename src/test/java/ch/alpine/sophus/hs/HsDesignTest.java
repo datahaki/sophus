@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +81,7 @@ class HsDesignTest {
 
   @Test
   void testSe2C() {
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {

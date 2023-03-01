@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +56,7 @@ class IterativeBiinvariantMeanTest {
 
   @Test
   void testSome() throws ClassNotFoundException, IOException {
-    Random random = new Random(2);
+    RandomGenerator random = new Random(2);
     Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;
     for (int length = 2; length < 8; ++length) {

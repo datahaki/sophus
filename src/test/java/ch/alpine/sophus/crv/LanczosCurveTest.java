@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.fft.FourierMatrix;
+import ch.alpine.tensor.fft.Fourier;
 
 class LanczosCurveTest {
   @Test
@@ -22,7 +22,7 @@ class LanczosCurveTest {
   @Test
   void testMatrix() {
     for (int n = 2; n < 10; ++n) {
-      Tensor refine = LanczosCurve.refine(FourierMatrix.of(n), 50);
+      Tensor refine = LanczosCurve.refine(Fourier.FORWARD.matrix(n), 50);
       assertEquals(Dimensions.of(refine), Arrays.asList(51, n));
     }
   }

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.st;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ public record StRandomSample(int n, int k) implements RandomSampleInterface, Ser
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), random, k, n);
     return Orthogonalize.usingPD(matrix);
     // Orthogonalize usingPD is identical to the geomstats formula:

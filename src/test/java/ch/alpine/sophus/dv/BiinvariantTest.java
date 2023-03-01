@@ -4,6 +4,7 @@ package ch.alpine.sophus.dv;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +81,7 @@ class BiinvariantTest {
 
   @Test
   void testSimplePD() throws ClassNotFoundException, IOException {
-    Random random = new Random();
+    RandomGenerator random = new Random();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(Se2CoveringGroup.INSTANCE);
     for (Biinvariant biinvariant : map.values()) {
       Distribution distribution = NormalDistribution.standard();

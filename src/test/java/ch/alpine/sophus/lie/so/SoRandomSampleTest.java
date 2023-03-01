@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -22,11 +22,10 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
 
 class SoRandomSampleTest {
-  @RepeatedTest(7)
-  void testSimple(RepetitionInfo repetitionInfo) throws ClassNotFoundException, IOException {
-    int n = repetitionInfo.getCurrentRepetition();
-    RandomSampleInterface randomSampleInterface = //
-        Serialization.copy(SoRandomSample.of(n));
+  @ParameterizedTest
+  @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7 })
+  void testSimple(int n) throws ClassNotFoundException, IOException {
+    RandomSampleInterface randomSampleInterface = Serialization.copy(SoRandomSample.of(n));
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
     OrthogonalMatrixQ.require(tensor);

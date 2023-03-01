@@ -32,7 +32,7 @@ public class GeodesicExtrapolationFilter implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor tensor) {
-    Tensor result = Tensors.empty();
+    Tensor result = Tensors.empty(); // TODO SOPHUS IMPL use reserve
     // Initializing BL up until extrapolation is possible
     for (int i = 0; i < 2; i++) {
       boundedLinkedList.add(tensor.get(i));

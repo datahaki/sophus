@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.sn;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -40,7 +40,7 @@ public class SnRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     // ignore the risk that random vector could be (0, 0, ..., 0)
     return Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), random, length));
   }

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.he;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -20,7 +20,7 @@ public class HeRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     return RandomVariate.of(distribution, random, 2 * n + 1); // element
   }
 }

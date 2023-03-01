@@ -4,6 +4,7 @@ package ch.alpine.sophus.crv.clt;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ class ClothoidCurveTest {
 
   @Test
   void testComparison() {
-    Random random = new Random(3);
+    RandomGenerator random = new Random(3);
     Distribution distribution = NormalDistribution.of(0, 0.002);
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, random, 3);

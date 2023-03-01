@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.ad;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ import ch.alpine.tensor.mat.Tolerance;
 class HsBarycentricCoordinateTest {
   @Test
   void testSimple() {
-    Random random = new Random(3);
+    RandomGenerator random = new Random(3);
     for (int d = 2; d < 5; ++d) {
       HsAlgebra hsAlgebra = SnAlgebra.of(d);
       RandomSampleInterface randomSampleInterface = BallRandomSample.of(Array.zeros(d), RealScalar.of(0.05));

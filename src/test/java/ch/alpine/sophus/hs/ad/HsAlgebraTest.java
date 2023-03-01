@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,7 @@ class HsAlgebraTest {
   @Test
   void testSe2ActionsExp() {
     HsAlgebra hsAlgebra = new HsAlgebra(Se2Algebra.INSTANCE.ad(), 2, 8);
-    Random random = new Random();
+    RandomGenerator random = new Random();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
     Tensor g = RandomVariate.of(distribution, random, 3);
     Tensor p = RandomVariate.of(distribution, random, 2);
@@ -178,7 +179,7 @@ class HsAlgebraTest {
   @Test
   void testAction() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random();
+    RandomGenerator random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
       Scalar lambda = RandomVariate.of(distribution);
@@ -197,7 +198,7 @@ class HsAlgebraTest {
   @Test
   void testProj() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
       Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
@@ -211,7 +212,7 @@ class HsAlgebraTest {
   @Test
   void testDecomp() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random(2);
+    RandomGenerator random = new Random(2);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(6);
       Tensor g = RandomVariate.of(distribution, random, hsAlgebra.dimG());
@@ -227,7 +228,7 @@ class HsAlgebraTest {
   @Test
   void testLiftProjection() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random();
+    RandomGenerator random = new Random();
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       Tensor m1 = RandomVariate.of(distribution, random, hsAlgebra.dimM());
       Tensor m2 = hsAlgebra.projection(hsAlgebra.lift(m1));
@@ -238,7 +239,7 @@ class HsAlgebraTest {
   @Test
   void testDecompCheat() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       BinaryOperator<Tensor> bch = hsAlgebra.lieAlgebra().bch(10);
       Tensor m = RandomVariate.of(distribution, random, hsAlgebra.dimM());
@@ -254,7 +255,7 @@ class HsAlgebraTest {
   @Test
   void testHTrivial() {
     Distribution distribution = DiscreteUniformDistribution.of(-100, 100);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     for (HsAlgebra hsAlgebra : HS_ALGEBRAS) {
       if (hsAlgebra.isHTrivial()) {
         // System.out.println("HERE");

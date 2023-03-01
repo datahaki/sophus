@@ -98,4 +98,13 @@ class Se2GroupTest {
     gs.combine(q);
     gs.combine(r);
   }
+
+  @Test
+  void testUnitsMatrix() {
+    Tensor p = Tensors.fromString("{{2,3,4[m]},{1,1,7[m]},{0[m^-1],0[m^-1],1}}");
+    Tensor q = Tensors.fromString("{{1,2,4[m]},{-1,3,1[m]},{0[m^-1],0[m^-1],1}}");
+    Tensor result = p.dot(q);
+    Tensor expect = Tensors.fromString("{{-1, 13, 15[m]}, {0, 5, 12[m]}, {0[m^-1], 0[m^-1], 1}}");
+    assertEquals(result, expect);
+  }
 }

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.so;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.lie.so2.So2RandomSample;
 import ch.alpine.sophus.lie.so3.So3RandomSample;
@@ -35,7 +35,7 @@ public class SoRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     return QRDecomposition.of(RandomVariate.of(NormalDistribution.standard(), random, n, n)).getQConjugateTranspose();
   }
 }

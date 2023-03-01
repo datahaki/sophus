@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -26,9 +26,9 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class KMeansTest {
-  @RepeatedTest(4)
-  void testR2Single(RepetitionInfo repetitionInfo) {
-    int n = repetitionInfo.getCurrentRepetition();
+  @ParameterizedTest
+  @ValueSource(ints = { 1, 2, 3, 4 })
+  void testR2Single(int n) {
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE);
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 20, 2);
     KMeans kMeans = new KMeans( //
@@ -60,9 +60,9 @@ class KMeansTest {
     assertEquals(sum, sequence.length());
   }
 
-  @RepeatedTest(4)
-  void testS2Single(RepetitionInfo repetitionInfo) {
-    int n = repetitionInfo.getCurrentRepetition();
+  @ParameterizedTest
+  @ValueSource(ints = { 1, 2, 3, 4 })
+  void testS2Single(int n) {
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(SnManifold.INSTANCE);
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor sequence = RandomSample.of(randomSampleInterface, 20);

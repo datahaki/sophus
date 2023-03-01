@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.gr;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ public record GrRandomSample(int n, int k) implements RandomSampleInterface, Ser
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     return 0 < k //
         ? InfluenceMatrix.of(RandomVariate.of(NormalDistribution.standard(), random, n, k)).matrix()
         : Array.zeros(n, n);

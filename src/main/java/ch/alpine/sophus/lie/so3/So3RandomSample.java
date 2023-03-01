@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.lie.so.SoRandomSample;
@@ -22,7 +22,7 @@ public enum So3RandomSample implements RandomSampleInterface {
   private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     Tensor xyza = S3_RANDOM_SAMPLE.randomSample(random);
     Tensor xyz = xyza.extract(0, 3);
     Tensor X1 = Cross.skew3(xyz.multiply(xyza.Get(3)));

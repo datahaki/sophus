@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -37,9 +37,9 @@ class SoMemberQTest {
     assertFalse(SoMemberQ.INSTANCE.test(nondet));
   }
 
-  @RepeatedTest(5)
-  void testProject(RepetitionInfo repetitionInfo) {
-    int n = repetitionInfo.getCurrentRepetition();
+  @ParameterizedTest
+  @ValueSource(ints = { 1, 2, 3, 4, 5 })
+  void testProject(int n) {
     Tensor x = RandomVariate.of(NormalDistribution.standard(), n, n);
     Tensor matrix = SoMemberQ.project(x);
     Scalar scalar = Det.of(matrix);

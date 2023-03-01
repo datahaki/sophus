@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Modifier;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +22,7 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.Symmetrize;
-import ch.alpine.tensor.mat.LeftNullSpace;
+import ch.alpine.tensor.mat.NullSpace;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.mat.PositiveSemidefiniteMatrixQ;
@@ -44,7 +46,7 @@ class BiinvariantVectorTest {
     Tensor point = RandomVariate.of(NormalDistribution.standard(), 3);
     Manifold manifold = RnGroup.INSTANCE;
     Tensor matrix = Tensor.of(sequence.stream().map(manifold.exponential(point)::vectorLog));
-    Tensor nullsp = LeftNullSpace.of(matrix);
+    Tensor nullsp = NullSpace.of(Transpose.of(matrix));
     OrthogonalMatrixQ.require(nullsp);
     Chop._08.requireClose(PseudoInverse.of(nullsp), Transpose.of(nullsp));
   }
@@ -67,7 +69,7 @@ class BiinvariantVectorTest {
     InfluenceMatrix influenceMatrix = InfluenceMatrix.of(matrix);
     SymmetricMatrixQ.require(influenceMatrix.matrix());
     Chop._08.requireClose(H, influenceMatrix.matrix());
-    Tensor n = LeftNullSpace.usingQR(V);
+    Tensor n = NullSpace.of(Transpose.of(V));
     Tensor M = influenceMatrix.residualMaker();
     InfluenceMatrixQ.require(M, Chop._09);
     Chop._08.requireClose(M, Transpose.of(n).dot(n));
@@ -85,10 +87,11 @@ class BiinvariantVectorTest {
   @Test
   void testSe2CAnchorIsTarget() {
     Distribution distribution = UniformDistribution.of(-10, +10);
+    RandomGenerator random = new Random(3);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
-      Tensor sequence = RandomVariate.of(distribution, count, 3);
-      Tensor point = RandomVariate.of(distribution, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, count, 3);
+      Tensor point = RandomVariate.of(distribution, random, 3);
       Tensor sigma_inverse = _check(manifold, sequence, point);
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
     }

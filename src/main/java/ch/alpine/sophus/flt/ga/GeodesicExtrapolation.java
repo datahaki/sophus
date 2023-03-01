@@ -60,7 +60,7 @@ public class GeodesicExtrapolation implements TensorUnaryOperator {
       // no extrapolation possible
       if (mask.length() == 1)
         return Tensors.vector(1);
-      Tensor splits = Tensors.empty();
+      Tensor splits = Tensors.empty(); // TODO SOPHUS IMPL use reserve
       Scalar factor = mask.Get(0);
       // Calculate interpolation splits
       for (int index = 1; index < mask.length() - 1; ++index) {

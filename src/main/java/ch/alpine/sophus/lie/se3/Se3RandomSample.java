@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.se3;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -16,7 +16,7 @@ public class Se3RandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     return Se3Group.INSTANCE.exp(rsi.randomSample(random));
   }
 }

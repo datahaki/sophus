@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.spd;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -26,7 +26,7 @@ public class TSpdRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     // clumsy way to generate a symmetric matrix
     return UpperEvaluation.of(vector, vector, (p, q) -> RandomVariate.of(distribution, random), s -> s);
   }

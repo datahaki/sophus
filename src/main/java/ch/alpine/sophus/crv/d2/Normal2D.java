@@ -19,7 +19,7 @@ public enum Normal2D {
   /** @param points of the form {{p1x, p1y}, {p2x, p2y}, ..., {pNx, pNy}}
    * @return matrix of the form {{n1x, n1y}, {n2x, n2y}, ..., {nNx, nNy}} unitless */
   public static Tensor string(Tensor points) {
-    Tensor normal = Tensors.empty();
+    Tensor normal = Tensors.empty(); // TODO SOPHUS IMPL use reserve
     int length = points.length();
     if (2 < length) {
       Tensor a = points.get(0);

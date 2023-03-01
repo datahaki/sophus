@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -19,7 +19,7 @@ public enum So2RandomSample implements RandomSampleInterface {
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Pi.VALUE.negate(), Pi.VALUE);
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     return RotationMatrix.of(RandomVariate.of(DISTRIBUTION, random));
   }
 }

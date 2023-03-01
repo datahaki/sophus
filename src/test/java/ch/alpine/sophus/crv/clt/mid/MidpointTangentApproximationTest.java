@@ -2,6 +2,7 @@
 package ch.alpine.sophus.crv.clt.mid;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ class MidpointTangentApproximationTest {
 
   @Test
   void testRandom() {
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     for (int count = 0; count < 100; ++count) {
       Scalar b0 = RandomVariate.of(NormalDistribution.standard(), random);
       Scalar b1 = RandomVariate.of(NormalDistribution.standard(), random);

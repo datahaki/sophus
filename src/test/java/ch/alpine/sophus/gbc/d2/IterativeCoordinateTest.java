@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -71,7 +72,7 @@ class IterativeCoordinateTest {
   }
 
   private static void _checkAlongedge(Genesis genesis, boolean strict) {
-    Random random = new Random();
+    RandomGenerator random = new Random();
     for (int n = 3; n < 10; ++n) {
       Tensor polygon = CirclePoints.of(n);
       int index = random.nextInt(polygon.length() - 1);
@@ -173,7 +174,7 @@ class IterativeCoordinateTest {
 
   @Test
   void testS2() {
-    Random random = new Random(2);
+    RandomGenerator random = new Random(2);
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(2);
     Tensor point = UnitVector.of(3, 0);
     int count = 0;

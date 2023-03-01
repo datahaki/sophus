@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ import ch.alpine.tensor.sca.Clips;
 class DistanceMatrixToPointsTest {
   @Test
   void testRankEuclidean() {
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(2));
     for (int d = 0; d < 4; ++d) {
       Tensor sequence = RandomVariate.of(distribution, random, 10 + d, 2 + d);
@@ -36,7 +37,7 @@ class DistanceMatrixToPointsTest {
 
   @Test
   void testUnit() {
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     Distribution distribution = UniformDistribution.of(Clips.absolute(2));
     for (int d = 0; d < 4; ++d) {
       Tensor sequence = RandomVariate.of(distribution, random, 8 + d, 1 + d).map(s -> Quantity.of(s, "m"));

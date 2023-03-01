@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ class PolygonCentroidTest {
 
   @Test
   void testRandom() {
-    Random random = new Random(3);
+    RandomGenerator random = new Random(3);
     for (int count = 0; count < 100; ++count) {
       Tensor poly1 = ConvexHull2D.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));
       Tensor poly2 = ConvexHull2D.of(RandomVariate.of(NormalDistribution.standard(), random, 3 + random.nextInt(3), 2));

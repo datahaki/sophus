@@ -2,7 +2,7 @@
 package ch.alpine.sophus.math.noise;
 
 import java.security.SecureRandom;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -44,7 +44,7 @@ import ch.alpine.tensor.pdf.RandomVariateInterface;
  * 
  * @author Sampo Niskanen <sampo.niskanen@iki.fi> */
 public class ColoredNoise implements Distribution, RandomVariateInterface {
-  private static final Random RANDOM = new SecureRandom();
+  private static final RandomGenerator RANDOM_GENERATOR = new SecureRandom();
   // ---
   private final int poles;
   private final double[] multipliers;
@@ -92,11 +92,11 @@ public class ColoredNoise implements Distribution, RandomVariateInterface {
     }
     // Fill the history with random values
     for (int i = 0; i < 5 * poles; ++i)
-      nextValue(RANDOM);
+      nextValue(RANDOM_GENERATOR);
   }
 
   /** @return the next pink noise sample. */
-  public double nextValue(Random random) {
+  public double nextValue(RandomGenerator random) {
     /* The following may be changed to rnd.nextDouble()-0.5 if strict
      * Gaussian distribution of resulting values is not required. */
     double x = random.nextGaussian();
@@ -108,11 +108,11 @@ public class ColoredNoise implements Distribution, RandomVariateInterface {
   }
 
   public double nextValue() {
-    return nextValue(RANDOM);
+    return nextValue(RANDOM_GENERATOR);
   }
 
   @Override
-  public Scalar randomVariate(Random random) {
+  public Scalar randomVariate(RandomGenerator random) {
     return RealScalar.of(nextValue(random));
   }
 }

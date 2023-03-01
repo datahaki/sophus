@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.sn;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Clips;
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.VALUE));
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     return AngleVector.of(RandomVariate.of(DISTRIBUTION, random));
   }
 }

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.math.sample;
 
 import java.io.Serializable;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.tensor.RationalScalar;
@@ -53,7 +53,7 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     Tensor vector = randomSampleInterface.randomSample(random).multiply(power.apply(RandomVariate.of(UNIFORM, random)));
     return vector.multiply(radius).add(center);
   }

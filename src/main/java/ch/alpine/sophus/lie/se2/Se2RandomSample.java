@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.se2;
 
 import java.util.Objects;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Scalar;
@@ -30,7 +30,7 @@ public class Se2RandomSample implements RandomSampleInterface {
   }
 
   @Override
-  public Tensor randomSample(Random random) {
+  public Tensor randomSample(RandomGenerator random) {
     Scalar angle = RandomVariate.of(DISTRIBUTION, random);
     return AngleVector.of(angle).multiply(RandomVariate.of(distribution, random)) //
         .append(RandomVariate.of(DISTRIBUTION, random));

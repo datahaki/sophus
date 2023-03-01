@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.math.sample;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomVariateInterface;
@@ -14,5 +14,5 @@ import ch.alpine.tensor.pdf.RandomVariateInterface;
 @FunctionalInterface
 public interface RandomSampleInterface {
   /** @return random sample from continuous or discrete set */
-  Tensor randomSample(Random random);
+  Tensor randomSample(RandomGenerator random);
 }

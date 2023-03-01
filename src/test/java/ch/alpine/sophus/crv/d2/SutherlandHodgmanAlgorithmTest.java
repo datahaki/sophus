@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,7 @@ class SutherlandHodgmanAlgorithmTest {
 
   @Test
   void testQuantity() {
-    Random random = new Random(3);
+    RandomGenerator random = new Random(3);
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "m")));
     for (int count = 0; count < 10; ++count) {
       Tensor tensor = RandomVariate.of(distribution, random, 6, 2);

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -93,7 +94,7 @@ class ReducingMeanTest {
 
   @Test
   void testSimple() {
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     BiinvariantMean bm = ReducingMean.of(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
@@ -122,7 +123,7 @@ class ReducingMeanTest {
 
   @Test
   void testLagrangeProperty() {
-    Random random = new Random();
+    RandomGenerator random = new Random();
     int d = 2;
     int len = 5 + random.nextInt(3);
     RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());

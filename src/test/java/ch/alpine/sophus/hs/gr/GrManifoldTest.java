@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +81,7 @@ class GrManifoldTest {
     int k = 1 + random1.nextInt(n - 1);
     RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
     int d = k * (n - k);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
     Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
     for (Biinvariant biinvariant : biinvariants) {
