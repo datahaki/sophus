@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.r2.CirclePoints;
@@ -20,6 +19,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.red.EqualsReduce;
 import ch.alpine.tensor.sca.Clips;
 
 class SutherlandHodgmanAlgorithmTest {
@@ -48,7 +48,7 @@ class SutherlandHodgmanAlgorithmTest {
           SutherlandHodgmanAlgorithm.of(CirclePoints.of(3 + count).map(s -> Quantity.of(s, "m"))) //
               .apply(tensor);
       Tensor tensor2 = polyclipResult.tensor();
-      Unprotect.getUnitUnique(tensor2);
+      EqualsReduce.zero(tensor2);
     }
   }
 

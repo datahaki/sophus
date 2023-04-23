@@ -8,7 +8,6 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.mat.SquareMatrixQ;
@@ -21,7 +20,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.qty.Unit;
+import ch.alpine.tensor.red.EqualsReduce;
 import ch.alpine.tensor.sca.Clips;
 
 class DistanceMatrixTest {
@@ -31,8 +30,7 @@ class DistanceMatrixTest {
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor tensor = DistanceMatrix.of(sequence, Vector2Norm::between);
     SquareMatrixQ.require(tensor);
-    Unit unit = Unprotect.getUnitUnique(tensor);
-    assertEquals(unit, Unit.of("A"));
+    assertEquals(EqualsReduce.zero(tensor), Quantity.of(0, "A"));
     SymmetricMatrixQ.require(tensor);
   }
 

@@ -4,9 +4,9 @@ package ch.alpine.sophus.crv.d2;
 import ch.alpine.sophus.hs.r2.SignedCurvature2D;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Flatten;
-import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.red.EqualsReduce;
+import ch.alpine.tensor.sca.InvertUnlessZero;
 
 /** @see CurvatureComb */
 public enum Curvature2D {
@@ -19,7 +19,7 @@ public enum Curvature2D {
         }
 
         private Scalar fallback(Tensor p, Tensor q, Tensor r) {
-          return Quantity.of(0, Unprotect.getUnitUnique(Flatten.of(p, q, r)).negate());
+          return InvertUnlessZero.FUNCTION.apply(EqualsReduce.zero(Flatten.of(p, q, r)));
         }
       };
 

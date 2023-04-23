@@ -6,6 +6,7 @@ import java.util.Objects;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.itp.BezierFunction;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** extrapolation by evaluating the Bezier curve defined by n number of

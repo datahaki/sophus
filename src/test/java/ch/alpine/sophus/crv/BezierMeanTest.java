@@ -20,18 +20,11 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.chq.ExactTensorQ;
+import ch.alpine.tensor.itp.BezierFunction;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.sca.Chop;
 
-class BezierFunctionTest {
-  @Test
-  void testSimple() {
-    Tensor control = Tensors.fromString("{{0, 1}, {1, 0}, {2, 1}}");
-    ScalarTensorFunction scalarTensorFunction = new BezierFunction(RnGroup.INSTANCE, control);
-    Tensor tensor = scalarTensorFunction.apply(RationalScalar.of(1, 4));
-    assertEquals(tensor, Tensors.fromString("{1/2, 5/8}"));
-    ExactTensorQ.require(tensor);
-  }
+class BezierMeanTest {
 
   @Test
   void testRn() {
@@ -42,7 +35,7 @@ class BezierFunctionTest {
     assertEquals(tensor, Tensors.fromString("{3/4, 7/16}"));
     ExactTensorQ.require(tensor);
     Tensor domain = Subdivide.of(0, 1, 7);
-    ScalarTensorFunction stf2 = BezierFunction.of(RnBiinvariantMean.INSTANCE, control);
+    ScalarTensorFunction stf2 = BezierMean.of(RnBiinvariantMean.INSTANCE, control);
     assertEquals(domain.map(stf1), domain.map(stf2));
     stf1.apply(RationalScalar.of(-1, 4));
     stf1.apply(RationalScalar.of(+5, 4));
@@ -81,7 +74,7 @@ class BezierFunctionTest {
   @Test
   void testFailEmpty() {
     assertThrows(Exception.class, () -> new BezierFunction(Se2CoveringGroup.INSTANCE, Tensors.empty()));
-    assertThrows(Exception.class, () -> BezierFunction.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
+    assertThrows(Exception.class, () -> BezierMean.of(RnBiinvariantMean.INSTANCE, Tensors.empty()));
   }
 
   @Test
@@ -91,7 +84,7 @@ class BezierFunctionTest {
 
   @Test
   void testFailNull() {
-    assertThrows(Exception.class, () -> BezierFunction.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
+    assertThrows(Exception.class, () -> BezierMean.of((BiinvariantMean) null, Tensors.vector(1, 2, 3)));
     assertThrows(Exception.class, () -> new BezierFunction((BinaryAverage) null, Tensors.vector(1, 2, 3)));
   }
 }

@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.pdf.Distribution;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.qty.Unit;
+import ch.alpine.tensor.red.EqualsReduce;
 import ch.alpine.tensor.red.Total;
 
 class Normal2DTest {
@@ -40,7 +40,7 @@ class Normal2DTest {
       Tensor string = Normal2D.string(tensor);
       assertEquals(string.length(), count);
       if (0 < string.length())
-        assertEquals(Unprotect.getUnitUnique(string), Unit.ONE);
+        assertEquals(EqualsReduce.zero(string), RealScalar.ZERO);
     }
   }
 
