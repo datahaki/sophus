@@ -53,8 +53,8 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    Tensor vector = randomSampleInterface.randomSample(random).multiply(power.apply(RandomVariate.of(UNIFORM, random)));
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    Tensor vector = randomSampleInterface.randomSample(randomGenerator).multiply(power.apply(RandomVariate.of(UNIFORM, randomGenerator)));
     return vector.multiply(radius).add(center);
   }
 }

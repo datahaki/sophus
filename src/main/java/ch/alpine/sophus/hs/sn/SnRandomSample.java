@@ -40,8 +40,8 @@ public class SnRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
+  public Tensor randomSample(RandomGenerator randomGenerator) {
     // ignore the risk that random vector could be (0, 0, ..., 0)
-    return Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), random, length));
+    return Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), randomGenerator, length));
   }
 }

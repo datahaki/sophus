@@ -28,8 +28,8 @@ public class RpnRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    Tensor tensor = randomSampleInterface.randomSample(random);
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    Tensor tensor = randomSampleInterface.randomSample(randomGenerator);
     tensor.set(Abs.FUNCTION, tensor.length() - 1);
     return tensor;
   }

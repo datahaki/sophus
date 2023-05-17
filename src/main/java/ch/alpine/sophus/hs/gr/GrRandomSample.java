@@ -30,9 +30,9 @@ public record GrRandomSample(int n, int k) implements RandomSampleInterface, Ser
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
+  public Tensor randomSample(RandomGenerator randomGenerator) {
     return 0 < k //
-        ? InfluenceMatrix.of(RandomVariate.of(NormalDistribution.standard(), random, n, k)).matrix()
+        ? InfluenceMatrix.of(RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, k)).matrix()
         : Array.zeros(n, n);
   }
 }

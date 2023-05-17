@@ -12,9 +12,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 
 public record TSe3RandomSample(Distribution p, Distribution v) implements RandomSampleInterface, Serializable {
   @Override
-  public Tensor randomSample(RandomGenerator random) {
+  public Tensor randomSample(RandomGenerator randomGenerator) {
     return Join.of( //
-        RandomVariate.of(p, random, 3), //
-        RandomVariate.of(v, random, 3));
+        RandomVariate.of(p, randomGenerator, 3), //
+        RandomVariate.of(v, randomGenerator, 3));
   }
 }

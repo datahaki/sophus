@@ -26,8 +26,8 @@ public class TSpdRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
+  public Tensor randomSample(RandomGenerator randomGenerator) {
     // clumsy way to generate a symmetric matrix
-    return UpperEvaluation.of(vector, vector, (p, q) -> RandomVariate.of(distribution, random), s -> s);
+    return UpperEvaluation.of(vector, vector, (p, q) -> RandomVariate.of(distribution, randomGenerator), s -> s);
   }
 }

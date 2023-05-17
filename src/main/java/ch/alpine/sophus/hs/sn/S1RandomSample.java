@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Clips;
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.VALUE));
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    return AngleVector.of(RandomVariate.of(DISTRIBUTION, random));
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return AngleVector.of(RandomVariate.of(DISTRIBUTION, randomGenerator));
   }
 }

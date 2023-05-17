@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Sign;
 
 public record TdRandomSample(Distribution t, int n, Distribution l) implements RandomSampleInterface, Serializable {
   @Override
-  public Tensor randomSample(RandomGenerator random) {
-    return RandomVariate.of(t, random, n).append(Sign.requirePositive(RandomVariate.of(l, random)));
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return RandomVariate.of(t, randomGenerator, n).append(Sign.requirePositive(RandomVariate.of(l, randomGenerator)));
   }
 }

@@ -96,10 +96,10 @@ public class ColoredNoise implements Distribution, RandomVariateInterface {
   }
 
   /** @return the next pink noise sample. */
-  public double nextValue(RandomGenerator random) {
+  public double nextValue(RandomGenerator randomGenerator) {
     /* The following may be changed to rnd.nextDouble()-0.5 if strict
      * Gaussian distribution of resulting values is not required. */
-    double x = random.nextGaussian();
+    double x = randomGenerator.nextGaussian();
     for (int i = 0; i < poles; ++i)
       x -= multipliers[i] * values[i];
     System.arraycopy(values, 0, values, 1, values.length - 1);
@@ -112,7 +112,7 @@ public class ColoredNoise implements Distribution, RandomVariateInterface {
   }
 
   @Override
-  public Scalar randomVariate(RandomGenerator random) {
-    return RealScalar.of(nextValue(random));
+  public Scalar randomVariate(RandomGenerator randomGenerator) {
+    return RealScalar.of(nextValue(randomGenerator));
   }
 }

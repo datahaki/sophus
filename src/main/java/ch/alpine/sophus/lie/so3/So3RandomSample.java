@@ -22,8 +22,8 @@ public enum So3RandomSample implements RandomSampleInterface {
   private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    Tensor xyza = S3_RANDOM_SAMPLE.randomSample(random);
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    Tensor xyza = S3_RANDOM_SAMPLE.randomSample(randomGenerator);
     Tensor xyz = xyza.extract(0, 3);
     Tensor X1 = Cross.skew3(xyz.multiply(xyza.Get(3)));
     Tensor X2 = Cross.skew3(xyz);

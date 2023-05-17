@@ -30,8 +30,8 @@ public record StRandomSample(int n, int k) implements RandomSampleInterface, Ser
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    Tensor matrix = RandomVariate.of(NormalDistribution.standard(), random, k, n);
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    Tensor matrix = RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n);
     return Orthogonalize.usingPD(matrix);
     // Orthogonalize usingPD is identical to the geomstats formula:
     // Tensor aux = MatrixDotTranspose.of(matrix, matrix);

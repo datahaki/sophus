@@ -18,7 +18,7 @@ public class Spd0RandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    return Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(random));
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(randomGenerator));
   }
 }

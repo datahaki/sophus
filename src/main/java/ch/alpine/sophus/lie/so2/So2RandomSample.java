@@ -19,7 +19,7 @@ public enum So2RandomSample implements RandomSampleInterface {
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Pi.VALUE.negate(), Pi.VALUE);
 
   @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator random) {
-    return RotationMatrix.of(RandomVariate.of(DISTRIBUTION, random));
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return RotationMatrix.of(RandomVariate.of(DISTRIBUTION, randomGenerator));
   }
 }

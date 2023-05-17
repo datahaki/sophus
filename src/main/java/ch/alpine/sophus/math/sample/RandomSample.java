@@ -17,10 +17,10 @@ public enum RandomSample {
   private static final RandomGenerator RANDOM_GENERATOR = new SecureRandom();
 
   /** @param randomSampleInterface
-   * @param random
+   * @param randomGenerator
    * @return */
-  public static Tensor of(RandomSampleInterface randomSampleInterface, RandomGenerator random) {
-    return randomSampleInterface.randomSample(random);
+  public static Tensor of(RandomSampleInterface randomSampleInterface, RandomGenerator randomGenerator) {
+    return randomSampleInterface.randomSample(randomGenerator);
   }
 
   /** @param randomSampleInterface
@@ -30,12 +30,12 @@ public enum RandomSample {
   }
 
   /** @param randomSampleInterface
-   * @param random
+   * @param randomGenerator
    * @param length non-negative
    * @return
    * @throws Exception if given length is negative */
-  public static Tensor of(RandomSampleInterface randomSampleInterface, RandomGenerator random, int length) {
-    return Tensor.of(stream(randomSampleInterface, random).limit(length));
+  public static Tensor of(RandomSampleInterface randomSampleInterface, RandomGenerator randomGenerator, int length) {
+    return Tensor.of(stream(randomSampleInterface, randomGenerator).limit(length));
   }
 
   /** @param randomSampleInterface
@@ -46,10 +46,10 @@ public enum RandomSample {
   }
 
   /** @param randomSampleInterface
-   * @param random
+   * @param randomGenerator
    * @return a new infinite stream of random samples from given randomSampleInterface */
-  public static Stream<Tensor> stream(RandomSampleInterface randomSampleInterface, RandomGenerator random) {
-    return Stream.generate(() -> randomSampleInterface.randomSample(random));
+  public static Stream<Tensor> stream(RandomSampleInterface randomSampleInterface, RandomGenerator randomGenerator) {
+    return Stream.generate(() -> randomSampleInterface.randomSample(randomGenerator));
   }
 
   /** @param randomSampleInterface

@@ -30,9 +30,9 @@ public class Se2RandomSample implements RandomSampleInterface {
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator random) {
-    Scalar angle = RandomVariate.of(DISTRIBUTION, random);
-    return AngleVector.of(angle).multiply(RandomVariate.of(distribution, random)) //
-        .append(RandomVariate.of(DISTRIBUTION, random));
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    Scalar angle = RandomVariate.of(DISTRIBUTION, randomGenerator);
+    return AngleVector.of(angle).multiply(RandomVariate.of(distribution, randomGenerator)) //
+        .append(RandomVariate.of(DISTRIBUTION, randomGenerator));
   }
 }

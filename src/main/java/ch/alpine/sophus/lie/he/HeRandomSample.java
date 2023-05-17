@@ -20,7 +20,7 @@ public class HeRandomSample implements RandomSampleInterface, Serializable {
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator random) {
-    return RandomVariate.of(distribution, random, 2 * n + 1); // element
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return RandomVariate.of(distribution, randomGenerator, 2 * n + 1); // element
   }
 }

@@ -13,6 +13,6 @@ import ch.alpine.tensor.pdf.RandomVariateInterface;
  * Examples: {@link BoxRandomSample}, {@link BallRandomSample} */
 @FunctionalInterface
 public interface RandomSampleInterface {
-  /** @return random sample from continuous or discrete set */
-  Tensor randomSample(RandomGenerator random);
+  /** @return randomGenerator sample from continuous or discrete set */
+  Tensor randomSample(RandomGenerator randomGenerator);
 }
