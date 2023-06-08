@@ -10,7 +10,6 @@ import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -20,6 +19,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
+import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;

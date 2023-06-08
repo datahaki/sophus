@@ -8,12 +8,12 @@ import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se3.Se3Algebra;
 import ch.alpine.sophus.lie.so.SoAlgebra;
-import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
 
 /** Careful:
  * TODO SOPHUS does not match {@link Se3Algebra} in the special case when n == 3

@@ -4,9 +4,9 @@ package ch.alpine.sophus.lie.su;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.HigherJacobiIdentity;
-import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.mat.AntihermitianMatrixQ;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;

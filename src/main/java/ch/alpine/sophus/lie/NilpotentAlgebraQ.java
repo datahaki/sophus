@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.mat.NilpotentMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 

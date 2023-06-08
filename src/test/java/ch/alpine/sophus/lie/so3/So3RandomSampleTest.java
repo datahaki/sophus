@@ -22,7 +22,6 @@ class So3RandomSampleTest {
     OrthogonalMatrixQ.require(matrix);
     Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);
     SchurDecomposition schurDecomposition = SchurDecomposition.of(matrix);
-    
     System.out.println(Pretty.of(schurDecomposition.getT().map(Round._3)));
   }
 }

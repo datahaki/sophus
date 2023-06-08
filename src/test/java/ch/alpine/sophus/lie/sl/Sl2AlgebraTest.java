@@ -9,7 +9,6 @@ import java.util.function.BinaryOperator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
-import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.MatrixAlgebra;
@@ -19,6 +18,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.OrderedQ;
+import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;

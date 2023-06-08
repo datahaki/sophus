@@ -25,7 +25,6 @@ import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.sca.Chop;
 
 class BezierMeanTest {
-
   @Test
   void testRn() {
     Tensor control = Tensors.fromString("{{0, 0}, {1, 1}, {2, 0}, {3, 1}}");

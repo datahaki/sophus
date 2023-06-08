@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.ad.HsAlgebra;
 import ch.alpine.sophus.lie.HigherJacobiIdentity;
-import ch.alpine.sophus.lie.KillingForm;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.mat.re.Det;
 
 class SlAlgebraTest {

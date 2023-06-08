@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.lie.CliffordAlgebra;
 
 public enum CliffordAlgebraCache {
   ;

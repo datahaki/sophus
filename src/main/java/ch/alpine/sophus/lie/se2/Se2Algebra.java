@@ -4,9 +4,9 @@ package ch.alpine.sophus.lie.se2;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.sca.N;
 
 public enum Se2Algebra implements LieAlgebra {

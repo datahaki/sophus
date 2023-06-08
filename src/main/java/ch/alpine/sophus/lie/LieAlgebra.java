@@ -4,6 +4,7 @@ package ch.alpine.sophus.lie;
 import java.util.function.BinaryOperator;
 
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.lie.JacobiIdentity;
 
 public interface LieAlgebra {
   /** @return tensor of rank 3 satisfying {@link JacobiIdentity} */
@@ -15,5 +16,6 @@ public interface LieAlgebra {
 
   /** @return
    * @throws UnsupportedOperationException */
+  // TODO perhaps create new interface MatrixLieAlgebra?
   Tensor basis();
 }
