@@ -160,13 +160,13 @@ class MatrixAlgebraTest {
 
   @Test
   void testMatrixLogExpExpSe2() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.basis());
     check(matrixAlgebra, 8);
   }
 
   @Test
   void testMatrixLogExpExpSo3() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Algebra.INSTANCE.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Algebra.basis());
     check(matrixAlgebra, 8);
   }
 }

@@ -30,7 +30,7 @@ public class SlAlgebra implements LieAlgebra, Serializable {
     if (n < 2)
       throw new IllegalArgumentException("n=" + n);
     this.n = n;
-    matrixAlgebra = new MatrixAlgebra(basis());
+    matrixAlgebra = new MatrixAlgebra(basis(n));
   }
 
   @Override
@@ -43,8 +43,7 @@ public class SlAlgebra implements LieAlgebra, Serializable {
     return BakerCampbellHausdorff.of(ad(), degree);
   }
 
-  @Override
-  public Tensor basis() {
+  public static Tensor basis(int n) {
     Tensor tensor = Array.sparse(n * n - 1, n, n);
     int index = 0;
     for (int i = 0; i < n; ++i)

@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 public enum Su3Algebra implements LieAlgebra {
   INSTANCE;
 
-  private final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.of(1, 3));
+  private static final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.of(1, 3));
   private final Tensor ad;
 
   Su3Algebra() {
@@ -39,8 +39,7 @@ public enum Su3Algebra implements LieAlgebra {
     return BakerCampbellHausdorff.of(ad(), degree);
   }
 
-  @Override // from LieAlgebra
-  public Tensor basis() {
+  public static Tensor basis() {
     // https://en.wikipedia.org/wiki/Gell-Mann_matrices
     Tensor u0 = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}");
     Tensor u1 = Tensors.fromString("{{0, -I, 0}, {I, 0, 0}, {0, 0, 0}}");

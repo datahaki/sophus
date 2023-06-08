@@ -37,7 +37,7 @@ class Sl2AlgebraTest {
     Distribution local = UniformDistribution.of(-0.3, 0.3);
     Tensor x = RandomVariate.of(local, 3);
     Tensor y = RandomVariate.of(local, 3);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Sl2Algebra.INSTANCE.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Sl2Algebra.basis());
     Tensor ad = Sl2Algebra.INSTANCE.ad();
     // System.out.println(Normal.of(matrixAlgebra.ad()));
     assertEquals(ad, matrixAlgebra.ad());
@@ -86,7 +86,7 @@ class Sl2AlgebraTest {
     Tensor g2 = RandomVariate.of(distribution, ad.length());
     BinaryOperator<Tensor> bch = lieAlgebra.bch(6);
     Tensor expect = bch.apply(g1, g2);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(lieAlgebra.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Sl2Algebra.basis());
     Tensor rotG1 = MatrixExp.of(matrixAlgebra.toMatrix(g1));
     Tensor rotG2 = MatrixExp.of(matrixAlgebra.toMatrix(g2));
     Tensor log = matrixAlgebra.toVector(MatrixLog.of(rotG1.dot(rotG2)));
@@ -101,7 +101,7 @@ class Sl2AlgebraTest {
     Tensor m = RandomVariate.of(distribution, 2);
     HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 8);
     Tensor expect = hsAlgebra.action(g, m);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(lieAlgebra.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Sl2Algebra.basis());
     Tensor rotG = MatrixExp.of(matrixAlgebra.toMatrix(g));
     Tensor rotM = MatrixExp.of(matrixAlgebra.toMatrix(hsAlgebra.lift(m)));
     Tensor log = matrixAlgebra.toVector(MatrixLog.of(rotG.dot(rotM)));

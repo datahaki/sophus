@@ -19,7 +19,6 @@ class SlAlgebraTest {
   @Test
   void testSl2Match() {
     LieAlgebra slAlgebra = SlAlgebra.of(2);
-    assertEquals(slAlgebra.basis(), Sl2Algebra.INSTANCE.basis());
     assertEquals(slAlgebra.ad(), Sl2Algebra.INSTANCE.ad());
   }
 

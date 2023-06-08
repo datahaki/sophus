@@ -24,8 +24,7 @@ public enum So3Algebra implements LieAlgebra {
     return BakerCampbellHausdorff.of(N.DOUBLE.of(AD), degree);
   }
 
-  @Override
-  public Tensor basis() {
+  public static Tensor basis() {
     return LeviCivitaTensor.of(3).negate();
   }
 }

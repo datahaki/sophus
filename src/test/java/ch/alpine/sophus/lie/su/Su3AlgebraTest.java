@@ -33,8 +33,8 @@ class Su3AlgebraTest {
 
   @Test
   void testHermitian() {
-    Su3Algebra.INSTANCE.basis().stream().forEach(HermitianMatrixQ::require);
-    Tensor tensor = Tensor.of(Su3Algebra.INSTANCE.basis().stream().map(Trace::of));
+    Su3Algebra.basis().stream().forEach(HermitianMatrixQ::require);
+    Tensor tensor = Tensor.of(Su3Algebra.basis().stream().map(Trace::of));
     Chop.NONE.requireAllZero(tensor);
   }
 }

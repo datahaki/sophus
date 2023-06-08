@@ -17,8 +17,8 @@ class SuAlgebraTest {
   void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = SuAlgebra.of(n);
-      lieAlgebra.basis().forEach(AntihermitianMatrixQ::require);
-      for (Tensor matrix : lieAlgebra.basis())
+      SuAlgebra.basis(n).forEach(AntihermitianMatrixQ::require);
+      for (Tensor matrix : SuAlgebra.basis(n))
         Tolerance.CHOP.requireZero(Trace.of(matrix));
       Tensor ad = lieAlgebra.ad();
       Tensor form = KillingForm.of(ad);

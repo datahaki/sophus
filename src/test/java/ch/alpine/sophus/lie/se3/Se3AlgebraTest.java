@@ -11,7 +11,7 @@ import ch.alpine.sophus.hs.ad.HsAlgebra;
 class Se3AlgebraTest {
   @Test
   void testSimple() {
-    Se3Algebra.INSTANCE.basis();
+    Se3Algebra.basis();
     // basis2.stream().forEach(basis->System.out.println(Pretty.of(basis)));
     Se3Algebra.INSTANCE.bch(3);
   }

@@ -28,8 +28,7 @@ public class RnAlgebra implements LieAlgebra, Serializable {
     return Tensor::add;
   }
 
-  @Override // from LieAlgebra
-  public Tensor basis() {
+  public static Tensor basis(int n) {
     Tensor tensor = SparseArray.of(RealScalar.ZERO, n, n + 1, n + 1);
     IntStream.range(0, n).forEach(i -> tensor.set(RealScalar.ONE, i, i, n));
     return tensor;

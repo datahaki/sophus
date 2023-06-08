@@ -39,7 +39,7 @@ class Su2AlgebraTest {
     Distribution local = UniformDistribution.of(-0.2, 0.2);
     Tensor x = RandomVariate.of(local, 3);
     Tensor y = RandomVariate.of(local, 3);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Su2Algebra.INSTANCE.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Su2Algebra.basis());
     Tensor ad = Su2Algebra.INSTANCE.ad();
     assertEquals(ad, matrixAlgebra.ad());
     Tensor mx = matrixAlgebra.toMatrix(x);
@@ -61,7 +61,7 @@ class Su2AlgebraTest {
 
   @Test
   void testBasis() {
-    for (Tensor matrix : Su2Algebra.INSTANCE.basis()) {
+    for (Tensor matrix : Su2Algebra.basis()) {
       ExactTensorQ.require(matrix);
       assertEquals(ConjugateTranspose.of(matrix), matrix.negate());
       assertEquals(Trace.of(matrix), RealScalar.ZERO);
@@ -71,6 +71,6 @@ class Su2AlgebraTest {
 
   @Test
   void testBasis2() {
-    assertEquals(Su2Algebra.INSTANCE.basis(), SuAlgebra.of(2).basis());
+    assertEquals(Su2Algebra.basis(), SuAlgebra.basis(2));
   }
 }

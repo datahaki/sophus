@@ -24,8 +24,7 @@ public enum Sl2Algebra implements LieAlgebra {
     return BakerCampbellHausdorff.of(N.DOUBLE.of(ad()), degree);
   }
 
-  @Override
-  public Tensor basis() {
+  public static Tensor basis() {
     return Tensors.of( //
         Tensors.fromString("{{0, 1}, {-1, 0}}"), //
         Tensors.fromString("{{0, 1}, {+1, 0}}"), //

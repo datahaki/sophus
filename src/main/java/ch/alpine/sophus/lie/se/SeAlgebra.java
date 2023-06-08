@@ -34,7 +34,7 @@ public class SeAlgebra implements LieAlgebra, Serializable {
 
   private SeAlgebra(int n) {
     this.n = n;
-    matrixAlgebra = new MatrixAlgebra(basis());
+    matrixAlgebra = new MatrixAlgebra(basis(n));
   }
 
   @Override
@@ -47,8 +47,7 @@ public class SeAlgebra implements LieAlgebra, Serializable {
     return BakerCampbellHausdorff.of(ad(), degree);
   }
 
-  @Override
-  public Tensor basis() {
+  public static Tensor basis(int n) {
     Tensor tensor = Array.sparse(n + n * (n - 1) / 2, n + 1, n + 1);
     int index = 0;
     for (int i = 0; i < n; ++i) {

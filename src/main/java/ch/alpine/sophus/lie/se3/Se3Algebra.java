@@ -13,18 +13,10 @@ import ch.alpine.tensor.sca.N;
 public enum Se3Algebra implements LieAlgebra {
   INSTANCE;
 
-  private final Tensor basis;
   private final Tensor ad;
 
   Se3Algebra() {
-    basis = Tensors.of( //
-        Tensors.fromString("{{0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"), //
-        Tensors.fromString("{{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}}"), //
-        Tensors.fromString("{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 0, 0}}"), //
-        Tensors.fromString("{{0, 0, 0, 0}, {0, 0, -1, 0}, {0, +1, 0, 0}, {0, 0, 0, 0}}"), //
-        Tensors.fromString("{{0, 0, +1, 0}, {0, 0, 0, 0}, {-1, 0, 0, 0}, {0, 0, 0, 0}}"), //
-        Tensors.fromString("{{0, -1, 0, 0}, {+1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"));
-    ad = new MatrixAlgebra(basis).ad();
+    ad = new MatrixAlgebra(basis()).ad();
   }
 
   @Override // from LieAlgebra
@@ -37,8 +29,13 @@ public enum Se3Algebra implements LieAlgebra {
     return BakerCampbellHausdorff.of(N.DOUBLE.of(ad), degree);
   }
 
-  @Override // from LieAlgebra
-  public Tensor basis() {
-    return basis.copy();
+  public static Tensor basis() {
+    return Tensors.of( //
+        Tensors.fromString("{{0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"), //
+        Tensors.fromString("{{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}}"), //
+        Tensors.fromString("{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 0, 0}}"), //
+        Tensors.fromString("{{0, 0, 0, 0}, {0, 0, -1, 0}, {0, +1, 0, 0}, {0, 0, 0, 0}}"), //
+        Tensors.fromString("{{0, 0, +1, 0}, {0, 0, 0, 0}, {-1, 0, 0, 0}, {0, 0, 0, 0}}"), //
+        Tensors.fromString("{{0, -1, 0, 0}, {+1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"));
   }
 }

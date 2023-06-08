@@ -52,7 +52,7 @@ class HeAlgebraTest {
       Tensor g2 = RandomVariate.of(distribution, ad.length());
       BinaryOperator<Tensor> bch = lieAlgebra.bch(6);
       Tensor expect = bch.apply(g1, g2);
-      MatrixAlgebra matrixAlgebra = new MatrixAlgebra(lieAlgebra.basis());
+      MatrixAlgebra matrixAlgebra = new MatrixAlgebra(HeAlgebra.basis(n));
       Tensor rotG1 = MatrixExp.of(matrixAlgebra.toMatrix(g1));
       Tensor rotG2 = MatrixExp.of(matrixAlgebra.toMatrix(g2));
       Tensor log = matrixAlgebra.toVector(MatrixLog.of(rotG1.dot(rotG2)));
@@ -69,7 +69,7 @@ class HeAlgebraTest {
       Tensor m = RandomVariate.of(distribution, n + 1);
       HsAlgebra hsAlgebra = new HsAlgebra(ad, n + 1, 8);
       Tensor expect = hsAlgebra.action(g, m);
-      MatrixAlgebra matrixAlgebra = new MatrixAlgebra(lieAlgebra.basis());
+      MatrixAlgebra matrixAlgebra = new MatrixAlgebra(HeAlgebra.basis(n));
       Tensor rotG = MatrixExp.of(matrixAlgebra.toMatrix(g));
       Tensor rotM = MatrixExp.of(matrixAlgebra.toMatrix(hsAlgebra.lift(m)));
       Tensor log = matrixAlgebra.toVector(MatrixLog.of(rotG.dot(rotM)));

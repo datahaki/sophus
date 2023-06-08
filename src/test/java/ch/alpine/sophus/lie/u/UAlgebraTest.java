@@ -24,7 +24,7 @@ class UAlgebraTest {
   void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = UAlgebra.of(n);
-      lieAlgebra.basis().forEach(AntihermitianMatrixQ::require);
+      UAlgebra.basis(n).forEach(AntihermitianMatrixQ::require);
       Tensor form = KillingForm.of(lieAlgebra.ad());
       // System.out.println(Pretty.of(form));
       SquareMatrixQ.require(form);
@@ -33,8 +33,7 @@ class UAlgebraTest {
 
   @Test
   void testEigensystem() {
-    LieAlgebra lieAlgebra = UAlgebra.of(3);
-    Tensor basis = lieAlgebra.basis();
+    Tensor basis = UAlgebra.basis(3);
     assertEquals(basis.length(), 9);
     Tensor weights = RandomVariate.of(UniformDistribution.unit(), 9);
     Tensor matrix = weights.dot(basis);

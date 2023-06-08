@@ -27,7 +27,7 @@ class RnAlgebraTest {
   @Test
   void testConsistency() {
     RnAlgebra rnAlgebra = new RnAlgebra(3);
-    Tensor basis = rnAlgebra.basis();
+    Tensor basis = RnAlgebra.basis(3);
     assertEquals(rnAlgebra.ad(), new MatrixAlgebra(basis).ad());
   }
 }

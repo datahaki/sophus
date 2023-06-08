@@ -13,9 +13,4 @@ public interface LieAlgebra {
   /** @param degree
    * @return baker campbell hausdorff formula of given degree */
   BinaryOperator<Tensor> bch(int degree);
-
-  /** @return
-   * @throws UnsupportedOperationException */
-  // TODO perhaps create new interface MatrixLieAlgebra?
-  Tensor basis();
 }

@@ -24,12 +24,10 @@ public class SuAlgebra implements LieAlgebra, Serializable {
   }
 
   // ---
-  private final int n;
   private final Tensor ad;
 
   private SuAlgebra(int n) {
-    this.n = n;
-    ad = new MatrixAlgebra(basis()).ad();
+    ad = new MatrixAlgebra(basis(n)).ad();
   }
 
   @Override
@@ -42,8 +40,7 @@ public class SuAlgebra implements LieAlgebra, Serializable {
     return BakerCampbellHausdorff.of(N.DOUBLE.of(ad), degree);
   }
 
-  @Override
-  public Tensor basis() {
+  public static Tensor basis(int n) {
     Tensor tensor = Array.sparse(n * n - 1, n, n);
     int index = 0;
     for (int i = 0; i < n; ++i)

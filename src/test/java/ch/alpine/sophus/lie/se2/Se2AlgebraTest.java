@@ -22,7 +22,7 @@ import ch.alpine.tensor.spa.Normal;
 class Se2AlgebraTest {
   @Test
   void testFromMatrices() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.basis());
     Tensor ad = Se2Algebra.INSTANCE.ad();
     assertEquals(ad, matrixAlgebra.ad());
     assertEquals(ad, Normal.of(matrixAlgebra.ad()));
@@ -55,7 +55,7 @@ class Se2AlgebraTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
     Tensor y = RandomVariate.of(distribution, 3);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.INSTANCE.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.basis());
     matrixAlgebra.ad().dot(x).dot(y);
     // Tensor log = MatrixLog.of(matrixAlgebra.toMatrix(x));
     // System.out.println(x);

@@ -91,7 +91,7 @@ class HsAlgebraTest {
     Tensor mat = Se2Matrix.of(xyz);
     Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q2);
-    Tensor exp = MatrixExp.of(g.dot(Se2Algebra.INSTANCE.basis()));
+    Tensor exp = MatrixExp.of(g.dot(Se2Algebra.basis()));
     Tensor q3 = exp.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q3);
   }
