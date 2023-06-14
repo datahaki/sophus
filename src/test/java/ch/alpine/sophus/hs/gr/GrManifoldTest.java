@@ -4,14 +4,21 @@ package ch.alpine.sophus.hs.gr;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.dv.AveragingWeights;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.lie.so.SoRandomSample;
 import ch.alpine.sophus.math.LowerVectorize0_2Norm;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -19,20 +26,32 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
+import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.ExponentialDistribution;
+import ch.alpine.tensor.pdf.c.LogisticDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class GrManifoldTest {
@@ -191,5 +210,104 @@ class GrManifoldTest {
     Tolerance.CHOP.requireClose(d1, d2);
     // TODO SOPHUS GR check distance of "antipodal" frames, why is this zero?
     // System.out.println(distance);
+  }
+
+  private static final BiinvariantMean BIINVARIANT_MEAN = GrManifold.INSTANCE.biinvariantMean(Chop._10);
+
+  @Test
+  void testBiinvariant() {
+    Distribution distribution = ExponentialDistribution.of(1);
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
+    Scalar maxDist = RealScalar.of(1.4);
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor sequence = Tensors.of(p);
+    for (int iter = 0; iter < 10; ++iter) {
+      Tensor q = RandomSample.of(randomSampleInterface);
+      Scalar distance = GrManifold.INSTANCE.distance(p, q);
+      if (Scalars.lessThan(distance, maxDist))
+        sequence.append(q);
+    }
+    int n = sequence.length();
+    Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
+    assertThrows(Exception.class, () -> BIINVARIANT_MEAN.mean(sequence, RandomVariate.of(distribution, n)));
+    Tensor point = BIINVARIANT_MEAN.mean(sequence, weights);
+    GrMemberQ.INSTANCE.require(point);
+    GrManifold.INSTANCE.distance(p, point);
+    {
+      Tensor g = RandomSample.of(SoRandomSample.of(4));
+      GrAction grAction = new GrAction(g);
+      Tensor seq_l = Tensor.of(sequence.stream().map(grAction));
+      Tensor pnt_l = BIINVARIANT_MEAN.mean(seq_l, weights);
+      Chop._08.requireClose(grAction.apply(point), pnt_l);
+    }
+  }
+
+  @RepeatedTest(10)
+  void testGeodesic() {
+    GeodesicSpace hsGeodesic = GrManifold.INSTANCE;
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
+    Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
+    for (Tensor point : sequence)
+      GrMemberQ.INSTANCE.require(point);
+  }
+
+  public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
+
+  @Test
+  void testSimple2() throws ClassNotFoundException, IOException {
+    int n = 4;
+    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2);
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    Distribution distribution = LogisticDistribution.of(1, 3);
+    TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
+    Tensor pv = tGrMemberQ.projection(RandomVariate.of(distribution, n, n));
+    Tensor log = new GrExponential(p).log(q);
+    tGrMemberQ.require(log);
+    Tensor qv0 = POLE_LADDER.shift(p, q).apply(pv);
+    Tensor qv1 = Serialization.copy(GrManifold.INSTANCE.hsTransport().shift(p, q)).apply(pv);
+    new TGrMemberQ(q).require(qv1);
+    Chop._08.requireClose(qv0, qv1);
+    Tensor match = GrAction.match(p, q);
+    Tensor ofForm = BasisTransform.ofForm(pv, match);
+    // Tensor qw = GrTransport2.INSTANCE.shift(p, q).apply(pv);
+    // System.out.println(Pretty.of(qv.map(Round._3)));
+    // System.out.println(Pretty.of(qw.map(Round._3)));
+    Chop._08.isClose(qv1, ofForm); // this is not correct
+  }
+
+  @Test
+  void testFromOToP() {
+    int n = 5;
+    for (int k = 0; k <= n; ++k) {
+      int fk = k;
+      Distribution distribution = UniformDistribution.unit();
+      TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(n, k);
+      Tensor ov = tGr0MemberQ.project(RandomVariate.of(distribution, n, n));
+      Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
+      Tensor p = RandomSample.of(randomSampleInterface);
+      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(o, p);
+      Tensor pv = tensorUnaryOperator.apply(ov);
+      TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
+      tGrMemberQ.require(pv);
+    }
+  }
+
+  @Test
+  void testNonMemberFail() {
+    int n = 5;
+    for (int k = 1; k < n; ++k) {
+      Distribution distribution = UniformDistribution.unit();
+      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
+      Tensor p = RandomSample.of(randomSampleInterface);
+      Tensor q = RandomSample.of(randomSampleInterface);
+      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(p, q);
+      Tensor ov = RandomVariate.of(distribution, n, n);
+      assertThrows(Exception.class, () -> tensorUnaryOperator.apply(ov));
+    }
   }
 }
