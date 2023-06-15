@@ -7,7 +7,10 @@ import java.util.stream.Stream;
 
 import ch.alpine.tensor.Tensor;
 
-/** References:
+/** interface provides capability to generate design matrices from
+ * collection of points and base point
+ * 
+ * References:
  * "Biinvariant Distance Vectors"
  * by Jan Hakenberg, 2020
  * 

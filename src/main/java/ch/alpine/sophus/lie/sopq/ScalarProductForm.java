@@ -11,6 +11,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
   /** @param p
    * @param q
    * @return */
+  // TODO SOPHUS dot should be implemented more efficiently
   public static Tensor of(int p, int q) {
     return DiagonalMatrix.with(Tensors.vector(i -> i < p //
         ? RealScalar.ONE

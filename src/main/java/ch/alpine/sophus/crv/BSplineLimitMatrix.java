@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.sophus.crv;
 
-import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.itp.LinearBinaryAverage;
 
 public enum BSplineLimitMatrix {
   ;
@@ -18,7 +18,7 @@ public enum BSplineLimitMatrix {
     Integers.requirePositive(n);
     Tensor domain = Range.of(0, n);
     return Transpose.of(Tensors.vector(k -> //
-    domain.map(GeodesicBSplineFunction.of(RnGroup.INSTANCE, degree, UnitVector.of(n, k))), n));
+    domain.map(GeodesicBSplineFunction.of(LinearBinaryAverage.INSTANCE, degree, UnitVector.of(n, k))), n));
   }
   // public static Tensor string(int n, int degree) {
   // Tensor domain = Range.of(0, n);
