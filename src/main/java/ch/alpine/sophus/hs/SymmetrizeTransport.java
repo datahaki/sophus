@@ -13,6 +13,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * 
  * @see SchildLadder */
 public record SymmetrizeTransport(HsTransport hsTransport) implements HsTransport, Serializable {
+
   /** @param hsTransport typically instance of SchildLadder
    * @return */
   public SymmetrizeTransport {
@@ -23,7 +24,6 @@ public record SymmetrizeTransport(HsTransport hsTransport) implements HsTranspor
   public TensorUnaryOperator shift(Tensor orig, Tensor dest) {
     return new Rung(hsTransport.shift(orig, dest));
   }
-
   private record Rung(TensorUnaryOperator tensorUnaryOperator) implements TensorUnaryOperator {
     @Override
     public Tensor apply(Tensor vector) {

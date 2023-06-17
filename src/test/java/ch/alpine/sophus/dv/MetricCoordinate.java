@@ -10,6 +10,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 
 /** ONLY FOR TESTING */
 public record MetricCoordinate(Genesis genesis) implements Genesis {
+
   /** Careful:
    * Distance may depend on sequence! In that case only the correct sequence
    * should be passed to the function {@link #weights(Tensor, Tensor)}!
@@ -19,7 +20,6 @@ public record MetricCoordinate(Genesis genesis) implements Genesis {
   public static Genesis of(ScalarUnaryOperator variogram) {
     return new MetricBiinvariant(RnGroup.INSTANCE).coordinate(variogram);
   }
-
   private static final Genesis AFFINE = new MetricCoordinate(AveragingWeights.INSTANCE);
 
   /** Affine coordinates are a special case of inverse distance coordinates

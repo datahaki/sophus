@@ -18,8 +18,8 @@ import ch.alpine.tensor.red.Times;
 
 /** attempts to produce positive weights for levers with zero in convex hull */
 public record IterativeAffineCoordinate(TensorUnaryOperator amplifier, int k) implements GenesisDeque {
-
   private static final Genesis GENESIS = AffineCoordinate.INSTANCE;
+
   // ---
   public IterativeAffineCoordinate {
     Objects.requireNonNull(amplifier);
