@@ -23,7 +23,7 @@ class S3UnitQuaternionDistanceTest {
     Quaternion p = Quaternion.of(3, 1, 2, 3);
     p = p.divide(Abs.FUNCTION.apply(p));
     Quaternion q = Quaternion.of(-2, 0, -4, 7);
-    q = q.divide(Abs.of(q));
+    q = q.divide(Abs.FUNCTION.apply(q));
     Chop._14.requireClose(Abs.FUNCTION.apply(p), RealScalar.ONE);
     Chop._14.requireClose(Abs.FUNCTION.apply(q), RealScalar.ONE);
     Scalar d1 = S3UnitQuaternionDistance.INSTANCE.distance(p, q);
@@ -61,8 +61,8 @@ class S3UnitQuaternionDistanceTest {
     Distribution distribution = NormalDistribution.standard();
     for (int index = 0; index < 30; ++index) {
       Quaternion quaternion = Quaternion.of(RandomVariate.of(distribution), RandomVariate.of(distribution, 3));
-      Quaternion log = Log.of(quaternion);
-      Quaternion exp = Exp.of(log);
+      Scalar log = Log.FUNCTION.apply(quaternion);
+      Scalar exp = Exp.FUNCTION.apply(log);
       Chop._14.requireClose(quaternion, exp);
     }
   }
@@ -72,8 +72,8 @@ class S3UnitQuaternionDistanceTest {
     Distribution distribution = NormalDistribution.of(0, .3);
     for (int index = 0; index < 30; ++index) {
       Quaternion quaternion = Quaternion.of(RandomVariate.of(distribution), RandomVariate.of(distribution, 3));
-      Quaternion exp = Exp.of(quaternion);
-      Quaternion log = Log.of(exp);
+      Scalar exp = Exp.FUNCTION.apply(quaternion);
+      Scalar log = Log.FUNCTION.apply(exp);
       Chop._14.requireClose(quaternion, log);
     }
   }

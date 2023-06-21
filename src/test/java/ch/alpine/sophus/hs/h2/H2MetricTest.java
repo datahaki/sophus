@@ -29,7 +29,7 @@ class H2MetricTest {
     Tensor q = Tensors.vector(2, 7 + Math.random());
     // ---
     Scalar actual = H2Metric.INSTANCE.distance(p, q);
-    Scalar expected = Abs.FUNCTION.apply(Log.of(q.Get(1).divide(p.Get(1))));
+    Scalar expected = Abs.FUNCTION.apply(Log.FUNCTION.apply(q.Get(1).divide(p.Get(1))));
     Chop._12.requireClose(actual, expected);
   }
 
@@ -39,7 +39,7 @@ class H2MetricTest {
     Tensor q = Tensors.vector(7 + Math.random(), 3);
     // ---
     Scalar actual = H2Metric.INSTANCE.distance(p, q);
-    Scalar expected = RealScalar.of(2).multiply(ArcSinh.of( //
+    Scalar expected = RealScalar.of(2).multiply(ArcSinh.FUNCTION.apply( //
         Abs.between(q.Get(0), p.Get(0)).divide(p.Get(1).add(p.Get(1)))));
     Chop._12.requireClose(actual, expected);
   }

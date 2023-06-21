@@ -54,7 +54,7 @@ class LagrangeCoordinateTest {
             RandomVariate.of(NormalDistribution.standard(), n, d));
         {
           Tensor weights = idw.origin(levers);
-          Tolerance.CHOP.allZero(Im.of(weights));
+          Tolerance.CHOP.allZero(weights.map(Im.FUNCTION));
         }
         {
           Tensor weights = genesis.origin(levers);

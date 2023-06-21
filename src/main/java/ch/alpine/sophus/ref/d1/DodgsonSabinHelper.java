@@ -55,7 +55,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
     Scalar bc = Vector2NormSquared.between(b, c); // squared
     Scalar mu = ac.divide(bd);
     Scalar res = Times.of(r, r, bc, _1_4);
-    Scalar h = res.divide(RealScalar.ONE.add(Sqrt.of(RealScalar.ONE.subtract(res))));
+    Scalar h = res.divide(RealScalar.ONE.add(Sqrt.FUNCTION.apply(RealScalar.ONE.subtract(res))));
     Scalar mu1 = mu.add(RealScalar.ONE);
     Scalar mu1_2 = mu1.multiply(mu1);
     // (1 - h * 2 * mu / mu1_2)

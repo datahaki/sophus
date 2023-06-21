@@ -89,7 +89,7 @@ class BaseWindowSamplerTest {
       Function<Integer, Tensor> uniformWindowSampler = UniformWindowSampler.of(smoothingKernel.get());
       Tensor vector = uniformWindowSampler.apply(1);
       assertEquals(vector, Tensors.of(RealScalar.ONE));
-      assertTrue(Scalars.lessThan(RealScalar.of(1e-3), Abs.of(vector.Get(0))));
+      assertTrue(Scalars.lessThan(RealScalar.of(1e-3), Abs.FUNCTION.apply(vector.Get(0))));
     }
   }
 

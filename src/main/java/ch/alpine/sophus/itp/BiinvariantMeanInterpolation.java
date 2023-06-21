@@ -48,7 +48,7 @@ import ch.alpine.tensor.sca.Floor;
     // TODO SOPHUS ALG implementation fails when any entry in index corresponds to exactly
     // the length of tensor in the respective dimensions
     int n = index.length();
-    Tensor findex = Floor.of(index);
+    Tensor findex = index.map(Floor.FUNCTION);
     Tensor weights = Flatten.of(index.subtract(findex).stream() //
         .map(scalar -> Tensors.of(RealScalar.ONE.subtract(scalar), scalar)) //
         .reduce(TensorProduct::of) //

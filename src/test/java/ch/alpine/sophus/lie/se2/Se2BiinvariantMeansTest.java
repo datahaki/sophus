@@ -40,7 +40,7 @@ class Se2BiinvariantMeansTest {
   void testArsignyPennec() throws ClassNotFoundException, IOException {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
-    Scalar rootOfTwo = Sqrt.of(TWO);
+    Scalar rootOfTwo = Sqrt.FUNCTION.apply(TWO);
     Scalar rootOfTwoHalf = rootOfTwo.reciprocal();
     Scalar piFourth = Pi.HALF.divide(TWO);
     // ---

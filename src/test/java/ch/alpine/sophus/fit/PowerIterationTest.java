@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -25,15 +26,15 @@ class PowerIterationTest {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(matrix);
     Tensor v = eigensystem.vectors().get(0).unmodifiable();
     Tensor x = PowerIteration.of(matrix).get();
-    Chop._12.requireClose(Abs.of(x.dot(v)), RealScalar.ONE);
+    Chop._12.requireClose(Abs.FUNCTION.apply((Scalar) x.dot(v)), RealScalar.ONE);
   }
 
   @Test
   void testNegative() {
     Tensor matrix = Tensors.fromString("{{-1, 0}, {0, 0}}");
     Tensor x = PowerIteration.of(matrix).get();
-    assertEquals(Abs.of(x.Get(0)), RealScalar.ONE);
-    assertEquals(Abs.of(x.Get(1)), RealScalar.ZERO);
+    assertEquals(Abs.FUNCTION.apply(x.Get(0)), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(x.Get(1)), RealScalar.ZERO);
   }
 
   @Test
@@ -41,9 +42,9 @@ class PowerIterationTest {
     Tensor matrix = Tensors.fromString("{{2}}");
     Eigensystem eigensystem = Eigensystem.ofSymmetric(matrix);
     Tensor v = eigensystem.vectors().get(0).unmodifiable();
-    assertEquals(Abs.of(v.Get(0)), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(v.Get(0)), RealScalar.ONE);
     Tensor x = PowerIteration.of(matrix).get();
-    assertEquals(Abs.of(x.Get(0)), RealScalar.ONE);
+    assertEquals(Abs.FUNCTION.apply(x.Get(0)), RealScalar.ONE);
   }
 
   @Test

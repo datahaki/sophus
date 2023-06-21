@@ -68,7 +68,7 @@ enum CatmullClarkSubdivisionExport {
   }
 
   private static Tensor r3s2_sp(Scalar x, Scalar y) {
-    Scalar z = Sqrt.of(RealScalar.ONE.subtract(x.multiply(x)).subtract(y.multiply(y)));
+    Scalar z = Sqrt.FUNCTION.apply(RealScalar.ONE.subtract(x.multiply(x)).subtract(y.multiply(y)));
     if (z instanceof RealScalar)
       return Tensors.of(x, y, z);
     throw new Throw(z);

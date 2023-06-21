@@ -352,7 +352,7 @@ class Se2CoveringGroupTest {
       assertEquals(Dimensions.of(residualMaker), Arrays.asList(n, n));
       Chop._08.requireClose(Symmetrize.of(residualMaker), residualMaker);
       Eigensystem eigensystem = Eigensystem.ofSymmetric(Symmetrize.of(residualMaker));
-      Tensor unitize = Unitize.of(eigensystem.values().map(Tolerance.CHOP));
+      Tensor unitize = eigensystem.values().map(Tolerance.CHOP).map(Unitize.FUNCTION);
       Chop._08.requireClose(eigensystem.values(), unitize);
       assertEquals(Total.ofVector(unitize), RealScalar.of(n - 3));
       for (int index = 0; index < n - 3; ++index) {

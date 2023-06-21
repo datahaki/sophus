@@ -33,7 +33,7 @@ class IterativeBiinvariantMeanTest {
   void testSE2() {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
-    Scalar rootOfTwo = Sqrt.of(TWO);
+    Scalar rootOfTwo = Sqrt.FUNCTION.apply(TWO);
     Scalar rootOfTwoHalf = rootOfTwo.reciprocal();
     Scalar piFourth = Pi.HALF.divide(TWO);
     // ---

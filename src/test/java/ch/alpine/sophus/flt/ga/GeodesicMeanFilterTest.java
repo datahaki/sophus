@@ -34,7 +34,7 @@ class GeodesicMeanFilterTest {
     Tensor result = tensorUnaryOperator.apply(tensor);
     assertEquals(Total.of(result), RealScalar.ONE);
     Tensor expect = UnitVector.of(10, 4).add(UnitVector.of(10, 5)).add(UnitVector.of(10, 6));
-    assertEquals(Unitize.of(result), expect);
+    assertEquals(result.map(Unitize.FUNCTION), expect);
   }
 
   @Test

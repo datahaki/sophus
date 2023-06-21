@@ -27,7 +27,7 @@ enum R2NoisePlot {
   private static final Clip CLIP = Clips.unit();
 
   private static Scalar function(int x, int y) {
-    return UnitStep.of(DoubleScalar.of(NOISE.at( //
+    return UnitStep.FUNCTION.apply(DoubleScalar.of(NOISE.at( //
         RE.Get(x).number().doubleValue(), //
         IM.Get(y).number().doubleValue())).subtract(RealScalar.of(0.9)));
   }
