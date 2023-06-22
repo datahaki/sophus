@@ -51,7 +51,7 @@ class RodriguesTest {
     Tensor mX = Rodrigues.vectorExp(x);
     Tensor mY = Rodrigues.vectorExp(y);
     Tensor res = Rodrigues.INSTANCE.vectorLog(mX.dot(mY));
-    Tensor ad = N.DOUBLE.of(LeviCivitaTensor.of(3).negate());
+    Tensor ad = LeviCivitaTensor.of(3).negate().map(N.DOUBLE);
     Scalar cmp = RealScalar.ONE;
     for (int degree = 1; degree < 6; ++degree) {
       BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, degree);

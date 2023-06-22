@@ -19,7 +19,7 @@ public enum So3RandomSample implements RandomSampleInterface {
   INSTANCE;
 
   private static final RandomSampleInterface S3_RANDOM_SAMPLE = SnRandomSample.of(3);
-  private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
+  private static final Tensor ID3 = IdentityMatrix.of(3).map(N.DOUBLE);
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(RandomGenerator randomGenerator) {

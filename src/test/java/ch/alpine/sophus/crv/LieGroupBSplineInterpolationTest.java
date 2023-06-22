@@ -31,7 +31,7 @@ class LieGroupBSplineInterpolationTest {
 
   @Test
   void testApplyRn() {
-    Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
+    Tensor target = Tensors.vector(1, 2, 0, 2, 1, 3).map(N.DOUBLE);
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 2, target);
     Tensor control = lieGroupBSplineInterpolation.apply();
@@ -59,7 +59,7 @@ class LieGroupBSplineInterpolationTest {
 
   @Test
   void testIterationRnConvergence() {
-    Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
+    Tensor target = Tensors.vector(1, 2, 0, 2, 1, 3).map(N.DOUBLE);
     LieGroupBSplineInterpolation lieGroupBSplineInterpolation = //
         new LieGroupBSplineInterpolation(RnGroup.INSTANCE, 3, target);
     Iteration iteration = lieGroupBSplineInterpolation.init();

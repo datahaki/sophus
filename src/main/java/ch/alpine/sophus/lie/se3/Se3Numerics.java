@@ -20,12 +20,12 @@ import ch.alpine.tensor.sca.tri.Sinc;
  * from "Lie Groups for 2D and 3D Transformations" by Ethan Eade
  * http://ethaneade.com/ */
 /* package */ class Se3Numerics {
-  private static final ScalarUnaryOperator SERIES1 = Polynomial.of(N.DOUBLE.of(Tensors.fromString( //
-      "{1/2, 0, -1/24, 0, 1/720, 0, -1/40320, 0, 1/3628800, 0, -1/479001600, 0, 1/87178291200, 0, -1/20922789888000}")));
-  private static final ScalarUnaryOperator SERIES2 = Polynomial.of(N.DOUBLE.of(Tensors.fromString( //
-      "{1/6, 0, -1/120, 0, 1/5040, 0, -1/362880, 0, 1/39916800, 0, -1/6227020800, 0, 1/1307674368000, 0, -1/355687428096000}")));
-  private static final ScalarUnaryOperator SERIES3 = Polynomial.of(N.DOUBLE.of(Tensors.fromString( //
-      "{1/12, 0, 1/720, 0, 1/30240, 0, 1/1209600, 0, 1/47900160, 0, 691/1307674368000, 0, 1/74724249600, 0, 3617/10670622842880000}")));
+  private static final ScalarUnaryOperator SERIES1 = Polynomial.of(Tensors.fromString( //
+      "{1/2, 0, -1/24, 0, 1/720, 0, -1/40320, 0, 1/3628800, 0, -1/479001600, 0, 1/87178291200, 0, -1/20922789888000}").map(N.DOUBLE));
+  private static final ScalarUnaryOperator SERIES2 = Polynomial.of(Tensors.fromString( //
+      "{1/6, 0, -1/120, 0, 1/5040, 0, -1/362880, 0, 1/39916800, 0, -1/6227020800, 0, 1/1307674368000, 0, -1/355687428096000}").map(N.DOUBLE));
+  private static final ScalarUnaryOperator SERIES3 = Polynomial.of(Tensors.fromString( //
+      "{1/12, 0, 1/720, 0, 1/30240, 0, 1/1209600, 0, 1/47900160, 0, 691/1307674368000, 0, 1/74724249600, 0, 3617/10670622842880000}").map(N.DOUBLE));
   final boolean series;
   final Scalar A;
   final Scalar B;

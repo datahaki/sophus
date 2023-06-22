@@ -29,6 +29,6 @@ public enum Se2Algebra implements LieAlgebra {
 
   @Override // from LieAlgebra
   public BinaryOperator<Tensor> bch(int degree) {
-    return BakerCampbellHausdorff.of(N.DOUBLE.of(AD), degree);
+    return BakerCampbellHausdorff.of(AD.map(N.DOUBLE), degree);
   }
 }

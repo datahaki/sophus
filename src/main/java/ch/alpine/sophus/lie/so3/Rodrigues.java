@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
 public enum Rodrigues implements Exponential {
   INSTANCE;
 
-  private static final Tensor ID3 = N.DOUBLE.of(IdentityMatrix.of(3));
+  private static final Tensor ID3 = IdentityMatrix.of(3).map(N.DOUBLE);
   private static final Scalar HALF = RealScalar.of(0.5);
 
   @Override // from Exponential

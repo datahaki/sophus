@@ -26,6 +26,6 @@ public class LieAlgebraImpl implements LieAlgebra {
 
   @Override
   public BinaryOperator<Tensor> bch(int degree) {
-    return BakerCampbellHausdorff.of(isNilpotent ? ad : N.DOUBLE.of(ad), degree);
+    return BakerCampbellHausdorff.of(isNilpotent ? ad : ad.map(N.DOUBLE), degree);
   }
 }

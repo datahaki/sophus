@@ -82,7 +82,7 @@ public abstract class AbstractBSplineInterpolation implements Serializable {
     for (int count = 0; count < maxiter; ++count) {
       iteration = iteration.stepGaussSeidel();
       Tensor q = iteration.control();
-      if (chop.isClose(N.DOUBLE.of(p), q))
+      if (chop.isClose(p.map(N.DOUBLE), q))
         break;
       p = q;
     }

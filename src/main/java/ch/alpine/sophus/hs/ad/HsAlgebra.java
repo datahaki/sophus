@@ -46,7 +46,7 @@ public class HsAlgebra implements HsLocal, Serializable {
     dim_h = dim_g - dim_m;
     pad = Array.zeros(dim_h);
     boolean isNilpotent = NilpotentAlgebraQ.of(ad);
-    bch = BakerCampbellHausdorff.of(isNilpotent ? ad : N.DOUBLE.of(ad), degree);
+    bch = BakerCampbellHausdorff.of(isNilpotent ? ad : ad.map(N.DOUBLE), degree);
     // ---
     consistencyCheck();
   }

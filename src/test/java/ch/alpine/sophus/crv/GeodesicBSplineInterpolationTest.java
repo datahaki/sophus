@@ -24,7 +24,7 @@ class GeodesicBSplineInterpolationTest {
 
   @Test
   void testApplyRn() {
-    Tensor target = N.DOUBLE.of(Tensors.vector(1, 2, 0, 2, 1, 3));
+    Tensor target = Tensors.vector(1, 2, 0, 2, 1, 3).map(N.DOUBLE);
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(RnGroup.INSTANCE, 2, target);
     Tensor control = geodesicBSplineInterpolation.apply();
@@ -54,7 +54,7 @@ class GeodesicBSplineInterpolationTest {
     Tensor target = Tensors.fromString("{{0, 2}, {1, 2}, {2, 2}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
-    target = N.DOUBLE.of(target);
+    target = target.map(N.DOUBLE);
     Iteration iteration = geodesicBSplineInterpolation.untilClose(Chop._08, 100);
     assertTrue(iteration.steps() < 200);
   }
@@ -64,7 +64,7 @@ class GeodesicBSplineInterpolationTest {
     Tensor target = Tensors.fromString("{{0, 1}, {1, 1}, {2, 1}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
-    target = N.DOUBLE.of(target);
+    target = target.map(N.DOUBLE);
     Iteration iteration = geodesicBSplineInterpolation.untilClose(Chop._08, 200);
     assertTrue(iteration.steps() < 250);
   }
@@ -74,7 +74,7 @@ class GeodesicBSplineInterpolationTest {
     Tensor target = Tensors.fromString("{{0, 1}, {1, 1}, {2, 0.1}, {3, 1}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
-    target = N.DOUBLE.of(target);
+    target = target.map(N.DOUBLE);
     Iteration iteration = geodesicBSplineInterpolation.untilClose(Chop._08, 200);
     assertTrue(iteration.steps() < 150);
   }
@@ -84,7 +84,7 @@ class GeodesicBSplineInterpolationTest {
     Tensor target = Tensors.fromString("{{2/5, 3/5}, {32/15, 77/60}, {15/4, 11/15}, {73/15, 71/30}, {13/2, 1/2}}");
     AbstractBSplineInterpolation geodesicBSplineInterpolation = //
         new GeodesicBSplineInterpolation(H2Geodesic.INSTANCE, 3, target);
-    target = N.DOUBLE.of(target);
+    target = target.map(N.DOUBLE);
     Iteration iteration = geodesicBSplineInterpolation.untilClose(Chop._08, 100);
     assertTrue(iteration.steps() < 100);
   }

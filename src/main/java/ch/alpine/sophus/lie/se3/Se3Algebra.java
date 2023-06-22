@@ -26,7 +26,7 @@ public enum Se3Algebra implements LieAlgebra {
 
   @Override // from LieAlgebra
   public BinaryOperator<Tensor> bch(int degree) {
-    return BakerCampbellHausdorff.of(N.DOUBLE.of(ad), degree);
+    return BakerCampbellHausdorff.of(ad.map(N.DOUBLE), degree);
   }
 
   public static Tensor basis() {

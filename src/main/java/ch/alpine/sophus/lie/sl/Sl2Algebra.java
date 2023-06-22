@@ -21,7 +21,7 @@ public enum Sl2Algebra implements LieAlgebra {
 
   @Override
   public BinaryOperator<Tensor> bch(int degree) {
-    return BakerCampbellHausdorff.of(N.DOUBLE.of(ad()), degree);
+    return BakerCampbellHausdorff.of(ad().map(N.DOUBLE), degree);
   }
 
   public static Tensor basis() {
