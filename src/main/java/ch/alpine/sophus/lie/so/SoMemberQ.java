@@ -11,6 +11,8 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixSqrt;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.sca.Abs;
+import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Sign;
 
 public enum SoMemberQ implements MemberQ {
   INSTANCE;
@@ -32,8 +34,8 @@ public enum SoMemberQ implements MemberQ {
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(xtx);
     Tensor result = x.dot(matrixSqrt.sqrt_inverse());
     Scalar det = Det.of(result);
-    Tolerance.CHOP.requireClose(Abs.FUNCTION.apply(det), RealScalar.ONE);
-    if (Tolerance.CHOP.isClose(det, RealScalar.ONE.negate()))
+    Chop._10.requireClose(Abs.FUNCTION.apply(det), RealScalar.ONE);
+    if (Sign.isNegative(det))
       result.set(Scalar::negate, Tensor.ALL, x.length() - 1);
     return result;
   }

@@ -2,7 +2,7 @@
 
 # ch.alpine.sophus
 
-Library for non-linear geometry computations in Java 17.
+Library for non-linear geometry computations in Java.
 
 ![](https://github.com/datahaki/sophus/actions/workflows/mvn_test.yml/badge.svg)
 

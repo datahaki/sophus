@@ -16,11 +16,11 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.HilbertMatrix;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pd.Orthogonalize;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Chop;
 
 class SoMemberQTest {
   @Test
@@ -43,9 +43,9 @@ class SoMemberQTest {
     Tensor x = RandomVariate.of(NormalDistribution.standard(), n, n);
     Tensor matrix = SoMemberQ.project(x);
     Scalar scalar = Det.of(matrix);
-    Tolerance.CHOP.requireClose(scalar, RealScalar.ONE);
+    Chop._10.requireClose(scalar, RealScalar.ONE);
     Tensor polard = Orthogonalize.usingPD(matrix); // does not work with x
-    Tolerance.CHOP.requireClose(matrix, polard);
+    Chop._10.requireClose(matrix, polard);
   }
 
   @Test
