@@ -18,7 +18,7 @@ class SnMemberQTest {
   @Test
   void testD2() {
     for (int n = 5; n < 14; ++n)
-      CirclePoints.of(n).stream().forEach(SnMemberQ.INSTANCE::require);
+      CirclePoints.of(n).forEach(SnMemberQ.INSTANCE::require);
   }
 
   @Test

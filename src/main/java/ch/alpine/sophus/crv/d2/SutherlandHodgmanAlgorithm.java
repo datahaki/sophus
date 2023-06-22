@@ -29,7 +29,7 @@ public class SutherlandHodgmanAlgorithm implements Serializable {
   /** @param clip convex, vertices ordered ccw, with dimensions n x 2
    * @return */
   public static SutherlandHodgmanAlgorithm of(Tensor clip) {
-    clip.stream().forEach(vertex -> VectorQ.requireLength(vertex, 2));
+    clip.forEach(vertex -> VectorQ.requireLength(vertex, 2));
     return new SutherlandHodgmanAlgorithm(clip);
   }
 

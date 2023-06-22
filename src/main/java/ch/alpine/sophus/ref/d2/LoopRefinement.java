@@ -15,7 +15,7 @@ public record LoopRefinement(BiinvariantMean biinvariantMean) //
   @Override
   public SurfaceMesh refine(SurfaceMesh surfaceMesh) {
     {
-      surfaceMesh.faces().stream().forEach(a -> Integers.requireEquals(a.length, 3));
+      surfaceMesh.faces().forEach(a -> Integers.requireEquals(a.length, 3));
     }
     SurfaceMeshRefinement surfaceMeshRefinement = new TriQuadLinearRefinement(biinvariantMean);
     SurfaceMesh out = surfaceMeshRefinement.refine(surfaceMesh);

@@ -25,7 +25,7 @@ class MinTriangleAreaSquaredTest {
   void testSimple() {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
-      polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
+      polygon.forEach(row -> row.append(RealScalar.of(3)));
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, AveragingWeights.of(n));
     }
@@ -35,7 +35,7 @@ class MinTriangleAreaSquaredTest {
   void testSimpleUnit() {
     for (int n = 3; n <= 6; ++n) {
       Tensor polygon = CirclePoints.of(n);
-      polygon.stream().forEach(row -> row.append(RealScalar.of(3)));
+      polygon.forEach(row -> row.append(RealScalar.of(3)));
       polygon = polygon.map(s -> Quantity.of(s, "s"));
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       Tolerance.CHOP.requireClose(weights, AveragingWeights.of(n));

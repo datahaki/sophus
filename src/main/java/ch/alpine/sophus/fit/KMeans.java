@@ -44,7 +44,7 @@ public class KMeans {
     List<Integer> list = tensor.stream().map(ArgMin::of).toList();
     partition = Array.of(i -> Tensors.empty(), seeds.length());
     AtomicInteger atomicInteger = new AtomicInteger();
-    sequence.stream().forEach(point -> partition.set(entry -> entry.append(point), list.get(atomicInteger.getAndIncrement())));
+    sequence.forEach(point -> partition.set(entry -> entry.append(point), list.get(atomicInteger.getAndIncrement())));
     seeds = Tensor.of(partition.stream() //
         .filter(subset -> 0 < subset.length()) //
         .map(subset -> biinvariantMean.mean(subset, ConstantArray.of(RationalScalar.of(1, subset.length()), subset.length()))));

@@ -76,7 +76,7 @@ class DubinsTransitionSpaceTest {
       assertEquals(8, wrap.samples().length());
       assertNotSame(start, wrap.samples().get(0));
       assertEquals(end, Last.of(wrap.samples()));
-      wrap.spacing().stream().forEach(s -> assertEquals(res, s));
+      wrap.spacing().forEach(s -> assertEquals(res, s));
     }
     // {
     // TransitionWrap wrap = transition.wrapped(8);

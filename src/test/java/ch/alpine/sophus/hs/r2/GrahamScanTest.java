@@ -72,11 +72,11 @@ class GrahamScanTest {
     tensor.append(Tensors.vector(1, 1));
     double variance = 1e-15;
     Distribution distribution = NormalDistribution.of(2.0, variance);
-    RandomVariate.of(distribution, 5 - 1, 2).stream().forEach(tensor::append);
+    RandomVariate.of(distribution, 5 - 1, 2).forEach(tensor::append);
     Tensor hull = ConvexHull2D.of(tensor);
     assertTrue(2 <= hull.length());
     assertTrue(hull.length() <= 3);
-    RandomVariate.of(distribution, 200 - 1, 2).stream().forEach(tensor::append);
+    RandomVariate.of(distribution, 200 - 1, 2).forEach(tensor::append);
     hull = ConvexHull2D.of(tensor);
     assertTrue(2 <= hull.length());
     assertTrue(hull.length() <= 3);

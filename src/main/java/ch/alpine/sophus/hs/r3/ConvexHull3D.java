@@ -17,7 +17,7 @@ public enum ConvexHull3D {
   /** @param tensor of size n x 3, representing a list of vertices in 3-dimensional Euclidean space
    * @return */
   public static List<int[]> of(Tensor tensor) {
-    tensor.stream().forEach(vector -> VectorQ.requireLength(vector, 3));
+    tensor.forEach(vector -> VectorQ.requireLength(vector, 3));
     ScalarUnaryOperator suo = QuantityMagnitude.singleton(QuantityUnit.of(tensor.Get(0, 0)));
     QuickHull3D quickHull3D = new QuickHull3D(Primitives.toDoubleArray(tensor.map(suo)));
     quickHull3D.buildHull();
