@@ -56,7 +56,7 @@ public record DooSabinRefinement(BiinvariantMean biinvariantMean) //
           IntDirectedEdge res2 = edge_outVrt.get(edge2);
           if (Objects.nonNull(res2)) {
             IntDirectedEdge res1 = entry.getValue();
-            out.addFace(new int[] { res1.j(), res1.i(), res2.j(), res2.i() });
+            out.addFace(res1.j(), res1.i(), res2.j(), res2.i());
             set.add(edge2);
           }
         }

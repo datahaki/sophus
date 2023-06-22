@@ -3,7 +3,6 @@ package ch.alpine.sophus.fit;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Sedarim;
@@ -42,7 +41,7 @@ public class KMeans {
 
   public void iterate() {
     Tensor tensor = Transpose.of(Tensor.of(seeds.stream().map(sedarim::sunder)));
-    List<Integer> list = tensor.stream().map(ArgMin::of).collect(Collectors.toList());
+    List<Integer> list = tensor.stream().map(ArgMin::of).toList();
     partition = Array.of(i -> Tensors.empty(), seeds.length());
     AtomicInteger atomicInteger = new AtomicInteger();
     sequence.stream().forEach(point -> partition.set(entry -> entry.append(point), list.get(atomicInteger.getAndIncrement())));

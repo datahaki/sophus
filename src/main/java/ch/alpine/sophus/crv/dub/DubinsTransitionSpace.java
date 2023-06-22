@@ -36,6 +36,6 @@ public class DubinsTransitionSpace implements TransitionSpace, Serializable {
   }
 
   private DubinsPath dubinsPath(Tensor start, Tensor end) {
-    return FixedRadiusDubins.of(start, end, radius).stream().min(comparator).get();
+    return FixedRadiusDubins.of(start, end, radius).stream().min(comparator).orElseThrow();
   }
 }

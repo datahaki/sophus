@@ -34,7 +34,7 @@ public record IterativeCoordinateLevel(Genesis genesis, Chop chop, int max) impl
     if (OriginEnclosureQ.INSTANCE.test(levers)) {
       Tensor scaling = InverseNorm.INSTANCE.origin(levers);
       OptionalInt optionalInt = NormalizeTotal.indeterminate(scaling);
-      if (!optionalInt.isPresent()) {
+      if (optionalInt.isEmpty()) {
         Tensor normalized = Times.of(scaling, levers);
         int depth = 0;
         while (depth < max) {

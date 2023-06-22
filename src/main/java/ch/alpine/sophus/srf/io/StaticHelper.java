@@ -24,6 +24,6 @@ import ch.alpine.tensor.Tensors;
     return new String[] { //
         string.substring(0, i0), //
         string.substring(b1, i1), //
-        string.substring(i1 + 1, string.length()) };
+        string.substring(i1 + 1) };
   }
 }
