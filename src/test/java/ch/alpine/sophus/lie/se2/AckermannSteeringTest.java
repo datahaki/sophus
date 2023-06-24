@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -52,5 +53,10 @@ class AckermannSteeringTest {
     Scalar delta = RealScalar.of(0.2);
     Tensor pair = asL.pair(delta);
     Chop._12.requireClose(pair, Tensors.vector(0.21711959572073944, 0.1853540110207382));
+  }
+
+  @Test
+  void testFail() {
+    assertThrows(Exception.class, () -> new AckermannSteering(RealScalar.ZERO, RealScalar.ONE));
   }
 }
