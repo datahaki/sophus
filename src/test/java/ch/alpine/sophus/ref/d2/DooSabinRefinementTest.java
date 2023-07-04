@@ -11,7 +11,7 @@ import ch.alpine.sophus.srf.io.PlyFormat;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.red.Mean;
 
 class DooSabinRefinementTest {

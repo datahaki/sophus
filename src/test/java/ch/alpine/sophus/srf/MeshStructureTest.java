@@ -14,7 +14,7 @@ import ch.alpine.sophus.ref.d2.SurfaceMeshExamples;
 import ch.alpine.sophus.ref.d2.SurfaceMeshRefinement;
 import ch.alpine.sophus.srf.io.PlyFormat;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.ext.ResourceData;
 
 class MeshStructureTest {
   @Test
