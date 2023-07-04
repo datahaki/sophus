@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
@@ -15,6 +14,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.itp.AbstractInterpolation;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.itp.LinearInterpolation;
@@ -53,11 +53,7 @@ import ch.alpine.tensor.sca.Floor;
         .map(scalar -> Tensors.of(RealScalar.ONE.subtract(scalar), scalar)) //
         .reduce(TensorProduct::of) //
         .orElseThrow(), n - 1);
-    List<Integer> fromIndex = findex.stream() //
-        .map(Scalar.class::cast) //
-        .map(Scalar::number) //
-        .map(Number::intValue) //
-        .collect(Collectors.toList());
+    List<Integer> fromIndex = Primitives.toListInteger(findex);
     List<Integer> dimensions = Collections.nCopies(n, 2);
     Tensor sequence = Flatten.of(tensor.block(fromIndex, dimensions), n - 1);
     return biinvariantMean.mean(sequence, weights);

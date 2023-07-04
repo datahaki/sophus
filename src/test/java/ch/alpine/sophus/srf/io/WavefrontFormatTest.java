@@ -16,6 +16,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.ReadLine;
 import ch.alpine.tensor.mat.MatrixQ;
@@ -55,7 +56,7 @@ class WavefrontFormatTest {
         Tensor normals = wavefrontObject.normals();
         Tensor faces = wavefrontObject.faces();
         normals.add(faces); // test if tensors have identical structure
-        Scalar index_max = (Scalar) normals.flatten(-1).reduce(Max::of).get();
+        Scalar index_max = Flatten.scalars(normals).reduce(Max::of).get();
         assertEquals(index_max.number().intValue() + 1, wavefront.normals().length());
       }
     }

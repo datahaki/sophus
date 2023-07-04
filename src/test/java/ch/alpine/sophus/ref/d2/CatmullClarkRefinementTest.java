@@ -13,6 +13,7 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.sophus.srf.io.PlyFormat;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.io.ResourceData;
@@ -34,7 +35,7 @@ class CatmullClarkRefinementTest {
     assertTrue(surfaceMesh.boundary().isEmpty());
     SurfaceMeshRefinement surfaceMeshRefinement = new CatmullClarkRefinement(RnBiinvariantMean.INSTANCE);
     SurfaceMesh refine1 = surfaceMeshRefinement.refine(surfaceMesh);
-    assertEquals(refine1.vrt.flatten(-1).distinct().count(), 7);
+    assertEquals(Flatten.scalars(refine1.vrt).distinct().count(), 7);
     assertEquals(refine1.vrt.length(), 26);
     assertEquals(Mean.of(refine1.vrt), Tensors.vector(0.5, 0.5, 0.5));
     ExactTensorQ.require(refine1.vrt);

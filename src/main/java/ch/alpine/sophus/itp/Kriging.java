@@ -2,7 +2,6 @@
 package ch.alpine.sophus.itp;
 
 import java.io.Serializable;
-import java.util.List;
 
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.ExponentialVariogram;
@@ -20,7 +19,7 @@ import ch.alpine.tensor.mat.pi.LagrangeMultiplier;
 import ch.alpine.tensor.mat.pi.PseudoInverse;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityUnit;
-import ch.alpine.tensor.qty.Unit;
+import ch.alpine.tensor.red.EqualsReduce;
 
 /** implementation of kriging for homogeneous spaces
  * 
@@ -70,18 +69,6 @@ public class Kriging implements Serializable {
     return interpolation(sedarim, sequence, IdentityMatrix.of(sequence.length()));
   }
 
-  private static Unit getUnitUnique(Tensor tensor) {
-    List<Unit> list = tensor.flatten(-1) //
-        .map(Scalar.class::cast) //
-        .map(QuantityUnit::of) //
-        .distinct() //
-        .limit(2).toList();
-    if (list.size() == 1)
-      return list.get(0);
-    // list has at most 2 elements, so list.toString() is acceptable
-    throw new IllegalArgumentException(list.toString());
-  }
-
   /** @param sedarim
    * @param sequence
    * @param values vector or matrix
@@ -92,7 +79,7 @@ public class Kriging implements Serializable {
     Tensor vardst = Tensor.of(sequence.stream().map(sedarim::sunder));
     SymmetricMatrixQ.require(vardst);
     Tensor matrix = vardst.subtract(SymmetricMatrixQ.require(covariance));
-    Scalar one = Quantity.of(RealScalar.ONE, getUnitUnique(matrix)); // TODO SOPHUS IMPL probably can be simplified
+    Scalar one = Quantity.of(RealScalar.ONE, QuantityUnit.of(EqualsReduce.zero(matrix))); // TODO SOPHUS IMPL probably can be simplified
     int n = matrix.length();
     Tensor rhs = Tensors.of(values.get(0).map(Scalar::zero));
     LagrangeMultiplier lagrangeMultiplier = //

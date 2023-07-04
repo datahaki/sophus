@@ -9,6 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.lie.HodgeDual;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -67,7 +68,7 @@ public enum Sl2Group implements LieGroup {
   @Override // from Exponential
   public Tensor vectorLog(Tensor q) {
     // specific to Sl2, skip 1, or limit 3
-    return Tensor.of(log(q).flatten(1).skip(1));
+    return Tensor.of(Flatten.stream(log(q), 1).skip(1));
   }
 
   @Override

@@ -4,7 +4,6 @@ package ch.alpine.sophus.gbc.d2;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -12,6 +11,7 @@ import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Tuples;
+import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.FirstPosition;
 
@@ -54,10 +54,8 @@ public class SPatch implements Sedarim {
   }
 
   public Tensor embed(Tensor rep) {
-    return rep.stream() //
-        .map(Scalar.class::cast) //
-        .map(Scalar::number) //
-        .mapToInt(Number::intValue) //
+    // TODO OWL use Mean
+    return Primitives.toIntStream(rep) //
         .mapToObj(v::get) //
         .reduce(Tensor::add) //
         .orElseThrow().divide(RealScalar.of(rep.length()));

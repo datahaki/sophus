@@ -11,11 +11,11 @@ import ch.alpine.sophus.hs.HsPair;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.NilpotentAlgebraQ;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
@@ -125,40 +125,30 @@ public class HsAlgebra implements HsLocal, Serializable {
 
   /** function asserts [h, h] subset h which is a requirement for any homogeneous space */
   private void consistencyCheck() {
-    if (!Transpose.of(ad, 0, 2, 1).add(ad) //
-        .flatten(-1) //
-        .map(Scalar.class::cast) //
+    if (!Flatten.scalars(Transpose.of(ad, 0, 2, 1).add(ad)) //
         .allMatch(Scalars::isZero))
       throw new Throw(ad);
-    if (!ad.block(List.of(0, dim_m, dim_m), List.of(dim_m, dim_h, dim_h)) //
-        .flatten(-1) //
-        .map(Scalar.class::cast) //
+    if (!Flatten.scalars(ad.block(List.of(0, dim_m, dim_m), List.of(dim_m, dim_h, dim_h))) //
         .allMatch(Scalars::isZero))
       throw new Throw(ad);
   }
 
   /** @return whether [h, m] subset m, i.e. h cap [h, m] = {0} */
   public boolean isReductive() {
-    return ad.block(List.of(dim_m, dim_m, 0), List.of(dim_h, dim_h, dim_m)) //
-        .flatten(-1) //
-        .map(Scalar.class::cast) //
+    return Flatten.scalars(ad.block(List.of(dim_m, dim_m, 0), List.of(dim_h, dim_h, dim_m))) //
         .allMatch(Scalars::isZero);
   }
 
   /** @return whether [m, m] subset h, i.e. m cap [m, m] = {0} */
   public boolean isSymmetric() {
-    return ad.block(List.of(0, 0, 0), List.of(dim_m, dim_m, dim_m)) //
-        .flatten(-1) //
-        .map(Scalar.class::cast) //
+    return Flatten.scalars(ad.block(List.of(0, 0, 0), List.of(dim_m, dim_m, dim_m))) //
         .allMatch(Scalars::isZero);
   }
 
   /** @return whether [m, g] subset m, in which case finding the element h that
    * projects g to m is trivial */
   public boolean isHTrivial() {
-    return ad.block(List.of(dim_m, 0, 0), List.of(dim_h, dim_g, dim_m)) //
-        .flatten(-1) //
-        .map(Scalar.class::cast) //
+    return Flatten.scalars(ad.block(List.of(dim_m, 0, 0), List.of(dim_h, dim_g, dim_m))) //
         .allMatch(Scalars::isZero);
   }
 
