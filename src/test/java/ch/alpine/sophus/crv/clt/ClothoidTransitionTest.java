@@ -39,13 +39,6 @@ class ClothoidTransitionTest {
   }
 
   @Test
-  void testLog2Int() {
-    int value = 1024;
-    int bit = 31 - Integer.numberOfLeadingZeros(value);
-    assertEquals(bit, 10);
-  }
-
-  @Test
   void testWrapped() {
     Tensor start = Tensors.vector(2, 3, 3);
     Tensor end = Tensors.vector(4, 1, 5);

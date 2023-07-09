@@ -9,9 +9,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Differences;
 
-/** EXPERIMENTAL SOPHUS
- * 
- * <pre>
+/** <pre>
  * HsDifferences[{a, b, c, d, e}] == {{a, log_a[b]}, {b, log_b[c]}, ..., {d, log_d[e]}}
  * </pre>
  * 
