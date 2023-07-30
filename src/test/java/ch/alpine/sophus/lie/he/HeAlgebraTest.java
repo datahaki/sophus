@@ -80,8 +80,6 @@ class HeAlgebraTest {
 
   @Test
   void testZeroFail() throws IOException {
-    Tensor ad = Normal.of(new HeAlgebra(2).ad());
-    Export.of(HomeDirectory.file("he2_ad.mathematica"), ad);
     assertThrows(Exception.class, () -> new HeAlgebra(0));
   }
 }

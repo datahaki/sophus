@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 
 /* package */ enum StaticHelper {
   ;
-  static Tensor three(String string) {
+  public static Tensor three(String string) {
     StringTokenizer stringTokenizer = new StringTokenizer(string);
     return Tensors.of( //
         Scalars.fromString(stringTokenizer.nextToken()), //
@@ -17,7 +17,7 @@ import ch.alpine.tensor.Tensors;
         Scalars.fromString(stringTokenizer.nextToken()));
   }
 
-  static String[] slash(String string) {
+  public static String[] slash(String string) {
     int i0 = string.indexOf('/');
     int b1 = i0 + 1;
     int i1 = string.indexOf('/', b1);
