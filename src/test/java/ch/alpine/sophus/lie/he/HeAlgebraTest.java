@@ -14,15 +14,12 @@ import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
-import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import ch.alpine.tensor.spa.Normal;
 
 class HeAlgebraTest {
   private final Distribution distribution = UniformDistribution.of(-0.05, 0.05);

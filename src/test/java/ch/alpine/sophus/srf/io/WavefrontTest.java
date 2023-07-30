@@ -52,7 +52,7 @@ class WavefrontTest {
 
   @Test
   void testLoad() throws IOException {
-    File directory = HomeDirectory.file("Projects/gym-duckietown/gym_duckietown/meshes");
+    File directory = HomeDirectory.file("Projects", "gym-duckietown", "gym_duckietown", "meshes");
     if (directory.isDirectory())
       for (File file : directory.listFiles())
         if (file.getName().endsWith(".obj"))
