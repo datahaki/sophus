@@ -3,7 +3,6 @@ package ch.alpine.sophus.lie.he;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
 import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
@@ -76,7 +75,7 @@ class HeAlgebraTest {
   }
 
   @Test
-  void testZeroFail() throws IOException {
+  void testZeroFail() {
     assertThrows(Exception.class, () -> new HeAlgebra(0));
   }
 }

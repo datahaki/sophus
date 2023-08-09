@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs.r3.qh3;
+package ch.alpine.sophus.hs.r3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.r3.ConvexHull3D;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;

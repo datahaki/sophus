@@ -1,6 +1,9 @@
 // code by jph
 package ch.alpine.sophus.dv;
 
+import java.util.Random;
+import java.util.random.RandomGenerator;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
@@ -23,8 +26,9 @@ class AffineCoordinateTest {
   void testS1() {
     Genesis genesis = MetricCoordinate.affine();
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(1);
+    RandomGenerator random = new Random(3);
     for (int n = 3; n < 10; ++n) {
-      Tensor levers = RandomSample.of(randomSampleInterface, n);
+      Tensor levers = RandomSample.of(randomSampleInterface, random, n);
       Tensor w1 = genesis.origin(levers.unmodifiable());
       Tensor w2 = AffineCoordinate.INSTANCE.origin(levers);
       Chop._07.requireClose(w1, w2);
@@ -35,10 +39,11 @@ class AffineCoordinateTest {
   void testRn() {
     Genesis genesis = MetricCoordinate.affine();
     Distribution distribution = NormalDistribution.standard();
+    RandomGenerator random = new Random(3);
     for (int n = 3; n < 10; ++n)
       for (int k = 0; k < 2; ++k) {
         int d = 2 + k;
-        Tensor levers = RandomVariate.of(distribution, n + k, d);
+        Tensor levers = RandomVariate.of(distribution, random, n + k, d);
         Tensor w1 = genesis.origin(levers);
         Tensor w2 = AffineCoordinate.INSTANCE.origin(levers);
         Chop._04.requireClose(w1, w2);
@@ -48,10 +53,11 @@ class AffineCoordinateTest {
   @Test
   void testIterateR2() {
     Distribution distribution = UniformDistribution.of(-1, 5);
+    RandomGenerator random = new Random(3);
     int d = 2;
     for (int n = 4; n < 10; ++n)
       for (int count = 0; count < 10; ++count) {
-        Tensor levers = RandomVariate.of(distribution, n, d);
+        Tensor levers = RandomVariate.of(distribution, random, n, d);
         if (OriginEnclosureQ.INSTANCE.test(levers)) {
           for (int i = 0; i < 3; ++i) {
             Tensor weights = AffineCoordinate.INSTANCE.origin(levers);

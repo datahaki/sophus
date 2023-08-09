@@ -8,7 +8,8 @@ import ch.alpine.sophus.math.api.GroupElement;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.num.Cycles;
 
-public class Permutation implements GroupElement, Serializable {
+// TODO SOPHUS API Permutation is not used, therefore visibility is reduced
+/* package */ class Permutation implements GroupElement, Serializable {
   private final Cycles cycles;
 
   public Permutation(Cycles cycles) {

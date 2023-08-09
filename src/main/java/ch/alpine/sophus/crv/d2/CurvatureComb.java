@@ -18,7 +18,6 @@ import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
-import ch.alpine.tensor.sca.InvertUnlessZero;
 
 /** .
  * G0 - Position, tangent of curve is not continuous, example: polygons
@@ -84,7 +83,6 @@ public enum CurvatureComb {
   @PackageTestAccess
   static Tensor normal(Tensor p, Tensor q, Tensor r, Tensor tangent) {
     Optional<Scalar> optional = SignedCurvature2D.of(p, q, r);
-    
     return optional.isPresent() //
         ? NORMALIZE_UNLESS_ZERO.apply(Cross.of(tangent)).multiply(optional.orElseThrow())
         : tangent.map(Unprotect::zero_negateUnit);

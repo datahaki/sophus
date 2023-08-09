@@ -24,6 +24,13 @@ jobs:
           git clone https://github.com/datahaki/tensor.git
           cd tensor
           mvn clean install -DskipTests=true
+      - name: mvn install bridge
+        working-directory: .
+        run: |
+          cd ..
+          git clone https://github.com/datahaki/bridge.git
+          cd bridge
+          mvn clean install -DskipTests=true
       - name: mvn test
         working-directory: .
         run: mvn test -B

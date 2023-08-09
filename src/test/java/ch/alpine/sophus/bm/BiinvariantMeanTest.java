@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
@@ -31,15 +33,16 @@ class BiinvariantMeanTest {
   @Test
   void testRnSimple() {
     Distribution distribution = UniformDistribution.unit();
+    Random random = new Random(3);
     for (int n = 1; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
+      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
       Tensor matrix = affine(n);
       Tensor invers = Inverse.of(matrix);
       Tensor mapped = Tensor.of(matrix.stream() //
           .map(weights -> RnBiinvariantMean.INSTANCE.mean(sequence, weights)));
       Tensor result = Tensor.of(invers.stream() //
           .map(weights -> RnBiinvariantMean.INSTANCE.mean(mapped, weights)));
-      Tolerance.CHOP.requireClose(sequence, result);
+      Chop._08.requireClose(sequence, result);
     }
   }
 
