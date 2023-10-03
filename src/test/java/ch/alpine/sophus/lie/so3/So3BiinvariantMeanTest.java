@@ -1,7 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so3;
 
-import java.util.Random;
+import java.security.SecureRandom;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ class So3BiinvariantMeanTest {
 
   @Test
   void testConvergence() {
-    Random random = new Random();
+    RandomGenerator random = new SecureRandom();
     Distribution distribution = NormalDistribution.of(0.0, 0.3);
     for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES) {
       int n = 4 + random.nextInt(6);

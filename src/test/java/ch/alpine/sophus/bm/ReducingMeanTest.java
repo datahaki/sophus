@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
@@ -123,7 +124,7 @@ class ReducingMeanTest {
 
   @Test
   void testLagrangeProperty() {
-    RandomGenerator random = new Random();
+    RandomGenerator random = new SecureRandom();
     int d = 2;
     int len = 5 + random.nextInt(3);
     RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());

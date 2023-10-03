@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.security.SecureRandom;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +52,7 @@ class RnGroupTest {
 
   @Test
   void testSimple() {
-    Random random = new Random();
+    RandomGenerator random = new SecureRandom();
     Distribution distribution = NormalDistribution.standard();
     for (int n = 2; n < 5; ++n) {
       int length = n + 1 + random.nextInt(3);

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.lang.reflect.Modifier;
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -41,7 +42,7 @@ class HarborBiinvariantTest {
 
   @Test
   void testRn() {
-    RandomGenerator random = new Random();
+    RandomGenerator random = new SecureRandom();
     Distribution distribution = UniformDistribution.of(Clips.absolute(10));
     Manifold manifold = RnGroup.INSTANCE;
     int length = 4 + random.nextInt(6);

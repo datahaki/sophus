@@ -2,8 +2,10 @@
 package ch.alpine.sophus.itp;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +43,7 @@ class KrigingTest {
 
   @Test
   void testSimple2() {
-    Random random = new Random();
+    RandomGenerator random = new SecureRandom();
     Distribution distributiox = NormalDistribution.standard();
     Distribution distribution = NormalDistribution.of(0, 0.1);
     PowerVariogram powerVariogram = PowerVariogram.of(1, 1.4);

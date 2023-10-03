@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -94,7 +96,7 @@ class Se2CoveringGroupTest {
 
   @Test
   void testAdInv() {
-    Random random = new Random();
+    RandomGenerator random = new SecureRandom();
     int n = 5 + random.nextInt(3);
     Tensor sequence = RandomSample.of(RANDOM_SAMPLE_INTERFACE, n);
     Tensor point = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
@@ -334,7 +336,7 @@ class Se2CoveringGroupTest {
 
   @Test
   void testProjectionIntoAdInvariant() {
-    Random random = new Random();
+    RandomGenerator random = new SecureRandom();
     Distribution distribution = NormalDistribution.standard();
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     Manifold manifold = Se2CoveringGroup.INSTANCE;
