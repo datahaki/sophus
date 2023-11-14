@@ -7,7 +7,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.PackageTestAccess;
 
 /** @param sequence of (x, y, z) points in He(n) of shape ((x1, ..., xm), (y1, ..., ym), z)
- * @param normalized non negative weights
+ * @param normalized non-negative weights
  * @return associated biinvariant mean which is the solution to the barycentric equation
  * 
  * Reference 1:

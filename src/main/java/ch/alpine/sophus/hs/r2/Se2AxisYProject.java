@@ -31,7 +31,7 @@ public class Se2AxisYProject implements TensorScalarFunction {
   }
 
   /** @param u == {vx, 0, rate} with units {[m*s^-1], ?, [s^-1]}
-   * @return time to arrival of a point on the y axis that is subject to flow x to reach p.
+   * @return time to arrival of a point on the y-axis that is subject to flow x to reach p.
    * negative return values are also possible. */
   public static TensorScalarFunction of(Tensor u) {
     Scalar vx = u.Get(0);

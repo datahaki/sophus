@@ -12,7 +12,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * "the hyperbolic space can be seen as the sphere of radius -1 in the
  * (n + 1)-dimensional Minkowski space"
  * 
- * "This happen to be in fact a global diffeomorphism that provides a
+ * "This happens to be in fact a global diffeomorphism that provides a
  * very convenient global chart of the hyperbolic space."
  * 
  * Reference:

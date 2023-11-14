@@ -9,7 +9,7 @@ import ch.alpine.tensor.Scalar;
 /** Merrien interpolatory Hermite subdivision scheme of order two
  * implementation for R^n
  * 
- * This scheme reproduces polynomials of degree 1. Moreover it reproduces
+ * This scheme reproduces polynomials of degree 1. Moreover, it reproduces
  * polynomials of degree 2 if and only if lambda == -1/8, and
  * polynomials of degree 3 if also mu == -1/2.
  * 

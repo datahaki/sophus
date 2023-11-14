@@ -9,7 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-/** Quote: "RxRxS is a Lie group and it can be shown using some
+/** Quote: "RxRxS is a Lie group, and it can be shown using some
  * representation theory that G is not a matrix group"
  * 
  * Reference:

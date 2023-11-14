@@ -20,7 +20,7 @@ import ch.alpine.tensor.red.Mean;
  * but do not satisfy Lagrange property
  * 
  * Reference:
- * "Affine generalised barycentric coordinates"
+ * "Affine generalized barycentric coordinates"
  * by S. Waldron, Jaen Journal on Approximation, 3(2):209-226, 2011
  * 
  * Quote: "Among all generalized barycentric coordinates with respect to a
@@ -28,7 +28,7 @@ import ch.alpine.tensor.red.Mean;
  * L2-norm, which are uniquely defined as the affine functions."
  * in Kai Hormann, N. Sukumar, 2017
  * 
- * <p>The concept of a one-time computation of a pseudoinverse at a central
+ * <p>The concept of a one-time computation of a pseudo-inverse at a central
  * location does not generalize to non-linear spaces.
  * 
  * @see AffineCoordinate */

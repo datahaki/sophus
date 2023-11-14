@@ -19,7 +19,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * then the function outputs values with unit "m^-1".
  * 
  * Sign convention:
- * For points sampled from a circle in counter clockwise direction
+ * For points sampled from a circle in counterclockwise direction
  * the result is positive, i.e. the inverse of the radius of the circle.
  * For instance: for the points {1, 0}, {0, 1}, {-1, 0} from the
  * unit circle the result is +1. */

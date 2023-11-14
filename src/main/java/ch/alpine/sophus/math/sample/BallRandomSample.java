@@ -16,7 +16,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Power;
 
-/** uniform random samples from the interior of a n-dimensional sphere
+/** uniform random samples from the interior of an n-dimensional sphere
  * 
  * implementation supports the use of Quantity
  * 

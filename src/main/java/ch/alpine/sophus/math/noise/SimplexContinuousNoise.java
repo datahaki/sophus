@@ -348,12 +348,12 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
     j1 = ranky >= 3 ? 1 : 0;
     k1 = rankz >= 3 ? 1 : 0;
     l1 = rankw >= 3 ? 1 : 0;
-    // Rank 2 denotes the second largest coordinate.
+    // Rank 2 denotes the second-largest coordinate.
     i2 = rankx >= 2 ? 1 : 0;
     j2 = ranky >= 2 ? 1 : 0;
     k2 = rankz >= 2 ? 1 : 0;
     l2 = rankw >= 2 ? 1 : 0;
-    // Rank 1 denotes the second smallest coordinate.
+    // Rank 1 denotes the second-smallest coordinate.
     i3 = rankx >= 1 ? 1 : 0;
     j3 = ranky >= 1 ? 1 : 0;
     k3 = rankz >= 1 ? 1 : 0;

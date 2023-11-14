@@ -50,11 +50,11 @@ public enum Hermite3Subdivisions {
    * For theta == 0 and omega == 0, the scheme reduces to Hermite1Subdivision
    * 
    * <p>Quote:
-   * "it is proved that the scheme reproduces polynomials up to degree 3 and
+   * "it is proved that the scheme reproduces polynomials up to degree 3, and
    * thus it satisfies the spectral condition up to order 3"
    * 
    * <p>Quote:
-   * "theta = 1/32 provides an example of an Hermite scheme which does not reproduce
+   * "theta = 1/32 provides an example of a Hermite scheme which does not reproduce
    * polynomials of degree 4, but satisfies the spectral condition of order 4.
    * To the best of our knowledge, this is the first time it is observed that the
    * spectral condition is not equivalent to the reproduction of polynomials."

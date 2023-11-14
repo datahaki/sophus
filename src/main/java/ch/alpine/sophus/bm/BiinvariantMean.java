@@ -24,7 +24,7 @@ import ch.alpine.tensor.itp.BinaryAverage;
  * <p>"The intuition behind such a bi-invariant mean on matrix Lie groups was present in [2003 Woods]
  * along with a practical iterative algorithm to compute it. However, no precise definition nor proof
  * of convergence was provided. The barycentric definition of bi-invariant means on Lie groups based
- * on one-parameter subgroups was developed in the the PhD of Vincent Arsigny and in the research
+ * on one-parameter subgroups was developed in the PhD of Vincent Arsigny and in the research
  * report [2006 Arsigny, Pennec, Ayache]." [p.4]
  * 
  * <p>
