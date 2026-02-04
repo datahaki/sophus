@@ -26,7 +26,7 @@ class ScBiinvariantMeanTest {
     for (int n = 3; n < 10; ++n) {
       Tensor sequence = RandomVariate.of(distribution, n);
       Scalar geomet = (Scalar) GeometricMean.of(sequence);
-      Tensor weights = AveragingWeights.of(sequence.length());
+      Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
       Tensor scmean = ScGroup.INSTANCE.biinvariantMean().mean(sequence.map(Tensors::of), weights);
       Chop._10.requireClose(Tensors.of(geomet), scmean);
     }

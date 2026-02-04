@@ -17,7 +17,7 @@ class WeightedGeometricMeanTest {
     int n = 5;
     Distribution distribution = UniformDistribution.of(0.4, 10);
     Tensor sequence = RandomVariate.of(distribution, n, 3);
-    Tensor weights = AveragingWeights.of(n);
+    Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
     Tensor m1 = WeightedGeometricMean.INSTANCE.mean(sequence, weights);
     Tensor m2 = GeometricMean.of(sequence);
     Tolerance.CHOP.requireClose(m1, m2);

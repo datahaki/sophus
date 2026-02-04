@@ -69,7 +69,7 @@ class SnManifoldTest {
     for (int n = 2; n < 10; ++n) {
       Tensor angles = RandomVariate.of(distribution, n);
       Tensor sequence = angles.map(AngleVector::of);
-      Tensor weights = AveragingWeights.of(n);
+      Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
       Tensor point = SnManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
       Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
     }
