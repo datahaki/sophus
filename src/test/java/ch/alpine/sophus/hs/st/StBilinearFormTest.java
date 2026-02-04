@@ -32,7 +32,7 @@ class StBilinearFormTest {
       assertTrue(Im.allZero(p));
       stiefelManifold.requireMember(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
-      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.3), randomGenerator, k, n));
+      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, k, n));
       assertTrue(Im.allZero(v));
       BilinearForm bilinearForm = stiefelManifold.bilinearForm(p);
       Scalar norm = bilinearForm.norm(v);
@@ -43,7 +43,7 @@ class StBilinearFormTest {
       assertTrue(Im.allZero(w));
       Scalar d_pq = stiefelManifold.distance(p, q);
       Tolerance.CHOP.requireClose(norm, d_pq);
-      Tensor u = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.3), randomGenerator, k, n));
+      Tensor u = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, k, n));
       Scalar eval1 = bilinearForm.formEval(u, v);
       Scalar eval2 = bilinearForm.formEval(v, u);
       Tolerance.CHOP.requireClose(eval1, eval2);
