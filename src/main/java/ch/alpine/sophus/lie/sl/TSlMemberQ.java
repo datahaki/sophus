@@ -2,12 +2,12 @@
 package ch.alpine.sophus.lie.sl;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.chq.ConstraintSquareMatrixQ;
+import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
 
-public class TSlMemberQ extends ConstraintSquareMatrixQ {
+public class TSlMemberQ extends ZeroDefectSquareMatrixQ {
   public static final TSlMemberQ INSTANCE = new TSlMemberQ(Tolerance.CHOP);
 
   public TSlMemberQ(Chop chop) {

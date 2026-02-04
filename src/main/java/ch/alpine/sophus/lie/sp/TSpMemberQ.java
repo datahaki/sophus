@@ -2,10 +2,10 @@ package ch.alpine.sophus.lie.sp;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.chq.ConstraintSquareMatrixQ;
+import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class TSpMemberQ extends ConstraintSquareMatrixQ {
+public class TSpMemberQ extends ZeroDefectSquareMatrixQ {
   private final Tensor omega;
 
   public TSpMemberQ(int n, Chop chop) {

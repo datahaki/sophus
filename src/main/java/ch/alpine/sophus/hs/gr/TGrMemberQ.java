@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.gr;
 import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
-import ch.alpine.tensor.chq.ConstraintSquareMatrixQ;
+import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.HermitianMatrixQ;
@@ -13,7 +13,7 @@ import ch.alpine.tensor.sca.Chop;
 /** tangent space at given point x
  * 
  * The dimensionality of TGr(n, k) is k * (n - k). */
-public class TGrMemberQ extends ConstraintSquareMatrixQ {
+public class TGrMemberQ extends ZeroDefectSquareMatrixQ {
   private final Tensor p;
 
   /** @param p in Gr(n, k) */

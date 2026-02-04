@@ -5,10 +5,10 @@ import java.util.Objects;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.chq.ConstraintMemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class TSnMemberQ extends ConstraintMemberQ {
+public class TSnMemberQ extends ZeroDefectArrayQ {
   private final Tensor p;
 
   public TSnMemberQ(Tensor p, Chop chop) {

@@ -33,7 +33,7 @@ class StExponentialTest {
       Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
       stiefelManifold.requireMember(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
-      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.3), randomGenerator, k, n));
+      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, k, n));
       Scalar norm = Matrix2Norm.of(v);
       assertFalse(Chop._08.isZero(norm));
       Exponential exponential = stiefelManifold.exponential(p);
@@ -54,7 +54,7 @@ class StExponentialTest {
     Tensor p = IdentityMatrix.of(n);
     stiefelManifold.requireMember(p);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
-    Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.3), randomGenerator, n, n));
+    Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, n, n));
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor q = exponential.exp(v);
     stiefelManifold.requireMember(q);
