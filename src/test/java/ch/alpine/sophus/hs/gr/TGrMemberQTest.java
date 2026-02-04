@@ -65,7 +65,7 @@ class TGrMemberQTest {
     Tensor q = RandomSample.of(randomSampleInterface);
     Tensor v = new GrExponential(p).log(q);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p); // .require(v);
-    LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::constraint, n, n);
+    LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::defect, n, n);
     assertFalse(linearSubspace.basis().stream().anyMatch(ExactTensorQ::of));
     assertEquals(linearSubspace.dimensions(), k * (n - k));
     tGrMemberQ.requireMember(v);
@@ -120,7 +120,7 @@ class TGrMemberQTest {
         assertEquals(r, expected);
         int dim = k * (n - k);
         if (0 < dim) {
-          LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::constraint, n, n);
+          LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::defect, n, n);
           assertEquals(linearSubspace.dimensions(), dim);
           // IO.println("---");
           // linearSubspace.basis().forEach(b -> IO.println(Pretty.of(b)));

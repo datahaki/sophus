@@ -23,10 +23,10 @@ public class TGrMemberQ extends ConstraintSquareMatrixQ {
   }
 
   @Override
-  public Tensor constraint(Tensor v) {
+  public Tensor defect(Tensor v) {
     return Join.of( //
         p.dot(v).add(v.dot(p)).subtract(v), //
-        HermitianMatrixQ.INSTANCE.constraint(v));
+        HermitianMatrixQ.INSTANCE.defect(v));
   }
 
   /** Reference:

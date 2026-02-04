@@ -26,7 +26,7 @@ class TStMemberQTest {
     StiefelManifold stiefelManifold = new StiefelManifold(n, k);
     Tensor p = RandomSample.of(stiefelManifold);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
-    LinearSubspace linearSubspace = LinearSubspace.of(tStMemberQ::constraint, k, n);
+    LinearSubspace linearSubspace = LinearSubspace.of(tStMemberQ::defect, k, n);
     int dim = n * k - k * (k + 1) / 2;
     assertEquals(linearSubspace.basis().length(), dim);
     for (Tensor v : linearSubspace.basis()) {
@@ -53,7 +53,7 @@ class TStMemberQTest {
       assertTrue(tStMemberQ.isMember(v));
       Tensor v2 = tStMemberQ.projection(v);
       Chop._10.requireClose(v, v2);
-      LinearSubspace linearSubspace = LinearSubspace.of(tStMemberQ::constraint, k, n);
+      LinearSubspace linearSubspace = LinearSubspace.of(tStMemberQ::defect, k, n);
       Tensor v3 = linearSubspace.projection(c);
       Chop._10.requireClose(v, v3);
     }

@@ -15,7 +15,7 @@ public class TSlMemberQ extends ConstraintSquareMatrixQ {
   }
 
   @Override
-  public Tensor constraint(Tensor tensor) {
+  public Tensor defect(Tensor tensor) {
     return Trace.of(tensor);
   }
 }

@@ -30,7 +30,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 class TSnMemberQTest {
   @Test
   void test() {
-    LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(Tensors.vector(0, 1, 0))::constraint, 3);
+    LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(Tensors.vector(0, 1, 0))::defect, 3);
     assertEquals(Tensors.fromString("{{1, 0, 0}, {0, 0, 1}}"), linearSubspace.basis());
   }
 
@@ -39,7 +39,7 @@ class TSnMemberQTest {
   void testRandom(int n) {
     Sphere sphereN = new Sphere(n);
     Tensor p = RandomSample.of(sphereN);
-    LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(p)::constraint, n + 1);
+    LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(p)::defect, n + 1);
     assertDoesNotThrow(() -> Serialization.copy(linearSubspace));
     TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
     linearSubspace.basis().stream().forEach(tSnMemberQ::requireMember);

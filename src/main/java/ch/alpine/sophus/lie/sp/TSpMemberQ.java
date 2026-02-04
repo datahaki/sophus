@@ -18,7 +18,7 @@ public class TSpMemberQ extends ConstraintSquareMatrixQ {
   }
 
   @Override
-  public Tensor constraint(Tensor v) {
+  public Tensor defect(Tensor v) {
     return omega.dot(v).add(Transpose.of(v).dot(omega));
   }
 }

@@ -16,7 +16,7 @@ public class AffineQ extends ConstraintMemberQ {
   }
 
   @Override
-  public Tensor constraint(Tensor tensor) {
+  public Tensor defect(Tensor tensor) {
     return Total.of(tensor).subtract(RealScalar.ONE);
   }
 }

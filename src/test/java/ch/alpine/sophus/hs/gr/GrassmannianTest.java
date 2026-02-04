@@ -56,7 +56,7 @@ class GrassmannianTest {
     Grassmannian grassmannian = Grassmannian.of(n, 1);
     Tensor p = Tensors.fromString("{{1,0},{0,0}}");
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    TensorUnaryOperator tuo = new TGrMemberQ(p)::constraint;
+    TensorUnaryOperator tuo = new TGrMemberQ(p)::defect;
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
     assertEquals(tensor.length(), 1);
     GrExponential exponential = grassmannian.exponential(p);
@@ -75,7 +75,7 @@ class GrassmannianTest {
     int n = 5;
     Grassmannian grassmannian = Grassmannian.of(n, 3);
     Tensor p = RandomSample.of(grassmannian);
-    TensorUnaryOperator tuo = m -> Join.of(p.dot(m).add(m.dot(p)).subtract(m), SymmetricMatrixQ.INSTANCE.constraint(m));
+    TensorUnaryOperator tuo = m -> Join.of(p.dot(m).add(m.dot(p)).subtract(m), SymmetricMatrixQ.INSTANCE.defect(m));
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
     assertEquals(tensor.length(), 6);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
@@ -123,7 +123,7 @@ class GrassmannianTest {
       Grassmannian grassmannian = Grassmannian.of(n, k);
       Tensor p = RandomSample.of(grassmannian);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-      LinearSubspace homogeneousSpan = LinearSubspace.of(tGrMemberQ::constraint, n, n);
+      LinearSubspace homogeneousSpan = LinearSubspace.of(tGrMemberQ::defect, n, n);
       Tensor v = RandomVariate.of(distribution, n, n);
       Tensor v1 = tGrMemberQ.projection(v);
       tGrMemberQ.requireMember(v1);

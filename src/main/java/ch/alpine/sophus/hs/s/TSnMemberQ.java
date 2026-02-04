@@ -21,7 +21,7 @@ public class TSnMemberQ extends ConstraintMemberQ {
   }
 
   @Override
-  public Tensor constraint(Tensor v) {
+  public Tensor defect(Tensor v) {
     return p.dot(v);
   }
 

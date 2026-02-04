@@ -22,7 +22,7 @@ class TSoMemberQTest {
   @ParameterizedTest
   @ValueSource(ints = { 3, 4, 5 })
   void testAntisymm(int n) {
-    TensorUnaryOperator tuo = AntisymmetricMatrixQ.INSTANCE::constraint;
+    TensorUnaryOperator tuo = AntisymmetricMatrixQ.INSTANCE::defect;
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
     assertEquals(tensor.length(), n * (n - 1) / 2);
   }

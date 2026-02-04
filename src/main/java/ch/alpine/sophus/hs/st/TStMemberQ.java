@@ -22,8 +22,8 @@ public class TStMemberQ extends ConstraintMemberQ {
   }
 
   @Override
-  public Tensor constraint(Tensor v) {
-    return AntisymmetricMatrixQ.INSTANCE.constraint(MatrixDotTranspose.of(p, v));
+  public Tensor defect(Tensor v) {
+    return AntisymmetricMatrixQ.INSTANCE.defect(MatrixDotTranspose.of(p, v));
   }
 
   /** function only exists for comparison with HomogenousSpan projection

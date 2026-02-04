@@ -16,7 +16,7 @@ public class StochasticMatrixQ extends ConstraintMemberQ {
   }
 
   @Override
-  public Tensor constraint(Tensor tensor) {
+  public Tensor defect(Tensor tensor) {
     return Tensor.of(tensor.stream().map(row -> Total.of(row).subtract(RealScalar.ONE)));
   }
 }

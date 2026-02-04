@@ -18,7 +18,7 @@ class TSpMemberQTest {
   @ValueSource(ints = { 1, 2, 3, 5 })
   void test(int n) {
     TSpMemberQ tSpMemberQ = new TSpMemberQ(n);
-    LinearSubspace linearSubspace = LinearSubspace.of(tSpMemberQ::constraint, 2 * n, 2 * n);
+    LinearSubspace linearSubspace = LinearSubspace.of(tSpMemberQ::defect, 2 * n, 2 * n);
     int dim = linearSubspace.dimensions();
     assertEquals(dim, n * (2 * n + 1));
     Tensor w = RandomVariate.of(NormalDistribution.standard(), dim);

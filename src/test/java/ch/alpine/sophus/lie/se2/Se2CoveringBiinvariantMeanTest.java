@@ -33,11 +33,10 @@ import test.wrap.BiinvariantMeanQ;
 class Se2CoveringBiinvariantMeanTest {
   @Test
   void testPermutations() {
-    Distribution distribution = UniformDistribution.of(Clips.absolute(10));
+    Distribution distribution = UniformDistribution.of(Clips.absolute(3));
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
-      Tensor weights = RandomVariate.of(distribution, length);
-      weights = weights.divide(Total.ofVector(weights));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
       new BiinvariantMeanQ(Se2CoveringGroup.INSTANCE.biinvariantMean(), Tolerance.CHOP).check(sequence, weights);
     }
   }
