@@ -10,15 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
-import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.num.Pi;
@@ -208,14 +204,8 @@ class Se2BiinvariantMeansTest {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor weights = RandomVariate.of(UniformDistribution.unit(), length);
       weights = weights.divide(Total.ofVector(weights));
-      for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
-        Tensor solution = biinvariantMean.mean(sequence, weights);
-        for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-          TensorUnaryOperator permute = Permute.of(perm);
-          Tensor result = biinvariantMean.mean(permute.apply(sequence), permute.apply(weights));
-          Chop._12.requireClose(result, solution);
-        }
-      }
+      for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
+        new BiinvariantMeanQ(biinvariantMean, Tolerance.CHOP).check(sequence, weights);
     }
   }
 

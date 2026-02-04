@@ -8,21 +8,20 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.sca.Chop;
 
 class StochasticMatrixQTest {
   @Test
   void testSimple() {
-    StochasticMatrixQ.requireRows(IdentityMatrix.of(3), Chop._08);
+    StochasticMatrixQ.INSTANCE.requireMember(IdentityMatrix.of(3));
   }
 
   @Test
   void testScalarFail() {
-    assertThrows(Exception.class, () -> StochasticMatrixQ.requireRows(RealScalar.ONE, Chop._08));
+    assertThrows(Exception.class, () -> StochasticMatrixQ.INSTANCE.requireMember(RealScalar.ONE));
   }
 
   @Test
   void testVectorFail() {
-    assertThrows(Exception.class, () -> StochasticMatrixQ.requireRows(Tensors.vector(1, 0, 0), Chop._08));
+    assertThrows(Exception.class, () -> StochasticMatrixQ.INSTANCE.requireMember(Tensors.vector(1, 0, 0)));
   }
 }

@@ -20,6 +20,7 @@ import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.mat.HilbertMatrix;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
@@ -28,6 +29,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
+import test.wrap.BiinvariantMeanQ;
 
 class So2BiinvariantMeansTest {
   private static final Clip CLIP = Clips.absolute(Pi.VALUE);
@@ -119,12 +121,7 @@ class So2BiinvariantMeansTest {
       // here, we hope that no antipodal points are generated
       Tensor sequence = RandomVariate.of(distribution, length);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), length));
-      Scalar solution = (Scalar) So2BiinvariantMeans.GLOBAL.mean(sequence, weights);
-      for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        TensorUnaryOperator permute = Permute.of(perm);
-        Tensor result = So2BiinvariantMeans.GLOBAL.mean(permute.apply(sequence), permute.apply(weights));
-        Chop._12.requireClose(result, solution);
-      }
+      new BiinvariantMeanQ(So2BiinvariantMeans.GLOBAL, Tolerance.CHOP).check(sequence, weights);
     }
   }
 

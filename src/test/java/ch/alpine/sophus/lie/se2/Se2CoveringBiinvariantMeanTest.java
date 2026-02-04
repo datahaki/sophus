@@ -18,6 +18,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -27,6 +28,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
+import test.wrap.BiinvariantMeanQ;
 
 class Se2CoveringBiinvariantMeanTest {
   @Test
@@ -36,12 +38,7 @@ class Se2CoveringBiinvariantMeanTest {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor weights = RandomVariate.of(distribution, length);
       weights = weights.divide(Total.ofVector(weights));
-      Tensor solution = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
-      for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        TensorUnaryOperator permute = Permute.of(perm);
-        Tensor result = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(permute.apply(sequence), permute.apply(weights));
-        Chop._03.requireClose(result, solution);
-      }
+      new BiinvariantMeanQ(Se2CoveringGroup.INSTANCE.biinvariantMean(), Tolerance.CHOP).check(sequence, weights);
     }
   }
 
