@@ -48,7 +48,7 @@ public class ScGroup implements LieGroup, Serializable {
   @Override
   public BiinvariantMean biinvariantMean() {
     return (Tensor sequence, Tensor weights) -> {
-      AffineQ.require(weights);
+      AffineQ.INSTANCE.requireMember(weights);
       Exponential exponential = exponential0();
       return exponential.exp(weights.dot(Tensor.of(sequence.stream().map(exponential::log))));
     };

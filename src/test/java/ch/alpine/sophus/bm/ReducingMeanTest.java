@@ -36,7 +36,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class ReducingMeanTest {
   private static Tensor _check(Tensor sequence, Tensor weights) {
-    AffineQ.require(weights);
+    AffineQ.INSTANCE.requireMember(weights);
     BiinvariantMean biinvariantMean = new ReducingMean(RGroup.INSTANCE);
     Tensor mean1 = biinvariantMean.mean(sequence, weights);
     Tensor mean2 = LinearBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -127,7 +127,7 @@ class ReducingMeanTest {
     for (int index = 0; index < len; ++index) {
       Tensor point = sequence.get(index);
       Tensor weights = UnitVector.of(len, index);
-      AffineQ.require(weights, Chop._08);
+      AffineQ.INSTANCE.requireMember(weights);
       Tensor spd = biinvariantMean.mean(sequence, weights);
       Chop._08.requireClose(spd, point);
     }

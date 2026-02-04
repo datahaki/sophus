@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.math.PermutationFunction;
+import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -16,6 +16,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
@@ -37,8 +38,8 @@ class Se2CoveringBiinvariantMeanTest {
       weights = weights.divide(Total.ofVector(weights));
       Tensor solution = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
       for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+        TensorUnaryOperator permute = Permute.of(perm);
+        Tensor result = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(permute.apply(sequence), permute.apply(weights));
         Chop._03.requireClose(result, solution);
       }
     }
@@ -85,10 +86,10 @@ class Se2CoveringBiinvariantMeanTest {
       weights = weights.divide(Total.ofVector(weights));
       Tensor solution = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
       for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+        TensorUnaryOperator permute = Permute.of(perm);
+        Tensor result = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(permute.apply(sequence), permute.apply(weights));
         Chop._08.requireClose(result, solution);
-        Tensor rnmean = LinearBiinvariantMean.INSTANCE.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+        Tensor rnmean = LinearBiinvariantMean.INSTANCE.mean(permute.apply(sequence), permute.apply(weights));
         Chop._02.requireClose(result, rnmean);
       }
     }

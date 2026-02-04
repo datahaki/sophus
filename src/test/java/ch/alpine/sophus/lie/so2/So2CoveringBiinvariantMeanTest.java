@@ -4,12 +4,13 @@ package ch.alpine.sophus.lie.so2;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
-import ch.alpine.sophus.math.PermutationFunction;
+import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.num.Pi;
@@ -31,10 +32,10 @@ class So2CoveringBiinvariantMeanTest {
       for (int count = 0; count < 10; ++count) {
         Scalar shift = RandomVariate.of(shifted);
         for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-          PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
+          TensorUnaryOperator permute = Permute.of(perm);
           Scalar result = (Scalar) LinearBiinvariantMean.INSTANCE.mean( //
-              biinvariantMeanTestHelper.apply(sequence.map(shift::add)), //
-              biinvariantMeanTestHelper.apply(weights));
+              permute.apply(sequence.map(shift::add)), //
+              permute.apply(weights));
           Chop._12.requireClose(result.subtract(shift), solution);
         }
       }

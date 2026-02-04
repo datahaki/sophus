@@ -105,7 +105,7 @@ class SoPhongMeanTest {
     Tensor p = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
     Tensor q = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
     Tensor weights = Tensors.vector(0.2, 0.8);
-    AffineQ.require(weights);
+    AffineQ.INSTANCE.requireMember(weights);
     Tensor sequence = Tensors.of(p, q);
     Tensor m1 = So3Group.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor m2 = SoPhongMean.INSTANCE.mean(sequence, weights);

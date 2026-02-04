@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.math.PermutationFunction;
+import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
@@ -52,8 +53,8 @@ class TdBiinvariantMeanTest {
     Tensor expected = Tensors.vector(1.9243978173573888, 2.1822472719434427);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-      PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-      Tensor result = TdGroup.INSTANCE.biinvariantMean().mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+      TensorUnaryOperator permute = Permute.of(perm);
+      Tensor result = TdGroup.INSTANCE.biinvariantMean().mean(permute.apply(sequence), permute.apply(weights));
       Chop._12.requireClose(result, actual);
     }
   }
@@ -72,8 +73,8 @@ class TdBiinvariantMeanTest {
     Tensor expected = Tensors.vector(3.1983964535982485, 2.9301560515835217);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-      PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-      Tensor result = TdGroup.INSTANCE.biinvariantMean().mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+      TensorUnaryOperator permute = Permute.of(perm);
+      Tensor result = TdGroup.INSTANCE.biinvariantMean().mean(permute.apply(sequence), permute.apply(weights));
       Chop._12.requireClose(result, actual);
     }
   }
@@ -92,8 +93,8 @@ class TdBiinvariantMeanTest {
     Tensor expected = Tensors.vector(1.0099219737525793, -2.5153382244082483, 2.9301560515835217);
     Chop._12.requireClose(expected, actual);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-      PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-      Tensor result = TdGroup.INSTANCE.biinvariantMean().mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+      TensorUnaryOperator permute = Permute.of(perm);
+      Tensor result = TdGroup.INSTANCE.biinvariantMean().mean(permute.apply(sequence), permute.apply(weights));
       Chop._12.requireClose(result, actual);
     }
   }

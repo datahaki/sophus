@@ -10,13 +10,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.PermutationFunction;
+import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Reverse;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -45,10 +46,10 @@ class So2BiinvariantMeansTest {
         for (int count = 0; count < 10; ++count) {
           Scalar shift = RandomVariate.of(distribution);
           for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-            PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
+            TensorUnaryOperator permute = Permute.of(perm);
             Scalar result = (Scalar) so2BiinvariantMean.mean( //
-                biinvariantMeanTestHelper.apply(sequence.map(shift::add)), //
-                biinvariantMeanTestHelper.apply(weights));
+                permute.apply(sequence.map(shift::add)), //
+                permute.apply(weights));
             CLIP.requireInside(result);
             Chop._12.requireAllZero(So2.MOD.apply(result.subtract(shift).subtract(solution)));
           }
@@ -120,8 +121,8 @@ class So2BiinvariantMeansTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), length));
       Scalar solution = (Scalar) So2BiinvariantMeans.GLOBAL.mean(sequence, weights);
       for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = So2BiinvariantMeans.GLOBAL.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+        TensorUnaryOperator permute = Permute.of(perm);
+        Tensor result = So2BiinvariantMeans.GLOBAL.mean(permute.apply(sequence), permute.apply(weights));
         Chop._12.requireClose(result, solution);
       }
     }

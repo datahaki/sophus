@@ -26,10 +26,9 @@ jobs:
         with:
           repository: datahaki/tensor
           path: tensor
-
       - name: build and install tensor
-        run: mvn install -DskipTests
+        run: mvn -B -ntp install -DskipTests
         working-directory: ./tensor
 
       - name: mvn test
-        run: mvn test -B
+        run: mvn -B -ntp test

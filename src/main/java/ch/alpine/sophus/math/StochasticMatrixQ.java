@@ -13,7 +13,7 @@ public enum StochasticMatrixQ {
    * @return given tensor
    * @throws Exception if tensor is not a row-stochastic matrix */
   public static Tensor requireRows(Tensor tensor, Chop chop) {
-    tensor.forEach(vector -> AffineQ.require(vector, chop));
+    tensor.forEach(vector -> AffineQ.INSTANCE.requireMember(vector));
     return tensor;
   }
 }

@@ -10,16 +10,17 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.sophus.math.PermutationFunction;
+import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -31,6 +32,7 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
+import test.wrap.BiinvariantMeanQ;
 
 class Se2BiinvariantMeansTest {
   // This test is from the paper:
@@ -133,15 +135,9 @@ class Se2BiinvariantMeansTest {
     Tensor s = Tensors.vector(4.8, 5.2, 1.3);
     Tensor sequence = Tensors.of(p, q, r, s);
     Tensor weights = Tensors.vector(3, 2, 1, 4).divide(RealScalar.of(10));
-    for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
-      Tensor solution = biinvariantMean.mean(sequence, weights);
+    for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values())
       // Chop._12.requireClose(solution, Tensors.vector(4.911144632104387, 5.064995814659804, 1.1));
-      for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = biinvariantMean.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
-        Chop._12.requireClose(result, solution);
-      }
-    }
+      new BiinvariantMeanQ(biinvariantMean, Chop._12).check(sequence, weights);
   }
 
   @Test
@@ -152,18 +148,13 @@ class Se2BiinvariantMeansTest {
     Tensor s = Tensors.fromString("{4.8[m], 5.2[m], 1.3}");
     Tensor sequence = Tensors.of(p, q, r, s);
     Tensor weights = Tensors.vector(3, 2, 1, 4).divide(RealScalar.of(10));
-    AffineQ.require(weights);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       // System.out.println(biinvariantMean);
       Tensor solution = biinvariantMean.mean(sequence, weights);
       boolean close1 = Chop._12.isClose(solution, Tensors.fromString("{4.911144632104387[m], 5.064995814659804[m], 1.1}"));
       boolean close2 = Chop._12.isClose(solution, Tensors.fromString("{4.911658712738642[m], 5.064497410160735[m], 1.0998987355880372}"));
       assertTrue(close1 || close2);
-      for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = biinvariantMean.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
-        Chop._12.requireClose(result, solution);
-      }
+      new BiinvariantMeanQ(biinvariantMean, Chop._12).check(sequence, weights);
     }
   }
 
@@ -179,11 +170,7 @@ class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor solution = biinvariantMean.mean(sequence, weights);
       Chop._01.requireClose(solution, Tensors.vector(14.83619642851975, -5.043678108261259, -1.466370614359171));
-      for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = biinvariantMean.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
-        Chop._12.requireClose(result, solution);
-      }
+      new BiinvariantMeanQ(biinvariantMean, Chop._12).check(sequence, weights);
     }
   }
 
@@ -193,14 +180,9 @@ class Se2BiinvariantMeansTest {
     for (int length = 1; length < 6; ++length) {
       // here, we hope that no antipodal points are generated
       Tensor sequence = RandomSample.of(randomSampleInterface, length);
-      Tensor weights = RandomVariate.of(UniformDistribution.unit(), length);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), length));
       // weights = weights.divide(Total.ofVector(weights));
-      Tensor solution = Se2BiinvariantMeans.GLOBAL.mean(sequence, weights);
-      for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-        PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-        Tensor result = Se2BiinvariantMeans.GLOBAL.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
-        Chop._12.requireClose(result, solution);
-      }
+      new BiinvariantMeanQ(Se2BiinvariantMeans.GLOBAL, Chop._12).check(sequence, weights);
     }
   }
 
@@ -229,8 +211,8 @@ class Se2BiinvariantMeansTest {
       for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
         Tensor solution = biinvariantMean.mean(sequence, weights);
         for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-          PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
-          Tensor result = biinvariantMean.mean(biinvariantMeanTestHelper.apply(sequence), biinvariantMeanTestHelper.apply(weights));
+          TensorUnaryOperator permute = Permute.of(perm);
+          Tensor result = biinvariantMean.mean(permute.apply(sequence), permute.apply(weights));
           Chop._12.requireClose(result, solution);
         }
       }

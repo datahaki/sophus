@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.Abs;
    * @return */
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    AffineQ.require(weights);
+    AffineQ.INSTANCE.requireMember(weights);
     VectorQ.requireLength(weights, sequence.length());
     PriorityQueue<WPoint> priorityQueue = new PriorityQueue<>();
     int index = 0;
