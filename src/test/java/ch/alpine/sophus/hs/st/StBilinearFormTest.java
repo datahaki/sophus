@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.st;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +25,7 @@ class StBilinearFormTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
   void testSimple(int n) throws ClassNotFoundException, IOException {
-    RandomGenerator randomGenerator = ThreadLocalRandom.current();
+    RandomGenerator randomGenerator = new Random(1);
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
