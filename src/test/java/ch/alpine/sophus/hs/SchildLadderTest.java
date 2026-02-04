@@ -2,15 +2,14 @@
 package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.hs.sn.SnTransport;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.SnTransport;
+import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -19,13 +18,14 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
 
 class SchildLadderTest {
   @Test
   void testRn() {
-    HsTransport hsTransport = new SchildLadder(RnGroup.INSTANCE);
+    HsTransport hsTransport = new SchildLadder(RGroup.INSTANCE);
     TensorUnaryOperator shift = //
         hsTransport.shift(Tensors.vector(1, 2, 3), Tensors.vector(4, -1, 7));
     Tensor v = Tensors.vector(2, 3, 1);
@@ -48,9 +48,9 @@ class SchildLadderTest {
       Tensor t2 = shift2.apply(v1);
       Tensor t3 = shift3.apply(v1);
       Tensor t4 = shift4.apply(v1);
-      Chop._12.requireClose(t1, t4);
-      Chop._12.requireClose(t2, t4);
-      Chop._12.requireClose(t3, t4);
+      Tolerance.CHOP.requireClose(t1, t4);
+      Tolerance.CHOP.requireClose(t2, t4);
+      Tolerance.CHOP.requireClose(t3, t4);
       ExactTensorQ.require(t4);
     }
     {
@@ -70,10 +70,5 @@ class SchildLadderTest {
       Scalar d23 = Vector2Norm.between(t2, t3);
       Chop._12.requireClose(d13, d23);
     }
-  }
-
-  @Test
-  void testNullFail() {
-    assertThrows(Exception.class, () -> new SchildLadder(null));
   }
 }

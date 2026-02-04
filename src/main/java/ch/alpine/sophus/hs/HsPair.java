@@ -2,11 +2,11 @@
 package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
-import java.util.function.BinaryOperator;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.api.TensorBinaryOperator;
 
 /** @param g residual in G
  * @param h estimate in G */
@@ -21,7 +21,7 @@ public record HsPair(Tensor g, Tensor h) implements Serializable {
   /** @param bch
    * @param hd
    * @return */
-  public HsPair move(BinaryOperator<Tensor> bch, Tensor hd) {
+  public HsPair move(TensorBinaryOperator bch, Tensor hd) {
     return new HsPair( //
         bch.apply(g, hd), // towards bch(lift(m), -h) == g
         bch.apply(h, hd)); // towards bch(g, h) == lift(m)

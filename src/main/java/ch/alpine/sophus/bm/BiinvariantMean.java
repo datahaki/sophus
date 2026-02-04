@@ -38,13 +38,12 @@ import ch.alpine.tensor.itp.BinaryAverage;
  * @see BinaryAverage */
 @FunctionalInterface
 public interface BiinvariantMean {
-  /** Hint: implementations treat both parameters as immutable.
-   * Implementations are not required to check for affinity of the weight vector.
-   * 
-   * @param sequence of points in Lie group or homogeneous space
+  /** @param sequence of points in Lie group or homogeneous space
    * @param weights vector typically affine, and non-negative
    * @return bi-invariant mean
    * @throws Exception if sequence and weights are empty
+   * @implSpec implementations treat both parameters as immutable
+   * @implSpec implementations are not required to check for affinity of the weights vector
    * @see AffineQ */
   Tensor mean(Tensor sequence, Tensor weights);
 }

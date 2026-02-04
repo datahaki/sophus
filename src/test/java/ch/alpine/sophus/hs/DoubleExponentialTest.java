@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.DoubleExponential.DoubleExponentialPoint;
-import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;

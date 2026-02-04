@@ -8,7 +8,9 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.math.api.BilinearForm;
+import ch.alpine.sophus.math.api.FrobeniusForm;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -31,6 +33,11 @@ import ch.alpine.tensor.sca.tri.Sin;
 public enum RpnManifold implements HomogeneousSpace, MetricManifold {
   INSTANCE;
 
+  @Override
+  public BiinvariantMean biinvariantMean() {
+    return IterativeBiinvariantMean.argmax(this, Chop._10);
+  }
+
   @Override // from Manifold
   public Exponential exponential(Tensor point) {
     return new RpnExponential(point);
@@ -46,7 +53,7 @@ public enum RpnManifold implements HomogeneousSpace, MetricManifold {
     // TODO SOPHUS ALG duplicate with SnManifold, possibly share baseclass with SnManifold extend
     Scalar a = SnManifold.INSTANCE.distance(p, q);
     if (Scalars.isZero(a)) // when p == q
-      return scalar -> p.copy();
+      return _ -> p.copy();
     if (Tolerance.CHOP.isClose(a, Pi.VALUE))
       throw new Throw(p, q); // when p == -q
     return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
@@ -55,18 +62,23 @@ public enum RpnManifold implements HomogeneousSpace, MetricManifold {
   }
 
   @Override
-  public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.argmax(this, chop);
-  }
-
-  @Override // from TensorMetric
   public Scalar distance(Tensor x, Tensor y) {
     Scalar d_xy = VectorAngle.of(x, y).orElseThrow();
     return Min.of(d_xy, Pi.VALUE.subtract(d_xy));
   }
 
-  @Override // from TensorNorm
-  public Scalar norm(Tensor v) {
-    return Vector2Norm.of(v);
+  @Override
+  public boolean isMember(Tensor tensor) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public BilinearForm bilinearForm(Tensor p) {
+    return FrobeniusForm.INSTANCE;
+  }
+
+  @Override
+  public String toString() {
+    return "Rpn";
   }
 }

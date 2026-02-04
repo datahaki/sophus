@@ -7,19 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
-import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.he.HeAlgebra;
-import ch.alpine.sophus.lie.se2.Se2Algebra;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
-import ch.alpine.sophus.lie.so3.So3Algebra;
+import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.lie.JacobiIdentity;
 import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
@@ -47,7 +46,7 @@ class MatrixAlgebraTest {
     assertInstanceOf(SparseArray.class, b2);
     Tensor basis = Tensors.of(b0, b1, b2);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    assertEquals(matrixAlgebra.ad(), Se2Algebra.INSTANCE.ad());
+    assertEquals(matrixAlgebra.ad(), LieAlgebraAds.se(2));
     assertEquals(matrixAlgebra.toVector(b1.add(b2)), Tensors.vector(0, 1, 1));
     assertEquals(matrixAlgebra.toVector(b0.subtract(b2)), Tensors.vector(1, 0, -1));
     Tensor matrix = matrixAlgebra.toMatrix(Tensors.vector(2, 3, 4));
@@ -104,7 +103,7 @@ class MatrixAlgebraTest {
     MatrixBracket.of(b0, b2);
     MatrixBracket.of(b1, b2);
     Tensor ad = new MatrixAlgebra(basis).ad(); // ad is unitless
-    BinaryOperator<Tensor> binaryOperator = BakerCampbellHausdorff.of(ad, 6);
+    TensorBinaryOperator binaryOperator = BakerCampbellHausdorff.of(ad, 6);
     Tensor x = Tensors.fromString("{1, 2, 3}");
     ad.dot(x);
     Tensor y = Tensors.fromString("{0.3, -0.4, 0.5}");
@@ -120,13 +119,7 @@ class MatrixAlgebraTest {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Tensors.of(IdentityMatrix.of(5)));
     assertEquals(matrixAlgebra.toVector(IdentityMatrix.of(5)), UnitVector.of(1, 0));
     String string = matrixAlgebra.toString();
-    // System.out.println(string);
     assertTrue(string.startsWith("MatrixAlgebra["));
-  }
-
-  @Test
-  void testNumericFail() {
-    assertThrows(Exception.class, () -> new MatrixAlgebra(new HeAlgebra(1).ad().map(N.DOUBLE)));
   }
 
   @Test
@@ -144,7 +137,7 @@ class MatrixAlgebraTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor ad = matrixAlgebra.ad();
     int n = ad.length();
-    BinaryOperator<Tensor> bch = BakerCampbellHausdorff.of(ad.map(N.DOUBLE), degree);
+    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad.map(N.DOUBLE), degree);
     Random random = new Random(10);
     for (int count = 0; count < 5; ++count) {
       Tensor x = RandomVariate.of(distribution, random, n);
@@ -160,13 +153,13 @@ class MatrixAlgebraTest {
 
   @Test
   void testMatrixLogExpExpSe2() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2Algebra.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(Se2CoveringGroup.INSTANCE.matrixBasis());
     check(matrixAlgebra, 8);
   }
 
   @Test
   void testMatrixLogExpExpSo3() {
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Algebra.basis());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
     check(matrixAlgebra, 8);
   }
 }

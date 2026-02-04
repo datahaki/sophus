@@ -9,8 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.he.HeAlgebra;
-import ch.alpine.sophus.lie.se2.Se2Algebra;
-import ch.alpine.sophus.lie.so3.So3Algebra;
+import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -18,7 +17,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.JacobiIdentity;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
-import ch.alpine.tensor.lie.r2.RotationMatrix;
+import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.red.KroneckerDelta;
 
 class MatrixBracketTest {
@@ -46,7 +45,8 @@ class MatrixBracketTest {
   @Test
   void testSo3Basis() {
     Tensor basis = LeviCivitaTensor.of(3).negate();
-    _check(So3Algebra.INSTANCE.ad(), basis);
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
+    _check(matrixAlgebra.ad(), basis);
   }
 
   @Test
@@ -55,7 +55,7 @@ class MatrixBracketTest {
     Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
     Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
     Tensor basis = Tensors.of(b0, b1, b2);
-    _check(Se2Algebra.INSTANCE.ad(), basis);
+    _check(LieAlgebraAds.se(2), basis);
   }
 
   @Test
@@ -103,6 +103,7 @@ class MatrixBracketTest {
 
   @Test
   void testMatrixAlg() {
-    assertEquals(So3Algebra.INSTANCE.ad(), LeviCivitaTensor.of(3).negate());
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
+    assertEquals(matrixAlgebra.ad(), LeviCivitaTensor.of(3).negate());
   }
 }

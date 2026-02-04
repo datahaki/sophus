@@ -1,13 +1,20 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
+import java.io.Serializable;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.IterativeBiinvariantMean;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.mat.SquareMatrixQ;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.sca.Chop;
 
 /** Lie group GL(n) of invertible square matrices
@@ -17,31 +24,66 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * input X is a square matrix
  * input M is an invertible matrix */
-public enum GlGroup implements LieGroup {
-  INSTANCE;
+public class GlGroup implements LieGroup, Serializable {
+  public static final GlGroup INSTANCE = new GlGroup();
 
-  @Override // from LieGroup
-  public LieGroupElement element(Tensor matrix) {
-    return GlGroupElement.of(matrix);
+  @Override
+  public BiinvariantMean biinvariantMean() {
+    return IterativeBiinvariantMean.reduce(this, Chop._10);
   }
 
-  @Override // from Exponential
-  public Tensor exp(Tensor matrix) {
-    return MatrixExp.of(matrix);
+  @Override // from MemberQ
+  public boolean isMember(Tensor matrix) {
+    return SquareMatrixQ.INSTANCE.isMember(matrix) //
+        && !Tolerance.CHOP.isZero(Det.of(matrix));
   }
 
-  @Override // from Exponential
-  public Tensor log(Tensor matrix) {
-    return MatrixLog.of(matrix);
-  }
+  private enum Exponential0 implements Exponential {
+    INSTANCE;
 
-  @Override // from Exponential
-  public Tensor vectorLog(Tensor matrix) {
-    return Flatten.of(log(matrix));
+    @Override // from Exponential
+    public Tensor exp(Tensor matrix) {
+      return MatrixExp.of(matrix);
+    }
+
+    @Override // from Exponential
+    public Tensor log(Tensor matrix) {
+      return MatrixLog.of(matrix);
+    }
   }
 
   @Override
-  public BiinvariantMean biinvariantMean(Chop chop) {
-    throw new UnsupportedOperationException();
+  public Exponential exponential0() {
+    return Exponential0.INSTANCE;
+  }
+
+  @Override
+  public final Tensor neutral(Tensor element) {
+    return IdentityMatrix.of(element);
+  }
+
+  @Override
+  public Tensor invert(Tensor element) {
+    return Inverse.of(element);
+  }
+
+  @Override
+  public final Tensor combine(Tensor element1, Tensor element2) {
+    return element1.dot(SquareMatrixQ.INSTANCE.requireMember(element2));
+  }
+
+  @Override
+  public Tensor adjoint(Tensor g, Tensor v) { // v is square
+    return dL(g, v).dot(invert(g));
+  }
+
+  @Override
+  public Tensor dL(Tensor g, Tensor v) { // v is square
+    return g.dot(SquareMatrixQ.INSTANCE.requireMember(v));
+  }
+
+  @Override
+  public String toString() {
+    return "GL";
   }
 }

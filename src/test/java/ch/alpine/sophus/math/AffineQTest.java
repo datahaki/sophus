@@ -22,31 +22,12 @@ class AffineQTest {
   }
 
   @Test
-  void testRequirePositive() {
-    AffineQ.requirePositiveOrZero(Tensors.vector(0.5, 0.5), Chop._08);
-    AffineQ.requirePositiveOrZero(Tensors.vector(0.25, 0.25, 0.25, 0.25), Chop._08);
-    AffineQ.requirePositiveOrZero(Tensors.vector(1, 0), Chop._08);
-  }
-
-  @Test
-  void testFail() {
-    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(Tensors.vector(2, -1), Chop._08));
-  }
-
-  @Test
-  void testFail2() {
-    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(Tensors.vector(1, 1), Chop._08));
-  }
-
-  @Test
   void testFailScalar() {
     assertThrows(Exception.class, () -> AffineQ.require(RealScalar.ONE, Chop._08));
-    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(RealScalar.ONE, Chop._08));
   }
 
   @Test
   void testFailMatrix() {
     assertThrows(Exception.class, () -> AffineQ.require(HilbertMatrix.of(3), Chop._08));
-    assertThrows(Exception.class, () -> AffineQ.requirePositiveOrZero(HilbertMatrix.of(3), Chop._08));
   }
 }

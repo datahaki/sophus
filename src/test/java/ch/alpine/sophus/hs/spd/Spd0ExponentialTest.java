@@ -1,36 +1,40 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.LowerTriangularize;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
 class Spd0ExponentialTest {
-  @Test
-  void testSimple() {
-    for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
-      Tensor x = RandomSample.of(rsi);
-      Tensor g = Spd0Exponential.INSTANCE.exp(x);
-      Tensor r = Spd0Exponential.INSTANCE.log(g);
-      Chop._07.requireClose(x, r);
-      Tensor m1 = //
-          Spd0Exponential.INSTANCE.exp(Spd0Exponential.INSTANCE.log(g).multiply(RationalScalar.HALF));
-      Tensor m2 = //
-          Spd0Exponential.INSTANCE.midpoint(g);
-      Chop._07.requireClose(m1, m2);
-    }
+  @ParameterizedTest
+  @ValueSource(ints = { 1, 2, 4 })
+  void testSimple(int n) {
+    RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
+    Tensor x = RandomSample.of(rsi);
+    Tensor g = Spd0Exponential.INSTANCE.exp(x);
+    Tensor r = Spd0Exponential.INSTANCE.log(g);
+    Chop._07.requireClose(x, r);
+    Tensor m1 = Spd0Exponential.INSTANCE.exp(Spd0Exponential.INSTANCE.log(g).multiply(RationalScalar.HALF));
+    Tensor m2 = SpdManifold.sqrt(g);
+    Chop._07.requireClose(m1, m2);
+    Tensor m3 = SpdManifold.INSTANCE.midpoint(IdentityMatrix.of(n), g);
+    Chop._07.requireClose(m1, m3);
   }
 
   @Test
@@ -53,6 +57,11 @@ class Spd0ExponentialTest {
       Tensor exp2 = MatrixLog.of(x);
       Chop._08.requireClose(exp1, exp2);
     }
+  }
+
+  @Test
+  void testSimple2() {
+    assertEquals(Spd0Exponential.norm(IdentityMatrix.of(3)), RealScalar.ZERO);
   }
 
   @Test

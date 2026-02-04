@@ -6,14 +6,14 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
@@ -51,9 +51,9 @@ class SpdTransportTest {
       e11 = tu1.apply(e11);
       e12 = tu1.apply(e12);
       e13 = tu1.apply(e13);
-      SymmetricMatrixQ.require(e11);
-      SymmetricMatrixQ.require(e12);
-      SymmetricMatrixQ.require(e13);
+      SymmetricMatrixQ.INSTANCE.requireMember(e11);
+      SymmetricMatrixQ.INSTANCE.requireMember(e12);
+      SymmetricMatrixQ.INSTANCE.requireMember(e13);
       p = q;
     }
   }

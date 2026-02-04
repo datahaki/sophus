@@ -3,10 +3,12 @@ package ch.alpine.sophus.math.sample;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 
 public class DnRandomSample implements RandomSampleInterface, Serializable {
@@ -15,7 +17,7 @@ public class DnRandomSample implements RandomSampleInterface, Serializable {
   }
 
   public static RandomSampleInterface of(List<Distribution> list) {
-    return new DnRandomSample(list);
+    return new DnRandomSample(Objects.requireNonNull(list));
   }
 
   // ---

@@ -9,12 +9,14 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.ext.Integers;
 
+/** class used for group elements as well as algebra elements */
 /* package */ record HeFormat(Tensor x, Tensor y, Scalar z) implements Serializable {
   /** @param xyz vector of length 2 * n + 1
    * @return */
   public static HeFormat of(Tensor xyz) {
-    int n2 = (xyz.length() - 1);
+    int n2 = Integers.requireOdd(xyz.length()) - 1;
     int n = n2 / 2;
     return new HeFormat( //
         VectorQ.require(xyz.extract(0, n)), //

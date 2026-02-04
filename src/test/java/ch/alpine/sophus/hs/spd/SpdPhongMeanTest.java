@@ -4,14 +4,12 @@ package ch.alpine.sophus.hs.spd;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.math.WeightedGeometricMean;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -22,6 +20,8 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -31,13 +31,13 @@ import ch.alpine.tensor.sca.Chop;
 class SpdPhongMeanTest {
   @Test
   void testSimple() {
-    Random random = new Random(1);
+    RandomGenerator randomGenerator = new Random(1);
     for (int d = 2; d < 4; ++d) {
-      int n = d * (d + 1) / 2 + 1 + random.nextInt(3);
+      int n = d * (d + 1) / 2 + 1 + randomGenerator.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, TriangularDistribution.with(0, 1));
-      Tensor sequence = RandomSample.of(rsi, random, n);
+      Tensor sequence = RandomSample.of(rsi, randomGenerator, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, n));
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.argmax(SpdManifold.INSTANCE, Chop._10);
@@ -55,9 +55,9 @@ class SpdPhongMeanTest {
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
     Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
-    SpdMemberQ.INSTANCE.require(m1);
+    SpdManifold.INSTANCE.requireMember(m1);
     Tensor m2 = SpdPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
-    SpdMemberQ.INSTANCE.require(m2);
+    SpdManifold.INSTANCE.requireMember(m2);
     Tensor m3 = GeometricMean.of(Unprotect.byRef(p, q));
     // SpdMemberQ.INSTANCE.require(m3);
     // System.out.println(Pretty.of(m1.map(Round._3)));
@@ -68,9 +68,9 @@ class SpdPhongMeanTest {
   @Test
   void testMidpointDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
-    SpdMemberQ.INSTANCE.require(p);
+    SpdManifold.INSTANCE.requireMember(p);
     Tensor q = DiagonalMatrix.of(3, 0.1);
-    SpdMemberQ.INSTANCE.require(q);
+    SpdManifold.INSTANCE.requireMember(q);
     Tensor m = SpdManifold.INSTANCE.midpoint(p, q);
     Tensor s = GeometricMean.of(Unprotect.byRef(p, q));
     Tolerance.CHOP.requireClose(m, s);
@@ -79,12 +79,12 @@ class SpdPhongMeanTest {
   @Test
   void testWeightedDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
-    SpdMemberQ.INSTANCE.require(p);
+    SpdManifold.INSTANCE.requireMember(p);
     Tensor q = DiagonalMatrix.of(3, 0.1);
-    SpdMemberQ.INSTANCE.require(q);
+    SpdManifold.INSTANCE.requireMember(q);
     Tensor weights = Tensors.vector(0.4, 0.6);
     Tensor sequence = Unprotect.byRef(p, q);
-    Tensor m1 = SpdManifold.INSTANCE.biinvariantMean(Chop._10).mean(sequence, weights);
+    Tensor m1 = SpdManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
     // Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
     Tensor m2 = WeightedGeometricMean.INSTANCE.mean(sequence, weights);
     Tolerance.CHOP.requireClose(m1, m2);

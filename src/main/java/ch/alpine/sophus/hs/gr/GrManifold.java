@@ -1,16 +1,23 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
+import java.io.Serializable;
+
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.math.LowerVectorize0_2Norm;
+import ch.alpine.sophus.math.api.BilinearForm;
+import ch.alpine.sophus.math.api.FrobeniusForm;
+import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.BasisTransform;
+import ch.alpine.tensor.mat.ev.Eigensystem;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.mat.gr.InfluenceMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
 /** Quote from geomstats:
@@ -44,11 +51,19 @@ import ch.alpine.tensor.sca.Chop;
  * Reference:
  * "Geometric mean and geodesic regression on Grassmannians"
  * E. Batzies, K. Hueper, L. Machado, F. Silva Leite by 2015 */
-public enum GrManifold implements HomogeneousSpace, MetricManifold {
-  INSTANCE;
+public class GrManifold implements HomogeneousSpace, MetricManifold, Serializable {
+  public static final InfluenceMatrixQ INFLUENCE_MATRIX_Q = new InfluenceMatrixQ(Chop._08); // 1e-10 does not always work
+  private static final Scalar N1_4 = RationalScalar.of(-1, 4);
+  public static final GrManifold INSTANCE = new GrManifold();
+  // ---
+
+  @Override
+  public BiinvariantMean biinvariantMean() {
+    return IterativeBiinvariantMean.reduce(this, Chop._10);
+  }
 
   @Override // from Manifold
-  public Exponential exponential(Tensor x) {
+  public GrExponential exponential(Tensor x) {
     return new GrExponential(x);
   }
 
@@ -58,17 +73,29 @@ public enum GrManifold implements HomogeneousSpace, MetricManifold {
   }
 
   @Override
-  public BiinvariantMean biinvariantMean(Chop chop) {
-    return IterativeBiinvariantMean.reduce(this, chop);
+  public BilinearForm bilinearForm(Tensor p) {
+    return FrobeniusForm.INSTANCE;
   }
 
-  @Override // from TensorMetric
-  public Scalar distance(Tensor p, Tensor q) {
-    return norm(new GrExponential(p).vectorLog(q));
+  /** rank can be determined via {@link Eigensystem} */
+  @Override // from MemberQ
+  public boolean isMember(Tensor p) {
+    return INFLUENCE_MATRIX_Q.isMember(p);
   }
 
   @Override
-  public Scalar norm(Tensor v) {
-    return LowerVectorize0_2Norm.INSTANCE.norm(v);
+  public Tensor flip(Tensor p, Tensor q) {
+    // matrix bracket is obsolete
+    return BasisTransform.ofMatrix(p, MatrixExp.of(exponential(p).mLog(q).multiply(RationalScalar.HALF)));
+  }
+
+  @Override
+  public Tensor midpoint(Tensor p, Tensor q) {
+    return BasisTransform.ofMatrix(p, MatrixExp.of(exponential(p).mLog(q).multiply(N1_4)));
+  }
+
+  @Override
+  public String toString() {
+    return "Gr";
   }
 }

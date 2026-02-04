@@ -1,16 +1,21 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
-import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.ConstraintSquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Trace;
+import ch.alpine.tensor.sca.Chop;
 
-public enum TSlMemberQ implements MemberQ {
-  INSTANCE;
+public class TSlMemberQ extends ConstraintSquareMatrixQ {
+  public static final TSlMemberQ INSTANCE = new TSlMemberQ(Tolerance.CHOP);
 
-  @Override // from MemberQ
-  public boolean test(Tensor x) {
-    return Tolerance.CHOP.isZero(Trace.of(x));
+  public TSlMemberQ(Chop chop) {
+    super(chop);
+  }
+
+  @Override
+  public Tensor constraint(Tensor tensor) {
+    return Trace.of(tensor);
   }
 }

@@ -4,10 +4,10 @@ package ch.alpine.sophus.lie.he;
 import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 
 public class HeRandomSample implements RandomSampleInterface, Serializable {
@@ -17,6 +17,7 @@ public class HeRandomSample implements RandomSampleInterface, Serializable {
   public HeRandomSample(int n, Distribution distribution) {
     this.n = Integers.requirePositive(n);
     this.distribution = distribution;
+    // TODO SOPHUS need special distrib for z element > 0
   }
 
   @Override

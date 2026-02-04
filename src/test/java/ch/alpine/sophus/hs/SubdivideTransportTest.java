@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.so3.So3Group;
+import ch.alpine.sophus.lie.so.So3Group;
 
 class SubdivideTransportTest {
   @Test

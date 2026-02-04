@@ -3,7 +3,7 @@ package ch.alpine.sophus.math.api;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.Quaternion;
+import ch.alpine.tensor.lie.rot.Quaternion;
 
 /** Examples of type T are {@link Tensor} and {@link Quaternion} */
 @FunctionalInterface

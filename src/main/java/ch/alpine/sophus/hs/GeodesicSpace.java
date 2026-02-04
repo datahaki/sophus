@@ -8,7 +8,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** parameterized curve/geodesic in a space of tensors */
-@FunctionalInterface
 public interface GeodesicSpace extends BinaryAverage {
   /** @param p
    * @param q

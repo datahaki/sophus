@@ -1,18 +1,38 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import java.io.Serializable;
-
-import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.ConstraintMemberQ;
+import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.MatrixDotTranspose;
 import ch.alpine.tensor.sca.Chop;
 
 /** Reference: geomstats */
-public record TStMemberQ(Tensor p) implements MemberQ, Serializable {
-  @Override // from MemberQ
-  public boolean test(Tensor v) {
-    return AntisymmetricMatrixQ.of(MatrixDotTranspose.of(p, v), Chop._06);
+public class TStMemberQ extends ConstraintMemberQ {
+  private final Tensor p;
+
+  public TStMemberQ(Tensor p, Chop chop) {
+    super(2, chop);
+    this.p = p;
+  }
+
+  public TStMemberQ(Tensor p) {
+    this(p, Chop._10);
+  }
+
+  @Override
+  public Tensor constraint(Tensor v) {
+    return AntisymmetricMatrixQ.INSTANCE.constraint(MatrixDotTranspose.of(p, v));
+  }
+
+  /** function only exists for comparison with HomogenousSpan projection
+   * 
+   * @param v
+   * @return */
+  public Tensor projection(Tensor v) {
+    // implementation identical to geomstats except that p and v are
+    // the transposed versions of the corresponding variable in geomstats
+    return v.subtract(Symmetrize.of(MatrixDotTranspose.of(p, v)).dot(p));
   }
 }

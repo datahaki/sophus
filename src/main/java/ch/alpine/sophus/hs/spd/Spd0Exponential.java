@@ -2,13 +2,14 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.math.LowerVectorize;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
-import ch.alpine.tensor.mat.ex.MatrixSqrt;
-import ch.alpine.tensor.mat.re.Inverse;
+import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.sca.exp.Log;
 
 /** Exponential map at IdentityMatrix in SPD
  * 
@@ -44,18 +45,31 @@ public enum Spd0Exponential implements Exponential {
     return Symmetrize.of(MatrixLog.ofSymmetric(q));
   }
 
-  @Override // from Exponential
-  public Tensor flip(Tensor q) {
-    return Inverse.of(q);
-  }
-
-  @Override // from Exponential
-  public Tensor midpoint(Tensor q) {
-    return MatrixSqrt.ofSymmetric(q).sqrt();
-  }
-
-  @Override // from Exponential
-  public Tensor vectorLog(Tensor q) {
-    return LowerVectorize.of(log(q), 0);
+  /** n(g) == n(Inverse[g])
+   * 
+   * For the identity matrix, n(Id) == 0
+   * 
+   * Quote:
+   * "The family of all affine-invariant metrics (up to a global scaling factor) induces
+   * the Riemannian distance: dist^2(P, Q) = Tr(L^2) + beta*Tr(L)^2 with
+   * L = log(P^-1/2 Q P^-1/2) and beta > -1/n is a free real parameter. [...]
+   * The affine-invariant metric with beta = 0 has been put forward independently for
+   * several applications around 2005. [...]
+   * N(P) has to be a symmetric function of the eigenvalues d_1 >= d_2 >= ... >= d_n > 0.
+   * Moreover, the symmetry of the invariant distance dist(P, Id) = dist(Id, P^-1)
+   * implies that N(P) = N(P^-1). [...]
+   * a formal proof of the triangular inequality is quite difficult to establish"
+   * from "Manifold-valued image processing with SPD matrices"
+   * by X. Pennec, 2020, p. 76
+   * 
+   * @param q spd
+   * @return */
+  public static Scalar norm(Tensor q) {
+    Tensor diag = Tensor.of(Eigensystem.ofSymmetric(q).values().stream() //
+        .map(Scalar.class::cast) //
+        .map(Log.FUNCTION));
+    // note that Norm2Squared.ofVector(diag) == Trace.of(MatrixLog.of(q)^2)
+    // note that Total.ofVector(diag) == Trace.of(MatrixLog.of(q))
+    return Vector2Norm.of(diag); // corresponds to beta == 0
   }
 }

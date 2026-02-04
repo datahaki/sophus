@@ -3,11 +3,11 @@ package ch.alpine.sophus.hs.spd;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;

@@ -1,0 +1,56 @@
+package ch.alpine.sophus.lie.sl;
+
+import ch.alpine.sophus.lie.MatrixGroup;
+import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.io.MathematicaFormat;
+
+public class SlNGroup extends SlGroup implements MatrixGroup {
+  private final int n;
+
+  public SlNGroup(int n) {
+    this.n = Integers.requirePositive(n);
+  }
+
+  @Override
+  public boolean isMember(Tensor matrix) {
+    return matrix.length() == n //
+        && super.isMember(matrix);
+  }
+
+  @Override
+  public Tensor matrixBasis() {
+    Tensor basis = Tensors.empty();
+    for (int i = 0; i < n; ++i)
+      for (int j = i + 1; j < n; ++j) {
+        {
+          Tensor tensor = Array.sparse(n, n);
+          tensor.set(RealScalar.ONE, i, j);
+          tensor.set(RealScalar.ONE.negate(), j, i);
+          basis.append(tensor);
+        }
+        {
+          Tensor tensor = Array.sparse(n, n);
+          tensor.set(RealScalar.ONE, i, j);
+          tensor.set(RealScalar.ONE, j, i);
+          basis.append(tensor);
+        }
+      }
+    for (int i = 1; i < n; ++i) {
+      Tensor tensor = Array.sparse(n, n);
+      tensor.set(RealScalar.ONE, i - 1, i - 1);
+      tensor.set(RealScalar.ONE.negate(), i, i);
+      basis.append(tensor);
+    }
+    return basis.multiply(RationalScalar.HALF);
+  }
+
+  @Override
+  public String toString() {
+    return MathematicaFormat.concise("SL", n);
+  }
+}

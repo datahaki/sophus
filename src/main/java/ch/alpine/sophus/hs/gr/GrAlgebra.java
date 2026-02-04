@@ -1,19 +1,13 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.se3.Se3Algebra;
-import ch.alpine.sophus.lie.so.SoAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.PackageTestAccess;
 
-/** Careful:
- * does not match {@link Se3Algebra} in the special case when n == 3
- * 
- * @see SoAlgebra */
 public enum GrAlgebra {
   ;
   /** @param n

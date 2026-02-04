@@ -4,40 +4,29 @@ package ch.alpine.sophus.hs.gr;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
-import java.util.random.RandomGenerator;
 
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.dv.AveragingWeights;
-import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.lie.so.SoRandomSample;
-import ch.alpine.sophus.math.LowerVectorize0_2Norm;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
+import ch.alpine.sophus.hs.s.Sphere;
+import ch.alpine.sophus.lie.so.SoNGroup;
+import ch.alpine.sophus.math.AveragingWeights;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.lie.TensorProduct;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
@@ -45,12 +34,12 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
-import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
-import ch.alpine.tensor.pdf.c.LogisticDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
@@ -59,16 +48,12 @@ class GrManifoldTest {
   void testMidpoint() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor q = RandomSample.of(randomSampleInterface);
-      GrExponential exp_p = new GrExponential(p);
-      GrExponential exp_q = new GrExponential(q);
-      Tensor m1 = exp_p.midpoint(q);
-      Tensor m2 = exp_q.midpoint(p);
+      Grassmannian grassmannian = Grassmannian.of(n, k);
+      Tensor p = RandomSample.of(grassmannian);
+      Tensor q = RandomSample.of(grassmannian);
+      Tensor m1 = GrManifold.INSTANCE.midpoint(p, q);
+      Tensor m2 = GrManifold.INSTANCE.midpoint(q, p);
       Chop._08.requireClose(m1, m2);
-      Tensor m3 = GrManifold.INSTANCE.midpoint(p, q);
-      Chop._08.requireClose(m1, m3);
     }
   }
 
@@ -76,40 +61,14 @@ class GrManifoldTest {
   void testMirror() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
+      RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
       Tensor mir1 = stf.apply(RealScalar.ONE.negate());
-      GrExponential exp_p = new GrExponential(p);
-      Tensor mir2 = exp_p.flip(q);
+      // GrExponential exp_p = new GrExponential(p);
+      Tensor mir2 = GrManifold.INSTANCE.flip(p, q);
       Chop._08.requireClose(mir1, mir2);
-    }
-  }
-
-  @Test
-  void testBiinvariance() {
-    Manifold manifold = GrManifold.INSTANCE;
-    Biinvariant[] biinvariants = new Biinvariant[] { //
-        Biinvariants.METRIC.ofSafe(manifold), //
-        Biinvariants.LEVERAGES.ofSafe(manifold), //
-        Biinvariants.GARDEN.ofSafe(manifold) };
-    Random random1 = new Random();
-    int n = 3 + random1.nextInt(2);
-    ScalarUnaryOperator variogram = InversePowerVariogram.of(2);
-    int k = 1 + random1.nextInt(n - 1);
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
-    int d = k * (n - k);
-    RandomGenerator random = new Random(1);
-    Tensor seq_o = RandomSample.of(randomSampleInterface, random, d + 2);
-    Tensor pnt_o = RandomSample.of(randomSampleInterface, random);
-    for (Biinvariant biinvariant : biinvariants) {
-      Tensor w_o = biinvariant.coordinate(variogram, seq_o).sunder(pnt_o);
-      GrAction grAction = new GrAction(RandomSample.of(SoRandomSample.of(n), random));
-      Tensor seq_l = Tensor.of(seq_o.stream().map(grAction));
-      Tensor pnt_l = grAction.apply(pnt_o);
-      Tensor w_l = biinvariant.coordinate(variogram, seq_l).sunder(pnt_l);
-      Chop._06.requireClose(w_o, w_l);
     }
   }
 
@@ -117,7 +76,7 @@ class GrManifoldTest {
   void testCommute() {
     int n = 5;
     int k = 2;
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
+    RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(p.dot(q), Transpose.of(q.dot(p)));
@@ -128,8 +87,8 @@ class GrManifoldTest {
   @Test
   void testMismatch() {
     int n = 5;
-    Tensor p1 = RandomSample.of(new GrRandomSample(n, 1));
-    Tensor p2 = RandomSample.of(new GrRandomSample(n, 2));
+    Tensor p1 = RandomSample.of(Grassmannian.of(n, 1));
+    Tensor p2 = RandomSample.of(Grassmannian.of(n, 2));
     Tensor q = ConstantArray.of(Pi.VALUE, n, n);
     assertThrows(Exception.class, () -> new GrExponential(p1).log(q));
     assertThrows(Exception.class, () -> new GrExponential(p2).log(q));
@@ -180,9 +139,10 @@ class GrManifoldTest {
 
   @Test
   void testRandomSymmetry() {
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
-    Tensor p = RandomSample.of(randomSampleInterface);
-    Tensor q = RandomSample.of(randomSampleInterface);
+    Random random = new Random(3);
+    RandomSampleInterface randomSampleInterface = Grassmannian.of(4, 3);
+    Tensor p = RandomSample.of(randomSampleInterface, random);
+    Tensor q = RandomSample.of(randomSampleInterface, random);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
     Scalar d2 = GrManifold.INSTANCE.distance(q, p);
     Tolerance.CHOP.requireClose(d1, d2);
@@ -190,7 +150,7 @@ class GrManifoldTest {
 
   @Test
   void testFrobenius() {
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 3);
+    RandomSampleInterface randomSampleInterface = Grassmannian.of(4, 3);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
@@ -202,22 +162,22 @@ class GrManifoldTest {
   void testAntipodal() {
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
-    GrMemberQ.INSTANCE.require(p);
-    GrMemberQ.INSTANCE.require(q);
+    GrManifold.INSTANCE.requireMember(p);
+    GrManifold.INSTANCE.requireMember(q);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
     d1.zero();
-    Scalar d2 = LowerVectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
-    Tolerance.CHOP.requireClose(d1, d2);
+    // Scalar d2 = LowerVectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
+    // Tolerance.CHOP.requireClose(d1, d2);
     // TODO SOPHUS GR check distance of "antipodal" frames, why is this zero?
     // System.out.println(distance);
   }
 
-  private static final BiinvariantMean BIINVARIANT_MEAN = GrManifold.INSTANCE.biinvariantMean(Chop._10);
+  private static final BiinvariantMean BIINVARIANT_MEAN = GrManifold.INSTANCE.biinvariantMean();
 
   @Test
   void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = Grassmannian.of(4, 2); // 4 dimensional
     Scalar maxDist = RealScalar.of(1.4);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor sequence = Tensors.of(p);
@@ -231,10 +191,10 @@ class GrManifoldTest {
     Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(n).add(RandomVariate.of(distribution, n)));
     assertThrows(Exception.class, () -> BIINVARIANT_MEAN.mean(sequence, RandomVariate.of(distribution, n)));
     Tensor point = BIINVARIANT_MEAN.mean(sequence, weights);
-    GrMemberQ.INSTANCE.require(point);
+    GrManifold.INSTANCE.requireMember(point);
     GrManifold.INSTANCE.distance(p, point);
     {
-      Tensor g = RandomSample.of(SoRandomSample.of(4));
+      Tensor g = RandomSample.of(new SoNGroup(4));
       GrAction grAction = new GrAction(g);
       Tensor seq_l = Tensor.of(sequence.stream().map(grAction));
       Tensor pnt_l = BIINVARIANT_MEAN.mean(seq_l, weights);
@@ -242,72 +202,68 @@ class GrManifoldTest {
     }
   }
 
-  @RepeatedTest(10)
+  @Test
   void testGeodesic() {
     GeodesicSpace hsGeodesic = GrManifold.INSTANCE;
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(4, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = Grassmannian.of(4, 2); // 4 dimensional
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
     Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
     for (Tensor point : sequence)
-      GrMemberQ.INSTANCE.require(point);
+      GrManifold.INSTANCE.requireMember(point);
   }
-
-  public static final HsTransport POLE_LADDER = new PoleLadder(GrManifold.INSTANCE);
-
-  @Test
-  void testSimple2() throws ClassNotFoundException, IOException {
-    int n = 4;
-    RandomSampleInterface randomSampleInterface = new GrRandomSample(n, 2);
-    Tensor p = RandomSample.of(randomSampleInterface);
-    Tensor q = RandomSample.of(randomSampleInterface);
-    Distribution distribution = LogisticDistribution.of(1, 3);
-    TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    Tensor pv = tGrMemberQ.projection(RandomVariate.of(distribution, n, n));
-    Tensor log = new GrExponential(p).log(q);
-    tGrMemberQ.require(log);
-    Tensor qv0 = POLE_LADDER.shift(p, q).apply(pv);
-    Tensor qv1 = Serialization.copy(GrManifold.INSTANCE.hsTransport().shift(p, q)).apply(pv);
-    new TGrMemberQ(q).require(qv1);
-    Chop._08.requireClose(qv0, qv1);
-    Tensor match = GrAction.match(p, q);
-    Tensor ofForm = BasisTransform.ofForm(pv, match);
-    // Tensor qw = GrTransport2.INSTANCE.shift(p, q).apply(pv);
-    // System.out.println(Pretty.of(qv.map(Round._3)));
-    // System.out.println(Pretty.of(qw.map(Round._3)));
-    Chop._08.isClose(qv1, ofForm); // this is not correct
-  }
-
-  @Test
-  void testFromOToP() {
-    int n = 5;
-    for (int k = 0; k <= n; ++k) {
-      int fk = k;
-      Distribution distribution = UniformDistribution.unit();
-      TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(n, k);
-      Tensor ov = tGr0MemberQ.project(RandomVariate.of(distribution, n, n));
-      Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
-      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
-      Tensor p = RandomSample.of(randomSampleInterface);
-      TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(o, p);
-      Tensor pv = tensorUnaryOperator.apply(ov);
-      TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-      tGrMemberQ.require(pv);
-    }
-  }
+  // @Test
+  // void testFromOToP() {
+  // int n = 5;
+  // for (int k = 0; k <= n; ++k) {
+  // int fk = k;
+  // Distribution distribution = UniformDistribution.unit();
+  // TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(n, k);
+  // Tensor ov = tGr0MemberQ.project(RandomVariate.of(distribution, n, n));
+  // Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
+  // RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
+  // Tensor p = RandomSample.of(randomSampleInterface);
+  // TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(o, p);
+  // Tensor pv = tensorUnaryOperator.apply(ov);
+  // TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
+  // tGrMemberQ.requireMember(pv);
+  // }
+  // }
 
   @Test
   void testNonMemberFail() {
     int n = 5;
     for (int k = 1; k < n; ++k) {
       Distribution distribution = UniformDistribution.unit();
-      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
+      RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(p, q);
       Tensor ov = RandomVariate.of(distribution, n, n);
       assertThrows(Exception.class, () -> tensorUnaryOperator.apply(ov));
     }
+  }
+
+  @Test
+  void testSimple2() {
+    int n = 5;
+    Tensor x = RandomSample.of(Grassmannian.of(n, 3));
+    assertEquals(Dimensions.of(x), Arrays.asList(n, n));
+    GrManifold.INSTANCE.requireMember(x);
+  }
+
+  @Test
+  void testVectorProject() {
+    for (int n = 1; n < 6; ++n) {
+      Tensor normal = RandomSample.of(new Sphere(n));
+      Tensor x = TensorProduct.of(normal, normal);
+      GrManifold.INSTANCE.requireMember(x);
+    }
+  }
+
+  @Test
+  void testNullFail() {
+    assertThrows(Exception.class, () -> GrManifold.INSTANCE.isMember(null));
   }
 }

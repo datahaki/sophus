@@ -4,8 +4,8 @@ package ch.alpine.sophus.hs.rpn;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.sn.SnAngle;
-import ch.alpine.sophus.hs.sn.TSnMemberQ;
+import ch.alpine.sophus.hs.s.SnAngle;
+import ch.alpine.sophus.hs.s.TSnMemberQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -39,7 +39,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    tSnMemberQ.require(v);
+    tSnMemberQ.requireMember(v);
     Scalar vn = Vector2Norm.of(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     y = Vector2Norm.NORMALIZE.apply(y);
@@ -58,10 +58,5 @@ import ch.alpine.tensor.sca.tri.Sinc;
       return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xyp);
     y = y.negate();
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xyn);
-  }
-
-  @Override // from Exponential
-  public Tensor vectorLog(Tensor y) {
-    return log(y);
   }
 }

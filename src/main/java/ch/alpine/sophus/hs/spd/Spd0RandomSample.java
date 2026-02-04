@@ -4,21 +4,15 @@ package ch.alpine.sophus.hs.spd;
 import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
-public class Spd0RandomSample implements RandomSampleInterface, Serializable {
-  private final TSpdRandomSample tSpdRandomSample;
-
-  /** @param n strictly positive
-   * @param distribution */
-  public Spd0RandomSample(int n, Distribution distribution) {
-    tSpdRandomSample = new TSpdRandomSample(n, distribution);
-  }
-
+/** @param n strictly positive
+ * @param distribution */
+public record Spd0RandomSample(int n, Distribution distribution) implements RandomSampleInterface, Serializable {
   @Override // from RandomSampleInterface
   public Tensor randomSample(RandomGenerator randomGenerator) {
-    return Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(randomGenerator));
+    return Spd0Exponential.INSTANCE.exp(new TSpdRandomSample(n, distribution).randomSample(randomGenerator));
   }
 }

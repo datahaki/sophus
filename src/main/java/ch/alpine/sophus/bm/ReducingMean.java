@@ -2,7 +2,6 @@
 package ch.alpine.sophus.bm;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.PriorityQueue;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -29,13 +28,8 @@ import ch.alpine.tensor.sca.Abs;
  * 
  * @see IterativeBiinvariantMean */
 /* package */ record ReducingMean(GeodesicSpace geodesicSpace) implements BiinvariantMean, Serializable {
-
   /** @param geodesicSpace
    * @return */
-  public static BiinvariantMean of(GeodesicSpace geodesicSpace) {
-    return new ReducingMean(Objects.requireNonNull(geodesicSpace));
-  }
-
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     AffineQ.require(weights);
@@ -52,14 +46,14 @@ import ch.alpine.tensor.sca.Abs;
     while (1 < priorityQueue.size()) {
       WPoint wPoint0 = priorityQueue.poll(); // may be zero
       WPoint wPoint1 = priorityQueue.poll(); // guaranteed to be non-zero
-      boolean s01 = wPoint0.split(wPoint1, priorityQueue);
+      boolean s01 = wPoint0.split(geodesicSpace, wPoint1, priorityQueue);
       if (!s01) {
         WPoint wPoint2 = priorityQueue.poll();
-        boolean s02 = wPoint0.split(wPoint2, priorityQueue);
+        boolean s02 = wPoint0.split(geodesicSpace, wPoint2, priorityQueue);
         if (s02)
           priorityQueue.add(wPoint1);
         else {
-          boolean s12 = wPoint1.split(wPoint2, priorityQueue);
+          boolean s12 = wPoint1.split(geodesicSpace, wPoint2, priorityQueue);
           if (s12)
             priorityQueue.add(wPoint0);
           else
@@ -69,16 +63,9 @@ import ch.alpine.tensor.sca.Abs;
     }
     return priorityQueue.poll().point;
   }
-  private class WPoint implements Comparable<WPoint> {
-    private final Scalar weight;
-    private final Tensor point;
 
-    public WPoint(Scalar weight, Tensor point) {
-      this.weight = weight;
-      this.point = point;
-    }
-
-    public boolean split(WPoint wPoint, PriorityQueue<WPoint> priorityQueue) {
+  private record WPoint(Scalar weight, Tensor point) implements Comparable<WPoint> {
+    public boolean split(GeodesicSpace geodesicSpace, WPoint wPoint, PriorityQueue<WPoint> priorityQueue) {
       Scalar total = weight.add(wPoint.weight);
       if (Scalars.nonZero(total)) {
         Tensor split = geodesicSpace.split(point, wPoint.point, wPoint.weight.divide(total));

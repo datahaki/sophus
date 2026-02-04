@@ -3,16 +3,16 @@ package ch.alpine.sophus.lie.he;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.function.BinaryOperator;
-
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
+import ch.alpine.tensor.api.TensorBinaryOperator;
+import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
@@ -31,7 +31,7 @@ class HeAlgebraTest {
       Tensor g = RandomVariate.of(distribution, ad.length());
       HsAlgebra hsAlgebra = new HsAlgebra(ad, n + 1, 8);
       Tensor h = Join.of(Array.zeros(n + 1), RandomVariate.of(distribution, n));
-      BinaryOperator<Tensor> bch = lieAlgebra.bch(6);
+      TensorBinaryOperator bch = BakerCampbellHausdorff.of(lieAlgebra.ad(), 6);
       Tensor prj_g = hsAlgebra.projection(g);
       Tensor res = bch.apply(g, h);
       Tensor prj_gh = hsAlgebra.projection(res);
@@ -46,7 +46,7 @@ class HeAlgebraTest {
       Tensor ad = lieAlgebra.ad();
       Tensor g1 = RandomVariate.of(distribution, ad.length());
       Tensor g2 = RandomVariate.of(distribution, ad.length());
-      BinaryOperator<Tensor> bch = lieAlgebra.bch(6);
+      TensorBinaryOperator bch = BakerCampbellHausdorff.of(lieAlgebra.ad(), 6);
       Tensor expect = bch.apply(g1, g2);
       MatrixAlgebra matrixAlgebra = new MatrixAlgebra(HeAlgebra.basis(n));
       Tensor rotG1 = MatrixExp.of(matrixAlgebra.toMatrix(g1));

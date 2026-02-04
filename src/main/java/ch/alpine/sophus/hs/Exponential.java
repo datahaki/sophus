@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 
@@ -12,27 +11,13 @@ import ch.alpine.tensor.alg.VectorQ;
  * operator returns a vector that satisfies {@link VectorQ}
  * this allows to concatenate log_x(p_i) for p_1, ..., p_n into a matrix */
 public interface Exponential {
-  /** @param v vector in the tangent space
+  /** exponential map is a map from the Lie algebra g of a Lie group G to the group
+   * 
+   * @param v vector in the tangent space
    * @return point in the manifold */
   Tensor exp(Tensor v);
 
   /** @param q point in the manifold
    * @return vector in the tangent space */
   Tensor log(Tensor q);
-
-  /** @param point on manifold
-   * @return vector in tangent space that satisfies Exp_x(vector) == point */
-  Tensor vectorLog(Tensor point);
-
-  /** @param q point in the manifold
-   * @return exp(log(q).negate()) */
-  default Tensor flip(Tensor q) {
-    return exp(log(q).negate());
-  }
-
-  /** @param q point in the manifold
-   * @return exp(log(q)/2) */
-  default Tensor midpoint(Tensor q) {
-    return exp(log(q).multiply(RationalScalar.HALF));
-  }
 }

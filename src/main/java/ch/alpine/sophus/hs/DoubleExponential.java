@@ -11,7 +11,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * "Numerical Accuracy of Ladder Schemes for Parallel Transport on Manifolds"
  * by Nicolas Guigui, Xavier Pennec, 2020, p. 4 */
 public record DoubleExponential(HomogeneousSpace homogeneousSpace) implements Serializable {
-
   public DoubleExponential {
     Objects.requireNonNull(homogeneousSpace);
   }
@@ -19,6 +18,7 @@ public record DoubleExponential(HomogeneousSpace homogeneousSpace) implements Se
   public DoubleExponentialPoint at(Tensor x) {
     return new DoubleExponentialPoint(x);
   }
+
   public class DoubleExponentialPoint implements Serializable {
     private final Tensor x;
     private final Exponential exponential;

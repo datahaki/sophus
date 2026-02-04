@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -15,6 +13,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.sca.Chop;
 
@@ -73,9 +73,9 @@ class SpdRiemannTest {
       e11 = tuo.apply(e11);
       e12 = tuo.apply(e12);
       e13 = tuo.apply(e13);
-      SymmetricMatrixQ.require(e11);
-      SymmetricMatrixQ.require(e12);
-      SymmetricMatrixQ.require(e13);
+      SymmetricMatrixQ.INSTANCE.requireMember(e11);
+      SymmetricMatrixQ.INSTANCE.requireMember(e12);
+      SymmetricMatrixQ.INSTANCE.requireMember(e13);
       SpdRiemann spdRiemann = new SpdRiemann(q);
       Scalar s1112 = spdRiemann.sectional(e11, e12);
       Chop._10.requireClose(s1112, RationalScalar.of(-1, 4));

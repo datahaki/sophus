@@ -1,13 +1,19 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.sophus.math.api.TensorNorm;
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
 
 /** distance between two points
  * 
  * norm of tangent vector */
-public interface MetricManifold extends TensorMetric, TensorNorm {
-  // ---
-  // TODO SOPHUS specify whether norm takes vectorLog or log as input!
+public interface MetricManifold extends Manifold, TensorMetric {
+  BilinearForm bilinearForm(Tensor p);
+
+  @Override
+  default Scalar distance(Tensor p, Tensor q) {
+    return bilinearForm(p).norm(exponential(p).log(q));
+  }
 }

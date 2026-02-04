@@ -4,30 +4,27 @@ package ch.alpine.sophus.hs.spd;
 import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.UpperEvaluation;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 
-public class TSpdRandomSample implements RandomSampleInterface, Serializable {
-  private final Distribution distribution;
-  private final Tensor vector;
-
-  /** @param n strictly positive
-   * @param distribution */
-  public TSpdRandomSample(int n, Distribution distribution) {
+/** @param n strictly positive
+ * @param distribution */
+public record TSpdRandomSample(int n, Distribution distribution) implements RandomSampleInterface, Serializable {
+  public TSpdRandomSample {
     Integers.requirePositive(n);
-    this.distribution = distribution;
-    vector = ConstantArray.of(RealScalar.ZERO, n);
   }
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(RandomGenerator randomGenerator) {
     // clumsy way to generate a symmetric matrix
-    return UpperEvaluation.of(vector, vector, (p, q) -> RandomVariate.of(distribution, randomGenerator), s -> s);
+    Tensor vector = ConstantArray.of(RealScalar.ZERO, n);
+    return UpperEvaluation.of(vector, vector, //
+        (_, _) -> RandomVariate.of(distribution, randomGenerator), s -> s);
   }
 }

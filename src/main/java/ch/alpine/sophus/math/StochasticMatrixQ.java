@@ -5,6 +5,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Chop;
 
 /** row stochastic matrices */
+// TODO SOPHUS only used for testing
 public enum StochasticMatrixQ {
   ;
   /** @param tensor

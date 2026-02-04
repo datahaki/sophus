@@ -2,14 +2,15 @@
 package ch.alpine.sophus.bm;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.math.StochasticMatrixQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector1Norm;
@@ -33,33 +34,32 @@ class BiinvariantMeanTest {
   @Test
   void testRnSimple() {
     Distribution distribution = UniformDistribution.unit();
-    Random random = new Random(3);
+    RandomGenerator randomGenerator = new Random(3);
     for (int n = 1; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
+      Tensor sequence = RandomVariate.of(distribution, randomGenerator, n, 3);
       Tensor matrix = affine(n);
       Tensor invers = Inverse.of(matrix);
       Tensor mapped = Tensor.of(matrix.stream() //
-          .map(weights -> RnBiinvariantMean.INSTANCE.mean(sequence, weights)));
+          .map(weights -> LinearBiinvariantMean.INSTANCE.mean(sequence, weights)));
       Tensor result = Tensor.of(invers.stream() //
-          .map(weights -> RnBiinvariantMean.INSTANCE.mean(mapped, weights)));
+          .map(weights -> LinearBiinvariantMean.INSTANCE.mean(mapped, weights)));
       Chop._08.requireClose(sequence, result);
     }
   }
 
-  @Test
-  void testSe2CSimple() {
-    Distribution distribution = UniformDistribution.unit();
-    for (int n = 1; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, n, 3);
-      Tensor matrix = affine(n);
-      Tensor invers = Inverse.of(matrix);
-      Tensor mapped = Tensor.of(matrix.stream() //
-          .map(NormalizeTotal.FUNCTION) //
-          .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights)));
-      Tensor result = Tensor.of(invers.stream() //
-          .map(NormalizeTotal.FUNCTION) //
-          .map(weights -> Se2CoveringBiinvariantMean.INSTANCE.mean(mapped, weights)));
-      Tolerance.CHOP.requireClose(sequence.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
-    }
+  @RepeatedTest(6)
+  void testSe2CSimple(RepetitionInfo repetitionInfo) {
+    int n = repetitionInfo.getCurrentRepetition();
+    Distribution distribution = UniformDistribution.of(-0.1, 0.1);
+    Tensor sequence = RandomVariate.of(distribution, n, 3);
+    Tensor matrix = affine(n);
+    Tensor invers = Inverse.of(matrix);
+    Tensor mapped = Tensor.of(matrix.stream() //
+        .map(NormalizeTotal.FUNCTION) //
+        .map(weights -> Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, weights)));
+    Tensor result = Tensor.of(invers.stream() //
+        .map(NormalizeTotal.FUNCTION) //
+        .map(weights -> Se2CoveringGroup.INSTANCE.biinvariantMean().mean(mapped, weights)));
+    Chop._08.requireClose(sequence.get(Tensor.ALL, 2), result.get(Tensor.ALL, 2));
   }
 }

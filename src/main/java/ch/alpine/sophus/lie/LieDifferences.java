@@ -3,9 +3,9 @@ package ch.alpine.sophus.lie;
 
 import java.util.Objects;
 
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Differences;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** LieDifferences is the generalization of {@link Differences}
  * The input are elements from the Lie group.
@@ -17,20 +17,10 @@ import ch.alpine.tensor.alg.Differences;
  * </pre>
  * 
  * @see Differences */
-public final class LieDifferences extends AdjacentReduce {
-  private final LieGroup lieGroup;
-
-  /** @param lieGroup
-   * @throws Exception if either parameter is null */
-  public LieDifferences(LieGroup lieGroup) {
-    this.lieGroup = Objects.requireNonNull(lieGroup);
-  }
-
-  /** @param p element of the lie group
-   * @param q element of the lie group
-   * @return vector == log(p^-1 . q) so that exp(vector) == p^-1 . q */
-  @Override
-  protected Tensor reduce(Tensor p, Tensor q) {
-    return lieGroup.exponential(p).log(q);
+public enum LieDifferences {
+  ;
+  public static TensorUnaryOperator of(LieGroup lieGroup) {
+    Objects.requireNonNull(lieGroup);
+    return new AdjacentReduce((p, q) -> lieGroup.exponential(p).log(q));
   }
 }

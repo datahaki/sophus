@@ -8,22 +8,35 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Rationalize;
+import ch.alpine.tensor.sca.Chop;
 
-public enum PlausibleRational implements ScalarUnaryOperator {
-  FUNCTION;
+public class PlausibleRational implements ScalarUnaryOperator {
+  public static ScalarUnaryOperator of(int i, Chop chop) {
+    return new PlausibleRational(i, chop);
+  }
 
-  private static final ScalarUnaryOperator RATIONALIZE = //
-      Rationalize.withDenominatorLessEquals(10_000);
+  public static ScalarUnaryOperator of(int i) {
+    return of(i, Tolerance.CHOP);
+  }
+
+  // ---
+  private final ScalarUnaryOperator rationalize;
+  private final Chop chop;
+
+  private PlausibleRational(int max_den, Chop chop) {
+    rationalize = Rationalize.withDenominatorLessEquals(max_den);
+    this.chop = chop;
+  }
 
   @Override
   public Scalar apply(Scalar scalar) {
     if (scalar instanceof MultiplexScalar multiplexScalar)
-      return multiplexScalar.eachMap(FUNCTION);
+      return multiplexScalar.eachMap(this);
     if (ExactScalarQ.of(scalar))
       return scalar;
     if (scalar instanceof RealScalar) {
-      Scalar approx = RATIONALIZE.apply(scalar);
-      if (Tolerance.CHOP.isClose(approx, scalar))
+      Scalar approx = rationalize.apply(scalar);
+      if (chop.isClose(approx, scalar))
         return approx;
     }
     return scalar;

@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.tri.Sin;
   /** @param xya element from Lie Group SE2 as coordinates {x, y, alpha}
    * @return */
   public static TensorUnaryOperator inverse(Tensor xya) {
-    return new Se2Adjoint(new Se2GroupElement(xya).inverse().toCoordinate());
+    return new Se2Adjoint(Se2Group.INSTANCE.invert(xya));
   }
 
   // ---

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.lie.LieAlgebraImpl;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -15,6 +14,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.OrderedQ;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.KillingForm;
+import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.mat.AntihermitianMatrixQ;
 import ch.alpine.tensor.mat.ConjugateTranspose;
 import ch.alpine.tensor.mat.DiagonalMatrix;
@@ -48,10 +48,10 @@ class Su2AlgebraTest {
     Tensor gY = MatrixExp.of(my);
     Tensor gZ = MatrixLog.of(gX.dot(gY));
     Tensor az = matrixAlgebra.toVector(gZ);
-    LieAlgebraImpl lieAlgebraImpl = new LieAlgebraImpl(matrixAlgebra.ad());
-    Tensor rs6 = lieAlgebraImpl.bch(6).apply(x, y);
-    Tensor rs8 = lieAlgebraImpl.bch(8).apply(x, y);
-    Tensor rsA = lieAlgebraImpl.bch(10).apply(x, y);
+    Tensor mAlgAd = matrixAlgebra.ad();
+    Tensor rs6 = BakerCampbellHausdorff.of(mAlgAd, 6).apply(x, y);
+    Tensor rs8 = BakerCampbellHausdorff.of(mAlgAd, 8).apply(x, y);
+    Tensor rsA = BakerCampbellHausdorff.of(mAlgAd, 10).apply(x, y);
     Scalar err1 = Vector2Norm.between(az, rs6);
     Scalar err2 = Vector2Norm.between(az, rs8);
     Scalar err3 = Vector2Norm.between(az, rsA);
@@ -65,7 +65,7 @@ class Su2AlgebraTest {
       ExactTensorQ.require(matrix);
       assertEquals(ConjugateTranspose.of(matrix), matrix.negate());
       assertEquals(Trace.of(matrix), RealScalar.ZERO);
-      AntihermitianMatrixQ.require(matrix);
+      AntihermitianMatrixQ.INSTANCE.requireMember(matrix);
     }
   }
 

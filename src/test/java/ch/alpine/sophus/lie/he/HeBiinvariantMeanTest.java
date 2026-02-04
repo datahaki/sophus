@@ -20,7 +20,7 @@ class HeBiinvariantMeanTest {
     Tensor element = Tensors.fromString("{1, 1, 1}");
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
-    Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     assertEquals(sequence.get(0), actual);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
@@ -30,7 +30,7 @@ class HeBiinvariantMeanTest {
     Tensor element = Tensors.fromString("{1, 1, 1}");
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
-    Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     assertEquals(element, actual);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
@@ -40,7 +40,7 @@ class HeBiinvariantMeanTest {
     Tensor element = Tensors.vector(1, 2, 1, 2, 1);
     Tensor sequence = Tensors.of(element);
     Tensor weights = Tensors.vector(1);
-    Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     assertEquals(element, actual);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
@@ -50,7 +50,7 @@ class HeBiinvariantMeanTest {
     Tensor element = Tensors.fromString("{1, 1, 1}");
     Tensor sequence = Tensors.of(element, element.add(element), element.add(element).add(element));
     Tensor weights = Tensors.vector(0.2, 0.6, 0.2);
-    Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor expected = Tensors.fromString("{2, 2, 1.8}");
     Chop._12.requireClose(actual, expected);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
@@ -61,7 +61,7 @@ class HeBiinvariantMeanTest {
     Tensor element = Tensors.vector(1, 2, 1, 2, 1);
     Tensor sequence = Tensors.of(element, element.add(element), element.add(element).add(element));
     Tensor weights = Tensors.vector(0.2, 0.6, 0.2);
-    Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor expected = Tensors.fromString("{2.0, 4.0, 2.0, 4.0, 1.0}");
     HeFormat heFormat = HeFormat.of(actual);
     assertEquals(heFormat.x(), heFormat.y());
@@ -71,12 +71,12 @@ class HeBiinvariantMeanTest {
 
   @Test
   void testInverse() {
-    HeGroupElement p = new HeGroupElement(Tensors.fromString("{1, 2, 3, 4, 5}"));
-    HeGroupElement pinv = p.inverse();
+    Tensor p = Tensors.fromString("{1, 2, 3, 4, 5}");
+    Tensor pinv = HeGroup.INSTANCE.invert(p);
     // ---
-    Tensor sequence = Tensors.of(p.toCoordinate(), pinv.toCoordinate());
+    Tensor sequence = Tensors.of(p, pinv);
     Tensor weights = Tensors.vector(0.5, 0.5);
-    Tensor actual = HeBiinvariantMean.INSTANCE.mean(sequence, weights);
+    Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor identity = Tensors.fromString("{0, 0, 0, 0, 0}");
     assertEquals(identity, actual);
     Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
@@ -89,7 +89,7 @@ class HeBiinvariantMeanTest {
     Tensor domain = Subdivide.of(-1, 1, 10);
     Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
-        w -> HeBiinvariantMean.INSTANCE.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
+        w -> HeGroup.INSTANCE.biinvariantMean().mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
     Tensor he2 = domain.map(mean);
     Chop._12.requireClose(he1, he2);
   }
@@ -101,13 +101,13 @@ class HeBiinvariantMeanTest {
     Tensor domain = Subdivide.of(0, 2, 11);
     Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
-        w -> HeBiinvariantMean.INSTANCE.mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
+        w -> HeGroup.INSTANCE.biinvariantMean().mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
     Tensor he2 = domain.map(mean);
     Chop._12.requireClose(he1, he2);
   }
 
   @Test
   void testEmpty() {
-    assertThrows(Exception.class, () -> HeBiinvariantMean.INSTANCE.mean(Tensors.empty(), Tensors.empty()));
+    assertThrows(Exception.class, () -> HeGroup.INSTANCE.biinvariantMean().mean(Tensors.empty(), Tensors.empty()));
   }
 }

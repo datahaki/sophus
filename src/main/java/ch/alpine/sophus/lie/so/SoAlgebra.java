@@ -2,17 +2,14 @@
 package ch.alpine.sophus.lie.so;
 
 import java.io.Serializable;
-import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.so3.So3Algebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.io.MathematicaFormat;
-import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
 
 /** Careful:
  * does not match {@link So3Algebra} in the special case when n == 3 */
@@ -38,12 +35,7 @@ public class SoAlgebra implements LieAlgebra, Serializable {
 
   @Override
   public Tensor ad() {
-    return matrixAlgebra.ad().copy();
-  }
-
-  @Override
-  public BinaryOperator<Tensor> bch(int degree) {
-    return BakerCampbellHausdorff.of(ad(), degree);
+    return matrixAlgebra.ad();
   }
 
   public static Tensor basis(int n) {

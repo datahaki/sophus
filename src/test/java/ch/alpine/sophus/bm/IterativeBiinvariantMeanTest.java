@@ -10,9 +10,8 @@ import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -48,7 +47,7 @@ class IterativeBiinvariantMeanTest {
     double nom = Math.sqrt(2) - Math.PI / 4;
     double denom = 1 + Math.PI / 4 * (Math.sqrt(2) / (2 - Math.sqrt(2)));
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
-    IterativeBiinvariantMean bMI = IterativeBiinvariantMean.argmax(Se2Group.INSTANCE, Chop._12);
+    IterativeBiinvariantMean bMI = IterativeBiinvariantMean.argmax(Se2Group.INSTANCE);
     Tensor actual = bMI.apply(sequenceUnordered, weights).orElseThrow();
     Tolerance.CHOP.requireClose(actual, expected);
   }
@@ -56,15 +55,15 @@ class IterativeBiinvariantMeanTest {
 
   @Test
   void testSome() throws ClassNotFoundException, IOException {
-    RandomGenerator random = new Random(2);
+    RandomGenerator randomGenerator = new Random(2);
     Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;
     for (int length = 2; length < 8; ++length) {
-      Tensor sequence = RandomVariate.of(UniformDistribution.unit(), random, length, 3);
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, random, length));
-      Tensor actual = Se2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+      Tensor sequence = RandomVariate.of(UniformDistribution.unit(), randomGenerator, length, 3);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, length));
+      Tensor actual = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
       IterativeBiinvariantMean biinvariantMeanImplicit = //
-          Serialization.copy(IterativeBiinvariantMean.argmax(Se2CoveringGroup.INSTANCE, Chop._12));
+          Serialization.copy(IterativeBiinvariantMean.argmax(Se2CoveringGroup.INSTANCE));
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
         Chop._06.requireClose(actual, result.orElseThrow());

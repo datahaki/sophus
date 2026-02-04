@@ -7,16 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.he.HeAlgebra;
-import ch.alpine.sophus.lie.se2.Se2Algebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
-import ch.alpine.sophus.lie.so3.So3Algebra;
+import ch.alpine.sophus.lie.so.So3Group;
 
 class NilpotentAlgebraQTest {
   @Test
   void testSimple() {
     assertTrue(NilpotentAlgebraQ.of(new HeAlgebra(1).ad()));
-    assertFalse(NilpotentAlgebraQ.of(So3Algebra.INSTANCE.ad()));
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
+    assertFalse(NilpotentAlgebraQ.of(matrixAlgebra.ad()));
     assertFalse(NilpotentAlgebraQ.of(Sl2Algebra.INSTANCE.ad()));
-    assertFalse(NilpotentAlgebraQ.of(Se2Algebra.INSTANCE.ad()));
+    assertFalse(NilpotentAlgebraQ.of(LieAlgebraAds.se(2)));
   }
 }

@@ -3,9 +3,9 @@ package ch.alpine.sophus.lie.sopq;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.api.MemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.sca.Chop;
 
 public class TSopqMemberQ implements MemberQ, Serializable {
@@ -18,7 +18,7 @@ public class TSopqMemberQ implements MemberQ, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean test(Tensor x) {
+  public boolean isMember(Tensor x) {
     // FIXME SOPHUS ALG implement based on /reference
     return CHOP.isClose(Transpose.of(x).dot(form), form.dot(x));
   }

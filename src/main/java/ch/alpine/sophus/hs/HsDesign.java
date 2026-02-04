@@ -2,10 +2,10 @@
 package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.VectorQ;
 
 /** interface provides capability to generate design matrices from
  * collection of points and base point
@@ -17,15 +17,13 @@ import ch.alpine.tensor.Tensor;
  * "Projection matrix"
  * on Wikipedia, 2020 */
 public record HsDesign(Manifold manifold) implements Serializable {
-  public HsDesign {
-    Objects.requireNonNull(manifold);
-  }
-
   /** @param sequence
    * @param point
    * @return */
   public Stream<Tensor> stream(Tensor sequence, Tensor point) {
-    return sequence.stream().map(manifold.exponential(point)::vectorLog);
+    return sequence.stream() //
+        .map(manifold.exponential(point)::log) //
+        .map(VectorQ::require);
   }
 
   /** In statistics the matrix is called "design matrix"

@@ -15,6 +15,6 @@ public class Adjoint {
   }
 
   public Tensor matrix(Tensor tensor) {
-    return Transpose.of(Tensor.of(vectors.stream().map(lieGroup.element(tensor)::adjoint)));
+    return Transpose.of(Tensor.of(vectors.stream().map(X -> lieGroup.adjoint(tensor, X))));
   }
 }

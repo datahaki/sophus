@@ -1,23 +1,58 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.random.RandomGenerator;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.BasisTransform;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.LogisticDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class GrActionTest {
-  @Test
-  void testDecomp() {
-    int n = 5;
-    for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = new GrRandomSample(n, k);
+  @ParameterizedTest
+  @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
+  void testDecomp(int n) {
+    for (int k = 1; k <= n; ++k) {
+      RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
-      Tensor so = GrAction.match(p, q);
-      Chop._10.requireClose(new GrAction(so).apply(p), q);
+      GrAction so = GrAction.match(p, q);
+      Chop._12.requireClose(so.apply(p), q);
+    }
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
+  void testSimple(int n) {
+    RandomGenerator randomGenerator = ThreadLocalRandom.current();
+    for (int k = 1; k <= n; ++k) {
+      Grassmannian grassmannian = Grassmannian.of(n, k);
+      Tensor p = RandomSample.of(grassmannian, randomGenerator);
+      Tensor q = RandomSample.of(grassmannian, randomGenerator);
+      Distribution distribution = LogisticDistribution.of(1, 3);
+      TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
+      Tensor pv = tGrMemberQ.projection(RandomVariate.of(distribution, randomGenerator, n, n));
+      Tensor log = new GrExponential(p).log(q);
+      tGrMemberQ.requireMember(log);
+      HsTransport hsTransport = grassmannian.hsTransport();
+      Tensor qv = hsTransport.shift(p, q).apply(pv);
+      new TGrMemberQ(q).requireMember(qv);
+      GrAction match = GrAction.match(p, q);
+      Tensor ofForm = BasisTransform.ofForm(pv, match.g());
+      assumeTrue(false);
+      // TODO SOPHUS pv is not a "form" but a tangent vector!
+      Chop._08.requireClose(qv, ofForm);
     }
   }
 }

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -117,7 +116,7 @@ class Se2AdjointTest {
       Tensor u_w = RandomVariate.of(distribution, 3);
       Tensor out = se2Adjoint.apply(u_w);
       assertEquals(Dimensions.of(out), List.of(3));
-      Tensor g_i = new Se2GroupElement(g).inverse().combine(Array.zeros(3));
+      Tensor g_i = Se2Group.INSTANCE.invert(g); // Element(g).inverse().combine(Array.zeros(3));
       TensorUnaryOperator se2Inverse = Se2Adjoint.forward(g_i);
       Tensor apply = se2Inverse.apply(out);
       Chop._13.requireClose(u_w, apply);

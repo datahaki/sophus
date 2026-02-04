@@ -2,11 +2,11 @@
 package ch.alpine.sophus.hs.rs;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.r2.ArcTan2D;
+import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.lie.r2.AngleVector;
+import ch.alpine.tensor.lie.rot.AngleVector;
 
 public enum Se2inR2S implements GeodesicSpace {
   METHOD_0(RnSBezierSplit.METHOD_0), //

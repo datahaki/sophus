@@ -16,7 +16,7 @@ class RegionTest {
 
   @Test
   void testSimple() {
-    Some some = s -> false;
+    Some some = _ -> false;
     Optional<Integer> optional = Stream.of(3).filter(some::single).findAny();
     assertFalse(optional.isPresent());
   }

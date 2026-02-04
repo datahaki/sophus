@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
-import ch.alpine.sophus.hs.sn.SnRotationMatrix;
+import ch.alpine.sophus.hs.s.SnRotationMatrix;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -18,16 +20,25 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
 class BallRandomSampleTest {
+  @Test
+  void testSimple1() {
+    Tensor tensor = RandomSample.of(BallRandomSample.of(Tensors.vector(1, 2, 3), RealScalar.ONE), 6);
+    assertEquals(Dimensions.of(tensor), Arrays.asList(6, 3));
+  }
+
   @Test
   void testSimple() {
     Tensor center = Tensors.vector(10, 20, 30, 40);
@@ -86,7 +97,7 @@ class BallRandomSampleTest {
 
   @Test
   void testR3S2Geodesic() {
-    Random random = new Random(7);
+    RandomGenerator random = new Random(7);
     RandomSampleInterface randomSampleInterface = //
         BallRandomSample.of(Tensors.vector(0, 0, 0), RealScalar.ONE);
     for (int index = 0; index < 20; ++index) {
@@ -108,7 +119,7 @@ class BallRandomSampleTest {
       Tensor q = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor tensor = SnRotationMatrix.of(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
-      assertTrue(OrthogonalMatrixQ.of(tensor, Chop._10));
+      assertTrue(new OrthogonalMatrixQ(Chop._10).isMember(tensor));
     }
   }
 

@@ -4,7 +4,6 @@ package ch.alpine.sophus.hs.spd;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.math.LowerVectorize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -35,17 +34,23 @@ import ch.alpine.tensor.mat.ex.MatrixSqrt;
  * @see MatrixLog
  * @see Spd0Exponential */
 public class SpdExponential implements Exponential, Serializable {
-  private final Tensor p;
   private final Tensor pp;
   private final Tensor pn;
 
   /** @param p symmetric
    * @throws Exception if p is not symmetric */
   public SpdExponential(Tensor p) {
-    this.p = p;
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(p);
     pp = matrixSqrt.sqrt();
     pn = matrixSqrt.sqrt_inverse();
+  }
+
+  public Tensor pp() {
+    return pp;
+  }
+
+  public Tensor pn() {
+    return pn;
   }
 
   @Override // from Exponential
@@ -56,22 +61,6 @@ public class SpdExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     return basis(Spd0Exponential.INSTANCE.log(basis(q, pn)), pp);
-  }
-
-  @Override // from Exponential
-  public Tensor flip(Tensor q) {
-    // return basis(Spd0Exponential.INSTANCE.flip(q), p);
-    return SpdManifold.INSTANCE.flip(p, q);
-  }
-
-  @Override // from Exponential
-  public Tensor midpoint(Tensor q) {
-    return basis(Spd0Exponential.INSTANCE.midpoint(basis(q, pn)), pp);
-  }
-
-  @Override // from Exponential
-  public Tensor vectorLog(Tensor q) {
-    return LowerVectorize.of(log(q), 0);
   }
 
   /** @param q point in Spd
@@ -92,14 +81,14 @@ public class SpdExponential implements Exponential, Serializable {
    * @return the 2-norm of the eigenvalues of log_p(q) == log_0(bt(q, pn))
    * @see SpdMetric */
   /* package */ Scalar distance(Tensor q) {
-    return StaticHelper.norm(basis(q, pn));
+    return Spd0Exponential.norm(basis(q, pn));
   }
 
   /** @param matrix
    * @param v
    * @return
    * @see BasisTransform#ofForm(Tensor, Tensor) */
-  private static Tensor basis(Tensor matrix, Tensor v) {
+  /* package */ static Tensor basis(Tensor matrix, Tensor v) {
     return Symmetrize.of(v.dot(matrix).dot(v));
   }
 }

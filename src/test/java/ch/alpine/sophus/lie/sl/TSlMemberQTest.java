@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 class TSlMemberQTest {
   @Test
   void testSimple() {
-    assertFalse(TSlMemberQ.INSTANCE.test(IdentityMatrix.of(2)));
-    assertTrue(TSlMemberQ.INSTANCE.test(DiagonalMatrix.of(-1, 3, -2, 0)));
+    assertFalse(TSlMemberQ.INSTANCE.isMember(IdentityMatrix.of(2)));
+    assertTrue(TSlMemberQ.INSTANCE.isMember(DiagonalMatrix.of(-1, 3, -2, 0)));
   }
 }

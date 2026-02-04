@@ -18,19 +18,19 @@ class TurningGeometryTest {
   @Test
   void test90() {
     Optional<Scalar> offsetY = TurningGeometry.offset_y(RealScalar.ONE, RealScalar.of(Math.PI / 2));
-    Chop._10.requireZero(offsetY.get());
+    Chop._10.requireZero(offsetY.orElseThrow());
   }
 
   @Test
   void test45() {
     Optional<Scalar> offsetY = TurningGeometry.offset_y(RealScalar.ONE, RealScalar.of(Math.PI / 4));
-    Chop._10.requireClose(offsetY.get(), RealScalar.ONE);
+    Chop._10.requireClose(offsetY.orElseThrow(), RealScalar.ONE);
   }
 
   @Test
   void test45neg() {
     Optional<Scalar> offsetY = TurningGeometry.offset_y(RealScalar.ONE, RealScalar.of(-Math.PI / 4));
-    Chop._10.requireClose(offsetY.get(), RealScalar.ONE.negate());
+    Chop._10.requireClose(offsetY.orElseThrow(), RealScalar.ONE.negate());
   }
 
   @Test
@@ -48,13 +48,13 @@ class TurningGeometryTest {
   @Test
   void test45Units() {
     Optional<Scalar> offsetY = TurningGeometry.offset_y(Quantity.of(1.23, "m"), RealScalar.of(0.345));
-    Chop._10.requireClose(offsetY.get(), Quantity.of(3.4226321090018064, "m"));
+    Chop._10.requireClose(offsetY.orElseThrow(), Quantity.of(3.4226321090018064, "m"));
   }
 
   @Test
   void testRatio() {
     Scalar angle = Quantity.of(0.23, "m^-1");
     Optional<Scalar> offsetY = TurningGeometry.offset_y(angle);
-    assertEquals(offsetY.get(), angle.reciprocal());
+    assertEquals(offsetY.orElseThrow(), angle.reciprocal());
   }
 }

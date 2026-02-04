@@ -2,40 +2,64 @@
 package ch.alpine.sophus.hs.st;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.IOException;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.random.RandomGenerator;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalars;
+import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.lie.so.SoGroup;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Matrix2Norm;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Chop;
 
 class StExponentialTest {
-  @Test
-  void testSimple() throws ClassNotFoundException, IOException {
-    Random random = new Random(4);
-    for (int n = 3; n < 6; ++n)
-      for (int k = n - 2; k <= n; ++k) {
-        RandomSampleInterface randomSampleInterface = new StRandomSample(n, k);
-        Tensor p = RandomSample.of(randomSampleInterface, random);
-        StMemberQ.INSTANCE.require(p);
-        TStProjection tStProjection = new TStProjection(p);
-        Tensor v = tStProjection.apply(RandomVariate.of(NormalDistribution.standard(), random, k, n));
-        assertTrue(Scalars.lessThan(RealScalar.of(0.01), Matrix2Norm.of(v)));
-        StExponential stExponential = Serialization.copy(new StExponential(p));
-        Tensor q = stExponential.exp(v);
-        assertEquals(Dimensions.of(p), Dimensions.of(q));
-        StMemberQ.INSTANCE.require(q);
-      }
+  @ParameterizedTest
+  @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
+  void testSimple(int n) {
+    RandomGenerator randomGenerator = ThreadLocalRandom.current();
+    for (int k = 1; k <= n; ++k) {
+      StiefelManifold stiefelManifold = new StiefelManifold(n, k);
+      Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
+      stiefelManifold.requireMember(p);
+      TStMemberQ tStMemberQ = new TStMemberQ(p);
+      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.3), randomGenerator, k, n));
+      Scalar norm = Matrix2Norm.of(v);
+      assertFalse(Chop._08.isZero(norm));
+      Exponential exponential = stiefelManifold.exponential(p);
+      Tensor q = exponential.exp(v);
+      assertEquals(Dimensions.of(p), Dimensions.of(q));
+      stiefelManifold.requireMember(q);
+      Tensor w = exponential.log(q);
+      Chop._10.requireClose(v, w);
+    }
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { 2, 3, 4, 8 })
+  void testOrthLogMatch(int n) {
+    RandomGenerator randomGenerator = ThreadLocalRandom.current();
+    // new Random(1);
+    StiefelManifold stiefelManifold = new StiefelManifold(n, n);
+    Tensor p = IdentityMatrix.of(n);
+    stiefelManifold.requireMember(p);
+    TStMemberQ tStMemberQ = new TStMemberQ(p);
+    Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.3), randomGenerator, n, n));
+    Exponential exponential = stiefelManifold.exponential(p);
+    Tensor q = exponential.exp(v);
+    stiefelManifold.requireMember(q);
+    Tensor log1 = exponential.log(q);
+    Tensor log2 = SoGroup.INSTANCE.exponential(p).log(q);
+    Tolerance.CHOP.requireClose(log1, log2);
   }
 }

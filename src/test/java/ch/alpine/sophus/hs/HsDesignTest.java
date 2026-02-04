@@ -9,15 +9,10 @@ import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.math.api.TensorMapping;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.tensor.Scalar;
+import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.Sphere;
+import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ExactTensorQ;
@@ -28,16 +23,17 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.mat.gr.Mahalanobis;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Clips;
 
 class HsDesignTest {
   @Test
   void testRn() {
-    Manifold manifold = RnGroup.INSTANCE;
+    Manifold manifold = RGroup.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
       Distribution distribution = UniformDistribution.unit();
       for (int count = dimension + 1; count < 8; ++count) {
@@ -66,7 +62,7 @@ class HsDesignTest {
   void testSn() {
     Manifold manifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
-      RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
       for (int count = dimension + 2; count < 8; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
         Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(new HsDesign(manifold).matrix(sequence, point)).sigma_inverse()));
@@ -81,11 +77,11 @@ class HsDesignTest {
 
   @Test
   void testSe2C() {
-    RandomGenerator random = new Random(1);
+    RandomGenerator randomGenerator = new Random(1);
     Distribution distribution = UniformDistribution.of(-10, +10);
     Manifold manifold = Se2CoveringGroup.INSTANCE;
     for (int count = 4; count < 10; ++count) {
-      Tensor sequence = RandomVariate.of(distribution, random, count, 3);
+      Tensor sequence = RandomVariate.of(distribution, randomGenerator, count, 3);
       for (Tensor point : sequence) {
         Tensor design = new HsDesign(manifold).matrix(sequence, point);
         Mahalanobis mahalanobis = new Mahalanobis(design);
@@ -94,7 +90,7 @@ class HsDesignTest {
         Chop._08.requireClose(mahalanobis.leverages_sqrt(), influenceMatrix.leverages_sqrt());
         Tensor sigma_inverse = mahalanobis.sigma_inverse();
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
-        SymmetricMatrixQ.require(mahalanobis.sigma_n(), Chop._08);
+        new SymmetricMatrixQ(Chop._08).requireMember(mahalanobis.sigma_n());
       }
     }
   }
@@ -117,26 +113,6 @@ class HsDesignTest {
       Tensor matrix = new HsDesign(manifold).matrix(sequence, point);
       InfluenceMatrix hsInfluence = InfluenceMatrix.of(matrix);
       Chop._08.requireClose(dot, hsInfluence.residualMaker());
-    }
-  }
-
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(Se2CoveringGroup.INSTANCE);
-
-  @Test
-  void testSe2CadInvariant() {
-    Distribution distribution = UniformDistribution.of(-10, +10);
-    Manifold manifold = Se2CoveringGroup.INSTANCE;
-    for (int count = 4; count < 10; ++count) {
-      Tensor sequence = RandomVariate.of(distribution, count, 3);
-      Tensor point = RandomVariate.of(distribution, 3);
-      Tensor leverages_sqrt = new Mahalanobis(new HsDesign(manifold).matrix(sequence, point)).leverages_sqrt();
-      leverages_sqrt.stream().map(Scalar.class::cast).forEach(Clips.unit()::requireInside);
-      Tensor shift = RandomVariate.of(distribution, 3);
-      for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift)) {
-        Tensor matrix = new HsDesign(manifold).matrix(tensorMapping.slash(sequence), tensorMapping.apply(point));
-        Chop._05.requireClose(leverages_sqrt, //
-            new Mahalanobis(matrix).leverages_sqrt());
-      }
     }
   }
 }

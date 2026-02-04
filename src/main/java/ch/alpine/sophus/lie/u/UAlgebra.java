@@ -2,7 +2,6 @@
 package ch.alpine.sophus.lie.u;
 
 import java.io.Serializable;
-import java.util.function.BinaryOperator;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
@@ -11,8 +10,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
-import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
-import ch.alpine.tensor.sca.N;
 
 public class UAlgebra implements LieAlgebra, Serializable {
   private static final Cache<Integer, LieAlgebra> CACHE = Cache.of(UAlgebra::new, 8);
@@ -33,11 +30,6 @@ public class UAlgebra implements LieAlgebra, Serializable {
   @Override
   public Tensor ad() {
     return ad;
-  }
-
-  @Override
-  public BinaryOperator<Tensor> bch(int degree) {
-    return BakerCampbellHausdorff.of(ad.map(N.DOUBLE), degree);
   }
 
   public static Tensor basis(int n) {

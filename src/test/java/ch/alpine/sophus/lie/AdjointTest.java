@@ -18,7 +18,7 @@ class AdjointTest {
     Tensor m1 = adjoint.matrix(g1);
     Tensor g2 = Tensors.vector(7, -3, 1);
     Tensor m2 = adjoint.matrix(g2);
-    Tensor g3 = lieGroup.element(g1).combine(g2);
+    Tensor g3 = lieGroup.combine(g1, g2);
     Tensor m3 = adjoint.matrix(g3);
     Chop._10.requireClose(m1.dot(m2), m3);
   }

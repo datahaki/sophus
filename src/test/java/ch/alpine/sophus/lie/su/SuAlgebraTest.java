@@ -17,13 +17,12 @@ class SuAlgebraTest {
   void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = SuAlgebra.of(n);
-      SuAlgebra.basis(n).forEach(AntihermitianMatrixQ::require);
+      SuAlgebra.basis(n).forEach(AntihermitianMatrixQ.INSTANCE::requireMember);
       for (Tensor matrix : SuAlgebra.basis(n))
         Tolerance.CHOP.requireZero(Trace.of(matrix));
       Tensor ad = lieAlgebra.ad();
       Tensor form = KillingForm.of(ad);
-      // System.out.println(Pretty.of(form));
-      SquareMatrixQ.require(form);
+      SquareMatrixQ.INSTANCE.requireMember(form);
       HigherJacobiIdentity.of4(ad);
       HigherJacobiIdentity.of4b(ad);
       HigherJacobiIdentity.of5(ad);

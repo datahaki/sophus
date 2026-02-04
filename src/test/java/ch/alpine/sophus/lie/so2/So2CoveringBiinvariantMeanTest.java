@@ -1,19 +1,16 @@
 // code by jph
 package ch.alpine.sophus.lie.so2;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.bm.BiinvariantMeanTestHelper;
+import ch.alpine.sophus.bm.LinearBiinvariantMean;
+import ch.alpine.sophus.math.PermutationFunction;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.lie.Permutations;
-import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
@@ -30,14 +27,14 @@ class So2CoveringBiinvariantMeanTest {
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length).map(RealScalar.of(10)::add);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), length));
-      Scalar solution = So2CoveringBiinvariantMean.INSTANCE.mean(sequence, weights);
+      Scalar solution = (Scalar) LinearBiinvariantMean.INSTANCE.mean(sequence, weights);
       for (int count = 0; count < 10; ++count) {
         Scalar shift = RandomVariate.of(shifted);
         for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
-          int[] index = Primitives.toIntArray(perm);
-          Scalar result = So2CoveringBiinvariantMean.INSTANCE.mean( //
-              BiinvariantMeanTestHelper.order(sequence.map(shift::add), index), //
-              BiinvariantMeanTestHelper.order(weights, index));
+          PermutationFunction biinvariantMeanTestHelper = new PermutationFunction(perm);
+          Scalar result = (Scalar) LinearBiinvariantMean.INSTANCE.mean( //
+              biinvariantMeanTestHelper.apply(sequence.map(shift::add)), //
+              biinvariantMeanTestHelper.apply(weights));
           Chop._12.requireClose(result.subtract(shift), solution);
         }
       }
@@ -46,24 +43,19 @@ class So2CoveringBiinvariantMeanTest {
 
   @Test
   void testSpecific() {
-    Scalar scalar = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.vector(3, 4), Tensors.vector(0.5, 0.5));
+    Scalar scalar = (Scalar) LinearBiinvariantMean.INSTANCE.mean(Tensors.vector(3, 4), Tensors.vector(0.5, 0.5));
     Chop._12.requireClose(scalar, RealScalar.of(3.5));
   }
 
   @Test
   void testAntipodal() {
-    Scalar mean = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4));
+    Scalar mean = (Scalar) LinearBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.HALF, Pi.HALF.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(mean, RealScalar.of(0.3141592653589793));
   }
 
   @Test
   void testFailFar() {
-    Scalar mean = So2CoveringBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.VALUE, Pi.VALUE.negate()), Tensors.vector(0.6, 0.4));
+    Scalar mean = (Scalar) LinearBiinvariantMean.INSTANCE.mean(Tensors.of(Pi.VALUE, Pi.VALUE.negate()), Tensors.vector(0.6, 0.4));
     Chop._12.requireClose(mean, RealScalar.of(0.6283185307179586));
-  }
-
-  @Test
-  void testFailTensor() {
-    assertThrows(Exception.class, () -> So2CoveringBiinvariantMean.INSTANCE.mean(HilbertMatrix.of(3), NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, 1))));
   }
 }

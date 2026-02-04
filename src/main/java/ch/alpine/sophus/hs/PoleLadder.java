@@ -2,7 +2,6 @@
 package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -19,30 +18,11 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * 
  * @see SchildLadder */
 public record PoleLadder(HomogeneousSpace homogeneousSpace) implements HsTransport, Serializable {
-
-  public PoleLadder {
-    Objects.requireNonNull(homogeneousSpace);
-  }
-
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    return new Rung(p, q);
-  }
-  private class Rung implements TensorUnaryOperator {
-    private final Exponential exp_p;
-    private final Exponential exp_q;
-    private final Exponential exp_m;
-
-    private Rung(Tensor p, Tensor q) {
-      exp_p = homogeneousSpace.exponential(p);
-      exp_q = homogeneousSpace.exponential(q);
-      Tensor m = exp_p.midpoint(q);
-      exp_m = homogeneousSpace.exponential(m);
-    }
-
-    @Override
-    public Tensor apply(Tensor v) {
-      return exp_q.log(exp_m.flip(exp_p.exp(v))).negate();
-    }
+    Exponential exp_p = homogeneousSpace.exponential(p);
+    Exponential exp_q = homogeneousSpace.exponential(q);
+    Tensor m = homogeneousSpace.midpoint(p, q);
+    return v -> exp_q.log(homogeneousSpace.flip(m, exp_p.exp(v))).negate();
   }
 }

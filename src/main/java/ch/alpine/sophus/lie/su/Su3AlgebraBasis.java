@@ -8,7 +8,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 public enum Su3AlgebraBasis {
   ;
-  private static final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.of(1, 3));
+  private static final Scalar SQRT3 = Sqrt.FUNCTION.apply(RationalScalar.THIRD);
 
   public static Tensor basis() {
     // https://en.wikipedia.org/wiki/Gell-Mann_matrices

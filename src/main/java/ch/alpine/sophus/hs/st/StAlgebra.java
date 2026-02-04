@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import ch.alpine.sophus.hs.ad.HsAlgebra;
+import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.so.SoAlgebra;
 
 /** Algebra of Stiefel Manifold */

@@ -21,7 +21,7 @@ import ch.alpine.tensor.mat.re.LinearSolve;
     Tensor tensor = HeBiinvariantMean.xydot(sequence);
     Tensor z = Tensor.of(sequence.stream().map(HeFormat::of).map(HeFormat::z));
     lhs.append(z.subtract(tensor.multiply(RationalScalar.HALF)));
-    lhs.append(Tensors.vector(l -> RealScalar.ONE, sequence.length()));
+    lhs.append(Tensors.vector(_ -> RealScalar.ONE, sequence.length()));
   }
 
   @Override

@@ -5,6 +5,7 @@ import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
+// TODO SOPHUS review: the 1 in the name is not warranted
 public enum Complex1LieGroup implements GeodesicSpace {
   INSTANCE;
 

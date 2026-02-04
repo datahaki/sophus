@@ -10,21 +10,21 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.he.HeGroup;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.se.Se3Group;
+import ch.alpine.sophus.lie.se.Se3Matrix;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2RandomSample;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se3.Se3Group;
-import ch.alpine.sophus.lie.se3.Se3Matrix;
-import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
+import ch.alpine.sophus.lie.so.Rodrigues;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
 import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -35,23 +35,9 @@ class LieDifferencesTest {
   void testSimple() throws ClassNotFoundException, IOException {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
-    LieDifferences lieDifferences = //
-        Serialization.copy(new LieDifferences(RnGroup.INSTANCE));
+    TensorUnaryOperator lieDifferences = //
+        Serialization.copy(LieDifferences.of(RGroup.INSTANCE));
     assertEquals(lieDifferences.apply(tensor), Differences.of(tensor));
-  }
-
-  @Test
-  void testPairFunction() {
-    Distribution distribution = UniformDistribution.unit();
-    RandomSampleInterface randomSampleInterface = Se2RandomSample.of(distribution);
-    LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
-    for (int index = 0; index < 10; ++index) {
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor q = RandomSample.of(randomSampleInterface);
-      Tensor v1 = lieDifferences.reduce(p, q);
-      Tensor v2 = lieDifferences.reduce(q, p).negate();
-      Chop._12.requireClose(v1, v2);
-    }
   }
 
   @Test
@@ -61,7 +47,7 @@ class LieDifferencesTest {
     for (int index = 0; index < 10; ++index)
       tensor.append(Se3Matrix.of( //
           Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
-    LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
+    TensorUnaryOperator lieDifferences = LieDifferences.of(Se3Group.INSTANCE);
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 6));
   }
 
@@ -69,7 +55,7 @@ class LieDifferencesTest {
   void testSe2Simple() throws ClassNotFoundException, IOException {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);
-    LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
+    TensorUnaryOperator lieDifferences = LieDifferences.of(Se2Group.INSTANCE);
     Tensor tensor = Serialization.copy(lieDifferences).apply(Tensors.of(p1, p2));
     assertEquals(Dimensions.of(tensor), Arrays.asList(1, 3));
     Chop._14.requireClose(tensor.get(0), Tensors.vector(0, 0, 0));
@@ -79,7 +65,7 @@ class LieDifferencesTest {
   void testSe2() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomSample.of(Se2RandomSample.of(distribution), 10);
-    LieDifferences lieDifferences = new LieDifferences(Se2Group.INSTANCE);
+    TensorUnaryOperator lieDifferences = LieDifferences.of(Se2Group.INSTANCE);
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 3));
   }
 
@@ -87,7 +73,7 @@ class LieDifferencesTest {
   void testSe3Simple() {
     Tensor m1 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.2, -0.3, 0.4)), Tensors.vector(10, 20, 30));
     Tensor m2 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.4)), Tensors.vector(11, 21, 31));
-    LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
+    TensorUnaryOperator lieDifferences = LieDifferences.of(Se3Group.INSTANCE);
     Tensor tensor = lieDifferences.apply(Tensors.of(m1, m2));
     assertEquals(Dimensions.of(tensor), Arrays.asList(1, 6));
   }
@@ -98,7 +84,7 @@ class LieDifferencesTest {
     int n = 10;
     int d = 3;
     Tensor elements = RandomVariate.of(distribution, n, d * 2 + 1);
-    LieDifferences lieDifferences = new LieDifferences(HeGroup.INSTANCE);
+    TensorUnaryOperator lieDifferences = LieDifferences.of(HeGroup.INSTANCE);
     Tensor differences = Serialization.copy(lieDifferences).apply(elements);
     assertEquals(differences.length(), n - 1);
   }
@@ -107,7 +93,7 @@ class LieDifferencesTest {
   void testSe2Covering() {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);
-    LieDifferences INSTANCE = new LieDifferences(Se2CoveringGroup.INSTANCE);
+    TensorUnaryOperator INSTANCE = LieDifferences.of(Se2CoveringGroup.INSTANCE);
     Tensor tensor = INSTANCE.apply(Tensors.of(p1, p2));
     assertEquals(Dimensions.of(tensor), Arrays.asList(1, 3));
     Chop._14.requireClose(tensor.get(0), Tensors.vector(0, 0, Math.PI * 2));
@@ -115,6 +101,6 @@ class LieDifferencesTest {
 
   @Test
   void testLieGroupNullFail() {
-    assertThrows(Exception.class, () -> new LieDifferences(null));
+    assertThrows(Exception.class, () -> LieDifferences.of(null));
   }
 }

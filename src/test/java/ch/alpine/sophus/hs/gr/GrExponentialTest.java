@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -23,6 +22,7 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrixQ;
 import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -37,15 +37,15 @@ class GrExponentialTest {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.require(v);
+    tGrMemberQ.requireMember(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
-    InfluenceMatrixQ.require(exp);
+    InfluenceMatrixQ.INSTANCE.requireMember(exp);
     Tolerance.CHOP.requireClose(x, exp);
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireAllZero(log);
-    Tensor vectorLog = grExponential.vectorLog(exp);
-    Tolerance.CHOP.requireAllZero(vectorLog);
+    // Tensor vectorLog = grExponential.vectorLog(exp);
+    // Tolerance.CHOP.requireAllZero(vectorLog);
   }
 
   @Test
@@ -56,46 +56,46 @@ class GrExponentialTest {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.require(v);
+    tGrMemberQ.requireMember(v);
     Tensor exp = grExponential.exp(v);
-    InfluenceMatrixQ.require(exp);
+    InfluenceMatrixQ.INSTANCE.requireMember(exp);
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireClose(v, log);
   }
 
   @Test
   void testShift() {
-    Tensor x = RandomSample.of(new GrRandomSample(2, 1));
+    Tensor x = RandomSample.of(Grassmannian.of(2, 1));
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.require(v);
+    tGrMemberQ.requireMember(v);
     Tensor exp = grExponential.exp(v);
-    assertTrue(InfluenceMatrixQ.of(exp));
+    assertTrue(InfluenceMatrixQ.INSTANCE.isMember(exp));
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireClose(v, log);
-    grExponential.vectorLog(exp);
+    // grExponential.vectorLog(exp);
   }
 
   @ParameterizedTest
   @ValueSource(ints = { 4, 5, 6 })
   void testDesign(int n) {
     int k = 3;
-    Tensor x = RandomSample.of(new GrRandomSample(n, k));
+    Tensor x = RandomSample.of(Grassmannian.of(n, k));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     assertEquals(MatrixRank.of(x), k);
-    InfluenceMatrixQ.require(x);
+    InfluenceMatrixQ.INSTANCE.requireMember(x);
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.require(v);
+    tGrMemberQ.requireMember(v);
     assertFalse(Chop._05.allZero(v));
     Tensor exp = grExponential.exp(v);
-    InfluenceMatrixQ.require(exp);
-    assertTrue(Scalars.lessThan(RealScalar.of(0.001), FrobeniusNorm.between(x, exp)));
+    InfluenceMatrixQ.INSTANCE.requireMember(exp);
+    assertTrue(Scalars.lessThan(RealScalar.of(0.001), FrobeniusNorm.of(x.subtract(exp))));
     Tensor w = grExponential.log(exp);
     Chop._05.requireClose(v, w);
   }

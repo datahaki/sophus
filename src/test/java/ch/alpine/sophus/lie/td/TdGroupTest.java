@@ -2,21 +2,13 @@
 package ch.alpine.sophus.lie.td;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-import java.util.Random;
-
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.dv.AffineWrap;
-import ch.alpine.sophus.dv.AveragingWeights;
-import ch.alpine.sophus.dv.BarycentricCoordinate;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.math.api.TensorMapping;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -24,9 +16,10 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -42,18 +35,9 @@ class TdGroupTest {
   void testSt1Inverse() {
     Tensor p = Tensors.fromString("{6, 3, 3}");
     Tensor id = Tensors.fromString("{0, 0, 1}");
-    TdGroupElement pE = TdGroup.INSTANCE.element(p);
-    TdGroupElement inv = pE.inverse();
-    assertEquals(inv.toCoordinate(), Tensors.fromString("{-2, -1, 1/3}"));
-    assertEquals(inv.combine(p), id);
-  }
-
-  @Test
-  void testSt1Combine() {
-    Tensor p = Tensors.vector(6, 1, 3);
-    TdGroupElement pE = TdGroup.INSTANCE.element(p);
-    Tensor q = Tensors.vector(8, 5, 2);
-    assertEquals(pE.combine(q), Tensors.vector(30, 16, 6));
+    Tensor inv = TdGroup.INSTANCE.invert(p);
+    assertEquals(inv, Tensors.fromString("{-2, -1, 1/3}"));
+    assertEquals(TdGroup.INSTANCE.combine(inv, p), id);
   }
 
   @Test
@@ -65,27 +49,25 @@ class TdGroupTest {
       Tensor g = RandomSample.of(rsi); // element
       RandomSampleInterface tsi = new TDtRandomSample(UniformDistribution.of(-1, 1), n);
       Tensor x = RandomSample.of(tsi); // vector
-      LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = ge.combine(LIE_GROUP.exp(x)); // g.Exp[x]
-      Tensor rhs = LIE_GROUP.element(LIE_GROUP.exp(ge.adjoint(x))).combine(g); // Exp[Ad(g).x].g
+      Tensor lhs = LIE_GROUP.combine(g, LIE_GROUP.exponential0().exp(x)); // g.Exp[x]
+      Tensor rhs = LIE_GROUP.combine(LIE_GROUP.exponential0().exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }
   }
 
-  @Test
-  void testAdjointLog() {
+  @RepeatedTest(10)
+  void testAdjointLog(RepetitionInfo repetitionInfo) {
     // reference Pennec/Arsigny 2012 p.13
     // Log[g.m.g^-1] == Ad(g).Log[m]
-    for (int n = 1; n < 10; ++n) {
-      RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
-      Tensor g = RandomSample.of(rsi);
-      Tensor m = RandomSample.of(rsi);
-      LieGroupElement ge = LIE_GROUP.element(g);
-      Tensor lhs = LIE_GROUP.log( //
-          LIE_GROUP.element(ge.combine(m)).combine(ge.inverse().toCoordinate())); // Log[g.m.g^-1]
-      Tensor rhs = ge.adjoint(LIE_GROUP.log(m)); // Ad(g).Log[m]
-      Chop._10.requireClose(lhs, rhs);
-    }
+    int n = repetitionInfo.getCurrentRepetition();
+    RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
+    Tensor g = RandomSample.of(rsi);
+    Tensor m = RandomSample.of(rsi);
+    Tensor lhs = LIE_GROUP.exponential0().log( //
+        LIE_GROUP.combine(LIE_GROUP.combine(g, m), LIE_GROUP.invert(g))); // Log[g.m.g^-1]
+    // LieGroupElement ge = LIE_GROUP.element(g);
+    Tensor rhs = LIE_GROUP.adjoint(g, LIE_GROUP.exponential0().log(m)); // Ad(g).Log[m]
+    Chop._10.requireClose(lhs, rhs);
   }
 
   @Test
@@ -166,8 +148,8 @@ class TdGroupTest {
     for (int count = 0; count < 10; ++count) {
       Distribution distribution = NormalDistribution.standard();
       Tensor inp = RandomVariate.of(distribution, 3);
-      Tensor xy = TdGroup.INSTANCE.exp(inp);
-      Tensor uv = TdGroup.INSTANCE.log(xy);
+      Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
+      Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -175,16 +157,16 @@ class TdGroupTest {
   @Test
   void testSt1ExpLog() {
     Tensor inp = Tensors.vector(7, 3);
-    Tensor xy = TdGroup.INSTANCE.exp(inp);
-    Tensor uv = TdGroup.INSTANCE.log(xy);
+    Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
+    Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
     Tolerance.CHOP.requireClose(inp, uv);
   }
 
   @Test
   void testSt1LogExp() {
     Tensor inp = Tensors.vector(7, 3);
-    Tensor uv = TdGroup.INSTANCE.log(inp);
-    Tensor xy = TdGroup.INSTANCE.exp(uv);
+    Tensor uv = TdGroup.INSTANCE.exponential0().log(inp);
+    Tensor xy = TdGroup.INSTANCE.exponential0().exp(uv);
     Tolerance.CHOP.requireClose(inp, xy);
   }
 
@@ -192,8 +174,8 @@ class TdGroupTest {
   void testSt1Singular() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = Tensors.vector(0, Math.random());
-      Tensor xy = TdGroup.INSTANCE.exp(inp);
-      Tensor uv = TdGroup.INSTANCE.log(xy);
+      Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
+      Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -204,8 +186,8 @@ class TdGroupTest {
       Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
       Scalar u = RealScalar.of(Math.random());
       Tensor inp = Append.of(v, u);
-      Tensor xy = TdGroup.INSTANCE.exp(inp);
-      Tensor uv = TdGroup.INSTANCE.log(xy);
+      Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
+      Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -214,8 +196,8 @@ class TdGroupTest {
   void testLogExp() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random(), Math.random());
-      Tensor uv = TdGroup.INSTANCE.log(inp);
-      Tensor xy = TdGroup.INSTANCE.exp(uv);
+      Tensor uv = TdGroup.INSTANCE.exponential0().log(inp);
+      Tensor xy = TdGroup.INSTANCE.exponential0().exp(uv);
       Tolerance.CHOP.requireClose(inp, xy);
     }
   }
@@ -223,71 +205,46 @@ class TdGroupTest {
   @Test
   void testSingular() {
     Tensor inp = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random(), 0);
-    Tensor xy = TdGroup.INSTANCE.exp(inp);
-    Tensor uv = TdGroup.INSTANCE.log(xy);
+    Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
+    Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
     Tolerance.CHOP.requireClose(inp, uv);
   }
 
-  private static final LieGroupOps LIE_GROUP_OPS = new LieGroupOps(TdGroup.INSTANCE);
-  private static final BarycentricCoordinate AFFINE = AffineWrap.of(TdGroup.INSTANCE);
-  private static final BarycentricCoordinate[] BARYCENTRIC_COORDINATES = { //
-      // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(1)), //
-      // LeveragesCoordinate.slow(DtManifold.INSTANCE, InversePowerVariogram.of(2)), //
-      AFFINE };
-
   @Test
-  void testSimple3() {
-    Random random = new Random(3);
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 1; n < 3; ++n)
-        for (int length = n + 2; length < n + 8; ++length) {
-          int fn = n;
-          RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), fn, ExponentialDistribution.standard());
-          Tensor sequence = RandomSample.of(rsi, random, length);
-          Tensor mean1 = RandomSample.of(rsi, random);
-          Tensor weights = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = TdBiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._06.requireClose(mean1, mean2);
-          // ---
-          Tensor shift = RandomSample.of(rsi, random);
-          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
-            Chop._03.requireClose(weights, //
-                barycentricCoordinate.weights(tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
-        }
+  void testSt1Inverse44() {
+    Tensor p = Tensors.vector(3, 6);
+    Tensor id = Tensors.vector(0, 1);
+    assertEquals(TdGroup.INSTANCE.diffOp(p).apply(p), id);
   }
 
   @Test
-  void testAffineBiinvariant() throws ClassNotFoundException, IOException {
-    Random random = new Random(3);
-    for (BarycentricCoordinate barycentricCoordinate : BARYCENTRIC_COORDINATES)
-      for (int n = 1; n < 3; ++n)
-        for (int length = n + 2; length < n + 8; ++length) {
-          barycentricCoordinate = Serialization.copy(barycentricCoordinate);
-          RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
-          Tensor sequence = RandomSample.of(rsi, random, length);
-          Tensor mean1 = RandomSample.of(rsi, random);
-          Tensor weights = barycentricCoordinate.weights(sequence, mean1);
-          Tensor mean2 = TdBiinvariantMean.INSTANCE.mean(sequence, weights);
-          Chop._08.requireClose(mean1, mean2); // linear reproduction
-          // ---
-          Tensor shift = RandomSample.of(rsi, random);
-          for (TensorMapping tensorMapping : LIE_GROUP_OPS.biinvariant(shift))
-            Chop._05.requireClose(weights, barycentricCoordinate.weights( //
-                tensorMapping.slash(sequence), tensorMapping.apply(mean1)));
-        }
+  void testInverse() {
+    Tensor id = Tensors.vector(0, 0, 0, 0, 1);
+    for (int count = 0; count < 100; ++count) {
+      Scalar lambda = RealScalar.of(Math.random() + 0.001);
+      Tensor t = Tensors.vector(Math.random(), 32 * Math.random(), -Math.random(), -17 * Math.random());
+      Tensor p = Append.of(t, lambda);
+      Chop._11.requireClose(TdGroup.INSTANCE.diffOp(p).apply(p), id);
+    }
+  }
+
+  // checks that lambda is required to be positive
+  @Test
+  void testLambdaNonPositiveFail() {
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.requireMember(Tensors.vector(5, 0)));
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.requireMember(Tensors.vector(5, -1)));
   }
 
   @Test
-  void testAffineCenter() throws ClassNotFoundException, IOException {
-    BarycentricCoordinate barycentricCoordinate = Serialization.copy(AFFINE);
-    for (int n = 1; n < 3; ++n)
-      for (int length = n + 2; length < n + 8; ++length) {
-        RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
-        Tensor sequence = RandomSample.of(rsi, length);
-        Tensor constant = AveragingWeights.of(length);
-        Tensor center = TdBiinvariantMean.INSTANCE.mean(sequence, constant);
-        Tensor weights = barycentricCoordinate.weights(sequence, center);
-        Tolerance.CHOP.requireClose(weights, constant);
-      }
+  void testCombineFail() {
+    Tensor p = Tensors.vector(1, 2, 3, 4);
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.combine(p, Tensors.vector(1, 2, 3, 0)));
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.combine(p, Tensors.vector(1, 2, 3, 4, 1)));
+  }
+
+  @Test
+  void testDlNullFail() {
+    Tensor pE = TdGroup.INSTANCE.requireMember(Tensors.vector(1, 2, 3, 4));
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.dL(pE, null));
   }
 }

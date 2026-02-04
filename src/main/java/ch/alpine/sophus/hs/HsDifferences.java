@@ -4,10 +4,10 @@ package ch.alpine.sophus.hs;
 import java.util.Objects;
 
 import ch.alpine.sophus.lie.LieDifferences;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Differences;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** <pre>
  * HsDifferences[{a, b, c, d, e}] == {{a, log_a[b]}, {b, log_b[c]}, ..., {d, log_d[e]}}
@@ -19,16 +19,10 @@ import ch.alpine.tensor.alg.Differences;
  * 
  * @see Differences
  * @see LieDifferences */
-public final class HsDifferences extends AdjacentReduce {
-  private final HomogeneousSpace homogeneousSpace;
-
-  /** @param homogeneousSpace non-null */
-  public HsDifferences(HomogeneousSpace homogeneousSpace) {
-    this.homogeneousSpace = Objects.requireNonNull(homogeneousSpace);
-  }
-
-  @Override
-  protected Tensor reduce(Tensor p, Tensor q) {
-    return Tensors.of(p, homogeneousSpace.exponential(p).log(q));
+public enum HsDifferences {
+  ;
+  public static TensorUnaryOperator of(HomogeneousSpace homogeneousSpace) {
+    Objects.requireNonNull(homogeneousSpace);
+    return new AdjacentReduce((p, q) -> Tensors.of(p, homogeneousSpace.exponential(p).log(q)));
   }
 }

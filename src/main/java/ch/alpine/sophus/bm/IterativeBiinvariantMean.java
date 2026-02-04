@@ -9,6 +9,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMax;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 
 /** Barycentric Fixed Point Iteration
@@ -42,11 +43,15 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     return of(homogeneousSpace, chop, ArgMaxSelection.INSTANCE);
   }
 
+  public static IterativeBiinvariantMean argmax(HomogeneousSpace homogeneousSpace) {
+    return argmax(homogeneousSpace, Tolerance.CHOP);
+  }
+
   /** @param homogeneousSpace
    * @param chop
    * @return */
   public static IterativeBiinvariantMean reduce(HomogeneousSpace homogeneousSpace, Chop chop) {
-    return new IterativeBiinvariantMean(homogeneousSpace, chop, ReducingMean.of(homogeneousSpace));
+    return new IterativeBiinvariantMean(homogeneousSpace, chop, new ReducingMean(homogeneousSpace));
   }
 
   /** serves as initial guess at begin of fix point iteration that
@@ -58,7 +63,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
 
     @Override // from BiinvariantMean
     public Tensor mean(Tensor sequence, Tensor weights) {
-      return sequence.get(ArgMax.of(AffineQ.require(weights)));
+      return sequence.get(ArgMax.of(weights));
     }
   }
 
