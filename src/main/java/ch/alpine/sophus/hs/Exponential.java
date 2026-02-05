@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** map between manifold M and tangent space T_p M for some point p in M
  * 
@@ -20,4 +21,10 @@ public interface Exponential {
   /** @param q point in the manifold
    * @return vector in the tangent space */
   Tensor log(Tensor q);
+
+  /** @return
+   * @apiNote method exists for convenience */
+  default TensorUnaryOperator log() {
+    return q -> log(q);
+  }
 }
