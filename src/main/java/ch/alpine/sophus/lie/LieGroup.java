@@ -16,7 +16,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exponential at neutral element */
 // TODO SOPHUS API should give LieAlgebra with ad (since this is implied from basis/group action)
 // .. and vectorLog implies basis
-public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor> {
+public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieIntegrator {
   /** @return tangent space */
   Exponential exponential0();
 
@@ -114,5 +114,10 @@ public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor> {
    * @return */
   default Tensor dR(Tensor point, Tensor tensor) {
     throw new UnsupportedOperationException();
+  }
+
+  @Override // from LieIntegrator
+  default Tensor spin(Tensor g, Tensor x) {
+    return exponential(g).exp(x);
   }
 }

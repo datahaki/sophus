@@ -42,7 +42,9 @@ class StBilinearFormTest {
       Tensor w = exponential.log(q);
       assertTrue(Im.allZero(w));
       Scalar d_pq = stiefelManifold.distance(p, q);
+      Scalar d_qp = stiefelManifold.distance(q, p);
       Tolerance.CHOP.requireClose(norm, d_pq);
+      Tolerance.CHOP.requireClose(d_pq, d_qp);
       Tensor u = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, k, n));
       Scalar eval1 = bilinearForm.formEval(u, v);
       Scalar eval2 = bilinearForm.formEval(v, u);
@@ -55,6 +57,12 @@ class StBilinearFormTest {
       Tensor aq = stAction.apply(q);
       Scalar d_apq = stiefelManifold.distance(ap, aq);
       Tolerance.CHOP.requireClose(d_pq, d_apq);
+      {
+        Tensor m = stiefelManifold.midpoint(p, q);
+        Scalar d_pm = stiefelManifold.distance(p, m);
+        Scalar d_qm = stiefelManifold.distance(q, m);
+        Tolerance.CHOP.requireClose(d_pm.add(d_qm), d_pq);
+      }
     }
   }
 }

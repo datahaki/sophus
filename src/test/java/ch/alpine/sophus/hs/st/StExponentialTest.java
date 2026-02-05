@@ -4,9 +4,6 @@ package ch.alpine.sophus.hs.st;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.random.RandomGenerator;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -27,13 +24,12 @@ class StExponentialTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
   void testSimple(int n) {
-    RandomGenerator randomGenerator = ThreadLocalRandom.current();
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-      Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
+      Tensor p = RandomSample.of(stiefelManifold);
       stiefelManifold.requireMember(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
-      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, k, n));
+      Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), k, n));
       Scalar norm = Matrix2Norm.of(v);
       assertFalse(Chop._08.isZero(norm));
       Exponential exponential = stiefelManifold.exponential(p);
@@ -48,13 +44,11 @@ class StExponentialTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4, 8 })
   void testOrthLogMatch(int n) {
-    RandomGenerator randomGenerator = ThreadLocalRandom.current();
-    // new Random(1);
     StiefelManifold stiefelManifold = new StiefelManifold(n, n);
     Tensor p = IdentityMatrix.of(n);
     stiefelManifold.requireMember(p);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
-    Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, n, n));
+    Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n));
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor q = exponential.exp(v);
     stiefelManifold.requireMember(q);

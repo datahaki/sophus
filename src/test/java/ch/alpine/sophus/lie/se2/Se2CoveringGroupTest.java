@@ -8,11 +8,9 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.BasicLieIntegrator;
 import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieIntegrator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -222,8 +220,7 @@ class Se2CoveringGroupTest {
       Tensor v = RandomVariate.of(distribution, 3);
       Tensor other = Se2CoveringGroup.INSTANCE.exponential0().exp(v);
       Tensor result = Se2CoveringGroup.INSTANCE.combine(xya, other);
-      LieIntegrator lieIntegrator = new BasicLieIntegrator(Se2CoveringGroup.INSTANCE);
-      Tensor prod = lieIntegrator.spin(xya, v);
+      Tensor prod = Se2CoveringGroup.INSTANCE.spin(xya, v);
       Chop._10.requireClose(prod, result);
     }
   }
