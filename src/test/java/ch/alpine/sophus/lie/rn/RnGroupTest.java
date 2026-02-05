@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.MetricManifold;
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -25,6 +24,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
+import showcase.GroupCheck;
 
 class RnGroupTest {
   @Test

@@ -41,7 +41,7 @@ class TGrMemberQTest {
   @Test
   void testSerializable() throws ClassNotFoundException, IOException {
     int n = 5;
-    Tensor x = RandomSample.of(Grassmannian.of(n, 3));
+    Tensor x = RandomSample.of(new Grassmannian(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     GrManifold.INSTANCE.requireMember(x);
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
@@ -60,7 +60,7 @@ class TGrMemberQTest {
   @ValueSource(ints = { 3, 4, 5 })
   void testProjection(int n) {
     int k = 2;
-    RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
+    RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Tensor v = new GrExponential(p).log(q);
@@ -92,7 +92,7 @@ class TGrMemberQTest {
     for (int n = 1; n < 6; ++n) {
       int fn = n;
       for (int k = 0; k <= n; ++k) {
-        Tensor x = RandomSample.of(Grassmannian.of(n, k), randomGenerator);
+        Tensor x = RandomSample.of(new Grassmannian(n, k), randomGenerator);
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 3) //

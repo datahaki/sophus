@@ -58,18 +58,22 @@ public class GlGroup implements LieGroup, Serializable {
   }
 
   @Override
-  public final Tensor neutral(Tensor element) {
-    return IdentityMatrix.of(element);
+  public final Tensor neutral(Tensor matrix) {
+    return IdentityMatrix.of(matrix);
   }
 
   @Override
-  public Tensor invert(Tensor element) {
-    return Inverse.of(element);
+  public Tensor invert(Tensor matrix) {
+    return protected_project(Inverse.of(matrix));
   }
 
   @Override
-  public final Tensor combine(Tensor element1, Tensor element2) {
-    return element1.dot(SquareMatrixQ.INSTANCE.requireMember(element2));
+  public final Tensor combine(Tensor matrix1, Tensor matrix2) {
+    return protected_project(matrix1.dot(SquareMatrixQ.INSTANCE.requireMember(matrix2)));
+  }
+
+  protected Tensor protected_project(Tensor matrix) {
+    return matrix;
   }
 
   @Override

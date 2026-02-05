@@ -24,7 +24,7 @@ class GrActionTest {
   @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
   void testDecomp(int n) {
     for (int k = 1; k <= n; ++k) {
-      RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
+      RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       GrAction so = GrAction.match(p, q);
@@ -37,7 +37,7 @@ class GrActionTest {
   void testSimple(int n) {
     RandomGenerator randomGenerator = ThreadLocalRandom.current();
     for (int k = 1; k <= n; ++k) {
-      Grassmannian grassmannian = Grassmannian.of(n, k);
+      Grassmannian grassmannian = new Grassmannian(n, k);
       Tensor p = RandomSample.of(grassmannian, randomGenerator);
       Tensor q = RandomSample.of(grassmannian, randomGenerator);
       Distribution distribution = LogisticDistribution.of(1, 3);

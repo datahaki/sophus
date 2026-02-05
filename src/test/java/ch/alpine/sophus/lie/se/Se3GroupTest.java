@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so.Rodrigues;
 import ch.alpine.tensor.RationalScalar;
@@ -35,6 +34,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
+import showcase.GroupCheck;
 
 class Se3GroupTest {
   private static final Exponential LIE_EXPONENTIAL = Se3Group.INSTANCE.exponential0();

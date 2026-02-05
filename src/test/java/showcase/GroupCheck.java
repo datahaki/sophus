@@ -1,4 +1,4 @@
-package ch.alpine.sophus.lie;
+package showcase;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +9,12 @@ import java.util.stream.IntStream;
 
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.lie.BchBinaryAverage;
+import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.MatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixGroup;
+import ch.alpine.sophus.lie.VectorEncodingMarker;
+import ch.alpine.sophus.lie.VectorizedGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -36,15 +36,14 @@ public enum RnSBezierSplit implements GeodesicSpace {
         return RealScalar.ZERO;
       return t0.orElseThrow().add(t1.orElseThrow()).divide(RealScalar.of(4));
     }
-  }, //
+  },
   METHOD_1 {
     @Override
     protected Scalar theta(Tensor p0, Tensor v0, Tensor p1, Tensor v1) {
       Optional<Scalar> t0 = VectorAngle.of(v0, v1);
       return t0.orElseThrow().divide(RealScalar.of(4));
     }
-  }, //
-  ;
+  };
 
   private static final TensorUnaryOperator NORMALIZE = NormalizeUnlessZero.with(Vector2Norm::of);
 

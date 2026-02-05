@@ -11,7 +11,6 @@ import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -30,6 +29,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
+import showcase.GroupCheck;
 
 class Se2GroupTest {
   @Test

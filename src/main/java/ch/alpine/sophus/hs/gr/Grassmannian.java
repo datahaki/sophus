@@ -24,20 +24,15 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
  * @param n positive
  * @param k no greater than n */
 public class Grassmannian extends GrManifold implements SpecificManifold {
-  /** @param n as in n x n projection matrices
-   * @param k each matrix with k ev equals 1 and (n-k) ev equals 0
-   * @return */
-  public static Grassmannian of(int n, int k) {
-    Integers.requireLessEquals(k, n);
-    return new Grassmannian(Integers.requirePositive(n), Integers.requirePositiveOrZero(k));
-  }
-
   private final int n;
   private final int k;
 
-  private Grassmannian(int n, int k) {
-    this.n = n;
-    this.k = k;
+  /** @param n as in n x n projection matrices
+   * @param k each matrix with k ev equals 1 and (n-k) ev equals 0 */
+  public Grassmannian(int n, int k) {
+    this.n = Integers.requirePositive(n);
+    this.k = Integers.requirePositiveOrZero(k);
+    Integers.requireLessEquals(k, n);
   }
 
   @Deprecated

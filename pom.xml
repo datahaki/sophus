@@ -22,7 +22,14 @@
 			<artifactId>tensor</artifactId>
 			<version>1.0.7</version>
 		</dependency>
-
+		<!-- 
+		<dependency>
+			<groupId>io.github.classgraph</groupId>
+			<artifactId>classgraph</artifactId>
+			<version>4.8.184</version>
+			<scope>test</scope>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>

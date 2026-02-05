@@ -35,7 +35,7 @@ import ch.alpine.tensor.sca.Chop;
 class GrassmannianTest {
   @Test
   void testCurve() {
-    Grassmannian grassmannian = Grassmannian.of(2, 1);
+    Grassmannian grassmannian = new Grassmannian(2, 1);
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
     assertTrue(grassmannian.isMember(p));
@@ -44,16 +44,16 @@ class GrassmannianTest {
 
   @Test
   void testIllegal() {
-    assertThrows(Exception.class, () -> Grassmannian.of(0, +0));
-    assertThrows(Exception.class, () -> Grassmannian.of(4, -1));
-    Grassmannian.of(4, +0);
-    assertThrows(Exception.class, () -> Grassmannian.of(4, +5));
+    assertThrows(Exception.class, () -> new Grassmannian(0, +0));
+    assertThrows(Exception.class, () -> new Grassmannian(4, -1));
+    new Grassmannian(4, +0);
+    assertThrows(Exception.class, () -> new Grassmannian(4, +5));
   }
 
   @Test
   void testGrassmannian() {
     int n = 2;
-    Grassmannian grassmannian = Grassmannian.of(n, 1);
+    Grassmannian grassmannian = new Grassmannian(n, 1);
     Tensor p = Tensors.fromString("{{1,0},{0,0}}");
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
     TensorUnaryOperator tuo = new TGrMemberQ(p)::defect;
@@ -73,7 +73,7 @@ class GrassmannianTest {
   @Test
   void testGrassmannianRandom() {
     int n = 5;
-    Grassmannian grassmannian = Grassmannian.of(n, 3);
+    Grassmannian grassmannian = new Grassmannian(n, 3);
     Tensor p = RandomSample.of(grassmannian);
     TensorUnaryOperator tuo = m -> Join.of(p.dot(m).add(m.dot(p)).subtract(m), SymmetricMatrixQ.INSTANCE.defect(m));
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
@@ -120,7 +120,7 @@ class GrassmannianTest {
   void testRandom32(int n) {
     Distribution distribution = NormalDistribution.standard();
     for (int k = 1; k < n; ++k) {
-      Grassmannian grassmannian = Grassmannian.of(n, k);
+      Grassmannian grassmannian = new Grassmannian(n, k);
       Tensor p = RandomSample.of(grassmannian);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
       LinearSubspace homogeneousSpan = LinearSubspace.of(tGrMemberQ::defect, n, n);
@@ -141,7 +141,7 @@ class GrassmannianTest {
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
     for (int k = 1; k < 5; ++k) {
-      RandomSampleInterface grRandomSample = Serialization.copy(Grassmannian.of(k + 3, k));
+      RandomSampleInterface grRandomSample = Serialization.copy(new Grassmannian(k + 3, k));
       Tensor x = RandomSample.of(grRandomSample);
       GrManifold.INSTANCE.requireMember(x);
     }
@@ -150,7 +150,7 @@ class GrassmannianTest {
   @Test
   void testNN() throws ClassNotFoundException, IOException {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = Serialization.copy(Grassmannian.of(n, n));
+      RandomSampleInterface randomSampleInterface = Serialization.copy(new Grassmannian(n, n));
       Tensor x = RandomSample.of(randomSampleInterface);
       GrManifold.INSTANCE.requireMember(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));
@@ -160,7 +160,7 @@ class GrassmannianTest {
   @Test
   void testN0() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = Grassmannian.of(n, 0);
+      RandomSampleInterface randomSampleInterface = new Grassmannian(n, 0);
       for (int k = 0; k < 3; ++k) {
         Tensor x = RandomSample.of(randomSampleInterface);
         GrManifold.INSTANCE.requireMember(x);
@@ -172,7 +172,7 @@ class GrassmannianTest {
 
   @Test
   void testFail() {
-    assertThrows(Exception.class, () -> Grassmannian.of(-3, 2));
-    assertThrows(Exception.class, () -> Grassmannian.of(3, 4));
+    assertThrows(Exception.class, () -> new Grassmannian(-3, 2));
+    assertThrows(Exception.class, () -> new Grassmannian(3, 4));
   }
 }

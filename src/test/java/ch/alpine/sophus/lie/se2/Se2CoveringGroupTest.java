@@ -8,7 +8,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
@@ -33,6 +32,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
+import showcase.GroupCheck;
 
 class Se2CoveringGroupTest {
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //

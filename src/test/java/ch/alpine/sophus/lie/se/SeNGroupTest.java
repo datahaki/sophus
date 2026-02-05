@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
@@ -13,6 +12,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import showcase.GroupCheck;
 
 class SeNGroupTest {
   @Test

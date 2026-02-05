@@ -10,7 +10,6 @@ import java.io.IOException;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.RationalScalar;
@@ -36,6 +35,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import showcase.GroupCheck;
 
 class So3GroupTest {
   @Test

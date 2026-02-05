@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -26,6 +25,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.spa.SparseArray;
+import showcase.GroupCheck;
 
 class SlNGroupTest {
   @Test
