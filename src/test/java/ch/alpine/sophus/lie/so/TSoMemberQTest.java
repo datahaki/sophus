@@ -9,8 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.TensorRank;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.TensorWedge;
@@ -24,8 +26,15 @@ class TSoMemberQTest {
   @ValueSource(ints = { 3, 4, 5 })
   void testAntisymm(int n) {
     TensorUnaryOperator tuo = AntisymmetricMatrixQ.INSTANCE::defect;
-    Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
-    assertEquals(tensor.length(), n * (n - 1) / 2);
+    LinearSubspace linearSubspace = LinearSubspace.of(tuo, n, n);
+    assertEquals(linearSubspace.dimensions(), n * (n - 1) / 2);
+    SoNGroup soNGroup = new SoNGroup(n);
+    assertEquals(linearSubspace.dimensions(), soNGroup.dimensions());
+    Tensor tensor = linearSubspace.basis();
+    // tensor.stream().forEach(ad->IO.println(Pretty.of(ad)));
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(tensor);
+    Tensor ad = matrixAlgebra.ad();
+    assertEquals(TensorRank.of(ad), 3);
   }
 
   @ParameterizedTest
@@ -34,8 +43,8 @@ class TSoMemberQTest {
     SoNGroup soNGroup = new SoNGroup(n);
     Tensor p = RandomSample.of(soNGroup);
     TensorUnaryOperator tuo = v -> Transpose.of(v).dot(p).add(Transpose.of(p).dot(v));
-    Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
-    assertEquals(tensor.length(), n * (n - 1) / 2);
+    LinearSubspace linearSubspace = LinearSubspace.of(tuo, n, n);
+    assertEquals(linearSubspace.dimensions(), n * (n - 1) / 2);
   }
 
   @Test

@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.so;
 
 import java.util.random.RandomGenerator;
 
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -16,6 +17,7 @@ import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.lie.rot.RotationMatrix;
+import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -32,6 +34,11 @@ public class SoNGroup extends SoGroup implements MatrixGroup, RandomSampleInterf
 
   public SoNGroup(int n) {
     this.n = Integers.requirePositive(n);
+  }
+
+  public MatrixAlgebra matrixAlgebra() {
+    LinearSubspace linearSubspace = LinearSubspace.of(TSoMemberQ.INSTANCE::defect, n, n);
+    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override
@@ -56,6 +63,10 @@ public class SoNGroup extends SoGroup implements MatrixGroup, RandomSampleInterf
     /* for some reason this always gives Det == 1 */
     return QRDecomposition.of(RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, n)) //
         .getQConjugateTranspose();
+  }
+
+  public int dimensions() {
+    return n * (n - 1) / 2;
   }
 
   @Override

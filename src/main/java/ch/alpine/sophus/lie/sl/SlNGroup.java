@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -9,6 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.mat.pi.LinearSubspace;
 
 public class SlNGroup extends SlGroup implements MatrixGroup {
   private final int n;
@@ -21,6 +23,11 @@ public class SlNGroup extends SlGroup implements MatrixGroup {
   public boolean isMember(Tensor matrix) {
     return matrix.length() == n //
         && super.isMember(matrix);
+  }
+
+  public MatrixAlgebra matrixAlgebra() {
+    LinearSubspace linearSubspace = LinearSubspace.of(TSlMemberQ.INSTANCE::defect, n, n);
+    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override
@@ -48,6 +55,10 @@ public class SlNGroup extends SlGroup implements MatrixGroup {
       basis.append(tensor);
     }
     return basis.multiply(RationalScalar.HALF);
+  }
+
+  public int dimensions() {
+    return n * n - 1;
   }
 
   @Override

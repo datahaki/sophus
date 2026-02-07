@@ -23,7 +23,7 @@ public class MatrixAlgebra implements TensorBinaryOperator {
   private final Tensor ad;
   private final TensorUnaryOperator solver;
 
-  /** @param basis consisting of n matrices that generate the Lie algebra
+  /** @param basis consisting of n square matrices that generate the Lie algebra
    * @throws Exception if basis contains redundant elements */
   public MatrixAlgebra(Tensor basis) {
     this.basis = basis;
@@ -63,13 +63,13 @@ public class MatrixAlgebra implements TensorBinaryOperator {
     return vector.dot(basis);
   }
 
-  @Override // from Object
-  public String toString() {
-    return MathematicaFormat.concise("MatrixAlgebra", ad(), Nnz.of((SparseArray) ad));
-  }
-
   @Override
   public Tensor apply(Tensor x, Tensor y) {
     return ad.dot(x).dot(y);
+  }
+
+  @Override // from Object
+  public String toString() {
+    return MathematicaFormat.concise("MatrixAlgebra", ad(), Nnz.of((SparseArray) ad));
   }
 }

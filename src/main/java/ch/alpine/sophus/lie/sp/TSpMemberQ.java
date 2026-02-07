@@ -11,14 +11,14 @@ public class TSpMemberQ extends ZeroDefectSquareMatrixQ {
 
   public TSpMemberQ(int n, Chop chop) {
     super(chop);
-    omega = Symplectic.omega(n);
+    omega = SymplecticForm.omega(n);
   }
 
   public TSpMemberQ(int n) {
     this(n, Chop._10);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor v) {
     return omega.dot(v).add(Transpose.of(v).dot(omega));
   }

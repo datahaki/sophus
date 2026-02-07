@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,6 +14,7 @@ import ch.alpine.tensor.alg.Subsets;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.io.Primitives;
+import ch.alpine.tensor.mat.pi.LinearSubspace;
 
 public class SeNGroup extends SeGroup implements MatrixGroup {
   private final int n;
@@ -26,6 +28,12 @@ public class SeNGroup extends SeGroup implements MatrixGroup {
   public boolean isMember(Tensor t) {
     return t.length() == n + 1 //
         && super.isMember(t);
+  }
+
+  public MatrixAlgebra matrixAlgebra() {
+    int m = n + 1;
+    LinearSubspace linearSubspace = LinearSubspace.of(TSeMemberQ.INSTANCE::defect, m, m);
+    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override
@@ -48,6 +56,10 @@ public class SeNGroup extends SeGroup implements MatrixGroup {
       basis.append(elem);
     }
     return basis;
+  }
+
+  public int dimensions() {
+    return n * (n + 1) / 2;
   }
 
   @Override
