@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.sp;
 
 import ch.alpine.sophus.lie.gl.GlGroup;

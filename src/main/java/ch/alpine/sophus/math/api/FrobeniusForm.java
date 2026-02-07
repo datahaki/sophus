@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.math.api;
 
 import ch.alpine.tensor.Scalar;

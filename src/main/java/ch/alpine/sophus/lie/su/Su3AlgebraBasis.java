@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.su;
 
 import ch.alpine.tensor.RationalScalar;

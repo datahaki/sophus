@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.hs.spd;
 
 import java.util.random.RandomGenerator;

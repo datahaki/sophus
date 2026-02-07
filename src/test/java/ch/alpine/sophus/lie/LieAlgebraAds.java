@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie;
 
 import ch.alpine.sophus.lie.se.SeNGroup;

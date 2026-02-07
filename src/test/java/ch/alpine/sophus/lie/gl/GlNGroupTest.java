@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.gl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

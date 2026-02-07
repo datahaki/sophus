@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.math.sample;
 
 import java.util.ArrayList;

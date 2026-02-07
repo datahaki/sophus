@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.sc;
 
 import org.junit.jupiter.params.ParameterizedTest;

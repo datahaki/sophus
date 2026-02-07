@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.hs.h;
 
 import java.io.Serializable;

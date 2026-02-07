@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.he;
 
 import ch.alpine.sophus.lie.MatrixGroup;

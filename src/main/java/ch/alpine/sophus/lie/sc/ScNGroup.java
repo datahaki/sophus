@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.sc;
 
 import java.util.stream.IntStream;

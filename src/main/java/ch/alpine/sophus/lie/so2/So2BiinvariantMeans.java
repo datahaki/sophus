@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.lie.so2;
 
 import ch.alpine.sophus.bm.BiinvariantMean;

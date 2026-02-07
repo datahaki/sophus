@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.hs;
 
 import org.junit.jupiter.api.Test;
