@@ -209,7 +209,7 @@ class GrManifoldTest {
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
-    Tensor sequence = Subdivide.of(-1.1, 2.1, 6).map(scalarTensorFunction);
+    Tensor sequence = Subdivide.of(-1.1, 2.1, 6).maps(scalarTensorFunction);
     for (Tensor point : sequence)
       GrManifold.INSTANCE.requireMember(point);
   }

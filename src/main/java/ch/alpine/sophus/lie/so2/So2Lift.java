@@ -11,7 +11,7 @@ public class So2Lift implements ScalarUnaryOperator {
   /** @param vector
    * @return */
   public static Tensor of(Tensor vector) {
-    return vector.map(new So2Lift());
+    return vector.maps(new So2Lift());
   }
 
   // ---

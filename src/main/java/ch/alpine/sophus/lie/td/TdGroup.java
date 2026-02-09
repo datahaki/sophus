@@ -115,7 +115,7 @@ public class TdGroup implements LieGroup, Serializable {
 
   @Override
   public final Tensor neutral(Tensor element) {
-    return Append.of(Drop.tail(element, 1).map(Scalar::zero), Last.of(element).map(Scalar::one));
+    return Append.of(Drop.tail(element, 1).maps(Scalar::zero), Last.of(element).maps(Scalar::one));
   }
 
   @Override

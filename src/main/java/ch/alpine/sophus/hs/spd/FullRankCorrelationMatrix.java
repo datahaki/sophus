@@ -17,7 +17,7 @@ public enum FullRankCorrelationMatrix {
    * @param matrix symmetric positive definite
    * @return */
   public static Tensor fromSpd(Tensor matrix) {
-    Tensor diag = Diagonal.of(matrix).map(Scalar::reciprocal).map(Sqrt.FUNCTION);
+    Tensor diag = Diagonal.of(matrix).maps(Scalar::reciprocal).maps(Sqrt.FUNCTION);
     return Times.of(matrix, TensorProduct.of(diag, diag));
   }
 }

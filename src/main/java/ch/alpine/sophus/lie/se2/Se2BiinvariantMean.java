@@ -19,7 +19,7 @@ public record Se2BiinvariantMean(Se2CoveringGroup lieGroup, BiinvariantMean scal
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
     Scalar amean = (Scalar) scalarBiinvariantMean.mean(sequence.get(Tensor.ALL, 2), weights);
-    Tensor _00a = sequence.get(0).extract(0, 2).map(Scalar::zero).append(amean);
+    Tensor _00a = sequence.get(0).extract(0, 2).maps(Scalar::zero).append(amean);
     TensorUnaryOperator lieGroupElement = lieGroup.diffOp(_00a);
     Int i = new Int();
     Tensor tmean = sequence.stream() // transform elements in sequence so that angles average to 0

@@ -17,7 +17,7 @@ class So2LiftTest {
   void testSimple() {
     Tensor vector = Tensors.vector(1, 2, 3, -3, -2, -1, 0, -1, -2, -3, 3, 2);
     Tensor tensor = So2Lift.of(vector);
-    tensor.map(Sign::requirePositiveOrZero);
+    tensor.maps(Sign::requirePositiveOrZero);
     Chop._12.requireClose(tensor.get(3), RealScalar.of(3.2831853071795862));
     assertEquals(Last.of(tensor), RealScalar.of(2));
   }

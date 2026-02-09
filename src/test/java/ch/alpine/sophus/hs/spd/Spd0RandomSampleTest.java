@@ -92,7 +92,7 @@ class Spd0RandomSampleTest {
     Tensor q = RandomSample.of(rsi);
     Tensor diag = Tensor.of(Eigensystem.ofSymmetric(q).values().stream() //
         .map(Scalar.class::cast)) //
-        .map(Log.FUNCTION);
+        .maps(Log.FUNCTION);
     Tensor log = MatrixLog.of(q);
     Chop._07.requireClose(Total.ofVector(diag), Trace.of(log));
     Tensor log2 = log.dot(log);

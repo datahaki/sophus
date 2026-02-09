@@ -51,12 +51,12 @@ class BchBinaryAverageTest {
     Scalar lambda = RealScalar.of(0.3);
     GeodesicSpace hsGeodesic = SnManifold.INSTANCE;
     Tensor mz = exponential.log(hsGeodesic.split(mx, my, lambda));
-    mz.map(Scalar::zero);
+    mz.maps(Scalar::zero);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
     for (int d = 1; d < 7; ++d) {
       TensorBinaryOperator bch = BakerCampbellHausdorff.of(matrixAlgebra.ad(), d);
       Tensor cmp = new BchBinaryAverage(bch).split(x, y, lambda);
-      cmp.map(Scalar::zero);
+      cmp.maps(Scalar::zero);
     }
   }
 }

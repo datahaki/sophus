@@ -74,7 +74,7 @@ class GlGroupTest {
   void testAdjoint() {
     Tensor xya = Tensors.vector(1, 2, 3);
     Tensor matrix = Se2Matrix.of(xya);
-    Tensor adjointGl = GlGroup.INSTANCE.adjoint(matrix, Tensors.fromString("{{0, 1, 0}, {-1, 0, 0}, {0, 0, 0}}")).map(Chop._10);
+    Tensor adjointGl = GlGroup.INSTANCE.adjoint(matrix, Tensors.fromString("{{0, 1, 0}, {-1, 0, 0}, {0, 0, 0}}")).maps(Chop._10);
     Tensor adjointSe = Se2Group.INSTANCE.adjoint(xya, Tensors.vector(0, 0, -1));
     Chop._12.requireClose(adjointGl.get(0, 2), adjointSe.get(0));
     Chop._12.requireClose(adjointGl.get(1, 2), adjointSe.get(1));

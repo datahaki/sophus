@@ -13,7 +13,7 @@ public enum FrobeniusForm implements BilinearForm {
 
   @Override
   public Scalar formEval(Tensor u, Tensor v) {
-    return Flatten.scalars(Entrywise.mul().apply(u, v.map(Conjugate.FUNCTION))) //
+    return Flatten.scalars(Entrywise.mul().apply(u, v.maps(Conjugate.FUNCTION))) //
         .reduce(Scalar::add) //
         .orElseThrow();
   }

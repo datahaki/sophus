@@ -75,7 +75,7 @@ class BallRandomSampleTest {
     RandomSampleInterface diskRandomSample = BallRandomSample.of(Tensors.fromString("{10[m], 20[m]}"), Quantity.of(2, "m"));
     Tensor tensor = RandomSample.of(diskRandomSample);
     ScalarUnaryOperator scalarUnaryOperator = QuantityMagnitude.SI().in("m");
-    tensor.map(scalarUnaryOperator);
+    tensor.maps(scalarUnaryOperator);
   }
 
   @Test
@@ -92,7 +92,7 @@ class BallRandomSampleTest {
         BallRandomSample.of(Tensors.fromString("{10[m], 20[m], -5[m]}"), Quantity.of(2, "m"));
     Tensor tensor = RandomSample.of(randomSampleInterface);
     ScalarUnaryOperator scalarUnaryOperator = QuantityMagnitude.SI().in("m");
-    tensor.map(scalarUnaryOperator);
+    tensor.maps(scalarUnaryOperator);
   }
 
   @Test

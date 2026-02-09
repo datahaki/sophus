@@ -26,7 +26,7 @@ class So2CoveringBiinvariantMeanTest {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Pi.HALF));
     Distribution shifted = UniformDistribution.of(Clips.absolute(10));
     for (int length = 1; length < 6; ++length) {
-      Tensor sequence = RandomVariate.of(distribution, length).map(RealScalar.of(10)::add);
+      Tensor sequence = RandomVariate.of(distribution, length).maps(RealScalar.of(10)::add);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), length));
       Scalar solution = (Scalar) LinearBiinvariantMean.INSTANCE.mean(sequence, weights);
       for (int count = 0; count < 10; ++count) {
@@ -34,7 +34,7 @@ class So2CoveringBiinvariantMeanTest {
         for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
           TensorUnaryOperator permute = Permute.of(perm);
           Scalar result = (Scalar) LinearBiinvariantMean.INSTANCE.mean( //
-              permute.apply(sequence.map(shift::add)), //
+              permute.apply(sequence.maps(shift::add)), //
               permute.apply(weights));
           Chop._12.requireClose(result.subtract(shift), solution);
         }

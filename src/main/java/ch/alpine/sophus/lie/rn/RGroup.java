@@ -66,7 +66,7 @@ public class RGroup implements LieGroup, MetricManifold, Serializable {
 
   @Override
   public Tensor neutral(Tensor element) {
-    return element.map(Scalar::zero);
+    return element.maps(Scalar::zero);
   }
 
   @Override

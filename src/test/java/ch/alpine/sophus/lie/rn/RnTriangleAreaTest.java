@@ -20,7 +20,7 @@ class RnTriangleAreaTest {
   @Test
   void testSimpleUnits() {
     ScalarUnaryOperator suo = s -> Quantity.of(s, "m");
-    Scalar scalar = RnTriangleArea.of(Tensors.vector(10, 0).map(suo), Tensors.vector(10, 1).map(suo), Tensors.vector(11, 0).map(suo));
+    Scalar scalar = RnTriangleArea.of(Tensors.vector(10, 0).maps(suo), Tensors.vector(10, 1).maps(suo), Tensors.vector(11, 0).maps(suo));
     Chop._10.requireClose(scalar, Quantity.of(RationalScalar.HALF, "m^2"));
   }
 }

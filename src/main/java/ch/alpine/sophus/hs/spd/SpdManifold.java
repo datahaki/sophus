@@ -109,7 +109,7 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
    * @return x if x is a point on the manifold */
   public static Tensor project(Tensor x) {
     Eigensystem eigensystem = Eigensystem.ofSymmetric(Symmetrize.of(x));
-    Tensor vector = eigensystem.values().map(MAX);
+    Tensor vector = eigensystem.values().maps(MAX);
     Tensor v = eigensystem.vectors();
     // the implementation is very inefficient because of diagonal matrix
     // ... also the inverse of eigensystem.vectors() is ConjugateTranspose !?

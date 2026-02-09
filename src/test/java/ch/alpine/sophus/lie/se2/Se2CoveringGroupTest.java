@@ -229,7 +229,7 @@ class Se2CoveringGroupTest {
   void testQuantity() {
     Tensor xya = Tensors.fromString("{1[m], 2[m], 0.34}");
     Tensor oth = Tensors.fromString("{-.3[m], 0.8[m], -0.5}");
-    Tensor inverse = Se2CoveringGroup.INSTANCE.diffOp(xya).apply(xya.map(Scalar::zero));
+    Tensor inverse = Se2CoveringGroup.INSTANCE.diffOp(xya).apply(xya.maps(Scalar::zero));
     assertEquals(inverse, Tensors.fromString("{-1.6097288498099749[m], -1.552022238915878[m], -0.34}"));
     Tensor circ = Se2CoveringGroup.INSTANCE.combine(xya, oth);
     assertEquals(circ, Tensors.fromString("{0.4503839266288446[m], 2.654157604780433[m], -0.15999999999999998}"));

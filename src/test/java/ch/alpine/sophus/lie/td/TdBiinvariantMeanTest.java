@@ -90,10 +90,10 @@ class TdBiinvariantMeanTest {
     Tensor p = Tensors.vector(2, 3, 1);
     Tensor q = Tensors.vector(3, 1, 2);
     Tensor domain = Subdivide.of(0, 1, 10);
-    Tensor st1 = domain.map(TdGroup.INSTANCE.curve(p, q));
+    Tensor st1 = domain.maps(TdGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
         w -> TdGroup.INSTANCE.biinvariantMean().mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
-    Tensor st2 = domain.map(mean);
+    Tensor st2 = domain.maps(mean);
     Chop._12.requireClose(st1, st2);
   }
 }

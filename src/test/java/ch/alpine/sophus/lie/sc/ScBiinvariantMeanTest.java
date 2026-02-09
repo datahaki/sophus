@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Chop;
 class ScBiinvariantMeanTest {
   @Test
   void testSimple() {
-    Tensor scalar = ScGroup.INSTANCE.biinvariantMean().mean(Tensors.vector(1, 2, 3).map(Tensors::of), Tensors.fromString("{1/3, 1/3, 1/3}"));
+    Tensor scalar = ScGroup.INSTANCE.biinvariantMean().mean(Tensors.vector(1, 2, 3).maps(Tensors::of), Tensors.fromString("{1/3, 1/3, 1/3}"));
     Chop._10.requireClose(scalar, Tensors.vector(1.8171205928321397));
   }
 
@@ -27,7 +27,7 @@ class ScBiinvariantMeanTest {
       Tensor sequence = RandomVariate.of(distribution, n);
       Scalar geomet = (Scalar) GeometricMean.of(sequence);
       Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
-      Tensor scmean = ScGroup.INSTANCE.biinvariantMean().mean(sequence.map(Tensors::of), weights);
+      Tensor scmean = ScGroup.INSTANCE.biinvariantMean().mean(sequence.maps(Tensors::of), weights);
       Chop._10.requireClose(Tensors.of(geomet), scmean);
     }
   }

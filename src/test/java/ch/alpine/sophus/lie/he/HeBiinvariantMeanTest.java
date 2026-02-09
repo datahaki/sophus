@@ -87,10 +87,10 @@ class HeBiinvariantMeanTest {
     Tensor p = Tensors.fromString("{1, 2, 3, 4, 5}");
     Tensor q = Tensors.fromString("{-3, 6, -2, 8, -9}");
     Tensor domain = Subdivide.of(-1, 1, 10);
-    Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
+    Tensor he1 = domain.maps(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
         w -> HeGroup.INSTANCE.biinvariantMean().mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
-    Tensor he2 = domain.map(mean);
+    Tensor he2 = domain.maps(mean);
     Chop._12.requireClose(he1, he2);
   }
 
@@ -99,10 +99,10 @@ class HeBiinvariantMeanTest {
     Tensor p = Tensors.fromString("{1, 4, 5}");
     Tensor q = Tensors.fromString("{-3, 6, -9}");
     Tensor domain = Subdivide.of(0, 2, 11);
-    Tensor he1 = domain.map(HeGroup.INSTANCE.curve(p, q));
+    Tensor he1 = domain.maps(HeGroup.INSTANCE.curve(p, q));
     ScalarTensorFunction mean = //
         w -> HeGroup.INSTANCE.biinvariantMean().mean(Tensors.of(p, q), Tensors.of(RealScalar.ONE.subtract(w), w));
-    Tensor he2 = domain.map(mean);
+    Tensor he2 = domain.maps(mean);
     Chop._12.requireClose(he1, he2);
   }
 

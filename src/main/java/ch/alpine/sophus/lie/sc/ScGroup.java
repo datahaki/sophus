@@ -31,12 +31,12 @@ public class ScGroup implements LieGroup, Serializable {
 
     @Override // from Exponential
     public Tensor exp(Tensor x) {
-      return VectorQ.require(x).map(Exp.FUNCTION);
+      return VectorQ.require(x).maps(Exp.FUNCTION);
     }
 
     @Override // from Exponential
     public Tensor log(Tensor g) {
-      return VectorQ.require(g).map(Log.FUNCTION);
+      return VectorQ.require(g).maps(Log.FUNCTION);
     }
   }
 
@@ -56,12 +56,12 @@ public class ScGroup implements LieGroup, Serializable {
 
   @Override
   public Tensor neutral(Tensor element) {
-    return VectorQ.require(element).map(Scalar::one);
+    return VectorQ.require(element).maps(Scalar::one);
   }
 
   @Override
   public Tensor invert(Tensor element) {
-    return VectorQ.require(element).map(Scalar::reciprocal);
+    return VectorQ.require(element).maps(Scalar::reciprocal);
   }
 
   @Override

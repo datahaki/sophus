@@ -20,7 +20,7 @@ class DecibelTest {
 
   @Test
   void testVector() {
-    Tensor tensor = Range.of(1, 100).map(Decibel.FUNCTION);
+    Tensor tensor = Range.of(1, 100).maps(Decibel.FUNCTION);
     assertEquals(tensor.length(), 99);
   }
 

@@ -44,7 +44,7 @@ public class SubdivideTransport implements HsTransport, Serializable {
 
   @Override
   public TensorUnaryOperator shift(Tensor xo, Tensor xw) {
-    return new Rung(domain.map(geodesicSpace.curve(xo, xw)));
+    return new Rung(domain.maps(geodesicSpace.curve(xo, xw)));
   }
 
   private class Rung implements TensorUnaryOperator {

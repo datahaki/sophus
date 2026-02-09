@@ -21,8 +21,8 @@ public enum TdBiinvariantMean implements BiinvariantMean {
     int n = Unprotect.dimension1Hint(sequence) - 1;
     Tensor lambdas = sequence.get(Tensor.ALL, n);
     // Reference 1, p.27 "weighted geometric mean of scalings"
-    Scalar scmean = ScGroup.INSTANCE.biinvariantMean().mean(lambdas.map(Tensors::of), weights).Get(0);
-    Tensor alphaw = NormalizeTotal.FUNCTION.apply(Times.of(weights, lambdas.divide(scmean).map(Logc.FUNCTION)));
+    Scalar scmean = ScGroup.INSTANCE.biinvariantMean().mean(lambdas.maps(Tensors::of), weights).Get(0);
+    Tensor alphaw = NormalizeTotal.FUNCTION.apply(Times.of(weights, lambdas.divide(scmean).maps(Logc.FUNCTION)));
     Tensor tn_seq = Tensor.of(sequence.stream().map(row -> Drop.tail(row, 1)));
     Tensor trmean = LinearBiinvariantMean.INSTANCE.mean(tn_seq, alphaw);
     return trmean.append(scmean); // "scalings reweighted arithmetic mean of translations"

@@ -51,7 +51,7 @@ class So2BiinvariantMeansTest {
           for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
             TensorUnaryOperator permute = Permute.of(perm);
             Scalar result = (Scalar) so2BiinvariantMean.mean( //
-                permute.apply(sequence.map(shift::add)), //
+                permute.apply(sequence.maps(shift::add)), //
                 permute.apply(weights));
             CLIP.requireInside(result);
             Chop._12.requireAllZero(So2.MOD.apply(result.subtract(shift).subtract(solution)));
@@ -83,8 +83,8 @@ class So2BiinvariantMeansTest {
       final Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.of(1, 2), random, length));
       for (int count = 0; count < 10; ++count) {
         Scalar shift = RandomVariate.of(distribution, random);
-        Scalar val1 = (Scalar) So2BiinvariantMeans.GLOBAL.mean(sequence.map(shift::add), weights);
-        Tensor val2 = So2BiinvariantMeans.LINEAR.mean(sequence.map(shift::add), weights);
+        Scalar val1 = (Scalar) So2BiinvariantMeans.GLOBAL.mean(sequence.maps(shift::add), weights);
+        Tensor val2 = So2BiinvariantMeans.LINEAR.mean(sequence.maps(shift::add), weights);
         chop.requireAllZero(So2.MOD.apply(val1.subtract(val2)));
       }
     }

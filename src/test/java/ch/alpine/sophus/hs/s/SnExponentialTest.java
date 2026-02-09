@@ -63,7 +63,7 @@ class SnExponentialTest {
   void testId(int dim) {
     for (int count = 0; count < 10; ++count) {
       Tensor point = Vector2Norm.NORMALIZE.apply(RandomVariate.of(NormalDistribution.standard(), dim));
-      Tensor apply = new SnExponential(point).exp(point.map(Scalar::zero));
+      Tensor apply = new SnExponential(point).exp(point.maps(Scalar::zero));
       Tolerance.CHOP.requireClose(point, apply);
     }
   }

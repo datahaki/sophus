@@ -56,7 +56,7 @@ class MatrixAlgebraTest {
         b2.multiply(RealScalar.of(4))));
     assertEquals(matrix, tensor);
     Tolerance.CHOP.requireClose( //
-        matrixAlgebra.toVector(b1.add(b2.multiply(RealScalar.of(0.3))).map(N.DOUBLE)), Tensors.vector(0, 1, 0.3));
+        matrixAlgebra.toVector(b1.add(b2.multiply(RealScalar.of(0.3))).maps(N.DOUBLE)), Tensors.vector(0, 1, 0.3));
     Tensor rank4 = JacobiIdentity.of(matrixAlgebra.ad());
     assertInstanceOf(SparseArray.class, rank4);
   }
@@ -137,7 +137,7 @@ class MatrixAlgebraTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor ad = matrixAlgebra.ad();
     int n = ad.length();
-    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad.map(N.DOUBLE), degree);
+    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad.maps(N.DOUBLE), degree);
     Random random = new Random(10);
     for (int count = 0; count < 5; ++count) {
       Tensor x = RandomVariate.of(distribution, random, n);

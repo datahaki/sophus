@@ -26,7 +26,7 @@ class RpnManifoldTest {
     for (int n = 2; n < 5; ++n)
       for (int count = 0; count < 5; ++count) {
         Tensor angles = RandomVariate.of(distribution, randomGenerator, n);
-        Tensor sequence = angles.map(AngleVector::of);
+        Tensor sequence = angles.maps(AngleVector::of);
         Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
         Tensor point = RpnManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
         Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));

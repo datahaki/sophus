@@ -34,7 +34,7 @@ public class MatrixAlgebra implements TensorBinaryOperator {
     ad = SparseArray.of(RealScalar.ZERO, n, n, n);
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j) {
-        Tensor x = toVector(MatrixBracket.of(basis.get(i), basis.get(j))).map(Tolerance.CHOP);
+        Tensor x = toVector(MatrixBracket.of(basis.get(i), basis.get(j))).maps(Tolerance.CHOP);
         ad.set(x, Tensor.ALL, j, i);
         ad.set(x.negate(), Tensor.ALL, i, j);
       }

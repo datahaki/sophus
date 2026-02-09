@@ -19,7 +19,7 @@ class Su3AlgebraTest {
   void testSimple() {
     Su3Algebra su3Algebra = Su3Algebra.INSTANCE;
     Tensor ad = su3Algebra.ad();
-    ad = ad.map(PlausibleRational.of(10));
+    ad = ad.maps(PlausibleRational.of(10));
     assertInstanceOf(SparseArray.class, ad);
     Tensor form = KillingForm.of(ad);
     Tolerance.CHOP.requireClose(Diagonal.of(form), ConstantArray.of(RealScalar.of(3), 8));

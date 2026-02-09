@@ -184,7 +184,7 @@ class HsAlgebraTest {
     Tensor snm = snExponential.exp(v);
     Tensor dot = rotation.dot(snm);
     Tensor bak = snExponential.log(dot);
-    bak.map(Scalar::zero);
+    bak.maps(Scalar::zero);
   }
 
   private static final HsAlgebra[] HS_ALGEBRAS = { //
@@ -244,7 +244,7 @@ class HsAlgebraTest {
       TensorBinaryOperator bch = BakerCampbellHausdorff.of(hsAlgebra.ad(), 10);
       Tensor m = RandomVariate.of(distribution, randomGenerator, hsAlgebra.dimM());
       Tensor ml = hsAlgebra.lift(m);
-      Tensor h = Join.of(m.map(Scalar::zero), RandomVariate.of(distribution, randomGenerator, hsAlgebra.dimH()));
+      Tensor h = Join.of(m.maps(Scalar::zero), RandomVariate.of(distribution, randomGenerator, hsAlgebra.dimH()));
       Tensor g = bch.apply(ml, h.negate()); // this is the equation
       Decomp decomp = hsAlgebra.new Decomp(HsPair.seed(g));
       Chop._10.requireClose(m, decomp.m);

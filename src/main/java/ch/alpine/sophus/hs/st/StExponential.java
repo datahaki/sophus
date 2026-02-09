@@ -71,7 +71,7 @@ import ch.alpine.tensor.sca.Chop;
     Tensor Qt = qrDecomposition.getQConjugateTranspose();
     Tensor block = ArrayFlatten.of(new Tensor[][] { // AntisymmetricMatrixQ
         { a.negate(), Transpose.of(r) }, //
-        { r.negate(), a.map(Scalar::zero) } });
+        { r.negate(), a.maps(Scalar::zero) } });
     return MatrixExp.of(block).extract(0, p.length()).dot(Join.of(p, Qt));
   }
 

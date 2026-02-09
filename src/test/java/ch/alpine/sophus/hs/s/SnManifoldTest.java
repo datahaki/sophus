@@ -68,7 +68,7 @@ class SnManifoldTest {
     Distribution distribution = UniformDistribution.of(0, Math.PI);
     for (int n = 2; n < 10; ++n) {
       Tensor angles = RandomVariate.of(distribution, n);
-      Tensor sequence = angles.map(AngleVector::of);
+      Tensor sequence = angles.maps(AngleVector::of);
       Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
       Tensor point = SnManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
       Chop._05.requireClose(ArcTan2D.of(point), Mean.of(angles));
@@ -90,7 +90,7 @@ class SnManifoldTest {
     ScalarTensorFunction scalarTensorFunction = //
         SnManifold.INSTANCE.curve(UnitVector.of(2, 0), UnitVector.of(2, 1));
     for (int n = 3; n < 20; ++n) {
-      Tensor points = Subdivide.of(0, 4, n).map(scalarTensorFunction);
+      Tensor points = Subdivide.of(0, 4, n).maps(scalarTensorFunction);
       Tensor circle = CirclePoints.of(n);
       Chop._12.requireClose(points.extract(0, n), circle);
     }
@@ -102,7 +102,7 @@ class SnManifoldTest {
         SnManifold.INSTANCE.curve(UnitVector.of(4, 0), UnitVector.of(4, 1));
     Tensor ZEROS = Array.zeros(2);
     for (int n = 3; n < 20; ++n) {
-      Tensor points = Subdivide.of(0, 4, n).map(scalarTensorFunction);
+      Tensor points = Subdivide.of(0, 4, n).maps(scalarTensorFunction);
       Tensor circle = Tensor.of(CirclePoints.of(n).stream().map(t -> Join.of(t, ZEROS)));
       Chop._12.requireClose(points.extract(0, n), circle);
     }

@@ -91,7 +91,7 @@ public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMa
 
   @Override
   public final Tensor neutral(Tensor element) {
-    return element.map(Scalar::zero);
+    return element.maps(Scalar::zero);
   }
 
   @Override

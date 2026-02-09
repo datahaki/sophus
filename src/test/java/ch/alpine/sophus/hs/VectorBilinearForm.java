@@ -11,6 +11,6 @@ public enum VectorBilinearForm implements BilinearForm {
 
   @Override
   public Scalar formEval(Tensor u, Tensor v) {
-    return (Scalar) u.dot(v.map(Conjugate.FUNCTION));
+    return (Scalar) u.dot(v.maps(Conjugate.FUNCTION));
   }
 }

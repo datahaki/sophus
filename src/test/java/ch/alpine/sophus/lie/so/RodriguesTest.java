@@ -52,7 +52,7 @@ class RodriguesTest {
     Tensor mX = Rodrigues.vectorExp(x);
     Tensor mY = Rodrigues.vectorExp(y);
     Tensor res = Rodrigues.vector_log(mX.dot(mY));
-    Tensor ad = LeviCivitaTensor.of(3).negate().map(N.DOUBLE);
+    Tensor ad = LeviCivitaTensor.of(3).negate().maps(N.DOUBLE);
     Scalar cmp = RealScalar.ONE;
     for (int degree = 1; degree < 6; ++degree) {
       TensorBinaryOperator binaryOperator = BakerCampbellHausdorff.of(ad, degree);
@@ -223,7 +223,7 @@ class RodriguesTest {
     Tensor matrix = So3TestHelper.spawn_So3().add(RandomVariate.of(noise, 3, 3));
     specialOps(matrix);
     QRDecomposition qr = QRDecomposition.of(matrix, QRSignOperators.ORIENTATION);
-    Scalar infNorm = VectorInfinityNorm.of(Diagonal.of(qr.getR()).map(s -> s.subtract(RealScalar.ONE)));
+    Scalar infNorm = VectorInfinityNorm.of(Diagonal.of(qr.getR()).maps(s -> s.subtract(RealScalar.ONE)));
     assertTrue(Scalars.lessThan(infNorm, RealScalar.of(0.1)));
   }
 

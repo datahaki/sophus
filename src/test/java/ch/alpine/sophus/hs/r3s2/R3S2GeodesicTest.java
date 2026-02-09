@@ -30,8 +30,8 @@ class R3S2GeodesicTest {
     Tensor q = Tensors.fromString("{{8, 8, 8}, {0, 1, 0}}");
     ScalarTensorFunction curve = R3S2Geodesic.INSTANCE.curve(p, q);
     Tensor domain = Subdivide.of(0, 1, 12);
-    Tensor result = domain.map(curve);
-    Tensor splits = domain.map(t -> R3S2Geodesic.INSTANCE.split(p, q, t));
+    Tensor result = domain.maps(curve);
+    Tensor splits = domain.maps(t -> R3S2Geodesic.INSTANCE.split(p, q, t));
     Chop._13.requireClose(result, splits);
   }
 
