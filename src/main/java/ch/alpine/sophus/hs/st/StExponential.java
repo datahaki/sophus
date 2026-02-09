@@ -63,7 +63,6 @@ import ch.alpine.tensor.sca.Chop;
     Tensor vt = Transpose.of(v);
     // ---
     Tensor a = TensorWedge.of(p.dot(vt)); // horizontal component, antisymmetric
-    AntisymmetricMatrixQ.INSTANCE.requireMember(a);
     // influence residual maker
     Tensor ptpvt = pt.dot(a);
     Tensor ka = vt.subtract(ptpvt); // normal component
@@ -121,7 +120,9 @@ import ch.alpine.tensor.sca.Chop;
     int max = (k + 2) * qt.length();
     for (int i = 0; i < max; ++i) {
       // step 5
-      Tensor L = TensorWedge.of(MatrixLog.of(V)).negate(); // 2k x 2k antisymmetric
+      Tensor L = MatrixLog.of(V).negate(); // 2k x 2k antisymmetric
+      new AntisymmetricMatrixQ(Chop._08).requireMember(L);
+      L = TensorWedge.of(L); // just for numerical correction
       Tensor C = L.block(lkk, lkk); // k x k
       // steps 6-8: convergence check
       Scalar normC = Matrix2Norm.bound(C);
