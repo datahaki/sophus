@@ -20,7 +20,7 @@ public class TSnMemberQ extends ZeroDefectArrayQ {
     this(p, Chop._06);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor v) {
     return p.dot(v);
   }

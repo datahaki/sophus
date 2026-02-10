@@ -15,7 +15,7 @@ public class StochasticMatrixQ extends ZeroDefectArrayQ {
     super(2, Tolerance.CHOP);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor tensor) {
     return Tensor.of(tensor.stream().map(row -> Total.of(row).subtract(RealScalar.ONE)));
   }

@@ -16,7 +16,7 @@ public class AffineQ extends ZeroDefectArrayQ {
     super(1, chop);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor tensor) {
     return Total.of(tensor).subtract(RealScalar.ONE);
   }

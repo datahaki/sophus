@@ -21,7 +21,7 @@ public class TStMemberQ extends ZeroDefectArrayQ {
     this(p, Chop._10);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor v) {
     return AntisymmetricMatrixQ.INSTANCE.defect(MatrixDotTranspose.of(p, v));
   }

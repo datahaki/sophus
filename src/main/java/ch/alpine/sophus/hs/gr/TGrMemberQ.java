@@ -22,7 +22,7 @@ public class TGrMemberQ extends ZeroDefectSquareMatrixQ {
     this.p = p;
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor v) {
     return Join.of( //
         p.dot(v).add(v.dot(p)).subtract(v), //

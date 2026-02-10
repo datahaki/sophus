@@ -18,7 +18,7 @@ public class TSeMemberQ extends ZeroDefectSquareMatrixQ {
     super(Chop._08);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor tensor) {
     int n = tensor.length() - 1;
     Tensor upper = tensor.block(LIST, List.of(n, n));

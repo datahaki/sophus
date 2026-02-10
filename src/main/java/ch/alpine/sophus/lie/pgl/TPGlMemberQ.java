@@ -15,7 +15,7 @@ public class TPGlMemberQ extends ZeroDefectSquareMatrixQ {
     super(chop);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor tensor) {
     int n = tensor.length() - 1;
     Scalar last = tensor.Get(n, n);

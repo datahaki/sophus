@@ -14,7 +14,7 @@ public class TSlMemberQ extends ZeroDefectSquareMatrixQ {
     super(chop);
   }
 
-  @Override
+  @Override // from ZeroDefectArrayQ
   public Tensor defect(Tensor tensor) {
     return Trace.of(tensor);
   }
