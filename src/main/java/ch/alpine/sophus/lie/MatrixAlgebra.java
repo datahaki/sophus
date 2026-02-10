@@ -5,6 +5,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.api.Slash;
 import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
@@ -27,7 +28,7 @@ public class MatrixAlgebra implements TensorBinaryOperator {
    * @throws Exception if basis contains redundant elements */
   public MatrixAlgebra(Tensor basis) {
     this.basis = basis;
-    Tensor matrix = Transpose.of(Tensor.of(basis.stream().map(Flatten::of)));
+    Tensor matrix = Transpose.of(Slash.of(Flatten::of, basis));
     Integers.requireEquals(basis.length(), MatrixRank.of(matrix));
     solver = LinearSolveFunction.of(matrix);
     int n = basis.length();

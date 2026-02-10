@@ -99,6 +99,14 @@ public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieI
    * @return Ad(this).tensor */
   Tensor adjoint(Tensor point, Tensor tensor);
 
+  default TensorUnaryOperator adjoint(Tensor p) {
+    return x -> adjoint(p, x);
+  }
+
+  default TensorUnaryOperator inverse() {
+    return p -> invert(p);
+  }
+
   /** dL maps a vector from the lie algebra to the tangent space at this element
    * 
    * DL_x|e : TeG -> TxG

@@ -173,7 +173,7 @@ class Se2CoveringGroupTest {
   }
 
   private static Tensor adjoint(LieGroup lieGroup, Tensor p) {
-    return Tensor.of(IdentityMatrix.of(3).stream().map(X -> lieGroup.adjoint(p, X)));
+    return lieGroup.adjoint(p).slash(IdentityMatrix.of(3));
   }
 
   @Test

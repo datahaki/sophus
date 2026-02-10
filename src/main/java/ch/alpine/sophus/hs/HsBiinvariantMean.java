@@ -49,7 +49,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
       Tensor next = mean_negate(_sequence, weights, prev);
       if (chop.isClose(prev, next))
         return next.negate();
-      _sequence = Tensor.of(sequence.stream().map(hsAlgebra.action(hsAlgebra.lift(next))));
+      _sequence = hsAlgebra.action(hsAlgebra.lift(next)).slash(sequence);
       prev = next;
     }
     throw new Throw(sequence, weights);
@@ -61,7 +61,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
       if (chop.allZero(defect))
         return mean_negate;
       TensorUnaryOperator tuo = hsAlgebra.action(hsAlgebra.lift(defect));
-      sequence = Tensor.of(sequence.stream().map(tuo));
+      sequence = tuo.slash(sequence);
       mean_negate = tuo.apply(mean_negate);
     }
     throw new Throw(sequence, weights);

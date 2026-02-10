@@ -98,7 +98,7 @@ class Se2CoveringBiinvariantMeanTest {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor xya = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(points, weights);
-      Tensor all = Tensor.of(points.stream().map(Se2CoveringGroup.INSTANCE::invert));
+      Tensor all = Se2CoveringGroup.INSTANCE.inverse().slash(points);
       Tensor one = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(all, weights);
       Tensor combine = Se2CoveringGroup.INSTANCE.combine(xya, one);
       Chop._12.requireAllZero(combine);

@@ -71,7 +71,7 @@ public enum GroupCheck {
       int n = sequence.length();
       Tensor weights = ConstantArray.of(RealScalar.of(1.0 / n), n);
       Tensor mean = lieGroup.biinvariantMean().mean(sequence, weights);
-      Tensor centered = Tensor.of(sequence.stream().map(lieGroup.actionL(lieGroup.invert(mean))));
+      Tensor centered = lieGroup.actionL(lieGroup.invert(mean)).slash(sequence);
       MeanDefect meanDefect = MeanDefect.of(centered, weights, exponential0);
       Tolerance.CHOP.requireAllZero(meanDefect.tangent());
       return;
@@ -101,7 +101,7 @@ public enum GroupCheck {
       int n = sequence.length();
       Tensor weights = ConstantArray.of(RealScalar.of(1.0 / n), n);
       Tensor mean = lieGroup.biinvariantMean().mean(sequence, weights);
-      Tensor centered = Tensor.of(sequence.stream().map(lieGroup.actionL(lieGroup.invert(mean))));
+      Tensor centered = lieGroup.actionL(lieGroup.invert(mean)).slash(sequence);
       MeanDefect meanDefect = MeanDefect.of(centered, weights, exponential0);
       Tolerance.CHOP.requireAllZero(meanDefect.tangent());
       // ---

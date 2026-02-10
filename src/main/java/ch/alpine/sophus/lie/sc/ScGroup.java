@@ -50,7 +50,7 @@ public class ScGroup implements LieGroup, Serializable {
     return (Tensor sequence, Tensor weights) -> {
       AffineQ.INSTANCE.requireMember(weights);
       Exponential exponential = exponential0();
-      return exponential.exp(weights.dot(Tensor.of(sequence.stream().map(exponential::log))));
+      return exponential.exp(weights.dot(exponential.log().slash(sequence)));
     };
   }
 
