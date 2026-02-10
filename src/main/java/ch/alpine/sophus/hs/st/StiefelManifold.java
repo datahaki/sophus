@@ -17,8 +17,6 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
  * References:
  * geomstats - stiefel.py
  * 
- * @param n positive
- * @param k non-negative, no greater than n
  * @return matrix that satisfies {@link OrthogonalMatrixQ} typically up to precision of 1e-10
  * 
  * @see StManifold */
@@ -26,6 +24,8 @@ public class StiefelManifold extends StManifold implements SpecificManifold {
   private final int n;
   private final int k;
 
+  /** @param n positive
+   * @param k positive, no greater than n */
   public StiefelManifold(int n, int k) {
     this.n = Integers.requirePositive(n);
     this.k = Integers.requirePositive(k);

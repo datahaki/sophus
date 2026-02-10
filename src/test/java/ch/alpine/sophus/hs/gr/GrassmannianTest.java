@@ -128,6 +128,7 @@ class GrassmannianTest {
       Tensor v = RandomVariate.of(distribution, n, n);
       Tensor v1 = tGrMemberQ.projection(v);
       tGrMemberQ.requireMember(v1);
+      assertFalse(tGrMemberQ.isMember(v));
       Tensor v2 = homogeneousSpan.projection(v);
       tGrMemberQ.requireMember(v2);
       Tolerance.CHOP.requireClose(v1, v2);
