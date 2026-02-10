@@ -25,6 +25,6 @@ public interface Exponential {
   /** @return
    * @apiNote method exists for convenience */
   default TensorUnaryOperator log() {
-    return q -> log(q);
+    return this::log;
   }
 }
