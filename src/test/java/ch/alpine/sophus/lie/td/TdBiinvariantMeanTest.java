@@ -22,7 +22,7 @@ class TdBiinvariantMeanTest {
     Tensor sequence = Tensors.of(Tensors.vector(2, 2));
     Tensor weights = Tensors.vector(1);
     Tensor actual = TdGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._12.requireAllZero(MeanDefect.of(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
     assertEquals(Tensors.vector(2, 2), actual);
   }
 
@@ -33,7 +33,7 @@ class TdBiinvariantMeanTest {
     Tensor sequence = Tensors.of(p, q);
     Tensor weights = Tensors.vector(0.5, 0.5);
     Tensor actual = TdGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._12.requireAllZero(MeanDefect.of(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
     Tensor expected = Tensors.fromString("{2.414213562373095, 1.414213562373095}");
     Chop._12.requireClose(expected, actual);
   }
@@ -47,7 +47,7 @@ class TdBiinvariantMeanTest {
     Tensor mask = Tensors.vector(1, 2, 3);
     Tensor weights = mask.divide(Total.ofVector(mask));
     Tensor actual = TdGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._12.requireAllZero(MeanDefect.of(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
     Tensor expected = Tensors.vector(1.9243978173573888, 2.1822472719434427);
     Chop._12.requireClose(expected, actual);
     new BiinvariantMeanQ(TdGroup.INSTANCE.biinvariantMean(), Tolerance.CHOP).check(sequence, weights);
@@ -63,7 +63,7 @@ class TdBiinvariantMeanTest {
     Tensor mask = Tensors.vector(1, 2, 3, -1);
     Tensor weights = mask.divide(Total.ofVector(mask));
     Tensor actual = TdGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._12.requireAllZero(MeanDefect.of(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
     Tensor expected = Tensors.vector(3.1983964535982485, 2.9301560515835217);
     Chop._12.requireClose(expected, actual);
     new BiinvariantMeanQ(TdGroup.INSTANCE.biinvariantMean(), Tolerance.CHOP).check(sequence, weights);
@@ -79,7 +79,7 @@ class TdBiinvariantMeanTest {
     Tensor mask = Tensors.vector(1, 2, 3, -1);
     Tensor weights = mask.divide(Total.ofVector(mask));
     Tensor actual = TdGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
-    Chop._12.requireAllZero(new MeanDefect(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._12.requireAllZero(MeanDefect.of(sequence, weights, TdGroup.INSTANCE.exponential(actual)).tangent());
     Tensor expected = Tensors.vector(1.0099219737525793, -2.5153382244082483, 2.9301560515835217);
     Chop._12.requireClose(expected, actual);
     new BiinvariantMeanQ(TdGroup.INSTANCE.biinvariantMean(), Tolerance.CHOP).check(sequence, weights);

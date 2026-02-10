@@ -22,7 +22,7 @@ class HeBiinvariantMeanTest {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     assertEquals(sequence.get(0), actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(MeanDefect.of(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -32,7 +32,7 @@ class HeBiinvariantMeanTest {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     assertEquals(element, actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(MeanDefect.of(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -42,7 +42,7 @@ class HeBiinvariantMeanTest {
     Tensor weights = Tensors.vector(1);
     Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     assertEquals(element, actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(MeanDefect.of(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -53,7 +53,7 @@ class HeBiinvariantMeanTest {
     Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor expected = Tensors.fromString("{2, 2, 1.8}");
     Chop._12.requireClose(actual, expected);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(MeanDefect.of(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -66,7 +66,7 @@ class HeBiinvariantMeanTest {
     HeFormat heFormat = HeFormat.of(actual);
     assertEquals(heFormat.x(), heFormat.y());
     Chop._12.requireClose(actual, expected);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(MeanDefect.of(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test
@@ -79,7 +79,7 @@ class HeBiinvariantMeanTest {
     Tensor actual = HeGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor identity = Tensors.fromString("{0, 0, 0, 0, 0}");
     assertEquals(identity, actual);
-    Chop._10.requireAllZero(new MeanDefect(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
+    Chop._10.requireAllZero(MeanDefect.of(sequence, weights, HeGroup.INSTANCE.exponential(actual)).tangent());
   }
 
   @Test

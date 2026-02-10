@@ -168,7 +168,7 @@ class Se3GroupTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor mean = ITERATIVE_BIINVARIANT_MEAN.mean(sequence, weights);
       assertEquals(Dimensions.of(mean), Arrays.asList(4, 4));
-      Tensor defect = new MeanDefect(sequence, weights, Se3Group.INSTANCE.exponential(mean)).tangent();
+      Tensor defect = MeanDefect.of(sequence, weights, Se3Group.INSTANCE.exponential(mean)).tangent();
       assertEquals(Dimensions.of(defect), List.of(6));
       Chop._08.requireAllZero(defect);
     }

@@ -43,7 +43,7 @@ class SpdNManifoldTest {
       Tensor sequence = RandomSample.of(rsi, randomGenerator, len);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, sequence.length()));
       Tensor mean = biinvariantMean.mean(sequence, weights);
-      Chop._06.requireAllZero(new MeanDefect(sequence, weights, SpdManifold.INSTANCE.exponential(mean)).tangent());
+      Chop._06.requireAllZero(MeanDefect.of(sequence, weights, SpdManifold.INSTANCE.exponential(mean)).tangent());
     }
   }
 

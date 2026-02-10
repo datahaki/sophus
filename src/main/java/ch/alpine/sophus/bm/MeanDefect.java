@@ -21,25 +21,18 @@ import ch.alpine.tensor.Tensor;
  * by Xavier Pennec, Vincent Arsigny, p.21, 2012
  * 
  * "Generalized Barycentric Coordinates in Computer Graphics and Computational Mechanics"
- * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017 */
-public class MeanDefect implements Serializable {
-  private final Exponential exponential;
-  private final Tensor tangent;
-
+ * by Kai Hormann, N. Sukumar, Eq. 1.11, 2017
+ * 
+ * tangent vector in the direction of true weighted average.
+ * Careful: tangent vector may have the form of a matrix. */
+public record MeanDefect(Exponential exponential, Tensor tangent) implements Serializable {
   /** output is subject to exponentiation
    * 
    * @param sequence
    * @param weights
    * @param exponential at estimated weighted average of given sequence */
-  public MeanDefect(Tensor sequence, Tensor weights, Exponential exponential) {
-    this.exponential = exponential;
-    tangent = weights.dot(Tensor.of(sequence.stream().map(exponential::log)));
-  }
-
-  /** @return tangent vector in the direction of true weighted average.
-   * Careful: tangent vector may have the form of a matrix. */
-  public Tensor tangent() {
-    return tangent;
+  public static MeanDefect of(Tensor sequence, Tensor weights, Exponential exponential) {
+    return new MeanDefect(exponential, weights.dot(exponential.log().slash(sequence)));
   }
 
   /** @return better guess of weighted average on manifold */

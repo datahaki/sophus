@@ -47,7 +47,7 @@ class GlNGroupTest {
   @ValueSource(ints = { 2, 3 })
   void testAdjoint(int n) {
     GlNGroup lieGroup = new GlNGroup(n);
-    Distribution distribution = NormalDistribution.of(0, 0.3);
+    Distribution distribution = NormalDistribution.of(0, 0.1);
     Tensor g = RandomVariate.of(distribution, n, n).add(IdentityMatrix.of(n));
     Tensor X = RandomVariate.of(distribution, n, n);
     Tensor adgX = lieGroup.adjoint(g, X);

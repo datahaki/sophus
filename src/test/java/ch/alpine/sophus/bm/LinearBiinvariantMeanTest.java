@@ -50,7 +50,7 @@ class LinearBiinvariantMeanTest {
         RGroup.INSTANCE.exponential0().exp(Tensors.vector(+1 + 0.3, 0, 0)), //
         RGroup.INSTANCE.exponential0().exp(Tensors.vector(+0 + 0.3, 0, 0)), //
         RGroup.INSTANCE.exponential0().exp(Tensors.vector(-1 + 0.3, 0, 0)));
-    Tensor log = new MeanDefect( //
+    Tensor log = MeanDefect.of( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), //
         RGroup.INSTANCE.exponential(RGroup.INSTANCE.exponential0().exp(Tensors.vector(+0.3, 0, 0)))).tangent();
     Chop._10.requireAllZero(log);

@@ -54,7 +54,7 @@ class Se2BiinvariantMeansTest {
     Tensor expected = Tensors.vector(nom / denom, 0, 0);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = Serialization.copy(biinvariantMean).mean(sequence, weights);
-      Tensor tangent = new MeanDefect(sequenceUnordered, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
+      Tensor tangent = MeanDefect.of(sequenceUnordered, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Tolerance.CHOP.requireAllZero(tangent);
       Tensor actualUnordered = biinvariantMean.mean(sequenceUnordered, weights);
       // ---
@@ -69,7 +69,7 @@ class Se2BiinvariantMeansTest {
     Tensor weights = Tensors.vector(1);
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(p, weights);
-      Tensor tangent = new MeanDefect(p, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
+      Tensor tangent = MeanDefect.of(p, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Tolerance.CHOP.requireAllZero(tangent);
       Chop._14.requireClose(p.get(0), actual);
     }
@@ -85,7 +85,7 @@ class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(3, 3, 0), actual);
-      Tensor tangent = new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
+      Tensor tangent = MeanDefect.of(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Tolerance.CHOP.requireAllZero(tangent);
     }
   }
@@ -100,7 +100,7 @@ class Se2BiinvariantMeansTest {
     for (BiinvariantMean biinvariantMean : Se2BiinvariantMeans.values()) {
       Tensor actual = biinvariantMean.mean(sequence, weights);
       Chop._14.requireClose(Tensors.vector(0, 0, 0.6), actual);
-      Tensor tangent = new MeanDefect(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
+      Tensor tangent = MeanDefect.of(sequence, weights, Se2Group.INSTANCE.exponential(actual)).tangent();
       Tolerance.CHOP.requireAllZero(tangent);
     }
   }
