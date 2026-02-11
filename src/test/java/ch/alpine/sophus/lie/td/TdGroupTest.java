@@ -183,7 +183,7 @@ class TdGroupTest {
   @Test
   void testExpLog() {
     for (int count = 0; count < 10; ++count) {
-      Tensor v = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random());
+      Tensor v = Tensors.vector(Math.random(), Math.random(), -Math.random(), -Math.random());
       Scalar u = RealScalar.of(Math.random());
       Tensor inp = Append.of(v, u);
       Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);

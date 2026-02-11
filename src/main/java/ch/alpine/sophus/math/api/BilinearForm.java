@@ -10,12 +10,19 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 @FunctionalInterface
 public interface BilinearForm {
+  /** @param u
+   * @param v
+   * @return */
   Scalar formEval(Tensor u, Tensor v);
 
+  /** @param u
+   * @return */
   default Scalar normSquared(Tensor u) {
     return formEval(u, u);
   }
 
+  /** @param u
+   * @return */
   default Scalar norm(Tensor u) {
     Scalar n2 = normSquared(u);
     if (Sign.isNegative(n2)) {
