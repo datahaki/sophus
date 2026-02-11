@@ -9,9 +9,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.hs.gr.GrManifold;
+import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -69,5 +71,19 @@ class TStMemberQTest {
       Tensor g = Transpose.of(p).dot(p);
       assertTrue(GrManifold.INSTANCE.isMember(g));
     }
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { 4, 5, 7, 10 })
+  void testTransport(int n) {
+    int k = 2;
+    StiefelManifold stiefelManifold = new StiefelManifold(n, k);
+    Tensor p = RandomSample.of(stiefelManifold);
+    Tensor v = new TStMemberQ(p).projection(RandomVariate.of(NormalDistribution.of(0, 0.3), k, n));
+    Tensor q = stiefelManifold.exponential(p).exp(v);
+    Tensor m = stiefelManifold.exponential(p).exp(v.multiply(RationalScalar.HALF));
+    Tensor m_v = stiefelManifold.hsTransport().shift(p, m).apply(v);
+    Tensor r = stiefelManifold.exponential(m).exp(m_v.multiply(RationalScalar.HALF));
+    Tolerance.CHOP.requireClose(q, r);
   }
 }
