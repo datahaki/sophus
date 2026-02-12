@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.s;
 
-import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.MeanEstimate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
@@ -15,11 +15,11 @@ import ch.alpine.tensor.nrm.Vector2Norm;
  * Reference:
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
-public enum SnPhongMean implements BiinvariantMean {
+public enum SnPhongMean implements MeanEstimate {
   INSTANCE;
 
   @Override // from BiinvariantMean
-  public Tensor mean(Tensor sequence, Tensor weights) {
+  public Tensor estimate(Tensor sequence, Tensor weights) {
     return Vector2Norm.NORMALIZE.apply(weights.dot(sequence)); // R^(n+1) -> S^n
   }
 }

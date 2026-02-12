@@ -34,7 +34,7 @@ class SoPhongMeanTest {
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
     Tensor m0 = sequence.get(ArgMax.of(weights));
     OrthogonalMatrixQ.INSTANCE.require(m0);
-    Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
+    Tensor m1 = SoPhongMean.INSTANCE.estimate(sequence, weights);
     OrthogonalMatrixQ.INSTANCE.require(m1);
     Tolerance.CHOP.requireClose(Det.of(m1), RealScalar.ONE);
     {
@@ -66,7 +66,7 @@ class SoPhongMeanTest {
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
     Tensor m0 = sequence.get(ArgMax.of(weights));
     OrthogonalMatrixQ.INSTANCE.require(m0);
-    Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
+    Tensor m1 = SoPhongMean.INSTANCE.estimate(sequence, weights);
     OrthogonalMatrixQ.INSTANCE.require(m1);
     Tolerance.CHOP.requireClose(Det.of(m1), RealScalar.ONE);
     {
@@ -94,7 +94,7 @@ class SoPhongMeanTest {
     Tensor p = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
     Tensor q = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
     Tensor m1 = So3Group.INSTANCE.midpoint(p, q);
-    Tensor m2 = SoPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
+    Tensor m2 = SoPhongMean.INSTANCE.estimate(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
     Tolerance.CHOP.requireClose(m1, m2);
   }
 
@@ -108,7 +108,7 @@ class SoPhongMeanTest {
     AffineQ.INSTANCE.require(weights);
     Tensor sequence = Tensors.of(p, q);
     Tensor m1 = So3Group.INSTANCE.biinvariantMean().mean(sequence, weights);
-    Tensor m2 = SoPhongMean.INSTANCE.mean(sequence, weights);
+    Tensor m2 = SoPhongMean.INSTANCE.estimate(sequence, weights);
     assertTrue(Scalars.lessThan(FrobeniusNorm.of(m1.subtract(m2)), RealScalar.of(0.1)));
   }
 }

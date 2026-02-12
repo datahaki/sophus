@@ -24,7 +24,7 @@ class SnFastMeanTest {
     for (int n = d + 1; n < 10; ++n) {
       Tensor sequence = Tensor.of(RandomVariate.of(distribution, randomGenerator, n, d).stream().map(Vector2Norm.NORMALIZE));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, n));
-      Tensor mean1 = SnFastMean.INSTANCE.mean(sequence, weights);
+      Tensor mean1 = SnFastMean.INSTANCE.estimate(sequence, weights);
       Tensor mean2 = SnManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
       Chop._04.requireClose(mean1, mean2);
     }

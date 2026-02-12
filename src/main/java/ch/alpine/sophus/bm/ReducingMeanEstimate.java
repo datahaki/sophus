@@ -26,12 +26,13 @@ import ch.alpine.tensor.sca.Abs;
  * 
  * For R^n the ReducingMean coincides with the weighted average.
  * 
+ * @param geodesicSpace
+ * 
  * @see IterativeBiinvariantMean */
-/* package */ record ReducingMean(GeodesicSpace geodesicSpace) implements BiinvariantMean, Serializable {
-  /** @param geodesicSpace
-   * @return */
-  @Override // from BiinvariantMean
-  public Tensor mean(Tensor sequence, Tensor weights) {
+public record ReducingMeanEstimate(GeodesicSpace geodesicSpace) implements MeanEstimate, Serializable {
+  /** @return */
+  @Override
+  public Tensor estimate(Tensor sequence, Tensor weights) {
     AffineQ.INSTANCE.require(weights);
     VectorQ.requireLength(weights, sequence.length());
     PriorityQueue<WPoint> priorityQueue = new PriorityQueue<>();
@@ -75,7 +76,7 @@ import ch.alpine.tensor.sca.Abs;
       return false;
     }
 
-    @Override
+    @Override // from Comparable
     public int compareTo(WPoint wPoint) {
       return Scalars.compare(Abs.FUNCTION.apply(weight), Abs.FUNCTION.apply(wPoint.weight));
     }

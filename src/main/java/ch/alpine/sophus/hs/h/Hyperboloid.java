@@ -11,17 +11,17 @@ public class Hyperboloid extends HManifold {
   public Hyperboloid(int dimensions) {
     this.dimensions = dimensions;
   }
-  
+
   @Override
   public MemberQ isPointQ() {
     return VectorQ.ofLength(dimensions);
   }
-  
+
   @Override
   public int dimensions() {
     return dimensions;
   }
-  
+
   @Override
   public String toString() {
     return MathematicaFormat.concise("H", dimensions);

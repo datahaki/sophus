@@ -9,7 +9,6 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 
@@ -31,7 +30,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @param initialGuess
    * @return */
-  public static IterativeBiinvariantMean of(Manifold manifold, Chop chop, BiinvariantMean initialGuess) {
+  public static IterativeBiinvariantMean of(Manifold manifold, Chop chop, MeanEstimate initialGuess) {
     return new IterativeBiinvariantMean(manifold, chop, initialGuess);
   }
 
@@ -41,7 +40,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @return */
   public static IterativeBiinvariantMean argmax(Manifold manifold, Chop chop) {
-    return of(manifold, chop, ArgMaxSelection.INSTANCE);
+    return of(manifold, chop, ArgMaxMeanEstimate.INSTANCE);
   }
 
   public static IterativeBiinvariantMean argmax(Manifold manifold) {
@@ -52,31 +51,18 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param chop
    * @return */
   public static IterativeBiinvariantMean reduce(HomogeneousSpace homogeneousSpace, Chop chop) {
-    return new IterativeBiinvariantMean(homogeneousSpace, chop, new ReducingMean(homogeneousSpace));
-  }
-
-  /** serves as initial guess at begin of fix point iteration that
-   * converges to exact mean.
-   * 
-   * @see IterativeBiinvariantMean */
-  private enum ArgMaxSelection implements BiinvariantMean {
-    INSTANCE;
-
-    @Override // from BiinvariantMean
-    public Tensor mean(Tensor sequence, Tensor weights) {
-      return sequence.get(ArgMax.of(weights));
-    }
+    return new IterativeBiinvariantMean(homogeneousSpace, chop, new ReducingMeanEstimate(homogeneousSpace));
   }
 
   // ---
   private final Manifold manifold;
   private final Chop chop;
-  private final BiinvariantMean initialGuess;
+  private final MeanEstimate meanEstimate;
 
-  private IterativeBiinvariantMean(Manifold manifold, Chop chop, BiinvariantMean initialGuess) {
+  private IterativeBiinvariantMean(Manifold manifold, Chop chop, MeanEstimate meanEstimate) {
     this.manifold = manifold;
     this.chop = Objects.requireNonNull(chop);
-    this.initialGuess = Objects.requireNonNull(initialGuess);
+    this.meanEstimate = Objects.requireNonNull(meanEstimate);
   }
 
   @Override // from BiinvariantMean
@@ -89,7 +75,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
    * @param weights
    * @return approximate biinvariant mean, or empty if convergence fail */
   public final Optional<Tensor> apply(Tensor sequence, Tensor weights) {
-    Tensor shifted = initialGuess.mean(sequence, weights); // initial guess
+    Tensor shifted = meanEstimate.estimate(sequence, weights); // initial guess
     // TODO adaptive... continue as long as error decreases!
     for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
       MeanDefect meanDefect = MeanDefect.of(sequence, weights, manifold.exponential(shifted));

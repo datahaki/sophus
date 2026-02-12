@@ -34,11 +34,11 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-class ReducingMeanTest {
+class ReducingMeanEstimateTest {
   private static Tensor _check(Tensor sequence, Tensor weights) {
     AffineQ.INSTANCE.require(weights);
-    BiinvariantMean biinvariantMean = new ReducingMean(RGroup.INSTANCE);
-    Tensor mean1 = biinvariantMean.mean(sequence, weights);
+    ReducingMeanEstimate biinvariantMean = new ReducingMeanEstimate(RGroup.INSTANCE);
+    Tensor mean1 = biinvariantMean.estimate(sequence, weights);
     Tensor mean2 = LinearBiinvariantMean.INSTANCE.mean(sequence, weights);
     Tolerance.CHOP.requireClose(mean1, mean2);
     return mean1;
@@ -90,14 +90,14 @@ class ReducingMeanTest {
   void testExactFail() {
     Tensor weights = Tensors.vector(0.0, 0.0, 0.1);
     Tensor sequence = Tensors.vector(3, 4, 10);
-    BiinvariantMean biinvariantMean = new ReducingMean(RGroup.INSTANCE);
-    assertThrows(Exception.class, () -> biinvariantMean.mean(sequence, weights));
+    ReducingMeanEstimate biinvariantMean = new ReducingMeanEstimate(RGroup.INSTANCE);
+    assertThrows(Exception.class, () -> biinvariantMean.estimate(sequence, weights));
   }
 
   @Test
   void testSimple() {
     RandomGenerator randomGenerator = new Random(1);
-    BiinvariantMean bm = new ReducingMean(SpdManifold.INSTANCE);
+    ReducingMeanEstimate bm = new ReducingMeanEstimate(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + randomGenerator.nextInt(3);
       RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.of(0, 0.3));
@@ -106,7 +106,7 @@ class ReducingMeanTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, n));
       Tensor m0 = sequence.get(ArgMax.of(weights));
       Tensor m1 = SpdPhongMean.INSTANCE.mean(sequence, weights);
-      Tensor m2 = bm.mean(sequence, weights);
+      Tensor m2 = bm.estimate(sequence, weights);
       BiinvariantMean biinvariantMean = IterativeBiinvariantMean.argmax(SpdManifold.INSTANCE, Chop._10);
       Tensor mE0 = biinvariantMean.mean(sequence, weights);
       Scalar d0 = SpdManifold.INSTANCE.distance(m0, mE0);

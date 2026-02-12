@@ -25,7 +25,7 @@ class SnPhongMeanTest {
       for (int n = d + 1; n < 10; ++n) {
         Tensor sequence = Tensor.of(RandomVariate.of(distribution, n, d).stream().map(Vector2Norm.NORMALIZE));
         Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
-        Tensor mean = SnPhongMean.INSTANCE.mean(sequence, weights);
+        Tensor mean = SnPhongMean.INSTANCE.estimate(sequence, weights);
         Tolerance.CHOP.requireClose(mean, Vector2Norm.NORMALIZE.apply(mean));
       }
   }
@@ -42,7 +42,7 @@ class SnPhongMeanTest {
         Tensor m2 = SnManifold.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
         SnManifold.INSTANCE.isPointQ().require(m2);
         Chop._08.requireClose(m1, m2);
-        Tensor mp = SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
+        Tensor mp = SnPhongMean.INSTANCE.estimate(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
         Chop._08.requireClose(m1, mp);
       }
   }
@@ -51,7 +51,7 @@ class SnPhongMeanTest {
   void testAffineFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = UnitVector.of(3, 1);
-    SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
+    SnPhongMean.INSTANCE.estimate(Tensors.of(x, y), Tensors.vector(0.5, 0.5));
     // assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
   }
 
@@ -59,7 +59,7 @@ class SnPhongMeanTest {
   void testAntipodalFail() {
     Tensor x = UnitVector.of(3, 0);
     Tensor y = x.negate();
-    assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.5)));
+    assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.estimate(Tensors.of(x, y), Tensors.vector(0.5, 0.5)));
     // assertThrows(Exception.class, () -> SnPhongMean.INSTANCE.mean(Tensors.of(x, y), Tensors.vector(0.5, 0.6)));
   }
 }

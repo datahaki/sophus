@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.bm.MeanEstimate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.pd.Orthogonalize;
 
@@ -9,11 +9,11 @@ import ch.alpine.tensor.mat.pd.Orthogonalize;
  * 
  * formula is exact for midpoint computation, i.e. where
  * sequence == {p, q} and weights == {1/2, 1/2} */
-public enum SoPhongMean implements BiinvariantMean {
+public enum SoPhongMean implements MeanEstimate {
   INSTANCE;
 
   @Override // from BiinvariantMean
-  public Tensor mean(Tensor sequence, Tensor weights) {
+  public Tensor estimate(Tensor sequence, Tensor weights) {
     return Orthogonalize.usingSvd(weights.dot(sequence));
   }
 }
