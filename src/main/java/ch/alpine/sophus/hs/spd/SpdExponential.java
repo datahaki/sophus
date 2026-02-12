@@ -9,7 +9,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.ex.MatrixSqrt;
@@ -61,6 +63,11 @@ public class SpdExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     return basis(Spd0Exponential.INSTANCE.log(basis(q, pn)), pp);
+  }
+
+  @Override
+  public MemberQ isTangentQ() {
+    return SquareMatrixQ.INSTANCE; // TODO check
   }
 
   /** @param q point in Spd

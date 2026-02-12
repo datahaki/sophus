@@ -10,6 +10,7 @@ import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.GroupInterface;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.MemberQ;
 
 /** interface maps tensor coordinate to an element of a lie group
  * 
@@ -41,6 +42,11 @@ public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieI
         if (Objects.isNull(pinv))
           pinv = invert(p);
         return exponential0().log(combine(pinv, q));
+      }
+
+      @Override
+      public MemberQ isTangentQ() {
+        return _ -> true;
       }
     };
   }

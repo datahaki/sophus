@@ -37,7 +37,7 @@ public class Hyperboloid implements HomogeneousSpace, VectorEncodingMarker, Metr
 
   @Override
   public BiinvariantMean biinvariantMean() {
-    return IterativeBiinvariantMean.argmax(this, Chop._10);
+    return IterativeBiinvariantMean.reduce(this, Chop._12);
   }
 
   @Override // from Manifold

@@ -50,15 +50,15 @@ public class SampleManifolds {
     assumeTrue(manifold instanceof RandomSampleInterface);
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
     assertEquals( //
-        RandomSample.of(rsi, new Random(2)), //
-        RandomSample.of(rsi, new Random(2)));
+        RandomSample.of(rsi, new Random(13)), //
+        RandomSample.of(rsi, new Random(13)));
     assumeTrue(manifold instanceof MetricManifold);
     MetricManifold metricManifold = (MetricManifold) manifold;
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
     assumeFalse(ThrowQ.of(() -> manifold.exponential(p).log(q)));
     Scalar d_pq = metricManifold.distance(p, q);
-    Scalar d_qp = metricManifold.distance(p, q);
+    Scalar d_qp = metricManifold.distance(q, p);
     Tolerance.CHOP.requireClose(d_pq, d_qp);
     assumeTrue(manifold instanceof GeodesicSpace);
     GeodesicSpace geodesicSpace = (GeodesicSpace) manifold;

@@ -10,8 +10,10 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** g is a 4 x 4 affine matrix in SE(3)
@@ -67,6 +69,11 @@ public class Se3Group extends SeNGroup implements VectorEncodingMarker {
       Tensor Vi = ID3.subtract(wx.multiply(RationalScalar.HALF)).add(wx2.multiply(se3Numerics.D));
       Tensor t = Se3Matrix.translation(g);
       return Join.of(Vi.dot(t), w);
+    }
+
+    @Override
+    public MemberQ isTangentQ() {
+      return m -> MatrixQ.ofSize(m, 2, 3);
     }
   }
 

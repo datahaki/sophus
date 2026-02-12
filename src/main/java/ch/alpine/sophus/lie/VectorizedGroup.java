@@ -9,6 +9,8 @@ import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.FrobeniusForm;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 
 public class VectorizedGroup implements LieGroup, MetricManifold, VectorEncodingMarker, Serializable {
@@ -35,6 +37,11 @@ public class VectorizedGroup implements LieGroup, MetricManifold, VectorEncoding
       @Override
       public Tensor log(Tensor q) {
         return matrixAlgebra.toVector(exponential0.log(q));
+      }
+
+      @Override
+      public MemberQ isTangentQ() {
+        return VectorQ::of;
       }
     };
   }

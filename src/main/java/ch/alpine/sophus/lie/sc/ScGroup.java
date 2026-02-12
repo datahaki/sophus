@@ -11,6 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Sign;
@@ -37,6 +38,11 @@ public class ScGroup implements LieGroup, Serializable {
     @Override // from Exponential
     public Tensor log(Tensor g) {
       return VectorQ.require(g).maps(Log.FUNCTION);
+    }
+    
+    @Override
+    public MemberQ isTangentQ() {
+      return VectorQ::of;
     }
   }
 

@@ -19,7 +19,6 @@ enum SoProjection {
    * @param x
    * @return */
   public static Tensor project(Tensor x) {
-    // TODO SOPHUS should be special case of StProjection
     Tensor xtx = Transpose.of(x).dot(x);
     MatrixSqrt matrixSqrt = MatrixSqrt.ofSymmetric(xtx);
     Tensor result = x.dot(matrixSqrt.sqrt_inverse());

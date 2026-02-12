@@ -12,6 +12,7 @@ import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Expc;
@@ -100,6 +101,11 @@ public class TdGroup implements LieGroup, Serializable {
           /* there is a typo in Reference 1 (!) */
           Drop.tail(t_lambda, 1).multiply(Logc.FUNCTION.apply(lambda)), //
           log_l);
+    }
+    
+    @Override
+    public MemberQ isTangentQ() {
+      return VectorQ::of;
     }
   }
 

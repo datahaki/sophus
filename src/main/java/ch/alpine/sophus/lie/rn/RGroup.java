@@ -13,6 +13,7 @@ import ch.alpine.sophus.math.api.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
  * 
@@ -46,6 +47,11 @@ public class RGroup implements LieGroup, MetricManifold, Serializable {
     @Override // from Exponential
     public Tensor log(Tensor y) {
       return y.copy();
+    }
+    
+    @Override
+    public MemberQ isTangentQ() {
+      return VectorQ::of;
     }
   }
 

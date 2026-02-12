@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -37,7 +38,7 @@ public enum Rodrigues implements Exponential {
 
   @Override // from Exponential
   public Tensor exp(Tensor log) { // 3x3 AntisymmetricMatrixQ
-    return vectorExp(vectorize(new AntisymmetricMatrixQ(Chop._10).requireMember(log)));
+    return vectorExp(vectorize(isTangentQ().requireMember(log)));
   }
 
   /** @param q orthogonal with dimensions 3 x 3
@@ -52,6 +53,11 @@ public enum Rodrigues implements Exponential {
       return q.subtract(Transpose.of(q)).divide(sinc.add(sinc));
     }
     throw new Throw(q);
+  }
+  
+  @Override
+  public MemberQ isTangentQ() {
+    return new AntisymmetricMatrixQ(Chop._10);
   }
 
   /** @param vector of length 3

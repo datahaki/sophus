@@ -8,6 +8,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 
 /** (2 * n + 1)-dimensional Heisenberg group
  * 
@@ -58,6 +59,11 @@ public class HeGroup implements LieGroup, Serializable {
     @Override // from Exponential
     public Tensor log(Tensor xyz) {
       return HeFormat.of(xyz).log().toCoordinate();
+    }
+
+    @Override
+    public MemberQ isTangentQ() {
+      return _ -> true; // TODO
     }
   }
 

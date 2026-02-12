@@ -4,7 +4,9 @@ package ch.alpine.sophus.hs.spd;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.lie.Symmetrize;
+import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
@@ -43,6 +45,11 @@ public enum Spd0Exponential implements Exponential {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     return Symmetrize.of(MatrixLog.ofSymmetric(q));
+  }
+
+  @Override
+  public MemberQ isTangentQ() {
+    return SquareMatrixQ.INSTANCE;
   }
 
   /** n(g) == n(Inverse[g])

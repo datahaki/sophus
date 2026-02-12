@@ -7,6 +7,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Projection;
@@ -47,7 +48,6 @@ public class SnExponential implements Exponential, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    tSnMemberQ.requireMember(v);
     Scalar vn = Vector2Norm.of(v);
     return p.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
   }
@@ -60,5 +60,10 @@ public class SnExponential implements Exponential, Serializable {
 
   public Tensor endomorphism(Tensor q) {
     return SnRotationMatrix.of(p, q);
+  }
+
+  @Override
+  public MemberQ isTangentQ() {
+    return tSnMemberQ;
   }
 }

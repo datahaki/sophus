@@ -137,4 +137,9 @@ import ch.alpine.tensor.sca.Chop;
     }
     throw new Throw(p, q);
   }
+  
+  @Override
+  public MemberQ isTangentQ() {
+    return tStMemberQ;
+  }
 }

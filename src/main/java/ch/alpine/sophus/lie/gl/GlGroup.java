@@ -8,6 +8,7 @@ import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
@@ -49,6 +50,11 @@ public class GlGroup implements LieGroup, Serializable {
     @Override // from Exponential
     public Tensor log(Tensor matrix) {
       return MatrixLog.of(matrix);
+    }
+    
+    @Override
+    public MemberQ isTangentQ() {
+      return SquareMatrixQ.INSTANCE;
     }
   }
 

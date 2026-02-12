@@ -16,6 +16,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
@@ -81,6 +82,11 @@ public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMa
           y.add(x.divide(tan)).multiply(be2), //
           y.divide(tan).subtract(x).multiply(be2), //
           be);
+    }
+
+    @Override
+    public MemberQ isTangentQ() {
+      return v -> VectorQ.ofLength(v, 3);
     }
   }
 

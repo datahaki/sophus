@@ -4,6 +4,7 @@ package ch.alpine.sophus.hs;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.MemberQ;
 
 /** map between manifold M and tangent space T_p M for some point p in M
  * 
@@ -27,4 +28,7 @@ public interface Exponential {
   default TensorUnaryOperator log() {
     return this::log;
   }
+
+  /** @return checks whether a given tensor is a tangent vector */
+  MemberQ isTangentQ();
 }

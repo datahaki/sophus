@@ -12,6 +12,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 
 /** @see HeGroup */
 public enum R2SGroup implements LieGroup {
@@ -50,6 +51,11 @@ public enum R2SGroup implements LieGroup {
           x, //
           y, //
           z.subtract(x.multiply(y).multiply(RationalScalar.HALF)));
+    }
+
+    @Override
+    public MemberQ isTangentQ() {
+      return _ -> true; // TODO
     }
   }
 
