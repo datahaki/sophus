@@ -8,7 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -56,7 +56,7 @@ public enum Rodrigues implements Exponential {
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public ZeroDefectArrayQ isTangentQ() {
     return new AntisymmetricMatrixQ(Chop._10);
   }
 

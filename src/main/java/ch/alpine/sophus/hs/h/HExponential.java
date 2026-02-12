@@ -9,7 +9,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.tri.ArcCosh;
 import ch.alpine.tensor.sca.tri.Cosh;
@@ -59,7 +60,7 @@ public class HExponential implements Exponential, Serializable {
   }
 
   @Override
-  public MemberQ isTangentQ() {
-    return null;
+  public ZeroDefectArrayQ isTangentQ() {
+    return VectorQ.INSTANCE;
   }
 }

@@ -11,7 +11,6 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Projection;
@@ -62,7 +61,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public TSnMemberQ isTangentQ() {
     return tSnMemberQ;
   }
 }

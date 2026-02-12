@@ -17,6 +17,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
@@ -85,8 +86,8 @@ public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMa
     }
 
     @Override
-    public MemberQ isTangentQ() {
-      return v -> VectorQ.ofLength(v, 3);
+    public ZeroDefectArrayQ isTangentQ() {
+      return VectorQ.ofLength(3);
     }
   }
 

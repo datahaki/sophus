@@ -12,7 +12,6 @@ import ch.alpine.tensor.alg.ArrayFlatten;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.lie.TensorWedge;
@@ -45,7 +44,7 @@ import ch.alpine.tensor.sca.Chop;
 /* package */ class StExponential implements Exponential, Serializable {
   private final Tensor p;
   private final Tensor pt;
-  private final MemberQ tStMemberQ;
+  private final TStMemberQ tStMemberQ;
 
   /** @param p orthogonal matrix with dimensions k x n
    * @throws Exception if p is not member of Stiefel manifold
@@ -139,7 +138,7 @@ import ch.alpine.tensor.sca.Chop;
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public TStMemberQ isTangentQ() {
     return tStMemberQ;
   }
 }

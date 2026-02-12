@@ -9,7 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -66,7 +66,7 @@ public class SpdExponential implements Exponential, Serializable {
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public ZeroDefectArrayQ isTangentQ() {
     return SquareMatrixQ.INSTANCE; // TODO check
   }
 

@@ -9,6 +9,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
@@ -53,7 +54,7 @@ public class GlGroup implements LieGroup, Serializable {
     }
 
     @Override
-    public MemberQ isTangentQ() {
+    public ZeroDefectArrayQ isTangentQ() {
       return SquareMatrixQ.INSTANCE;
     }
   }

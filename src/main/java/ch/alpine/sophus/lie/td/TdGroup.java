@@ -13,6 +13,7 @@ import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Expc;
@@ -104,8 +105,8 @@ public class TdGroup implements LieGroup, Serializable {
     }
 
     @Override
-    public MemberQ isTangentQ() {
-      return VectorQ::of;
+    public ZeroDefectArrayQ isTangentQ() {
+      return VectorQ.INSTANCE;
     }
   }
 

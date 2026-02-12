@@ -13,6 +13,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 /** @see HeGroup */
 public enum R2SGroup implements LieGroup {
@@ -54,8 +55,8 @@ public enum R2SGroup implements LieGroup {
     }
 
     @Override
-    public MemberQ isTangentQ() {
-      return _ -> true; // TODO
+    public ZeroDefectArrayQ isTangentQ() {
+      return VectorQ.ofLength(3);
     }
   }
 

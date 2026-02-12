@@ -7,7 +7,6 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Projection;
@@ -64,7 +63,7 @@ public class SnExponential implements Exponential, Serializable {
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public TSnMemberQ isTangentQ() {
     return tSnMemberQ;
   }
 }

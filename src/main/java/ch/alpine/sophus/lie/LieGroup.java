@@ -10,7 +10,7 @@ import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.GroupInterface;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 /** interface maps tensor coordinate to an element of a lie group
  * 
@@ -45,8 +45,8 @@ public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieI
       }
 
       @Override
-      public MemberQ isTangentQ() {
-        return _ -> true;
+      public ZeroDefectArrayQ isTangentQ() {
+        throw new UnsupportedOperationException();
       }
     };
   }

@@ -10,7 +10,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.MatrixQ;
@@ -72,8 +72,8 @@ public class Se3Group extends SeNGroup implements VectorEncodingMarker {
     }
 
     @Override
-    public MemberQ isTangentQ() {
-      return m -> MatrixQ.ofSize(m, 2, 3);
+    public ZeroDefectArrayQ isTangentQ() {
+      return MatrixQ.ofSize(2, 3);
     }
   }
 

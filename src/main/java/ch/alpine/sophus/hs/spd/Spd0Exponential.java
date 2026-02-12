@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.spd;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.ev.Eigensystem;
@@ -48,7 +48,7 @@ public enum Spd0Exponential implements Exponential {
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public ZeroDefectArrayQ isTangentQ() {
     return SquareMatrixQ.INSTANCE;
   }
 

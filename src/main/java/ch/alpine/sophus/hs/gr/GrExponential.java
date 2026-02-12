@@ -8,7 +8,6 @@ import ch.alpine.sophus.lie.MatrixBracket;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
-import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -48,7 +47,7 @@ public class GrExponential implements Exponential, Serializable {
   }
 
   @Override
-  public MemberQ isTangentQ() {
+  public TGrMemberQ isTangentQ() {
     return tGrMemberQ;
   }
 

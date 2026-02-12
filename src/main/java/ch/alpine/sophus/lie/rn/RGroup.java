@@ -14,6 +14,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
  * 
@@ -50,8 +51,8 @@ public class RGroup implements LieGroup, MetricManifold, Serializable {
     }
 
     @Override
-    public MemberQ isTangentQ() {
-      return VectorQ::of;
+    public ZeroDefectArrayQ isTangentQ() {
+      return VectorQ.INSTANCE;
     }
   }
 
