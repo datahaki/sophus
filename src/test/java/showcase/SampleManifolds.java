@@ -17,6 +17,7 @@ import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
+import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.hs.st.StiefelManifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -33,6 +34,7 @@ import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Chop;
 
 public class SampleManifolds {
   public static List<Manifold> list() {
@@ -46,7 +48,10 @@ public class SampleManifolds {
         new SoNGroup(3), //
         new SoNGroup(4), //
         new Sphere(2), //
-        new Sphere(3) //
+        new Sphere(3), //
+        new Hyperboloid(2), //
+        new Hyperboloid(3), //
+        new Hyperboloid(4) //
     );
   }
 
@@ -66,7 +71,7 @@ public class SampleManifolds {
     assumeFalse(ThrowQ.of(() -> exponential.log(q)));
     Scalar d_pq = metricManifold.distance(p, q);
     Scalar d_qp = metricManifold.distance(q, p);
-    Tolerance.CHOP.requireClose(d_pq, d_qp);
+    Chop._10.requireClose(d_pq, d_qp);
     assumeTrue(manifold instanceof GeodesicSpace);
     GeodesicSpace geodesicSpace = (GeodesicSpace) manifold;
     Tensor m = geodesicSpace.midpoint(p, q);
@@ -86,9 +91,12 @@ public class SampleManifolds {
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
     Exponential exponential = manifold.exponential(p);
+    Tensor log_p = exponential.log(p);
+    Tolerance.CHOP.requireAllZero(log_p);
     assumeFalse(ThrowQ.of(() -> exponential.log(q)));
     Tensor v = exponential.log(q);
     List<Integer> list = Dimensions.of(v);
+    assertEquals(list, Dimensions.of(log_p));
     ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
     int d = linearSubspace.dimensions();

@@ -1,7 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
+import java.util.List;
+
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
@@ -11,14 +14,21 @@ import ch.alpine.tensor.sca.Chop;
 /** Reference: geomstats */
 public class TStMemberQ extends ZeroDefectArrayQ {
   private final Tensor p;
+  private final List<Integer> dims;
 
   public TStMemberQ(Tensor p, Chop chop) {
     super(2, chop);
     this.p = p;
+    dims = Dimensions.of(p);
   }
 
   public TStMemberQ(Tensor p) {
     this(p, Chop._10);
+  }
+
+  @Override // from ZeroDefectArrayQ
+  protected boolean isArrayWith(List<Integer> list) {
+    return list.equals(dims);
   }
 
   @Override // from ZeroDefectArrayQ

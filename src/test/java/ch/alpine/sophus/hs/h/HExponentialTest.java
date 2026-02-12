@@ -32,7 +32,7 @@ class HExponentialTest {
     Tensor exp = hExponential.exp(vx);
     Tensor log = hExponential.log(exp);
     Chop._10.requireClose(vx, log);
-    Scalar dist = Hyperboloid.INSTANCE.distance(px, exp);
+    Scalar dist = HManifold.INSTANCE.distance(px, exp);
     Sign.requirePositiveOrZero(dist);
   }
 }

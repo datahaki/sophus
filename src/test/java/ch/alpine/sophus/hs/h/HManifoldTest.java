@@ -11,11 +11,11 @@ import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-class HyperboloidTest {
+class HManifoldTest {
   @Test
   void test() {
-    assertDoesNotThrow(() -> Serialization.copy(Hyperboloid.INSTANCE));
-    CenterMean centerMean = new CenterMean(Hyperboloid.INSTANCE.biinvariantMean());
+    assertDoesNotThrow(() -> Serialization.copy(HManifold.INSTANCE));
+    CenterMean centerMean = new CenterMean(HManifold.INSTANCE.biinvariantMean());
     Tensor sequence = RandomVariate.of(NormalDistribution.standard(), 6, 3);
     centerMean.apply(sequence);
   }

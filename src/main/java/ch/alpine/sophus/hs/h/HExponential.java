@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.tri.Sinhc;
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016
  * 
- * @see Hyperboloid */
+ * @see HManifold */
 public class HExponential implements Exponential, Serializable {
   private final HWeierstrassCoordinate px;
   private final Tensor p;
@@ -61,6 +61,6 @@ public class HExponential implements Exponential, Serializable {
 
   @Override
   public ZeroDefectArrayQ isTangentQ() {
-    return VectorQ.INSTANCE;
+    return VectorQ.ofLength(p.length());
   }
 }

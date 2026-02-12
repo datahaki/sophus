@@ -20,7 +20,6 @@ import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
-import ch.alpine.tensor.mat.qr.GramSchmidt;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
 import ch.alpine.tensor.mat.qr.QRMathematica;
 import ch.alpine.tensor.mat.re.MatrixRank;
@@ -90,6 +89,7 @@ import ch.alpine.tensor.sca.Chop;
     final Tensor M = p.dot(qt); // k x k
     // step 2
     Tensor K = qt.subtract(pt.dot(M)); // n x k
+    // IO.println("Dim[K]=" + Dimensions.of(K));
     // IO.println(Pretty.of(K.map(Round._3)));
     // the MatrixRank of the matrix "K" is min(k, n-k)
     int n = qt.length();
@@ -98,14 +98,22 @@ import ch.alpine.tensor.sca.Chop;
         IO.println(Pretty.of(K));
         System.err.println("NO NO NO");
       }
-    QRDecomposition qrDecomposition = 2 * k <= n //
-        ? GramSchmidt.of(K)
-        : QRMathematica.wrap(QRDecomposition.of(K));
+    // IO.println(2 * k <= n ? "GramSchmidt" : "Mathematica");
+    // FIXME SOPHUS
+    QRDecomposition qrDecomposition =
+        // 2 * k <= n //
+        // ? GramSchmidt.of(K)
+        // :
+        QRMathematica.wrap(QRDecomposition.of(K));
     final Tensor Qt = qrDecomposition.getQConjugateTranspose(); // k x n ( same dims as p,q )
     final Tensor N = qrDecomposition.getR(); // k x k
+    // IO.println("Dim[Qt]=" + Dimensions.of(Qt));
+    // IO.println("Dim[N]=" + Dimensions.of(N));
     // step 3
     Tensor P = Join.of(M, N); // 2k x k
+    // IO.println("Dim[P]=" + Dimensions.of(P));
     Tensor W = QRDecomposition.of(P).getQ(); // 2k x 2k | orthogonal completion
+    // IO.println("Dim[W]=" + Dimensions.of(W));
     // Procrustes preprocessing
     Tensor G = W.block(lkk, lkk); // k x k
     SingularValueDecomposition svd = SingularValueDecomposition.of(G);
