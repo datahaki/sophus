@@ -12,6 +12,7 @@ import java.util.Random;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
@@ -24,9 +25,14 @@ import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 public class SampleManifolds {
   public static List<Manifold> list() {
@@ -56,7 +62,8 @@ public class SampleManifolds {
     MetricManifold metricManifold = (MetricManifold) manifold;
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
-    assumeFalse(ThrowQ.of(() -> manifold.exponential(p).log(q)));
+    Exponential exponential = manifold.exponential(p);
+    assumeFalse(ThrowQ.of(() -> exponential.log(q)));
     Scalar d_pq = metricManifold.distance(p, q);
     Scalar d_qp = metricManifold.distance(q, p);
     Tolerance.CHOP.requireClose(d_pq, d_qp);
@@ -66,5 +73,28 @@ public class SampleManifolds {
     Scalar d_pm = metricManifold.distance(p, m);
     Scalar d_mq = metricManifold.distance(m, q);
     Tolerance.CHOP.requireClose(d_pq, d_pm.add(d_mq));
+  }
+
+  @ParameterizedTest
+  @MethodSource("list")
+  void testExponential(Manifold manifold) {
+    assumeTrue(manifold instanceof RandomSampleInterface);
+    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+    assertEquals( //
+        RandomSample.of(rsi, new Random(13)), //
+        RandomSample.of(rsi, new Random(13)));
+    Tensor p = RandomSample.of(rsi);
+    Tensor q = RandomSample.of(rsi);
+    Exponential exponential = manifold.exponential(p);
+    assumeFalse(ThrowQ.of(() -> exponential.log(q)));
+    Tensor v = exponential.log(q);
+    List<Integer> list = Dimensions.of(v);
+    ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
+    LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
+    int d = linearSubspace.dimensions();
+    Tensor weights = RandomVariate.of(NormalDistribution.of(0.0, 0.1), d);
+    Tensor w = linearSubspace.apply(weights);
+    Tensor r = exponential.exp(w);
+    assumeTrue(manifold.isPointQ().test(r));
   }
 }

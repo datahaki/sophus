@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.sophus.hs.s;
 
 import ch.alpine.tensor.RealScalar;

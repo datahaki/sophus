@@ -44,9 +44,9 @@ public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieI
         return exponential0().log(combine(pinv, q));
       }
 
-      @Override
+      @Override // from Exponential
       public ZeroDefectArrayQ isTangentQ() {
-        throw new UnsupportedOperationException();
+        return exponential0().isTangentQ();
       }
     };
   }
