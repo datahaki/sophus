@@ -13,6 +13,6 @@ public enum SnTransport implements HsTransport {
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
     TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
     Tensor matrix = SnRotationMatrix.of(p, q);
-    return vector -> matrix.dot(tSnMemberQ.requireMember(vector));
+    return vector -> matrix.dot(tSnMemberQ.require(vector));
   }
 }

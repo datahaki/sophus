@@ -66,7 +66,7 @@ class So3GroupTest {
       Tensor g = So3TestHelper.spawn_So3();
       Tensor v = So3TestHelper.spawn_so3();
       Tensor tensor = LinearSolve.of(g, v).dot(g);
-      AntisymmetricMatrixQ.INSTANCE.requireMember(tensor);
+      AntisymmetricMatrixQ.INSTANCE.require(tensor);
       // AntisymmetricMatrixQ.require(So3Exponential.INSTANCE.log(g));
       // VectorQ.requireLength(So3Group.INSTANCE.exponential0().vectorLog(g), 3);
     }
@@ -92,7 +92,7 @@ class So3GroupTest {
     Tensor p = Rodrigues.vectorExp(Tensors.vector(1, 2, 3));
     Tensor q = Rodrigues.vectorExp(Tensors.vector(2, -1, 2));
     Tensor split = So3Group.INSTANCE.split(p, q, RationalScalar.HALF);
-    assertTrue(new OrthogonalMatrixQ(Chop._14).isMember(split));
+    assertTrue(new OrthogonalMatrixQ(Chop._14).test(split));
   }
 
   @Test
@@ -125,7 +125,7 @@ class So3GroupTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor p = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
     Tensor q = MatrixExp.of(TensorWedge.of(RandomVariate.of(distribution, 4, 4)));
-    OrthogonalMatrixQ.INSTANCE.requireMember(p);
+    OrthogonalMatrixQ.INSTANCE.require(p);
     assertThrows(Exception.class, () -> So3Group.INSTANCE.distance(p, q));
   }
 
@@ -133,7 +133,7 @@ class So3GroupTest {
   void testSimple3() {
     Tensor matrix = RandomSample.of(So3Group.INSTANCE);
     MatrixQ.requireSize(matrix, 3, 3);
-    OrthogonalMatrixQ.INSTANCE.requireMember(matrix);
+    OrthogonalMatrixQ.INSTANCE.require(matrix);
     Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);
     SchurDecomposition schurDecomposition = SchurDecomposition.of(matrix);
     schurDecomposition.getT();

@@ -52,14 +52,14 @@ import ch.alpine.tensor.sca.Chop;
    * @see StManifold
    * @see OrthogonalMatrixQ */
   public StExponential(Tensor p) {
-    this.p = StManifold.INSTANCE.isPointQ().requireMember(p);
+    this.p = StManifold.INSTANCE.isPointQ().require(p);
     pt = Transpose.of(p);
     tStMemberQ = new TStMemberQ(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    tStMemberQ.requireMember(v);
+    tStMemberQ.require(v);
     Tensor vt = Transpose.of(v);
     // ---
     Tensor a = TensorWedge.of(p.dot(vt)); // horizontal component, antisymmetric
@@ -80,7 +80,7 @@ import ch.alpine.tensor.sca.Chop;
     // new InfluenceMatrixQ(Chop._08).requireMember(pt.dot(p));
     // InfluenceMatrix influenceMatrix = InfluenceMatrix.of(pt, p);
     // if k == n the Exponential coincides with SO_Exponential
-    StManifold.INSTANCE.isPointQ().requireMember(q);
+    StManifold.INSTANCE.isPointQ().require(q);
     Tensor qt = Transpose.of(q); // n x k
     int k = p.length();
     Integers.requireEquals(k, q.length());
@@ -121,7 +121,7 @@ import ch.alpine.tensor.sca.Chop;
     for (int i = 0; i < max; ++i) {
       // step 5
       Tensor L = MatrixLog.of(V).negate(); // 2k x 2k antisymmetric
-      new AntisymmetricMatrixQ(Chop._08).requireMember(L);
+      new AntisymmetricMatrixQ(Chop._08).require(L);
       L = TensorWedge.of(L); // just for numerical correction
       Tensor C = L.block(lkk, lkk); // k x k
       // steps 6-8: convergence check

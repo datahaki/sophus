@@ -26,8 +26,8 @@ public enum KullbackLeiblerDivergence implements TensorMetric {
 
   @Override
   public Scalar distance(Tensor p1, Tensor p2) {
-    SymmetricMatrixQ.INSTANCE.requireMember(p1);
-    SymmetricMatrixQ.INSTANCE.requireMember(p2);
+    SymmetricMatrixQ.INSTANCE.require(p1);
+    SymmetricMatrixQ.INSTANCE.require(p2);
     Tensor s1 = p1.dot(Inverse.of(p2));
     Tensor s2 = p2.dot(Inverse.of(p1));
     return Trace.of(s1.add(s2)).subtract(RealScalar.of(2L * p1.length()));
@@ -41,8 +41,8 @@ public enum KullbackLeiblerDivergence implements TensorMetric {
    * @return squared */
   @PackageTestAccess
   static Scalar between(Tensor p1, Tensor p2) {
-    SymmetricMatrixQ.INSTANCE.requireMember(p1);
-    SymmetricMatrixQ.INSTANCE.requireMember(p2);
+    SymmetricMatrixQ.INSTANCE.require(p1);
+    SymmetricMatrixQ.INSTANCE.require(p2);
     Tensor qinvp = LinearSolve.of(p2, p1);
     Scalar n = RealScalar.of(p1.length());
     return Trace.of(qinvp).subtract(n).subtract(Log.FUNCTION.apply(Abs.FUNCTION.apply(Det.of(qinvp)))) //

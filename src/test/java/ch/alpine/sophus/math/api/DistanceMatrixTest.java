@@ -30,9 +30,9 @@ class DistanceMatrixTest {
     Distribution distribution = UniformDistribution.of(Clips.absolute(Quantity.of(2, "A")));
     Tensor sequence = RandomVariate.of(distribution, 10, 3);
     Tensor tensor = DistanceMatrix.of(sequence, Vector2Norm::between);
-    SquareMatrixQ.INSTANCE.requireMember(tensor);
+    SquareMatrixQ.INSTANCE.require(tensor);
     assertEquals(EqualsReduce.zero(tensor), Quantity.of(0, "A"));
-    SymmetricMatrixQ.INSTANCE.requireMember(tensor);
+    SymmetricMatrixQ.INSTANCE.require(tensor);
   }
 
   @Test

@@ -11,7 +11,7 @@ import ch.alpine.tensor.alg.Array;
 class TGlMemberQTest {
   @Test
   void testSimple() {
-    assertTrue(TGlMemberQ.INSTANCE.isMember(Array.zeros(2, 2)));
-    assertFalse(TGlMemberQ.INSTANCE.isMember(Array.zeros(2, 3)));
+    assertTrue(TGlMemberQ.INSTANCE.test(Array.zeros(2, 2)));
+    assertFalse(TGlMemberQ.INSTANCE.test(Array.zeros(2, 3)));
   }
 }

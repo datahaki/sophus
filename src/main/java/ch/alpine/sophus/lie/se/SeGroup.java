@@ -18,7 +18,7 @@ public class SeGroup extends GlGroup {
   public MemberQ isPointQ() {
     return matrix -> {
       int n = matrix.length();
-      return SquareMatrixQ.INSTANCE.isMember(matrix) //
+      return SquareMatrixQ.INSTANCE.test(matrix) //
           && Last.of(matrix).equals(UnitVector.of(n, n - 1));
     };
   }

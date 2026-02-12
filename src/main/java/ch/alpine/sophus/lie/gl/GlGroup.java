@@ -35,7 +35,7 @@ public class GlGroup implements LieGroup, Serializable {
 
   @Override // from MemberQ
   public MemberQ isPointQ() {
-    return matrix -> SquareMatrixQ.INSTANCE.isMember(matrix) //
+    return matrix -> SquareMatrixQ.INSTANCE.test(matrix) //
         && !Tolerance.CHOP.isZero(Det.of(matrix));
   }
 
@@ -75,7 +75,7 @@ public class GlGroup implements LieGroup, Serializable {
 
   @Override
   public final Tensor combine(Tensor matrix1, Tensor matrix2) {
-    return protected_project(matrix1.dot(SquareMatrixQ.INSTANCE.requireMember(matrix2)));
+    return protected_project(matrix1.dot(SquareMatrixQ.INSTANCE.require(matrix2)));
   }
 
   protected Tensor protected_project(Tensor matrix) {
@@ -89,7 +89,7 @@ public class GlGroup implements LieGroup, Serializable {
 
   @Override
   public Tensor dL(Tensor g, Tensor v) { // v is square
-    return g.dot(SquareMatrixQ.INSTANCE.requireMember(v));
+    return g.dot(SquareMatrixQ.INSTANCE.require(v));
   }
 
   @Override

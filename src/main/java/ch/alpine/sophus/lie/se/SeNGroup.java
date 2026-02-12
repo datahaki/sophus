@@ -28,7 +28,7 @@ public class SeNGroup extends SeGroup implements MatrixGroup {
   @Override
   public MemberQ isPointQ() {
     return t -> t.length() == n + 1 //
-        && super.isPointQ().isMember(t);
+        && super.isPointQ().test(t);
   }
 
   public MatrixAlgebra matrixAlgebra() {

@@ -155,19 +155,19 @@ class SnManifoldTest {
 
   @Test
   void testD1() {
-    SnManifold.INSTANCE.isPointQ().requireMember(Tensors.vector(+1));
-    SnManifold.INSTANCE.isPointQ().requireMember(Tensors.vector(-1));
+    SnManifold.INSTANCE.isPointQ().require(Tensors.vector(+1));
+    SnManifold.INSTANCE.isPointQ().require(Tensors.vector(-1));
   }
 
   @Test
   void testD2() {
     for (int n = 5; n < 14; ++n)
-      CirclePoints.of(n).forEach(SnManifold.INSTANCE.isPointQ()::requireMember);
+      CirclePoints.of(n).forEach(SnManifold.INSTANCE.isPointQ()::require);
   }
 
   @Test
   void testNullFail() {
-    assertThrows(Exception.class, () -> SnManifold.INSTANCE.isPointQ().isMember(null));
+    assertThrows(Exception.class, () -> SnManifold.INSTANCE.isPointQ().test(null));
   }
 
   @Test

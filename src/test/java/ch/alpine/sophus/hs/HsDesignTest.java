@@ -90,7 +90,7 @@ class HsDesignTest {
         Chop._08.requireClose(mahalanobis.leverages_sqrt(), influenceMatrix.leverages_sqrt());
         Tensor sigma_inverse = mahalanobis.sigma_inverse();
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
-        new SymmetricMatrixQ(Chop._08).requireMember(mahalanobis.sigma_n());
+        new SymmetricMatrixQ(Chop._08).require(mahalanobis.sigma_n());
       }
     }
   }

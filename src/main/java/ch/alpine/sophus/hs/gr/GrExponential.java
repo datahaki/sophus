@@ -26,14 +26,14 @@ public class GrExponential implements Exponential, Serializable {
   /** @param p rank k projector of Gr(n, k)
    * @throws Exception if p is not an element in the Grassmann manifold */
   public GrExponential(Tensor p) {
-    this.p = GrManifold.INSTANCE.isPointQ().requireMember(p);
+    this.p = GrManifold.INSTANCE.isPointQ().require(p);
     tGrMemberQ = new TGrMemberQ(p);
     p2_id = bic(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    tGrMemberQ.requireMember(v);
+    tGrMemberQ.require(v);
     return BasisTransform.ofMatrix(p, MatrixExp.of(MatrixBracket.of(p, v)));
   }
 
@@ -43,7 +43,7 @@ public class GrExponential implements Exponential, Serializable {
 
   @Override // from Exponential
   public Tensor log(Tensor q) {
-    GrManifold.INSTANCE.isPointQ().requireMember(q);
+    GrManifold.INSTANCE.isPointQ().require(q);
     return MatrixBracket.of(mLog(q).multiply(RationalScalar.HALF), p);
   }
 

@@ -18,7 +18,7 @@ public class SopqMemberQ implements MemberQ, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor x) {
+  public boolean test(Tensor x) {
     return CHOP.isClose(Transpose.of(x).dot(form).dot(x), form);
   }
 }

@@ -51,9 +51,9 @@ class SpdTransportTest {
       e11 = tu1.apply(e11);
       e12 = tu1.apply(e12);
       e13 = tu1.apply(e13);
-      SymmetricMatrixQ.INSTANCE.requireMember(e11);
-      SymmetricMatrixQ.INSTANCE.requireMember(e12);
-      SymmetricMatrixQ.INSTANCE.requireMember(e13);
+      SymmetricMatrixQ.INSTANCE.require(e11);
+      SymmetricMatrixQ.INSTANCE.require(e12);
+      SymmetricMatrixQ.INSTANCE.require(e13);
       p = q;
     }
   }

@@ -33,11 +33,11 @@ class StiefelManifoldTest {
   void testSphere1(int n) {
     StiefelManifold stiefelManifold = new StiefelManifold(n, 1);
     Tensor p = Tensors.of(UnitVector.of(n, 0));
-    stiefelManifold.isPointQ().requireMember(p);
+    stiefelManifold.isPointQ().require(p);
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor v = Tensors.of(UnitVector.of(n, 1));
     TStMemberQ tStMemberQ = new TStMemberQ(p);
-    tStMemberQ.requireMember(v);
+    tStMemberQ.require(v);
     Tolerance.CHOP.requireClose(tStMemberQ.projection(v), v);
     Tensor q = exponential.exp(v);
     Tolerance.CHOP.requireClose(q.get(0).extract(0, 2), AngleVector.of(RealScalar.ONE));
@@ -48,11 +48,11 @@ class StiefelManifoldTest {
   void testSphere2(int n) {
     StiefelManifold stiefelManifold = new StiefelManifold(n, 1);
     Tensor p = Tensors.of(UnitVector.of(n, 0));
-    stiefelManifold.isPointQ().requireMember(p);
+    stiefelManifold.isPointQ().require(p);
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor v = Tensors.of(UnitVector.of(n, 2));
     TStMemberQ tStMemberQ = new TStMemberQ(p);
-    tStMemberQ.requireMember(v);
+    tStMemberQ.require(v);
     Tolerance.CHOP.requireClose(tStMemberQ.projection(v), v);
     Tensor q = exponential.exp(v);
     Tolerance.CHOP.requireClose(Tensors.of(q.get(0, 0), q.get(0, 2)), AngleVector.of(RealScalar.ONE));
@@ -63,12 +63,12 @@ class StiefelManifoldTest {
   void testOrth(int n) {
     StiefelManifold stiefelManifold = new StiefelManifold(n, n);
     Tensor p = IdentityMatrix.of(n);
-    stiefelManifold.isPointQ().requireMember(p);
+    stiefelManifold.isPointQ().require(p);
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor vv = RandomVariate.of(ExponentialDistribution.standard(), n, n);
     Tensor v = Transpose.of(vv).subtract(vv);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
-    tStMemberQ.requireMember(v);
+    tStMemberQ.require(v);
     Tolerance.CHOP.requireClose(tStMemberQ.projection(v), v);
     Tensor q1 = exponential.exp(v);
     Tensor q2 = SoGroup.INSTANCE.exponential(p).exp(v);
@@ -80,14 +80,14 @@ class StiefelManifoldTest {
   void testSpecialOrth(int n) {
     StiefelManifold stiefelManifold = new StiefelManifold(n, n - 1);
     Tensor p = Drop.tail(IdentityMatrix.of(n), 1);
-    stiefelManifold.isPointQ().requireMember(p);
+    stiefelManifold.isPointQ().require(p);
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor vv = RandomVariate.of(ExponentialDistribution.standard(), n - 1, n);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     Tensor v = tStMemberQ.projection(vv);
-    tStMemberQ.requireMember(v);
+    tStMemberQ.require(v);
     Tensor q1 = exponential.exp(v);
-    stiefelManifold.isPointQ().requireMember(q1);
+    stiefelManifold.isPointQ().require(q1);
     // Tensor q2 = SoGroup.INSTANCE.exponential(p).exp(v);
     // Tolerance.CHOP.requireClose(q1, q2);
   }
@@ -98,7 +98,7 @@ class StiefelManifoldTest {
     for (int k = n - 2; k <= n; ++k) {
       RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k);
       Tensor matrix = RandomSample.of(randomSampleInterface);
-      StManifold.INSTANCE.isPointQ().requireMember(matrix);
+      StManifold.INSTANCE.isPointQ().require(matrix);
     }
   }
 

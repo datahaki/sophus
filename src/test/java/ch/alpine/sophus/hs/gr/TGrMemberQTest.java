@@ -43,15 +43,15 @@ class TGrMemberQTest {
     int n = 5;
     Tensor x = RandomSample.of(new Grassmannian(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
-    GrManifold.INSTANCE.isPointQ().requireMember(x);
+    GrManifold.INSTANCE.isPointQ().require(x);
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
     Tensor pre = RandomVariate.of(NormalDistribution.standard(), n, n);
-    assertFalse(tGrMemberQ.isMember(pre));
+    assertFalse(tGrMemberQ.test(pre));
     Tensor w1 = tGrMemberQ.projection(pre);
-    tGrMemberQ.requireMember(w1);
+    tGrMemberQ.require(w1);
     assertFalse(Chop._08.allZero(w1));
     Tensor w2 = tGrMemberQ.projection(w1);
-    tGrMemberQ.requireMember(w2);
+    tGrMemberQ.require(w2);
     assertFalse(Chop._08.allZero(w2));
     Tolerance.CHOP.requireClose(w1, w2);
   }
@@ -68,17 +68,17 @@ class TGrMemberQTest {
     LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::defect, n, n);
     assertFalse(linearSubspace.basis().stream().anyMatch(ExactTensorQ::of));
     assertEquals(linearSubspace.dimensions(), k * (n - k));
-    tGrMemberQ.requireMember(v);
+    tGrMemberQ.require(v);
     assertFalse(Chop._08.allZero(v));
     Sign.requirePositive(FrobeniusNorm.of(v));
     Tolerance.CHOP.requireAllZero(TGrMemberQ.identity(p, v));
     Tensor w1 = tGrMemberQ.projection(v);
-    tGrMemberQ.requireMember(w1);
+    tGrMemberQ.require(w1);
     assertFalse(Chop._08.allZero(w1));
     Tensor w2 = tGrMemberQ.projection(v);
     Tensor w3 = linearSubspace.projection(v);
     Tolerance.CHOP.requireClose(w2, w3);
-    tGrMemberQ.requireMember(w2);
+    tGrMemberQ.require(w2);
     assertFalse(Chop._08.allZero(w2));
     Tolerance.CHOP.requireClose(w1, w2);
     Sign.requirePositive(FrobeniusNorm.of(w1));
@@ -112,7 +112,7 @@ class TGrMemberQTest {
         Tensor diagonal = Join.of(ConstantArray.of(RealScalar.ONE, k), ConstantArray.of(RealScalar.ZERO, n - k));
         Tensor x = DiagonalMatrix.with(diagonal);
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
-        GrManifold.INSTANCE.isPointQ().requireMember(x);
+        GrManifold.INSTANCE.isPointQ().require(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 5) //
             .mapToObj(_ -> Flatten.of(tGrMemberQ.projection(RandomVariate.of(distribution, fn, fn)))));

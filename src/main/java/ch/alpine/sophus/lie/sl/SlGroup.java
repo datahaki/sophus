@@ -17,7 +17,7 @@ public class SlGroup extends GlGroup {
 
   @Override // from MemberQ
   public MemberQ isPointQ() {
-    return matrix -> SquareMatrixQ.INSTANCE.isMember(matrix) //
+    return matrix -> SquareMatrixQ.INSTANCE.test(matrix) //
         && Tolerance.CHOP.isClose(Det.of(matrix), RealScalar.ONE);
   }
 

@@ -102,7 +102,7 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
 
   @Override // from MemberQ
   public MemberQ isPointQ() {
-    return p -> SymmetricMatrixQ.INSTANCE.isMember(p) //
+    return p -> SymmetricMatrixQ.INSTANCE.test(p) //
         && PositiveDefiniteMatrixQ.ofHermitian(p); // TODO see how this goes with symmetrize
   }
 

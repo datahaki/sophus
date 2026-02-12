@@ -18,6 +18,6 @@ class TSopqProjectTest {
     Tensor x = RandomVariate.of(NormalDistribution.standard(), 5, 5);
     Tensor sopq = tSopqProject.apply(x);
     Tensor exp = MatrixExp.of(sopq);
-    Serialization.copy(new SopqMemberQ(3, 2)).requireMember(exp);
+    Serialization.copy(new SopqMemberQ(3, 2)).require(exp);
   }
 }

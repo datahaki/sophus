@@ -119,7 +119,7 @@ class BallRandomSampleTest {
       Tensor q = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface));
       Tensor tensor = SnRotationMatrix.of(p, q);
       Chop._10.requireClose(tensor.dot(p), q);
-      assertTrue(new OrthogonalMatrixQ(Chop._10).isMember(tensor));
+      assertTrue(new OrthogonalMatrixQ(Chop._10).test(tensor));
     }
   }
 

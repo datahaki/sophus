@@ -38,7 +38,7 @@ public class Sphere extends SnManifold implements SpecificManifold {
   @Override // from MemberQ
   public MemberQ isPointQ() {
     return p -> p.length() == length //
-        && super.isPointQ().isMember(p);
+        && super.isPointQ().test(p);
   }
 
   @Override // from RandomSampleInterface

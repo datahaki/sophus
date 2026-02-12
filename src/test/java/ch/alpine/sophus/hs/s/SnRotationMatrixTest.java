@@ -38,7 +38,7 @@ class SnRotationMatrixTest {
       Tensor wd = TensorWedge.of(a, b).negate();
       Tolerance.CHOP.requireClose(wx, wd);
       Tensor rotation1 = SnRotationMatrix.of(a, b);
-      assertTrue(new OrthogonalMatrixQ(Chop._10).isMember(rotation1));
+      assertTrue(new OrthogonalMatrixQ(Chop._10).test(rotation1));
       Chop._08.requireClose(rotation1.dot(a), b);
       Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
       Chop._08.requireClose(rotation1, RotationMatrix3D.of(a, b));
@@ -53,7 +53,7 @@ class SnRotationMatrixTest {
     Tensor b = Vector2Norm.NORMALIZE.apply(RandomVariate.of(UNIFORM, random, d));
     Tensor rotation1 = SnRotationMatrix.of(a, b);
     Tensor rotation2 = SnRotationMatrix.of(b, a);
-    assertTrue(new OrthogonalMatrixQ(Chop._08).isMember(rotation1));
+    assertTrue(new OrthogonalMatrixQ(Chop._08).test(rotation1));
     Chop._08.requireClose(new SnAction(rotation1).apply(a), b);
     Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
     Chop._08.requireClose(rotation1, Inverse.of(rotation2));
@@ -68,7 +68,7 @@ class SnRotationMatrixTest {
         Tensor b = RandomSample.of(randomSampleInterface);
         Tensor rotation1 = SnRotationMatrix.of(a, b);
         Tensor rotation2 = SnRotationMatrix.of(b, a);
-        assertTrue(new OrthogonalMatrixQ(Chop._08).isMember(rotation1));
+        assertTrue(new OrthogonalMatrixQ(Chop._08).test(rotation1));
         Chop._08.requireClose(rotation1.dot(a), b);
         Chop._08.requireClose(Det.of(rotation1), RealScalar.ONE);
         Chop._06.requireClose(rotation1, Inverse.of(rotation2));

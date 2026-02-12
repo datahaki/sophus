@@ -24,7 +24,7 @@ public record GrAction(Tensor g) implements TensorUnaryOperator {
 
   /** @param g from SO(n) */
   public GrAction {
-    OrthogonalMatrixQ.INSTANCE.requireMember(g);
+    OrthogonalMatrixQ.INSTANCE.require(g);
   }
 
   @Override

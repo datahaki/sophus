@@ -23,7 +23,7 @@ public class SlNGroup extends SlGroup implements MatrixGroup {
   @Override
   public MemberQ isPointQ() {
     return matrix -> matrix.length() == n //
-        && super.isPointQ().isMember(matrix);
+        && super.isPointQ().test(matrix);
   }
 
   public MatrixAlgebra matrixAlgebra() {

@@ -42,7 +42,7 @@ class TSnMemberQTest {
     LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(p)::defect, n + 1);
     assertDoesNotThrow(() -> Serialization.copy(linearSubspace));
     TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
-    linearSubspace.basis().stream().forEach(tSnMemberQ::requireMember);
+    linearSubspace.basis().stream().forEach(tSnMemberQ::require);
     Tensor v = RandomVariate.of(UniformDistribution.unit(20), n + 1);
     Tensor v1 = tSnMemberQ.projection(v);
     Tensor v2 = linearSubspace.projection(v);
@@ -52,10 +52,10 @@ class TSnMemberQTest {
   @Test
   void testSerializable() throws ClassNotFoundException, IOException {
     MemberQ memberQ = Serialization.copy(SnManifold.INSTANCE.isPointQ());
-    memberQ.requireMember(UnitVector.of(4, 3));
+    memberQ.require(UnitVector.of(4, 3));
     TSnMemberQ tSnMemberQ = Serialization.copy(new TSnMemberQ(UnitVector.of(4, 3)));
-    tSnMemberQ.requireMember(UnitVector.of(4, 2));
-    assertFalse(tSnMemberQ.isMember(Tensors.vector(1, 2, 3, 4)));
+    tSnMemberQ.require(UnitVector.of(4, 2));
+    assertFalse(tSnMemberQ.test(Tensors.vector(1, 2, 3, 4)));
   }
 
   @Test
@@ -66,11 +66,11 @@ class TSnMemberQTest {
       Tensor y = RandomSample.of(randomSampleInterface);
       Tensor v = new SnExponential(x).log(y);
       TSnMemberQ tSnMemberQ = new TSnMemberQ(x);
-      tSnMemberQ.requireMember(v);
+      tSnMemberQ.require(v);
       Tensor w = RandomVariate.of(NormalDistribution.standard(), d + 1);
-      assertFalse(tSnMemberQ.isMember(w));
+      assertFalse(tSnMemberQ.test(w));
       w = tSnMemberQ.projection(w);
-      assertTrue(tSnMemberQ.isMember(w));
+      assertTrue(tSnMemberQ.test(w));
       Tensor w2 = tSnMemberQ.projection(w);
       Tolerance.CHOP.requireClose(w, w2);
     }

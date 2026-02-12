@@ -12,8 +12,8 @@ public enum TSpdMemberQ implements MemberQ {
   INSTANCE;
 
   @Override // from MemberQ
-  public boolean isMember(Tensor v) {
-    return SymmetricMatrixQ.INSTANCE.isMember(v);
+  public boolean test(Tensor v) {
+    return SymmetricMatrixQ.INSTANCE.test(v);
   }
 
   /** @param v

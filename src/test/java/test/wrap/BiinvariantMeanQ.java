@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 public record BiinvariantMeanQ(BiinvariantMean biinvariantMean, Chop chop) {
   public void check(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.requireMember(weights);
+    AffineQ.INSTANCE.require(weights);
     Tensor expect = biinvariantMean.mean(sequence, weights);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
       TensorUnaryOperator permute = Permute.of(perm);

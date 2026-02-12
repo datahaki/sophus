@@ -37,12 +37,12 @@ class TStMemberQTest {
     assertEquals(linearSubspace.basis().length(), dim);
     for (Tensor v : linearSubspace.basis()) {
       Tensor q = stiefelManifold.exponential(p).exp(v);
-      stiefelManifold.isPointQ().requireMember(q);
+      stiefelManifold.isPointQ().require(q);
     }
     int bl = linearSubspace.basis().length();
     Tensor weights = RandomVariate.of(NormalDistribution.standard(), bl);
     Tensor v = weights.dot(linearSubspace.basis());
-    tStMemberQ.requireMember(v);
+    tStMemberQ.require(v);
   }
 
   @ParameterizedTest
@@ -52,12 +52,12 @@ class TStMemberQTest {
     for (int k = n - 2; k <= n; ++k) {
       RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(randomSampleInterface, randomGenerator);
-      StManifold.INSTANCE.isPointQ().requireMember(p);
+      StManifold.INSTANCE.isPointQ().require(p);
       final Tensor c = RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor v = tStMemberQ.projection(c);
       assertEquals(Dimensions.of(p), Dimensions.of(v));
-      assertTrue(tStMemberQ.isMember(v));
+      assertTrue(tStMemberQ.test(v));
       Tensor v2 = tStMemberQ.projection(v);
       Chop._10.requireClose(v, v2);
       LinearSubspace linearSubspace = LinearSubspace.of(tStMemberQ::defect, k, n);
@@ -73,7 +73,7 @@ class TStMemberQTest {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(stiefelManifold);
       Tensor g = Transpose.of(p).dot(p);
-      assertTrue(GrManifold.INSTANCE.isPointQ().isMember(g));
+      assertTrue(GrManifold.INSTANCE.isPointQ().test(g));
     }
   }
 

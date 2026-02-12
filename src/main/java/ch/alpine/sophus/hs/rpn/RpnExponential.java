@@ -40,7 +40,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    tSnMemberQ.requireMember(v);
+    tSnMemberQ.require(v);
     Scalar vn = Vector2Norm.of(v);
     Tensor y = x.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
     y = Vector2Norm.NORMALIZE.apply(y);

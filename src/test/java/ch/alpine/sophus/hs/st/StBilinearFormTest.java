@@ -31,7 +31,7 @@ class StBilinearFormTest {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
       assertTrue(Im.allZero(p));
-      stiefelManifold.isPointQ().requireMember(p);
+      stiefelManifold.isPointQ().require(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, k, n));
       assertTrue(Im.allZero(v));
@@ -54,7 +54,7 @@ class StBilinearFormTest {
       SoNGroup Gn = new SoNGroup(n);
       StAction stAction = new StAction(RandomSample.of(Gk), RandomSample.of(Gn));
       Tensor ap = stAction.apply(p);
-      stiefelManifold.isPointQ().requireMember(ap);
+      stiefelManifold.isPointQ().require(ap);
       Tensor aq = stAction.apply(q);
       Scalar d_apq = stiefelManifold.distance(ap, aq);
       Tolerance.CHOP.requireClose(d_pq, d_apq);

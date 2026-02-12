@@ -42,7 +42,7 @@ class StManifoldTest {
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
-      stiefelManifold.isPointQ().requireMember(p);
+      stiefelManifold.isPointQ().require(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor sequence = Tensors.empty();
       // IO.println(stiefelManifold.dimensions());

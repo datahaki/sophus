@@ -42,7 +42,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override // from BiinvariantMean
   public Tensor mean(final Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.requireMember(weights);
+    AffineQ.INSTANCE.require(weights);
     Tensor _sequence = sequence;
     Tensor prev = Array.zeros(hsAlgebra.dimM());
     for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {

@@ -12,21 +12,21 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 class AffineQTest {
   @Test
   void testRequire() {
-    AffineQ.INSTANCE.requireMember(Tensors.vector(0.5, 0.5));
-    AffineQ.INSTANCE.requireMember(Tensors.vector(0.25, 0.25, 0.25, 0.25));
-    AffineQ.INSTANCE.requireMember(Tensors.vector(1, 0));
-    AffineQ.INSTANCE.requireMember(Tensors.vector(-0.5, 1.5));
-    AffineQ.INSTANCE.requireMember(Tensors.vector(-0.25, 0.75, 0.25, 0.25));
-    AffineQ.INSTANCE.requireMember(Tensors.vector(1, -2, 2));
+    AffineQ.INSTANCE.require(Tensors.vector(0.5, 0.5));
+    AffineQ.INSTANCE.require(Tensors.vector(0.25, 0.25, 0.25, 0.25));
+    AffineQ.INSTANCE.require(Tensors.vector(1, 0));
+    AffineQ.INSTANCE.require(Tensors.vector(-0.5, 1.5));
+    AffineQ.INSTANCE.require(Tensors.vector(-0.25, 0.75, 0.25, 0.25));
+    AffineQ.INSTANCE.require(Tensors.vector(1, -2, 2));
   }
 
   @Test
   void testFailScalar() {
-    assertThrows(Exception.class, () -> AffineQ.INSTANCE.requireMember(RealScalar.ONE)); // , Chop._08));
+    assertThrows(Exception.class, () -> AffineQ.INSTANCE.require(RealScalar.ONE)); // , Chop._08));
   }
 
   @Test
   void testFailMatrix() {
-    assertThrows(Exception.class, () -> AffineQ.INSTANCE.requireMember(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> AffineQ.INSTANCE.require(HilbertMatrix.of(3)));
   }
 }

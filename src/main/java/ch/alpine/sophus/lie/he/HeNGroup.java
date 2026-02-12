@@ -21,7 +21,7 @@ public class HeNGroup extends HeGroup implements MatrixGroup, VectorEncodingMark
   @Override
   public MemberQ isPointQ() {
     return uvw -> dimensions() == uvw.length() //
-        && super.isPointQ().isMember(uvw);
+        && super.isPointQ().test(uvw);
   }
 
   @Override

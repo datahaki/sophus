@@ -73,9 +73,9 @@ class SpdRiemannTest {
       e11 = tuo.apply(e11);
       e12 = tuo.apply(e12);
       e13 = tuo.apply(e13);
-      SymmetricMatrixQ.INSTANCE.requireMember(e11);
-      SymmetricMatrixQ.INSTANCE.requireMember(e12);
-      SymmetricMatrixQ.INSTANCE.requireMember(e13);
+      SymmetricMatrixQ.INSTANCE.require(e11);
+      SymmetricMatrixQ.INSTANCE.require(e12);
+      SymmetricMatrixQ.INSTANCE.require(e13);
       SpdRiemann spdRiemann = new SpdRiemann(q);
       Scalar s1112 = spdRiemann.sectional(e11, e12);
       Chop._10.requireClose(s1112, RationalScalar.of(-1, 4));

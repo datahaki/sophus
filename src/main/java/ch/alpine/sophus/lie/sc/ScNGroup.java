@@ -20,7 +20,7 @@ public class ScNGroup extends ScGroup implements MatrixGroup, VectorEncodingMark
 
   @Override
   public MemberQ isPointQ() {
-    return t -> super.isPointQ().isMember(t) && t.length() == n;
+    return t -> super.isPointQ().test(t) && t.length() == n;
   }
 
   @Override

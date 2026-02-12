@@ -182,10 +182,10 @@ class RodriguesTest {
   @RepeatedTest(10)
   void testRodriques() {
     Tensor matrix = So3TestHelper.spawn_So3();
-    assertTrue(OrthogonalMatrixQ.INSTANCE.isMember(matrix));
-    OrthogonalMatrixQ.INSTANCE.requireMember(matrix);
+    assertTrue(OrthogonalMatrixQ.INSTANCE.test(matrix));
+    OrthogonalMatrixQ.INSTANCE.require(matrix);
     Tensor log = Rodrigues.INSTANCE.log(matrix);
-    AntisymmetricMatrixQ.INSTANCE.requireMember(log);
+    AntisymmetricMatrixQ.INSTANCE.require(log);
     Tensor exp = Rodrigues.INSTANCE.exp(log);
     Chop._08.requireClose(exp, matrix);
   }
@@ -237,7 +237,7 @@ class RodriguesTest {
   @Test
   void testRodriques2() {
     Tensor matrix = So3TestHelper.spawn_So3();
-    assertTrue(UnitaryMatrixQ.INSTANCE.isMember(matrix));
+    assertTrue(UnitaryMatrixQ.INSTANCE.test(matrix));
   }
 
   @Test
@@ -251,7 +251,7 @@ class RodriguesTest {
   void testOrthPassFormatFail2() {
     Tensor matrix = RandomVariate.of(NormalDistribution.standard(), 3, 5);
     Tensor orthog = Orthogonalize.of(matrix);
-    assertTrue(OrthogonalMatrixQ.INSTANCE.isMember(orthog));
+    assertTrue(OrthogonalMatrixQ.INSTANCE.test(orthog));
     assertThrows(Exception.class, () -> Rodrigues.INSTANCE.log(orthog));
   }
 

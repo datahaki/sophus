@@ -10,7 +10,7 @@ import ch.alpine.tensor.mat.OrthogonalMatrixQ;
  * by Ethan Eade */
 public record SnAction(Tensor g) implements TensorUnaryOperator {
   public SnAction {
-    OrthogonalMatrixQ.INSTANCE.requireMember(g);
+    OrthogonalMatrixQ.INSTANCE.require(g);
   }
 
   @Override

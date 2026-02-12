@@ -65,7 +65,7 @@ class Su2AlgebraTest {
       ExactTensorQ.require(matrix);
       assertEquals(ConjugateTranspose.of(matrix), matrix.negate());
       assertEquals(Trace.of(matrix), RealScalar.ZERO);
-      AntihermitianMatrixQ.INSTANCE.requireMember(matrix);
+      AntihermitianMatrixQ.INSTANCE.require(matrix);
     }
   }
 

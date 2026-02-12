@@ -19,7 +19,7 @@ public class PGlGroup extends GlGroup {
   public MemberQ isPointQ() {
     return matrix -> {
       int n = matrix.length() - 1;
-      return super.isPointQ().isMember(matrix) //
+      return super.isPointQ().test(matrix) //
           && Tolerance.CHOP.isZero(matrix.Get(n, n).subtract(RealScalar.ONE));
     };
   }

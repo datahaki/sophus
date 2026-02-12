@@ -55,7 +55,7 @@ public class SoGroup extends GlGroup implements MetricManifold {
   @Override // from MemberQ
   public MemberQ isPointQ() {
     return x -> Tolerance.CHOP.isClose(Det.of(x), RealScalar.ONE) //
-        && OrthogonalMatrixQ.INSTANCE.isMember(x);
+        && OrthogonalMatrixQ.INSTANCE.test(x);
   }
 
   @Override
@@ -70,7 +70,7 @@ public class SoGroup extends GlGroup implements MetricManifold {
 
   @Override // from LieGroupElement
   public final Tensor dL(Tensor matrix, Tensor v) { // v is skew with dimensions 3 x 3
-    return matrix.dot(TSoMemberQ.INSTANCE.requireMember(v)); // consistent with So3Transport
+    return matrix.dot(TSoMemberQ.INSTANCE.require(v)); // consistent with So3Transport
   }
 
   @Override // from TensorMetric

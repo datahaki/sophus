@@ -81,7 +81,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.requireMember(weights);
+    AffineQ.INSTANCE.require(weights);
     return apply(sequence, weights).orElseThrow();
   }
 

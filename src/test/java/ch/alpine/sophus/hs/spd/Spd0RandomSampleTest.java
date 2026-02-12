@@ -74,7 +74,7 @@ class Spd0RandomSampleTest {
   void testSimple(RepetitionInfo repetitionInfo) {
     int n = repetitionInfo.getCurrentRepetition();
     RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
-    SpdManifold.INSTANCE.isPointQ().requireMember(RandomSample.of(rsi));
+    SpdManifold.INSTANCE.isPointQ().require(RandomSample.of(rsi));
   }
 
   @ParameterizedTest

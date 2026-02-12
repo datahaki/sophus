@@ -38,7 +38,7 @@ public enum Se2Matrix {
    * @param matrix
    * @return {px, py, angle} */
   public static Tensor toVector(Tensor matrix) {
-    SquareMatrixQ.INSTANCE.requireMember(matrix);
+    SquareMatrixQ.INSTANCE.require(matrix);
     return Tensors.of(matrix.Get(0, 2), matrix.Get(1, 2), //
         ArcTan.of(matrix.Get(0, 0), matrix.Get(1, 0))); // arc tan is numerically stable
   }

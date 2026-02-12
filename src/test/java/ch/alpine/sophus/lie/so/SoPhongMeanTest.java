@@ -33,20 +33,20 @@ class SoPhongMeanTest {
     Distribution distribution_w = UniformDistribution.of(0.4, 1);
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
     Tensor m0 = sequence.get(ArgMax.of(weights));
-    OrthogonalMatrixQ.INSTANCE.requireMember(m0);
+    OrthogonalMatrixQ.INSTANCE.require(m0);
     Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
-    OrthogonalMatrixQ.INSTANCE.requireMember(m1);
+    OrthogonalMatrixQ.INSTANCE.require(m1);
     Tolerance.CHOP.requireClose(Det.of(m1), RealScalar.ONE);
     {
       Tensor mE0 = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
-      OrthogonalMatrixQ.INSTANCE.requireMember(mE0);
+      OrthogonalMatrixQ.INSTANCE.require(mE0);
       Scalar d0E = So3Group.INSTANCE.distance(m0, mE0);
       Scalar d1E = So3Group.INSTANCE.distance(m1, mE0);
       d0E.add(d1E);
     }
     {
       Tensor mE1 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
-      OrthogonalMatrixQ.INSTANCE.requireMember(mE1);
+      OrthogonalMatrixQ.INSTANCE.require(mE1);
       Scalar d0E = So3Group.INSTANCE.distance(m0, mE1);
       Scalar d1E = So3Group.INSTANCE.distance(m1, mE1);
       d0E.add(d1E);
@@ -65,13 +65,13 @@ class SoPhongMeanTest {
     Distribution distribution_w = UniformDistribution.of(0.4, 1);
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
     Tensor m0 = sequence.get(ArgMax.of(weights));
-    OrthogonalMatrixQ.INSTANCE.requireMember(m0);
+    OrthogonalMatrixQ.INSTANCE.require(m0);
     Tensor m1 = SoPhongMean.INSTANCE.mean(sequence, weights);
-    OrthogonalMatrixQ.INSTANCE.requireMember(m1);
+    OrthogonalMatrixQ.INSTANCE.require(m1);
     Tolerance.CHOP.requireClose(Det.of(m1), RealScalar.ONE);
     {
       Tensor mE0 = IterativeBiinvariantMean.argmax(So3Group.INSTANCE, Tolerance.CHOP).mean(sequence, weights);
-      OrthogonalMatrixQ.INSTANCE.requireMember(mE0);
+      OrthogonalMatrixQ.INSTANCE.require(mE0);
       Scalar d0E = So3Group.INSTANCE.distance(m0, mE0);
       Scalar d1E = So3Group.INSTANCE.distance(m1, mE0);
       Tolerance.CHOP.requireZero(d0E);
@@ -79,7 +79,7 @@ class SoPhongMeanTest {
     }
     {
       Tensor mE1 = IterativeBiinvariantMean.of(So3Group.INSTANCE, Tolerance.CHOP, SoPhongMean.INSTANCE).mean(sequence, weights);
-      OrthogonalMatrixQ.INSTANCE.requireMember(mE1);
+      OrthogonalMatrixQ.INSTANCE.require(mE1);
       Scalar d0E = So3Group.INSTANCE.distance(m0, mE1);
       Scalar d1E = So3Group.INSTANCE.distance(m1, mE1);
       Tolerance.CHOP.requireZero(d0E);
@@ -105,7 +105,7 @@ class SoPhongMeanTest {
     Tensor p = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
     Tensor q = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
     Tensor weights = Tensors.vector(0.2, 0.8);
-    AffineQ.INSTANCE.requireMember(weights);
+    AffineQ.INSTANCE.require(weights);
     Tensor sequence = Tensors.of(p, q);
     Tensor m1 = So3Group.INSTANCE.biinvariantMean().mean(sequence, weights);
     Tensor m2 = SoPhongMean.INSTANCE.mean(sequence, weights);

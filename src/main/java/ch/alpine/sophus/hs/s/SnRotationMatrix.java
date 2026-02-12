@@ -23,8 +23,8 @@ public enum SnRotationMatrix {
     // Tensor w = TensorWedge.of(p, q).multiply(RealScalar.of(-2));
     // TODO SOPHUS ALG Eade suggests to treat the case q ~= -p separately!
     Tensor pq = TensorProduct.of( //
-        SnManifold.INSTANCE.isPointQ().requireMember(p), //
-        SnManifold.INSTANCE.isPointQ().requireMember(q));
+        SnManifold.INSTANCE.isPointQ().require(p), //
+        SnManifold.INSTANCE.isPointQ().require(q));
     Tensor w = Transpose.of(pq).subtract(pq);
     Scalar c = RealScalar.ONE.add(p.dot(q)).reciprocal();
     return IdentityMatrix.of(p.length()).add(w).add(w.dot(w).multiply(c));

@@ -26,8 +26,8 @@ class BiinvariantMeanTest {
    * @return */
   private static Tensor affine(int n) {
     Tensor matrix = RandomVariate.of(DISTRIBUTION, n, n);
-    matrix = StochasticMatrixQ.INSTANCE.requireMember(Tensor.of(matrix.stream().map(Vector1Norm.NORMALIZE)));
-    StochasticMatrixQ.INSTANCE.requireMember(Inverse.of(matrix));
+    matrix = StochasticMatrixQ.INSTANCE.require(Tensor.of(matrix.stream().map(Vector1Norm.NORMALIZE)));
+    StochasticMatrixQ.INSTANCE.require(Inverse.of(matrix));
     return matrix;
   }
 

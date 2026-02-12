@@ -39,8 +39,8 @@ class GrassmannianTest {
     Grassmannian grassmannian = new Grassmannian(2, 1);
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
-    assertTrue(grassmannian.isPointQ().isMember(p));
-    assertTrue(grassmannian.isPointQ().isMember(q));
+    assertTrue(grassmannian.isPointQ().test(p));
+    assertTrue(grassmannian.isPointQ().test(q));
   }
 
   @Test
@@ -62,7 +62,7 @@ class GrassmannianTest {
     assertEquals(tensor.length(), 1);
     GrExponential exponential = grassmannian.exponential(p);
     for (Tensor v : tensor) {
-      tGrMemberQ.requireMember(v);
+      tGrMemberQ.require(v);
       Tensor w = tGrMemberQ.projection(v);
       Tolerance.CHOP.requireClose(v, w);
     }
@@ -82,11 +82,11 @@ class GrassmannianTest {
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
     GrExponential exponential = grassmannian.exponential(p);
     for (Tensor v : tensor) {
-      tGrMemberQ.requireMember(v);
+      tGrMemberQ.require(v);
       Tensor w = tGrMemberQ.projection(v);
       Tolerance.CHOP.requireClose(v, w);
       Tensor q = exponential.exp(v.multiply(Pi.HALF));
-      grassmannian.isPointQ().requireMember(q);
+      grassmannian.isPointQ().require(q);
     }
   }
 
@@ -94,26 +94,26 @@ class GrassmannianTest {
   void testSimple21() {
     Tensor p = Tensors.fromString("{{1,0},{0,0}}");
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    assertTrue(tGrMemberQ.isMember(Tensors.fromString("{{0, 1}, {1, 0}}")));
-    assertFalse(tGrMemberQ.isMember(Tensors.fromString("{{0, 1}, {2, 0}}")));
-    assertFalse(tGrMemberQ.isMember(Tensors.fromString("{{0, 1}, {1, 1}}")));
-    assertFalse(tGrMemberQ.isMember(Tensors.fromString("{{0, 1}, {-1, 0}}")));
+    assertTrue(tGrMemberQ.test(Tensors.fromString("{{0, 1}, {1, 0}}")));
+    assertFalse(tGrMemberQ.test(Tensors.fromString("{{0, 1}, {2, 0}}")));
+    assertFalse(tGrMemberQ.test(Tensors.fromString("{{0, 1}, {1, 1}}")));
+    assertFalse(tGrMemberQ.test(Tensors.fromString("{{0, 1}, {-1, 0}}")));
   }
 
   @Test
   void testSimple31() {
     Tensor p = Tensors.fromString("{{1,0,0},{0,0,0},{0,0,0}}");
     TGrMemberQ tGr0MemberQ = new TGrMemberQ(p);
-    assertTrue(tGr0MemberQ.isMember(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
-    assertFalse(tGr0MemberQ.isMember(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
+    assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
+    assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
   }
 
   @Test
   void testSimple32() {
     Tensor p = Tensors.fromString("{{1,0,0},{0,1,0},{0,0,0}}");
     TGrMemberQ tGr0MemberQ = new TGrMemberQ(p);
-    assertFalse(tGr0MemberQ.isMember(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
-    assertTrue(tGr0MemberQ.isMember(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
+    assertFalse(tGr0MemberQ.test(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}")));
+    assertTrue(tGr0MemberQ.test(Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}}")));
   }
 
   @ParameterizedTest
@@ -127,16 +127,16 @@ class GrassmannianTest {
       LinearSubspace homogeneousSpan = LinearSubspace.of(tGrMemberQ::defect, n, n);
       Tensor v = RandomVariate.of(distribution, n, n);
       Tensor v1 = tGrMemberQ.projection(v);
-      tGrMemberQ.requireMember(v1);
-      assertFalse(tGrMemberQ.isMember(v));
+      tGrMemberQ.require(v1);
+      assertFalse(tGrMemberQ.test(v));
       Tensor v2 = homogeneousSpan.projection(v);
-      tGrMemberQ.requireMember(v2);
+      tGrMemberQ.require(v2);
       Tolerance.CHOP.requireClose(v1, v2);
       int dim = homogeneousSpan.basis().length();
       Tensor weights = RandomVariate.of(UniformDistribution.unit(20), dim);
       Tensor w = weights.dot(homogeneousSpan.basis()).multiply(RealScalar.of(.1));
       Tensor q = grassmannian.exponential(p).exp(w);
-      grassmannian.isPointQ().isMember(q);
+      grassmannian.isPointQ().test(q);
     }
   }
 
@@ -145,7 +145,7 @@ class GrassmannianTest {
     for (int k = 1; k < 5; ++k) {
       RandomSampleInterface grRandomSample = Serialization.copy(new Grassmannian(k + 3, k));
       Tensor x = RandomSample.of(grRandomSample);
-      GrManifold.INSTANCE.isPointQ().requireMember(x);
+      GrManifold.INSTANCE.isPointQ().require(x);
     }
   }
 
@@ -154,7 +154,7 @@ class GrassmannianTest {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(new Grassmannian(n, n));
       Tensor x = RandomSample.of(randomSampleInterface);
-      GrManifold.INSTANCE.isPointQ().requireMember(x);
+      GrManifold.INSTANCE.isPointQ().require(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));
     }
   }
@@ -165,7 +165,7 @@ class GrassmannianTest {
       RandomSampleInterface randomSampleInterface = new Grassmannian(n, 0);
       for (int k = 0; k < 3; ++k) {
         Tensor x = RandomSample.of(randomSampleInterface);
-        GrManifold.INSTANCE.isPointQ().requireMember(x);
+        GrManifold.INSTANCE.isPointQ().require(x);
         assertEquals(x, Array.zeros(n, n));
         x.set(RealScalar.ONE::add, Tensor.ALL, Tensor.ALL);
       }

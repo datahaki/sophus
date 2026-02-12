@@ -38,7 +38,7 @@ public enum Rodrigues implements Exponential {
 
   @Override // from Exponential
   public Tensor exp(Tensor log) { // 3x3 AntisymmetricMatrixQ
-    return vectorExp(vectorize(isTangentQ().requireMember(log)));
+    return vectorExp(vectorize(isTangentQ().require(log)));
   }
 
   /** @param q orthogonal with dimensions 3 x 3
@@ -48,7 +48,7 @@ public enum Rodrigues implements Exponential {
   @Override // from Exponential
   public Tensor log(Tensor q) { // 3x3 OrthogonalMatrixQ
     if (q.length() == 3 && //
-        OrthogonalMatrixQ.INSTANCE.isMember(q)) {
+        OrthogonalMatrixQ.INSTANCE.test(q)) {
       Scalar sinc = Sinc.FUNCTION.apply(theta(q));
       return q.subtract(Transpose.of(q)).divide(sinc.add(sinc));
     }

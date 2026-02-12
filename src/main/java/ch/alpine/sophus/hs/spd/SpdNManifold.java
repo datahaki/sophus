@@ -20,7 +20,7 @@ public class SpdNManifold extends SpdManifold implements SpecificManifold {
   @Override
   public MemberQ isPointQ() {
     return p -> p.length() == n //
-        && super.isPointQ().isMember(p);
+        && super.isPointQ().test(p);
   }
 
   @Override

@@ -44,10 +44,10 @@ class GrActionTest {
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
       Tensor pv = tGrMemberQ.projection(RandomVariate.of(distribution, randomGenerator, n, n));
       Tensor log = new GrExponential(p).log(q);
-      tGrMemberQ.requireMember(log);
+      tGrMemberQ.require(log);
       HsTransport hsTransport = grassmannian.hsTransport();
       Tensor qv = hsTransport.shift(p, q).apply(pv);
-      new TGrMemberQ(q).requireMember(qv);
+      new TGrMemberQ(q).require(qv);
       GrAction match = GrAction.match(p, q);
       Tensor ofForm = BasisTransform.ofForm(pv, match.g());
       assumeTrue(false);

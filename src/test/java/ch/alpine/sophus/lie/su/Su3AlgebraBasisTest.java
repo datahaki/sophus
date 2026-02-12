@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Chop;
 class Su3AlgebraBasisTest {
   @Test
   void testHermitian() {
-    Su3AlgebraBasis.basis().forEach(HermitianMatrixQ.INSTANCE::requireMember);
+    Su3AlgebraBasis.basis().forEach(HermitianMatrixQ.INSTANCE::require);
     Tensor tensor = Tensor.of(Su3AlgebraBasis.basis().stream().map(Trace::of));
     Chop.NONE.requireAllZero(tensor);
   }

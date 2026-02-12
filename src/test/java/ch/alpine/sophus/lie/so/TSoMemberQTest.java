@@ -50,12 +50,12 @@ class TSoMemberQTest {
   @Test
   void testSimple() {
     Tensor wedge = TensorWedge.of(Tensors.vector(1, 2, 3), Tensors.vector(-1, 4, 0.2));
-    TSoMemberQ.INSTANCE.requireMember(wedge);
-    assertFalse(TSoMemberQ.INSTANCE.isMember(HilbertMatrix.of(3)));
+    TSoMemberQ.INSTANCE.require(wedge);
+    assertFalse(TSoMemberQ.INSTANCE.test(HilbertMatrix.of(3)));
   }
 
   @Test
   void testNullFail() {
-    assertThrows(Exception.class, () -> TSoMemberQ.INSTANCE.isMember(null));
+    assertThrows(Exception.class, () -> TSoMemberQ.INSTANCE.test(null));
   }
 }

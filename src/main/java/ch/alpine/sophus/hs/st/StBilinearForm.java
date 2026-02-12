@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Re;
 
   public StBilinearForm(Tensor p) {
     c = IdentityMatrix.inplaceAdd(ConjugateTranspose.of(p).dot(p).multiply(RationalScalar.of(-1, 2)));
-    SymmetricMatrixQ.INSTANCE.requireMember(c);
+    SymmetricMatrixQ.INSTANCE.require(c);
   }
 
   @Override

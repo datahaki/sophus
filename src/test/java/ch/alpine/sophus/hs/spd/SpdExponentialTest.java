@@ -50,7 +50,7 @@ class SpdExponentialTest {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
-      new SymmetricMatrixQ(Chop._07).requireMember(MatrixLog.of(p));
+      new SymmetricMatrixQ(Chop._07).require(MatrixLog.of(p));
     }
   }
 

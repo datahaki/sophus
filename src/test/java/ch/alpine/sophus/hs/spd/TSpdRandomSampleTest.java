@@ -17,7 +17,7 @@ class TSpdRandomSampleTest {
   void testSimple() throws ClassNotFoundException, IOException {
     TSpdRandomSample simRandomSample = new TSpdRandomSample(3, TriangularDistribution.with(0, 1));
     Serialization.copy(simRandomSample);
-    SymmetricMatrixQ.INSTANCE.requireMember(RandomSample.of(simRandomSample));
+    SymmetricMatrixQ.INSTANCE.require(RandomSample.of(simRandomSample));
   }
 
   @Test

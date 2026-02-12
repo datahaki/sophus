@@ -86,7 +86,7 @@ class SoNGroupTest {
     int dim = matrixAlgebra.dimensions();
     Tensor trial = RandomVariate.of(DiscreteUniformDistribution.of(-30, 40), dim);
     Tensor matrix = matrixAlgebra.toMatrix(trial);
-    AntisymmetricMatrixQ.INSTANCE.requireMember(matrix);
+    AntisymmetricMatrixQ.INSTANCE.require(matrix);
     Tensor vector = matrixAlgebra.toVector(matrix);
     ExactTensorQ.require(vector);
     assertEquals(vector, trial);
@@ -106,7 +106,7 @@ class SoNGroupTest {
     int n = repetitionInfo.getCurrentRepetition();
     SoNGroup soNGroup = new SoNGroup(n);
     for (Tensor matrix : RandomSample.of(soNGroup, 10)) {
-      OrthogonalMatrixQ.INSTANCE.requireMember(matrix);
+      OrthogonalMatrixQ.INSTANCE.require(matrix);
       Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);
     }
   }
@@ -117,10 +117,10 @@ class SoNGroupTest {
     RandomSampleInterface randomSampleInterface = Serialization.copy(new SoNGroup(n));
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
-    OrthogonalMatrixQ.INSTANCE.requireMember(tensor);
+    OrthogonalMatrixQ.INSTANCE.require(tensor);
     MatrixQ.requireSize(tensor, n, n);
     Tensor log = MatrixLog.of(tensor);
-    AntisymmetricMatrixQ.INSTANCE.requireMember(log);
+    AntisymmetricMatrixQ.INSTANCE.require(log);
   }
 
   @Test

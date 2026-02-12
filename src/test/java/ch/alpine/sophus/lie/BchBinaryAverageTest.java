@@ -43,11 +43,11 @@ class BchBinaryAverageTest {
     Exponential exponential = SnManifold.INSTANCE.exponential(n);
     Tensor mx = exponential.exp(x);
     Tensor my = exponential.exp(y);
-    SnManifold.INSTANCE.isPointQ().requireMember(mx);
-    SnManifold.INSTANCE.isPointQ().requireMember(my);
+    SnManifold.INSTANCE.isPointQ().require(mx);
+    SnManifold.INSTANCE.isPointQ().require(my);
     TSnMemberQ tSnMemberQ = new TSnMemberQ(n);
-    tSnMemberQ.requireMember(x);
-    tSnMemberQ.requireMember(y);
+    tSnMemberQ.require(x);
+    tSnMemberQ.require(y);
     Scalar lambda = RealScalar.of(0.3);
     GeodesicSpace hsGeodesic = SnManifold.INSTANCE;
     Tensor mz = exponential.log(hsGeodesic.split(mx, my, lambda));

@@ -24,7 +24,7 @@ class SoAlgebraTest {
       assertTrue(hsAlgebra.isReductive());
       if (2 < n)
         assertFalse(hsAlgebra.isHTrivial());
-      SoAlgebra.basis(n).forEach(AntisymmetricMatrixQ.INSTANCE::requireMember);
+      SoAlgebra.basis(n).forEach(AntisymmetricMatrixQ.INSTANCE::require);
       HigherJacobiIdentity.of4(ad);
       HigherJacobiIdentity.of4b(ad);
       HigherJacobiIdentity.of5(ad);

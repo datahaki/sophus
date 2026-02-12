@@ -21,9 +21,9 @@ class UAlgebraTest {
   void testSimple() {
     for (int n = 2; n < 5; ++n) {
       LieAlgebra lieAlgebra = UAlgebra.of(n);
-      UAlgebra.basis(n).forEach(AntihermitianMatrixQ.INSTANCE::requireMember);
+      UAlgebra.basis(n).forEach(AntihermitianMatrixQ.INSTANCE::require);
       Tensor form = KillingForm.of(lieAlgebra.ad());
-      SquareMatrixQ.INSTANCE.requireMember(form);
+      SquareMatrixQ.INSTANCE.require(form);
     }
   }
 
@@ -33,9 +33,9 @@ class UAlgebraTest {
     assertEquals(basis.length(), 9);
     Tensor weights = RandomVariate.of(UniformDistribution.unit(), 9);
     Tensor matrix = weights.dot(basis);
-    AntihermitianMatrixQ.INSTANCE.requireMember(matrix);
+    AntihermitianMatrixQ.INSTANCE.require(matrix);
     Tensor divide = matrix.divide(ComplexScalar.I);
-    HermitianMatrixQ.INSTANCE.requireMember(divide);
+    HermitianMatrixQ.INSTANCE.require(divide);
     Eigensystem.ofHermitian(divide);
   }
 }

@@ -8,8 +8,8 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 class SeGroupTest {
   @Test
   void test() {
-    SeGroup.INSTANCE.isPointQ().requireMember(IdentityMatrix.of(2));
-    SeGroup.INSTANCE.isPointQ().requireMember(IdentityMatrix.of(3));
-    SeGroup.INSTANCE.isPointQ().requireMember(IdentityMatrix.of(4));
+    SeGroup.INSTANCE.isPointQ().require(IdentityMatrix.of(2));
+    SeGroup.INSTANCE.isPointQ().require(IdentityMatrix.of(3));
+    SeGroup.INSTANCE.isPointQ().require(IdentityMatrix.of(4));
   }
 }

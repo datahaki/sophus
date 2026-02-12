@@ -21,7 +21,7 @@ public class RnGroup extends RGroup implements MatrixGroup, VectorEncodingMarker
   @Override
   public MemberQ isPointQ() {
     return tensor -> tensor.length() == dimensions() //
-        && super.isPointQ().isMember(tensor);
+        && super.isPointQ().test(tensor);
   }
 
   @Override

@@ -54,7 +54,7 @@ public class ScGroup implements LieGroup, Serializable {
   @Override
   public BiinvariantMean biinvariantMean() {
     return (Tensor sequence, Tensor weights) -> {
-      AffineQ.INSTANCE.requireMember(weights);
+      AffineQ.INSTANCE.require(weights);
       Exponential exponential = exponential0();
       return exponential.exp(weights.dot(exponential.log().slash(sequence)));
     };
@@ -72,21 +72,21 @@ public class ScGroup implements LieGroup, Serializable {
 
   @Override
   public Tensor combine(Tensor element1, Tensor element2) {
-    if (isPointQ().isMember(element1) && isPointQ().isMember(element2))
+    if (isPointQ().test(element1) && isPointQ().test(element2))
       return Times.of(element1, element2);
     throw new Throw(element1, element2);
   }
 
   @Override
   public Tensor adjoint(Tensor point, Tensor tensor) {
-    if (isPointQ().isMember(point))
+    if (isPointQ().test(point))
       return tensor;
     throw new Throw(point);
   }
 
   @Override
   public Tensor dL(Tensor point, Tensor tensor) {
-    if (isPointQ().isMember(point))
+    if (isPointQ().test(point))
       return Times.of(point, tensor);
     throw new Throw(point);
   }

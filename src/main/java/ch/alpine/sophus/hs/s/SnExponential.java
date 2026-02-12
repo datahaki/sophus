@@ -48,7 +48,7 @@ public class SnExponential implements Exponential, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
-    isTangentQ().requireMember(v);
+    isTangentQ().require(v);
     Scalar vn = Vector2Norm.of(v);
     return p.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
   }

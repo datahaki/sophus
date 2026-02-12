@@ -18,7 +18,7 @@ public class TSopqMemberQ implements MemberQ, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor x) {
+  public boolean test(Tensor x) {
     // FIXME SOPHUS ALG implement based on /reference
     return CHOP.isClose(Transpose.of(x).dot(form), form.dot(x));
   }

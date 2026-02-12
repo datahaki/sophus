@@ -14,7 +14,7 @@ public enum WeightedGeometricMean implements BiinvariantMean {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.requireMember(weights);
+    AffineQ.INSTANCE.require(weights);
     Int i = new Int();
     return sequence.stream() //
         .map(point -> point.maps(Power.function(weights.Get(i.getAndIncrement())))) //

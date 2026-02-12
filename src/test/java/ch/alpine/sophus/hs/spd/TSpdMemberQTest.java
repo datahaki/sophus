@@ -16,7 +16,7 @@ class TSpdMemberQTest {
     for (int n = 1; n < 10; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor sim = RandomSample.of(rsi);
-      TSpdMemberQ.INSTANCE.requireMember(sim);
+      TSpdMemberQ.INSTANCE.require(sim);
       Tolerance.CHOP.requireClose(TSpdMemberQ.project(sim), sim);
     }
   }

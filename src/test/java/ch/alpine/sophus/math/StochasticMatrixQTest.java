@@ -12,16 +12,16 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 class StochasticMatrixQTest {
   @Test
   void testSimple() {
-    StochasticMatrixQ.INSTANCE.requireMember(IdentityMatrix.of(3));
+    StochasticMatrixQ.INSTANCE.require(IdentityMatrix.of(3));
   }
 
   @Test
   void testScalarFail() {
-    assertThrows(Exception.class, () -> StochasticMatrixQ.INSTANCE.requireMember(RealScalar.ONE));
+    assertThrows(Exception.class, () -> StochasticMatrixQ.INSTANCE.require(RealScalar.ONE));
   }
 
   @Test
   void testVectorFail() {
-    assertThrows(Exception.class, () -> StochasticMatrixQ.INSTANCE.requireMember(Tensors.vector(1, 0, 0)));
+    assertThrows(Exception.class, () -> StochasticMatrixQ.INSTANCE.require(Tensors.vector(1, 0, 0)));
   }
 }

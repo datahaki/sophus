@@ -37,10 +37,10 @@ class GrExponentialTest {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.requireMember(v);
+    tGrMemberQ.require(v);
     Chop.NONE.requireAllZero(v);
     Tensor exp = grExponential.exp(v);
-    InfluenceMatrixQ.INSTANCE.requireMember(exp);
+    InfluenceMatrixQ.INSTANCE.require(exp);
     Tolerance.CHOP.requireClose(x, exp);
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireAllZero(log);
@@ -56,9 +56,9 @@ class GrExponentialTest {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.requireMember(v);
+    tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
-    InfluenceMatrixQ.INSTANCE.requireMember(exp);
+    InfluenceMatrixQ.INSTANCE.require(exp);
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireClose(v, log);
   }
@@ -71,9 +71,9 @@ class GrExponentialTest {
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.requireMember(v);
+    tGrMemberQ.require(v);
     Tensor exp = grExponential.exp(v);
-    assertTrue(InfluenceMatrixQ.INSTANCE.isMember(exp));
+    assertTrue(InfluenceMatrixQ.INSTANCE.test(exp));
     Tensor log = grExponential.log(exp);
     Tolerance.CHOP.requireClose(v, log);
     // grExponential.vectorLog(exp);
@@ -86,15 +86,15 @@ class GrExponentialTest {
     Tensor x = RandomSample.of(new Grassmannian(n, k));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     assertEquals(MatrixRank.of(x), k);
-    InfluenceMatrixQ.INSTANCE.requireMember(x);
+    InfluenceMatrixQ.INSTANCE.require(x);
     GrExponential grExponential = new GrExponential(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
     Tensor v = tGrMemberQ.projection(pre);
-    tGrMemberQ.requireMember(v);
+    tGrMemberQ.require(v);
     assertFalse(Chop._05.allZero(v));
     Tensor exp = grExponential.exp(v);
-    InfluenceMatrixQ.INSTANCE.requireMember(exp);
+    InfluenceMatrixQ.INSTANCE.require(exp);
     assertTrue(Scalars.lessThan(RealScalar.of(0.001), FrobeniusNorm.of(x.subtract(exp))));
     Tensor w = grExponential.log(exp);
     Chop._05.requireClose(v, w);

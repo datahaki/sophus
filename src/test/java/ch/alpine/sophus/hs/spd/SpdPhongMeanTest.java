@@ -55,9 +55,9 @@ class SpdPhongMeanTest {
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
     Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
-    SpdManifold.INSTANCE.isPointQ().requireMember(m1);
+    SpdManifold.INSTANCE.isPointQ().require(m1);
     Tensor m2 = SpdPhongMean.INSTANCE.mean(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
-    SpdManifold.INSTANCE.isPointQ().requireMember(m2);
+    SpdManifold.INSTANCE.isPointQ().require(m2);
     Tensor m3 = GeometricMean.of(Unprotect.byRef(p, q));
     // SpdMemberQ.INSTANCE.require(m3);
     // System.out.println(Pretty.of(m1.map(Round._3)));
@@ -68,9 +68,9 @@ class SpdPhongMeanTest {
   @Test
   void testMidpointDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
-    SpdManifold.INSTANCE.isPointQ().requireMember(p);
+    SpdManifold.INSTANCE.isPointQ().require(p);
     Tensor q = DiagonalMatrix.of(3, 0.1);
-    SpdManifold.INSTANCE.isPointQ().requireMember(q);
+    SpdManifold.INSTANCE.isPointQ().require(q);
     Tensor m = SpdManifold.INSTANCE.midpoint(p, q);
     Tensor s = GeometricMean.of(Unprotect.byRef(p, q));
     Tolerance.CHOP.requireClose(m, s);
@@ -79,9 +79,9 @@ class SpdPhongMeanTest {
   @Test
   void testWeightedDiagonal() {
     Tensor p = DiagonalMatrix.of(2, 0.7);
-    SpdManifold.INSTANCE.isPointQ().requireMember(p);
+    SpdManifold.INSTANCE.isPointQ().require(p);
     Tensor q = DiagonalMatrix.of(3, 0.1);
-    SpdManifold.INSTANCE.isPointQ().requireMember(q);
+    SpdManifold.INSTANCE.isPointQ().require(q);
     Tensor weights = Tensors.vector(0.4, 0.6);
     Tensor sequence = Unprotect.byRef(p, q);
     Tensor m1 = SpdManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
