@@ -42,9 +42,11 @@ public class HeGroup implements LieGroup, Serializable {
   }
 
   @Override
-  public boolean isMember(Tensor uvw) {
-    HeFormat.of(uvw);
-    return true;
+  public MemberQ isPointQ() {
+    return uvw -> {
+      HeFormat.of(uvw); // TODO throws
+      return true;
+    };
   }
 
   private enum Exponential0 implements Exponential {

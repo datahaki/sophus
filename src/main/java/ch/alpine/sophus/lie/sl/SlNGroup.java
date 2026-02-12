@@ -8,6 +8,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
@@ -20,9 +21,9 @@ public class SlNGroup extends SlGroup implements MatrixGroup {
   }
 
   @Override
-  public boolean isMember(Tensor matrix) {
-    return matrix.length() == n //
-        && super.isMember(matrix);
+  public MemberQ isPointQ() {
+    return matrix -> matrix.length() == n //
+        && super.isPointQ().isMember(matrix);
   }
 
   public MatrixAlgebra matrixAlgebra() {

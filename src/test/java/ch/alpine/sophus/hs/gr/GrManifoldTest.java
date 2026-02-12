@@ -162,8 +162,8 @@ class GrManifoldTest {
   void testAntipodal() {
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
-    GrManifold.INSTANCE.requireMember(p);
-    GrManifold.INSTANCE.requireMember(q);
+    GrManifold.INSTANCE.isPointQ().requireMember(p);
+    GrManifold.INSTANCE.isPointQ().requireMember(q);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
     d1.zero();
     // Scalar d2 = LowerVectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
@@ -191,7 +191,7 @@ class GrManifoldTest {
     Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.INSTANCE.origin(sequence).add(RandomVariate.of(distribution, n)));
     assertThrows(Exception.class, () -> BIINVARIANT_MEAN.mean(sequence, RandomVariate.of(distribution, n)));
     Tensor point = BIINVARIANT_MEAN.mean(sequence, weights);
-    GrManifold.INSTANCE.requireMember(point);
+    GrManifold.INSTANCE.isPointQ().requireMember(point);
     GrManifold.INSTANCE.distance(p, point);
     {
       Tensor g = RandomSample.of(new SoNGroup(4));
@@ -211,7 +211,7 @@ class GrManifoldTest {
     ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
     Tensor sequence = Subdivide.of(-1.1, 2.1, 6).maps(scalarTensorFunction);
     for (Tensor point : sequence)
-      GrManifold.INSTANCE.requireMember(point);
+      GrManifold.INSTANCE.isPointQ().requireMember(point);
   }
   // @Test
   // void testFromOToP() {
@@ -250,7 +250,7 @@ class GrManifoldTest {
     int n = 5;
     Tensor x = RandomSample.of(new Grassmannian(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
-    GrManifold.INSTANCE.requireMember(x);
+    GrManifold.INSTANCE.isPointQ().requireMember(x);
   }
 
   @Test
@@ -258,12 +258,12 @@ class GrManifoldTest {
     for (int n = 1; n < 6; ++n) {
       Tensor normal = RandomSample.of(new Sphere(n));
       Tensor x = TensorProduct.of(normal, normal);
-      GrManifold.INSTANCE.requireMember(x);
+      GrManifold.INSTANCE.isPointQ().requireMember(x);
     }
   }
 
   @Test
   void testNullFail() {
-    assertThrows(Exception.class, () -> GrManifold.INSTANCE.isMember(null));
+    assertThrows(Exception.class, () -> GrManifold.INSTANCE.isPointQ().isMember(null));
   }
 }

@@ -15,6 +15,7 @@ import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.sca.Chop;
 
 /** hyperboloid model with fast midpoint computation
@@ -30,9 +31,9 @@ public class Hyperboloid implements HomogeneousSpace, VectorEncodingMarker, Metr
   }
 
   /** for instance the point {0, 0, ..., 0} with n entries is member of H^n */
-  @Override // from MemberQ
-  public boolean isMember(Tensor p) {
-    return VectorQ.of(p);
+  @Override
+  public MemberQ isPointQ() {
+    return VectorQ::of;
   }
 
   @Override

@@ -7,6 +7,7 @@ import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.VectorEncodingMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.spa.SparseArray;
 
@@ -18,8 +19,8 @@ public class ScNGroup extends ScGroup implements MatrixGroup, VectorEncodingMark
   }
 
   @Override
-  public boolean isMember(Tensor t) {
-    return super.isMember(t) && t.length() == n;
+  public MemberQ isPointQ() {
+    return t -> super.isPointQ().isMember(t) && t.length() == n;
   }
 
   @Override

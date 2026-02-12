@@ -34,8 +34,8 @@ public class GlGroup implements LieGroup, Serializable {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor matrix) {
-    return SquareMatrixQ.INSTANCE.isMember(matrix) //
+  public MemberQ isPointQ() {
+    return matrix -> SquareMatrixQ.INSTANCE.isMember(matrix) //
         && !Tolerance.CHOP.isZero(Det.of(matrix));
   }
 
@@ -51,7 +51,7 @@ public class GlGroup implements LieGroup, Serializable {
     public Tensor log(Tensor matrix) {
       return MatrixLog.of(matrix);
     }
-    
+
     @Override
     public MemberQ isTangentQ() {
       return SquareMatrixQ.INSTANCE;

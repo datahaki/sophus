@@ -36,6 +36,6 @@ class SeNGroupTest {
   void testMatchCheck(int d) {
     SeNGroup seNGroup = new SeNGroup(d);
     GroupCheck.check(seNGroup);
-    seNGroup.requireMember(IdentityMatrix.of(d + 1));
+    seNGroup.isPointQ().requireMember(IdentityMatrix.of(d + 1));
   }
 }

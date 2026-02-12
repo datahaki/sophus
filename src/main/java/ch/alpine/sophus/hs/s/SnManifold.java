@@ -17,8 +17,8 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
-import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.VectorAngle;
@@ -41,9 +41,8 @@ public class SnManifold implements HomogeneousSpace, MetricManifold, Serializabl
   public static final SnManifold INSTANCE = new SnManifold();
 
   @Override // from MemberQ
-  public boolean isMember(Tensor p) {
-    return VectorQ.of(p) //
-        && Tolerance.CHOP.isClose(Vector2Norm.of(p), RealScalar.ONE);
+  public MemberQ isPointQ() {
+    return UnitVectorQ.INSTANCE;
   }
 
   /** Buss and Fillmore prove for data on spheres S^2, the step size of 1 for

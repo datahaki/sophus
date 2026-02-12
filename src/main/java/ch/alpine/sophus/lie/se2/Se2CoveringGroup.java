@@ -38,8 +38,8 @@ public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMa
   }
 
   @Override
-  public final boolean isMember(Tensor t) {
-    return VectorQ.ofLength(t, 3);
+  public final MemberQ isPointQ() {
+    return t -> VectorQ.ofLength(t, 3);
   }
 
   @Override

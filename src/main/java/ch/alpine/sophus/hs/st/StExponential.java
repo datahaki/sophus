@@ -52,7 +52,7 @@ import ch.alpine.tensor.sca.Chop;
    * @see StManifold
    * @see OrthogonalMatrixQ */
   public StExponential(Tensor p) {
-    this.p = StManifold.INSTANCE.requireMember(p);
+    this.p = StManifold.INSTANCE.isPointQ().requireMember(p);
     pt = Transpose.of(p);
     tStMemberQ = new TStMemberQ(p);
   }
@@ -80,7 +80,7 @@ import ch.alpine.tensor.sca.Chop;
     // new InfluenceMatrixQ(Chop._08).requireMember(pt.dot(p));
     // InfluenceMatrix influenceMatrix = InfluenceMatrix.of(pt, p);
     // if k == n the Exponential coincides with SO_Exponential
-    StManifold.INSTANCE.requireMember(q);
+    StManifold.INSTANCE.isPointQ().requireMember(q);
     Tensor qt = Transpose.of(q); // n x k
     int k = p.length();
     Integers.requireEquals(k, q.length());
@@ -137,7 +137,7 @@ import ch.alpine.tensor.sca.Chop;
     }
     throw new Throw(p, q);
   }
-  
+
   @Override
   public MemberQ isTangentQ() {
     return tStMemberQ;

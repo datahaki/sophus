@@ -4,6 +4,9 @@ package ch.alpine.sophus.hs.st;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Random;
+import java.util.random.RandomGenerator;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -34,7 +37,7 @@ class TStMemberQTest {
     assertEquals(linearSubspace.basis().length(), dim);
     for (Tensor v : linearSubspace.basis()) {
       Tensor q = stiefelManifold.exponential(p).exp(v);
-      stiefelManifold.requireMember(q);
+      stiefelManifold.isPointQ().requireMember(q);
     }
     int bl = linearSubspace.basis().length();
     Tensor weights = RandomVariate.of(NormalDistribution.standard(), bl);
@@ -45,11 +48,12 @@ class TStMemberQTest {
   @ParameterizedTest
   @ValueSource(ints = { 3, 4, 5 })
   void testSimple(int n) {
+    RandomGenerator randomGenerator = new Random(3);
     for (int k = n - 2; k <= n; ++k) {
       RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k);
-      Tensor p = RandomSample.of(randomSampleInterface);
-      StManifold.INSTANCE.requireMember(p);
-      final Tensor c = RandomVariate.of(NormalDistribution.standard(), k, n);
+      Tensor p = RandomSample.of(randomSampleInterface, randomGenerator);
+      StManifold.INSTANCE.isPointQ().requireMember(p);
+      final Tensor c = RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor v = tStMemberQ.projection(c);
       assertEquals(Dimensions.of(p), Dimensions.of(v));
@@ -69,7 +73,7 @@ class TStMemberQTest {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(stiefelManifold);
       Tensor g = Transpose.of(p).dot(p);
-      assertTrue(GrManifold.INSTANCE.isMember(g));
+      assertTrue(GrManifold.INSTANCE.isPointQ().isMember(g));
     }
   }
 

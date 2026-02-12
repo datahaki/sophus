@@ -11,6 +11,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subsets;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.io.Primitives;
@@ -25,9 +26,9 @@ public class SeNGroup extends SeGroup implements MatrixGroup {
   }
 
   @Override
-  public boolean isMember(Tensor t) {
-    return t.length() == n + 1 //
-        && super.isMember(t);
+  public MemberQ isPointQ() {
+    return t -> t.length() == n + 1 //
+        && super.isPointQ().isMember(t);
   }
 
   public MatrixAlgebra matrixAlgebra() {

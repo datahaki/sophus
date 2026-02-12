@@ -10,12 +10,12 @@ import ch.alpine.tensor.sca.tri.ArcCos;
 /** maps a point q to the (angular) distance from base point p */
 public record SnAngle(Tensor x) implements TensorScalarFunction {
   public SnAngle {
-    SnManifold.INSTANCE.requireMember(x);
+    SnManifold.INSTANCE.isPointQ().requireMember(x);
   }
 
   @Override
   public Scalar apply(Tensor y) {
-    Scalar xy = (Scalar) x.dot(SnManifold.INSTANCE.requireMember(y));
+    Scalar xy = (Scalar) x.dot(SnManifold.INSTANCE.isPointQ().requireMember(y));
     return ArcCos.FUNCTION.apply(Clips.absoluteOne().apply(xy));
   }
 }

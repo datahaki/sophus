@@ -6,6 +6,7 @@ import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.sca.Chop;
@@ -20,8 +21,8 @@ public class Symplectic extends GlGroup {
   }
 
   @Override
-  public boolean isMember(Tensor m) {
-    return Chop._08.allZero(Dot.of(Transpose.of(m), omega, m).subtract(omega));
+  public MemberQ isPointQ() {
+    return m -> Chop._08.allZero(Dot.of(Transpose.of(m), omega, m).subtract(omega));
   }
 
   public MatrixAlgebra matrixAlgebra() {

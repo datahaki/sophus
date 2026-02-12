@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,7 +35,7 @@ class GrActionTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
   void testSimple(int n) {
-    RandomGenerator randomGenerator = ThreadLocalRandom.current();
+    RandomGenerator randomGenerator = new Random(3);
     for (int k = 1; k <= n; ++k) {
       Grassmannian grassmannian = new Grassmannian(n, k);
       Tensor p = RandomSample.of(grassmannian, randomGenerator);

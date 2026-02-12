@@ -5,6 +5,7 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -35,9 +36,9 @@ public class Sphere extends SnManifold implements SpecificManifold {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor p) {
-    return p.length() == length //
-        && super.isMember(p);
+  public MemberQ isPointQ() {
+    return p -> p.length() == length //
+        && super.isPointQ().isMember(p);
   }
 
   @Override // from RandomSampleInterface

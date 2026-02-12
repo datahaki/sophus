@@ -12,6 +12,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.MatrixDotTranspose;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
@@ -52,8 +53,8 @@ public class SoGroup extends GlGroup implements MetricManifold {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor x) {
-    return Tolerance.CHOP.isClose(Det.of(x), RealScalar.ONE) //
+  public MemberQ isPointQ() {
+    return x -> Tolerance.CHOP.isClose(Det.of(x), RealScalar.ONE) //
         && OrthogonalMatrixQ.INSTANCE.isMember(x);
   }
 

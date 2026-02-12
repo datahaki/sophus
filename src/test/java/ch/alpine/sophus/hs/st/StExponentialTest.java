@@ -27,7 +27,7 @@ class StExponentialTest {
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
       Tensor p = RandomSample.of(stiefelManifold);
-      stiefelManifold.requireMember(p);
+      stiefelManifold.isPointQ().requireMember(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), k, n));
       Scalar norm = Matrix2Norm.of(v);
@@ -35,7 +35,7 @@ class StExponentialTest {
       Exponential exponential = stiefelManifold.exponential(p);
       Tensor q = exponential.exp(v);
       assertEquals(Dimensions.of(p), Dimensions.of(q));
-      stiefelManifold.requireMember(q);
+      stiefelManifold.isPointQ().requireMember(q);
       Tensor w = exponential.log(q);
       Chop._10.requireClose(v, w);
     }
@@ -46,12 +46,12 @@ class StExponentialTest {
   void testOrthLogMatch(int n) {
     StiefelManifold stiefelManifold = new StiefelManifold(n, n);
     Tensor p = IdentityMatrix.of(n);
-    stiefelManifold.requireMember(p);
+    stiefelManifold.isPointQ().requireMember(p);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n));
     Exponential exponential = stiefelManifold.exponential(p);
     Tensor q = exponential.exp(v);
-    stiefelManifold.requireMember(q);
+    stiefelManifold.isPointQ().requireMember(q);
     Tensor log1 = exponential.log(q);
     Tensor log2 = SoGroup.INSTANCE.exponential(p).log(q);
     Tolerance.CHOP.requireClose(log1, log2);

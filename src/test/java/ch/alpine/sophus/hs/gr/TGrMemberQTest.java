@@ -43,7 +43,7 @@ class TGrMemberQTest {
     int n = 5;
     Tensor x = RandomSample.of(new Grassmannian(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
-    GrManifold.INSTANCE.requireMember(x);
+    GrManifold.INSTANCE.isPointQ().requireMember(x);
     TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
     Tensor pre = RandomVariate.of(NormalDistribution.standard(), n, n);
     assertFalse(tGrMemberQ.isMember(pre));
@@ -112,7 +112,7 @@ class TGrMemberQTest {
         Tensor diagonal = Join.of(ConstantArray.of(RealScalar.ONE, k), ConstantArray.of(RealScalar.ZERO, n - k));
         Tensor x = DiagonalMatrix.with(diagonal);
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
-        GrManifold.INSTANCE.requireMember(x);
+        GrManifold.INSTANCE.isPointQ().requireMember(x);
         int expected = k * (n - k);
         Tensor samples = Tensor.of(IntStream.range(0, expected + 5) //
             .mapToObj(_ -> Flatten.of(tGrMemberQ.projection(RandomVariate.of(distribution, fn, fn)))));

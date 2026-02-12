@@ -51,7 +51,7 @@ class TSnMemberQTest {
 
   @Test
   void testSerializable() throws ClassNotFoundException, IOException {
-    MemberQ memberQ = Serialization.copy(SnManifold.INSTANCE);
+    MemberQ memberQ = Serialization.copy(SnManifold.INSTANCE.isPointQ());
     memberQ.requireMember(UnitVector.of(4, 3));
     TSnMemberQ tSnMemberQ = Serialization.copy(new TSnMemberQ(UnitVector.of(4, 3)));
     tSnMemberQ.requireMember(UnitVector.of(4, 2));

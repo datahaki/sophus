@@ -82,7 +82,7 @@ class SoGroupTest {
   void testDet1() {
     Tensor nondet = DiagonalMatrix.of(1, 1, -1);
     assertEquals(Det.of(nondet), RealScalar.ONE.negate());
-    assertFalse(SoGroup.INSTANCE.isMember(nondet));
+    assertFalse(SoGroup.INSTANCE.isPointQ().isMember(nondet));
   }
 
   @Disabled
@@ -93,7 +93,7 @@ class SoGroupTest {
 
   @Test
   void testDetNegFail33() {
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.requireMember(DiagonalMatrix.of(1, 1, -1)));
+    assertThrows(Exception.class, () -> SoGroup.INSTANCE.isPointQ().requireMember(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Disabled
@@ -104,17 +104,17 @@ class SoGroupTest {
 
   @Test
   void testFail() {
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.requireMember(HilbertMatrix.of(3)));
+    assertThrows(Exception.class, () -> SoGroup.INSTANCE.isPointQ().requireMember(HilbertMatrix.of(3)));
   }
 
   @Test
   void testSize4Ok() {
-    SoGroup.INSTANCE.requireMember(IdentityMatrix.of(4));
+    SoGroup.INSTANCE.isPointQ().requireMember(IdentityMatrix.of(4));
   }
 
   @Test
   void testDetNegFail() {
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.requireMember(DiagonalMatrix.of(1, 1, -1)));
+    assertThrows(Exception.class, () -> SoGroup.INSTANCE.isPointQ().requireMember(DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test
@@ -135,6 +135,6 @@ class SoGroupTest {
 
   @Test
   void testNullFail() {
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.requireMember(null));
+    assertThrows(Exception.class, () -> SoGroup.INSTANCE.isPointQ().requireMember(null));
   }
 }

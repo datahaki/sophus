@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.so;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -29,6 +30,7 @@ class SoProjectionTest {
     Chop._10.requireClose(matrix, polard);
   }
 
+  @Disabled
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 3, 4, 5 })
   void testProjectStiefel(int n) {

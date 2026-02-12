@@ -54,7 +54,7 @@ public enum Rodrigues implements Exponential {
     }
     throw new Throw(q);
   }
-  
+
   @Override
   public MemberQ isTangentQ() {
     return new AntisymmetricMatrixQ(Chop._10);

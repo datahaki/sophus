@@ -5,6 +5,7 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -17,9 +18,9 @@ public class SpdNManifold extends SpdManifold implements SpecificManifold {
   }
 
   @Override
-  public boolean isMember(Tensor p) {
-    return p.length() == n //
-        && super.isMember(p);
+  public MemberQ isPointQ() {
+    return p -> p.length() == n //
+        && super.isPointQ().isMember(p);
   }
 
   @Override

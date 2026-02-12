@@ -15,6 +15,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.gr.InfluenceMatrixQ;
@@ -52,7 +53,6 @@ import ch.alpine.tensor.sca.Chop;
  * "Geometric mean and geodesic regression on Grassmannians"
  * E. Batzies, K. Hueper, L. Machado, F. Silva Leite by 2015 */
 public class GrManifold implements HomogeneousSpace, MetricManifold, Serializable {
-  public static final InfluenceMatrixQ INFLUENCE_MATRIX_Q = new InfluenceMatrixQ(Chop._08); // 1e-10 does not always work
   private static final Scalar N1_4 = RationalScalar.of(-1, 4);
   public static final GrManifold INSTANCE = new GrManifold();
   // ---
@@ -78,9 +78,9 @@ public class GrManifold implements HomogeneousSpace, MetricManifold, Serializabl
   }
 
   /** rank can be determined via {@link Eigensystem} */
-  @Override // from MemberQ
-  public boolean isMember(Tensor p) {
-    return INFLUENCE_MATRIX_Q.isMember(p);
+  @Override
+  public MemberQ isPointQ() {
+    return new InfluenceMatrixQ(Chop._08); // 1e-10 does not always work;
   }
 
   @Override

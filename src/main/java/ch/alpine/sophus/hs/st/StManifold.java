@@ -13,6 +13,7 @@ import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.sv.SingularValueDecomposition;
 import ch.alpine.tensor.sca.Chop;
@@ -30,8 +31,8 @@ public class StManifold implements HomogeneousSpace, MetricManifold, Serializabl
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor p) {
-    return new OrthogonalMatrixQ(Chop._10).isMember(p); // 1e-12 does not always work
+  public MemberQ isPointQ() {
+    return new OrthogonalMatrixQ(Chop._10); // 1e-12 does not always work
   }
 
   @Override

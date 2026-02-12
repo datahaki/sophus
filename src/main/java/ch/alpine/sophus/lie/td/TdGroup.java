@@ -77,8 +77,8 @@ public class TdGroup implements LieGroup, Serializable {
   public static final TdGroup INSTANCE = new TdGroup();
 
   @Override
-  public boolean isMember(Tensor t_lambda) {
-    return VectorQ.of(t_lambda) //
+  public MemberQ isPointQ() {
+    return t_lambda -> VectorQ.of(t_lambda) //
         && Sign.isPositive(Last.of(t_lambda));
   }
 
@@ -102,7 +102,7 @@ public class TdGroup implements LieGroup, Serializable {
           Drop.tail(t_lambda, 1).multiply(Logc.FUNCTION.apply(lambda)), //
           log_l);
     }
-    
+
     @Override
     public MemberQ isTangentQ() {
       return VectorQ::of;

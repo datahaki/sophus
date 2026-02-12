@@ -83,9 +83,9 @@ class GlGroupTest {
 
   @Test
   void testIsMember() {
-    assertTrue(GlGroup.INSTANCE.isMember(IdentityMatrix.of(2)));
-    assertFalse(GlGroup.INSTANCE.isMember(Array.zeros(2, 2)));
-    assertFalse(GlGroup.INSTANCE.isMember(Array.zeros(2, 3)));
+    assertTrue(GlGroup.INSTANCE.isPointQ().isMember(IdentityMatrix.of(2)));
+    assertFalse(GlGroup.INSTANCE.isPointQ().isMember(Array.zeros(2, 2)));
+    assertFalse(GlGroup.INSTANCE.isPointQ().isMember(Array.zeros(2, 3)));
   }
 
   @Test

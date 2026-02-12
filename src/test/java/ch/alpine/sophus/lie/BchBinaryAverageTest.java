@@ -43,8 +43,8 @@ class BchBinaryAverageTest {
     Exponential exponential = SnManifold.INSTANCE.exponential(n);
     Tensor mx = exponential.exp(x);
     Tensor my = exponential.exp(y);
-    SnManifold.INSTANCE.requireMember(mx);
-    SnManifold.INSTANCE.requireMember(my);
+    SnManifold.INSTANCE.isPointQ().requireMember(mx);
+    SnManifold.INSTANCE.isPointQ().requireMember(my);
     TSnMemberQ tSnMemberQ = new TSnMemberQ(n);
     tSnMemberQ.requireMember(x);
     tSnMemberQ.requireMember(y);

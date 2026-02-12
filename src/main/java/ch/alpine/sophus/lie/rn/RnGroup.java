@@ -7,6 +7,7 @@ import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.VectorEncodingMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.spa.SparseArray;
 
@@ -18,9 +19,9 @@ public class RnGroup extends RGroup implements MatrixGroup, VectorEncodingMarker
   }
 
   @Override
-  public boolean isMember(Tensor tensor) {
-    return tensor.length() == dimensions() //
-        && super.isMember(tensor);
+  public MemberQ isPointQ() {
+    return tensor -> tensor.length() == dimensions() //
+        && super.isPointQ().isMember(tensor);
   }
 
   @Override

@@ -13,6 +13,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Int;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.ConjugateTranspose;
@@ -100,8 +101,8 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
   private static final ScalarUnaryOperator MAX = Max.function(RealScalar.of(1e-12));
 
   @Override // from MemberQ
-  public boolean isMember(Tensor p) {
-    return SymmetricMatrixQ.INSTANCE.isMember(p) //
+  public MemberQ isPointQ() {
+    return p -> SymmetricMatrixQ.INSTANCE.isMember(p) //
         && PositiveDefiniteMatrixQ.ofHermitian(p); // TODO see how this goes with symmetrize
   }
 

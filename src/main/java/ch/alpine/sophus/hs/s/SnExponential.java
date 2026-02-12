@@ -32,22 +32,23 @@ public class SnExponential implements Exponential, Serializable {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final Tensor p;
+  private final TSnMemberQ tSnMemberQ;
   private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
-  private final TSnMemberQ tSnMemberQ;
 
   /** only needed for vectorLog */
   /** @param p on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
   public SnExponential(Tensor p) {
     this.p = p;
-    snAngle = new SnAngle(p);
     tSnMemberQ = new TSnMemberQ(p);
+    snAngle = new SnAngle(p);
     projection = Projection.on(p);
   }
 
   @Override // from Exponential
   public Tensor exp(Tensor v) {
+    isTangentQ().requireMember(v);
     Scalar vn = Vector2Norm.of(v);
     return p.multiply(Cos.FUNCTION.apply(vn)).add(v.multiply(Sinc.FUNCTION.apply(vn)));
   }

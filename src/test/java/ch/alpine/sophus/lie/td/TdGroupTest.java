@@ -231,8 +231,8 @@ class TdGroupTest {
   // checks that lambda is required to be positive
   @Test
   void testLambdaNonPositiveFail() {
-    assertThrows(Exception.class, () -> TdGroup.INSTANCE.requireMember(Tensors.vector(5, 0)));
-    assertThrows(Exception.class, () -> TdGroup.INSTANCE.requireMember(Tensors.vector(5, -1)));
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.isPointQ().requireMember(Tensors.vector(5, 0)));
+    assertThrows(Exception.class, () -> TdGroup.INSTANCE.isPointQ().requireMember(Tensors.vector(5, -1)));
   }
 
   @Test
@@ -244,7 +244,7 @@ class TdGroupTest {
 
   @Test
   void testDlNullFail() {
-    Tensor pE = TdGroup.INSTANCE.requireMember(Tensors.vector(1, 2, 3, 4));
+    Tensor pE = TdGroup.INSTANCE.isPointQ().requireMember(Tensors.vector(1, 2, 3, 4));
     assertThrows(Exception.class, () -> TdGroup.INSTANCE.dL(pE, null));
   }
 }

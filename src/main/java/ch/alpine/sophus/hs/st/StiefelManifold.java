@@ -34,7 +34,9 @@ public class StiefelManifold extends StManifold implements SpecificManifold {
 
   @Override // from RandomSampleInterface
   public Tensor randomSample(RandomGenerator randomGenerator) {
-    return Orthogonalize.usingPD(RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n));
+    Tensor p = Orthogonalize.usingPD(RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n));
+    p = StManifold.projection(p); // just for numeric correction
+    return isPointQ().requireMember(p);
   }
 
   @Override

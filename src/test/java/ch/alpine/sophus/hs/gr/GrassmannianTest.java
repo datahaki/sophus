@@ -39,8 +39,8 @@ class GrassmannianTest {
     Grassmannian grassmannian = new Grassmannian(2, 1);
     Tensor p = DiagonalMatrix.of(1, 0);
     Tensor q = DiagonalMatrix.of(0, 1);
-    assertTrue(grassmannian.isMember(p));
-    assertTrue(grassmannian.isMember(q));
+    assertTrue(grassmannian.isPointQ().isMember(p));
+    assertTrue(grassmannian.isPointQ().isMember(q));
   }
 
   @Test
@@ -86,7 +86,7 @@ class GrassmannianTest {
       Tensor w = tGrMemberQ.projection(v);
       Tolerance.CHOP.requireClose(v, w);
       Tensor q = exponential.exp(v.multiply(Pi.HALF));
-      grassmannian.requireMember(q);
+      grassmannian.isPointQ().requireMember(q);
     }
   }
 
@@ -136,7 +136,7 @@ class GrassmannianTest {
       Tensor weights = RandomVariate.of(UniformDistribution.unit(20), dim);
       Tensor w = weights.dot(homogeneousSpan.basis()).multiply(RealScalar.of(.1));
       Tensor q = grassmannian.exponential(p).exp(w);
-      grassmannian.isMember(q);
+      grassmannian.isPointQ().isMember(q);
     }
   }
 
@@ -145,7 +145,7 @@ class GrassmannianTest {
     for (int k = 1; k < 5; ++k) {
       RandomSampleInterface grRandomSample = Serialization.copy(new Grassmannian(k + 3, k));
       Tensor x = RandomSample.of(grRandomSample);
-      GrManifold.INSTANCE.requireMember(x);
+      GrManifold.INSTANCE.isPointQ().requireMember(x);
     }
   }
 
@@ -154,7 +154,7 @@ class GrassmannianTest {
     for (int n = 1; n < 5; ++n) {
       RandomSampleInterface randomSampleInterface = Serialization.copy(new Grassmannian(n, n));
       Tensor x = RandomSample.of(randomSampleInterface);
-      GrManifold.INSTANCE.requireMember(x);
+      GrManifold.INSTANCE.isPointQ().requireMember(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));
     }
   }
@@ -165,7 +165,7 @@ class GrassmannianTest {
       RandomSampleInterface randomSampleInterface = new Grassmannian(n, 0);
       for (int k = 0; k < 3; ++k) {
         Tensor x = RandomSample.of(randomSampleInterface);
-        GrManifold.INSTANCE.requireMember(x);
+        GrManifold.INSTANCE.isPointQ().requireMember(x);
         assertEquals(x, Array.zeros(n, n));
         x.set(RealScalar.ONE::add, Tensor.ALL, Tensor.ALL);
       }

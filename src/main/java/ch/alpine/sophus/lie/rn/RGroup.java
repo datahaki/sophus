@@ -32,8 +32,8 @@ public class RGroup implements LieGroup, MetricManifold, Serializable {
   }
 
   @Override
-  public boolean isMember(Tensor tensor) {
-    return VectorQ.of(tensor);
+  public MemberQ isPointQ() {
+    return VectorQ::of;
   }
 
   private enum Exponential0 implements Exponential {
@@ -48,7 +48,7 @@ public class RGroup implements LieGroup, MetricManifold, Serializable {
     public Tensor log(Tensor y) {
       return y.copy();
     }
-    
+
     @Override
     public MemberQ isTangentQ() {
       return VectorQ::of;

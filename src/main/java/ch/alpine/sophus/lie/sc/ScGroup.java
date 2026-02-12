@@ -22,8 +22,8 @@ public class ScGroup implements LieGroup, Serializable {
   public static final ScGroup INSTANCE = new ScGroup();
 
   @Override
-  public boolean isMember(Tensor t) {
-    return VectorQ.of(t) //
+  public MemberQ isPointQ() {
+    return t -> VectorQ.of(t) //
         && t.stream().map(Scalar.class::cast).allMatch(Sign::isPositive);
   }
 
@@ -39,7 +39,7 @@ public class ScGroup implements LieGroup, Serializable {
     public Tensor log(Tensor g) {
       return VectorQ.require(g).maps(Log.FUNCTION);
     }
-    
+
     @Override
     public MemberQ isTangentQ() {
       return VectorQ::of;
@@ -72,21 +72,21 @@ public class ScGroup implements LieGroup, Serializable {
 
   @Override
   public Tensor combine(Tensor element1, Tensor element2) {
-    if (isMember(element1) && isMember(element2))
+    if (isPointQ().isMember(element1) && isPointQ().isMember(element2))
       return Times.of(element1, element2);
     throw new Throw(element1, element2);
   }
 
   @Override
   public Tensor adjoint(Tensor point, Tensor tensor) {
-    if (isMember(point))
+    if (isPointQ().isMember(point))
       return tensor;
     throw new Throw(point);
   }
 
   @Override
   public Tensor dL(Tensor point, Tensor tensor) {
-    if (isMember(point))
+    if (isPointQ().isMember(point))
       return Times.of(point, tensor);
     throw new Throw(point);
   }

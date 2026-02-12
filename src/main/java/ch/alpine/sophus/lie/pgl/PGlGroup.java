@@ -4,6 +4,7 @@ package ch.alpine.sophus.lie.pgl;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.jet.LinearFractionalTransform;
 import ch.alpine.tensor.mat.Tolerance;
 
@@ -15,10 +16,12 @@ public class PGlGroup extends GlGroup {
   }
 
   @Override
-  public boolean isMember(Tensor matrix) {
-    int n = matrix.length() - 1;
-    return super.isMember(matrix) //
-        && Tolerance.CHOP.isZero(matrix.Get(n, n).subtract(RealScalar.ONE));
+  public MemberQ isPointQ() {
+    return matrix -> {
+      int n = matrix.length() - 1;
+      return super.isPointQ().isMember(matrix) //
+          && Tolerance.CHOP.isZero(matrix.Get(n, n).subtract(RealScalar.ONE));
+    };
   }
 
   @Override

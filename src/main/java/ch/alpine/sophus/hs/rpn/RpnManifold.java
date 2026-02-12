@@ -9,6 +9,7 @@ import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.UnitVectorQ;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.FrobeniusForm;
 import ch.alpine.tensor.RealScalar;
@@ -18,6 +19,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.VectorAngle;
@@ -68,8 +70,8 @@ public enum RpnManifold implements HomogeneousSpace, MetricManifold {
   }
 
   @Override
-  public boolean isMember(Tensor tensor) {
-    throw new UnsupportedOperationException();
+  public MemberQ isPointQ() {
+    return UnitVectorQ.INSTANCE;
   }
 
   @Override

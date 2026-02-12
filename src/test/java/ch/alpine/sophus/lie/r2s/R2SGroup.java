@@ -19,8 +19,8 @@ public enum R2SGroup implements LieGroup {
   INSTANCE;
 
   @Override
-  public boolean isMember(Tensor xyu) {
-    return VectorQ.ofLength(xyu, 3);
+  public MemberQ isPointQ() {
+    return xyu -> VectorQ.ofLength(xyu, 3);
   }
 
   @Override

@@ -28,7 +28,7 @@ class TSpMemberQTest {
     assertEquals(dim, symplectic.dimensions());
     Exponential tangentSpace = symplectic.exponential(IdentityMatrix.of(2 * n));
     Tensor p = tangentSpace.exp(v);
-    assertTrue(symplectic.isMember(p));
+    assertTrue(symplectic.isPointQ().isMember(p));
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(linearSubspace.basis());
     assertEquals(matrixAlgebra.dimensions(), symplectic.dimensions());
   }

@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.sl;
 
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Det;
@@ -16,8 +16,8 @@ public class SlGroup extends GlGroup {
   }
 
   @Override // from MemberQ
-  public boolean isMember(Tensor matrix) {
-    return SquareMatrixQ.INSTANCE.isMember(matrix) //
+  public MemberQ isPointQ() {
+    return matrix -> SquareMatrixQ.INSTANCE.isMember(matrix) //
         && Tolerance.CHOP.isClose(Det.of(matrix), RealScalar.ONE);
   }
 

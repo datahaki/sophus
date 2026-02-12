@@ -62,8 +62,8 @@ public class VectorizedGroup implements LieGroup, MetricManifold, VectorEncoding
   }
 
   @Override
-  public boolean isMember(Tensor tensor) {
-    return lieGroup.isMember(tensor);
+  public MemberQ isPointQ() {
+    return tensor -> lieGroup.isPointQ().isMember(tensor);
   }
 
   @Override
