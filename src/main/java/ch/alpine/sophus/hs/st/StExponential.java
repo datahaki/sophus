@@ -98,13 +98,9 @@ import ch.alpine.tensor.sca.Chop;
         IO.println(Pretty.of(K));
         System.err.println("NO NO NO");
       }
-    // IO.println(2 * k <= n ? "GramSchmidt" : "Mathematica");
-    // FIXME SOPHUS
-    QRDecomposition qrDecomposition =
-        // 2 * k <= n //
-        // ? GramSchmidt.of(K)
-        // :
-        QRMathematica.wrap(QRDecomposition.of(K));
+    // the use of GramSchmidt would require more complex logic
+    // for instance when q == p then matrix K is all zeros
+    QRDecomposition qrDecomposition = QRMathematica.wrap(QRDecomposition.of(K));
     final Tensor Qt = qrDecomposition.getQConjugateTranspose(); // k x n ( same dims as p,q )
     final Tensor N = qrDecomposition.getR(); // k x k
     // IO.println("Dim[Qt]=" + Dimensions.of(Qt));
