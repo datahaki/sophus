@@ -19,6 +19,10 @@ public interface Exponential {
    * @return point in the manifold */
   Tensor exp(Tensor v);
 
+  default TensorUnaryOperator exp() {
+    return this::exp;
+  }
+
   /** @param q point in the manifold
    * @return vector in the tangent space */
   Tensor log(Tensor q);

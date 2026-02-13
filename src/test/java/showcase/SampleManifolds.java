@@ -12,8 +12,10 @@ import java.util.Random;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
@@ -30,10 +32,12 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
+import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 public class SampleManifolds {
@@ -104,5 +108,34 @@ public class SampleManifolds {
     Tensor w = linearSubspace.apply(weights);
     Tensor r = exponential.exp(w);
     assumeTrue(manifold.isPointQ().test(r));
+  }
+
+  @ParameterizedTest
+  @MethodSource("list")
+  void testBiinvMean(Manifold manifold) {
+    assumeTrue(manifold instanceof RandomSampleInterface);
+    assumeTrue(manifold instanceof HomogeneousSpace);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifold;
+    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+    assertEquals( //
+        RandomSample.of(rsi, new Random(13)), //
+        RandomSample.of(rsi, new Random(13)));
+    Tensor p = RandomSample.of(rsi);
+    Exponential exponential = manifold.exponential(p);
+    Tensor log_p = exponential.log(p);
+    List<Integer> list = Dimensions.of(log_p);
+    Tolerance.CHOP.requireAllZero(log_p);
+    ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
+    LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
+    int d = linearSubspace.dimensions();
+    int n = d + 3;
+    Tensor coeffs = RandomVariate.of(NormalDistribution.of(0.0, 0.02), n, d);
+    Tensor tangents = linearSubspace.slash(coeffs);
+    Tensor sequence = exponential.exp().slash(tangents);
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
+    Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
+    // FIXME
+    if (!manifold.toString().startsWith("SO["))
+      biinvariantMean.mean(sequence, weights);
   }
 }
