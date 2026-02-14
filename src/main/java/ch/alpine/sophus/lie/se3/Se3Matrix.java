@@ -7,7 +7,9 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.lie.rot.QuaternionToRotationMatrix;
+import ch.alpine.tensor.mat.MatrixQ;
 
 /** code based on derivation by Ethan Eade
  * "Lie Groups for 2D and 3D Transformations", p. 8 */
@@ -21,6 +23,8 @@ public enum Se3Matrix {
    * @throws Exception if first 3 entries of t are not scalars
    * @see QuaternionToRotationMatrix */
   public static Tensor of(Tensor R, Tensor t) {
+    MatrixQ.requireSize(R, 3, 3);
+    VectorQ.requireLength(t, 3);
     return Unprotect.byRef( //
         R.get(0).append(t.Get(0)), //
         R.get(1).append(t.Get(1)), //
