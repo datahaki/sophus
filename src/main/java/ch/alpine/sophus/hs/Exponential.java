@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs;
 
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
@@ -31,6 +32,10 @@ public interface Exponential {
    * @apiNote method exists for convenience */
   default TensorUnaryOperator log() {
     return this::log;
+  }
+
+  default TensorUnaryOperator vectorLog() {
+    return t -> Flatten.of(log(t));
   }
 
   /** @return checks whether a given tensor is a tangent vector */

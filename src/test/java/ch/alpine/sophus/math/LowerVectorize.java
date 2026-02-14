@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
  * in order to remove the duplicate entries.
  * 
  * @see LowerTriangularize */
-public enum LowerVectorize {
+enum LowerVectorize {
   ;
   /** @param tensor with rank at least 2
    * @param index for instance 0 to include diagonal elements, or -1 to exclude diagonal elements

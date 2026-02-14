@@ -43,8 +43,8 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-public class SampleManifolds {
-  public static List<HomogeneousSpace> list() {
+class SampleManifolds {
+  public static List<HomogeneousSpace> homogeneousSpaces() {
     return Arrays.asList( //
         new StiefelManifold(3, 1), //
         new Grassmannian(5, 2), //
@@ -65,36 +65,36 @@ public class SampleManifolds {
   }
 
   @ParameterizedTest
-  @MethodSource("list")
-  void testSerialization(HomogeneousSpace manifold) throws ClassNotFoundException, IOException {
-    Serialization.copy(manifold);
-    Serialization.copy(manifold.isPointQ());
-    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+  @MethodSource("homogeneousSpaces")
+  void testSerialization(HomogeneousSpace homogeneousSpace) throws ClassNotFoundException, IOException {
+    Serialization.copy(homogeneousSpace);
+    Serialization.copy(homogeneousSpace.isPointQ());
+    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     Tensor p = RandomSample.of(rsi);
-    Exponential exponential = manifold.exponential(p);
+    Exponential exponential = homogeneousSpace.exponential(p);
     Serialization.copy(exponential);
     Serialization.copy(exponential.isTangentQ());
-    Tolerance.CHOP.requireClose(manifold.flip(p, p), p);
+    Tolerance.CHOP.requireClose(homogeneousSpace.flip(p, p), p);
   }
 
   @ParameterizedTest
-  @MethodSource("list")
-  void testDistance(HomogeneousSpace manifold) {
-    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+  @MethodSource("homogeneousSpaces")
+  void testDistance(HomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
         RandomSample.of(rsi, new Random(13)));
-    assumeTrue(manifold instanceof MetricManifold);
-    MetricManifold metricManifold = (MetricManifold) manifold;
+    assumeTrue(homogeneousSpace instanceof MetricManifold);
+    MetricManifold metricManifold = (MetricManifold) homogeneousSpace;
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
-    Exponential exponential = manifold.exponential(p);
+    Exponential exponential = homogeneousSpace.exponential(p);
     assumeFalse(ThrowQ.of(() -> exponential.log(q)));
     Scalar d_pq = metricManifold.distance(p, q);
     Scalar d_qp = metricManifold.distance(q, p);
     Chop._10.requireClose(d_pq, d_qp);
-    assumeTrue(manifold instanceof GeodesicSpace);
-    GeodesicSpace geodesicSpace = (GeodesicSpace) manifold;
+    assumeTrue(homogeneousSpace instanceof GeodesicSpace);
+    GeodesicSpace geodesicSpace = (GeodesicSpace) homogeneousSpace;
     Tensor m = geodesicSpace.midpoint(p, q);
     Scalar d_pm = metricManifold.distance(p, m);
     Scalar d_mq = metricManifold.distance(m, q);
@@ -102,15 +102,15 @@ public class SampleManifolds {
   }
 
   @ParameterizedTest
-  @MethodSource("list")
-  void testExponential(HomogeneousSpace manifold) {
-    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+  @MethodSource("homogeneousSpaces")
+  void testExponential(HomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
         RandomSample.of(rsi, new Random(13)));
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
-    Exponential exponential = manifold.exponential(p);
+    Exponential exponential = homogeneousSpace.exponential(p);
     Tensor log_p = exponential.log(p);
     Tolerance.CHOP.requireAllZero(log_p);
     assumeFalse(ThrowQ.of(() -> exponential.log(q)));
@@ -123,11 +123,11 @@ public class SampleManifolds {
     Tensor weights = RandomVariate.of(NormalDistribution.of(0.0, 0.1), d);
     Tensor w = linearSubspace.apply(weights);
     Tensor r = exponential.exp(w);
-    assumeTrue(manifold.isPointQ().test(r));
+    assumeTrue(homogeneousSpace.isPointQ().test(r));
   }
 
   @ParameterizedTest
-  @MethodSource("list")
+  @MethodSource("homogeneousSpaces")
   void testBiinvMean(HomogeneousSpace homogeneousSpace) {
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     assertEquals( //
