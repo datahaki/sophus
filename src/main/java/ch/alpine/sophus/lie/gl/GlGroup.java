@@ -1,12 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
@@ -26,7 +24,7 @@ import ch.alpine.tensor.sca.Chop;
  * 
  * input X is a square matrix
  * input M is an invertible matrix */
-public class GlGroup implements LieGroup, Serializable {
+public class GlGroup extends AbstractLieGroup {
   public static final GlGroup INSTANCE = new GlGroup();
 
   @Override

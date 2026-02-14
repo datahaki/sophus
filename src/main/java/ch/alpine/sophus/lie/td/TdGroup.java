@@ -1,11 +1,9 @@
 // code by ob
 package ch.alpine.sophus.lie.td;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
@@ -53,7 +51,7 @@ import ch.alpine.tensor.sca.exp.Logc;
  * 
  * element of (n + 1)-dimensional Scaling and Translations group
  * 
- * <p>the neutral element is {1, {0, 0, ..., 0}}
+ * <p>the neutral element is {0, 0, ..., 0, 1}
  * 
  * <p>Reference:
  * Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations.
@@ -74,7 +72,7 @@ import ch.alpine.tensor.sca.exp.Logc;
  * Reference 2:
  * "Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations."
  * by Vincent Arsigny, Xavier Pennec, Nicholas Ayache, p.29, 2006 */
-public class TdGroup implements LieGroup, Serializable {
+public class TdGroup extends AbstractLieGroup {
   public static final TdGroup INSTANCE = new TdGroup();
 
   @Override

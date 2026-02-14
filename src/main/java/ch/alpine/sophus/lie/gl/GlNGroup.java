@@ -35,6 +35,6 @@ public class GlNGroup extends GlGroup implements MatrixGroup {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("GL", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

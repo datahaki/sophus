@@ -47,6 +47,6 @@ public class RnGroup extends RGroup implements SpecificManifold, MatrixGroup, Ve
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("R", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

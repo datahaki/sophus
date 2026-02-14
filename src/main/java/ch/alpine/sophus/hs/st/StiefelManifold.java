@@ -46,6 +46,6 @@ public class StiefelManifold extends StManifold implements SpecificManifold {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("St", n, k);
+    return MathematicaFormat.concise(super.toString(), n, k);
   }
 }

@@ -71,6 +71,6 @@ public class SoNGroup extends SoGroup implements MatrixGroup, RandomSampleInterf
 
   @Override
   public final String toString() {
-    return MathematicaFormat.concise("SO", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

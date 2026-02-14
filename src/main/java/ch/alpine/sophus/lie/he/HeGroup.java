@@ -1,11 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
@@ -33,7 +31,7 @@ import ch.alpine.tensor.chq.MemberQ;
  * Reference 2:
  * "Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups"
  * by Xavier Pennec, Vincent Arsigny, p.29, Section 4.2, 2012 */
-public class HeGroup implements LieGroup, Serializable {
+public class HeGroup extends AbstractLieGroup {
   public static final HeGroup INSTANCE = new HeGroup();
 
   @Override

@@ -35,6 +35,6 @@ public class Hyperboloid extends HManifold implements SpecificManifold {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("H", dimensions);
+    return MathematicaFormat.concise(super.toString(), dimensions);
   }
 }

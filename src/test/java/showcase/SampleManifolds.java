@@ -32,6 +32,8 @@ import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.sl.SlNGroup;
 import ch.alpine.sophus.lie.so.SoNGroup;
+import ch.alpine.sophus.lie.sp.SpNGroup;
+import ch.alpine.sophus.lie.td.TdNGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -61,9 +63,13 @@ class SampleManifolds {
         new Grassmannian(6, 3), //
         new SpdNManifold(2), //
         new SpdNManifold(3), //
+        new SpNGroup(2), //
+        new SpNGroup(3), //
         new SlNGroup(2), //
         new SlNGroup(3), //
         new RnGroup(3), //
+        new TdNGroup(1), //
+        new TdNGroup(2), //
         new HeNGroup(1), //
         new HeNGroup(2), //
         Se2Group.INSTANCE, //

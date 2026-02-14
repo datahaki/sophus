@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -19,12 +20,12 @@ class TSpMemberQTest {
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 3, 4 })
   void test(int n) {
-    TSpMemberQ tSpMemberQ = new TSpMemberQ(n);
+    ZeroDefectArrayQ tSpMemberQ = TSpMemberQ.INSTANCE;
     LinearSubspace linearSubspace = LinearSubspace.of(tSpMemberQ::defect, 2 * n, 2 * n);
     int dim = linearSubspace.dimensions();
     Tensor w = RandomVariate.of(NormalDistribution.standard(), dim);
     Tensor v = w.dot(linearSubspace.basis());
-    Symplectic symplectic = new Symplectic(n);
+    SpNGroup symplectic = new SpNGroup(n);
     assertEquals(dim, symplectic.dimensions());
     Exponential tangentSpace = symplectic.exponential(IdentityMatrix.of(2 * n));
     Tensor p = tangentSpace.exp(v);

@@ -85,6 +85,6 @@ public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("SL", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

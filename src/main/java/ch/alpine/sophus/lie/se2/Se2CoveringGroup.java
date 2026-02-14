@@ -1,13 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
-import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.VectorEncodingMarker;
 import ch.alpine.sophus.lie.se.SeNGroup;
@@ -36,7 +35,7 @@ import ch.alpine.tensor.sca.tri.Tan;
  * References:
  * <a href="http://vixra.org/abs/1807.0463">1807.0463</a>
  * <a href="https://www.youtube.com/watch?v=2vDciaUgL4E">video</a> */
-public class Se2CoveringGroup implements LieGroup, RandomSampleInterface, MatrixGroup, VectorEncodingMarker, Serializable {
+public class Se2CoveringGroup extends AbstractLieGroup implements RandomSampleInterface, MatrixGroup, VectorEncodingMarker {
   private static final Scalar HALF = RealScalar.of(0.5);
   public static final Se2CoveringGroup INSTANCE = new Se2CoveringGroup();
   // ---

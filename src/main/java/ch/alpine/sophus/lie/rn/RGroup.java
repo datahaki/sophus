@@ -1,13 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.MetricManifold;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
@@ -27,7 +25,7 @@ import ch.alpine.tensor.chq.ZeroDefectArrayQ;
  * the logarithm function is the identity
  * 
  * Euclidean vector metric */
-public class RGroup implements LieGroup, MetricManifold, Serializable {
+public class RGroup extends AbstractLieGroup implements MetricManifold {
   public static final RGroup INSTANCE = new RGroup();
 
   protected RGroup() {

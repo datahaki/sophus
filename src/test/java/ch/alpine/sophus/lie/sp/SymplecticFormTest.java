@@ -15,7 +15,7 @@ import ch.alpine.tensor.spa.SparseArray;
 class SymplecticFormTest {
   @Test
   void test() {
-    Tensor omega = SymplecticForm.omega(2);
+    Tensor omega = new SymplecticForm(2).matrix();
     assertInstanceOf(SparseArray.class, omega);
     // IO.println(Pretty.of(omega));
     assertEquals(Dimensions.of(omega), List.of(4, 4));

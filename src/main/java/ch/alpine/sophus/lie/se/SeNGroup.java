@@ -91,6 +91,6 @@ public class SeNGroup extends SeGroup implements MatrixGroup, SpecificManifold {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("SE", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

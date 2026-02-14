@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.r2s;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RationalScalar;
@@ -16,8 +16,8 @@ import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 /** @see HeGroup */
-public enum R2SGroup implements LieGroup {
-  INSTANCE;
+public class R2SGroup extends AbstractLieGroup {
+  public static final R2SGroup INSTANCE = new R2SGroup();
 
   @Override
   public MemberQ isPointQ() {

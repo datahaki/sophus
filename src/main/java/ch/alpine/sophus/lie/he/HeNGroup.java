@@ -63,6 +63,6 @@ public class HeNGroup extends HeGroup implements SpecificManifold, MatrixGroup, 
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("He", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

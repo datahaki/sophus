@@ -35,6 +35,6 @@ public class SpdNManifold extends SpdManifold implements SpecificManifold {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("Spd", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

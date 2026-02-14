@@ -1,11 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.sc;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -19,7 +17,7 @@ import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
 
-public class ScGroup implements LieGroup, Serializable {
+public class ScGroup extends AbstractLieGroup {
   public static final ScGroup INSTANCE = new ScGroup();
 
   @Override

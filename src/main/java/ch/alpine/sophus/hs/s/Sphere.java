@@ -53,6 +53,6 @@ public class Sphere extends SnManifold implements SpecificManifold {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("S", dimensions);
+    return MathematicaFormat.concise(super.toString(), dimensions);
   }
 }

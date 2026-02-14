@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import java.io.Serializable;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.MetricManifold;
@@ -14,7 +12,7 @@ import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 
-public class VectorizedGroup implements LieGroup, MetricManifold, VectorEncodingMarker, Serializable {
+public class VectorizedGroup extends AbstractLieGroup implements MetricManifold, VectorEncodingMarker {
   // TODO SOPHUS through introspection check for metric or not
   private final LieGroup lieGroup;
   private final MatrixAlgebra matrixAlgebra;
