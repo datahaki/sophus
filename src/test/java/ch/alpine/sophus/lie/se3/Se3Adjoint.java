@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.se3;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.Cross;
@@ -47,6 +48,18 @@ import ch.alpine.tensor.mat.re.Inverse;
     Tensor w = u_w.get(1); // rotation
     Tensor rw = R.dot(w);
     return Tensors.of( //
+        R.dot(u).add(Cross.of(t, rw)), //
+        rw);
+  }
+
+  // @Override // from LieGroupElement
+  public static Tensor adjoint(Tensor g, Tensor u_w) {
+    Tensor R = Se3Matrix.rotation(g);
+    Tensor t = Se3Matrix.translation(g);
+    Tensor u = u_w.extract(0, 3); // translation
+    Tensor w = u_w.extract(3, 6); // rotation
+    Tensor rw = R.dot(w);
+    return Join.of( //
         R.dot(u).add(Cross.of(t, rw)), //
         rw);
   }

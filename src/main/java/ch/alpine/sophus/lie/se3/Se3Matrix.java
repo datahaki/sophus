@@ -27,7 +27,7 @@ public enum Se3Matrix {
         R.get(2).append(t.Get(2)), //
         UNIT_VECTOR_3.copy());
   }
-  
+
   public static Tensor ofT(Tensor R, Tensor t) {
     return Unprotect.byRef( //
         R.get(0).append(t.Get(0)), //
