@@ -25,7 +25,7 @@ import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -159,7 +159,7 @@ class HsAlgebraTest {
     Tensor res = hsAlgebra.action(g, m);
     Chop._03.requireClose(res, Tensors.vector(0.0, 0.1));
     Tensor p = UnitVector.of(3, 2);
-    Tensor rotation = Rodrigues.vectorExp(g);
+    Tensor rotation = So3Exponential.vectorExp(g);
     SnExponential snExponential = new SnExponential(p);
     Tensor v = m.copy().append(RealScalar.ZERO);
     Tensor snm = snExponential.exp(v);
@@ -178,7 +178,7 @@ class HsAlgebraTest {
     // System.out.println(res);
     Chop._03.requireClose(res, Tensors.vector(0.1, 0.2));
     Tensor p = UnitVector.of(3, 2);
-    Tensor rotation = Rodrigues.vectorExp(g);
+    Tensor rotation = So3Exponential.vectorExp(g);
     SnExponential snExponential = new SnExponential(p);
     Tensor v = m.copy().append(RealScalar.ZERO);
     Tensor snm = snExponential.exp(v);

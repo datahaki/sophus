@@ -28,7 +28,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
  * 
  * for n == 2 and n == 3 there are faster alternatives
  * 
- * consistent with {@link RotationMatrix} and {@link Rodrigues} */
+ * consistent with {@link RotationMatrix} and {@link So3Exponential} */
 public class SoNGroup extends SoGroup implements MatrixGroup, RandomSampleInterface {
   private final int n;
 

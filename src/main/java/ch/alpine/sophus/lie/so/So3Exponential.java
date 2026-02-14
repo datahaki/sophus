@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
  * p. 131
  * 
  * <p>The formula for the logarithm is taken from a book by Chirikjian */
-public enum Rodrigues implements Exponential {
+public enum So3Exponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3).maps(N.DOUBLE);
@@ -55,6 +55,12 @@ public enum Rodrigues implements Exponential {
     throw new Throw(q);
   }
 
+  private static Scalar theta(Tensor matrix) {
+    Scalar value = matrix.Get(0, 0).add(matrix.Get(1, 1)).add(matrix.Get(2, 2)) //
+        .subtract(RealScalar.ONE).multiply(HALF);
+    return ArcCos.FUNCTION.apply(value);
+  }
+
   @Override
   public ZeroDefectArrayQ isTangentQ() {
     return new AntisymmetricMatrixQ(Chop._10);
@@ -70,12 +76,6 @@ public enum Rodrigues implements Exponential {
     Scalar r2 = Sqrt.FUNCTION.apply(h2.multiply(h2).multiply(HALF));
     Tensor X2 = Cross.skew3(vector.multiply(r2));
     return ID3.add(X1).add(X2.dot(X2));
-  }
-
-  private static Scalar theta(Tensor matrix) {
-    Scalar value = matrix.Get(0, 0).add(matrix.Get(1, 1)).add(matrix.Get(2, 2)) //
-        .subtract(RealScalar.ONE).multiply(HALF);
-    return ArcCos.FUNCTION.apply(value);
   }
 
   public static Tensor vector_log(Tensor q) {

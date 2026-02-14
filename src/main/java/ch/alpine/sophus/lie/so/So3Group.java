@@ -33,7 +33,7 @@ public class So3Group extends SoNGroup {
 
   @Override
   public Exponential exponential0() {
-    return Rodrigues.INSTANCE;
+    return So3Exponential.INSTANCE;
   }
 
   /** Reference:

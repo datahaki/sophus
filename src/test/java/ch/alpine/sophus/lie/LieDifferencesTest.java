@@ -16,7 +16,7 @@ import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2RandomSample;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -46,7 +46,7 @@ class LieDifferencesTest {
     Tensor tensor = Tensors.empty();
     for (int index = 0; index < 10; ++index)
       tensor.append(Se3Matrix.of( //
-          Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
+          So3Exponential.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3)));
     TensorUnaryOperator lieDifferences = LieDifferences.of(new SeNGroup(3));
     assertEquals(Dimensions.of(lieDifferences.apply(tensor)), Arrays.asList(9, 4, 4));
   }
@@ -71,8 +71,8 @@ class LieDifferencesTest {
 
   @Test
   void testSe3Simple() {
-    Tensor m1 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(0.2, -0.3, 0.4)), Tensors.vector(10, 20, 30));
-    Tensor m2 = Se3Matrix.of(Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.4)), Tensors.vector(11, 21, 31));
+    Tensor m1 = Se3Matrix.of(So3Exponential.vectorExp(Tensors.vector(0.2, -0.3, 0.4)), Tensors.vector(10, 20, 30));
+    Tensor m2 = Se3Matrix.of(So3Exponential.vectorExp(Tensors.vector(-0.2, 0.3, 0.4)), Tensors.vector(11, 21, 31));
     TensorUnaryOperator lieDifferences = LieDifferences.of(new SeNGroup(3));
     Tensor tensor = lieDifferences.apply(Tensors.of(m1, m2));
     assertEquals(Dimensions.of(tensor), Arrays.asList(1, 4, 4));

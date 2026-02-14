@@ -63,7 +63,7 @@ class SoNGroupTest {
     for (int i = 0; i < 3; ++i) {
       Tensor vec = UnitVector.of(3, i);
       Tensor rot = soNGroup.exponential0().exp(matrixAlgebra.toMatrix(vec));
-      Tensor rod = Rodrigues.vectorExp(vec);
+      Tensor rod = So3Exponential.vectorExp(vec);
       Tolerance.CHOP.requireClose(rot, rod);
     }
   }

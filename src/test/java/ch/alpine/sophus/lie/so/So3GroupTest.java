@@ -89,8 +89,8 @@ class So3GroupTest {
 
   @Test
   void testSimple2() {
-    Tensor p = Rodrigues.vectorExp(Tensors.vector(1, 2, 3));
-    Tensor q = Rodrigues.vectorExp(Tensors.vector(2, -1, 2));
+    Tensor p = So3Exponential.vectorExp(Tensors.vector(1, 2, 3));
+    Tensor q = So3Exponential.vectorExp(Tensors.vector(2, -1, 2));
     Tensor split = So3Group.INSTANCE.split(p, q, RationalScalar.HALF);
     assertTrue(new OrthogonalMatrixQ(Chop._14).test(split));
   }
@@ -99,8 +99,8 @@ class So3GroupTest {
   void testEndPoints() {
     Distribution distribution = NormalDistribution.of(0, .3);
     for (int index = 0; index < 10; ++index) {
-      Tensor p = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
-      Tensor q = Rodrigues.vectorExp(RandomVariate.of(distribution, 3));
+      Tensor p = So3Exponential.vectorExp(RandomVariate.of(distribution, 3));
+      Tensor q = So3Exponential.vectorExp(RandomVariate.of(distribution, 3));
       Chop._14.requireClose(p, So3Group.INSTANCE.split(p, q, RealScalar.ZERO));
       Chop._11.requireClose(q, So3Group.INSTANCE.split(p, q, RealScalar.ONE));
     }
@@ -115,8 +115,8 @@ class So3GroupTest {
   void testDistance() {
     Tensor vector = Tensors.vector(0.2, 0.5, 0.3);
     Scalar distance = So3Group.INSTANCE.distance( //
-        Rodrigues.vectorExp(Tensors.vector(0, 0, 0)), //
-        Rodrigues.vectorExp(vector));
+        So3Exponential.vectorExp(Tensors.vector(0, 0, 0)), //
+        So3Exponential.vectorExp(vector));
     Chop._15.requireClose(distance, Vector2Norm.of(vector));
   }
 

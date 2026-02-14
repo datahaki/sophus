@@ -66,7 +66,7 @@ public class SpdExponential implements Exponential, Serializable {
 
   @Override
   public ZeroDefectArrayQ isTangentQ() {
-    return new TSpdMemberQ(pp);
+    return TSpdMemberQ.INSTANCE;
   }
 
   /** @param q point in Spd

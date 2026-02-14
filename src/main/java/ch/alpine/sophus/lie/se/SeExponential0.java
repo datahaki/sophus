@@ -2,7 +2,9 @@
 package ch.alpine.sophus.lie.se;
 
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.UpperVectorize;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
@@ -18,6 +20,11 @@ enum SeExponential0 implements Exponential {
   @Override // from Exponential
   public Tensor log(Tensor matrix) {
     return MatrixLog.of(matrix);
+  }
+
+  @Override
+  public TensorUnaryOperator vectorLog() {
+    return p -> UpperVectorize.of(log(p), 1);
   }
 
   @Override

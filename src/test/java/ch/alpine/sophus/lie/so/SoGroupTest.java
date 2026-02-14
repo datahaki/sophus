@@ -29,15 +29,15 @@ class SoGroupTest {
   @Disabled
   @Test
   void testBlub() {
-    Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
-    Tensor matr = Rodrigues.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
+    Tensor orth = So3Exponential.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
+    Tensor matr = So3Exponential.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
     SoGroup.INSTANCE.combine(orth, matr);
     assertThrows(Exception.class, () -> SoGroup.INSTANCE.combine(orth, matr.add(matr)));
   }
 
   @Test
   void testAdjoint() {
-    Tensor orth = Rodrigues.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
+    Tensor orth = So3Exponential.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
     // SoGroupElement so3GroupElement = SoGroupElement.of(orth);
     Tensor vector = So3TestHelper.spawn_so3();
     Tensor adjoint = So3Group.INSTANCE.adjoint(orth, vector);
@@ -51,8 +51,8 @@ class SoGroupTest {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3(); // element
       Tensor x = So3TestHelper.spawn_so3(); // vector
-      Tensor lhs = LIE_GROUP.combine(g, Rodrigues.INSTANCE.exp(x)); // g.Exp[x]
-      Tensor rhs = LIE_GROUP.combine(Rodrigues.INSTANCE.exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
+      Tensor lhs = LIE_GROUP.combine(g, So3Exponential.INSTANCE.exp(x)); // g.Exp[x]
+      Tensor rhs = LIE_GROUP.combine(So3Exponential.INSTANCE.exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }
   }
@@ -65,8 +65,8 @@ class SoGroupTest {
     for (int count = 0; count < 10; ++count) {
       Tensor g = So3TestHelper.spawn_So3(random);
       Tensor m = So3TestHelper.spawn_So3(random);
-      Tensor lhs = Rodrigues.INSTANCE.log(LIE_GROUP.combine(LIE_GROUP.combine(g, m), LIE_GROUP.invert(g))); // Log[g.m.g^-1]
-      Tensor rhs = LIE_GROUP.adjoint(g, Rodrigues.INSTANCE.log(m)); // Ad(g).Log[m]
+      Tensor lhs = So3Exponential.INSTANCE.log(LIE_GROUP.combine(LIE_GROUP.combine(g, m), LIE_GROUP.invert(g))); // Log[g.m.g^-1]
+      Tensor rhs = LIE_GROUP.adjoint(g, So3Exponential.INSTANCE.log(m)); // Ad(g).Log[m]
       Chop._10.requireClose(lhs, rhs);
     }
   }

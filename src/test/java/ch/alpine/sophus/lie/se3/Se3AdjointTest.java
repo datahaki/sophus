@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
@@ -26,7 +26,7 @@ class Se3AdjointTest {
   void testForwardInverse() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
-      Tensor g = Se3Matrix.of(Rodrigues.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3));
+      Tensor g = Se3Matrix.of(So3Exponential.vectorExp(RandomVariate.of(distribution, 3)), RandomVariate.of(distribution, 3));
       TensorUnaryOperator se3Adjoint = Se3Adjoint.forward(g);
       Tensor u_w = RandomVariate.of(distribution, 2, 3);
       Tensor out = se3Adjoint.apply(u_w);

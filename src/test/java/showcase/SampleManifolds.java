@@ -23,6 +23,7 @@ import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
 import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.hs.s.Sphere;
+import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.st.StiefelManifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se.SeNGroup;
@@ -54,6 +55,7 @@ class SampleManifolds {
         new StiefelManifold(4, 2), //
         new Grassmannian(5, 2), //
         new Grassmannian(6, 3), //
+        new SpdNManifold(3), //
         new RnGroup(3), //
         Se2Group.INSTANCE, //
         Se2CoveringGroup.INSTANCE, //

@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.se3;
 
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -36,8 +36,8 @@ enum Se3VExponential0 implements Exponential {
   @Override // from Exponential
   public Tensor log(Tensor g) {
     Tensor R = Se3Matrix.rotation(g);
-    Tensor wx = Rodrigues.INSTANCE.log(R);
-    Tensor w = Rodrigues.vectorize(wx);
+    Tensor wx = So3Exponential.INSTANCE.log(R);
+    Tensor w = So3Exponential.vectorize(wx);
     Scalar theta = Vector2Norm.of(w);
     Tensor wx2 = wx.dot(wx);
     Se3Numerics se3Numerics = new Se3Numerics(theta);

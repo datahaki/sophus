@@ -15,7 +15,7 @@ import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -92,17 +92,17 @@ class HsBiinvariantMeanTest {
   @Test
   void testSo3Mean4() {
     Exponential exponential = So3Group.INSTANCE.exponential0();
-    assertInstanceOf(Rodrigues.class, exponential);
+    assertInstanceOf(So3Exponential.class, exponential);
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
     Tensor p2 = Tensors.vector(-0.05, 0.03, 0.1);
     Tensor p3 = Tensors.vector(0.07, -0.08, -0.06);
     Tensor sequence = Tensors.of(p0, p1, p2, p3);
-    Tensor seqG = Tensor.of(sequence.stream().map(Rodrigues::vectorExp));
+    Tensor seqG = Tensor.of(sequence.stream().map(So3Exponential::vectorExp));
     Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
     Tensor meanG = So3Group.INSTANCE.biinvariantMean().mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
-    Tensor meanv = Rodrigues.vectorize(mean);
+    Tensor meanv = So3Exponential.vectorize(mean);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
     Tensor ad = matrixAlgebra.ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
@@ -122,11 +122,11 @@ class HsBiinvariantMeanTest {
     Random random = new Random(1);
     for (int n = 4; n < 7; ++n) {
       Tensor sequence = RandomVariate.of(distribution, random, n, 3);
-      Tensor seqG = Tensor.of(sequence.stream().map(Rodrigues::vectorExp));
+      Tensor seqG = Tensor.of(sequence.stream().map(So3Exponential::vectorExp));
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, random, n));
       Tensor meanG = So3Group.INSTANCE.biinvariantMean().mean(seqG, weights);
       Tensor mean = exponential.log(meanG);
-      Tensor meanv = Rodrigues.vectorize(mean);
+      Tensor meanv = So3Exponential.vectorize(mean);
       BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
       Tensor meanb = biinvariantMean.mean(sequence, weights);
       Chop._11.requireClose(meanv, meanb);
