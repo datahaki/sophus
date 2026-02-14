@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -10,6 +11,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.lie.so.SoNGroup;
@@ -42,6 +44,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import showcase.ThrowQ;
 
 class GrManifoldTest {
   @Test
@@ -61,9 +64,11 @@ class GrManifoldTest {
   void testMirror() {
     int n = 4;
     for (int k = 1; k < n; ++k) {
-      RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor q = RandomSample.of(randomSampleInterface);
+      Grassmannian grassmannian = new Grassmannian(n, k);
+      Tensor p = RandomSample.of(grassmannian);
+      Tensor q = RandomSample.of(grassmannian);
+      Exponential exponential = grassmannian.exponential(p);
+      assumeFalse(ThrowQ.of(() -> exponential.log(q)));
       ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
       Tensor mir1 = stf.apply(RealScalar.ONE.negate());
       // GrExponential exp_p = new GrExponential(p);

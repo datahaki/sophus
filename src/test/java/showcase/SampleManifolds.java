@@ -17,7 +17,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
@@ -45,7 +44,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 public class SampleManifolds {
-  public static List<Manifold> list() {
+  public static List<HomogeneousSpace> list() {
     return Arrays.asList( //
         new StiefelManifold(3, 1), //
         new Grassmannian(5, 2), //
@@ -67,20 +66,20 @@ public class SampleManifolds {
 
   @ParameterizedTest
   @MethodSource("list")
-  void testSerialization(Manifold manifold) throws ClassNotFoundException, IOException {
+  void testSerialization(HomogeneousSpace manifold) throws ClassNotFoundException, IOException {
     Serialization.copy(manifold);
     Serialization.copy(manifold.isPointQ());
-    assumeTrue(manifold instanceof HomogeneousSpace);
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
     Tensor p = RandomSample.of(rsi);
     Exponential exponential = manifold.exponential(p);
     Serialization.copy(exponential);
     Serialization.copy(exponential.isTangentQ());
+    Tolerance.CHOP.requireClose(manifold.flip(p, p), p);
   }
 
   @ParameterizedTest
   @MethodSource("list")
-  void testDistance(Manifold manifold) {
+  void testDistance(HomogeneousSpace manifold) {
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
@@ -104,7 +103,7 @@ public class SampleManifolds {
 
   @ParameterizedTest
   @MethodSource("list")
-  void testExponential(Manifold manifold) {
+  void testExponential(HomogeneousSpace manifold) {
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
@@ -129,15 +128,13 @@ public class SampleManifolds {
 
   @ParameterizedTest
   @MethodSource("list")
-  void testBiinvMean(Manifold manifold) {
-    assumeTrue(manifold instanceof HomogeneousSpace);
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifold;
-    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+  void testBiinvMean(HomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
         RandomSample.of(rsi, new Random(13)));
     Tensor p = RandomSample.of(rsi);
-    Exponential exponential = manifold.exponential(p);
+    Exponential exponential = homogeneousSpace.exponential(p);
     Tensor log_p = exponential.log(p);
     List<Integer> list = Dimensions.of(log_p);
     Tolerance.CHOP.requireAllZero(log_p);
@@ -145,7 +142,7 @@ public class SampleManifolds {
     zeroDefectArrayQ.require(log_p);
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
     int d = linearSubspace.dimensions();
-    if (manifold instanceof SpecificManifold specificManifold) {
+    if (homogeneousSpace instanceof SpecificManifold specificManifold) {
       assertEquals(specificManifold.dimensions(), d);
     }
     int n = d + 3;
@@ -155,7 +152,7 @@ public class SampleManifolds {
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
     // FIXME
-    if (!manifold.toString().startsWith("SO["))
+    if (!homogeneousSpace.toString().startsWith("SO["))
       biinvariantMean.mean(sequence, weights);
   }
 }
