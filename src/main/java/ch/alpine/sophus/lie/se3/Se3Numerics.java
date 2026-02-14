@@ -6,6 +6,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
@@ -19,7 +20,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
  * 
  * from "Lie Groups for 2D and 3D Transformations" by Ethan Eade
  * http://ethaneade.com/ */
-/* package */ class Se3Numerics {
+class Se3Numerics {
   private static final ScalarUnaryOperator SERIES1 = Polynomial.of(Tensors.fromString( //
       "{1/2, 0, -1/24, 0, 1/720, 0, -1/40320, 0, 1/3628800, 0, -1/479001600, 0, 1/87178291200, 0, -1/20922789888000}").maps(N.DOUBLE));
   private static final ScalarUnaryOperator SERIES2 = Polynomial.of(Tensors.fromString( //
@@ -49,7 +50,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
     }
   }
 
-  // for testing
+  @PackageTestAccess
   Tensor vector() {
     return Tensors.of(Boole.of(series), A, B, C, D);
   }

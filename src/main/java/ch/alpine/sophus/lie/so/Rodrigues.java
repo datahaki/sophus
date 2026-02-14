@@ -82,7 +82,7 @@ public enum Rodrigues implements Exponential {
     return vectorize(INSTANCE.log(q));
   }
 
-  /** @param log 3 x 3 matrix in so(3)
+  /** @param log 3 x 3 matrix in so(3), or 4 x 4 matrix in se(3)
    * @return vector of length 3 */
   public static Tensor vectorize(Tensor log) {
     return Tensors.of(log.Get(2, 1), log.Get(0, 2), log.Get(1, 0));

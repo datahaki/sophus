@@ -1,8 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.rot.QuaternionToRotationMatrix;
@@ -24,6 +26,14 @@ public enum Se3Matrix {
         R.get(1).append(t.Get(1)), //
         R.get(2).append(t.Get(2)), //
         UNIT_VECTOR_3.copy());
+  }
+  
+  public static Tensor ofT(Tensor R, Tensor t) {
+    return Unprotect.byRef( //
+        R.get(0).append(t.Get(0)), //
+        R.get(1).append(t.Get(1)), //
+        R.get(2).append(t.Get(2)), //
+        ConstantArray.of(RealScalar.ZERO, 4));
   }
 
   /** @param matrix of dimensions 4 x 4

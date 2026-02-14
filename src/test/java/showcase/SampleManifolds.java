@@ -28,7 +28,6 @@ import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -53,7 +52,7 @@ public class SampleManifolds {
         new RnGroup(3), //
         Se2Group.INSTANCE, //
         Se2CoveringGroup.INSTANCE, //
-        Se3Group.INSTANCE, //
+        new SeNGroup(3), //
         new SeNGroup(4), //
         new SoNGroup(2), //
         new SoNGroup(3), //

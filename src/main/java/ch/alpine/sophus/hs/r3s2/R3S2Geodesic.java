@@ -3,7 +3,8 @@ package ch.alpine.sophus.hs.r3s2;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.s.SnRotationMatrix;
-import ch.alpine.sophus.lie.se3.Se3Group;
+import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -20,6 +21,7 @@ public enum R3S2Geodesic implements GeodesicSpace {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);
+  private static final LieGroup LIE_GROUP = new SeNGroup(3);
 
   @Override // from Geodesic
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
@@ -31,7 +33,7 @@ public enum R3S2Geodesic implements GeodesicSpace {
     Tensor pSe3 = Se3Matrix.of(ID3, pt);
     Tensor qSe3 = Se3Matrix.of(rotation, qt);
     return scalar -> {
-      Tensor split = Se3Group.INSTANCE.split(pSe3, qSe3, scalar);
+      Tensor split = LIE_GROUP.split(pSe3, qSe3, scalar);
       return Tensors.of( //
           Se3Matrix.translation(split), //
           Se3Matrix.rotation(split).dot(pn));

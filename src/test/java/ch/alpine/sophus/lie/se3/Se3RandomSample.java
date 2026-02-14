@@ -5,17 +5,18 @@ import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.pdf.RandomVariate;
 
-@Deprecated
-public record TSe3RandomSample(Distribution p, Distribution v) implements RandomSampleInterface, Serializable {
+class Se3RandomSample implements RandomSampleInterface, Serializable {
+  private final RandomSampleInterface rsi;
+
+  public Se3RandomSample(Distribution p, Distribution v) {
+    rsi = new TSe3RandomSample(p, v);
+  }
+
   @Override
   public Tensor randomSample(RandomGenerator randomGenerator) {
-    return Join.of( //
-        RandomVariate.of(p, randomGenerator, 3), //
-        RandomVariate.of(v, randomGenerator, 3));
+    return Se3Group.INSTANCE.exponential0().exp(rsi.randomSample(randomGenerator));
   }
 }

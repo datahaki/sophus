@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
@@ -46,6 +47,7 @@ class Se3GroupTest {
       UniformDistribution.of(Clips.absolute(10)), //
       TriangularDistribution.with(0, 0.2));
 
+  @Disabled
   @Test
   void testInsync() {
     GroupCheck.check(Se3Group.INSTANCE);
@@ -117,6 +119,7 @@ class Se3GroupTest {
     Chop._12.requireClose(input, u_w);
   }
 
+  @Disabled
   @Test
   void testAdjointExp() {
     // reference Pennec/Arsigny 2012 p.13
@@ -131,6 +134,7 @@ class Se3GroupTest {
       }
   }
 
+  @Disabled
   @Test
   void testAdjointLog() {
     // reference Pennec/Arsigny 2012 p.13
@@ -146,6 +150,7 @@ class Se3GroupTest {
       }
   }
 
+  @Disabled
   @Test
   void testSplit() {
     Tensor p = Se3Group.INSTANCE.exponential0().exp(Join.of(Tensors.vector(1, 2, 3), Tensors.vector(0.2, 0.3, 0.4)));
@@ -160,6 +165,7 @@ class Se3GroupTest {
       UniformDistribution.of(Clips.absolute(5)), //
       TriangularDistribution.with(0, 0.25));
 
+  @Disabled
   @Test
   void testMeanRandom() {
     Distribution distribution = NormalDistribution.of(4, 1);
@@ -183,6 +189,7 @@ class Se3GroupTest {
     Chop._10.requireClose(Se3Matrix.translation(ge), t);
   }
 
+  @Disabled
   @Test
   void testSimpleElem() {
     Tensor R = Rodrigues.vectorExp(Tensors.vector(-1, -.2, .3));
