@@ -13,7 +13,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
    * @return */
   // TODO SOPHUS dot should be implemented more efficiently
   public static Tensor of(int p, int q) {
-    return DiagonalMatrix.with(Tensors.vector(i -> i < p //
+    return DiagonalMatrix.sparse(Tensors.vector(i -> i < p //
         ? RealScalar.ONE
         : RealScalar.ONE.negate(), p + q));
   }

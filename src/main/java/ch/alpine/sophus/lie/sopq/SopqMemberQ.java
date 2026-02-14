@@ -4,6 +4,7 @@ package ch.alpine.sophus.lie.sopq;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
 public class SopqMemberQ implements MemberQ {
@@ -17,6 +18,7 @@ public class SopqMemberQ implements MemberQ {
 
   @Override // from MemberQ
   public boolean test(Tensor x) {
-    return CHOP.isClose(Transpose.of(x).dot(form).dot(x), form);
+    return SquareMatrixQ.INSTANCE.test(x) //
+        && CHOP.isClose(Transpose.of(x).dot(form).dot(x), form);
   }
 }

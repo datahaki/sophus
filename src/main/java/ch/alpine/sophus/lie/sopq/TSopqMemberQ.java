@@ -3,21 +3,20 @@ package ch.alpine.sophus.lie.sopq;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class TSopqMemberQ implements MemberQ {
-  private static final Chop CHOP = Chop._08;
-  // ---
+public class TSopqMemberQ extends ZeroDefectSquareMatrixQ {
   private final Tensor form;
 
   public TSopqMemberQ(int p, int q) {
+    super(Chop._08);
     form = ScalarProductForm.of(p, q);
   }
 
-  @Override // from MemberQ
-  public boolean test(Tensor x) {
+  @Override
+  public Tensor defect(Tensor x) {
     // FIXME SOPHUS ALG implement based on /reference
-    return CHOP.isClose(Transpose.of(x).dot(form), form.dot(x));
+    return Transpose.of(x).dot(form).subtract(form.dot(x));
   }
 }

@@ -110,7 +110,7 @@ class TGrMemberQTest {
       int fn = n;
       for (int k = 0; k <= n; ++k) {
         Tensor diagonal = Join.of(ConstantArray.of(RealScalar.ONE, k), ConstantArray.of(RealScalar.ZERO, n - k));
-        Tensor x = DiagonalMatrix.with(diagonal);
+        Tensor x = DiagonalMatrix.sparse(diagonal);
         TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
         GrManifold.INSTANCE.isPointQ().require(x);
         int expected = k * (n - k);
