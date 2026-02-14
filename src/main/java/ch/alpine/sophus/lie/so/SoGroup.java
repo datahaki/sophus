@@ -14,12 +14,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.MatrixDotTranspose;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.mat.ex.MatrixExp;
-import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Chop;
@@ -62,28 +59,9 @@ public class SoGroup extends GlGroup implements MetricManifold {
         && OrthogonalMatrixQ.INSTANCE.test(x);
   }
 
-  private enum Exponential0 implements Exponential {
-    INSTANCE;
-
-    @Override // from Exponential
-    public Tensor exp(Tensor matrix) {
-      return MatrixExp.of(matrix);
-    }
-
-    @Override // from Exponential
-    public Tensor log(Tensor matrix) {
-      return MatrixLog.of(matrix);
-    }
-
-    @Override
-    public ZeroDefectArrayQ isTangentQ() {
-      return TSoMemberQ.INSTANCE;
-    }
-  }
-
   @Override
   public Exponential exponential0() {
-    return Exponential0.INSTANCE;
+    return SoExponential.INSTANCE;
   }
 
   @Override

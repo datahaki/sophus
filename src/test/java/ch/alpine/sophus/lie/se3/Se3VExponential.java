@@ -13,7 +13,7 @@ import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-enum Se3VExponential0 implements Exponential {
+enum Se3VExponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

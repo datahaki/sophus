@@ -7,7 +7,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
-import ch.alpine.sophus.lie.se3.Se3Exponential0;
+import ch.alpine.sophus.lie.se3.Se3Exponential;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -45,8 +45,8 @@ public class SeNGroup extends SeGroup implements MatrixGroup, SpecificManifold {
   @Override
   public Exponential exponential0() {
     return n == 3 //
-        ? Se3Exponential0.INSTANCE
-        : SeExponential0.INSTANCE;
+        ? Se3Exponential.INSTANCE
+        : SeExponential.INSTANCE;
   }
 
   public MatrixAlgebra matrixAlgebra() {

@@ -9,22 +9,22 @@ import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 
-enum SeExponential0 implements Exponential {
+enum SeExponential implements Exponential {
   INSTANCE;
 
   @Override // from Exponential
-  public Tensor exp(Tensor matrix) {
-    return MatrixExp.of(matrix);
+  public Tensor exp(Tensor v) {
+    return MatrixExp.of(v);
   }
 
   @Override // from Exponential
-  public Tensor log(Tensor matrix) {
-    return MatrixLog.of(matrix);
+  public Tensor log(Tensor q) {
+    return MatrixLog.of(q);
   }
 
   @Override
   public TensorUnaryOperator vectorLog() {
-    return p -> UpperVectorize.of(log(p), 1);
+    return q -> UpperVectorize.of(log(q), 1);
   }
 
   @Override

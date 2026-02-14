@@ -8,9 +8,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 /** (2 * n + 1)-dimensional Heisenberg group
  * 
@@ -51,29 +49,9 @@ public class HeGroup implements LieGroup, Serializable {
     };
   }
 
-  private enum Exponential0 implements Exponential {
-    INSTANCE;
-
-    @Override // from Exponential
-    public Tensor exp(Tensor uvw) {
-      return HeFormat.of(uvw).exp().toCoordinate();
-    }
-
-    /** @param xyz vector of the form {x1, ...., xn, y1, ..., yn, z} */
-    @Override // from Exponential
-    public Tensor log(Tensor xyz) {
-      return HeFormat.of(xyz).log().toCoordinate();
-    }
-
-    @Override
-    public ZeroDefectArrayQ isTangentQ() {
-      return VectorQ.INSTANCE;
-    }
-  }
-
   @Override
   public final Exponential exponential0() {
-    return Exponential0.INSTANCE;
+    return HeExponential.INSTANCE;
   }
 
   @Override

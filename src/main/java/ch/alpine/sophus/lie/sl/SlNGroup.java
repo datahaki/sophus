@@ -1,10 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import java.util.random.RandomGenerator;
+
+import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -12,8 +16,13 @@ import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
+import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.pow.Power;
 
-public class SlNGroup extends SlGroup implements MatrixGroup {
+public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
   private final int n;
 
   public SlNGroup(int n) {
@@ -58,8 +67,20 @@ public class SlNGroup extends SlGroup implements MatrixGroup {
     return basis.multiply(RationalScalar.HALF);
   }
 
+  @Override
   public int dimensions() {
     return n * n - 1;
+  }
+
+  @Override
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    Tensor matrix = RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, n);
+    Scalar det = Det.of(matrix);
+    if (Sign.isNegative(det)) {
+      matrix.set(Tensor::negate, 0);
+      det = det.negate();
+    }
+    return matrix.divide(Power.of(det, RationalScalar.of(1, n)));
   }
 
   @Override

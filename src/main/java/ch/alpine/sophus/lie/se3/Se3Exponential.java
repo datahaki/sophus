@@ -16,7 +16,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** from "Lie Groups for 2D and 3D Transformations" by Ethan Eade
  * http://ethaneade.com/ */
-public enum Se3Exponential0 implements Exponential {
+public enum Se3Exponential implements Exponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

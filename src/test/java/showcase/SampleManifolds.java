@@ -25,21 +25,25 @@ import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.st.StiefelManifold;
+import ch.alpine.sophus.lie.he.HeNGroup;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
+import ch.alpine.sophus.lie.sl.SlNGroup;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.mat.pi.LinearSubspaceMemberQ;
+import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -55,8 +59,13 @@ class SampleManifolds {
         new StiefelManifold(4, 2), //
         new Grassmannian(5, 2), //
         new Grassmannian(6, 3), //
+        new SpdNManifold(2), //
         new SpdNManifold(3), //
+        new SlNGroup(2), //
+        new SlNGroup(3), //
         new RnGroup(3), //
+        new HeNGroup(1), //
+        new HeNGroup(2), //
         Se2Group.INSTANCE, //
         Se2CoveringGroup.INSTANCE, //
         new SeNGroup(3), //
@@ -147,12 +156,24 @@ class SampleManifolds {
     if (homogeneousSpace instanceof SpecificManifold specificManifold) {
       assertEquals(specificManifold.dimensions(), d);
     }
-    int n = d + 3;
-    RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.1));
-    Tensor sequence = RandomSample.of(rpnts, n);
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
-    Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-    biinvariantMean.mean(sequence, weights);
+    {
+      int n = d + 3;
+      RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.1));
+      Tensor sequence = RandomSample.of(rpnts, n);
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
+      biinvariantMean.mean(sequence, weights);
+    }
+    {
+      RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.1));
+      Tensor sequence = RandomSample.of(rpnts, d);
+      Tensor slash1 = exponential.vectorLog().slash(sequence);
+      TensorUnaryOperator vectorLog = t -> Flatten.of(exponential.log(t));
+      Tensor slash2 = vectorLog.slash(sequence);
+      int rank = MatrixRank.of(slash2);
+      assertEquals(MatrixRank.of(slash1), rank);
+      assertEquals(rank, d);
+    }
   }
 
   @ParameterizedTest
@@ -170,7 +191,6 @@ class SampleManifolds {
       Tensor qpn = exp_q.log(p).negate();
       Tolerance.CHOP.requireClose(pqv, qpn);
     }
-    // ---
     Tensor log_p = exp_p.log(p);
     LinearSubspace sub_p = LinearSubspace.of(exp_p.isTangentQ()::defect, Dimensions.of(log_p));
     LinearSubspace sub_q = LinearSubspace.of(exp_q.isTangentQ()::defect, Dimensions.of(log_p));

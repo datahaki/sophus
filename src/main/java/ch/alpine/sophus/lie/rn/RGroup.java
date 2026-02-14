@@ -13,6 +13,7 @@ import ch.alpine.sophus.math.api.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
@@ -48,6 +49,11 @@ public class RGroup implements LieGroup, MetricManifold, Serializable {
     @Override // from Exponential
     public Tensor log(Tensor y) {
       return y.copy();
+    }
+
+    @Override
+    public TensorUnaryOperator vectorLog() {
+      return log();
     }
 
     @Override

@@ -35,7 +35,7 @@ public interface Exponential {
   }
 
   default TensorUnaryOperator vectorLog() {
-    return t -> Flatten.of(log(t));
+    return q -> Flatten.of(log(q));
   }
 
   /** @return checks whether a given tensor is a tangent vector */

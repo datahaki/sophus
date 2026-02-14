@@ -4,11 +4,13 @@ package ch.alpine.sophus.hs.spd;
 import java.io.Serializable;
 
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.UpperVectorize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -62,6 +64,11 @@ public class SpdExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     return basis(Spd0Exponential.INSTANCE.log(basis(q, pn)), pp);
+  }
+
+  @Override
+  public TensorUnaryOperator vectorLog() {
+    return q -> UpperVectorize.of(log(q), 0);
   }
 
   @Override

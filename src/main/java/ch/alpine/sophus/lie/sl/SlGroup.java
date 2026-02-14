@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
+import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.chq.MemberQ;
@@ -13,6 +14,11 @@ public class SlGroup extends GlGroup {
 
   protected SlGroup() {
     // ---
+  }
+
+  @Override
+  public Exponential exponential0() {
+    return SlExponential.INSTANCE;
   }
 
   @Override // from MemberQ

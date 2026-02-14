@@ -7,6 +7,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -14,6 +15,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Trace;
@@ -33,5 +35,13 @@ class SlGroupTest {
     Tolerance.CHOP.requireZero(Trace.of(diff));
     Tensor result = MatrixExp.of(diff);
     Tolerance.CHOP.requireClose(Det.of(result), RealScalar.ONE);
+  }
+
+  @RepeatedTest(10)
+  void testRandom(RepetitionInfo repetitionInfo) {
+    int n = repetitionInfo.getCurrentRepetition() + 1;
+    SlNGroup seNGroup = new SlNGroup(n);
+    Tensor matrix = RandomSample.of(seNGroup);
+    Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);
   }
 }

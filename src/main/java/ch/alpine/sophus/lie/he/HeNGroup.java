@@ -1,6 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
+import java.util.random.RandomGenerator;
+
+import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.VectorEncodingMarker;
 import ch.alpine.tensor.RealScalar;
@@ -10,8 +13,10 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class HeNGroup extends HeGroup implements MatrixGroup, VectorEncodingMarker {
+public class HeNGroup extends HeGroup implements SpecificManifold, MatrixGroup, VectorEncodingMarker {
   private final int n;
 
   public HeNGroup(int n) {
@@ -49,6 +54,11 @@ public class HeNGroup extends HeGroup implements MatrixGroup, VectorEncodingMark
   @Override
   public int dimensions() {
     return n * 2 + 1;
+  }
+
+  @Override
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return RandomVariate.of(NormalDistribution.standard(), randomGenerator, dimensions());
   }
 
   @Override

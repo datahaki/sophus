@@ -14,10 +14,10 @@ import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-class Se3Exponential0Test {
+class Se3ExponentialTest {
   @Test
   void test() {
-    Exponential exponential = Se3Exponential0.INSTANCE;
+    Exponential exponential = Se3Exponential.INSTANCE;
     ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, 4, 4);
     assertEquals(linearSubspace.dimensions(), 6);

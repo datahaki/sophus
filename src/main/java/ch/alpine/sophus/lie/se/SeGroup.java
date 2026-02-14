@@ -27,7 +27,7 @@ public class SeGroup extends GlGroup {
 
   @Override
   public Exponential exponential0() {
-    return SeExponential0.INSTANCE;
+    return SeExponential.INSTANCE;
   }
 
   @Override
