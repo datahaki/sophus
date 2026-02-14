@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.lie.se;
+package ch.alpine.sophus.lie.se3;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

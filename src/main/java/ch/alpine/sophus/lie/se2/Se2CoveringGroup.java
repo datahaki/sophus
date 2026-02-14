@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.se2;
 
 import java.io.Serializable;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
@@ -19,6 +20,12 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sin;
 import ch.alpine.tensor.sca.tri.Tan;
@@ -29,7 +36,7 @@ import ch.alpine.tensor.sca.tri.Tan;
  * References:
  * <a href="http://vixra.org/abs/1807.0463">1807.0463</a>
  * <a href="https://www.youtube.com/watch?v=2vDciaUgL4E">video</a> */
-public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMarker, Serializable {
+public class Se2CoveringGroup implements LieGroup, RandomSampleInterface, MatrixGroup, VectorEncodingMarker, Serializable {
   private static final Scalar HALF = RealScalar.of(0.5);
   public static final Se2CoveringGroup INSTANCE = new Se2CoveringGroup();
   // ---
@@ -40,7 +47,7 @@ public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMa
 
   @Override
   public final MemberQ isPointQ() {
-    return t -> VectorQ.ofLength(t, 3);
+    return VectorQ.ofLength(dimensions());
   }
 
   @Override
@@ -185,6 +192,12 @@ public class Se2CoveringGroup implements LieGroup, MatrixGroup, VectorEncodingMa
   @Override
   public final int dimensions() {
     return 3;
+  }
+
+  @Override
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return RandomVariate.of(NormalDistribution.standard(), randomGenerator, 2) //
+        .append(RandomVariate.of(UniformDistribution.of(Clips.absolute(Pi.VALUE)), randomGenerator));
   }
 
   @Override

@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.rn.RGroup;
-import ch.alpine.sophus.lie.se.Se3Group;
-import ch.alpine.sophus.lie.se.Se3Matrix;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2RandomSample;
+import ch.alpine.sophus.lie.se3.Se3Group;
+import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.sophus.lie.so.Rodrigues;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

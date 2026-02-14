@@ -23,18 +23,19 @@ import ch.alpine.tensor.sca.tri.Sinhc;
  * 
  * @see HManifold */
 public class HExponential implements Exponential, Serializable {
-  private final HWeierstrassCoordinate px;
-  private final Tensor p;
+  private final HWeierstrassCoordinate p;
+  /** p with extra coordinate */
+  private final Tensor p_h;
 
-  HExponential(Tensor px) {
-    this.px = new HWeierstrassCoordinate(px);
-    p = this.px.toPoint();
+  HExponential(Tensor p) {
+    this.p = new HWeierstrassCoordinate(p);
+    p_h = this.p.toPoint();
   }
 
   /** @param y
    * @return result guaranteed to be greater equals 1 */
   private Scalar _cosh_d(Tensor y) {
-    Scalar cosh_d = LBilinearForm.INSTANCE.formEval(p, y).negate();
+    Scalar cosh_d = LBilinearForm.INSTANCE.formEval(p_h, y).negate();
     if (Scalars.lessEquals(RealScalar.ONE, cosh_d))
       return cosh_d;
     Chop._08.requireClose(cosh_d, RealScalar.ONE);
@@ -43,9 +44,9 @@ public class HExponential implements Exponential, Serializable {
 
   @Override // from Exponential
   public Tensor exp(Tensor vx) {
-    Scalar vn = px.toNorm(vx);
-    Tensor v = px.toTangent(vx);
-    Tensor exp = p.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
+    Scalar vn = p.toNorm(vx);
+    Tensor v = p.toTangent(vx);
+    Tensor exp = p_h.multiply(Cosh.FUNCTION.apply(vn)).add(v.multiply(Sinhc.FUNCTION.apply(vn)));
     return Drop.tail(exp, 1);
   }
 
@@ -55,12 +56,12 @@ public class HExponential implements Exponential, Serializable {
     // embedding of TxH^n in R^(n+1) is not tight
     Scalar cosh_d = _cosh_d(y);
     Scalar angle = ArcCosh.FUNCTION.apply(cosh_d);
-    Tensor log = y.subtract(p.multiply(cosh_d)).divide(Sinhc.FUNCTION.apply(angle));
+    Tensor log = y.subtract(p_h.multiply(cosh_d)).divide(Sinhc.FUNCTION.apply(angle));
     return Drop.tail(log, 1);
   }
 
   @Override
   public ZeroDefectArrayQ isTangentQ() {
-    return VectorQ.ofLength(p.length());
+    return VectorQ.ofLength(p.p().length());
   }
 }

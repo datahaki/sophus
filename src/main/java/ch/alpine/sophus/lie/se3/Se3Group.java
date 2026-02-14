@@ -1,9 +1,10 @@
 // code by jph
-package ch.alpine.sophus.lie.se;
+package ch.alpine.sophus.lie.se3;
 
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.VectorEncodingMarker;
 import ch.alpine.sophus.lie.gl.GlGroup;
+import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.sophus.lie.so.Rodrigues;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,7 +14,6 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** g is a 4 x 4 affine matrix in SE(3)
@@ -73,7 +73,7 @@ public class Se3Group extends SeNGroup implements VectorEncodingMarker {
 
     @Override
     public ZeroDefectArrayQ isTangentQ() {
-      return MatrixQ.ofSize(2, 3);
+      return VectorQ.ofLength(6);
     }
   }
 

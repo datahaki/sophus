@@ -10,7 +10,7 @@ import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class TSeMemberQ extends ZeroDefectSquareMatrixQ {
+/* package */ class TSeMemberQ extends ZeroDefectSquareMatrixQ {
   private static final List<Integer> LIST = List.of(0, 0);
   public static final ZeroDefectArrayQ INSTANCE = new TSeMemberQ();
 

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -18,18 +19,22 @@ import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
+import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
 import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.hs.st.StiefelManifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
+import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
+import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -48,6 +53,8 @@ public class SampleManifolds {
         new RnGroup(3), //
         Se2Group.INSTANCE, //
         Se2CoveringGroup.INSTANCE, //
+        Se3Group.INSTANCE, //
+        new SeNGroup(4), //
         new SoNGroup(2), //
         new SoNGroup(3), //
         new SoNGroup(4), //
@@ -61,8 +68,20 @@ public class SampleManifolds {
 
   @ParameterizedTest
   @MethodSource("list")
+  void testSerialization(Manifold manifold) throws ClassNotFoundException, IOException {
+    Serialization.copy(manifold);
+    Serialization.copy(manifold.isPointQ());
+    assumeTrue(manifold instanceof HomogeneousSpace);
+    RandomSampleInterface rsi = (RandomSampleInterface) manifold;
+    Tensor p = RandomSample.of(rsi);
+    Exponential exponential = manifold.exponential(p);
+    Serialization.copy(exponential);
+    Serialization.copy(exponential.isTangentQ());
+  }
+
+  @ParameterizedTest
+  @MethodSource("list")
   void testDistance(Manifold manifold) {
-    assumeTrue(manifold instanceof RandomSampleInterface);
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
@@ -87,7 +106,6 @@ public class SampleManifolds {
   @ParameterizedTest
   @MethodSource("list")
   void testExponential(Manifold manifold) {
-    assumeTrue(manifold instanceof RandomSampleInterface);
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
@@ -113,7 +131,6 @@ public class SampleManifolds {
   @ParameterizedTest
   @MethodSource("list")
   void testBiinvMean(Manifold manifold) {
-    assumeTrue(manifold instanceof RandomSampleInterface);
     assumeTrue(manifold instanceof HomogeneousSpace);
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifold;
     RandomSampleInterface rsi = (RandomSampleInterface) manifold;
@@ -126,8 +143,12 @@ public class SampleManifolds {
     List<Integer> list = Dimensions.of(log_p);
     Tolerance.CHOP.requireAllZero(log_p);
     ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
+    zeroDefectArrayQ.require(log_p);
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
     int d = linearSubspace.dimensions();
+    if (manifold instanceof SpecificManifold specificManifold) {
+      assertEquals(specificManifold.dimensions(), d);
+    }
     int n = d + 3;
     Tensor coeffs = RandomVariate.of(NormalDistribution.of(0.0, 0.02), n, d);
     Tensor tangents = linearSubspace.slash(coeffs);

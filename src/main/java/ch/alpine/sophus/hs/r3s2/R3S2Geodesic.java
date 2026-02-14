@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.r3s2;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.s.SnRotationMatrix;
-import ch.alpine.sophus.lie.se.Se3Group;
-import ch.alpine.sophus.lie.se.Se3Matrix;
+import ch.alpine.sophus.lie.se3.Se3Group;
+import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
