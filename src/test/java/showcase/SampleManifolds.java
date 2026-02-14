@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.LocalRandomSample;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -28,6 +29,7 @@ import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so.SoNGroup;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
@@ -146,13 +148,10 @@ class SampleManifolds {
       assertEquals(specificManifold.dimensions(), d);
     }
     int n = d + 3;
-    Tensor coeffs = RandomVariate.of(NormalDistribution.of(0.0, 0.02), n, d);
-    Tensor tangents = linearSubspace.slash(coeffs);
-    Tensor sequence = exponential.exp().slash(tangents);
+    RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.1));
+    Tensor sequence = RandomSample.of(rpnts, n);
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
-    // FIXME
-    if (!homogeneousSpace.toString().startsWith("SO["))
-      biinvariantMean.mean(sequence, weights);
+    biinvariantMean.mean(sequence, weights);
   }
 }

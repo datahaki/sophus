@@ -124,17 +124,17 @@ class GrassmannianTest {
       Grassmannian grassmannian = new Grassmannian(n, k);
       Tensor p = RandomSample.of(grassmannian);
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-      LinearSubspace homogeneousSpan = LinearSubspace.of(tGrMemberQ::defect, n, n);
+      LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::defect, n, n);
       Tensor v = RandomVariate.of(distribution, n, n);
       Tensor v1 = tGrMemberQ.projection(v);
       tGrMemberQ.require(v1);
       assertFalse(tGrMemberQ.test(v));
-      Tensor v2 = homogeneousSpan.projection(v);
+      Tensor v2 = linearSubspace.projection(v);
       tGrMemberQ.require(v2);
       Tolerance.CHOP.requireClose(v1, v2);
-      int dim = homogeneousSpan.basis().length();
+      int dim = linearSubspace.basis().length();
       Tensor weights = RandomVariate.of(UniformDistribution.unit(20), dim);
-      Tensor w = weights.dot(homogeneousSpan.basis()).multiply(RealScalar.of(.1));
+      Tensor w = weights.dot(linearSubspace.basis()).multiply(RealScalar.of(.1));
       Tensor q = grassmannian.exponential(p).exp(w);
       grassmannian.isPointQ().test(q);
     }
