@@ -1,6 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
+import java.util.random.RandomGenerator;
+
+import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -11,8 +14,11 @@ import ch.alpine.tensor.alg.Tuples;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.io.Primitives;
+import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class GlNGroup extends GlGroup implements MatrixGroup {
+public class GlNGroup extends GlGroup implements SpecificManifold, MatrixGroup {
   private final int n;
 
   public GlNGroup(int n) {
@@ -31,6 +37,16 @@ public class GlNGroup extends GlGroup implements MatrixGroup {
       basis.append(elem);
     }
     return basis;
+  }
+
+  @Override
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return MatrixExp.of(RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, n));
+  }
+
+  @Override
+  public int dimensions() {
+    return n * n;
   }
 
   @Override

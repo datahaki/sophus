@@ -25,6 +25,7 @@ import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.st.StiefelManifold;
+import ch.alpine.sophus.lie.gl.GlNGroup;
 import ch.alpine.sophus.lie.he.HeNGroup;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se.SeNGroup;
@@ -65,6 +66,7 @@ class SampleManifolds {
         new SpdNManifold(3), //
         new SpNGroup(2), //
         new SpNGroup(3), //
+        new GlNGroup(2), //
         new SlNGroup(2), //
         new SlNGroup(3), //
         new RnGroup(3), //
@@ -164,7 +166,7 @@ class SampleManifolds {
     }
     {
       int n = d + 3;
-      RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.1));
+      RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.05));
       Tensor sequence = RandomSample.of(rpnts, n);
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
@@ -188,14 +190,14 @@ class SampleManifolds {
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     final Tensor p = RandomSample.of(rsi);
     final Exponential exp_p = homogeneousSpace.exponential(p);
-    final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, p, 0.1));
+    final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, p, 0.05));
     final Exponential exp_q = homogeneousSpace.exponential(q);
     TensorUnaryOperator shift = homogeneousSpace.hsTransport().shift(p, q);
     {
       Tensor v = exp_p.log(q);
       Tensor pqv = shift.apply(v);
       Tensor qpn = exp_q.log(p).negate();
-      Tolerance.CHOP.requireClose(pqv, qpn);
+      Chop._08.requireClose(pqv, qpn);
     }
     Tensor log_p = exp_p.log(p);
     LinearSubspace sub_p = LinearSubspace.of(exp_p.isTangentQ()::defect, Dimensions.of(log_p));

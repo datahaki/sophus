@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie.so;
 
 import java.util.random.RandomGenerator;
 
+import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.RealScalar;
@@ -19,7 +20,6 @@ import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
@@ -29,7 +29,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
  * for n == 2 and n == 3 there are faster alternatives
  * 
  * consistent with {@link RotationMatrix} and {@link So3Exponential} */
-public class SoNGroup extends SoGroup implements MatrixGroup, RandomSampleInterface {
+public class SoNGroup extends SoGroup implements SpecificManifold, MatrixGroup {
   private final int n;
 
   public SoNGroup(int n) {
@@ -65,6 +65,7 @@ public class SoNGroup extends SoGroup implements MatrixGroup, RandomSampleInterf
         .getQConjugateTranspose();
   }
 
+  @Override
   public int dimensions() {
     return n * (n - 1) / 2;
   }
