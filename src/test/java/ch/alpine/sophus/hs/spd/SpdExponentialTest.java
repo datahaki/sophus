@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.spd;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.mat.ex.MatrixLog;
@@ -28,12 +26,12 @@ import ch.alpine.tensor.sca.Clips;
 class SpdExponentialTest {
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 4 })
-  void testSimple(int n) throws ClassNotFoundException, IOException {
+  void testSimple(int n) {
     Random randomGenerator = new Random(3);
     RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor p = RandomSample.of(spd, randomGenerator);
     Tensor q = RandomSample.of(spd, randomGenerator);
-    SpdExponential exp_p = Serialization.copy(new SpdExponential(p));
+    SpdExponential exp_p = new SpdExponential(p);
     Tensor w = exp_p.log(q);
     Tensor exp = exp_p.exp(w);
     Chop._08.requireClose(q, exp);

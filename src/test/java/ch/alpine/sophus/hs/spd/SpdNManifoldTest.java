@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.spd;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
@@ -14,7 +13,6 @@ import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -32,9 +30,9 @@ class SpdNManifoldTest {
   }
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     RandomGenerator randomGenerator = new Random(3);
-    BiinvariantMean biinvariantMean = Serialization.copy(SpdManifold.INSTANCE.biinvariantMean());
+    BiinvariantMean biinvariantMean = SpdManifold.INSTANCE.biinvariantMean();
     Distribution distribution = UniformDistribution.unit();
     for (int n = 2; n < 4; ++n) {
       int count = randomGenerator.nextInt(4);

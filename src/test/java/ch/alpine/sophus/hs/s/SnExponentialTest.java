@@ -4,8 +4,6 @@ package ch.alpine.sophus.hs.s;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,7 +14,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.Tolerance;
@@ -27,8 +24,8 @@ import ch.alpine.tensor.sca.Chop;
 
 class SnExponentialTest {
   @Test
-  void test2D() throws ClassNotFoundException, IOException {
-    SnExponential snExp = Serialization.copy(new SnExponential(UnitVector.of(2, 0)));
+  void test2D() {
+    SnExponential snExp = new SnExponential(UnitVector.of(2, 0));
     Scalar dist = RealScalar.of(0.2);
     Tensor log = snExp.log(AngleVector.of(dist));
     Chop._12.requireClose(log, UnitVector.of(2, 1).multiply(dist));

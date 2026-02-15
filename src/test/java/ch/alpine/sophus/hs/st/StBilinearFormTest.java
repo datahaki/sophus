@@ -3,7 +3,6 @@ package ch.alpine.sophus.hs.st;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
@@ -15,7 +14,6 @@ import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -25,7 +23,7 @@ import ch.alpine.tensor.sca.Im;
 class StBilinearFormTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
-  void testSimple(int n) throws ClassNotFoundException, IOException {
+  void testSimple(int n) {
     RandomGenerator randomGenerator = new Random(1);
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
@@ -37,7 +35,7 @@ class StBilinearFormTest {
       assertTrue(Im.allZero(v));
       BilinearForm bilinearForm = stiefelManifold.bilinearForm(p);
       Scalar norm = bilinearForm.norm(v);
-      Exponential exponential = Serialization.copy(stiefelManifold.exponential(p));
+      Exponential exponential = stiefelManifold.exponential(p);
       Tensor q = exponential.exp(v);
       assertTrue(Im.allZero(q));
       Tensor w = exponential.log(q);

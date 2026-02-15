@@ -3,7 +3,6 @@ package ch.alpine.sophus.bm;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -16,7 +15,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.num.Pi;
@@ -54,7 +52,7 @@ class IterativeBiinvariantMeanTest {
   // Tests form more groups however i think that e.g. HE1 could cause problems due to tensor of tensor structure.
 
   @Test
-  void testSome() throws ClassNotFoundException, IOException {
+  void testSome() {
     RandomGenerator randomGenerator = new Random(2);
     Distribution distribution = NormalDistribution.of(0, 0.2);
     int success = 0;
@@ -63,7 +61,7 @@ class IterativeBiinvariantMeanTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, length));
       Tensor actual = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, weights);
       IterativeBiinvariantMean biinvariantMeanImplicit = //
-          Serialization.copy(IterativeBiinvariantMean.argmax(Se2CoveringGroup.INSTANCE));
+          IterativeBiinvariantMean.argmax(Se2CoveringGroup.INSTANCE);
       Optional<Tensor> result = biinvariantMeanImplicit.apply(sequence, weights);
       if (result.isPresent()) {
         Chop._06.requireClose(actual, result.orElseThrow());

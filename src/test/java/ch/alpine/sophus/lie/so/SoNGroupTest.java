@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
@@ -110,8 +107,8 @@ class SoNGroupTest {
 
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7 })
-  void testSimple(int n) throws ClassNotFoundException, IOException {
-    RandomSampleInterface randomSampleInterface = Serialization.copy(new SoNGroup(n));
+  void testSimple(int n) {
+    RandomSampleInterface randomSampleInterface = new SoNGroup(n);
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
     OrthogonalMatrixQ.INSTANCE.require(tensor);

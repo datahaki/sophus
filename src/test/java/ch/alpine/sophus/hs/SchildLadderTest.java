@@ -3,8 +3,6 @@ package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.s.SnManifold;
@@ -17,7 +15,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Chop;
@@ -35,12 +32,12 @@ class SchildLadderTest {
   }
 
   @Test
-  void testSn() throws ClassNotFoundException, IOException {
+  void testSn() {
     Tensor orig = UnitVector.of(3, 0);
     Tensor dest = UnitVector.of(3, 1);
     TensorUnaryOperator shift1 = new SchildLadder(SnManifold.INSTANCE).shift(orig, dest);
-    TensorUnaryOperator shift2 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE)).shift(orig, dest);
-    TensorUnaryOperator shift3 = Serialization.copy(new SchildLadder(SnManifold.INSTANCE)).shift(orig, dest);
+    TensorUnaryOperator shift2 = new SchildLadder(SnManifold.INSTANCE).shift(orig, dest);
+    TensorUnaryOperator shift3 = new SchildLadder(SnManifold.INSTANCE).shift(orig, dest);
     TensorUnaryOperator shift4 = SnTransport.INSTANCE.shift(orig, dest);
     {
       Tensor v1 = UnitVector.of(3, 1);

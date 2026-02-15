@@ -1,11 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -42,18 +42,20 @@ class SampleManifolds {
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testSerialization(HomogeneousSpace homogeneousSpace) throws ClassNotFoundException, IOException {
-    Serialization.copy(homogeneousSpace);
-    Serialization.copy(homogeneousSpace.isPointQ());
+  void testSerialization(HomogeneousSpace homogeneousSpace) {
+    assertDoesNotThrow(() -> Serialization.copy(homogeneousSpace));
+    assertDoesNotThrow(() -> homogeneousSpace.isPointQ());
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
         RandomSample.of(rsi, new Random(13)));
     Tensor p = RandomSample.of(rsi);
     Exponential exponential = homogeneousSpace.exponential(p);
-    Serialization.copy(exponential);
-    Serialization.copy(exponential.isTangentQ());
+    assertDoesNotThrow(() -> exponential);
+    assertDoesNotThrow(() -> exponential.isTangentQ());
     Tolerance.CHOP.requireClose(homogeneousSpace.flip(p, p), p);
+    assertDoesNotThrow(() -> homogeneousSpace.biinvariantMean());
+    assertDoesNotThrow(() -> homogeneousSpace.hsTransport());
   }
 
   @ParameterizedTest

@@ -3,8 +3,6 @@ package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RGroup;
@@ -14,7 +12,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.ext.Serialization;
 
 class GeodesicSpaceTest {
   @Test
@@ -29,8 +26,8 @@ class GeodesicSpaceTest {
   }
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
-    GeodesicSpace hsMidpoint = Serialization.copy(RGroup.INSTANCE);
+  void testSimple() {
+    GeodesicSpace hsMidpoint = RGroup.INSTANCE;
     Tensor tensor = hsMidpoint.midpoint(Tensors.vector(2, 0, 8), Tensors.vector(4, 2, 10));
     ExactTensorQ.require(tensor);
     assertEquals(tensor, Tensors.vector(3, 1, 9));

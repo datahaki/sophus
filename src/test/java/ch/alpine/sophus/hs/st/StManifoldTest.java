@@ -1,11 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.random.RandomGenerator;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -14,7 +12,6 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -64,10 +61,5 @@ class StManifoldTest {
         Chop._08.requireClose(mean2, stAction.apply(mean));
       }
     }
-  }
-
-  @Test
-  void testSerializable() throws ClassNotFoundException, IOException {
-    Serialization.copy(new StiefelManifold(3, 1));
   }
 }

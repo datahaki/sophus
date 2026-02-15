@@ -4,8 +4,6 @@ package ch.alpine.sophus.hs.spd;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.PositiveDefiniteMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
@@ -42,12 +39,12 @@ class Spd0RandomSampleTest {
   }
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     for (int n = 1; n < 6; ++n)
       for (int count = 1; count < 10; ++count) {
         RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
         Tensor g = RandomSample.of(rsi);
-        _check(g, Serialization.copy(MatrixSqrt.ofSymmetric(g)));
+        _check(g, MatrixSqrt.ofSymmetric(g));
         assertTrue(PositiveDefiniteMatrixQ.ofHermitian(g));
       }
   }

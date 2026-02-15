@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +15,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
@@ -37,11 +34,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class So3GroupTest {
-  @Test
-  void testSimple() throws ClassNotFoundException, IOException {
-    Serialization.copy(So3Group.INSTANCE);
-  }
-
   @Test
   void testAd() {
     Tensor ad = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis()).ad();

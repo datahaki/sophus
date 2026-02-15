@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,7 +16,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
@@ -142,18 +139,18 @@ class GrassmannianTest {
   }
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     for (int k = 1; k < 5; ++k) {
-      RandomSampleInterface grRandomSample = Serialization.copy(new Grassmannian(k + 3, k));
+      RandomSampleInterface grRandomSample = new Grassmannian(k + 3, k);
       Tensor x = RandomSample.of(grRandomSample);
       GrManifold.INSTANCE.isPointQ().require(x);
     }
   }
 
   @Test
-  void testNN() throws ClassNotFoundException, IOException {
+  void testNN() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = Serialization.copy(new Grassmannian(n, n));
+      RandomSampleInterface randomSampleInterface = new Grassmannian(n, n);
       Tensor x = RandomSample.of(randomSampleInterface);
       GrManifold.INSTANCE.isPointQ().require(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));

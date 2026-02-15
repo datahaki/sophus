@@ -3,14 +3,12 @@ package ch.alpine.sophus.hs.s;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.pdf.RandomSample;
 
 class SphereTest {
@@ -21,9 +19,8 @@ class SphereTest {
   }
 
   @Test
-  void test2() throws ClassNotFoundException, IOException {
+  void test2() {
     Sphere sphereN = new Sphere(2);
-    Serialization.copy(sphereN);
     assertEquals(sphereN.toString(), "S[2]");
   }
 

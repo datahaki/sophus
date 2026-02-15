@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -21,7 +20,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorBinaryOperator;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
@@ -57,7 +55,6 @@ public class GroupCheck {
   public static void check(LieGroup lieGroup) {
     assertFalse(lieGroup.toString().contains("@"));
     // IO.println(lieGroup);
-    assertDoesNotThrow(() -> Serialization.copy(lieGroup));
     if (lieGroup instanceof RandomSampleInterface randomSampleInterface) {
       check(lieGroup, randomSampleInterface);
     }

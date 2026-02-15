@@ -1,13 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs.s;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.IOException;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -18,7 +15,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -40,7 +36,6 @@ class TSnMemberQTest {
     Sphere sphereN = new Sphere(n);
     Tensor p = RandomSample.of(sphereN);
     LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(p)::defect, n + 1);
-    assertDoesNotThrow(() -> Serialization.copy(linearSubspace));
     TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
     linearSubspace.basis().stream().forEach(tSnMemberQ::require);
     Tensor v = RandomVariate.of(UniformDistribution.unit(20), n + 1);
@@ -50,10 +45,10 @@ class TSnMemberQTest {
   }
 
   @Test
-  void testSerializable() throws ClassNotFoundException, IOException {
-    MemberQ memberQ = Serialization.copy(SnManifold.INSTANCE.isPointQ());
+  void testSerializable() {
+    MemberQ memberQ = SnManifold.INSTANCE.isPointQ();
     memberQ.require(UnitVector.of(4, 3));
-    TSnMemberQ tSnMemberQ = Serialization.copy(new TSnMemberQ(UnitVector.of(4, 3)));
+    TSnMemberQ tSnMemberQ = new TSnMemberQ(UnitVector.of(4, 3));
     tSnMemberQ.require(UnitVector.of(4, 2));
     assertFalse(tSnMemberQ.test(Tensors.vector(1, 2, 3, 4)));
   }

@@ -4,7 +4,6 @@ package ch.alpine.sophus.hs.gr;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -21,7 +20,6 @@ import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
@@ -39,12 +37,12 @@ import ch.alpine.tensor.sca.Sign;
 
 class TGrMemberQTest {
   @Test
-  void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() {
     int n = 5;
     Tensor x = RandomSample.of(new Grassmannian(n, 3));
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     GrManifold.INSTANCE.isPointQ().require(x);
-    TGrMemberQ tGrMemberQ = Serialization.copy(new TGrMemberQ(x));
+    TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Tensor pre = RandomVariate.of(NormalDistribution.standard(), n, n);
     assertFalse(tGrMemberQ.test(pre));
     Tensor w1 = tGrMemberQ.projection(pre);

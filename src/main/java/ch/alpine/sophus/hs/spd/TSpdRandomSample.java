@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 
 /** @param n strictly positive
  * @param distribution */
-public record TSpdRandomSample(int n, Distribution distribution) implements RandomSampleInterface, Serializable {
+/* package */ record TSpdRandomSample(int n, Distribution distribution) implements RandomSampleInterface, Serializable {
   public TSpdRandomSample {
     Integers.requirePositive(n);
   }

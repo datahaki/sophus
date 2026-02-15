@@ -28,14 +28,14 @@ class RpnManifoldTest {
         Tensor angles = RandomVariate.of(distribution, randomGenerator, n);
         Tensor sequence = angles.maps(AngleVector::of);
         Tensor weights = AveragingWeights.INSTANCE.origin(sequence);
-        Tensor point = RpnManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
+        Tensor point = RpManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
         Chop._12.requireClose(ArcTan2D.of(point), Mean.of(angles));
       }
   }
 
   @Test
   void testDistance() {
-    Tolerance.CHOP.requireZero(RpnManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(+10, 0, 0)));
-    Tolerance.CHOP.requireZero(RpnManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(-10, 0, 0)));
+    Tolerance.CHOP.requireZero(RpManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(+10, 0, 0)));
+    Tolerance.CHOP.requireZero(RpManifold.INSTANCE.distance(Tensors.vector(2, 0, 0), Tensors.vector(-10, 0, 0)));
   }
 }
