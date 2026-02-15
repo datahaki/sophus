@@ -6,7 +6,9 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.ext.Integers;
 
 /** (2 * n + 1)-dimensional Heisenberg group
  * 
@@ -41,10 +43,7 @@ public class HeGroup extends AbstractLieGroup {
 
   @Override
   public MemberQ isPointQ() {
-    return uvw -> {
-      HeFormat.of(uvw); // TODO throws
-      return true;
-    };
+    return uvw -> VectorQ.of(uvw) && Integers.isOdd(uvw.length());
   }
 
   @Override

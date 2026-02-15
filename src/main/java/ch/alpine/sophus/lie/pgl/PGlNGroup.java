@@ -40,6 +40,6 @@ public class PGlNGroup extends PGlGroup implements MatrixGroup {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("PGL", n);
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

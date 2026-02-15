@@ -22,7 +22,6 @@ public class SpNGroup extends SpGroup implements SpecificManifold {
   }
 
   public MatrixAlgebra matrixAlgebra() {
-    int m = n + 1;
     return new MatrixAlgebra(linearSubspace.basis());
   }
 

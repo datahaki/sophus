@@ -40,6 +40,7 @@ class PGlGroupTest {
     assertEquals(linearSubspace.dimensions(), dim);
     Tensor w = RandomVariate.of(NormalDistribution.of(0, 0.0003), dim);
     Tensor address = linearSubspace.apply(w);
+    address.negate();
     // IO.println(Pretty.of(MatrixExp.of(address).map(Round._4)));
   }
 }

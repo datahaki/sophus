@@ -47,7 +47,8 @@ class GrassmannianTest {
   void testIllegal() {
     assertThrows(Exception.class, () -> new Grassmannian(0, +0));
     assertThrows(Exception.class, () -> new Grassmannian(4, -1));
-    new Grassmannian(4, +0);
+    assertEquals(new Grassmannian(4, +0).dimensions(), 0);
+    assertEquals(new Grassmannian(4, +4).dimensions(), 0);
     assertThrows(Exception.class, () -> new Grassmannian(4, +5));
   }
 

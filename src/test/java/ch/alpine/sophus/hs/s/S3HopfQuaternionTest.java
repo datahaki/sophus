@@ -22,7 +22,8 @@ class S3HopfQuaternionTest {
     Tensor xyza = RandomSample.of(sphere);
     Quaternion q = Quaternion.of(xyza.Get(3), xyza.extract(0, 3));
     S3HopfQuaternion s3HopfQuaternion = new S3HopfQuaternion(q);
-    Tensor xyz = s3HopfQuaternion.project();
+    // Tensor xyz =
+    s3HopfQuaternion.project();
     Scalar angle = RandomVariate.of(UniformDistribution.of(Clips.absolute(Pi.VALUE)));
     Tensor tensor = s3HopfQuaternion.lift(angle);
     Tolerance.CHOP.requireClose(Vector2Norm.of(tensor), RealScalar.ONE);

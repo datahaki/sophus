@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.Tolerance;
 public class PGlGroup extends GlGroup {
   public static final PGlGroup INSTANCE = new PGlGroup();
 
-  PGlGroup() {
+  protected PGlGroup() {
   }
 
   @Override
@@ -29,5 +29,10 @@ public class PGlGroup extends GlGroup {
     // TODO SOPHUS protected_project also required in EXPONENTIAL
     int n = matrix.length() - 1;
     return matrix.divide(matrix.Get(n, n));
+  }
+
+  @Override
+  public String toString() {
+    return "PGl";
   }
 }

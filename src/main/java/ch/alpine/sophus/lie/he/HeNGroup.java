@@ -10,6 +10,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -25,8 +26,7 @@ public class HeNGroup extends HeGroup implements SpecificManifold, MatrixGroup, 
 
   @Override
   public MemberQ isPointQ() {
-    return uvw -> dimensions() == uvw.length() //
-        && super.isPointQ().test(uvw);
+    return uvw -> VectorQ.of(uvw) && dimensions() == uvw.length();
   }
 
   @Override
