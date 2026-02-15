@@ -35,7 +35,9 @@ class PGlGroupTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4 })
   void testSimple(int n) {
-    LinearSubspace linearSubspace = LinearSubspace.of(TPGlMemberQ.INSTANCE::defect, n, n);
+    PGlNGroup pGlNGroup = new PGlNGroup(n);
+    LinearSubspace linearSubspace = //
+        LinearSubspace.of(pGlNGroup.exponential0().isTangentQ()::defect, n, n);
     int dim = n * n - 1;
     assertEquals(linearSubspace.dimensions(), dim);
     Tensor w = RandomVariate.of(NormalDistribution.of(0, 0.0003), dim);

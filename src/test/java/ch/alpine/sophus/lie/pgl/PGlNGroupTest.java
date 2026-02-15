@@ -10,5 +10,6 @@ class PGlNGroupTest {
   void test() {
     PGlNGroup pGlNGroup = new PGlNGroup(3);
     assertEquals(pGlNGroup.dimensions(), 8);
+    // GroupCheck.check(pGlNGroup);
   }
 }

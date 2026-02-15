@@ -69,16 +69,12 @@ public class GlGroup extends AbstractLieGroup {
 
   @Override
   public Tensor invert(Tensor matrix) {
-    return protected_project(Inverse.of(matrix));
+    return Inverse.of(matrix);
   }
 
   @Override
   public final Tensor combine(Tensor matrix1, Tensor matrix2) {
-    return protected_project(matrix1.dot(SquareMatrixQ.INSTANCE.require(matrix2)));
-  }
-
-  protected Tensor protected_project(Tensor matrix) {
-    return matrix;
+    return matrix1.dot(SquareMatrixQ.INSTANCE.require(matrix2));
   }
 
   @Override
