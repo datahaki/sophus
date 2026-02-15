@@ -1,8 +1,9 @@
 // code by jph
-package ch.alpine.sophus.hs.s;
+package ch.alpine.sophus.hs.rpn;
 
 import java.util.random.RandomGenerator;
 
+import ch.alpine.sophus.hs.s.SphereRandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Abs;
@@ -21,8 +22,8 @@ public class HemisphereRandomSample extends SphereRandomSample {
   }
 
   /** Example:
-   * dimension == 0 consist of the points {1}, and {-1}
-   * dimension == 1 corresponds to the unit circle in the plane
+   * dimension == 0 consist of the points {1}
+   * dimension == 1 corresponds to the half circle in the plane
    * dimension == 2 corresponds to the "standard", surface sphere embedded in 3-dimensional Euclidean space
    * 
    * @param dimension of sphere as manifold */

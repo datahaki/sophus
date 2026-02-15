@@ -10,10 +10,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 /** interface maps tensor coordinate to an element of a lie group
  * 
  * exponential at neutral element */
-// TODO SOPHUS API should give LieAlgebra with ad (since this is implied from basis/group action)
-// .. and vectorLog implies basis
 public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieIntegrator {
-  /** @return tangent space */
+  /** @return tangent space at neutral element which happens to be the lie algebra */
   Exponential exponential0();
 
   /** @param g

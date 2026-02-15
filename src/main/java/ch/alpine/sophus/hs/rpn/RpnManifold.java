@@ -1,86 +1,48 @@
 // code by jph
 package ch.alpine.sophus.hs.rpn;
 
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.MetricManifold;
-import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.hs.s.SnManifold;
-import ch.alpine.sophus.hs.s.UnitVectorQ;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.FrobeniusForm;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
+import java.util.random.RandomGenerator;
+
+import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Throw;
-import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.nrm.VectorAngle;
-import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.red.Min;
-import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.tri.Sin;
+import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** real projective plane
  * 
  * Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
-public enum RpnManifold implements HomogeneousSpace, MetricManifold {
-  INSTANCE;
+public class RpnManifold extends RpManifold implements SpecificManifold {
+  private final int n;
+  private final int length;
+  private final RandomSampleInterface randomSampleInterface;
 
-  @Override
-  public BiinvariantMean biinvariantMean() {
-    return IterativeBiinvariantMean.argmax(this, Chop._10);
+  public RpnManifold(int n) {
+    this.n = Integers.requirePositiveOrZero(n);
+    length = n + 1;
+    randomSampleInterface = HemisphereRandomSample.of(n);
   }
 
-  @Override // from Manifold
-  public Exponential exponential(Tensor point) {
-    return new RpnExponential(point);
-  }
-
-  @Override
-  public HsTransport hsTransport() {
-    return new PoleLadder(this);
-  }
-
-  @Override
-  public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    // TODO SOPHUS ALG duplicate with SnManifold, possibly share baseclass with SnManifold extend
-    Scalar a = SnManifold.INSTANCE.distance(p, q);
-    if (Scalars.isZero(a)) // when p == q
-      return _ -> p.copy();
-    if (Tolerance.CHOP.isClose(a, Pi.VALUE))
-      throw new Throw(p, q); // when p == -q
-    return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
-        Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
-        Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
-  }
-
-  @Override
-  public Scalar distance(Tensor x, Tensor y) {
-    Scalar d_xy = VectorAngle.of(x, y).orElseThrow();
-    return Min.of(d_xy, Pi.VALUE.subtract(d_xy));
-  }
-
-  @Override
+  @Override // from MemberQ
   public MemberQ isPointQ() {
-    return UnitVectorQ.INSTANCE;
+    return p -> p.length() == length //
+        && super.isPointQ().test(p);
   }
 
   @Override
-  public BilinearForm bilinearForm(Tensor p) {
-    return FrobeniusForm.INSTANCE;
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return randomSampleInterface.randomSample(randomGenerator);
+  }
+
+  @Override
+  public int dimensions() {
+    return n;
   }
 
   @Override
   public String toString() {
-    return "Rpn";
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }
