@@ -11,8 +11,8 @@ import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdManifold;
+import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.math.AffineQ;
@@ -30,7 +30,6 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
@@ -100,7 +99,7 @@ class ReducingMeanEstimateTest {
     ReducingMeanEstimate bm = new ReducingMeanEstimate(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + randomGenerator.nextInt(3);
-      RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.of(0, 0.3));
+      RandomSampleInterface rsi = new SpdNManifold(d);
       Tensor sequence = RandomSample.of(rsi, randomGenerator, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, n));
@@ -121,7 +120,7 @@ class ReducingMeanEstimateTest {
   void testLagrangeProperty() {
     int d = 2;
     int len = 5 + ThreadLocalRandom.current().nextInt(3);
-    RandomSampleInterface rsi = new Spd0RandomSample(d, NormalDistribution.standard());
+    RandomSampleInterface rsi = new SpdNManifold(d);
     Tensor sequence = RandomSample.of(rsi, len);
     BiinvariantMean biinvariantMean = SpdManifold.INSTANCE.biinvariantMean();
     for (int index = 0; index < len; ++index) {

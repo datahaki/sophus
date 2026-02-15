@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** @param n strictly positive
  * @param distribution */
-public record Spd0RandomSample(int n, Distribution distribution) implements RandomSampleInterface, Serializable {
+/* package */ record Spd0RandomSample(int n, Distribution distribution) implements RandomSampleInterface, Serializable {
   @Override // from RandomSampleInterface
   public Tensor randomSample(RandomGenerator randomGenerator) {
     return Spd0Exponential.INSTANCE.exp(new TSpdRandomSample(n, distribution).randomSample(randomGenerator));

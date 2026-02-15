@@ -1,5 +1,5 @@
 // code by jph
-package showcase;
+package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,12 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.lie.BchBinaryAverage;
-import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.MatrixGroup;
-import ch.alpine.sophus.lie.VectorEncodingMarker;
-import ch.alpine.sophus.lie.VectorizedGroup;
 import ch.alpine.sophus.usr.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

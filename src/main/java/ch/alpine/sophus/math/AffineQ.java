@@ -8,7 +8,10 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Chop;
 
-/** check if entries add up to one */
+/** The set of vectors whose entries sum to 1 is called the standard
+ * affine hyperplane (or sometimes just an affine hyperplane)
+ * 
+ * check if entries add up to one */
 public class AffineQ extends ZeroDefectArrayQ {
   public static final ZeroDefectArrayQ INSTANCE = new AffineQ(Tolerance.CHOP);
 

@@ -105,9 +105,9 @@ class SpdManifoldTest {
   @SuppressWarnings("unused")
   @Test
   void testDistance() {
-    RandomSampleInterface randomSampleInterface = new Spd0RandomSample(3, NormalDistribution.of(0, 0.2));
-    Tensor p = RandomSample.of(randomSampleInterface);
-    Tensor q = RandomSample.of(randomSampleInterface);
+    RandomSampleInterface rsi = new Spd0RandomSample(3, NormalDistribution.of(0, 0.2));
+    Tensor p = RandomSample.of(rsi);
+    Tensor q = RandomSample.of(rsi);
     Scalar d1 = SpdManifold.INSTANCE.distance(p, q);
     // Tensor v = SpdManifold.INSTANCE.exponential(p).vectorLog(q);
     // Scalar d2 = SpdManifold.INSTANCE.norm(v);

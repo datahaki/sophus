@@ -1,5 +1,5 @@
 // code by jph
-package showcase;
+package test.wrap;
 
 import org.junit.jupiter.api.function.Executable;
 

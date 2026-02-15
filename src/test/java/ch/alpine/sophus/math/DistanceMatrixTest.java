@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math.api;
+package ch.alpine.sophus.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

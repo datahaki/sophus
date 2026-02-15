@@ -10,14 +10,13 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 
-public class HeRandomSample implements RandomSampleInterface, Serializable {
+/* package */ class HeRandomSample implements RandomSampleInterface, Serializable {
   private final int n;
   private final Distribution distribution;
 
   public HeRandomSample(int n, Distribution distribution) {
     this.n = Integers.requirePositive(n);
     this.distribution = distribution;
-    // TODO SOPHUS need special distrib for z element > 0
   }
 
   @Override

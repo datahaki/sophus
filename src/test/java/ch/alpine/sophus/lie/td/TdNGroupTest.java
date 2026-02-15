@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.lie.GroupCheck;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +19,6 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
-import showcase.GroupCheck;
 
 class TdNGroupTest {
   @ParameterizedTest

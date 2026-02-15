@@ -44,7 +44,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import showcase.ThrowQ;
+import test.wrap.ThrowQ;
 
 class GrManifoldTest {
   @Test
@@ -170,11 +170,7 @@ class GrManifoldTest {
     GrManifold.INSTANCE.isPointQ().require(p);
     GrManifold.INSTANCE.isPointQ().require(q);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
-    d1.zero();
-    // Scalar d2 = LowerVectorize0_2Norm.INSTANCE.norm(new GrExponential(p).vectorLog(q));
-    // Tolerance.CHOP.requireClose(d1, d2);
-    // TODO SOPHUS GR check distance of "antipodal" frames, why is this zero?
-    // System.out.println(distance);
+    Tolerance.CHOP.requireZero(d1);
   }
 
   private static final BiinvariantMean BIINVARIANT_MEAN = GrManifold.INSTANCE.biinvariantMean();

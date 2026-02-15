@@ -7,7 +7,7 @@ import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
-public class SopqMemberQ implements MemberQ {
+/* package */ class SopqMemberQ implements MemberQ {
   private static final Chop CHOP = Chop._08;
   // ---
   private final Tensor form;

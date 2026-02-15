@@ -1,5 +1,5 @@
 // code by jph
-package showcase;
+package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
@@ -13,12 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.LocalRandomSample;
-import ch.alpine.sophus.hs.MetricManifold;
-import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.usr.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -39,6 +33,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import test.wrap.ThrowQ;
 
 class SampleManifolds {
   public static List<HomogeneousSpace> homogeneousSpaces() {

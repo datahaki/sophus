@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.sc;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import showcase.GroupCheck;
+import ch.alpine.sophus.lie.GroupCheck;
 
 class ScNGroupTest {
   @ParameterizedTest
