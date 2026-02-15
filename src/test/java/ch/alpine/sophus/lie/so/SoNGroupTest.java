@@ -36,7 +36,6 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.spa.SparseArray;
-import showcase.GroupCheck;
 
 class SoNGroupTest {
   @Test
@@ -90,7 +89,6 @@ class SoNGroupTest {
     Tensor vector = matrixAlgebra.toVector(matrix);
     ExactTensorQ.require(vector);
     assertEquals(vector, trial);
-    GroupCheck.check(soNGroup);
   }
 
   @ParameterizedTest
@@ -98,7 +96,6 @@ class SoNGroupTest {
   void testBasis(int n) {
     SoNGroup soNGroup = new SoNGroup(n);
     assertTrue(soNGroup.toString().contains("" + n));
-    GroupCheck.check(soNGroup);
   }
 
   @RepeatedTest(10)

@@ -26,7 +26,6 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.spa.SparseArray;
-import showcase.GroupCheck;
 
 class SlNGroupTest {
   @Test
@@ -83,6 +82,5 @@ class SlNGroupTest {
     assertInstanceOf(SparseArray.class, form);
     Scalar scalar = Det.of(form);
     ExactScalarQ.require(scalar);
-    GroupCheck.check(slNGroup);
   }
 }

@@ -44,7 +44,6 @@ class TdNGroupTest {
     Tolerance.CHOP.requireClose(z, res);
     TdRandomSample randomSample = new TdRandomSample(NormalDistribution.standard(), d, TriangularDistribution.with(1, 0.1));
     GroupCheck.check(tdNGroup, randomSample);
-    GroupCheck.check(tdNGroup);
   }
 
   @Test

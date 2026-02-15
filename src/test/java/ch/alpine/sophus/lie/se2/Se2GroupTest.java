@@ -29,14 +29,12 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
-import showcase.GroupCheck;
 
 class Se2GroupTest {
   @Test
   void testSimple() {
     Tensor tensor = Se2Group.INSTANCE.combine(Tensors.vector(1, 2, 2 * Math.PI + 3), Tensors.vector(0, 0, 0));
     assertEquals(tensor, Tensors.vector(1, 2, 3));
-    GroupCheck.check(Se2Group.INSTANCE);
   }
 
   @Test

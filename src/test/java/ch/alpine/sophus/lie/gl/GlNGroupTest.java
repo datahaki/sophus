@@ -22,7 +22,6 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.spa.SparseArray;
-import showcase.GroupCheck;
 
 class GlNGroupTest {
   @ParameterizedTest
@@ -40,7 +39,6 @@ class GlNGroupTest {
     Scalar scalar = Det.of(form);
     ExactScalarQ.require(scalar);
     assertEquals(scalar, RealScalar.ZERO);
-    GroupCheck.check(glNGroup);
   }
 
   @ParameterizedTest

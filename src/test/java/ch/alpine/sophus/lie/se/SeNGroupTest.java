@@ -13,7 +13,6 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import showcase.GroupCheck;
 
 class SeNGroupTest {
   @Test
@@ -35,7 +34,6 @@ class SeNGroupTest {
   @ValueSource(ints = { 2, 3, 5 })
   void testMatchCheck(int d) {
     SeNGroup seNGroup = new SeNGroup(d);
-    GroupCheck.check(seNGroup);
     seNGroup.isPointQ().require(IdentityMatrix.of(d + 1));
   }
 }

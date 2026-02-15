@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -20,21 +19,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.LocalRandomSample;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.SpecificManifold;
-import ch.alpine.sophus.hs.gr.Grassmannian;
-import ch.alpine.sophus.hs.h.Hyperboloid;
-import ch.alpine.sophus.hs.s.Sphere;
-import ch.alpine.sophus.hs.spd.SpdNManifold;
-import ch.alpine.sophus.hs.st.StiefelManifold;
-import ch.alpine.sophus.lie.gl.GlNGroup;
-import ch.alpine.sophus.lie.he.HeNGroup;
-import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.lie.se.SeNGroup;
-import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.sl.SlNGroup;
-import ch.alpine.sophus.lie.so.SoNGroup;
-import ch.alpine.sophus.lie.sp.SpNGroup;
-import ch.alpine.sophus.lie.td.TdNGroup;
+import ch.alpine.sophus.usr.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -57,36 +42,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class SampleManifolds {
   public static List<HomogeneousSpace> homogeneousSpaces() {
-    return Arrays.asList( //
-        new StiefelManifold(3, 1), //
-        new StiefelManifold(4, 2), //
-        new Grassmannian(5, 2), //
-        new Grassmannian(6, 3), //
-        new SpdNManifold(2), //
-        new SpdNManifold(3), //
-        new SpNGroup(2), //
-        new SpNGroup(3), //
-        new GlNGroup(2), //
-        new SlNGroup(2), //
-        new SlNGroup(3), //
-        new RnGroup(3), //
-        new TdNGroup(1), //
-        new TdNGroup(2), //
-        new HeNGroup(1), //
-        new HeNGroup(2), //
-        Se2Group.INSTANCE, //
-        Se2CoveringGroup.INSTANCE, //
-        new SeNGroup(3), //
-        new SeNGroup(4), //
-        new SoNGroup(2), //
-        new SoNGroup(3), //
-        new SoNGroup(4), //
-        new Sphere(2), //
-        new Sphere(3), //
-        new Hyperboloid(2), //
-        new Hyperboloid(3), //
-        new Hyperboloid(4) //
-    );
+    return SophusExperimental.filter(HomogeneousSpace.class);
   }
 
   @ParameterizedTest

@@ -32,7 +32,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
-import showcase.GroupCheck;
 
 class Se2CoveringGroupTest {
   private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = //
@@ -44,7 +43,6 @@ class Se2CoveringGroupTest {
     // Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(p);
     Tensor tensor = Se2CoveringGroup.INSTANCE.combine(p, Tensors.vector(0, 0, -3));
     assertEquals(tensor, Tensors.vector(1, 2, 0));
-    GroupCheck.check(Se2CoveringGroup.INSTANCE);
   }
 
   @Test

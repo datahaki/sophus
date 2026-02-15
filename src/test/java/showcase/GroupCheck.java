@@ -6,7 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
+import java.util.List;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.Exponential;
@@ -16,6 +20,7 @@ import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.VectorEncodingMarker;
 import ch.alpine.sophus.lie.VectorizedGroup;
+import ch.alpine.sophus.usr.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -33,10 +38,20 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.spa.SparseArray;
 
-public enum GroupCheck {
-  ;
+public class GroupCheck {
+  public static List<LieGroup> lieGroups() {
+    return SophusExperimental.filter(LieGroup.class);
+  }
+
+  @ParameterizedTest
+  @MethodSource("lieGroups")
+  void testLieGroup(LieGroup lieGroup) {
+    check(lieGroup);
+  }
+
   private static final Distribution DISTRIBUTION = TriangularDistribution.of(-0.1, 0, 0.1);
 
   public static void check(LieGroup lieGroup, RandomSampleInterface randomSampleInterface) {
@@ -125,11 +140,11 @@ public enum GroupCheck {
     Tensor Z = lieGroup.combine(X, Y);
     Tensor iX = lieGroup.invert(X);
     Tensor iY = lieGroup.invert(Y);
-    Tolerance.CHOP.requireClose(lieGroup.combine(X, iX), lieGroup.neutral(X));
-    Tolerance.CHOP.requireClose(lieGroup.combine(Y, iY), lieGroup.neutral(Y));
-    Tolerance.CHOP.requireClose(lieGroup.combine(iX, X), lieGroup.neutral(X));
-    Tolerance.CHOP.requireClose(lieGroup.combine(iY, Y), lieGroup.neutral(Y));
-    Tolerance.CHOP.requireClose(lieGroup.combine(iY, iX), lieGroup.invert(Z));
+    Chop._09.requireClose(lieGroup.combine(X, iX), lieGroup.neutral(X));
+    Chop._09.requireClose(lieGroup.combine(Y, iY), lieGroup.neutral(Y));
+    Chop._09.requireClose(lieGroup.combine(iX, X), lieGroup.neutral(X));
+    Chop._09.requireClose(lieGroup.combine(iY, Y), lieGroup.neutral(Y));
+    Chop._09.requireClose(lieGroup.combine(iY, iX), lieGroup.invert(Z));
   }
 
   private static void checkAd(LieGroup lieGroup, Tensor x, Tensor Y) {

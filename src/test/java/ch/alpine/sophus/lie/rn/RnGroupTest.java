@@ -24,7 +24,6 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
-import showcase.GroupCheck;
 
 class RnGroupTest {
   @Test
@@ -89,11 +88,5 @@ class RnGroupTest {
     Scalar scalar = tensorMetric.distance(Tensors.vector(1, 2, 3), Tensors.vector(1 + 3, 2 + 4, 3));
     assertEquals(scalar, RealScalar.of(5));
     ExactScalarQ.require(scalar);
-  }
-
-  @Test
-  void test() {
-    RnGroup rnNGroup = new RnGroup(3);
-    GroupCheck.check(rnNGroup);
   }
 }

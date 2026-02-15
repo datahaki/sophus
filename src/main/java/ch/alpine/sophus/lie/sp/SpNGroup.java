@@ -5,20 +5,22 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class SpNGroup extends SpGroup implements SpecificManifold {
+public class SpNGroup extends SpGroup implements SpecificManifold, MatrixGroup {
   private final int n;
   private final LinearSubspace linearSubspace;
 
   public SpNGroup(int n) {
     this.n = n;
-    linearSubspace = LinearSubspace.of(TSpMemberQ.INSTANCE::defect, 2 * n, 2 * n);
+    linearSubspace = LinearSubspace.of(exponential0().isTangentQ()::defect, 2 * n, 2 * n);
   }
 
   public MatrixAlgebra matrixAlgebra() {
@@ -26,8 +28,13 @@ public class SpNGroup extends SpGroup implements SpecificManifold {
   }
 
   @Override
+  public Tensor matrixBasis() {
+    return linearSubspace.basis();
+  }
+
+  @Override
   public int dimensions() {
-    return n * (2 * n + 1);
+    return Integers.requireEquals(n * (2 * n + 1), linearSubspace.dimensions());
   }
 
   @Override

@@ -35,13 +35,11 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import showcase.GroupCheck;
 
 class So3GroupTest {
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
     Serialization.copy(So3Group.INSTANCE);
-    GroupCheck.check(So3Group.INSTANCE);
   }
 
   @Test
