@@ -8,7 +8,7 @@ import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.FrobeniusForm;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -83,7 +83,7 @@ public class SoGroup extends GlGroup implements MetricManifold {
   public final Scalar distance(Tensor p, Tensor q) {
     // formula taken from chatgpt
     Tensor A = exponential(p).log(q);
-    Scalar normSquared = Trace.of(A.dot(A)).multiply(RationalScalar.HALF.negate());
+    Scalar normSquared = Trace.of(A.dot(A)).multiply(Rational.HALF.negate());
     return Sqrt.FUNCTION.apply(normSquared);
   }
 

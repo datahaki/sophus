@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
@@ -20,7 +20,7 @@ public record SymmetrizeTransport(HsTransport hsTransport) implements HsTranspor
     return v -> {
       Tensor wp = shift.apply(v);
       Tensor wn = shift.apply(v.negate());
-      return wp.subtract(wn).multiply(RationalScalar.HALF);
+      return wp.subtract(wn).multiply(Rational.HALF);
     };
   }
 }

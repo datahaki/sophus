@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
@@ -39,7 +39,7 @@ class SnPhongMeanTest {
         Tensor y = Vector2Norm.NORMALIZE.apply(RandomVariate.of(distribution, d));
         Tensor m1 = SnManifold.INSTANCE.midpoint(x, y);
         SnManifold.INSTANCE.isPointQ().require(m1);
-        Tensor m2 = SnManifold.INSTANCE.curve(x, y).apply(RationalScalar.HALF);
+        Tensor m2 = SnManifold.INSTANCE.curve(x, y).apply(Rational.HALF);
         SnManifold.INSTANCE.isPointQ().require(m2);
         Chop._08.requireClose(m1, m2);
         Tensor mp = SnPhongMean.INSTANCE.estimate(Tensors.of(x, y), Tensors.vector(0.5, 0.5));

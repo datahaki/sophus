@@ -57,7 +57,7 @@ class MatrixAlgebraTest {
     assertEquals(matrix, tensor);
     Tolerance.CHOP.requireClose( //
         matrixAlgebra.toVector(b1.add(b2.multiply(RealScalar.of(0.3))).maps(N.DOUBLE)), Tensors.vector(0, 1, 0.3));
-    Tensor rank4 = JacobiIdentity.of(matrixAlgebra.ad());
+    Tensor rank4 = JacobiIdentity.INSTANCE.defect(matrixAlgebra.ad());
     assertInstanceOf(SparseArray.class, rank4);
   }
 

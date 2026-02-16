@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -49,7 +49,7 @@ class R3S2GeodesicTest {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{8, 8, 8}, {1, 0, 0}}"), //
-        RationalScalar.HALF);
+        Rational.HALF);
     Chop._10.requireClose(split, Tensors.fromString("{{4.5, 5, 5.5}, {1, 0, 0}}"));
   }
 
@@ -58,7 +58,7 @@ class R3S2GeodesicTest {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{1, 2, 3}, {0, 1, 0}}"), //
-        RationalScalar.HALF);
+        Rational.HALF);
     Chop._10.requireClose(split, Tensors.fromString( //
         "{{1, 2, 3}, {0.7071067811865476, 0.7071067811865475, 0}}"));
   }
@@ -68,7 +68,7 @@ class R3S2GeodesicTest {
     Tensor split = R3S2Geodesic.INSTANCE.split( //
         Tensors.fromString("{{1, 2, 3}, {1, 0, 0}}"), //
         Tensors.fromString("{{8, 8, 8}, {0, 1, 0}}"), //
-        RationalScalar.HALF);
+        Rational.HALF);
     Chop._10.requireClose(split.get(0), Tensors.fromString( //
         "{5.742640687119285, 3.5502525316941673, 5.5}"));
     Chop._10.requireClose(split.get(1), Tensors.fromString( //
@@ -81,7 +81,7 @@ class R3S2GeodesicTest {
     Tensor n1 = UnitVector.of(3, 1);
     Tensor p = Tensors.of(n0, n0);
     Tensor q = Tensors.of(n1, n1);
-    Tensor split = R3S2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
+    Tensor split = R3S2Geodesic.INSTANCE.split(p, q, Rational.HALF);
     Chop._12.requireClose(split.get(0), split.get(1));
   }
 }

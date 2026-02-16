@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.re.LinearSolve;
     lhs = Join.of(tX, tY);
     Tensor tensor = HeBiinvariantMean.xydot(sequence);
     Tensor z = Tensor.of(sequence.stream().map(HeFormat::of).map(HeFormat::z));
-    lhs.append(z.subtract(tensor.multiply(RationalScalar.HALF)));
+    lhs.append(z.subtract(tensor.multiply(Rational.HALF)));
     lhs.append(Tensors.vector(_ -> RealScalar.ONE, sequence.length()));
   }
 
@@ -29,7 +29,7 @@ import ch.alpine.tensor.mat.re.LinearSolve;
     HeFormat heFormat = HeFormat.of(mean);
     Tensor mXY = heFormat.x().dot(heFormat.y());
     Tensor rhs = Join.of(heFormat.x(), heFormat.y());
-    rhs.append(heFormat.z().subtract(mXY.multiply(RationalScalar.HALF)));
+    rhs.append(heFormat.z().subtract(mXY.multiply(Rational.HALF)));
     rhs.append(RealScalar.ONE);
     return LinearSolve.of(lhs, rhs);
   }

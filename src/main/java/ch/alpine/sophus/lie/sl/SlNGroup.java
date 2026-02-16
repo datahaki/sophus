@@ -6,7 +6,7 @@ import java.util.random.RandomGenerator;
 import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -64,7 +64,7 @@ public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
       tensor.set(RealScalar.ONE.negate(), i, i);
       basis.append(tensor);
     }
-    return basis.multiply(RationalScalar.HALF);
+    return basis.multiply(Rational.HALF);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
       matrix.set(Tensor::negate, 0);
       det = det.negate();
     }
-    return matrix.divide(Power.of(det, RationalScalar.of(1, n)));
+    return matrix.divide(Power.of(det, Rational.of(1, n)));
   }
 
   @Override

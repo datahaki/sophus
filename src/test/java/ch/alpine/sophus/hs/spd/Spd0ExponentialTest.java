@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -30,7 +30,7 @@ class Spd0ExponentialTest {
     Tensor g = Spd0Exponential.INSTANCE.exp(x);
     Tensor r = Spd0Exponential.INSTANCE.log(g);
     Chop._07.requireClose(x, r);
-    Tensor m1 = Spd0Exponential.INSTANCE.exp(Spd0Exponential.INSTANCE.log(g).multiply(RationalScalar.HALF));
+    Tensor m1 = Spd0Exponential.INSTANCE.exp(Spd0Exponential.INSTANCE.log(g).multiply(Rational.HALF));
     Tensor m2 = SpdManifold.sqrt(g);
     Chop._07.requireClose(m1, m2);
     Tensor m3 = SpdManifold.INSTANCE.midpoint(IdentityMatrix.of(n), g);

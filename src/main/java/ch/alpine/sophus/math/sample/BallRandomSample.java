@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.s.Sphere;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
@@ -48,7 +48,7 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
 
   private BallRandomSample(Tensor center, Scalar radius) {
     randomSampleInterface = new Sphere(center.length() - 1);
-    power = Power.function(RationalScalar.of(1, center.length()));
+    power = Power.function(Rational.of(1, center.length()));
     this.center = center;
     this.radius = radius;
   }

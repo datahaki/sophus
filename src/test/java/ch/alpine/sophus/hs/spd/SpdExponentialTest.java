@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
@@ -39,7 +39,7 @@ class SpdExponentialTest {
     Tensor f2 = exp_p.exp(w.negate());
     Chop._08.requireClose(f1, f2);
     Tensor m1 = SpdManifold.INSTANCE.midpoint(p, q);
-    Tensor m2 = exp_p.exp(w.multiply(RationalScalar.HALF));
+    Tensor m2 = exp_p.exp(w.multiply(Rational.HALF));
     Chop._08.requireClose(m1, m2);
   }
 
@@ -62,8 +62,8 @@ class SpdExponentialTest {
       SpdExponential spdExpQ = new SpdExponential(q);
       Tensor pqw = spdExpP.log(q);
       Tensor qpw = spdExpQ.log(p);
-      Tensor ph = spdExpP.exp(pqw.multiply(RationalScalar.HALF));
-      Tensor qh = spdExpQ.exp(qpw.multiply(RationalScalar.HALF));
+      Tensor ph = spdExpP.exp(pqw.multiply(Rational.HALF));
+      Tensor qh = spdExpQ.exp(qpw.multiply(Rational.HALF));
       Chop._08.requireClose(ph, qh);
       // Tensor vector = spdExpP.vectorLog(q);
       // VectorQ.requireLength(vector, n * (n + 1) / 2);

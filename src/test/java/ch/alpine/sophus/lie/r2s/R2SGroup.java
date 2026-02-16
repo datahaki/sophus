@@ -6,7 +6,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.so2.So2;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -40,7 +40,7 @@ public class R2SGroup extends AbstractLieGroup {
       return Tensors.of( //
           u, //
           v, //
-          So2.MOD.apply(w.add(u.multiply(v).multiply(RationalScalar.HALF))));
+          So2.MOD.apply(w.add(u.multiply(v).multiply(Rational.HALF))));
     }
 
     @Override // from Exponential
@@ -51,7 +51,7 @@ public class R2SGroup extends AbstractLieGroup {
       return Tensors.of( //
           x, //
           y, //
-          z.subtract(x.multiply(y).multiply(RationalScalar.HALF)));
+          z.subtract(x.multiply(y).multiply(Rational.HALF)));
     }
 
     @Override

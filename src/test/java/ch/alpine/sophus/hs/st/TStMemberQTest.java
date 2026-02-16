@@ -12,7 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.hs.gr.GrManifold;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Transpose;
@@ -85,9 +85,9 @@ class TStMemberQTest {
     Tensor p = RandomSample.of(stiefelManifold);
     Tensor v = new TStMemberQ(p).projection(RandomVariate.of(NormalDistribution.of(0, 0.3), k, n));
     Tensor q = stiefelManifold.exponential(p).exp(v);
-    Tensor m = stiefelManifold.exponential(p).exp(v.multiply(RationalScalar.HALF));
+    Tensor m = stiefelManifold.exponential(p).exp(v.multiply(Rational.HALF));
     Tensor m_v = stiefelManifold.hsTransport().shift(p, m).apply(v);
-    Tensor r = stiefelManifold.exponential(m).exp(m_v.multiply(RationalScalar.HALF));
+    Tensor r = stiefelManifold.exponential(m).exp(m_v.multiply(Rational.HALF));
     Tolerance.CHOP.requireClose(q, r);
   }
 }

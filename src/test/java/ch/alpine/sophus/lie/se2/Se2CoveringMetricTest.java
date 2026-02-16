@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ class Se2CoveringMetricTest {
     Tensor p = Tensors.vector(1, .7, 2);
     Tensor q = Tensors.vector(2, .3, 3.3);
     Scalar dq = Se2CoveringMetric.INSTANCE.distance(p, q);
-    Tensor m = Se2CoveringGroup.INSTANCE.split(p, q, RationalScalar.HALF);
+    Tensor m = Se2CoveringGroup.INSTANCE.split(p, q, Rational.HALF);
     Scalar dm = Se2CoveringMetric.INSTANCE.distance(p, m);
     Chop._14.requireClose(dq.divide(dm), RealScalar.of(2));
   }

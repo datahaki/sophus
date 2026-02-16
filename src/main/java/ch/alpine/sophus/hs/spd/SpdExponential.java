@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.math.UpperVectorize;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
@@ -81,7 +81,7 @@ public class SpdExponential implements Exponential, Serializable {
    * along geodesic from base point p to q
    * @see SpdTransport */
   public Tensor endomorphism(Tensor q) {
-    Tensor w = log(q).multiply(RationalScalar.HALF);
+    Tensor w = log(q).multiply(Rational.HALF);
     Tensor mid = Spd0Exponential.INSTANCE.exp(basis(w, pn));
     return Transpose.of(pp.dot(mid).dot(pn)); // mid is treated as (1, 1) tensor
   }

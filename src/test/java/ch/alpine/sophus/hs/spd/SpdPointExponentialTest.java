@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.spd;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -31,8 +31,8 @@ class SpdPointExponentialTest {
       Tensor q = RandomSample.of(rsi);
       Tensor pqw = SpdPointExponential.log(p, q);
       Tensor qpw = SpdPointExponential.log(q, p);
-      Tensor ph = SpdPointExponential.exp(p, pqw.multiply(RationalScalar.HALF));
-      Tensor qh = SpdPointExponential.exp(q, qpw.multiply(RationalScalar.HALF));
+      Tensor ph = SpdPointExponential.exp(p, pqw.multiply(Rational.HALF));
+      Tensor qh = SpdPointExponential.exp(q, qpw.multiply(Rational.HALF));
       Chop._08.requireClose(ph, qh);
     }
   }

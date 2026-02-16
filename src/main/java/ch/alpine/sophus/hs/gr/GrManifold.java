@@ -11,7 +11,7 @@ import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.FrobeniusForm;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
@@ -53,7 +53,7 @@ import ch.alpine.tensor.sca.Chop;
  * "Geometric mean and geodesic regression on Grassmannians"
  * E. Batzies, K. Hueper, L. Machado, F. Silva Leite by 2015 */
 public class GrManifold implements HomogeneousSpace, MetricManifold, Serializable {
-  private static final Scalar N1_4 = RationalScalar.of(-1, 4);
+  private static final Scalar N1_4 = Rational.of(-1, 4);
   public static final GrManifold INSTANCE = new GrManifold();
   // ---
 
@@ -86,7 +86,7 @@ public class GrManifold implements HomogeneousSpace, MetricManifold, Serializabl
   @Override
   public Tensor flip(Tensor p, Tensor q) {
     // matrix bracket is obsolete
-    return BasisTransform.ofMatrix(p, MatrixExp.of(exponential(p).mLog(q).multiply(RationalScalar.HALF)));
+    return BasisTransform.ofMatrix(p, MatrixExp.of(exponential(p).mLog(q).multiply(Rational.HALF)));
   }
 
   @Override

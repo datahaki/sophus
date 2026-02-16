@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.hs.s.Sphere;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -33,7 +33,7 @@ public class RingRandomSample implements RandomSampleInterface, Serializable {
 
   public RingRandomSample(int dimensions, Scalar r1, Scalar r2) {
     randomSampleInterface = new Sphere(dimensions - 1);
-    power = Power.function(RationalScalar.of(1, dimensions));
+    power = Power.function(Rational.of(1, dimensions));
     this.r2 = r2;
     distribution = UniformDistribution.of(Power.of(r1.divide(r2), dimensions), RealScalar.ONE);
   }

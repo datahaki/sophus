@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.st;
 import java.io.Serializable;
 
 import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.ConjugateTranspose;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Re;
   private final Tensor c;
 
   public StBilinearForm(Tensor p) {
-    c = IdentityMatrix.inplaceAdd(ConjugateTranspose.of(p).dot(p).multiply(RationalScalar.of(-1, 2)));
+    c = IdentityMatrix.inplaceAdd(ConjugateTranspose.of(p).dot(p).multiply(Rational.of(-1, 2)));
     SymmetricMatrixQ.INSTANCE.require(c);
   }
 

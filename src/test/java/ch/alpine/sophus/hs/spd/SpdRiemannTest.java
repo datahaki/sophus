@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -26,7 +26,7 @@ class SpdRiemannTest {
     Tensor e12 = Tensors.fromString("{{0, 1}, {1, 0}}");
     Scalar s1112 = spdRiemann.sectional(e11, e12);
     ExactScalarQ.require(s1112);
-    assertEquals(s1112, RationalScalar.of(-1, 4));
+    assertEquals(s1112, Rational.of(-1, 4));
   }
 
   @Test
@@ -37,10 +37,10 @@ class SpdRiemannTest {
     Tensor e13 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}");
     Scalar s1112 = spdRiemann.sectional(e11, e12);
     ExactScalarQ.require(s1112);
-    assertEquals(s1112, RationalScalar.of(-1, 4));
+    assertEquals(s1112, Rational.of(-1, 4));
     Scalar s1213 = spdRiemann.sectional(e12, e13);
     ExactScalarQ.require(s1213);
-    assertEquals(s1213, RationalScalar.of(-1, 8));
+    assertEquals(s1213, Rational.of(-1, 8));
   }
 
   @Test
@@ -55,9 +55,9 @@ class SpdRiemannTest {
     Tensor e12 = tuo.apply(Tensors.fromString("{{0, 1, 0}, {1, 0, 0}, {0, 0, 0}}"));
     Tensor e13 = tuo.apply(Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {1, 0, 0}}"));
     Scalar s1112 = spdRiemann.sectional(e11, e12);
-    Chop._10.requireClose(s1112, RationalScalar.of(-1, 4));
+    Chop._10.requireClose(s1112, Rational.of(-1, 4));
     Scalar s1213 = spdRiemann.sectional(e12, e13);
-    Chop._10.requireClose(s1213, RationalScalar.of(-1, 8));
+    Chop._10.requireClose(s1213, Rational.of(-1, 8));
   }
 
   @Test
@@ -78,9 +78,9 @@ class SpdRiemannTest {
       SymmetricMatrixQ.INSTANCE.require(e13);
       SpdRiemann spdRiemann = new SpdRiemann(q);
       Scalar s1112 = spdRiemann.sectional(e11, e12);
-      Chop._10.requireClose(s1112, RationalScalar.of(-1, 4));
+      Chop._10.requireClose(s1112, Rational.of(-1, 4));
       Scalar s1213 = spdRiemann.sectional(e12, e13);
-      Chop._10.requireClose(s1213, RationalScalar.of(-1, 8));
+      Chop._10.requireClose(s1213, Rational.of(-1, 8));
       p = q;
     }
   }

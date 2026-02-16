@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.rn;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -14,13 +14,13 @@ class RnTriangleAreaTest {
   @Test
   void testSimple2D() {
     Scalar scalar = RnTriangleArea.of(Tensors.vector(10, 0), Tensors.vector(10, 1), Tensors.vector(11, 0));
-    Chop._10.requireClose(scalar, RationalScalar.HALF);
+    Chop._10.requireClose(scalar, Rational.HALF);
   }
 
   @Test
   void testSimpleUnits() {
     ScalarUnaryOperator suo = s -> Quantity.of(s, "m");
     Scalar scalar = RnTriangleArea.of(Tensors.vector(10, 0).maps(suo), Tensors.vector(10, 1).maps(suo), Tensors.vector(11, 0).maps(suo));
-    Chop._10.requireClose(scalar, Quantity.of(RationalScalar.HALF, "m^2"));
+    Chop._10.requireClose(scalar, Quantity.of(Rational.HALF, "m^2"));
   }
 }

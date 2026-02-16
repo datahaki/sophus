@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.gl.GlGroup;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -81,7 +81,7 @@ class So3GroupTest {
   void testSimple2() {
     Tensor p = So3Exponential.vectorExp(Tensors.vector(1, 2, 3));
     Tensor q = So3Exponential.vectorExp(Tensors.vector(2, -1, 2));
-    Tensor split = So3Group.INSTANCE.split(p, q, RationalScalar.HALF);
+    Tensor split = So3Group.INSTANCE.split(p, q, Rational.HALF);
     assertTrue(new OrthogonalMatrixQ(Chop._14).test(split));
   }
 

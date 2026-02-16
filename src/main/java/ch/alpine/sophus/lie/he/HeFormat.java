@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.he;
 
 import java.io.Serializable;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
@@ -44,10 +44,10 @@ import ch.alpine.tensor.ext.Integers;
   }
 
   public HeFormat exp() {
-    return new HeFormat(x, y, z.add(x.dot(y).multiply(RationalScalar.HALF)));
+    return new HeFormat(x, y, z.add(x.dot(y).multiply(Rational.HALF)));
   }
 
   public HeFormat log() {
-    return new HeFormat(x, y, z.subtract(x.dot(y).multiply(RationalScalar.HALF)));
+    return new HeFormat(x, y, z.subtract(x.dot(y).multiply(Rational.HALF)));
   }
 }

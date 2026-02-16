@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.MatrixBracket;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.ext.PackageTestAccess;
@@ -43,7 +43,7 @@ public class GrExponential implements Exponential, Serializable {
   @Override // from Exponential
   public Tensor log(Tensor q) {
     GrManifold.INSTANCE.isPointQ().require(q);
-    return MatrixBracket.of(mLog(q).multiply(RationalScalar.HALF), p);
+    return MatrixBracket.of(mLog(q).multiply(Rational.HALF), p);
   }
 
   @Override

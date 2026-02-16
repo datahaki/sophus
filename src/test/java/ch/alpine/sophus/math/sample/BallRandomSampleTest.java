@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
 import ch.alpine.sophus.hs.s.SnRotationMatrix;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -105,7 +105,7 @@ class BallRandomSampleTest {
       Tensor qn = Vector2Norm.NORMALIZE.apply(RandomSample.of(randomSampleInterface, random));
       Tensor p = Tensors.of(pn, pn);
       Tensor q = Tensors.of(qn, qn);
-      Tensor split = R3S2Geodesic.INSTANCE.split(p, q, RationalScalar.HALF);
+      Tensor split = R3S2Geodesic.INSTANCE.split(p, q, Rational.HALF);
       Chop._08.requireClose(split.get(0), split.get(1));
     }
   }

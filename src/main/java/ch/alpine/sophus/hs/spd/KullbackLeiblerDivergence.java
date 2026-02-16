@@ -2,7 +2,7 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -46,6 +46,6 @@ public enum KullbackLeiblerDivergence implements TensorMetric {
     Tensor qinvp = LinearSolve.of(p2, p1);
     Scalar n = RealScalar.of(p1.length());
     return Trace.of(qinvp).subtract(n).subtract(Log.FUNCTION.apply(Abs.FUNCTION.apply(Det.of(qinvp)))) //
-        .multiply(RationalScalar.HALF);
+        .multiply(Rational.HALF);
   }
 }

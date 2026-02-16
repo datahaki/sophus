@@ -4,7 +4,7 @@ package ch.alpine.sophus.hs.s;
 import java.io.Serializable;
 
 import ch.alpine.tensor.ComplexScalar;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -47,7 +47,7 @@ public record S3Hopf(Scalar z1, Scalar z2) implements Serializable {
     Scalar x = xyz.Get(0);
     Scalar y = xyz.Get(1);
     Scalar z = xyz.Get(2);
-    Scalar z1 = Sqrt.FUNCTION.apply(RealScalar.ONE.add(z).multiply(RationalScalar.HALF));
+    Scalar z1 = Sqrt.FUNCTION.apply(RealScalar.ONE.add(z).multiply(Rational.HALF));
     Scalar z2 = ComplexScalar.of(x, y).divide(Sqrt.FUNCTION.apply(RealScalar.ONE.add(z).multiply(RealScalar.TWO)));
     return new S3Hopf(z1, z2);
   }

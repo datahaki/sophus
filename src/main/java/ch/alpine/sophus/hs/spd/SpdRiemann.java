@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dot;
@@ -23,7 +23,7 @@ public class SpdRiemann {
     Tensor t2 = Dot.of(u, pi, v, pi, w);
     Tensor t3 = Dot.of(v, pi, w, pi, u);
     Tensor t4 = Dot.of(u, pi, w, pi, v);
-    return t1.add(t2).subtract(t3).subtract(t4).multiply(RationalScalar.of(1, 4));
+    return t1.add(t2).subtract(t3).subtract(t4).multiply(Rational.of(1, 4));
   }
 
   /** Reference: 3.3.2.2 Riemannian metric

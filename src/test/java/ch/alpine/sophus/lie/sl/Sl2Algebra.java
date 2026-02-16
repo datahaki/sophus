@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.sl;
 
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
@@ -19,6 +19,6 @@ public enum Sl2Algebra implements LieAlgebra {
     return Tensors.of( //
         Tensors.fromString("{{0, 1}, {-1, 0}}"), //
         Tensors.fromString("{{0, 1}, {+1, 0}}"), //
-        Tensors.fromString("{{1, 0}, {0, -1}}")).multiply(RationalScalar.HALF);
+        Tensors.fromString("{{1, 0}, {0, -1}}")).multiply(Rational.HALF);
   }
 }

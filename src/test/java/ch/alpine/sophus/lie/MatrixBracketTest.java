@@ -22,7 +22,7 @@ import ch.alpine.tensor.red.KroneckerDelta;
 
 class MatrixBracketTest {
   private static void _check(Tensor ad, Tensor basis) {
-    JacobiIdentity.require(ad);
+    JacobiIdentity.INSTANCE.require(ad);
     int n = ad.length();
     assertEquals(n, basis.length());
     for (int c0 = 0; c0 < n; ++c0)

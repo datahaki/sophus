@@ -2,7 +2,7 @@
 package ch.alpine.sophus.math;
 
 import ch.alpine.sophus.math.api.TensorNorm;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -43,7 +43,7 @@ public enum LowerVectorize0_2Norm implements TensorNorm {
   /** @param n */
   @PackageTestAccess
   static int requireTriangleNumber(int n) {
-    ExactScalarQ.require(Sqrt.FUNCTION.apply(RealScalar.of(1 + 8 * n)).subtract(RealScalar.ONE).multiply(RationalScalar.HALF));
+    ExactScalarQ.require(Sqrt.FUNCTION.apply(RealScalar.of(1 + 8 * n)).subtract(RealScalar.ONE).multiply(Rational.HALF));
     return n;
   }
 }

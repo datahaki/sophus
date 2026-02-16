@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.math.AveragingWeights;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -79,7 +79,7 @@ class SnManifoldTest {
   void testSimple2() {
     Tensor p = UnitVector.of(3, 0);
     Tensor q = UnitVector.of(3, 1);
-    Tensor split = SnManifold.INSTANCE.split(p, q, RationalScalar.HALF);
+    Tensor split = SnManifold.INSTANCE.split(p, q, Rational.HALF);
     assertEquals(Vector2Norm.of(split), RealScalar.ONE);
     assertEquals(split.Get(0), split.Get(1));
     assertTrue(Scalars.isZero(split.Get(2)));
@@ -177,7 +177,7 @@ class SnManifoldTest {
 
   @Test
   void testNormFail() {
-    assertThrows(Exception.class, () -> SnManifold.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), RationalScalar.HALF));
+    assertThrows(Exception.class, () -> SnManifold.INSTANCE.split(Tensors.vector(1, 2, 3), Tensors.vector(4, 5, 6), Rational.HALF));
   }
 
   @Test

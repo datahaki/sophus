@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsAdGeodesic;
 import ch.alpine.sophus.hs.HsAlgebra;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -34,7 +34,7 @@ class StAlgebraTest {
     Distribution distribution = TriangularDistribution.with(0, 0.1);
     Tensor x = RandomVariate.of(distribution, 7);
     Tensor y = RandomVariate.of(distribution, 7);
-    hsAdGeodesic.split(x, y, RationalScalar.of(1, 3));
+    hsAdGeodesic.split(x, y, Rational.of(1, 3));
   }
 
   @Test

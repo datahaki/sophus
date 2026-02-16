@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.MetricManifold;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -60,7 +60,7 @@ class RnGroupTest {
     GeodesicSpace geodesicSpace = RGroup.INSTANCE;
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(UnitVector.of(3, 0), UnitVector.of(3, 1));
     assertEquals(scalarTensorFunction.apply(RealScalar.ZERO), UnitVector.of(3, 0));
-    assertEquals(scalarTensorFunction.apply(RationalScalar.HALF), Tensors.vector(0.5, 0.5, 0));
+    assertEquals(scalarTensorFunction.apply(Rational.HALF), Tensors.vector(0.5, 0.5, 0));
   }
 
   @Test

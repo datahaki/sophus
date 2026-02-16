@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.se3;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.se.TSeMemberQ;
 import ch.alpine.sophus.lie.so.So3Exponential;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Drop;
@@ -44,7 +44,7 @@ public enum Se3Exponential implements Exponential {
     Scalar theta = Vector2Norm.of(w);
     Tensor wx2 = wx.dot(wx);
     Se3Numerics se3Numerics = new Se3Numerics(theta);
-    Tensor Vi = ID3.subtract(wx.multiply(RationalScalar.HALF)).add(wx2.multiply(se3Numerics.D));
+    Tensor Vi = ID3.subtract(wx.multiply(Rational.HALF)).add(wx2.multiply(se3Numerics.D));
     Tensor t = Se3Matrix.translation(g);
     return Se3Matrix.ofT(wx, Vi.dot(t));
   }
