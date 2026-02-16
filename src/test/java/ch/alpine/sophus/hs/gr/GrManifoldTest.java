@@ -189,7 +189,7 @@ class GrManifoldTest {
         sequence.append(q);
     }
     int n = sequence.length();
-    Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.INSTANCE.origin(sequence).add(RandomVariate.of(distribution, n)));
+    Tensor weights = NormalizeTotal.FUNCTION.apply(AveragingWeights.of(sequence.length()).add(RandomVariate.of(distribution, n)));
     assertThrows(Exception.class, () -> BIINVARIANT_MEAN.mean(sequence, RandomVariate.of(distribution, n)));
     Tensor point = BIINVARIANT_MEAN.mean(sequence, weights);
     GrManifold.INSTANCE.isPointQ().require(point);

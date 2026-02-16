@@ -6,6 +6,7 @@ import ch.alpine.tensor.ext.Int;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 
+/** extracts entries on diagonal and above */
 public enum UpperVectorize {
   ;
   /** @param tensor with rank at least 2

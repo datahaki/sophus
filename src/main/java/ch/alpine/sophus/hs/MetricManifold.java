@@ -10,6 +10,8 @@ import ch.alpine.tensor.Tensor;
  * 
  * norm of tangent vector */
 public interface MetricManifold extends Manifold, TensorMetric {
+  /** @param p
+   * @return bilinear form from semi-riemannian metric at point p */
   BilinearForm bilinearForm(Tensor p);
 
   @Override

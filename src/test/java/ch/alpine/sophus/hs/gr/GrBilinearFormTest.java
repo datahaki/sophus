@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.gr;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.math.api.FrobeniusForm;
+import ch.alpine.sophus.math.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;

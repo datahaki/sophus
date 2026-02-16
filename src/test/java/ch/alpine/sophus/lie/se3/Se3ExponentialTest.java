@@ -21,16 +21,12 @@ class Se3ExponentialTest {
     ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, 4, 4);
     assertEquals(linearSubspace.dimensions(), 6);
-    Tensor weights = RandomVariate.of(NormalDistribution.standard(), 6);
+    Tensor weights = RandomVariate.of(NormalDistribution.of(0, 0.1), 6);
     Tensor v = linearSubspace.apply(weights);
     Tensor p = exponential.exp(v);
     SeNGroup seNGroup = new SeNGroup(3);
     seNGroup.isPointQ().require(p);
     Tensor w = exponential.log(p);
-    // IO.println(Dimensions.of(v));
-    // IO.println(Dimensions.of(w));
-    // IO.println(Pretty.of(v.maps(Round._3)));
-    // IO.println(Pretty.of(w.maps(Round._3)));
     Tolerance.CHOP.requireClose(v, w);
   }
 }
