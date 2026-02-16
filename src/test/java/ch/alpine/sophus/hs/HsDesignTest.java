@@ -13,6 +13,7 @@ import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
+import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ExactTensorQ;

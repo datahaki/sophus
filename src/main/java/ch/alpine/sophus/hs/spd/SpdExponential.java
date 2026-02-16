@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.math.UpperVectorize;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

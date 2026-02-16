@@ -3,8 +3,8 @@ package ch.alpine.sophus.bm;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
+import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 
 /** approximation of biinvariant mean using a geodesic average that has a

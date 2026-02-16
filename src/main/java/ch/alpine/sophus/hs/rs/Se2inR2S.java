@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.rs;
 
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;

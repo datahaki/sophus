@@ -4,9 +4,9 @@ package ch.alpine.sophus.bm;
 import java.io.Serializable;
 import java.util.PriorityQueue;
 
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;

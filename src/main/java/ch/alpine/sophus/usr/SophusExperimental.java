@@ -4,7 +4,6 @@ package ch.alpine.sophus.usr;
 import java.util.List;
 import java.util.stream.Stream;
 
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
 import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.hs.s.Sphere;
@@ -20,6 +19,7 @@ import ch.alpine.sophus.lie.sl.SlNGroup;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.sophus.lie.sp.SpNGroup;
 import ch.alpine.sophus.lie.td.TdNGroup;
+import ch.alpine.sophus.math.api.Manifold;
 
 public enum SophusExperimental {
   ;

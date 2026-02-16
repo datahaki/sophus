@@ -2,10 +2,10 @@
 package ch.alpine.sophus.lie.r2s;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.so2.So2;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.spd;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.hs.SpecificManifold;
+import ch.alpine.sophus.math.api.SpecificManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;

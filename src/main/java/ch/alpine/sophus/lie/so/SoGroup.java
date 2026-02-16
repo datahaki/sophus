@@ -3,11 +3,11 @@ package ch.alpine.sophus.lie.so;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
-import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.sophus.math.FrobeniusForm;
 import ch.alpine.sophus.math.api.BilinearForm;
+import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

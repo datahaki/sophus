@@ -1,8 +1,6 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.math.api;
 
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 

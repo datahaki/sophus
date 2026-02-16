@@ -1,9 +1,10 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.math;
 
 import java.util.Objects;
 
 import ch.alpine.sophus.lie.LieDifferences;
+import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Differences;
@@ -19,10 +20,10 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * 
  * @see Differences
  * @see LieDifferences */
-public enum HsDifferences {
+public enum ManifoldDifferences {
   ;
-  public static TensorUnaryOperator of(HomogeneousSpace homogeneousSpace) {
-    Objects.requireNonNull(homogeneousSpace);
-    return new AdjacentReduce((p, q) -> Tensors.of(p, homogeneousSpace.exponential(p).log(q)));
+  public static TensorUnaryOperator of(Manifold manifold) {
+    Objects.requireNonNull(manifold);
+    return new AdjacentReduce((p, q) -> Tensors.of(p, manifold.exponential(p).log(q)));
   }
 }

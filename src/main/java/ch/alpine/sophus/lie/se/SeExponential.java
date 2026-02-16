@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.math.UpperVectorize;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;

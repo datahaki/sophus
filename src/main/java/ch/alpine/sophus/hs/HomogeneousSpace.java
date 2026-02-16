@@ -2,6 +2,9 @@
 package ch.alpine.sophus.hs;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 

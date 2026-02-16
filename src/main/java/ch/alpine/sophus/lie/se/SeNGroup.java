@@ -3,12 +3,12 @@ package ch.alpine.sophus.lie.se;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.se3.Se3Exponential;
 import ch.alpine.sophus.lie.so.SoNGroup;
+import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.math.api.SpecificManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

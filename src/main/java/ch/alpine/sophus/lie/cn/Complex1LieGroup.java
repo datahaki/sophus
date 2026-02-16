@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.cn;
 
-import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 

@@ -4,9 +4,9 @@ package ch.alpine.sophus.lie.td;
 import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 
-import ch.alpine.sophus.hs.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixGroup;
-import ch.alpine.sophus.lie.VectorEncodingMarker;
+import ch.alpine.sophus.math.api.SpecificManifold;
+import ch.alpine.sophus.math.api.VectorEncodingMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.MathematicaFormat;

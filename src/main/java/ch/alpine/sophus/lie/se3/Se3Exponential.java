@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.se.TSeMemberQ;
 import ch.alpine.sophus.lie.so.So3Exponential;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -6,8 +6,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.AffineQ;
+import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;

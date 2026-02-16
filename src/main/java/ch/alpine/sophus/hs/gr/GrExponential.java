@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.gr;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.MatrixBracket;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;

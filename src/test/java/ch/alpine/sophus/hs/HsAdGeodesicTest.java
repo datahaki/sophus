@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.hs.s.SnAlgebra;
 import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.sp;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.gl.GlGroup;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Transpose;

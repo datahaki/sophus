@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.lie.gl.GlGroup;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.MemberQ;

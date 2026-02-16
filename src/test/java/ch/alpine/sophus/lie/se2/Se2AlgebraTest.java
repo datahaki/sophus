@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.MatrixAlgebra;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorBinaryOperator;

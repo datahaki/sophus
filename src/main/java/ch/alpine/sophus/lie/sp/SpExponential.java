@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.sp;
 
-import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;

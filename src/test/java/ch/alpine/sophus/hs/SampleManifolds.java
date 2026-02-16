@@ -13,6 +13,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.math.api.MetricManifold;
+import ch.alpine.sophus.math.api.SpecificManifold;
+import ch.alpine.sophus.math.sample.LocalRandomSample;
 import ch.alpine.sophus.usr.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

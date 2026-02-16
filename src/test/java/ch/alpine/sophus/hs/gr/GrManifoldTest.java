@@ -11,11 +11,11 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.sophus.math.AveragingWeights;
+import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

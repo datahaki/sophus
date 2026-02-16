@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorBinaryOperator;

@@ -3,7 +3,7 @@ package ch.alpine.sophus.bm;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 
 /** Any m from the group that satisfies the equation below is refers to as

@@ -12,7 +12,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.math.api.VectorEncodingMarker;
 import ch.alpine.sophus.usr.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
