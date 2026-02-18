@@ -33,13 +33,13 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>6.0.2</version>
+			<version>6.0.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-params</artifactId>
-			<version>6.0.2</version>
+			<version>6.0.3</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -51,25 +51,6 @@
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
-
-	<repositories>
-		<repository>
-			<id>tensor-mvn-repo</id>
-			<url>https://raw.github.com/datahaki/tensor/mvn-repo/</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>qhull3d-mvn-repo</id>
-			<url>https://raw.github.com/datahaki/qhull3d/mvn-repo/</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<build>
 		<plugins>
