@@ -4,9 +4,7 @@ package ch.alpine.sophus.hs.gr;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.math.api.SpecificManifold;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -34,27 +32,6 @@ public class Grassmannian extends GrManifold implements SpecificManifold {
     this.n = Integers.requirePositive(n);
     this.k = Integers.requirePositiveOrZero(k);
     Integers.requireLessEquals(k, n);
-  }
-
-  @Deprecated
-  public Tensor matrixBasis() { // if this is the tangent vector at Id ?
-    Tensor basis = Tensors.empty();
-    for (int i = 0; i < k; ++i)
-      for (int j = k; j < n; ++j) {
-        Tensor elem = Array.sparse(n, n);
-        elem.set(RealScalar.ONE, i, j);
-        elem.set(RealScalar.ONE.negate(), j, i);
-        basis.append(elem);
-      }
-    for (int i = 0; i < n; ++i)
-      for (int j = i + 1; j < n; ++j)
-        if (k <= i || j < k) {
-          Tensor elem = Array.sparse(n, n);
-          elem.set(RealScalar.ONE, i, j);
-          elem.set(RealScalar.ONE.negate(), j, i);
-          basis.append(elem);
-        }
-    return basis;
   }
 
   @Override // from RandomSampleInterface
