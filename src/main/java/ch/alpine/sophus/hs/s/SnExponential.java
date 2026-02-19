@@ -3,13 +3,13 @@ package ch.alpine.sophus.hs.s;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.math.VectorProjection;
 import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.red.Projection;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sinc;
 
@@ -42,7 +42,7 @@ public class SnExponential implements Exponential, Serializable {
     this.p = p;
     tSnMemberQ = new TSnMemberQ(p);
     snAngle = new SnAngle(p);
-    projection = Projection.on(p);
+    projection = VectorProjection.on(p);
   }
 
   @Override // from Exponential

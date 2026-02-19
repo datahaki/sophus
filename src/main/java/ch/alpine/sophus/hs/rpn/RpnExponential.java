@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.hs.s.SnAngle;
 import ch.alpine.sophus.hs.s.TSnMemberQ;
+import ch.alpine.sophus.math.VectorProjection;
 import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -13,7 +14,6 @@ import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.red.Projection;
 import ch.alpine.tensor.sca.tri.Cos;
 import ch.alpine.tensor.sca.tri.Sinc;
 
@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
     this.x = x;
     snAngle = new SnAngle(x);
     tSnMemberQ = new TSnMemberQ(x);
-    projection = Projection.on(x);
+    projection = VectorProjection.on(x);
     if (x.length() < 2)
       throw new Throw(x);
   }

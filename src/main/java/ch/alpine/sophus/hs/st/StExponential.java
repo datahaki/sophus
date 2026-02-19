@@ -13,7 +13,6 @@ import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.ext.Integers;
-import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
@@ -22,7 +21,6 @@ import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
 import ch.alpine.tensor.mat.qr.QRMathematica;
-import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.mat.sv.SingularValueDecomposition;
 import ch.alpine.tensor.nrm.Matrix2Norm;
 import ch.alpine.tensor.sca.Chop;
@@ -92,12 +90,11 @@ import ch.alpine.tensor.sca.Chop;
     // IO.println("Dim[K]=" + Dimensions.of(K));
     // IO.println(Pretty.of(K.map(Round._3)));
     // the MatrixRank of the matrix "K" is min(k, n-k)
-    int n = qt.length();
-    if (false)
-      if (MatrixRank.of(K) != Math.min(k, n - k) && !Chop._10.allZero(K)) {
-        IO.println(Pretty.of(K));
-        System.err.println("NO NO NO");
-      }
+    // int n = qt.length();
+    // if (MatrixRank.of(K) != Math.min(k, n - k) && !Chop._10.allZero(K)) {
+    // IO.println(Pretty.of(K));
+    // System.err.println("NO NO NO");
+    // }
     // the use of GramSchmidt would require more complex logic
     // for instance when q == p then matrix K is all zeros
     QRDecomposition qrDecomposition = QRMathematica.wrap(QRDecomposition.of(K));
