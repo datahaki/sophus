@@ -76,8 +76,7 @@ class SampleManifolds {
     Scalar d_pq = metricManifold.distance(p, q);
     Scalar d_qp = metricManifold.distance(q, p);
     Chop._10.requireClose(d_pq, d_qp);
-    assumeTrue(homogeneousSpace instanceof GeodesicSpace);
-    GeodesicSpace geodesicSpace = (GeodesicSpace) homogeneousSpace;
+    GeodesicSpace geodesicSpace = homogeneousSpace;
     Tensor m = geodesicSpace.midpoint(p, q);
     Scalar d_pm = metricManifold.distance(p, m);
     Scalar d_mq = metricManifold.distance(m, q);

@@ -89,6 +89,7 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
 
   @Override
   public BilinearForm bilinearForm(Tensor p) {
+    // FIXME
     return null;
   }
 
