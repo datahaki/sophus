@@ -72,9 +72,12 @@ public enum SophusExperimental {
   };
 
   public static <T extends Manifold> List<T> filter(Class<T> cls) {
-    return Stream.of(MANIFOLDS) //
+    List<T> list = Stream.of(MANIFOLDS) //
         .filter(cls::isInstance) //
         .map(cls::cast) //
         .toList();
+    if (list.isEmpty())
+      throw new IllegalStateException();
+    return list;
   }
 }

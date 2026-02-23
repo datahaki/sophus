@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Scalar;
@@ -10,6 +12,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Chop;
 
 class SpdBilinearFormTest {
   @Test
@@ -22,10 +25,13 @@ class SpdBilinearFormTest {
     Scalar d2 = Spd0Exponential.INSTANCE.distance(q);
     Tolerance.CHOP.requireClose(d1, d2);
     Tensor g = IdentityMatrix.inplaceAdd(RandomVariate.of(NormalDistribution.of(0, 0.1), n, n));
-    SpdIso spdIso = new SpdIso(g);
+    SpdIsometry spdIso = new SpdIsometry(g);
     Tensor ps = spdIso.apply(p);
+    assertFalse(Chop._04.isClose(p, ps));
     Tensor qs = spdIso.apply(q);
     Scalar d3 = spdNManifold.distance(ps, qs);
     Tolerance.CHOP.requireClose(d1, d3);
+    Scalar d4 = spdNManifold.exponential(ps).distance(qs);
+    Tolerance.CHOP.requireClose(d1, d4);
   }
 }

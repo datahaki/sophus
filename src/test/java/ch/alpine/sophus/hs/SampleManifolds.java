@@ -25,6 +25,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.Tolerance;
@@ -49,12 +50,13 @@ class SampleManifolds {
   @MethodSource("homogeneousSpaces")
   void testSerialization(HomogeneousSpace homogeneousSpace) {
     assertDoesNotThrow(() -> Serialization.copy(homogeneousSpace));
-    assertDoesNotThrow(() -> homogeneousSpace.isPointQ());
+    MemberQ pointQ = homogeneousSpace.isPointQ();
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
         RandomSample.of(rsi, new Random(13)));
     Tensor p = RandomSample.of(rsi);
+    pointQ.require(p);
     Exponential exponential = homogeneousSpace.exponential(p);
     assertDoesNotThrow(() -> exponential);
     assertDoesNotThrow(() -> exponential.isTangentQ());

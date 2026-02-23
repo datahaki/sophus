@@ -12,6 +12,7 @@ import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
+import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
@@ -86,22 +87,26 @@ public class SpdExponential implements Exponential, Serializable {
     return Transpose.of(pp.dot(mid).dot(pn)); // mid is treated as (1, 1) tensor
   }
 
-  /** Reference:
-   * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
-   * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 82
-   * 
-   * @param q
-   * @return the 2-norm of the eigenvalues of log_p(q) == log_0(bt(q, pn))
-   * @see SpdMetric */
-  /* package */ Scalar distance(Tensor q) {
-    return Spd0Exponential.INSTANCE.distance(basis(q, pn));
-  }
-
   /** @param matrix
    * @param v
    * @return
    * @see BasisTransform#ofForm(Tensor, Tensor) */
   /* package */ static Tensor basis(Tensor matrix, Tensor v) {
     return Symmetrize.of(v.dot(matrix).dot(v));
+  }
+
+  /** This method implements an alternative, completely equivalent
+   * formula for distance(p, q).
+   * 
+   * Reference:
+   * "Riemannian Geometric Statistics in Medical Image Analysis", 2020
+   * Edited by Xavier Pennec, Stefan Sommer, Tom Fletcher, p. 82
+   * 
+   * @param q
+   * @return the 2-norm of the eigenvalues of log_p(q) == log_0(bt(q, pn))
+   * @see SpdMetric */
+  @PackageTestAccess
+  /* package */ Scalar distance(Tensor q) {
+    return Spd0Exponential.INSTANCE.distance(basis(q, pn));
   }
 }
