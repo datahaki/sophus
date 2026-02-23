@@ -10,7 +10,6 @@ import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.MemberQ;
@@ -87,16 +86,14 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
     return SpdTransport.INSTANCE;
   }
 
+  /** This is called the:
+   * 
+   * Affine-invariant metric
+   * Fisher–Rao metric (in statistics)
+   * Cartan/Killing–induced metric on the symmetric space. */
   @Override
   public BilinearForm bilinearForm(Tensor p) {
-    // FIXME
-    return null;
-  }
-
-  @Override // from TensorMetric
-  public Scalar distance(Tensor p, Tensor q) {
-    // TODO SOPHUS
-    return new SpdExponential(p).distance(q);
+    return new SpdBilinearForm(p);
   }
 
   private static final ScalarUnaryOperator MAX = Max.function(RealScalar.of(1e-12));

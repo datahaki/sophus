@@ -61,7 +61,7 @@ class Spd0ExponentialTest {
 
   @Test
   void testSimple2() {
-    assertEquals(Spd0Exponential.norm(IdentityMatrix.of(3)), RealScalar.ZERO);
+    assertEquals(Spd0Exponential.INSTANCE.distance(IdentityMatrix.of(3)), RealScalar.ZERO);
   }
 
   @Test

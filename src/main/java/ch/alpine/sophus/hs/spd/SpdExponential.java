@@ -94,7 +94,7 @@ public class SpdExponential implements Exponential, Serializable {
    * @return the 2-norm of the eigenvalues of log_p(q) == log_0(bt(q, pn))
    * @see SpdMetric */
   /* package */ Scalar distance(Tensor q) {
-    return Spd0Exponential.norm(basis(q, pn));
+    return Spd0Exponential.INSTANCE.distance(basis(q, pn));
   }
 
   /** @param matrix

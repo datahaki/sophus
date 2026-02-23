@@ -1,17 +1,16 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import ch.alpine.sophus.math.FrobeniusForm;
+import ch.alpine.sophus.math.api.BilinearForm;
 import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SquareMatrixQ;
-import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
-import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.sca.exp.Log;
 
 /** Exponential map at IdentityMatrix in SPD
  * 
@@ -34,7 +33,7 @@ import ch.alpine.tensor.sca.exp.Log;
  * @see MatrixExp
  * @see MatrixLog
  * @see SpdExponential */
-public enum Spd0Exponential implements Exponential {
+public enum Spd0Exponential implements Exponential, BilinearForm {
   INSTANCE;
 
   @Override // from Exponential
@@ -50,6 +49,11 @@ public enum Spd0Exponential implements Exponential {
   @Override
   public ZeroDefectArrayQ isTangentQ() {
     return SquareMatrixQ.INSTANCE;
+  }
+
+  @Override
+  public Scalar formEval(Tensor u, Tensor v) {
+    return FrobeniusForm.INSTANCE.formEval(u, v);
   }
 
   /** n(g) == n(Inverse[g])
@@ -71,12 +75,7 @@ public enum Spd0Exponential implements Exponential {
    * 
    * @param q spd
    * @return */
-  public static Scalar norm(Tensor q) {
-    Tensor diag = Tensor.of(Eigensystem.ofSymmetric(q).values().stream() //
-        .map(Scalar.class::cast) //
-        .map(Log.FUNCTION));
-    // note that Norm2Squared.ofVector(diag) == Trace.of(MatrixLog.of(q)^2)
-    // note that Total.ofVector(diag) == Trace.of(MatrixLog.of(q))
-    return Vector2Norm.of(diag); // corresponds to beta == 0
+  public Scalar distance(Tensor q) {
+    return norm(log(q));
   }
 }

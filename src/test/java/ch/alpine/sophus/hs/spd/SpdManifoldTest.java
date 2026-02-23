@@ -57,9 +57,9 @@ class SpdManifoldTest {
   void testNorm(int n) {
     RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor g = RandomSample.of(rsi);
-    Scalar dP = Spd0Exponential.norm(g);
+    Scalar dP = Spd0Exponential.INSTANCE.distance(g);
     Tensor ginv = Symmetrize.of(Inverse.of(g));
-    Scalar dN = Spd0Exponential.norm(ginv);
+    Scalar dN = Spd0Exponential.INSTANCE.distance(ginv);
     Chop._06.requireClose(dP, dN);
     Tensor p = RandomSample.of(rsi);
     Tensor q = RandomSample.of(rsi);
