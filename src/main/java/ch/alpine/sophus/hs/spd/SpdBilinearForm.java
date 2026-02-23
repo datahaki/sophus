@@ -10,6 +10,11 @@ import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.red.Trace;
 
+/** This is called the:
+ * 
+ * Affine-invariant metric
+ * Fisher–Rao metric (in statistics)
+ * Cartan/Killing–induced metric on the symmetric space. */
 /* package */ class SpdBilinearForm implements BilinearForm, Serializable {
   private final Tensor pinv;
 

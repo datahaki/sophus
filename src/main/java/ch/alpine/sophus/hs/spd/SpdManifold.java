@@ -86,11 +86,6 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
     return SpdTransport.INSTANCE;
   }
 
-  /** This is called the:
-   * 
-   * Affine-invariant metric
-   * Fisher–Rao metric (in statistics)
-   * Cartan/Killing–induced metric on the symmetric space. */
   @Override
   public BilinearForm bilinearForm(Tensor p) {
     return new SpdBilinearForm(p);

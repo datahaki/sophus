@@ -6,7 +6,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Mean;
 
-/** @see Mean */
+/** used for instance in k-means clustering to establish center of cluster
+ * 
+ * @see Mean */
 public record CenterMean(BiinvariantMean biinvariantMean) implements TensorUnaryOperator {
   @Override
   public Tensor apply(Tensor sequence) {
