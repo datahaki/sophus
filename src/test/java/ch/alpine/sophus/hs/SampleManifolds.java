@@ -105,6 +105,9 @@ class SampleManifolds {
     Tensor w = linearSubspace.apply(weights);
     Tensor r = exponential.exp(w);
     assumeTrue(homogeneousSpace.isPointQ().test(r));
+    Tensor pv100 = exponential.exp(v.multiply(RealScalar.of(10)));
+    MemberQ pointQ = homogeneousSpace.isPointQ();
+    pointQ.require(pv100);
   }
 
   @ParameterizedTest
