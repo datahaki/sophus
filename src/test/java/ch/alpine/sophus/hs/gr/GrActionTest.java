@@ -28,7 +28,7 @@ class GrActionTest {
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       GrAction so = GrAction.match(p, q);
-      Chop._12.requireClose(so.apply(p), q);
+      Chop._10.requireClose(so.apply(p), q);
     }
   }
 

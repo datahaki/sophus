@@ -9,7 +9,6 @@ import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.sca.Chop;
 
-/** the pole ladder is exact in symmetric spaces */
 public record GrAction(Tensor g) implements TensorUnaryOperator {
   /** @param p
    * @param q
