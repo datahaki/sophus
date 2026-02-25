@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs.rs;
+package ch.alpine.sophus.gs.rs;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
@@ -9,9 +9,8 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.lie.rot.AngleVector;
 
 public enum Se2inR2S implements GeodesicSpace {
-  METHOD_0(RnSBezierSplit.METHOD_0), //
-  METHOD_1(RnSBezierSplit.METHOD_1), //
-  ;
+  METHOD_0(RnSBezierSplit.METHOD_0),
+  METHOD_1(RnSBezierSplit.METHOD_1);
 
   private final RnSBezierSplit rnSBezierSplit;
 
@@ -27,5 +26,10 @@ public enum Se2inR2S implements GeodesicSpace {
       Tensor split = rnSBezierSplit.split(pv0, pv1, scalar);
       return split.get(0).append(ArcTan2D.of(split.get(1)));
     };
+  }
+
+  @Override
+  public String toString() {
+    return "RnSB" + ordinal();
   }
 }

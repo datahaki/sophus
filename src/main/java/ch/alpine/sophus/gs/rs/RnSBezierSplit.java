@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs.rs;
+package ch.alpine.sophus.gs.rs;
 
 import java.util.Optional;
 

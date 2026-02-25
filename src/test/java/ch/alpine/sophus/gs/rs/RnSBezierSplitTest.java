@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs.rs;
+package ch.alpine.sophus.gs.rs;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
