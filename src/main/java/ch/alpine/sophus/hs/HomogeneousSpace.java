@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.GeodesicSpace;
-import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
@@ -28,13 +28,13 @@ public interface HomogeneousSpace extends GeodesicSpace, Manifold {
    * @return Exp_p[-Log_p[q]] */
   // TODO SOPHUS find an elegant way to check if default matches override
   default Tensor flip(Tensor p, Tensor q) {
-    Exponential exp_p = exponential(p);
+    TangentSpace exp_p = exponential(p);
     return exp_p.exp(exp_p.log(q).negate());
   }
 
   @Override
   default ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Exponential exp_p = exponential(p);
+    TangentSpace exp_p = exponential(p);
     Tensor v = exp_p.log(q);
     return scalar -> exp_p.exp(v.multiply(scalar));
   }

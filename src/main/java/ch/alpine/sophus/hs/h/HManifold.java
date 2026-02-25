@@ -3,15 +3,15 @@ package ch.alpine.sophus.hs.h;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.BilinearForm;
+import ch.alpine.sophus.api.MetricManifold;
+import ch.alpine.sophus.api.TangentSpace;
+import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.MetricManifold;
-import ch.alpine.sophus.math.api.VectorEncodingMarker;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
@@ -42,8 +42,8 @@ public class HManifold implements HomogeneousSpace, VectorEncodingMarker, Metric
   }
 
   @Override // from Manifold
-  public Exponential exponential(Tensor p) {
-    return new HExponential(p);
+  public TangentSpace exponential(Tensor p) {
+    return new HTangentSpace(p);
   }
 
   @Override // from HomogeneousSpace

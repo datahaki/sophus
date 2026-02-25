@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -28,7 +28,7 @@ class SpdManifoldTest {
     RandomSampleInterface spd = new Spd0RandomSample(3, NormalDistribution.of(0, 0.2));
     Tensor p = RandomSample.of(spd);
     Tensor q = RandomSample.of(spd);
-    SpdExponential exp_p = new SpdExponential(p);
+    SpdTangentSpace exp_p = new SpdTangentSpace(p);
     Chop._10.requireClose(exp_p.exp(exp_p.log(q).negate()), SpdManifold.INSTANCE.flip(p, q));
   }
 
@@ -71,7 +71,7 @@ class SpdManifoldTest {
         BasisTransform.ofForm(p, v), //
         BasisTransform.ofForm(q, v));
     Chop._06.requireClose(pq, v_pq);
-    FrobeniusNorm.of(new SpdExponential(p).log(q));
+    FrobeniusNorm.of(new SpdTangentSpace(p).log(q));
     // Scalar d3 = LowerVectorize0_2Norm.INSTANCE.norm(new SpdExponential(p).vectorLog(q));
     // Chop._08.requireClose(d2, d3);
   }
@@ -82,7 +82,7 @@ class SpdManifoldTest {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
-      Exponential exponential = new SpdExponential(p);
+      TangentSpace exponential = new SpdTangentSpace(p);
       Tensor log = exponential.log(q);
       Chop._06.requireClose(exponential.exp(log), q);
     }
@@ -94,7 +94,7 @@ class SpdManifoldTest {
       RandomSampleInterface rsi = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(rsi);
       Tensor q = RandomSample.of(rsi);
-      Exponential exponential = new SpdExponential(p);
+      TangentSpace exponential = new SpdTangentSpace(p);
       Tensor w1 = exponential.log(q);
       Scalar r1 = Sqrt.FUNCTION.apply(new SpdRiemann(p).scalarProd(w1, w1));
       Scalar r2 = SpdManifold.INSTANCE.distance(p, q);

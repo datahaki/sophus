@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
@@ -17,7 +17,7 @@ public record DoubleExponential(HomogeneousSpace homogeneousSpace) implements Se
 
   public class DoubleExponentialPoint implements Serializable {
     private final Tensor x;
-    private final Exponential exponential;
+    private final TangentSpace exponential;
 
     private DoubleExponentialPoint(Tensor x) {
       this.x = x;
@@ -26,7 +26,7 @@ public record DoubleExponential(HomogeneousSpace homogeneousSpace) implements Se
 
     public TensorUnaryOperator operator(Tensor v) {
       Tensor xv = exponential.exp(v);
-      Exponential exp_xv = homogeneousSpace.exponential(xv);
+      TangentSpace exp_xv = homogeneousSpace.exponential(xv);
       TensorUnaryOperator operator = homogeneousSpace.hsTransport().shift(x, xv);
       return w -> exp_xv.exp(operator.apply(w));
     }

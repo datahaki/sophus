@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.h;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.math.api.TensorDistance;
+import ch.alpine.sophus.api.TensorDistance;
 import ch.alpine.tensor.Tensors;
 
 class HLineDistanceTest {

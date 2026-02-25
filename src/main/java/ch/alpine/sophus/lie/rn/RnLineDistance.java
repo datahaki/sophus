@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
+import ch.alpine.sophus.api.LineDistance;
+import ch.alpine.sophus.api.TensorDistance;
 import ch.alpine.sophus.math.VectorProjection;
-import ch.alpine.sophus.math.api.LineDistance;
-import ch.alpine.sophus.math.api.TensorDistance;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;

@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -27,7 +27,7 @@ class TSpMemberQTest {
     Tensor v = w.dot(linearSubspace.basis());
     SpNGroup symplectic = new SpNGroup(n);
     assertEquals(dim, symplectic.dimensions());
-    Exponential tangentSpace = symplectic.exponential(IdentityMatrix.of(2 * n));
+    TangentSpace tangentSpace = symplectic.exponential(IdentityMatrix.of(2 * n));
     Tensor p = tangentSpace.exp(v);
     assertTrue(symplectic.isPointQ().test(p));
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(linearSubspace.basis());

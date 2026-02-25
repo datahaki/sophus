@@ -4,23 +4,28 @@ package ch.alpine.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 public abstract class AbstractLieGroup implements LieGroup, Serializable {
-  abstract class LieExp implements Exponential, Serializable {
+  abstract class LieExp implements TangentSpace, Serializable {
     // ---
   }
 
   /** all tangent vectors are assumed to be in the tangent space at the neutral element,
    * i.e. given in the basis of TeG */
   @Override // from Manifold
-  public final Exponential exponential(Tensor p) {
+  public final TangentSpace exponential(Tensor p) {
     return new LieExp() {
       Tensor pinv;
+
+      @Override
+      public Tensor basePoint() {
+        return p;
+      }
 
       @Override // from Exponential
       public Tensor exp(Tensor v) {

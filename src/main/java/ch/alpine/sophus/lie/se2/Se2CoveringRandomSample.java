@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
-import ch.alpine.sophus.math.sample.DnRandomSample;
+import ch.alpine.sophus.rsm.DnRandomSample;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 

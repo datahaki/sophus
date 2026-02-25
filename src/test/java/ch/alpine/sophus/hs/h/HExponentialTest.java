@@ -18,7 +18,7 @@ class HExponentialTest {
   @ValueSource(ints = { 1, 2, 3, 5 })
   void testZero(int d) {
     Tensor px = RandomVariate.of(NormalDistribution.standard(), d);
-    HExponential hExponential = new HExponential(px);
+    HTangentSpace hExponential = new HTangentSpace(px);
     Tensor exp = hExponential.exp(Array.zeros(d));
     Tolerance.CHOP.requireClose(px, exp);
   }
@@ -27,7 +27,7 @@ class HExponentialTest {
   @ValueSource(ints = { 1, 2, 3, 5 })
   void testPush(int d) {
     Tensor px = RandomVariate.of(NormalDistribution.standard(), d);
-    HExponential hExponential = new HExponential(px);
+    HTangentSpace hExponential = new HTangentSpace(px);
     Tensor vx = RandomVariate.of(NormalDistribution.standard(), d);
     Tensor exp = hExponential.exp(vx);
     Tensor log = hExponential.log(exp);

@@ -9,9 +9,9 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import ch.alpine.sophus.api.BilinearForm;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.lie.so.SoNGroup;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
@@ -35,7 +35,7 @@ class StBilinearFormTest {
       assertTrue(Im.allZero(v));
       BilinearForm bilinearForm = stiefelManifold.bilinearForm(p);
       Scalar norm = bilinearForm.norm(v);
-      Exponential exponential = stiefelManifold.exponential(p);
+      TangentSpace exponential = stiefelManifold.exponential(p);
       Tensor q = exponential.exp(v);
       assertTrue(Im.allZero(q));
       Tensor w = exponential.log(q);

@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
+import ch.alpine.sophus.api.BilinearForm;
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.math.FrobeniusForm;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
@@ -32,7 +32,7 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
  * 
  * @see MatrixExp
  * @see MatrixLog
- * @see SpdExponential */
+ * @see SpdTangentSpace */
 public enum Spd0Exponential implements Exponential, BilinearForm {
   INSTANCE;
 

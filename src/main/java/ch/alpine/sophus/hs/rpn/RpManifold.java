@@ -1,6 +1,9 @@
 // code by jph
 package ch.alpine.sophus.hs.rpn;
 
+import ch.alpine.sophus.api.BilinearForm;
+import ch.alpine.sophus.api.MetricManifold;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -9,9 +12,6 @@ import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.UnitVectorQ;
 import ch.alpine.sophus.math.FrobeniusForm;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -41,8 +41,8 @@ public class RpManifold implements HomogeneousSpace, MetricManifold {
   }
 
   @Override // from Manifold
-  public final Exponential exponential(Tensor point) {
-    return new RpnExponential(point);
+  public final TangentSpace exponential(Tensor point) {
+    return new RpnTangentSpace(point);
   }
 
   @Override

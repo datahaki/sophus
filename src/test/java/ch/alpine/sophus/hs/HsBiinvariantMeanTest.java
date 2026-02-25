@@ -9,15 +9,15 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.s.SnExponential;
+import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -43,7 +43,7 @@ class HsBiinvariantMeanTest {
       Tensor sequence_m = RandomVariate.of(distributionX, random, n, 2);
       BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
       Tensor m_avg = biinvariantMean.mean(sequence_m, weights);
-      SnExponential snExponential = new SnExponential(UnitVector.of(3, 2));
+      STangentSpace snExponential = new STangentSpace(UnitVector.of(3, 2));
       Tensor pointsS2 = Tensor.of(sequence_m.stream().map(r -> r.copy().append(RealScalar.ZERO)).map(snExponential::exp));
       Tensor meanS2 = SnManifold.INSTANCE.biinvariantMean().mean(pointsS2, weights);
       Tensor res = snExponential.log(meanS2).extract(0, 2);

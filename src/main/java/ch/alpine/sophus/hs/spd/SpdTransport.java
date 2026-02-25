@@ -20,7 +20,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    Tensor pt = new SpdExponential(p).endomorphism(q);
+    Tensor pt = new SpdTangentSpace(p).endomorphism(q);
     // v is a symmetric matrix but is treated as rank 1
     return v -> BasisTransform.ofForm(v, pt);
   }

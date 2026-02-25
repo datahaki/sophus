@@ -23,7 +23,7 @@ class SnTransportTest {
   void testFlip() {
     Tensor p = RandomSample.of(new Sphere(3));
     Tensor q = RandomSample.of(new Sphere(3));
-    SnExponential snExponential = new SnExponential(p);
+    STangentSpace snExponential = new STangentSpace(p);
     Tensor f1 = snExponential.exp(snExponential.log(q).negate());
     Tensor f2 = SnManifold.INSTANCE.flip(p, q);
     Tolerance.CHOP.requireClose(f1, f2);

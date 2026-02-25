@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.lie.so.SoGroup;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
@@ -32,7 +32,7 @@ class StExponentialTest {
       Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), k, n));
       Scalar norm = Matrix2Norm.of(v);
       assertFalse(Chop._08.isZero(norm));
-      Exponential exponential = stiefelManifold.exponential(p);
+      TangentSpace exponential = stiefelManifold.exponential(p);
       Tensor q = exponential.exp(v);
       assertEquals(Dimensions.of(p), Dimensions.of(q));
       stiefelManifold.isPointQ().require(q);
@@ -49,7 +49,7 @@ class StExponentialTest {
     stiefelManifold.isPointQ().require(p);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n));
-    Exponential exponential = stiefelManifold.exponential(p);
+    TangentSpace exponential = stiefelManifold.exponential(p);
     Tensor q = exponential.exp(v);
     stiefelManifold.isPointQ().require(q);
     Tensor log1 = exponential.log(q);

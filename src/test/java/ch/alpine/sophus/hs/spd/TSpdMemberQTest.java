@@ -17,7 +17,7 @@ class TSpdMemberQTest {
     for (int n = 1; n < 10; ++n) {
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor sim = RandomSample.of(rsi);
-      SpdExponential spdExponential = new SpdExponential(IdentityMatrix.of(n));
+      SpdTangentSpace spdExponential = new SpdTangentSpace(IdentityMatrix.of(n));
       spdExponential.isTangentQ().require(sim);
       Tolerance.CHOP.requireClose(TSpdMemberQ.project(sim), sim);
     }

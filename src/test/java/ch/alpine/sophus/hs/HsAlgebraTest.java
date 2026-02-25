@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.hs.HsAlgebra.Decomp;
-import ch.alpine.sophus.hs.s.SnExponential;
+import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
@@ -160,7 +160,7 @@ class HsAlgebraTest {
     Chop._03.requireClose(res, Tensors.vector(0.0, 0.1));
     Tensor p = UnitVector.of(3, 2);
     Tensor rotation = So3Exponential.vectorExp(g);
-    SnExponential snExponential = new SnExponential(p);
+    STangentSpace snExponential = new STangentSpace(p);
     Tensor v = m.copy().append(RealScalar.ZERO);
     Tensor snm = snExponential.exp(v);
     Tensor dot = rotation.dot(snm);
@@ -179,7 +179,7 @@ class HsAlgebraTest {
     Chop._03.requireClose(res, Tensors.vector(0.1, 0.2));
     Tensor p = UnitVector.of(3, 2);
     Tensor rotation = So3Exponential.vectorExp(g);
-    SnExponential snExponential = new SnExponential(p);
+    STangentSpace snExponential = new STangentSpace(p);
     Tensor v = m.copy().append(RealScalar.ZERO);
     Tensor snm = snExponential.exp(v);
     Tensor dot = rotation.dot(snm);

@@ -12,6 +12,6 @@ public enum SnFastMean implements MeanEstimate {
   @Override // from BiinvariantMean
   public Tensor estimate(Tensor sequence, Tensor weights) {
     Tensor mean = SnPhongMean.INSTANCE.estimate(sequence, weights);
-    return MeanDefect.of(sequence, weights, new SnExponential(mean)).shifted();
+    return MeanDefect.of(sequence, weights, new STangentSpace(mean)).shifted();
   }
 }

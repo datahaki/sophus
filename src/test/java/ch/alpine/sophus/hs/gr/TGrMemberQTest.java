@@ -61,7 +61,7 @@ class TGrMemberQTest {
     RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
-    Tensor v = new GrExponential(p).log(q);
+    Tensor v = new GrTangentSpace(p).log(q);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p); // .require(v);
     LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::defect, n, n);
     assertFalse(linearSubspace.basis().stream().anyMatch(ExactTensorQ::of));

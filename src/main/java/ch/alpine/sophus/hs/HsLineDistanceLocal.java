@@ -3,14 +3,14 @@ package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.TensorDistance;
+import ch.alpine.sophus.api.TangentSpace;
+import ch.alpine.sophus.api.TensorDistance;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Times;
 
-public record HsLineDistanceLocal(Exponential exponential, Tensor normal) implements TensorDistance, Serializable {
+public record HsLineDistanceLocal(TangentSpace exponential, Tensor normal) implements TensorDistance, Serializable {
   /** @param tensor of the lie group
    * @return element of the lie algebra */
   public Tensor project(Tensor tensor) {

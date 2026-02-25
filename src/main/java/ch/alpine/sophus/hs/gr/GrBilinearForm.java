@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.math.api.BilinearForm;
+import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.MatrixDotConjugateTranspose;

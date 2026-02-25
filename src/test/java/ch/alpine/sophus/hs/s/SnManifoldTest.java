@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.math.AveragingWeights;
-import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -58,7 +58,7 @@ class SnManifoldTest {
       Scalar a1 = SnManifold.INSTANCE.distance(p, q);
       Scalar a2 = _check(p, q);
       Chop._12.requireClose(a1, a2);
-      Scalar norm = Vector2Norm.of(new SnExponential(p).log(q));
+      Scalar norm = Vector2Norm.of(new STangentSpace(p).log(q));
       Tolerance.CHOP.requireClose(norm, a1);
     }
   }

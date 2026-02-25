@@ -32,7 +32,7 @@ class FullRankCorrelationMatrixTest {
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor frc1 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
       Tensor frc2 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
-      Tensor log = new SpdExponential(frc1).log(frc2);
+      Tensor log = new SpdTangentSpace(frc1).log(frc2);
       log.maps(Scalar::zero);
       // System.out.println(Pretty.of(log.map(Round._2)));
     }
@@ -44,7 +44,7 @@ class FullRankCorrelationMatrixTest {
       Tensor frc1 = IdentityMatrix.of(n);
       Spd0RandomSample spdRandomSample = new Spd0RandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor frc2 = FullRankCorrelationMatrix.fromSpd(RandomSample.of(spdRandomSample));
-      Tensor log = new SpdExponential(frc1).log(frc2);
+      Tensor log = new SpdTangentSpace(frc1).log(frc2);
       log.maps(Scalar::zero);
       // System.out.println(Pretty.of(log.map(Round._2)));
     }

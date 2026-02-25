@@ -10,12 +10,12 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.sophus.math.AveragingWeights;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -67,7 +67,7 @@ class GrManifoldTest {
       Grassmannian grassmannian = new Grassmannian(n, k);
       Tensor p = RandomSample.of(grassmannian);
       Tensor q = RandomSample.of(grassmannian);
-      Exponential exponential = grassmannian.exponential(p);
+      TangentSpace exponential = grassmannian.exponential(p);
       assumeFalse(ThrowQ.of(() -> exponential.log(q)));
       ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
       Tensor mir1 = stf.apply(RealScalar.ONE.negate());
@@ -95,8 +95,8 @@ class GrManifoldTest {
     Tensor p1 = RandomSample.of(new Grassmannian(n, 1));
     Tensor p2 = RandomSample.of(new Grassmannian(n, 2));
     Tensor q = ConstantArray.of(Pi.VALUE, n, n);
-    assertThrows(Exception.class, () -> new GrExponential(p1).log(q));
-    assertThrows(Exception.class, () -> new GrExponential(p2).log(q));
+    assertThrows(Exception.class, () -> new GrTangentSpace(p1).log(q));
+    assertThrows(Exception.class, () -> new GrTangentSpace(p2).log(q));
   }
 
   /** @param vector
@@ -159,7 +159,7 @@ class GrManifoldTest {
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
-    Scalar d2 = FrobeniusNorm.of(new GrExponential(p).log(q));
+    Scalar d2 = FrobeniusNorm.of(new GrTangentSpace(p).log(q));
     Chop._08.requireClose(d1, d2);
   }
 

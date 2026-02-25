@@ -3,14 +3,14 @@ package ch.alpine.sophus.lie.se2;
 
 import java.util.random.RandomGenerator;
 
+import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.MatrixGroup;
 import ch.alpine.sophus.lie.se.SeNGroup;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.SpecificManifold;
-import ch.alpine.sophus.math.api.VectorEncodingMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

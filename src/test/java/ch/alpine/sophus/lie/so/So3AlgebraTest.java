@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsAlgebra;
-import ch.alpine.sophus.hs.s.SnExponential;
+import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -46,7 +46,7 @@ class So3AlgebraTest {
       Tensor m2 = hsAlgebra.action(ga, m1);
       Tensor p = UnitVector.of(3, 2);
       // TODO SOPHUS SO3 investigate where this "change of coordinates" comes from
-      SnExponential snExponential = new SnExponential(p);
+      STangentSpace snExponential = new STangentSpace(p);
       Tensor v1 = hsAlgebra.lift(m1); // attach 0
       Tensor p1 = snExponential.exp(v1); // map to S^2
       Tensor g = Tensors.of(ga.Get(1).negate(), ga.Get(0), ga.Get(2));
@@ -68,7 +68,7 @@ class So3AlgebraTest {
     Tensor m2 = hsAlgebra.action(h, m1);
     Tensor p = UnitVector.of(3, 2);
     Tensor rotation = So3Group.INSTANCE.exponential0().exp(h);
-    SnExponential snExponential = new SnExponential(p);
+    STangentSpace snExponential = new STangentSpace(p);
     Tensor v1 = hsAlgebra.lift(m1);
     Tensor snm = snExponential.exp(v1);
     Tensor dot = rotation.dot(snm);

@@ -3,8 +3,8 @@ package ch.alpine.sophus.hs.h;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.api.LineDistance;
-import ch.alpine.sophus.math.api.TensorDistance;
+import ch.alpine.sophus.api.LineDistance;
+import ch.alpine.sophus.api.TensorDistance;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

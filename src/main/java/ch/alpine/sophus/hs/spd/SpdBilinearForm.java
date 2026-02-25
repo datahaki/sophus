@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.api.BilinearForm;
+import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dot;

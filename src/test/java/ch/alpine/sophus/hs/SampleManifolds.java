@@ -12,13 +12,13 @@ import java.util.Random;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ch.alpine.sophus.SophusExperimental;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.MetricManifold;
+import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.GeodesicSpace;
-import ch.alpine.sophus.math.api.MetricManifold;
-import ch.alpine.sophus.math.api.SpecificManifold;
-import ch.alpine.sophus.math.sample.LocalRandomSample;
-import ch.alpine.sophus.usr.SophusExperimental;
+import ch.alpine.sophus.rsm.LocalRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -57,7 +57,7 @@ class SampleManifolds {
         RandomSample.of(rsi, new Random(13)));
     Tensor p = RandomSample.of(rsi);
     pointQ.require(p);
-    Exponential exponential = homogeneousSpace.exponential(p);
+    TangentSpace exponential = homogeneousSpace.exponential(p);
     assertDoesNotThrow(() -> exponential);
     assertDoesNotThrow(() -> exponential.isTangentQ());
     Tolerance.CHOP.requireClose(homogeneousSpace.flip(p, p), p);
@@ -72,9 +72,9 @@ class SampleManifolds {
     assumeTrue(homogeneousSpace instanceof MetricManifold);
     MetricManifold metricManifold = (MetricManifold) homogeneousSpace;
     Tensor p = RandomSample.of(rsi);
-    Exponential exponential = homogeneousSpace.exponential(p);
-    Tensor q = RandomSample.of(LocalRandomSample.of(exponential, p, 0.1));
-    assumeFalse(ThrowQ.of(() -> exponential.log(q)));
+    TangentSpace tangentSpace = homogeneousSpace.exponential(p);
+    Tensor q = RandomSample.of(LocalRandomSample.of(tangentSpace, 0.1));
+    assumeFalse(ThrowQ.of(() -> tangentSpace.log(q)));
     Scalar d_pq = metricManifold.distance(p, q);
     Scalar d_qp = metricManifold.distance(q, p);
     Chop._10.requireClose(d_pq, d_qp);
@@ -90,22 +90,22 @@ class SampleManifolds {
   void testExponential(HomogeneousSpace homogeneousSpace) {
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     Tensor p = RandomSample.of(rsi);
-    Exponential exponential = homogeneousSpace.exponential(p);
-    Tensor q = RandomSample.of(LocalRandomSample.of(exponential, p, 0.1));
-    Tensor log_p = exponential.log(p);
+    TangentSpace tangentSpace = homogeneousSpace.exponential(p);
+    Tensor q = RandomSample.of(LocalRandomSample.of(tangentSpace, 0.1));
+    Tensor log_p = tangentSpace.log(p);
     Tolerance.CHOP.requireAllZero(log_p);
-    assumeFalse(ThrowQ.of(() -> exponential.log(q)));
-    Tensor v = exponential.log(q);
+    assumeFalse(ThrowQ.of(() -> tangentSpace.log(q)));
+    Tensor v = tangentSpace.log(q);
     List<Integer> list = Dimensions.of(v);
     assertEquals(list, Dimensions.of(log_p));
-    ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
+    ZeroDefectArrayQ zeroDefectArrayQ = tangentSpace.isTangentQ();
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
     int d = linearSubspace.dimensions();
     Tensor weights = RandomVariate.of(NormalDistribution.of(0.0, 0.1), d);
     Tensor w = linearSubspace.apply(weights);
-    Tensor r = exponential.exp(w);
+    Tensor r = tangentSpace.exp(w);
     assumeTrue(homogeneousSpace.isPointQ().test(r));
-    Tensor pv100 = exponential.exp(v.multiply(RealScalar.of(10)));
+    Tensor pv100 = tangentSpace.exp(v.multiply(RealScalar.of(10)));
     MemberQ pointQ = homogeneousSpace.isPointQ();
     pointQ.require(pv100);
   }
@@ -115,11 +115,11 @@ class SampleManifolds {
   void testBiinvMean(HomogeneousSpace homogeneousSpace) {
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     Tensor p = RandomSample.of(rsi);
-    Exponential exponential = homogeneousSpace.exponential(p);
-    Tensor log_p = exponential.log(p);
+    TangentSpace tangentSpace = homogeneousSpace.exponential(p);
+    Tensor log_p = tangentSpace.log(p);
     List<Integer> list = Dimensions.of(log_p);
     Tolerance.CHOP.requireAllZero(log_p);
-    ZeroDefectArrayQ zeroDefectArrayQ = exponential.isTangentQ();
+    ZeroDefectArrayQ zeroDefectArrayQ = tangentSpace.isTangentQ();
     zeroDefectArrayQ.require(log_p);
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
     int d = linearSubspace.dimensions();
@@ -128,17 +128,17 @@ class SampleManifolds {
     }
     {
       int n = d + 3;
-      RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.05));
+      RandomSampleInterface rpnts = LocalRandomSample.of(tangentSpace, RealScalar.of(0.05));
       Tensor sequence = RandomSample.of(rpnts, n);
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), n));
       biinvariantMean.mean(sequence, weights);
     }
     {
-      RandomSampleInterface rpnts = LocalRandomSample.of(exponential, p, RealScalar.of(0.1));
+      RandomSampleInterface rpnts = LocalRandomSample.of(tangentSpace, RealScalar.of(0.1));
       Tensor sequence = RandomSample.of(rpnts, d);
-      Tensor slash1 = exponential.vectorLog().slash(sequence);
-      TensorUnaryOperator vectorLog = t -> Flatten.of(exponential.log(t));
+      Tensor slash1 = tangentSpace.vectorLog().slash(sequence);
+      TensorUnaryOperator vectorLog = t -> Flatten.of(tangentSpace.log(t));
       Tensor slash2 = vectorLog.slash(sequence);
       int rank = MatrixRank.of(slash2);
       assertEquals(MatrixRank.of(slash1), rank);
@@ -151,9 +151,9 @@ class SampleManifolds {
   void testTransport(HomogeneousSpace homogeneousSpace) {
     RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
     final Tensor p = RandomSample.of(rsi);
-    final Exponential exp_p = homogeneousSpace.exponential(p);
-    final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, p, 0.05));
-    final Exponential exp_q = homogeneousSpace.exponential(q);
+    final TangentSpace exp_p = homogeneousSpace.exponential(p);
+    final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, 0.05));
+    final TangentSpace exp_q = homogeneousSpace.exponential(q);
     TensorUnaryOperator shift = homogeneousSpace.hsTransport().shift(p, q);
     {
       Tensor v = exp_p.log(q);

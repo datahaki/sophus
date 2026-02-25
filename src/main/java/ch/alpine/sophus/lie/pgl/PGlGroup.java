@@ -1,11 +1,11 @@
 // code by jph
 package ch.alpine.sophus.lie.pgl;
 
+import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.gl.GlGroup;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;

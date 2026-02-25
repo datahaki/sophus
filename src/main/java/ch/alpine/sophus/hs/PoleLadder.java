@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
@@ -21,8 +21,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 public record PoleLadder(HomogeneousSpace homogeneousSpace) implements HsTransport, Serializable {
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    Exponential exp_p = homogeneousSpace.exponential(p);
-    Exponential exp_q = homogeneousSpace.exponential(q);
+    TangentSpace exp_p = homogeneousSpace.exponential(p);
+    TangentSpace exp_q = homogeneousSpace.exponential(q);
     Tensor m = homogeneousSpace.midpoint(p, q);
     return v -> exp_q.log(homogeneousSpace.flip(m, exp_p.exp(v))).negate();
   }

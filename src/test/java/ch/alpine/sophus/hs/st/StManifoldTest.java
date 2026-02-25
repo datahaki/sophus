@@ -7,9 +7,9 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.so.SoNGroup;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.Tolerance;
@@ -44,7 +44,7 @@ class StManifoldTest {
       Tensor sequence = Tensors.empty();
       // IO.println(stiefelManifold.dimensions());
       int K = 8;
-      Exponential exponential = stiefelManifold.exponential(p);
+      TangentSpace exponential = stiefelManifold.exponential(p);
       for (int j = 0; j < K; ++j) {
         Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.02), randomGenerator, k, n));
         sequence.append(exponential.exp(v));

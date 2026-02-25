@@ -58,7 +58,7 @@ class GrassmannianTest {
     TensorUnaryOperator tuo = new TGrMemberQ(p)::defect;
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
     assertEquals(tensor.length(), 1);
-    GrExponential exponential = grassmannian.exponential(p);
+    GrTangentSpace exponential = grassmannian.exponential(p);
     for (Tensor v : tensor) {
       tGrMemberQ.require(v);
       Tensor w = tGrMemberQ.projection(v);
@@ -78,7 +78,7 @@ class GrassmannianTest {
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
     assertEquals(tensor.length(), 6);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-    GrExponential exponential = grassmannian.exponential(p);
+    GrTangentSpace exponential = grassmannian.exponential(p);
     for (Tensor v : tensor) {
       tGrMemberQ.require(v);
       Tensor w = tGrMemberQ.projection(v);

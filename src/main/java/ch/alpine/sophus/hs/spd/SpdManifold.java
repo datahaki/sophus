@@ -3,12 +3,12 @@ package ch.alpine.sophus.hs.spd;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.BilinearForm;
+import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -62,8 +62,8 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
   }
 
   @Override // from Manifold
-  public SpdExponential exponential(Tensor p) {
-    return new SpdExponential(p);
+  public SpdTangentSpace exponential(Tensor p) {
+    return new SpdTangentSpace(p);
   }
 
   @Override
@@ -73,8 +73,8 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
 
   @Override
   public Tensor midpoint(Tensor p, Tensor q) {
-    SpdExponential spdExponential = new SpdExponential(p);
-    return SpdExponential.basis(SpdManifold.sqrt(SpdExponential.basis(q, spdExponential.pn())), spdExponential.pp());
+    SpdTangentSpace spdExponential = new SpdTangentSpace(p);
+    return SpdTangentSpace.basis(SpdManifold.sqrt(SpdTangentSpace.basis(q, spdExponential.pn())), spdExponential.pp());
   }
 
   static Tensor sqrt(Tensor q) {

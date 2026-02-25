@@ -3,8 +3,8 @@ package ch.alpine.sophus.math;
 
 import java.util.Objects;
 
+import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.lie.LieDifferences;
-import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.AdjacentReduce;
 import ch.alpine.tensor.alg.Differences;

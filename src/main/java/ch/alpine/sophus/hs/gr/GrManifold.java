@@ -3,14 +3,14 @@ package ch.alpine.sophus.hs.gr;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.BilinearForm;
+import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.math.FrobeniusForm;
-import ch.alpine.sophus.math.api.BilinearForm;
-import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -63,8 +63,8 @@ public class GrManifold implements HomogeneousSpace, MetricManifold, Serializabl
   }
 
   @Override // from Manifold
-  public GrExponential exponential(Tensor x) {
-    return new GrExponential(x);
+  public GrTangentSpace exponential(Tensor x) {
+    return new GrTangentSpace(x);
   }
 
   @Override

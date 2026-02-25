@@ -32,7 +32,7 @@ class GrExponentialTest {
   @Test
   void test0D() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 1}}");
-    GrExponential grExponential = new GrExponential(x);
+    GrTangentSpace grExponential = new GrTangentSpace(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
@@ -51,7 +51,7 @@ class GrExponentialTest {
   @Test
   void testSimple() {
     Tensor x = Tensors.fromString("{{1, 0}, {0, 0}}");
-    GrExponential grExponential = new GrExponential(x);
+    GrTangentSpace grExponential = new GrTangentSpace(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
@@ -66,7 +66,7 @@ class GrExponentialTest {
   @Test
   void testShift() {
     Tensor x = RandomSample.of(new Grassmannian(2, 1));
-    GrExponential grExponential = new GrExponential(x);
+    GrTangentSpace grExponential = new GrTangentSpace(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
     Tensor pre = RandomVariate.of(distribution, 2, 2);
@@ -87,7 +87,7 @@ class GrExponentialTest {
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     assertEquals(MatrixRank.of(x), k);
     InfluenceMatrixQ.INSTANCE.require(x);
-    GrExponential grExponential = new GrExponential(x);
+    GrTangentSpace grExponential = new GrTangentSpace(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Tensor pre = RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n);
     Tensor v = tGrMemberQ.projection(pre);
@@ -103,6 +103,6 @@ class GrExponentialTest {
   @Test
   void testGrFail() {
     Tensor x = Tensors.fromString("{{1, 1}, {0, 1}}");
-    assertThrows(Exception.class, () -> new GrExponential(x));
+    assertThrows(Exception.class, () -> new GrTangentSpace(x));
   }
 }

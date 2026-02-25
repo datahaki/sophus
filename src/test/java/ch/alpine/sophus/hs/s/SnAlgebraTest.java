@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.hs.HsBiinvariantMean;
-import ch.alpine.sophus.math.sample.BallRandomSample;
+import ch.alpine.sophus.rsm.BallRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
@@ -49,7 +49,7 @@ class SnAlgebraTest {
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, n));
       BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
       final Tensor hsmean = biinvariantMean.mean(sequence, weights);
-      SnExponential snExponential = new SnExponential(UnitVector.of(d + 1, 0));
+      STangentSpace snExponential = new STangentSpace(UnitVector.of(d + 1, 0));
       Tensor sn_pnt = Tensor.of(sequence.stream().map(p -> snExponential.exp(Insert.of(p, RealScalar.ZERO, 0))));
       Tensor snmean = SnManifold.INSTANCE.biinvariantMean().mean(sn_pnt, weights);
       final Tensor sn_cmp = snExponential.log(snmean).extract(1, d + 1);

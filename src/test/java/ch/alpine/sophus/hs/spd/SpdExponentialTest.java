@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.math.api.Exponential;
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.IdentityMatrix;
@@ -31,7 +31,7 @@ class SpdExponentialTest {
     RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
     Tensor p = RandomSample.of(spd, randomGenerator);
     Tensor q = RandomSample.of(spd, randomGenerator);
-    SpdExponential exp_p = new SpdExponential(p);
+    SpdTangentSpace exp_p = new SpdTangentSpace(p);
     Tensor w = exp_p.log(q);
     Tensor exp = exp_p.exp(w);
     Chop._08.requireClose(q, exp);
@@ -58,8 +58,8 @@ class SpdExponentialTest {
       RandomSampleInterface spd = new Spd0RandomSample(n, TriangularDistribution.with(0, 1));
       Tensor p = RandomSample.of(spd);
       Tensor q = RandomSample.of(spd);
-      SpdExponential spdExpP = new SpdExponential(p);
-      SpdExponential spdExpQ = new SpdExponential(q);
+      SpdTangentSpace spdExpP = new SpdTangentSpace(p);
+      SpdTangentSpace spdExpQ = new SpdTangentSpace(q);
       Tensor pqw = spdExpP.log(q);
       Tensor qpw = spdExpQ.log(p);
       Tensor ph = spdExpP.exp(pqw.multiply(Rational.HALF));
@@ -73,7 +73,7 @@ class SpdExponentialTest {
   @Test
   void testIdentity() {
     for (int n = 1; n < 4; ++n) {
-      Exponential exponential = new SpdExponential(IdentityMatrix.of(n));
+      TangentSpace exponential = new SpdTangentSpace(IdentityMatrix.of(n));
       RandomSampleInterface rsi = new TSpdRandomSample(n, UniformDistribution.of(Clips.absolute(1)));
       Tensor x = RandomSample.of(rsi);
       Chop._08.requireClose(exponential.exp(x), Spd0Exponential.INSTANCE.exp(x));
@@ -86,11 +86,11 @@ class SpdExponentialTest {
 
   @Test
   void testNonSymmetricFail() {
-    assertThrows(Exception.class, () -> new SpdExponential(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
+    assertThrows(Exception.class, () -> new SpdTangentSpace(RandomVariate.of(UniformDistribution.of(-2, 2), 3, 3)));
   }
 
   @Test
   void testNullFail() {
-    assertThrows(Exception.class, () -> new SpdExponential(null));
+    assertThrows(Exception.class, () -> new SpdTangentSpace(null));
   }
 }

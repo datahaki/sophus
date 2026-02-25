@@ -59,7 +59,7 @@ class TSnMemberQTest {
       RandomSampleInterface randomSampleInterface = new Sphere(d);
       Tensor x = RandomSample.of(randomSampleInterface);
       Tensor y = RandomSample.of(randomSampleInterface);
-      Tensor v = new SnExponential(x).log(y);
+      Tensor v = new STangentSpace(x).log(y);
       TSnMemberQ tSnMemberQ = new TSnMemberQ(x);
       tSnMemberQ.require(v);
       Tensor w = RandomVariate.of(NormalDistribution.standard(), d + 1);

@@ -11,8 +11,8 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -123,7 +123,7 @@ class SoGroupTest {
     for (int n = 2; n < 10; ++n) {
       Tensor p = new SoNGroup(n).randomSample(random);
       Tensor q = new SoNGroup(n).randomSample(random);
-      Exponential exponential = SoGroup.INSTANCE.exponential(p);
+      TangentSpace exponential = SoGroup.INSTANCE.exponential(p);
       Tensor vp = exponential.log(q);
       TSoMemberQ.INSTANCE.require(vp);
       Tensor qr = exponential.exp(vp);
