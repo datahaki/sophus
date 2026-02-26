@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.td;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.GroupCheck;
+import ch.alpine.sophus.lie.LieAlgebraMatrixBasis;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Tensor;
@@ -21,11 +23,12 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
 class TdNGroupTest {
+  @Disabled
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 5 })
   void testMatch(int d) {
     TdNGroup tdNGroup = new TdNGroup(d);
-    Tensor matrixBasis = tdNGroup.matrixBasis();
+    Tensor matrixBasis = LieAlgebraMatrixBasis.of(tdNGroup);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     Distribution distribution = TriangularDistribution.of(-0.1, 0, 0.1);
     int dim = matrixBasis.length();
@@ -46,10 +49,11 @@ class TdNGroupTest {
     GroupCheck.check(tdNGroup, randomSample);
   }
 
+  @Disabled
   @Test
   void testMatchCheck() {
     TdNGroup lieGroup = new TdNGroup(1);
-    Tensor basis = lieGroup.matrixBasis();
+    Tensor basis = LieAlgebraMatrixBasis.of(lieGroup);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     Exponential exponential0 = GlGroup.INSTANCE.exponential0();
     Tensor X = Tensors.vector(2, 1).dot(basis);

@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so.So3Group;
+import ch.alpine.tensor.Tensor;
 
 class NilpotentAlgebraQTest {
   @Test
   void testSimple() {
     assertTrue(NilpotentAlgebraQ.of(new HeAlgebra(1).ad()));
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis());
+    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
+    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     assertFalse(NilpotentAlgebraQ.of(matrixAlgebra.ad()));
     assertFalse(NilpotentAlgebraQ.of(Sl2Algebra.INSTANCE.ad()));
     assertFalse(NilpotentAlgebraQ.of(LieAlgebraAds.se(2)));

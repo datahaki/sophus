@@ -52,7 +52,6 @@ import ch.alpine.tensor.mat.re.Inverse;
         rw);
   }
 
-  // @Override // from LieGroupElement
   public static Tensor adjoint(Tensor g, Tensor u_w) {
     Tensor R = Se3Matrix.rotation(g);
     Tensor t = Se3Matrix.translation(g);

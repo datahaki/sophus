@@ -65,7 +65,6 @@ class TdGroupTest {
     Tensor m = RandomSample.of(rsi);
     Tensor lhs = LIE_GROUP.exponential0().log( //
         LIE_GROUP.combine(LIE_GROUP.combine(g, m), LIE_GROUP.invert(g))); // Log[g.m.g^-1]
-    // LieGroupElement ge = LIE_GROUP.element(g);
     Tensor rhs = LIE_GROUP.adjoint(g, LIE_GROUP.exponential0().log(m)); // Ad(g).Log[m]
     Chop._10.requireClose(lhs, rhs);
   }

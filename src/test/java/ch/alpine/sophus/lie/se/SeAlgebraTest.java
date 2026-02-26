@@ -7,11 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.LieAlgebraAds;
+import ch.alpine.sophus.lie.LieAlgebraMatrixBasis;
+import ch.alpine.tensor.Tensor;
 
 class SeAlgebraTest {
   @Test
   void testSimple() {
-    assertEquals(new SeNGroup(4).matrixBasis().length(), 4 + 6);
+    SeNGroup seNGroup = new SeNGroup(4);
+    Tensor basis = LieAlgebraMatrixBasis.of(seNGroup);
+    assertEquals(basis.length(), 4 + 6);
   }
 
   @Test

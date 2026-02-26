@@ -3,15 +3,11 @@ package ch.alpine.sophus.lie.sl;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.MatrixGroup;
+import ch.alpine.sophus.lie.SpecificGroup;
 import ch.alpine.tensor.Rational;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -22,7 +18,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Power;
 
-public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
+public class SlNGroup extends SlGroup implements SpecificGroup {
   private final int n;
 
   public SlNGroup(int n) {
@@ -41,33 +37,6 @@ public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
   }
 
   @Override
-  public Tensor matrixBasis() {
-    Tensor basis = Tensors.empty();
-    for (int i = 0; i < n; ++i)
-      for (int j = i + 1; j < n; ++j) {
-        {
-          Tensor tensor = Array.sparse(n, n);
-          tensor.set(RealScalar.ONE, i, j);
-          tensor.set(RealScalar.ONE.negate(), j, i);
-          basis.append(tensor);
-        }
-        {
-          Tensor tensor = Array.sparse(n, n);
-          tensor.set(RealScalar.ONE, i, j);
-          tensor.set(RealScalar.ONE, j, i);
-          basis.append(tensor);
-        }
-      }
-    for (int i = 1; i < n; ++i) {
-      Tensor tensor = Array.sparse(n, n);
-      tensor.set(RealScalar.ONE, i - 1, i - 1);
-      tensor.set(RealScalar.ONE.negate(), i, i);
-      basis.append(tensor);
-    }
-    return basis.multiply(Rational.HALF);
-  }
-
-  @Override
   public int dimensions() {
     return n * n - 1;
   }
@@ -81,6 +50,11 @@ public class SlNGroup extends SlGroup implements SpecificManifold, MatrixGroup {
       det = det.negate();
     }
     return matrix.divide(Power.of(det, Rational.of(1, n)));
+  }
+
+  @Override
+  public int matrixOrder() {
+    return n;
   }
 
   @Override

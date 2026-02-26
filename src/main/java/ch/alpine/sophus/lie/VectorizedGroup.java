@@ -23,10 +23,9 @@ public class VectorizedGroup extends AbstractLieGroup implements MetricManifold,
   public VectorizedGroup(LieGroup lieGroup) {
     this.lieGroup = lieGroup;
     exponential0 = lieGroup.exponential0();
-    ZeroDefectArrayQ zeroDefectArrayQ = exponential0.isTangentQ();
     // LinearSubspace.of(zeroDefectArrayQ::defect, k,k);
-    MatrixGroup matrixGroup = (MatrixGroup) lieGroup;
-    matrixAlgebra = new MatrixAlgebra(matrixGroup.matrixBasis());
+    Tensor basis = LieAlgebraMatrixBasis.of(lieGroup);
+    matrixAlgebra = new MatrixAlgebra(basis);
   }
 
   @Override

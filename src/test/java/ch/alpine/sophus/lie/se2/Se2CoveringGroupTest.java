@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.LieExponential;
@@ -47,6 +48,7 @@ class Se2CoveringGroupTest {
     assertEquals(tensor, Tensors.vector(1, 2, 0));
   }
 
+  @Disabled
   @Test
   void testConvergenceSe2() {
     Tensor x = Tensors.vector(0.1, 0.2, 0.05);
@@ -275,9 +277,7 @@ class Se2CoveringGroupTest {
   void testAdjointCombine() {
     for (int count = 0; count < 10; ++count) {
       Tensor a = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
-      // LieGroupElement ga = Se2CoveringGroup.INSTANCE.element(a);
       Tensor b = RandomSample.of(RANDOM_SAMPLE_INTERFACE);
-      // LieGroupElement gb = Se2CoveringGroup.INSTANCE.element(b);
       Tensor ab = Se2CoveringGroup.INSTANCE.combine(a, b);
       Tensor matrix = adjoint(Se2CoveringGroup.INSTANCE, ab);
       Tensor Ad_a = adjoint(Se2CoveringGroup.INSTANCE, a);

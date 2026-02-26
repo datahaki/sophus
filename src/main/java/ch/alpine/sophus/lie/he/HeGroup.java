@@ -66,14 +66,14 @@ public class HeGroup extends AbstractLieGroup {
     return HeFormat.of(element1).combine(HeFormat.of(element2)).toCoordinate();
   }
 
-  @Override // from LieGroupElement
+  @Override
   public Tensor adjoint(Tensor xyz, Tensor dxdydz) {
     HeFormat heFormat = HeFormat.of(xyz);
     HeFormat other = HeFormat.of(dxdydz);
     return other.with((Scalar) heFormat.x().dot(other.y()).subtract(heFormat.y().dot(other.x())).add(other.z()));
   }
 
-  @Override // from LieGroupElement
+  @Override
   public Tensor dL(Tensor xyz, Tensor tensor) {
     throw new UnsupportedOperationException();
   }

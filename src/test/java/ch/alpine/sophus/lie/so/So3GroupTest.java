@@ -1,21 +1,19 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.MatrixAlgebra;
+import ch.alpine.sophus.lie.LieAlgebraMatrixBasis;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.MatrixQ;
@@ -35,15 +33,10 @@ import ch.alpine.tensor.sca.Chop;
 
 class So3GroupTest {
   @Test
-  void testAd() {
-    Tensor ad = new MatrixAlgebra(So3Group.INSTANCE.matrixBasis()).ad();
-    assertEquals(ad, LeviCivitaTensor.of(3).negate());
-  }
-
-  @Test
   void testConsistent() {
     SoNGroup soNGroup = new SoNGroup(3);
-    for (var elem : soNGroup.matrixBasis()) {
+    Tensor basis = LieAlgebraMatrixBasis.of(soNGroup);
+    for (var elem : basis) {
       Tensor exp1 = So3Group.INSTANCE.exponential0().exp(elem);
       Tensor exp2 = soNGroup.exponential0().exp(elem);
       Tolerance.CHOP.requireClose(exp1, exp2);

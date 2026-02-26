@@ -98,7 +98,7 @@ public class TdGroup extends AbstractLieGroup {
     return Append.of(t.divide(lambda.negate()), lambda.reciprocal());
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor combine(Tensor element1, Tensor element2) {
     Tensor t1 = Drop.tail(element1, 1);
     Scalar lambda1 = Last.of(element1);
@@ -109,7 +109,7 @@ public class TdGroup extends AbstractLieGroup {
         Sign.requirePositive(lambda1.multiply(lambda2)));
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor adjoint(Tensor t_lambda, Tensor dt_dlambda) {
     Tensor t = Drop.tail(t_lambda, 1);
     Scalar lambda = Sign.requirePositive(Last.of(t_lambda));
@@ -118,7 +118,7 @@ public class TdGroup extends AbstractLieGroup {
     return Append.of(t.multiply(dlambda).add(dt).divide(lambda), dlambda);
   }
 
-  @Override // from LieGroupElement
+  @Override
   public Tensor dL(Tensor t_lambda, Tensor tensor) {
     throw new UnsupportedOperationException();
   }

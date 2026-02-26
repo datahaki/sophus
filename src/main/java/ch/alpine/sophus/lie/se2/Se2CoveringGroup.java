@@ -4,13 +4,11 @@ package ch.alpine.sophus.lie.se2;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.LieExponential;
-import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
-import ch.alpine.sophus.lie.MatrixGroup;
-import ch.alpine.sophus.lie.se.SeNGroup;
+import ch.alpine.sophus.lie.SpecificGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -36,7 +34,7 @@ import ch.alpine.tensor.sca.tri.Tan;
  * References:
  * <a href="http://vixra.org/abs/1807.0463">1807.0463</a>
  * <a href="https://www.youtube.com/watch?v=2vDciaUgL4E">video</a> */
-public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifold, MatrixGroup, VectorEncodingMarker {
+public class Se2CoveringGroup extends AbstractLieGroup implements SpecificGroup, VectorEncodingMarker {
   private static final Scalar HALF = RealScalar.of(0.5);
   public static final Se2CoveringGroup INSTANCE = new Se2CoveringGroup();
   // ---
@@ -154,7 +152,7 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
         truncate(pa.add(qa)));
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor adjoint(Tensor xya, Tensor uvw) {
     Scalar px = xya.Get(0);
     Scalar py = xya.Get(1);
@@ -170,7 +168,7 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
         w);
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor dL(Tensor xya, Tensor uvw) {
     Scalar pa = xya.Get(2);
     Scalar ca = Cos.FUNCTION.apply(pa);
@@ -184,7 +182,7 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
         w);
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor dR(Tensor xya, Tensor uvw) {
     Scalar px = xya.Get(0);
     Scalar py = xya.Get(1);
@@ -198,11 +196,6 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
   }
 
   @Override
-  public final Tensor matrixBasis() {
-    return new SeNGroup(2).matrixBasis();
-  }
-
-  @Override
   public final int dimensions() {
     return 3;
   }
@@ -211,6 +204,11 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
   public Tensor randomSample(RandomGenerator randomGenerator) {
     return RandomVariate.of(NormalDistribution.standard(), randomGenerator, 2) //
         .append(RandomVariate.of(UniformDistribution.of(Clips.absolute(Pi.VALUE)), randomGenerator));
+  }
+
+  @Override
+  public int matrixOrder() {
+    return dimensions() + 1;
   }
 
   @Override

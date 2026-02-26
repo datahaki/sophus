@@ -4,11 +4,15 @@ package ch.alpine.sophus.lie.td;
 import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
+import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.ArrayFlatten;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
+import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Expc;
@@ -20,9 +24,10 @@ enum TdExponential implements LieExponential {
 
   @Override // from Exponential
   public Tensor exp(Tensor dt_dlambda) {
+    Tensor dt = Drop.tail(dt_dlambda, 1);
     Scalar dl = Last.of(dt_dlambda);
     return Append.of( //
-        Drop.tail(dt_dlambda, 1).multiply(Expc.FUNCTION.apply(dl)), //
+        dt.multiply(Expc.FUNCTION.apply(dl)), //
         Exp.FUNCTION.apply(dl));
   }
 
@@ -42,7 +47,12 @@ enum TdExponential implements LieExponential {
   }
 
   @Override
-  public Tensor gl_representation(Tensor x) {
-    return null;
+  public Tensor gl_representation(Tensor dt_dlambda) {
+    Tensor dt = Drop.tail(dt_dlambda, 1);
+    int n = dt.length();
+    Scalar dl = Last.of(dt_dlambda);
+    return ArrayFlatten.of(new Tensor[][] { //
+        { DiagonalMatrix.of(dt.length(), dl), Array.zeros(n, 1) }, //
+        { Tensors.of(dt), Array.zeros(1, 1) } });
   }
 }

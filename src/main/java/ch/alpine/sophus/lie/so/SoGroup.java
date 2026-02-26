@@ -69,12 +69,12 @@ public class SoGroup extends GlGroup implements MetricManifold {
     return Transpose.of(element);
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor adjoint(Tensor matrix, Tensor v) { // v is skew with dimensions 3 x 3
     return MatrixDotTranspose.of(dL(matrix, v), matrix);
   }
 
-  @Override // from LieGroupElement
+  @Override
   public final Tensor dL(Tensor matrix, Tensor v) { // v is skew with dimensions 3 x 3
     return matrix.dot(TSoMemberQ.INSTANCE.require(v)); // consistent with So3Transport
   }
