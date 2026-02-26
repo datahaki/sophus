@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.so;
 
 import ch.alpine.sophus.api.BilinearForm;
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
@@ -60,7 +60,7 @@ public class SoGroup extends GlGroup implements MetricManifold {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return SoExponential.INSTANCE;
   }
 

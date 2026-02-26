@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.math.UpperVectorize;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -9,7 +9,7 @@ import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 
-enum SoExponential implements Exponential {
+enum SoExponential implements LieExponential {
   INSTANCE;
 
   @Override // from Exponential

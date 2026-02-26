@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.tri.Sinc;
  * p. 131
  * 
  * <p>The formula for the logarithm is taken from a book by Chirikjian */
-public enum So3Exponential implements Exponential {
+public enum So3Exponential implements LieExponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3).maps(N.DOUBLE);

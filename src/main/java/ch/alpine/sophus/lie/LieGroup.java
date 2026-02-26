@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.GroupInterface;
@@ -12,7 +12,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exponential at neutral element */
 public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieIntegrator {
   /** @return tangent space at neutral element which happens to be the lie algebra */
-  Exponential exponential0();
+  LieExponential exponential0();
 
   /** @param g
    * @return h -> g.h.g^-1 */

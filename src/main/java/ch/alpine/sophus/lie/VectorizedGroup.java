@@ -3,6 +3,7 @@ package ch.alpine.sophus.lie;
 
 import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -22,13 +23,15 @@ public class VectorizedGroup extends AbstractLieGroup implements MetricManifold,
   public VectorizedGroup(LieGroup lieGroup) {
     this.lieGroup = lieGroup;
     exponential0 = lieGroup.exponential0();
+    ZeroDefectArrayQ zeroDefectArrayQ = exponential0.isTangentQ();
+    // LinearSubspace.of(zeroDefectArrayQ::defect, k,k);
     MatrixGroup matrixGroup = (MatrixGroup) lieGroup;
     matrixAlgebra = new MatrixAlgebra(matrixGroup.matrixBasis());
   }
 
   @Override
-  public Exponential exponential0() {
-    return new Exponential() {
+  public LieExponential exponential0() {
+    return new LieExponential() {
       @Override
       public Tensor exp(Tensor v) {
         return exponential0.exp(matrixAlgebra.toMatrix(v));

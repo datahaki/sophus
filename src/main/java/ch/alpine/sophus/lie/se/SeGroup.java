@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.UnitVector;
@@ -26,7 +26,7 @@ public class SeGroup extends GlGroup {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return SeExponential.INSTANCE;
   }
 

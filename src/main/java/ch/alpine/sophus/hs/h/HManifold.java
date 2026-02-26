@@ -6,14 +6,12 @@ import java.io.Serializable;
 import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.api.TangentSpace;
-import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.sca.Chop;
@@ -23,10 +21,9 @@ import ch.alpine.tensor.sca.Chop;
  * Reference:
  * "Metric Spaces of Non-Positive Curvature"
  * by Martin R. Bridson, Andre Haefliger, 1999 */
-public class HManifold implements HomogeneousSpace, VectorEncodingMarker, MetricManifold, Serializable {
+public class HManifold implements HomogeneousSpace, MetricManifold, Serializable {
   public static final HManifold INSTANCE = new HManifold();
 
-  // ---
   protected HManifold() {
   }
 
@@ -54,11 +51,6 @@ public class HManifold implements HomogeneousSpace, VectorEncodingMarker, Metric
   @Override
   public BilinearForm bilinearForm(Tensor p) {
     return HBilinearForm.of(p);
-  }
-
-  @Override
-  public int dimensions() {
-    throw new Throw();
   }
 
   @Override

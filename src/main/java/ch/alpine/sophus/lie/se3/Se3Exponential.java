@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.lie.se.TSeMemberQ;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.tensor.Rational;
@@ -16,7 +16,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** from "Lie Groups for 2D and 3D Transformations" by Ethan Eade
  * http://ethaneade.com/ */
-public enum Se3Exponential implements Exponential {
+public enum Se3Exponential implements LieExponential {
   INSTANCE;
 
   private static final Tensor ID3 = IdentityMatrix.of(3);

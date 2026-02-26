@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.sc;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.math.AffineQ;
@@ -10,12 +11,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Sign;
-import ch.alpine.tensor.sca.exp.Exp;
-import ch.alpine.tensor.sca.exp.Log;
 
 public class ScGroup extends AbstractLieGroup {
   public static final ScGroup INSTANCE = new ScGroup();
@@ -26,28 +24,9 @@ public class ScGroup extends AbstractLieGroup {
         && t.stream().map(Scalar.class::cast).allMatch(Sign::isPositive);
   }
 
-  private enum Exponential0 implements Exponential {
-    INSTANCE;
-
-    @Override // from Exponential
-    public Tensor exp(Tensor x) {
-      return VectorQ.require(x).maps(Exp.FUNCTION);
-    }
-
-    @Override // from Exponential
-    public Tensor log(Tensor g) {
-      return VectorQ.require(g).maps(Log.FUNCTION);
-    }
-
-    @Override
-    public ZeroDefectArrayQ isTangentQ() {
-      return VectorQ.INSTANCE;
-    }
-  }
-
   @Override
-  public final Exponential exponential0() {
-    return Exponential0.INSTANCE;
+  public final LieExponential exponential0() {
+    return ScExponential0.INSTANCE;
   }
 
   @Override

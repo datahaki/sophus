@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.se2;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -16,6 +16,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
@@ -54,7 +55,7 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
     return new Se2BiinvariantMean(this, LinearBiinvariantMean.INSTANCE);
   }
 
-  private class Exponential0 implements Exponential {
+  private class Exponential0 implements LieExponential {
     /** maps a vector x from the Lie-algebra se2 to a vector of the Lie-group SE2
      * 
      * @param x element in the se2 Lie-algebra of the form {vx, vy, beta}
@@ -71,7 +72,7 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
       return Tensors.of( //
           sd.multiply(vx).add(cd.multiply(vy)).divide(be), //
           sd.multiply(vy).subtract(cd.multiply(vx)).divide(be), //
-          truncate(be));
+          truncate(be)); // <- specifc to Se2 class
     }
 
     /** @param g element in the SE2 Lie group of the form {px, py, beta}
@@ -95,10 +96,23 @@ public class Se2CoveringGroup extends AbstractLieGroup implements SpecificManifo
     public ZeroDefectArrayQ isTangentQ() {
       return VectorQ.ofLength(3);
     }
+
+    @Override
+    public Tensor gl_representation(Tensor x) {
+      Scalar be = x.Get(2);
+      if (Scalars.isZero(be))
+        return x.copy();
+      Scalar vx = x.Get(0);
+      Scalar vy = x.Get(1);
+      return Tensors.matrix(new Scalar[][] { //
+          { be.zero(), be.negate(), vx }, //
+          { be, be.zero(), vy }, //
+          { Unprotect.zero_negateUnit(vx), Unprotect.zero_negateUnit(vy), RealScalar.ZERO } });
+    }
   }
 
   @Override
-  public final Exponential exponential0() {
+  public final LieExponential exponential0() {
     return new Exponential0();
   }
 

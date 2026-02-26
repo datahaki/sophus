@@ -2,7 +2,7 @@
 package ch.alpine.sophus.lie.rn;
 
 import ch.alpine.sophus.api.BilinearForm;
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
@@ -10,6 +10,8 @@ import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.math.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Append;
+import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.MemberQ;
@@ -36,7 +38,7 @@ public class RGroup extends AbstractLieGroup implements MetricManifold {
     return VectorQ::of;
   }
 
-  private enum Exponential0 implements Exponential {
+  private enum Exponential0 implements LieExponential {
     INSTANCE;
 
     @Override // from Exponential
@@ -58,10 +60,18 @@ public class RGroup extends AbstractLieGroup implements MetricManifold {
     public ZeroDefectArrayQ isTangentQ() {
       return VectorQ.INSTANCE;
     }
+
+    @Override
+    public Tensor gl_representation(Tensor x) {
+      int n = x.length();
+      Tensor zeros = Array.zeros(n);
+      Tensor matrix = Tensor.of(x.stream().map(r -> Append.of(zeros, r)));
+      return matrix.append(Array.zeros(n + 1));
+    }
   }
 
   @Override
-  public final Exponential exponential0() {
+  public final LieExponential exponential0() {
     return Exponential0.INSTANCE;
   }
 

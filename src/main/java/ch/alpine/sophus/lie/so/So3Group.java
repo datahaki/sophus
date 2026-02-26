@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.so;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.hs.s.SphereRandomSample;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.QuaternionToRotationMatrix;
@@ -32,7 +32,7 @@ public class So3Group extends SoNGroup {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return So3Exponential.INSTANCE;
   }
 

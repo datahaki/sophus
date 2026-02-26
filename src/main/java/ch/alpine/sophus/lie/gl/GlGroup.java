@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
@@ -38,7 +38,7 @@ public class GlGroup extends AbstractLieGroup {
         && !Tolerance.CHOP.isZero(Det.of(matrix));
   }
 
-  private enum Exponential0 implements Exponential {
+  private enum Exponential0 implements LieExponential {
     INSTANCE;
 
     @Override // from Exponential
@@ -58,7 +58,7 @@ public class GlGroup extends AbstractLieGroup {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return Exponential0.INSTANCE;
   }
 

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.he;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.tensor.Scalar;
@@ -47,7 +47,7 @@ public class HeGroup extends AbstractLieGroup {
   }
 
   @Override
-  public final Exponential exponential0() {
+  public final LieExponential exponential0() {
     return HeExponential.INSTANCE;
   }
 

@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.sophus.lie.pgl;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.lie.sl.TSlMemberQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 
-/* package */ enum PGlExponential implements Exponential {
+/* package */ enum PGlExponential implements LieExponential {
   INSTANCE;
 
   @Override // from Exponential

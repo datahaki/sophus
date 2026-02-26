@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.se;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixGroup;
@@ -43,7 +43,7 @@ public class SeNGroup extends SeGroup implements MatrixGroup, SpecificManifold {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return n == 3 //
         ? Se3Exponential.INSTANCE
         : SeExponential.INSTANCE;

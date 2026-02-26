@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.pgl;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
@@ -43,7 +43,7 @@ public class PGlGroup extends AbstractLieGroup {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return PGlExponential.INSTANCE;
   }
 

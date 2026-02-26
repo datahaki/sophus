@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.r2s;
 
-import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.he.HeGroup;
@@ -29,7 +29,7 @@ public class R2SGroup extends AbstractLieGroup {
     return Array.zeros(3);
   }
 
-  public enum Exponential0 implements Exponential {
+  public enum Exponential0 implements LieExponential {
     INSTANCE;
 
     @Override // from Exponential
@@ -61,7 +61,7 @@ public class R2SGroup extends AbstractLieGroup {
   }
 
   @Override
-  public Exponential exponential0() {
+  public LieExponential exponential0() {
     return Exponential0.INSTANCE;
   }
 

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
@@ -88,5 +89,13 @@ class RnGroupTest {
     Scalar scalar = tensorMetric.distance(Tensors.vector(1, 2, 3), Tensors.vector(1 + 3, 2 + 4, 3));
     assertEquals(scalar, RealScalar.of(5));
     ExactScalarQ.require(scalar);
+  }
+
+  @Test
+  void test_glRep() {
+    LieExponential lieExponential = RGroup.INSTANCE.exponential0();
+    Tensor matrix = lieExponential.gl_representation(Tensors.vector(1, 2, 3));
+    Tensor string = Tensors.fromString("{{0, 0, 0, 1}, {0, 0, 0, 2}, {0, 0, 0, 3}, {0, 0, 0, 0}}");
+    assertEquals(matrix, string);
   }
 }
