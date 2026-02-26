@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import java.util.random.RandomGenerator;
+
 import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.LieExponential;
@@ -17,13 +19,15 @@ import ch.alpine.tensor.io.MathematicaFormat;
 public class VectorizedGroup extends AbstractLieGroup implements MetricManifold, VectorEncodingMarker {
   // TODO SOPHUS through introspection check for metric or not
   private final LieGroup lieGroup;
+  private final SpecificGroup specificGroup;
   private final MatrixAlgebra matrixAlgebra;
   private final Exponential exponential0;
 
+  /** @param lieGroup has to be instance of SpecificGroup */
   public VectorizedGroup(LieGroup lieGroup) {
     this.lieGroup = lieGroup;
+    specificGroup = (SpecificGroup) lieGroup;
     exponential0 = lieGroup.exponential0();
-    // LinearSubspace.of(zeroDefectArrayQ::defect, k,k);
     Tensor basis = LieAlgebraMatrixBasis.of(lieGroup);
     matrixAlgebra = new MatrixAlgebra(basis);
   }
@@ -91,6 +95,16 @@ public class VectorizedGroup extends AbstractLieGroup implements MetricManifold,
   @Override
   public BilinearForm bilinearForm(Tensor p) {
     return FrobeniusForm.INSTANCE;
+  }
+
+  @Override
+  public int matrixOrder() {
+    return specificGroup.matrixOrder();
+  }
+
+  @Override
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return specificGroup.randomSample(randomGenerator);
   }
 
   @Override

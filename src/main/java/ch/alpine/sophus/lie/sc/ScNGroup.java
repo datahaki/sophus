@@ -1,11 +1,16 @@
 // code by jph
 package ch.alpine.sophus.lie.sc;
 
-import ch.alpine.sophus.api.VectorEncodingMarker;
+import java.util.random.RandomGenerator;
+
+import ch.alpine.sophus.lie.SpecificGroup;
+import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 
-public class ScNGroup extends ScGroup implements VectorEncodingMarker {
+public class ScNGroup extends ScGroup implements SpecificGroup {
   private final int n;
 
   public ScNGroup(int n) {
@@ -19,6 +24,16 @@ public class ScNGroup extends ScGroup implements VectorEncodingMarker {
 
   @Override
   public int dimensions() {
+    return n;
+  }
+
+  @Override
+  public Tensor randomSample(RandomGenerator randomGenerator) {
+    return RandomVariate.of(LogNormalDistribution.standard(), n);
+  }
+
+  @Override
+  public int matrixOrder() {
     return n;
   }
 
