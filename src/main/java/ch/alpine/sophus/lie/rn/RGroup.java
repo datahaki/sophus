@@ -10,12 +10,8 @@ import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.math.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Append;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
  * 
@@ -38,65 +34,33 @@ public class RGroup extends AbstractLieGroup implements MetricManifold {
     return VectorQ::of;
   }
 
-  private enum Exponential0 implements LieExponential {
-    INSTANCE;
-
-    @Override // from Exponential
-    public Tensor exp(Tensor v) {
-      return v.copy();
-    }
-
-    @Override // from Exponential
-    public Tensor log(Tensor y) {
-      return y.copy();
-    }
-
-    @Override
-    public TensorUnaryOperator vectorLog() {
-      return log();
-    }
-
-    @Override
-    public ZeroDefectArrayQ isTangentQ() {
-      return VectorQ.INSTANCE;
-    }
-
-    @Override
-    public Tensor gl_representation(Tensor x) {
-      int n = x.length();
-      Tensor zeros = Array.zeros(n);
-      Tensor matrix = Tensor.of(x.stream().map(r -> Append.of(zeros, r)));
-      return matrix.append(Array.zeros(n + 1));
-    }
-  }
-
   @Override
   public final LieExponential exponential0() {
-    return Exponential0.INSTANCE;
+    return RExponential0.INSTANCE;
   }
 
   @Override
-  public BiinvariantMean biinvariantMean() {
+  public final BiinvariantMean biinvariantMean() {
     return LinearBiinvariantMean.INSTANCE;
   }
 
   @Override
-  public BilinearForm bilinearForm(Tensor p) {
+  public final BilinearForm bilinearForm(Tensor p) {
     return FrobeniusForm.INSTANCE;
   }
 
   @Override
-  public Tensor neutral(Tensor element) {
+  public final Tensor neutral(Tensor element) {
     return element.maps(Scalar::zero);
   }
 
   @Override
-  public Tensor invert(Tensor element) {
+  public final Tensor invert(Tensor element) {
     return element.negate();
   }
 
   @Override
-  public Tensor combine(Tensor element1, Tensor element2) {
+  public final Tensor combine(Tensor element1, Tensor element2) {
     return element1.add(element2);
   }
 

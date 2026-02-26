@@ -19,6 +19,7 @@ import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -199,14 +200,16 @@ public class Se2CoveringGroup extends AbstractLieGroup implements VectorEncoding
     return 3;
   }
 
+  private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.VALUE));
+
   @Override
   public Tensor randomSample(RandomGenerator randomGenerator) {
     return RandomVariate.of(NormalDistribution.standard(), randomGenerator, 2) //
-        .append(RandomVariate.of(UniformDistribution.of(Clips.absolute(Pi.VALUE)), randomGenerator));
+        .append(RandomVariate.of(DISTRIBUTION, randomGenerator));
   }
 
   @Override
-  public int matrixOrder() {
+  public final int matrixOrder() {
     return dimensions() + 1;
   }
 
