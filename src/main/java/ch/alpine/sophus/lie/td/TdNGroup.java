@@ -4,14 +4,13 @@ package ch.alpine.sophus.lie.td;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.VectorEncodingMarker;
-import ch.alpine.sophus.lie.SpecificGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class TdNGroup extends TdGroup implements SpecificGroup, VectorEncodingMarker {
+public class TdNGroup extends TdGroup implements VectorEncodingMarker {
   private final int n;
 
   public TdNGroup(int n) {

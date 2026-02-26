@@ -3,14 +3,14 @@ package ch.alpine.sophus.lie.sc;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.lie.SpecificGroup;
+import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 
-public class ScNGroup extends ScGroup implements SpecificGroup {
+public class ScNGroup extends ScGroup implements VectorEncodingMarker {
   private final int n;
 
   public ScNGroup(int n) {

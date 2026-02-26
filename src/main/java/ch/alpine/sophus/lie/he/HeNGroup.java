@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie.he;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.VectorEncodingMarker;
-import ch.alpine.sophus.lie.SpecificGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
@@ -13,7 +12,7 @@ import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class HeNGroup extends HeGroup implements SpecificGroup, VectorEncodingMarker {
+public class HeNGroup extends HeGroup implements VectorEncodingMarker {
   private final int n;
 
   public HeNGroup(int n) {
