@@ -36,7 +36,7 @@ class TStMemberQTest {
     int dim = n * k - k * (k + 1) / 2;
     assertEquals(linearSubspace.basis().length(), dim);
     for (Tensor v : linearSubspace.basis()) {
-      Tensor q = stiefelManifold.exponential(p).exp(v);
+      Tensor q = stiefelManifold.tangentSpace(p).exp(v);
       stiefelManifold.isPointQ().require(q);
     }
     int bl = linearSubspace.basis().length();
@@ -84,10 +84,10 @@ class TStMemberQTest {
     StiefelManifold stiefelManifold = new StiefelManifold(n, k);
     Tensor p = RandomSample.of(stiefelManifold);
     Tensor v = new TStMemberQ(p).projection(RandomVariate.of(NormalDistribution.of(0, 0.3), k, n));
-    Tensor q = stiefelManifold.exponential(p).exp(v);
-    Tensor m = stiefelManifold.exponential(p).exp(v.multiply(Rational.HALF));
+    Tensor q = stiefelManifold.tangentSpace(p).exp(v);
+    Tensor m = stiefelManifold.tangentSpace(p).exp(v.multiply(Rational.HALF));
     Tensor m_v = stiefelManifold.hsTransport().shift(p, m).apply(v);
-    Tensor r = stiefelManifold.exponential(m).exp(m_v.multiply(Rational.HALF));
+    Tensor r = stiefelManifold.tangentSpace(m).exp(m_v.multiply(Rational.HALF));
     Tolerance.CHOP.requireClose(q, r);
   }
 }

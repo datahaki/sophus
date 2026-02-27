@@ -21,8 +21,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 public record PoleLadder(HomogeneousSpace homogeneousSpace) implements HsTransport, Serializable {
   @Override // from HsTransport
   public TensorUnaryOperator shift(Tensor p, Tensor q) {
-    TangentSpace exp_p = homogeneousSpace.exponential(p);
-    TangentSpace exp_q = homogeneousSpace.exponential(q);
+    TangentSpace exp_p = homogeneousSpace.tangentSpace(p);
+    TangentSpace exp_q = homogeneousSpace.tangentSpace(q);
     Tensor m = homogeneousSpace.midpoint(p, q);
     return v -> exp_q.log(homogeneousSpace.flip(m, exp_p.exp(v))).negate();
   }

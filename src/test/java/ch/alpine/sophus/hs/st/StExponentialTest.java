@@ -32,7 +32,7 @@ class StExponentialTest {
       Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), k, n));
       Scalar norm = Matrix2Norm.of(v);
       assertFalse(Chop._08.isZero(norm));
-      TangentSpace exponential = stiefelManifold.exponential(p);
+      TangentSpace exponential = stiefelManifold.tangentSpace(p);
       Tensor q = exponential.exp(v);
       assertEquals(Dimensions.of(p), Dimensions.of(q));
       stiefelManifold.isPointQ().require(q);
@@ -49,11 +49,11 @@ class StExponentialTest {
     stiefelManifold.isPointQ().require(p);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), n, n));
-    TangentSpace exponential = stiefelManifold.exponential(p);
+    TangentSpace exponential = stiefelManifold.tangentSpace(p);
     Tensor q = exponential.exp(v);
     stiefelManifold.isPointQ().require(q);
     Tensor log1 = exponential.log(q);
-    Tensor log2 = SoGroup.INSTANCE.exponential(p).log(q);
+    Tensor log2 = SoGroup.INSTANCE.tangentSpace(p).log(q);
     Tolerance.CHOP.requireClose(log1, log2);
   }
 }

@@ -18,7 +18,7 @@ public abstract class AbstractLieGroup implements LieGroup, Serializable {
   /** all tangent vectors are assumed to be in the tangent space at the neutral element,
    * i.e. given in the basis of TeG */
   @Override // from Manifold
-  public final TangentSpace exponential(Tensor p) {
+  public final TangentSpace tangentSpace(Tensor p) {
     return new LieExp() {
       Tensor pinv;
 
@@ -100,6 +100,6 @@ public abstract class AbstractLieGroup implements LieGroup, Serializable {
 
   @Override // from LieIntegrator
   public final Tensor spin(Tensor p, Tensor v) {
-    return exponential(p).exp(v);
+    return tangentSpace(p).exp(v);
   }
 }

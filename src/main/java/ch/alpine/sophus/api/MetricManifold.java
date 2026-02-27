@@ -14,6 +14,6 @@ public interface MetricManifold extends Manifold, TensorMetric {
 
   @Override
   default Scalar distance(Tensor p, Tensor q) {
-    return bilinearForm(p).norm(exponential(p).log(q));
+    return bilinearForm(p).norm(tangentSpace(p).log(q));
   }
 }

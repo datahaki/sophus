@@ -27,7 +27,7 @@ class HsAdGeodesicTest {
     Tensor q = RandomVariate.of(distribution, n);
     Scalar lambda = RealScalar.of(0.3);
     Tensor chk = hsAdGeodesic.split(p, q, lambda);
-    TangentSpace exponential = SnManifold.INSTANCE.exponential(UnitVector.of(n + 1, n));
+    TangentSpace exponential = SnManifold.INSTANCE.tangentSpace(UnitVector.of(n + 1, n));
     Tensor sn_p = exponential.exp(p.copy().append(RealScalar.ZERO));
     Tensor sn_q = exponential.exp(q.copy().append(RealScalar.ZERO));
     Tensor sn_s = SnManifold.INSTANCE.split(sn_p, sn_q, lambda);

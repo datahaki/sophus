@@ -113,7 +113,7 @@ class HeGroupTest {
       RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
       Tensor g = RandomSample.of(rsi);
       Tensor x = RandomSample.of(rsi);
-      Tensor lhs = LIE_GROUP.exponential(g).exp(x); // g.Exp[x]
+      Tensor lhs = LIE_GROUP.tangentSpace(g).exp(x); // g.Exp[x]
       Tensor rhs = LIE_GROUP.combine(LIE_GROUP.exponential0().exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }

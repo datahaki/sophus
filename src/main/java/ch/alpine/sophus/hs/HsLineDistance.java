@@ -15,7 +15,7 @@ public record HsLineDistance(HomogeneousSpace homogeneousSpace) implements LineD
 
   @Override // from LineDistance
   public HsLineDistanceLocal distanceToLine(Tensor p, Tensor q) {
-    TangentSpace exponential = homogeneousSpace.exponential(p);
+    TangentSpace exponential = homogeneousSpace.tangentSpace(p);
     return new HsLineDistanceLocal( //
         exponential, //
         NORMALIZE_UNLESS_ZERO.apply(exponential.log(q)));

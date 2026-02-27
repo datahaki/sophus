@@ -78,7 +78,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     Tensor shifted = meanEstimate.estimate(sequence, weights); // initial guess
     // TODO adaptive... continue as long as error decreases!
     for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
-      MeanDefect meanDefect = MeanDefect.of(sequence, weights, manifold.exponential(shifted));
+      MeanDefect meanDefect = MeanDefect.of(sequence, weights, manifold.tangentSpace(shifted));
       shifted = meanDefect.shifted();
       if (chop.allZero(meanDefect.tangent()))
         return Optional.of(shifted);

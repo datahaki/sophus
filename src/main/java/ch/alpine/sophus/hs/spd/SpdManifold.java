@@ -62,7 +62,7 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
   }
 
   @Override // from Manifold
-  public SpdTangentSpace exponential(Tensor p) {
+  public SpdTangentSpace tangentSpace(Tensor p) {
     return new SpdTangentSpace(p);
   }
 

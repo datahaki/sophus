@@ -35,7 +35,7 @@ class StBilinearFormTest {
       assertTrue(Im.allZero(v));
       BilinearForm bilinearForm = stiefelManifold.bilinearForm(p);
       Scalar norm = bilinearForm.norm(v);
-      TangentSpace exponential = stiefelManifold.exponential(p);
+      TangentSpace exponential = stiefelManifold.tangentSpace(p);
       Tensor q = exponential.exp(v);
       assertTrue(Im.allZero(q));
       Tensor w = exponential.log(q);

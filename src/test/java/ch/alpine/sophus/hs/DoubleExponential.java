@@ -16,19 +16,19 @@ public record DoubleExponential(HomogeneousSpace homogeneousSpace) implements Se
   }
 
   public class DoubleExponentialPoint implements Serializable {
-    private final Tensor x;
-    private final TangentSpace exponential;
+    private final Tensor p;
+    private final TangentSpace tangentSpace;
 
-    private DoubleExponentialPoint(Tensor x) {
-      this.x = x;
-      exponential = homogeneousSpace.exponential(x);
+    private DoubleExponentialPoint(Tensor p) {
+      this.p = p;
+      tangentSpace = homogeneousSpace.tangentSpace(p);
     }
 
     public TensorUnaryOperator operator(Tensor v) {
-      Tensor xv = exponential.exp(v);
-      TangentSpace exp_xv = homogeneousSpace.exponential(xv);
-      TensorUnaryOperator operator = homogeneousSpace.hsTransport().shift(x, xv);
-      return w -> exp_xv.exp(operator.apply(w));
+      Tensor q = tangentSpace.exp(v);
+      TangentSpace exp_q = homogeneousSpace.tangentSpace(q);
+      TensorUnaryOperator operator = homogeneousSpace.hsTransport().shift(p, q);
+      return w -> exp_q.exp(operator.apply(w));
     }
   }
 }

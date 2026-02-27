@@ -67,7 +67,7 @@ class GrManifoldTest {
       Grassmannian grassmannian = new Grassmannian(n, k);
       Tensor p = RandomSample.of(grassmannian);
       Tensor q = RandomSample.of(grassmannian);
-      TangentSpace exponential = grassmannian.exponential(p);
+      TangentSpace exponential = grassmannian.tangentSpace(p);
       assumeFalse(ThrowQ.of(() -> exponential.log(q)));
       ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
       Tensor mir1 = stf.apply(RealScalar.ONE.negate());

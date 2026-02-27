@@ -31,7 +31,7 @@ class SpdBilinearFormTest {
     Tensor qs = spdIso.apply(q);
     Scalar d3 = spdNManifold.distance(ps, qs);
     Tolerance.CHOP.requireClose(d1, d3);
-    Scalar d4 = spdNManifold.exponential(ps).distance(qs);
+    Scalar d4 = spdNManifold.tangentSpace(ps).distance(qs);
     Tolerance.CHOP.requireClose(d1, d4);
   }
 }

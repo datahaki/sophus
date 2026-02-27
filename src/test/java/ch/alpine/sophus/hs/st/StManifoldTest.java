@@ -44,7 +44,7 @@ class StManifoldTest {
       Tensor sequence = Tensors.empty();
       // IO.println(stiefelManifold.dimensions());
       int K = 8;
-      TangentSpace exponential = stiefelManifold.exponential(p);
+      TangentSpace exponential = stiefelManifold.tangentSpace(p);
       for (int j = 0; j < K; ++j) {
         Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.02), randomGenerator, k, n));
         sequence.append(exponential.exp(v));

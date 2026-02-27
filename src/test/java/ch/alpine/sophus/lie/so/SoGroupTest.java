@@ -123,7 +123,7 @@ class SoGroupTest {
     for (int n = 2; n < 10; ++n) {
       Tensor p = new SoNGroup(n).randomSample(random);
       Tensor q = new SoNGroup(n).randomSample(random);
-      TangentSpace exponential = SoGroup.INSTANCE.exponential(p);
+      TangentSpace exponential = SoGroup.INSTANCE.tangentSpace(p);
       Tensor vp = exponential.log(q);
       TSoMemberQ.INSTANCE.require(vp);
       Tensor qr = exponential.exp(vp);

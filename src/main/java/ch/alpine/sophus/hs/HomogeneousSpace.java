@@ -28,13 +28,13 @@ public interface HomogeneousSpace extends GeodesicSpace, Manifold {
    * @return Exp_p[-Log_p[q]] */
   // TODO SOPHUS find an elegant way to check if default matches override
   default Tensor flip(Tensor p, Tensor q) {
-    TangentSpace exp_p = exponential(p);
+    TangentSpace exp_p = tangentSpace(p);
     return exp_p.exp(exp_p.log(q).negate());
   }
 
   @Override
   default ScalarTensorFunction curve(Tensor p, Tensor q) {
-    TangentSpace exp_p = exponential(p);
+    TangentSpace exp_p = tangentSpace(p);
     Tensor v = exp_p.log(q);
     return scalar -> exp_p.exp(v.multiply(scalar));
   }

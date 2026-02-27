@@ -41,7 +41,7 @@ public class RpManifold implements HomogeneousSpace, MetricManifold {
   }
 
   @Override // from Manifold
-  public final TangentSpace exponential(Tensor point) {
+  public final TangentSpace tangentSpace(Tensor point) {
     return new RpnTangentSpace(point);
   }
 

@@ -36,7 +36,7 @@ public class StManifold implements HomogeneousSpace, MetricManifold, Serializabl
   }
 
   @Override
-  public TangentSpace exponential(Tensor p) {
+  public TangentSpace tangentSpace(Tensor p) {
     return new StTangentSpace(p);
   }
 

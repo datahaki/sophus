@@ -28,7 +28,8 @@ import ch.alpine.tensor.sca.tri.Sinc;
  * "Barycentric Subspace Analysis on Manifolds"
  * by Xavier Pennec, 2016, p. 8 */
 public class STangentSpace implements TangentSpace, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = //
+      NormalizeUnlessZero.with(Vector2Norm::of);
   // ---
   private final Tensor p;
   private final TSnMemberQ tSnMemberQ;

@@ -27,6 +27,6 @@ public record SingleStepMeanEstimate(Manifold manifold) implements MeanEstimate,
   public Tensor estimate(Tensor sequence, Tensor weights) {
     MeanEstimate meanEstimate = ArgMaxMeanEstimate.INSTANCE;
     Tensor shifted = meanEstimate.estimate(sequence, weights); // initial guess
-    return MeanDefect.of(sequence, weights, manifold.exponential(shifted)).shifted();
+    return MeanDefect.of(sequence, weights, manifold.tangentSpace(shifted)).shifted();
   }
 }

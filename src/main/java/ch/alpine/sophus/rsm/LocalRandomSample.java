@@ -19,10 +19,16 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 /** samples around origin of given tangent space with standard deviation sigma
  * and maps back to manifold */
 public class LocalRandomSample implements RandomSampleInterface, Serializable {
+  /** @param tangentSpace
+   * @param sigma
+   * @return */
   public static RandomSampleInterface of(TangentSpace tangentSpace, Scalar sigma) {
     return new LocalRandomSample(tangentSpace, sigma);
   }
 
+  /** @param tangentSpace
+   * @param sigma
+   * @return */
   public static RandomSampleInterface of(TangentSpace tangentSpace, Number sigma) {
     return new LocalRandomSample(tangentSpace, RealScalar.of(sigma));
   }

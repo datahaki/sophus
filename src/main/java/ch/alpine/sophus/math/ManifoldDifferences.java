@@ -24,6 +24,6 @@ public enum ManifoldDifferences {
   ;
   public static TensorUnaryOperator of(Manifold manifold) {
     Objects.requireNonNull(manifold);
-    return new AdjacentReduce((p, q) -> Tensors.of(p, manifold.exponential(p).log(q)));
+    return new AdjacentReduce((p, q) -> Tensors.of(p, manifold.tangentSpace(p).log(q)));
   }
 }

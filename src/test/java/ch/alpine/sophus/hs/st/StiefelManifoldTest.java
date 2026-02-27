@@ -34,7 +34,7 @@ class StiefelManifoldTest {
     StiefelManifold stiefelManifold = new StiefelManifold(n, 1);
     Tensor p = Tensors.of(UnitVector.of(n, 0));
     stiefelManifold.isPointQ().require(p);
-    TangentSpace exponential = stiefelManifold.exponential(p);
+    TangentSpace exponential = stiefelManifold.tangentSpace(p);
     Tensor v = Tensors.of(UnitVector.of(n, 1));
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     tStMemberQ.require(v);
@@ -49,7 +49,7 @@ class StiefelManifoldTest {
     StiefelManifold stiefelManifold = new StiefelManifold(n, 1);
     Tensor p = Tensors.of(UnitVector.of(n, 0));
     stiefelManifold.isPointQ().require(p);
-    TangentSpace exponential = stiefelManifold.exponential(p);
+    TangentSpace exponential = stiefelManifold.tangentSpace(p);
     Tensor v = Tensors.of(UnitVector.of(n, 2));
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     tStMemberQ.require(v);
@@ -64,14 +64,14 @@ class StiefelManifoldTest {
     StiefelManifold stiefelManifold = new StiefelManifold(n, n);
     Tensor p = IdentityMatrix.of(n);
     stiefelManifold.isPointQ().require(p);
-    TangentSpace exponential = stiefelManifold.exponential(p);
+    TangentSpace exponential = stiefelManifold.tangentSpace(p);
     Tensor vv = RandomVariate.of(ExponentialDistribution.standard(), n, n);
     Tensor v = Transpose.of(vv).subtract(vv);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     tStMemberQ.require(v);
     Tolerance.CHOP.requireClose(tStMemberQ.projection(v), v);
     Tensor q1 = exponential.exp(v);
-    Tensor q2 = SoGroup.INSTANCE.exponential(p).exp(v);
+    Tensor q2 = SoGroup.INSTANCE.tangentSpace(p).exp(v);
     Tolerance.CHOP.requireClose(q1, q2);
   }
 
@@ -81,7 +81,7 @@ class StiefelManifoldTest {
     StiefelManifold stiefelManifold = new StiefelManifold(n, n - 1);
     Tensor p = Drop.tail(IdentityMatrix.of(n), 1);
     stiefelManifold.isPointQ().require(p);
-    TangentSpace exponential = stiefelManifold.exponential(p);
+    TangentSpace exponential = stiefelManifold.tangentSpace(p);
     Tensor vv = RandomVariate.of(ExponentialDistribution.standard(), n - 1, n);
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     Tensor v = tStMemberQ.projection(vv);

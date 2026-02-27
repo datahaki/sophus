@@ -39,7 +39,7 @@ public class HManifold implements HomogeneousSpace, MetricManifold, Serializable
   }
 
   @Override // from Manifold
-  public TangentSpace exponential(Tensor p) {
+  public TangentSpace tangentSpace(Tensor p) {
     return new HTangentSpace(p);
   }
 

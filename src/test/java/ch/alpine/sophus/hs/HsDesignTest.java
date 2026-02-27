@@ -39,11 +39,11 @@ class HsDesignTest {
       Distribution distribution = UniformDistribution.unit();
       for (int count = dimension + 1; count < 8; ++count) {
         Tensor sequence = RandomVariate.of(distribution, count, dimension);
-        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(manifold.exponential(point).log().slash(sequence)).sigma_inverse()));
+        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(manifold.tangentSpace(point).log().slash(sequence)).sigma_inverse()));
         for (Tensor form : forms)
           assertTrue(PositiveDefiniteMatrixQ.ofHermitian(form));
         Tensor point = RandomVariate.of(distribution, dimension);
-        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(new Mahalanobis(manifold.exponential(point).log().slash(sequence)).sigma_inverse()));
+        assertTrue(PositiveDefiniteMatrixQ.ofHermitian(new Mahalanobis(manifold.tangentSpace(point).log().slash(sequence)).sigma_inverse()));
       }
     }
   }
@@ -66,11 +66,11 @@ class HsDesignTest {
       RandomSampleInterface randomSampleInterface = new Sphere(dimension);
       for (int count = dimension + 2; count < 8; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
-        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(manifold.exponential(point).log().slash(sequence)).sigma_inverse()));
+        Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(manifold.tangentSpace(point).log().slash(sequence)).sigma_inverse()));
         for (Tensor form : forms)
           assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(form, Chop._06)); // has excess dimension
         Tensor point = RandomSample.of(randomSampleInterface);
-        Tensor matrix = manifold.exponential(point).log().slash(sequence);
+        Tensor matrix = manifold.tangentSpace(point).log().slash(sequence);
         assertTrue(PositiveSemidefiniteMatrixQ.ofHermitian(new Mahalanobis(matrix).sigma_inverse(), Chop._08));
       }
     }
@@ -84,7 +84,7 @@ class HsDesignTest {
     for (int count = 4; count < 10; ++count) {
       Tensor sequence = RandomVariate.of(distribution, randomGenerator, count, 3);
       for (Tensor point : sequence) {
-        Tensor design = manifold.exponential(point).log().slash(sequence);
+        Tensor design = manifold.tangentSpace(point).log().slash(sequence);
         Mahalanobis mahalanobis = new Mahalanobis(design);
         InfluenceMatrix influenceMatrix = InfluenceMatrix.of(design);
         Chop._08.requireClose(mahalanobis.leverages(), influenceMatrix.leverages());
@@ -103,7 +103,7 @@ class HsDesignTest {
     for (int count = 4; count < 8; ++count) {
       Tensor sequence = RandomVariate.of(distribution, count, 3);
       Tensor point = RandomVariate.of(distribution, 3);
-      Tensor design = manifold.exponential(point).log().slash(sequence);
+      Tensor design = manifold.tangentSpace(point).log().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(design);
       Tensor sigma_inverse = mahalanobis.sigma_inverse();
       assertTrue(PositiveDefiniteMatrixQ.ofHermitian(sigma_inverse));
@@ -111,7 +111,7 @@ class HsDesignTest {
       Tensor vt = design;
       Tensor v = Transpose.of(vt);
       Tensor dot = IdentityMatrix.of(count).subtract(vt.dot(sigma_inverse.dot(v)));
-      Tensor matrix = manifold.exponential(point).log().slash(sequence);
+      Tensor matrix = manifold.tangentSpace(point).log().slash(sequence);
       InfluenceMatrix hsInfluence = InfluenceMatrix.of(matrix);
       Chop._08.requireClose(dot, hsInfluence.residualMaker());
     }

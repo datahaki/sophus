@@ -21,6 +21,6 @@ public enum LieDifferences {
   ;
   public static TensorUnaryOperator of(LieGroup lieGroup) {
     Objects.requireNonNull(lieGroup);
-    return new AdjacentReduce((p, q) -> lieGroup.exponential(p).log(q));
+    return new AdjacentReduce((p, q) -> lieGroup.tangentSpace(p).log(q));
   }
 }

@@ -63,7 +63,7 @@ public class GrManifold implements HomogeneousSpace, MetricManifold, Serializabl
   }
 
   @Override // from Manifold
-  public GrTangentSpace exponential(Tensor x) {
+  public GrTangentSpace tangentSpace(Tensor x) {
     return new GrTangentSpace(x);
   }
 
@@ -86,12 +86,12 @@ public class GrManifold implements HomogeneousSpace, MetricManifold, Serializabl
   @Override
   public Tensor flip(Tensor p, Tensor q) {
     // matrix bracket is obsolete
-    return BasisTransform.ofMatrix(p, MatrixExp.of(exponential(p).mLog(q).multiply(Rational.HALF)));
+    return BasisTransform.ofMatrix(p, MatrixExp.of(tangentSpace(p).mLog(q).multiply(Rational.HALF)));
   }
 
   @Override
   public Tensor midpoint(Tensor p, Tensor q) {
-    return BasisTransform.ofMatrix(p, MatrixExp.of(exponential(p).mLog(q).multiply(N1_4)));
+    return BasisTransform.ofMatrix(p, MatrixExp.of(tangentSpace(p).mLog(q).multiply(N1_4)));
   }
 
   @Override
