@@ -24,13 +24,17 @@ public enum Se2Matrix {
    * </pre>
    * @throws Exception if parameter g is not a vector of length 3 */
   public static Tensor of(Tensor xya) {
+    Scalar x = xya.Get(0);
+    Scalar y = xya.Get(1);
+    Scalar zx = Unprotect.zero_negateUnit(x);
+    Scalar zy = Unprotect.zero_negateUnit(y);
     Scalar angle = xya.Get(2);
     Scalar cos = Cos.FUNCTION.apply(angle);
     Scalar sin = Sin.FUNCTION.apply(angle);
     return Tensors.matrix(new Scalar[][] { //
-        { cos, sin.negate(), xya.Get(0) }, //
-        { sin, cos /*----*/, xya.Get(1) }, //
-        { RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE }, //
+        { cos, sin.negate(), x }, //
+        { sin, cos /*----*/, y }, //
+        { zx, zy, RealScalar.ONE }, //
     });
   }
 
