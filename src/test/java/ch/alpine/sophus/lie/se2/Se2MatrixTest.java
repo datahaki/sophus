@@ -45,7 +45,7 @@ class Se2MatrixTest {
 
   @Test
   void testTranslation2() {
-    Tensor t1 = Se2Matrix.translation(2, 4.0);
+    Tensor t1 = Se2Matrix.translation(Tensors.vector(2, 4.0));
     assertEquals(Se2Matrix.translation(Tensors.vector(2, 4)), t1);
   }
 

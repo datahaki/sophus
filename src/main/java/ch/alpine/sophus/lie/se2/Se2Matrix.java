@@ -5,6 +5,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.sca.tri.ArcTan;
 import ch.alpine.tensor.sca.tri.Cos;
@@ -51,15 +52,26 @@ public enum Se2Matrix {
    * [0 0 1]
    * </pre> */
   public static Tensor translation(Tensor xy) {
+    Scalar x = xy.Get(0);
+    Scalar y = xy.Get(1);
+    Scalar zx = Unprotect.zero_negateUnit(x);
+    Scalar zy = Unprotect.zero_negateUnit(y);
     return Tensors.matrix(new Scalar[][] { //
-        { RealScalar.ONE, RealScalar.ZERO, xy.Get(0) }, //
-        { RealScalar.ZERO, RealScalar.ONE, xy.Get(1) }, //
-        { RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE }, //
+        { RealScalar.ONE, RealScalar.ZERO, x }, //
+        { RealScalar.ZERO, RealScalar.ONE, y }, //
+        { zx, zy, RealScalar.ONE }, //
     });
   }
 
-  public static Tensor translation(Number x, Number y) {
-    return translation(Tensors.vector(x, y));
+  /** @param s for instance 1[m^-1]
+   * @return matrix of size 3 x 3 that is used to convert from
+   * model coordinates to pixel coordinates */
+  public static Tensor model2pixel(Scalar s) {
+    return Tensors.matrix(new Scalar[][] { //
+        { s, s.zero(), RealScalar.ZERO }, //
+        { s.zero(), s, RealScalar.ZERO }, //
+        { s.zero(), s.zero(), RealScalar.ONE }, //
+    });
   }
 
   /** Hint: function is useful to construct a pixel2model matrix
