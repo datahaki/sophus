@@ -8,14 +8,11 @@ import ch.alpine.tensor.mat.pi.LinearSubspace;
 
 public enum LieAlgebraMatrixBasis {
   ;
-  public static Tensor of(LieGroup lieGroup) {
-    if (lieGroup instanceof SpecificGroup specificGroup) {
-      int n = specificGroup.matrixOrder();
-      LieExponential lieExponential = lieGroup.exponential0();
-      ZeroDefectArrayQ zeroDefectArrayQ = lieExponential.isTangentQ();
-      LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, n, n);
-      return linearSubspace.basis();
-    }
-    throw new IllegalArgumentException();
+  public static Tensor of(SpecificLieGroup specificGroup) {
+    int n = specificGroup.matrixOrder();
+    LieExponential lieExponential = specificGroup.exponential0();
+    ZeroDefectArrayQ zeroDefectArrayQ = lieExponential.isTangentQ();
+    LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, n, n);
+    return linearSubspace.basis();
   }
 }

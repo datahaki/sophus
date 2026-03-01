@@ -5,7 +5,7 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.SpecificGroup;
+import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.sophus.lie.se3.Se3Exponential;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class SeNGroup extends SeGroup implements SpecificGroup {
+public class SeNGroup extends SeGroup implements SpecificLieGroup {
   private final int n;
 
   /** @param n in SE(n) */

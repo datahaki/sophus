@@ -5,19 +5,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dot;
+import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Chop;
 
 class Se2MatrixTest {
@@ -63,6 +67,22 @@ class Se2MatrixTest {
     assertEquals(matrix.get(2), Tensors.vector(0, 0, 1));
     Scalar det = Det.of(matrix);
     Chop._14.requireClose(det, RealScalar.ONE);
+  }
+
+  @Test
+  void testModPix() {
+    Tensor model2pixel = Se2Matrix.model2pixel(Quantity.of(10, "m"));
+    Tensor pixel2model = Se2Matrix.pixel2model(Quantity.of(10, "m"));
+    assertEquals(model2pixel, Transpose.of(pixel2model));
+  }
+
+  @Test
+  void testModPixInv() {
+    Tensor model2pixel = Se2Matrix.model2pixel(Quantity.of(10, "m"));
+    Tensor m2p_inv = Inverse.of(model2pixel);
+    Tensor pixel2model = Se2Matrix.pixel2model(Quantity.of(Rational.of(1, 10), "m^-1"));
+    assertEquals(m2p_inv, pixel2model);
+    assertEquals(m2p_inv.toString(), pixel2model.toString());
   }
 
   @Test

@@ -83,10 +83,10 @@ public class GroupCheck {
       Tolerance.CHOP.requireAllZero(meanDefect.tangent());
       return;
     }
-    if (lieGroup instanceof SpecificGroup) {
-      check(new VectorizedGroup(lieGroup));
+    if (lieGroup instanceof SpecificLieGroup specificGroup) {
+      check(new VectorizedGroup(specificGroup));
       // ---
-      Tensor matrixBasis = LieAlgebraMatrixBasis.of(lieGroup);
+      Tensor matrixBasis = LieAlgebraMatrixBasis.of(specificGroup);
       MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
       Tensor ad = matrixAlgebra.ad();
       TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 0xA);
@@ -151,8 +151,8 @@ public class GroupCheck {
   }
 
   public static void showBasis(LieGroup lieGroup) {
-    if (lieGroup instanceof SpecificGroup matrix) {
-      Tensor matrixBasis = LieAlgebraMatrixBasis.of(lieGroup);
+    if (lieGroup instanceof SpecificLieGroup specificGroup) {
+      Tensor matrixBasis = LieAlgebraMatrixBasis.of(specificGroup);
       for (var elem : matrixBasis)
         IO.println(Pretty.of(elem));
     }

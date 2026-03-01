@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.sp;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.SpecificGroup;
+import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -13,7 +13,7 @@ import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class SpNGroup extends SpGroup implements SpecificGroup {
+public class SpNGroup extends SpGroup implements SpecificLieGroup {
   private final int n;
   private final LinearSubspace linearSubspace;
 

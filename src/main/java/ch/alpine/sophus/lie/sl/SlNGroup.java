@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.sl;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.SpecificGroup;
+import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Power;
 
-public class SlNGroup extends SlGroup implements SpecificGroup {
+public class SlNGroup extends SlGroup implements SpecificLieGroup {
   private final int n;
 
   public SlNGroup(int n) {

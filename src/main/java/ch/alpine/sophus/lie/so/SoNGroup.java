@@ -4,7 +4,7 @@ package ch.alpine.sophus.lie.so;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.SpecificGroup;
+import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
  * for n == 2 and n == 3 there are faster alternatives
  * 
  * consistent with {@link RotationMatrix} and {@link So3Exponential} */
-public class SoNGroup extends SoGroup implements SpecificGroup {
+public class SoNGroup extends SoGroup implements SpecificLieGroup {
   private final int n;
 
   public SoNGroup(int n) {

@@ -18,15 +18,13 @@ import ch.alpine.tensor.io.MathematicaFormat;
 
 public class VectorizedGroup extends AbstractLieGroup implements MetricManifold, VectorEncodingMarker {
   // TODO SOPHUS through introspection check for metric or not
-  private final LieGroup lieGroup;
-  private final SpecificGroup specificGroup;
+  private final SpecificLieGroup lieGroup;
   private final MatrixAlgebra matrixAlgebra;
   private final Exponential exponential0;
 
   /** @param lieGroup has to be instance of SpecificGroup */
-  public VectorizedGroup(LieGroup lieGroup) {
+  public VectorizedGroup(SpecificLieGroup lieGroup) {
     this.lieGroup = lieGroup;
-    specificGroup = (SpecificGroup) lieGroup;
     exponential0 = lieGroup.exponential0();
     Tensor basis = LieAlgebraMatrixBasis.of(lieGroup);
     matrixAlgebra = new MatrixAlgebra(basis);
@@ -99,12 +97,12 @@ public class VectorizedGroup extends AbstractLieGroup implements MetricManifold,
 
   @Override
   public int matrixOrder() {
-    return specificGroup.matrixOrder();
+    return lieGroup.matrixOrder();
   }
 
   @Override
   public Tensor randomSample(RandomGenerator randomGenerator) {
-    return specificGroup.randomSample(randomGenerator);
+    return lieGroup.randomSample(randomGenerator);
   }
 
   @Override

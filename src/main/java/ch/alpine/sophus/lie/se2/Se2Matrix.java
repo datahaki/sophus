@@ -78,6 +78,14 @@ public enum Se2Matrix {
     });
   }
 
+  public static Tensor pixel2model(Scalar s) {
+    return Tensors.matrix(new Scalar[][] { //
+        { s, s.zero(), s.zero() }, //
+        { s.zero(), s, s.zero() }, //
+        { RealScalar.ZERO, RealScalar.ZERO, RealScalar.ONE }, //
+    });
+  }
+
   /** Hint: function is useful to construct a pixel2model matrix
    * for an image of given height.
    * 

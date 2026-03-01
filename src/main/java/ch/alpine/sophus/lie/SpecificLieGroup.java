@@ -3,6 +3,6 @@ package ch.alpine.sophus.lie;
 
 import ch.alpine.sophus.api.SpecificManifold;
 
-public interface SpecificGroup extends SpecificManifold {
+public interface SpecificLieGroup extends LieGroup, SpecificManifold {
   int matrixOrder();
 }
