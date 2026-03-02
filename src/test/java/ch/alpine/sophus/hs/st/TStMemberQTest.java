@@ -88,6 +88,6 @@ class TStMemberQTest {
     Tensor m = stiefelManifold.tangentSpace(p).exp(v.multiply(Rational.HALF));
     Tensor m_v = stiefelManifold.hsTransport().shift(p, m).apply(v);
     Tensor r = stiefelManifold.tangentSpace(m).exp(m_v.multiply(Rational.HALF));
-    Tolerance.CHOP.requireClose(q, r);
+    Chop._10.requireClose(q, r);
   }
 }
