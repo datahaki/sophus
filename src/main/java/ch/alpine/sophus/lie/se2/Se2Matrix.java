@@ -71,10 +71,14 @@ public enum Se2Matrix {
    * @return matrix of size 3 x 3 that is used to convert from
    * model coordinates to pixel coordinates */
   public static Tensor model2pixel(Scalar s) {
+    return model2pixel(s, s);
+  }
+
+  public static Tensor model2pixel(Scalar sx, Scalar sy) {
     return Tensors.matrix(new Scalar[][] { //
-        { s, s.zero(), RealScalar.ZERO }, //
-        { s.zero(), s, RealScalar.ZERO }, //
-        { s.zero(), s.zero(), RealScalar.ONE }, //
+        { sx, sy.zero(), RealScalar.ZERO }, //
+        { sx.zero(), sy, RealScalar.ZERO }, //
+        { sx.zero(), sy.zero(), RealScalar.ONE }, //
     });
   }
 
