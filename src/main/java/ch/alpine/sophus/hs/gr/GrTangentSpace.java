@@ -5,9 +5,11 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.lie.MatrixBracket;
+import ch.alpine.sophus.math.UpperVectorize;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -49,6 +51,11 @@ public class GrTangentSpace implements TangentSpace, Serializable {
   public Tensor log(Tensor q) {
     GrManifold.INSTANCE.isPointQ().require(q);
     return MatrixBracket.of(mLog(q).multiply(Rational.HALF), p);
+  }
+
+  @Override
+  public TensorUnaryOperator vectorLog() {
+    return q -> UpperVectorize.of(log(q), 0);
   }
 
   @Override

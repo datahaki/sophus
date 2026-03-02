@@ -5,7 +5,6 @@ import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 enum HeExponential implements LieExponential {
@@ -20,11 +19,6 @@ enum HeExponential implements LieExponential {
   @Override // from Exponential
   public Tensor log(Tensor xyz) {
     return HeFormat.of(xyz).log().toCoordinate();
-  }
-
-  @Override
-  public TensorUnaryOperator vectorLog() {
-    return log();
   }
 
   @Override

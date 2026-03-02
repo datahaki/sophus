@@ -6,7 +6,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
 enum RExponential0 implements LieExponential {
@@ -20,11 +19,6 @@ enum RExponential0 implements LieExponential {
   @Override // from Exponential
   public Tensor log(Tensor y) {
     return y.copy();
-  }
-
-  @Override
-  public TensorUnaryOperator vectorLog() {
-    return log();
   }
 
   @Override

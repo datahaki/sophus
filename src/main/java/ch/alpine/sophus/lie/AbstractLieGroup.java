@@ -4,6 +4,7 @@ package ch.alpine.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;
@@ -19,6 +20,7 @@ public abstract class AbstractLieGroup implements LieGroup, Serializable {
    * i.e. given in the basis of TeG */
   @Override // from Manifold
   public final TangentSpace tangentSpace(Tensor p) {
+    LieExponential lieExponential = exponential0();
     return new LieExp() {
       Tensor pinv;
 
@@ -29,19 +31,26 @@ public abstract class AbstractLieGroup implements LieGroup, Serializable {
 
       @Override // from Exponential
       public Tensor exp(Tensor v) {
-        return combine(p, exponential0().exp(v));
+        return combine(p, lieExponential.exp(v));
       }
 
       @Override // from Exponential
       public Tensor log(Tensor q) {
         if (Objects.isNull(pinv))
           pinv = invert(p);
-        return exponential0().log(combine(pinv, q));
+        return lieExponential.log(combine(pinv, q));
+      }
+
+      @Override
+      public TensorUnaryOperator vectorLog() {
+        if (Objects.isNull(pinv))
+          pinv = invert(p);
+        return q -> lieExponential.vectorLog().apply(combine(pinv, q));
       }
 
       @Override // from Exponential
       public ZeroDefectArrayQ isTangentQ() {
-        return exponential0().isTangentQ();
+        return lieExponential.isTangentQ();
       }
     };
   }

@@ -26,7 +26,7 @@ public class TGrMemberQ extends ZeroDefectSquareMatrixQ {
   public Tensor defect(Tensor v) {
     return Join.of( //
         p.dot(v).add(v.dot(p)).subtract(v), //
-        HermitianMatrixQ.INSTANCE.defect(v));
+        HermitianMatrixQ.INSTANCE.defect(v)); // v == v'
   }
 
   /** Reference:

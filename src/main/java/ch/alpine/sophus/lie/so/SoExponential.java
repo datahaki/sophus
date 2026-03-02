@@ -24,7 +24,7 @@ enum SoExponential implements LieExponential {
 
   @Override // from Exponential
   public TensorUnaryOperator vectorLog() {
-    return q -> UpperVectorize.of(q, 1);
+    return q -> UpperVectorize.of(log(q), 1);
   }
 
   @Override
