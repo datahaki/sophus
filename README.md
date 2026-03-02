@@ -7,7 +7,7 @@ Library for non-linear geometry computations in Java.
 ![](https://github.com/datahaki/sophus/actions/workflows/mvn_test.yml/badge.svg)
 
 The library was developed with the following objectives in mind
-* trajectory design for autonomous robots
+* trajectory design and motion planning for autonomous robots
 * suitable for use in safety-critical real-time systems
 * implementation of theoretical concepts with high level of abstraction
 
@@ -27,47 +27,13 @@ The library was developed with the following objectives in mind
 * Euclidean space $R^n$
 * Heisenberg group `He(n)`
 * Special orthogonal group `SO(n)`
-* Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(3)`
+* Special orthogonal group `SL(n)`
+* Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(n)`
 
----
 
 ## Contributors
 
 Jan Hakenberg, Oliver Brinkmann, Joel Gächter
-
-
-## Integration
-
-From time to time, a version is deployed and made available for maven integration. Specify `repository` and `dependency` of the library `sophus` in the `pom.xml` file of your maven project:
-
-```xml
-<dependencies>
-  <!-- other dependencies -->
-  <dependency>
-    <groupId>ch.alpine</groupId>
-    <artifactId>sophus</artifactId>
-    <version>0.0.9</version>
-  </dependency>
-</dependencies>
-
-<repositories>
-  <!-- other repositories -->
-  <repository>
-    <id>sophus-mvn-repo</id>
-    <url>https://raw.github.com/datahaki/sophus/mvn-repo/</url>
-    <snapshots>
-      <enabled>true</enabled>
-      <updatePolicy>always</updatePolicy>
-    </snapshots>
-  </repository>
-</repositories>
-```
-
-The source code is attached to every release.
-
-The branch `master` always contains the latest features for Java 17, and does not correspond to the most recent deployed version generally.
-
----
 
 ## References
 
