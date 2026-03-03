@@ -54,4 +54,8 @@ public record Sl2Iwasawa(Scalar theta, Scalar t, Scalar s) {
   public Tensor matrix() {
     return Dot.of(K(), A(), N());
   }
+
+  public Tensor vector() {
+    return Tensors.of(theta, t, s);
+  }
 }
