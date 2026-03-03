@@ -16,7 +16,6 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;

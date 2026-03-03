@@ -18,7 +18,6 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
-import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -37,7 +36,7 @@ class Se2CoveringBiinvariantMeanTest {
     for (int length = 1; length < 6; ++length) {
       Tensor sequence = RandomVariate.of(distribution, length, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, length));
-      new BiinvariantMeanQ(Se2CoveringGroup.INSTANCE.biinvariantMean(), Tolerance.CHOP).check(sequence, weights);
+      new BiinvariantMeanQ(Se2CoveringGroup.INSTANCE.biinvariantMean(), Chop._08).check(sequence, weights);
     }
   }
 
