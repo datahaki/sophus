@@ -10,25 +10,14 @@ import ch.alpine.tensor.sca.tri.ArcTan;
 
 /** curve on the 2-dimensional sphere
  * 
- * https://de.wikipedia.org/wiki/Loxodrome */
-public class S2Loxodrome implements ScalarTensorFunction {
-  /** @param angle
-   * @return */
-  public static ScalarTensorFunction of(Scalar angle) {
-    return new S2Loxodrome(angle);
-  }
-
+ * https://de.wikipedia.org/wiki/Loxodrome
+ * 
+ * @param angle */
+public record S2Loxodrome(Scalar angle) implements ScalarTensorFunction {
   /** @param angle
    * @return */
   public static ScalarTensorFunction of(Number angle) {
-    return of(RealScalar.of(angle));
-  }
-
-  // ---
-  private final Scalar angle;
-
-  private S2Loxodrome(Scalar angle) {
-    this.angle = angle;
+    return new S2Loxodrome(RealScalar.of(angle));
   }
 
   @Override

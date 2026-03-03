@@ -35,7 +35,7 @@ class S2LoxodromeTest {
 
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
-    ScalarTensorFunction scalarTensorFunction = Serialization.copy(S2Loxodrome.of(RealScalar.of(0.1)));
+    ScalarTensorFunction scalarTensorFunction = Serialization.copy(S2Loxodrome.of(0.1));
     Tensor tensor = Subdivide.of(-1, 100, 60).maps(scalarTensorFunction);
     assertTrue(tensor.stream().allMatch(SnManifold.INSTANCE.isPointQ()));
   }
@@ -51,7 +51,7 @@ class S2LoxodromeTest {
     Scalar angle = RandomVariate.of(NormalDistribution.standard());
     Scalar scalar = RandomVariate.of(NormalDistribution.standard());
     Tolerance.CHOP.requireClose( //
-        S2Loxodrome.of(angle).apply(scalar), //
+        new S2Loxodrome(angle).apply(scalar), //
         prev(angle, scalar));
   }
 }
