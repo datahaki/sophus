@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
-import ch.alpine.sophus.math.AveragingWeights;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.nrm.AveragingWeights;
 import ch.alpine.tensor.red.Mean;
 
 /** used for instance in k-means clustering to establish center of cluster

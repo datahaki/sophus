@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
-import ch.alpine.sophus.math.AveragingWeights;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -25,6 +24,7 @@ import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.nrm.AveragingWeights;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;

@@ -7,11 +7,11 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so2.ArcTan2D;
-import ch.alpine.sophus.math.AveragingWeights;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.nrm.AveragingWeights;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
