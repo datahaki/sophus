@@ -5,6 +5,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
+import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 
 /** a tangent space without a specific base point
  * 
@@ -17,6 +18,7 @@ public interface Exponential {
    * @return point in the manifold */
   Tensor exp(Tensor v);
 
+  /** @return */
   default TensorUnaryOperator exp() {
     return this::exp;
   }
@@ -31,6 +33,12 @@ public interface Exponential {
     return this::log;
   }
 
+  /** Example: in SO(n) the {@link #log()} returns square matrices that are
+   * {@link AntisymmetricMatrixQ}. {@link #vectorLog()} returns only entries
+   * above the diagonal as a vector.
+   * 
+   * @return operator that maps a point q to a tangent vectorized
+   * typically without redundant entries */
   default TensorUnaryOperator vectorLog() {
     return q -> Flatten.of(log(q));
   }

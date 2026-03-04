@@ -12,6 +12,7 @@ import ch.alpine.sophus.SophusExperimental;
 import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.ArrayQ;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -29,6 +30,7 @@ class HomogeneousSpaceTest {
     List<Integer> dims = Dimensions.of(p);
     TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);
     Tensor v = tangentSpace.log(p);
+    ArrayQ.require(v);
     Tolerance.CHOP.requireAllZero(v);
     assertEquals(dims, Dimensions.of(v));
   }

@@ -11,7 +11,7 @@ The library was developed with the following objectives in mind
 * suitable for use in safety-critical real-time systems
 * implementation of theoretical concepts with high level of abstraction
 
-## Manifolds
+## 🌐 Manifolds
 
 ##### Homogeneous Spaces
 
@@ -31,11 +31,11 @@ The library was developed with the following objectives in mind
 * Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(n)`
 
 
-## Contributors
+## 👥 Contributors
 
 Jan Hakenberg, Oliver Brinkmann, Joel Gächter
 
-## References
+## 📚 References
 
 * *Bi-invariant Means in Lie Groups. Application to Left-invariant Polyaffine Transformations.* by Vincent Arsigny, Xavier Pennec, Nicholas Ayache
 * *Exponential Barycenters of the Canonical Cartan Connection and Invariant Means on Lie Groups* by Xavier Pennec, Vincent Arsigny
