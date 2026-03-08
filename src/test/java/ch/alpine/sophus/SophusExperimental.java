@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.sophus;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.gr.Grassmannian;
@@ -72,7 +72,7 @@ public enum SophusExperimental {
   };
 
   public static <T extends Manifold> List<T> filter(Class<T> cls) {
-    List<T> list = Stream.of(MANIFOLDS) //
+    List<T> list = Arrays.stream(MANIFOLDS) //
         .filter(cls::isInstance) //
         .map(cls::cast) //
         .toList();
