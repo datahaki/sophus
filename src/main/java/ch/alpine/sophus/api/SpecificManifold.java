@@ -3,7 +3,8 @@ package ch.alpine.sophus.api;
 
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 
-// TODO SOPHUS somewhat redundant to VectorEncodingMarker
+/** dimensions and random sample */
 public interface SpecificManifold extends RandomSampleInterface {
+  /** @return */
   int dimensions();
 }
