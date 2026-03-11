@@ -11,7 +11,8 @@ import ch.alpine.tensor.nrm.NormalizeUnlessZero;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 public record HsLineDistance(HomogeneousSpace homogeneousSpace) implements LineDistance, Serializable {
-  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
+  private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = //
+      NormalizeUnlessZero.with(Vector2Norm::of);
 
   @Override // from LineDistance
   public HsLineDistanceLocal distanceToLine(Tensor p, Tensor q) {
