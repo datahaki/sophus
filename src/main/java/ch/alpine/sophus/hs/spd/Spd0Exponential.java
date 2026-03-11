@@ -8,7 +8,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.Symmetrize;
-import ch.alpine.tensor.mat.SquareMatrixQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 
@@ -48,7 +47,7 @@ public enum Spd0Exponential implements Exponential, BilinearForm {
 
   @Override
   public ZeroDefectArrayQ isTangentQ() {
-    return SquareMatrixQ.INSTANCE;
+    return TSpdMemberQ.INSTANCE; // not reached in tests
   }
 
   @Override

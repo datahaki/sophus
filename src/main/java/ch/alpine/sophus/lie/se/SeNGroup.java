@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie.se;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.api.LieExponential;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.sophus.lie.se3.Se3Exponential;
 import ch.alpine.sophus.lie.so.SoNGroup;
@@ -35,7 +35,7 @@ public class SeNGroup extends SeGroup implements SpecificLieGroup {
   public LieExponential exponential0() {
     return n == 3 //
         ? Se3Exponential.INSTANCE
-        : SeExponential.INSTANCE;
+        : super.exponential0();
   }
 
   @Override

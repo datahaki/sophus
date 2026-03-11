@@ -1,11 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.rn;
 
-import ch.alpine.sophus.api.LieExponential;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
@@ -29,8 +28,8 @@ enum RExponential0 implements LieExponential {
   }
 
   @Override // from LieExponential
-  public Tensor gl_representation(Tensor _x) {
-    Tensor x = Flatten.of(_x);
+  public Tensor gl_representation(Tensor x) {
+    // Tensor x = Flatten.of(_x);
     int n = x.length();
     Tensor zeros = Array.zeros(n);
     Tensor matrix = Tensor.of(x.stream().map(r -> Append.of(zeros, r)));

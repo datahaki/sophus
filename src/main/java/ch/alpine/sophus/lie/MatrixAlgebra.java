@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;

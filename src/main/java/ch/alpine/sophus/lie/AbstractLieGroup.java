@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie;
 import java.io.Serializable;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.Tensor;

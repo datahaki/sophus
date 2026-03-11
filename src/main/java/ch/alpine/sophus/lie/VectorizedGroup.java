@@ -5,7 +5,6 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;

@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.GroupInterface;

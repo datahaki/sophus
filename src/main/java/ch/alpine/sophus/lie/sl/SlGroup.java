@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.sl;
 
-import ch.alpine.sophus.api.LieExponential;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.chq.MemberQ;

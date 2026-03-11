@@ -5,16 +5,26 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Sign;
 
 public class TdNGroup extends TdGroup implements VectorEncodingMarker {
   private final int n;
 
   public TdNGroup(int n) {
     this.n = n;
+  }
+
+  @Override
+  public MemberQ isPointQ() {
+    return t_lambda -> VectorQ.ofLength(t_lambda, dimensions()) //
+        && Sign.isPositive(Last.of(t_lambda));
   }
 
   @Override

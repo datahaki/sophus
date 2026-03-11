@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.se3;
 
-import ch.alpine.sophus.api.LieExponential;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.se.TSeMemberQ;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.tensor.Rational;

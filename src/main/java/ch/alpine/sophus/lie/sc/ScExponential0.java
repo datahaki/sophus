@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie.sc;
 
-import ch.alpine.sophus.api.LieExponential;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;

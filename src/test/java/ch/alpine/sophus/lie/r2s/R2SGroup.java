@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.sophus.lie.r2s;
 
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Rational;

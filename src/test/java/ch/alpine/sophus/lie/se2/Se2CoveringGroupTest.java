@@ -9,8 +9,8 @@ import java.util.Random;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.lie.LieAlgebraAds;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

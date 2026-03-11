@@ -9,6 +9,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 
 /** Careful:
@@ -27,8 +28,7 @@ public class SoAlgebra implements LieAlgebra, Serializable {
   private final MatrixAlgebra matrixAlgebra;
 
   private SoAlgebra(int n) {
-    if (n < 2)
-      throw new IllegalArgumentException("n=" + n);
+    Integers.requireLessEquals(2, n);
     this.n = n;
     matrixAlgebra = new MatrixAlgebra(basis(n));
   }

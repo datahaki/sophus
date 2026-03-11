@@ -7,6 +7,7 @@ import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -14,14 +15,16 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 public class HeNGroup extends HeGroup implements VectorEncodingMarker {
   private final int n;
+  private final ZeroDefectArrayQ isPointQ;
 
   public HeNGroup(int n) {
     this.n = Integers.requirePositive(n);
+    isPointQ = VectorQ.ofLength(dimensions());
   }
 
   @Override
   public MemberQ isPointQ() {
-    return uvw -> VectorQ.of(uvw) && dimensions() == uvw.length();
+    return isPointQ;
   }
 
   @Override

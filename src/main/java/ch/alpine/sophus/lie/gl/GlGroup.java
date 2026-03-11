@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.gl;
 
-import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
+import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;

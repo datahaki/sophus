@@ -7,20 +7,23 @@ import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 public class Hyperboloid extends HManifold implements SpecificManifold {
   private final int dimensions;
+  private final ZeroDefectArrayQ isPointQ;
 
   public Hyperboloid(int dimensions) {
     this.dimensions = dimensions;
+    isPointQ = VectorQ.ofLength(dimensions());
   }
 
   @Override
   public MemberQ isPointQ() {
-    return VectorQ.ofLength(dimensions());
+    return isPointQ;
   }
 
   @Override
