@@ -86,7 +86,7 @@ public class GroupCheck {
     if (lieGroup instanceof SpecificLieGroup specificGroup) {
       check(new VectorizedGroup(specificGroup));
       // ---
-      Tensor matrixBasis = new LieMatrixAlgebra(specificGroup).matrixAlgebra().basis();
+      Tensor matrixBasis = MatrixAlgebra.of(specificGroup).basis();
       MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
       Tensor ad = matrixAlgebra.ad();
       TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 0xA);
@@ -152,7 +152,7 @@ public class GroupCheck {
 
   public static void showBasis(LieGroup lieGroup) {
     if (lieGroup instanceof SpecificLieGroup specificGroup) {
-      Tensor matrixBasis = new LieMatrixAlgebra(specificGroup).matrixAlgebra().basis();
+      Tensor matrixBasis = MatrixAlgebra.of(specificGroup).basis();
       for (var elem : matrixBasis)
         IO.println(Pretty.of(elem));
     }

@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
@@ -8,16 +9,26 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.Slash;
 import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.lie.JacobiIdentity;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.mat.re.LinearSolveFunction;
 import ch.alpine.tensor.mat.re.MatrixRank;
 import ch.alpine.tensor.spa.Nnz;
 import ch.alpine.tensor.spa.SparseArray;
 
 public class MatrixAlgebra implements TensorBinaryOperator {
+  public static MatrixAlgebra of(SpecificLieGroup specificLieGroup) {
+    int n = specificLieGroup.matrixOrder();
+    LieExponential lieExponential = specificLieGroup.exponential0();
+    ZeroDefectArrayQ zeroDefectArrayQ = lieExponential.isTangentQ();
+    LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, n, n);
+    return new MatrixAlgebra(linearSubspace.basis());
+  }
+
   private final Tensor basis;
   /** m is a matrix with basis elements flattened to rows
    * m has at least as many columns as rows */

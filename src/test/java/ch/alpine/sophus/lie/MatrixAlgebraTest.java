@@ -156,13 +156,13 @@ class MatrixAlgebraTest {
   @Disabled
   @Test
   void testMatrixLogExpExpSe2() {
-    MatrixAlgebra matrixAlgebra = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).matrixAlgebra();
+    MatrixAlgebra matrixAlgebra = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE);
     check(matrixAlgebra, 8);
   }
 
   @Test
   void testMatrixLogExpExpSo3() {
-    MatrixAlgebra matrixAlgebra = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra();
+    MatrixAlgebra matrixAlgebra = MatrixAlgebra.of(So3Group.INSTANCE);
     check(matrixAlgebra, 8);
   }
 }

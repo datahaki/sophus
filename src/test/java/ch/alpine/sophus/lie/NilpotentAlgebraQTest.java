@@ -15,7 +15,7 @@ class NilpotentAlgebraQTest {
   @Test
   void testSimple() {
     assertTrue(NilpotentAlgebraQ.of(new HeAlgebra(1).ad()));
-    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
     assertFalse(NilpotentAlgebraQ.of(ad));
     assertFalse(NilpotentAlgebraQ.of(Sl2Algebra.INSTANCE.ad()));
     assertFalse(NilpotentAlgebraQ.of(LieAlgebraAds.se(2)));

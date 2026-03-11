@@ -15,7 +15,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.lie.LieAlgebraAds;
-import ch.alpine.sophus.lie.LieMatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
@@ -35,7 +35,7 @@ class HsBiinvariantMeanTest {
   void testMean() {
     Distribution distributionX = UniformDistribution.of(-0.05, 0.05);
     Distribution distributionW = UniformDistribution.of(0.2, 1);
-    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 8);
     assertFalse(hsAlgebra.isHTrivial());
     Random random = new Random(1);
@@ -107,7 +107,7 @@ class HsBiinvariantMeanTest {
     Tensor meanG = So3Group.INSTANCE.biinvariantMean().mean(seqG, weights);
     Tensor mean = exponential.log(meanG);
     Tensor meanv = So3Exponential.vectorize(mean);
-    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
     BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
     Tensor meanb = biinvariantMean.mean(sequence, weights);
@@ -119,7 +119,7 @@ class HsBiinvariantMeanTest {
     Exponential exponential = So3Group.INSTANCE.exponential0();
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
-    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
     Random random = new Random(1);
     for (int n = 4; n < 7; ++n) {
@@ -139,7 +139,7 @@ class HsBiinvariantMeanTest {
   void testNullFail() {
     assertThrows(Exception.class, () -> HsBiinvariantMean.of(null));
     assertThrows(Exception.class, () -> HsBiinvariantMean.of(null, Chop._10));
-    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
     HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
     assertThrows(Exception.class, () -> HsBiinvariantMean.of(hsAlgebra, null));
   }

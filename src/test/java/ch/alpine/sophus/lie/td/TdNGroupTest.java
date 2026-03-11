@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.lie.GroupCheck;
-import ch.alpine.sophus.lie.LieMatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Tensor;
@@ -28,7 +27,7 @@ class TdNGroupTest {
   @ValueSource(ints = { 2, 3, 5 })
   void testMatch(int d) {
     TdNGroup tdNGroup = new TdNGroup(d);
-    Tensor matrixBasis = new LieMatrixAlgebra(tdNGroup).matrixAlgebra().basis();
+    Tensor matrixBasis = MatrixAlgebra.of(tdNGroup).basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     Distribution distribution = TriangularDistribution.of(-0.1, 0, 0.1);
     int dim = matrixBasis.length();
@@ -53,7 +52,7 @@ class TdNGroupTest {
   @Test
   void testMatchCheck() {
     TdNGroup lieGroup = new TdNGroup(1);
-    Tensor basis = new LieMatrixAlgebra(lieGroup).matrixAlgebra().basis();
+    Tensor basis = MatrixAlgebra.of(lieGroup).basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     Exponential exponential0 = GlGroup.INSTANCE.exponential0();
     Tensor X = Tensors.vector(2, 1).dot(basis);

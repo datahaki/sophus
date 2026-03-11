@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.HigherJacobiIdentity;
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.sophus.lie.LieMatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
@@ -37,7 +37,7 @@ class SoAlgebraTest {
   void testMatch() {
     for (int n = 2; n < 7; ++n) {
       Tensor b1 = SoAlgebra.basis(n);
-      Tensor b2 = new LieMatrixAlgebra(new SoNGroup(n)).matrixAlgebra().basis();
+      Tensor b2 = MatrixAlgebra.of(new SoNGroup(n)).basis();
       assertEquals(Dimensions.of(b1), Dimensions.of(b2));
     }
   }

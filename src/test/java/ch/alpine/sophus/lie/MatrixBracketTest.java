@@ -47,7 +47,7 @@ class MatrixBracketTest {
   @Test
   void testSo3Basis() {
     Tensor basis1 = LeviCivitaTensor.of(3).negate();
-    Tensor basis2 = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra().basis();
+    Tensor basis2 = MatrixAlgebra.of(So3Group.INSTANCE).basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis2);
     _check(matrixAlgebra.ad(), basis1);
   }
@@ -108,7 +108,7 @@ class MatrixBracketTest {
   @Disabled
   @Test
   void testMatrixAlg() {
-    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
     assertEquals(ad, LeviCivitaTensor.of(3).negate());
   }
 }

@@ -15,6 +15,6 @@ class LieAlgebraMatrixBasisTest {
   @ParameterizedTest
   @MethodSource("specificLieGroup")
   void testSimple(SpecificLieGroup specificLieGroup) {
-    new LieMatrixAlgebra(specificLieGroup).matrixAlgebra().ad();
+    MatrixAlgebra.of(specificLieGroup).ad();
   }
 }

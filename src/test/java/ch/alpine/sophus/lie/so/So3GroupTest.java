@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.LieMatrixAlgebra;
+import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.gl.GlGroup;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
@@ -35,7 +35,7 @@ class So3GroupTest {
   @Test
   void testConsistent() {
     SoNGroup soNGroup = new SoNGroup(3);
-    Tensor basis = new LieMatrixAlgebra(soNGroup).matrixAlgebra().basis();
+    Tensor basis = MatrixAlgebra.of(soNGroup).basis();
     for (var elem : basis) {
       Tensor exp1 = So3Group.INSTANCE.exponential0().exp(elem);
       Tensor exp2 = soNGroup.exponential0().exp(elem);

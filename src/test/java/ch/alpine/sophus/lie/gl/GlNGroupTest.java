@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.lie.LieMatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -30,7 +29,7 @@ class GlNGroupTest {
   void testBasis(int n) {
     GlNGroup glNGroup = new GlNGroup(n);
     assertTrue(glNGroup.toString().contains("" + n));
-    Tensor matrixBasis = new LieMatrixAlgebra(glNGroup).matrixAlgebra().basis();
+    Tensor matrixBasis = MatrixAlgebra.of(glNGroup).basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     assertEquals(matrixBasis.length(), matrixAlgebra.dimensions());
     Tensor ad = matrixAlgebra.ad();

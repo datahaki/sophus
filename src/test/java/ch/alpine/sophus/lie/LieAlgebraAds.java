@@ -8,10 +8,10 @@ import ch.alpine.tensor.Tensor;
 public enum LieAlgebraAds {
   ;
   public static Tensor se(int n) {
-    return new LieMatrixAlgebra(new SeNGroup(n)).ad();
+    return MatrixAlgebra.of(new SeNGroup(n)).ad();
   }
 
   public static Tensor sl(int n) {
-    return new LieMatrixAlgebra(new SlNGroup(n)).ad();
+    return MatrixAlgebra.of(new SlNGroup(n)).ad();
   }
 }

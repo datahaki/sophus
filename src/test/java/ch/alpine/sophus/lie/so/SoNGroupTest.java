@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ch.alpine.sophus.lie.LieMatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -47,7 +46,7 @@ class SoNGroupTest {
   @Test
   void testBasis2() {
     SoNGroup soNGroup = new SoNGroup(2);
-    Tensor matrixBasis = new LieMatrixAlgebra(soNGroup).matrixAlgebra().basis();
+    Tensor matrixBasis = MatrixAlgebra.of(soNGroup).basis();
     assertEquals(matrixBasis, Tensors.fromString("{{{0, -1}, {1, 0}}}"));
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     Scalar angle = RealScalar.ONE;
@@ -67,7 +66,7 @@ class SoNGroupTest {
   @Test
   void testBasis3Rodrigues() {
     SoNGroup soNGroup = new SoNGroup(3);
-    Tensor matrixBasis = new LieMatrixAlgebra(soNGroup).matrixAlgebra().basis();
+    Tensor matrixBasis = MatrixAlgebra.of(soNGroup).basis();
     assertEquals(matrixBasis.length(), 3);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     for (int i = 0; i < 3; ++i) {
@@ -82,7 +81,7 @@ class SoNGroupTest {
   void testBasis3() {
     SoNGroup soNGroup = new SoNGroup(3);
     assertTrue(soNGroup.toString().contains("3"));
-    Tensor matrixBasis = new LieMatrixAlgebra(soNGroup).matrixAlgebra().basis();
+    Tensor matrixBasis = MatrixAlgebra.of(soNGroup).basis();
     assertEquals(matrixBasis.length(), 3);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     assertEquals(matrixBasis.length(), matrixAlgebra.dimensions());
