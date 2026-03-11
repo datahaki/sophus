@@ -20,6 +20,7 @@ public abstract class AbstractLieGroup implements LieGroup, Serializable {
    * i.e. given in the basis of TeG */
   @Override // from Manifold
   public final TangentSpace tangentSpace(Tensor p) {
+    isPointQ().require(p);
     LieExponential lieExponential = exponential0();
     return new LieExp() {
       Tensor pinv;
