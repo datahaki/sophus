@@ -35,12 +35,12 @@ public class HeNGroup extends HeGroup implements VectorEncodingMarker {
   }
 
   @Override
-  public String toString() {
-    return MathematicaFormat.concise(super.toString(), n);
+  public int matrixOrder() {
+    return n + 2;
   }
 
   @Override
-  public int matrixOrder() {
-    return n + 2;
+  public String toString() {
+    return MathematicaFormat.concise(super.toString(), n);
   }
 }

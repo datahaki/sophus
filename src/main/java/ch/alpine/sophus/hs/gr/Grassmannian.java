@@ -48,6 +48,6 @@ public class Grassmannian extends GrManifold implements SpecificManifold {
 
   @Override
   public String toString() {
-    return MathematicaFormat.concise("Gr", n, k);
+    return MathematicaFormat.concise(super.toString(), n, k);
   }
 }

@@ -3,13 +3,11 @@ package ch.alpine.sophus.lie.so;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.lie.rot.RotationMatrix;
-import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -25,11 +23,6 @@ public class SoNGroup extends SoGroup implements SpecificLieGroup {
 
   public SoNGroup(int n) {
     this.n = Integers.requirePositive(n);
-  }
-
-  public MatrixAlgebra matrixAlgebra() {
-    LinearSubspace linearSubspace = LinearSubspace.of(TSoMemberQ.INSTANCE::defect, n, n);
-    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override // from RandomSampleInterface

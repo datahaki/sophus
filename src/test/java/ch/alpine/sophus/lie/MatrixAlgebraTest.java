@@ -156,15 +156,13 @@ class MatrixAlgebraTest {
   @Disabled
   @Test
   void testMatrixLogExpExpSe2() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
+    MatrixAlgebra matrixAlgebra = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).matrixAlgebra();
     check(matrixAlgebra, 8);
   }
 
   @Test
   void testMatrixLogExpExpSo3() {
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
+    MatrixAlgebra matrixAlgebra = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra();
     check(matrixAlgebra, 8);
   }
 }

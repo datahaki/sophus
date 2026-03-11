@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie.se;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.LieExponential;
-import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.sophus.lie.se3.Se3Exponential;
 import ch.alpine.sophus.lie.so.SoNGroup;
@@ -14,7 +13,6 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
-import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
@@ -38,12 +36,6 @@ public class SeNGroup extends SeGroup implements SpecificLieGroup {
     return n == 3 //
         ? Se3Exponential.INSTANCE
         : SeExponential.INSTANCE;
-  }
-
-  public MatrixAlgebra matrixAlgebra() {
-    int m = n + 1;
-    LinearSubspace linearSubspace = LinearSubspace.of(TSeMemberQ.INSTANCE::defect, m, m);
-    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override

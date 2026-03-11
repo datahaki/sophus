@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.lie.LieAlgebraAds;
-import ch.alpine.sophus.lie.LieAlgebraMatrixBasis;
+import ch.alpine.sophus.lie.LieMatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -27,8 +27,7 @@ import ch.alpine.tensor.spa.Normal;
 class Se2AlgebraTest {
   @Test
   void testFromMatrices() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
+    MatrixAlgebra matrixAlgebra = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).matrixAlgebra();
     Tensor ad = LieAlgebraAds.se(2);
     assertEquals(ad, matrixAlgebra.ad());
     assertEquals(ad, Normal.of(matrixAlgebra.ad()));

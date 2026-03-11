@@ -43,7 +43,8 @@ public class HeGroup extends AbstractLieGroup {
 
   @Override
   public MemberQ isPointQ() {
-    return uvw -> VectorQ.of(uvw) && Integers.isOdd(uvw.length());
+    return uvw -> VectorQ.of(uvw) //
+        && Integers.isOdd(uvw.length());
   }
 
   @Override

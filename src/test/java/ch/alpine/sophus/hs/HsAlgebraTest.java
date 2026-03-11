@@ -21,7 +21,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ch.alpine.sophus.hs.HsAlgebra.Decomp;
 import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.lie.LieAlgebraAds;
-import ch.alpine.sophus.lie.LieAlgebraMatrixBasis;
+import ch.alpine.sophus.lie.LieMatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
@@ -51,9 +51,7 @@ class HsAlgebraTest {
   @Disabled
   @Test
   void testSe2() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    Tensor ad = matrixAlgebra.ad();
+    Tensor ad = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).ad();
     TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
     bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
     HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 6);
@@ -64,9 +62,7 @@ class HsAlgebraTest {
   @Disabled
   @Test
   void testSe2Actions() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    Tensor ad = matrixAlgebra.ad();
+    Tensor ad = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).ad();
     TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
     bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
     HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 8);
@@ -95,9 +91,8 @@ class HsAlgebraTest {
   @Disabled
   @Test
   void testSe2ActionsExp() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    Tensor ad = matrixAlgebra.ad();
+    LieMatrixAlgebra lAlg = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE);
+    Tensor ad = lAlg.ad();
     TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
     bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
     HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 8);
@@ -110,7 +105,7 @@ class HsAlgebraTest {
     Tensor mat = Se2Matrix.of(xyz);
     Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q2);
-    Tensor exp = MatrixExp.of(g.dot(basis));
+    Tensor exp = MatrixExp.of(g.dot(lAlg.matrixAlgebra().basis()));
     Tensor q3 = exp.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
     Tolerance.CHOP.requireClose(q1, q3);
   }
@@ -118,9 +113,7 @@ class HsAlgebraTest {
   @Disabled
   @Test
   void testSe2Fail() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    Tensor ad = matrixAlgebra.ad();
+    Tensor ad = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).ad();
     TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
     bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
     assertThrows(Exception.class, () -> new HsAlgebra(ad, 1, 6));
@@ -128,9 +121,8 @@ class HsAlgebraTest {
 
   @Test
   void testSo3() {
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
+    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 6);
     assertTrue(hsAlgebra.isReductive());
     assertTrue(hsAlgebra.isSymmetric());
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
@@ -164,9 +156,8 @@ class HsAlgebraTest {
   void testSo3Simple() {
     Tensor g = Tensors.vector(0.0, 0.0, Math.PI / 2);
     Tensor m = Tensors.vector(0.1, 0.0);
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
+    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 6);
     Tensor res = hsAlgebra.action(g, m);
     Chop._03.requireClose(res, Tensors.vector(0.0, 0.1));
     Tensor p = UnitVector.of(3, 2);
@@ -183,9 +174,8 @@ class HsAlgebraTest {
   void testSo3ZeroMap() {
     Tensor g = Tensors.vector(0.1, 0.2, 0);
     Tensor m = Tensors.vector(0.0, 0.0);
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
+    Tensor ad = new LieMatrixAlgebra(So3Group.INSTANCE).ad();
+    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 6);
     Tensor res = hsAlgebra.action(g, m);
     // System.out.println(res);
     Chop._03.requireClose(res, Tensors.vector(0.1, 0.2));
@@ -201,7 +191,7 @@ class HsAlgebraTest {
 
   private static final HsAlgebra[] HS_ALGEBRAS = { //
       new HsAlgebra(LieAlgebraAds.se(2), 2, 6), //
-      new HsAlgebra(new MatrixAlgebra(LieAlgebraMatrixBasis.of(So3Group.INSTANCE)).ad(), 2, 6), //
+      new HsAlgebra(new LieMatrixAlgebra(So3Group.INSTANCE).ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(1).ad(), 2, 6), //
       new HsAlgebra(new HeAlgebra(2).ad(), 3, 6), //
       new HsAlgebra(Sl2Algebra.INSTANCE.ad(), 2, 6), //
@@ -286,9 +276,7 @@ class HsAlgebraTest {
   @Disabled
   @Test
   void testLieAlgebra() {
-    Tensor basis = LieAlgebraMatrixBasis.of(Se2CoveringGroup.INSTANCE);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    Tensor se2_ad = matrixAlgebra.ad();
+    Tensor se2_ad = new LieMatrixAlgebra(Se2CoveringGroup.INSTANCE).ad();
     TensorBinaryOperator bch = BakerCampbellHausdorff.of(se2_ad, 10, Tolerance.CHOP);
     bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
     for (Tensor ad : new Tensor[] { //

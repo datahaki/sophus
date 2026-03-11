@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.HsAlgebra;
 import ch.alpine.sophus.hs.s.STangentSpace;
-import ch.alpine.sophus.lie.LieAlgebraMatrixBasis;
+import ch.alpine.sophus.lie.LieMatrixAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -30,7 +30,7 @@ class So3AlgebraTest {
     Tensor mX = So3Exponential.vectorExp(x);
     Tensor mY = So3Exponential.vectorExp(y);
     Tensor res = So3Exponential.vector_log(mX.dot(mY));
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
+    Tensor basis = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra().basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     TensorBinaryOperator tbo = BakerCampbellHausdorff.of(matrixAlgebra.ad(), 6);
     Tensor z = tbo.apply(x, y);
@@ -41,7 +41,7 @@ class So3AlgebraTest {
   @Test
   void testAlg() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
+    Tensor basis = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra().basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
     for (int count = 0; count < 10; ++count) {
@@ -65,7 +65,7 @@ class So3AlgebraTest {
   @Test
   void testActionH() {
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
+    Tensor basis = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra().basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     HsAlgebra hsAlgebra = new HsAlgebra(matrixAlgebra.ad(), 2, 6);
     Tensor h = Join.of(Array.zeros(2), RandomVariate.of(distribution, 1));
@@ -83,7 +83,7 @@ class So3AlgebraTest {
 
   @Test
   void testSo3H() {
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
+    Tensor basis = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra().basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     Tensor so3 = matrixAlgebra.ad();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);
@@ -100,7 +100,7 @@ class So3AlgebraTest {
   @Disabled
   @Test
   void testSo3S2() {
-    Tensor basis = LieAlgebraMatrixBasis.of(So3Group.INSTANCE);
+    Tensor basis = new LieMatrixAlgebra(So3Group.INSTANCE).matrixAlgebra().basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     Tensor so3 = matrixAlgebra.ad();
     Distribution distribution = UniformDistribution.of(-0.05, 0.05);

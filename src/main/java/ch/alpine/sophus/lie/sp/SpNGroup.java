@@ -3,7 +3,6 @@ package ch.alpine.sophus.lie.sp;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
@@ -20,10 +19,6 @@ public class SpNGroup extends SpGroup implements SpecificLieGroup {
   public SpNGroup(int n) {
     this.n = n;
     linearSubspace = LinearSubspace.of(exponential0().isTangentQ()::defect, 2 * n, 2 * n);
-  }
-
-  public MatrixAlgebra matrixAlgebra() {
-    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override

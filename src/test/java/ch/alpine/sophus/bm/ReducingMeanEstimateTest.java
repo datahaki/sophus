@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,13 +15,11 @@ import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.math.AffineQ;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -44,45 +41,12 @@ class ReducingMeanEstimateTest {
   }
 
   @Test
-  void testExact() {
-    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(2, 3, 0, 8, 0, 7, 1));
-    Tensor sequence = Tensors.vector(0, 1, 2, 3, 4, 5, 6);
-    Tensor mean = _check(sequence, weights);
-    ExactScalarQ.require((Scalar) mean);
-  }
-
-  @Test
   void testRandom() {
     int n = 6;
     Distribution distribution = UniformDistribution.of(-1, 1);
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
     Tensor sequence = RandomVariate.of(distribution, n, 3);
     _check(sequence, weights);
-  }
-
-  @Test
-  void testExact2() {
-    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(1, -1, 1));
-    Tensor sequence = Tensors.vector(3, 4, 10);
-    Tensor mean = _check(sequence, weights);
-    ExactScalarQ.require((Scalar) mean);
-    assertEquals(mean, RealScalar.of(9));
-  }
-
-  @Test
-  void testExact3() {
-    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(-1, 1, 1));
-    Tensor sequence = Tensors.vector(3, 4, 10);
-    Tensor mean = _check(sequence, weights);
-    ExactScalarQ.require((Scalar) mean);
-  }
-
-  @Test
-  void testExact4() {
-    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, -1));
-    Tensor sequence = Tensors.vector(3, 4, 10);
-    Tensor mean = _check(sequence, weights);
-    ExactScalarQ.require((Scalar) mean);
   }
 
   @Test

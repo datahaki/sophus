@@ -5,6 +5,7 @@ import ch.alpine.sophus.api.LieExponential;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
@@ -23,11 +24,13 @@ enum RExponential0 implements LieExponential {
 
   @Override
   public ZeroDefectArrayQ isTangentQ() {
+    // TODO this is does not corresponds to RGroup which allows scalar, and matrices
     return VectorQ.INSTANCE;
   }
 
-  @Override
-  public Tensor gl_representation(Tensor x) {
+  @Override // from LieExponential
+  public Tensor gl_representation(Tensor _x) {
+    Tensor x = Flatten.of(_x);
     int n = x.length();
     Tensor zeros = Array.zeros(n);
     Tensor matrix = Tensor.of(x.stream().map(r -> Append.of(zeros, r)));

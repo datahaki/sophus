@@ -3,7 +3,6 @@ package ch.alpine.sophus.lie.sl;
 
 import java.util.random.RandomGenerator;
 
-import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
@@ -11,7 +10,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
-import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -29,11 +27,6 @@ public class SlNGroup extends SlGroup implements SpecificLieGroup {
   public MemberQ isPointQ() {
     return matrix -> matrix.length() == n //
         && super.isPointQ().test(matrix);
-  }
-
-  public MatrixAlgebra matrixAlgebra() {
-    LinearSubspace linearSubspace = LinearSubspace.of(TSlMemberQ.INSTANCE::defect, n, n);
-    return new MatrixAlgebra(linearSubspace.basis());
   }
 
   @Override

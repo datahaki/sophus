@@ -5,22 +5,27 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
+import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
+/** additive group of vectors of length n */
 public class RnGroup extends RGroup implements VectorEncodingMarker {
   private final int n;
+  private final ZeroDefectArrayQ isPointQ;
 
+  /** @param n vector length */
   public RnGroup(int n) {
     this.n = n;
+    isPointQ = VectorQ.ofLength(dimensions());
   }
 
   @Override
   public MemberQ isPointQ() {
-    return tensor -> tensor.length() == dimensions() //
-        && super.isPointQ().test(tensor);
+    return isPointQ;
   }
 
   @Override // from RandomSampleInterface

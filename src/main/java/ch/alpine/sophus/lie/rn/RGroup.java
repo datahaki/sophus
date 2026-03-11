@@ -10,7 +10,6 @@ import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.math.FrobeniusForm;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 
 /** Euclidean vector space, group action is addition, the neutral element is 0.
@@ -31,7 +30,8 @@ public class RGroup extends AbstractLieGroup implements MetricManifold {
 
   @Override
   public MemberQ isPointQ() {
-    return VectorQ::of;
+    /* scalars, vectors, arrays, unstructured tensors */
+    return _ -> true;
   }
 
   @Override

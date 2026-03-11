@@ -41,6 +41,10 @@ public class MatrixAlgebra implements TensorBinaryOperator {
       }
   }
 
+  public Tensor basis() {
+    return basis;
+  }
+
   public int dimensions() {
     return ad.length();
   }
