@@ -20,8 +20,8 @@ class TdRandomSampleTest {
     Tensor inv = TdGroup.INSTANCE.invert(lambda_t);
     Tensor neutral = TdGroup.INSTANCE.combine(lambda_t, inv);
     Tolerance.CHOP.requireClose(neutral, UnitVector.of(3, 2));
-    Tensor log1 = TdGroup.INSTANCE.exponential0().log(lambda_t);
-    Tensor log2 = TdGroup.INSTANCE.exponential0().log(inv);
+    Tensor log1 = TdGroup.INSTANCE.lieExponential().log(lambda_t);
+    Tensor log2 = TdGroup.INSTANCE.lieExponential().log(inv);
     Tolerance.CHOP.requireClose(log1, log2.negate());
   }
 
@@ -32,8 +32,8 @@ class TdRandomSampleTest {
       RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), 2, ExponentialDistribution.standard());
       Tensor g = RandomSample.of(rsi);
       Tensor m = RandomSample.of(rsi);
-      Tensor lhs = TdGroup.INSTANCE.exponential0().log(TdGroup.INSTANCE.conjugation(g).apply(m));
-      Tensor rhs = TdGroup.INSTANCE.adjoint(g, TdGroup.INSTANCE.exponential0().log(m));
+      Tensor lhs = TdGroup.INSTANCE.lieExponential().log(TdGroup.INSTANCE.conjugation(g).apply(m));
+      Tensor rhs = TdGroup.INSTANCE.adjoint(g, TdGroup.INSTANCE.lieExponential().log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }
   }

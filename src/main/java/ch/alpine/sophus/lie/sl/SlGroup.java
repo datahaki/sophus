@@ -17,7 +17,7 @@ public class SlGroup extends GlGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
+  public LieExponential lieExponential() {
     return SlExponential.INSTANCE;
   }
 

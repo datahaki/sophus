@@ -35,8 +35,8 @@ class HeGroupTest {
   void testExpLog() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = RandomSample.of(RSI);
-      Tensor xyz = HeGroup.INSTANCE.exponential0().exp(inp);
-      Tensor uvw = HeGroup.INSTANCE.exponential0().log(xyz);
+      Tensor xyz = HeGroup.INSTANCE.lieExponential().exp(inp);
+      Tensor uvw = HeGroup.INSTANCE.lieExponential().log(xyz);
       Tolerance.CHOP.requireClose(inp, uvw);
     }
   }
@@ -45,8 +45,8 @@ class HeGroupTest {
   void testLogExp() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = RandomSample.of(RSI);
-      Tensor uvw = HeGroup.INSTANCE.exponential0().log(inp);
-      Tensor xyz = HeGroup.INSTANCE.exponential0().exp(uvw);
+      Tensor uvw = HeGroup.INSTANCE.lieExponential().log(inp);
+      Tensor xyz = HeGroup.INSTANCE.lieExponential().exp(uvw);
       Tolerance.CHOP.requireClose(inp, xyz);
     }
   }
@@ -56,8 +56,8 @@ class HeGroupTest {
     for (int count = 0; count < 10; ++count) {
       Tensor g = RandomSample.of(RSI);
       Tensor m = RandomSample.of(RSI);
-      Tensor lhs = HeGroup.INSTANCE.exponential0().log(HeGroup.INSTANCE.conjugation(g).apply(m));
-      Tensor rhs = HeGroup.INSTANCE.adjoint(g, HeGroup.INSTANCE.exponential0().log(m));
+      Tensor lhs = HeGroup.INSTANCE.lieExponential().log(HeGroup.INSTANCE.conjugation(g).apply(m));
+      Tensor rhs = HeGroup.INSTANCE.adjoint(g, HeGroup.INSTANCE.lieExponential().log(m));
       Tolerance.CHOP.requireClose(lhs, rhs);
     }
   }
@@ -114,7 +114,7 @@ class HeGroupTest {
       Tensor g = RandomSample.of(rsi);
       Tensor x = RandomSample.of(rsi);
       Tensor lhs = LIE_GROUP.tangentSpace(g).exp(x); // g.Exp[x]
-      Tensor rhs = LIE_GROUP.combine(LIE_GROUP.exponential0().exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
+      Tensor rhs = LIE_GROUP.combine(LIE_GROUP.lieExponential().exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }
   }
@@ -127,9 +127,9 @@ class HeGroupTest {
       RandomSampleInterface rsi = new HeRandomSample(n, UniformDistribution.of(Clips.absolute(10)));
       Tensor g = RandomSample.of(rsi);
       Tensor m = RandomSample.of(rsi);
-      Tensor lhs = LIE_GROUP.exponential0().log( //
+      Tensor lhs = LIE_GROUP.lieExponential().log( //
           LIE_GROUP.combine(LIE_GROUP.combine(g, m), LIE_GROUP.invert(g))); // Log[g.m.g^-1]
-      Tensor rhs = LIE_GROUP.adjoint(g, LIE_GROUP.exponential0().log(m)); // Ad(g).Log[m]
+      Tensor rhs = LIE_GROUP.adjoint(g, LIE_GROUP.lieExponential().log(m)); // Ad(g).Log[m]
       Chop._10.requireClose(lhs, rhs);
     }
   }

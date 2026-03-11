@@ -34,7 +34,7 @@ class SpecificLieGroupTest {
     Tensor neutral = specificLieGroup.neutral(p);
     specificLieGroup.isPointQ().require(neutral);
     specificLieGroup.isPointQ().require(p);
-    LieExponential lieExponential = specificLieGroup.exponential0();
+    LieExponential lieExponential = specificLieGroup.lieExponential();
     // ---
     Tensor log = lieExponential.log(neutral);
     Tolerance.CHOP.requireAllZero(log);

@@ -43,7 +43,7 @@ public class PGlGroup extends AbstractLieGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
+  public LieExponential lieExponential() {
     return PGlExponential.INSTANCE;
   }
 

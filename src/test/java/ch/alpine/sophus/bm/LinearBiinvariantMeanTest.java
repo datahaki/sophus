@@ -47,12 +47,12 @@ class LinearBiinvariantMeanTest {
   @Test
   void testSimple2() {
     Tensor sequence = Tensors.of( //
-        RGroup.INSTANCE.exponential0().exp(Tensors.vector(+1 + 0.3, 0, 0)), //
-        RGroup.INSTANCE.exponential0().exp(Tensors.vector(+0 + 0.3, 0, 0)), //
-        RGroup.INSTANCE.exponential0().exp(Tensors.vector(-1 + 0.3, 0, 0)));
+        RGroup.INSTANCE.lieExponential().exp(Tensors.vector(+1 + 0.3, 0, 0)), //
+        RGroup.INSTANCE.lieExponential().exp(Tensors.vector(+0 + 0.3, 0, 0)), //
+        RGroup.INSTANCE.lieExponential().exp(Tensors.vector(-1 + 0.3, 0, 0)));
     Tensor log = MeanDefect.of( //
         sequence, Tensors.vector(0.25, 0.5, 0.25), //
-        RGroup.INSTANCE.tangentSpace(RGroup.INSTANCE.exponential0().exp(Tensors.vector(+0.3, 0, 0)))).tangent();
+        RGroup.INSTANCE.tangentSpace(RGroup.INSTANCE.lieExponential().exp(Tensors.vector(+0.3, 0, 0)))).tangent();
     Chop._10.requireAllZero(log);
   }
 }

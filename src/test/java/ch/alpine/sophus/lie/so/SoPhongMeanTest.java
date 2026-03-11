@@ -29,7 +29,7 @@ class SoPhongMeanTest {
   void testSimple() {
     int n = 7;
     Distribution distribution = UniformDistribution.of(-0.4, 0.4);
-    Tensor sequence = Tensors.vector(_ -> So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3)), n);
+    Tensor sequence = Tensors.vector(_ -> So3Group.INSTANCE.lieExponential().exp(RandomVariate.of(distribution, 3)), n);
     Distribution distribution_w = UniformDistribution.of(0.4, 1);
     Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution_w, n));
     Tensor m0 = sequence.get(ArgMax.of(weights));
@@ -58,7 +58,7 @@ class SoPhongMeanTest {
   void testSingle() {
     int n = 1;
     Distribution distribution = UniformDistribution.of(-0.4, 0.4);
-    Tensor sequence = Tensors.vector(_ -> So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3)), n);
+    Tensor sequence = Tensors.vector(_ -> So3Group.INSTANCE.lieExponential().exp(RandomVariate.of(distribution, 3)), n);
     for (Tensor p : sequence) {
       Tolerance.CHOP.requireClose(Det.of(p), RealScalar.ONE);
     }
@@ -91,8 +91,8 @@ class SoPhongMeanTest {
   @Test
   void testTwoExactMidpoint() {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
-    Tensor p = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
-    Tensor q = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
+    Tensor p = So3Group.INSTANCE.lieExponential().exp(RandomVariate.of(distribution, 3));
+    Tensor q = So3Group.INSTANCE.lieExponential().exp(RandomVariate.of(distribution, 3));
     Tensor m1 = So3Group.INSTANCE.midpoint(p, q);
     Tensor m2 = SoPhongMean.INSTANCE.estimate(Tensors.of(p, q), Tensors.vector(0.5, 0.5));
     Tolerance.CHOP.requireClose(m1, m2);
@@ -102,8 +102,8 @@ class SoPhongMeanTest {
   @Test
   void testTwoMidpoint() {
     Distribution distribution = UniformDistribution.of(-0.2, 0.2);
-    Tensor p = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
-    Tensor q = So3Group.INSTANCE.exponential0().exp(RandomVariate.of(distribution, 3));
+    Tensor p = So3Group.INSTANCE.lieExponential().exp(RandomVariate.of(distribution, 3));
+    Tensor q = So3Group.INSTANCE.lieExponential().exp(RandomVariate.of(distribution, 3));
     Tensor weights = Tensors.vector(0.2, 0.8);
     AffineQ.INSTANCE.require(weights);
     Tensor sequence = Tensors.of(p, q);

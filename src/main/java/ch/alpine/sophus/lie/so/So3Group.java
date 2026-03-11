@@ -32,7 +32,7 @@ public class So3Group extends SoNGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
+  public LieExponential lieExponential() {
     return So3Exponential.INSTANCE;
   }
 

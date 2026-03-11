@@ -77,7 +77,7 @@ public class TdGroup extends AbstractLieGroup {
   }
 
   @Override
-  public final LieExponential exponential0() {
+  public final LieExponential lieExponential() {
     return TdExponential.INSTANCE;
   }
 

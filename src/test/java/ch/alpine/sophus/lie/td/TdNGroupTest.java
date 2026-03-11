@@ -33,7 +33,7 @@ class TdNGroupTest {
     int dim = matrixBasis.length();
     Tensor x = RandomVariate.of(distribution, dim);
     Tensor y = RandomVariate.of(distribution, dim);
-    Exponential exponential0 = tdNGroup.exponential0();
+    Exponential exponential0 = tdNGroup.lieExponential();
     Tensor exp_x = exponential0.exp(x);
     Tensor exp_y = exponential0.exp(y);
     Tensor z = exponential0.log(tdNGroup.combine(exp_x, exp_y));
@@ -54,7 +54,7 @@ class TdNGroupTest {
     TdNGroup lieGroup = new TdNGroup(1);
     Tensor basis = MatrixAlgebra.of(lieGroup).basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    Exponential exponential0 = GlGroup.INSTANCE.exponential0();
+    Exponential exponential0 = GlGroup.INSTANCE.lieExponential();
     Tensor X = Tensors.vector(2, 1).dot(basis);
     Tensor x = exponential0.exp(X);
     Tensor TDX = x.get(Tensor.ALL, 1);

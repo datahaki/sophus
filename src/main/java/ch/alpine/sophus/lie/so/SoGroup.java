@@ -60,7 +60,7 @@ public class SoGroup extends GlGroup implements MetricManifold {
   }
 
   @Override
-  public LieExponential exponential0() {
+  public LieExponential lieExponential() {
     return SoExponential.INSTANCE;
   }
 

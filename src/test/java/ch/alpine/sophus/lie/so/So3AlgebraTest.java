@@ -53,7 +53,7 @@ class So3AlgebraTest {
       Tensor v1 = hsAlgebra.lift(m1); // attach 0
       Tensor p1 = snExponential.exp(v1); // map to S^2
       Tensor g = Tensors.of(ga.Get(1).negate(), ga.Get(0), ga.Get(2));
-      Tensor rot = So3Group.INSTANCE.exponential0().exp(g);
+      Tensor rot = So3Group.INSTANCE.lieExponential().exp(g);
       Tensor p2 = rot.dot(p1); // apply action
       Tensor v2 = snExponential.log(p2);
       Chop._06.requireClose(hsAlgebra.lift(m2), v2);
@@ -71,7 +71,7 @@ class So3AlgebraTest {
     Tensor m1 = RandomVariate.of(distribution, 2);
     Tensor m2 = hsAlgebra.action(h, m1);
     Tensor p = UnitVector.of(3, 2);
-    Tensor rotation = So3Group.INSTANCE.exponential0().exp(h);
+    Tensor rotation = So3Group.INSTANCE.lieExponential().exp(h);
     STangentSpace snExponential = new STangentSpace(p);
     Tensor v1 = hsAlgebra.lift(m1);
     Tensor snm = snExponential.exp(v1);
@@ -107,9 +107,9 @@ class So3AlgebraTest {
     Tensor m = RandomVariate.of(distribution, 2);
     HsAlgebra hsAlgebra = new HsAlgebra(so3, 2, 8);
     Tensor expect = hsAlgebra.action(g, m);
-    Tensor rotG = So3Group.INSTANCE.exponential0().exp(g);
-    Tensor rotM = So3Group.INSTANCE.exponential0().exp(hsAlgebra.lift(m));
-    Tensor log = So3Group.INSTANCE.exponential0().log(rotG.dot(rotM));
+    Tensor rotG = So3Group.INSTANCE.lieExponential().exp(g);
+    Tensor rotM = So3Group.INSTANCE.lieExponential().exp(hsAlgebra.lift(m));
+    Tensor log = So3Group.INSTANCE.lieExponential().log(rotG.dot(rotM));
     Tensor prj = hsAlgebra.projection(log);
     Tolerance.CHOP.requireClose(expect, prj);
   }

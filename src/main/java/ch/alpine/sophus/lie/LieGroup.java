@@ -11,7 +11,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * exponential at neutral element */
 public interface LieGroup extends HomogeneousSpace, GroupInterface<Tensor>, LieIntegrator {
   /** @return tangent space at neutral element which happens to be the lie algebra */
-  LieExponential exponential0();
+  LieExponential lieExponential();
 
   /** @param g
    * @return h -> g.h.g^-1 */

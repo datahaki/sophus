@@ -49,8 +49,8 @@ class TdGroupTest {
       Tensor g = RandomSample.of(rsi); // element
       RandomSampleInterface tsi = new TDtRandomSample(UniformDistribution.of(-1, 1), n);
       Tensor x = RandomSample.of(tsi); // vector
-      Tensor lhs = LIE_GROUP.combine(g, LIE_GROUP.exponential0().exp(x)); // g.Exp[x]
-      Tensor rhs = LIE_GROUP.combine(LIE_GROUP.exponential0().exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
+      Tensor lhs = LIE_GROUP.combine(g, LIE_GROUP.lieExponential().exp(x)); // g.Exp[x]
+      Tensor rhs = LIE_GROUP.combine(LIE_GROUP.lieExponential().exp(LIE_GROUP.adjoint(g, x)), g); // Exp[Ad(g).x].g
       Chop._10.requireClose(lhs, rhs);
     }
   }
@@ -63,9 +63,9 @@ class TdGroupTest {
     RandomSampleInterface rsi = new TdRandomSample(UniformDistribution.of(-1, 1), n, ExponentialDistribution.standard());
     Tensor g = RandomSample.of(rsi);
     Tensor m = RandomSample.of(rsi);
-    Tensor lhs = LIE_GROUP.exponential0().log( //
+    Tensor lhs = LIE_GROUP.lieExponential().log( //
         LIE_GROUP.combine(LIE_GROUP.combine(g, m), LIE_GROUP.invert(g))); // Log[g.m.g^-1]
-    Tensor rhs = LIE_GROUP.adjoint(g, LIE_GROUP.exponential0().log(m)); // Ad(g).Log[m]
+    Tensor rhs = LIE_GROUP.adjoint(g, LIE_GROUP.lieExponential().log(m)); // Ad(g).Log[m]
     Chop._10.requireClose(lhs, rhs);
   }
 
@@ -147,8 +147,8 @@ class TdGroupTest {
     for (int count = 0; count < 10; ++count) {
       Distribution distribution = NormalDistribution.standard();
       Tensor inp = RandomVariate.of(distribution, 3);
-      Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
-      Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
+      Tensor xy = TdGroup.INSTANCE.lieExponential().exp(inp);
+      Tensor uv = TdGroup.INSTANCE.lieExponential().log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -156,16 +156,16 @@ class TdGroupTest {
   @Test
   void testSt1ExpLog() {
     Tensor inp = Tensors.vector(7, 3);
-    Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
-    Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
+    Tensor xy = TdGroup.INSTANCE.lieExponential().exp(inp);
+    Tensor uv = TdGroup.INSTANCE.lieExponential().log(xy);
     Tolerance.CHOP.requireClose(inp, uv);
   }
 
   @Test
   void testSt1LogExp() {
     Tensor inp = Tensors.vector(7, 3);
-    Tensor uv = TdGroup.INSTANCE.exponential0().log(inp);
-    Tensor xy = TdGroup.INSTANCE.exponential0().exp(uv);
+    Tensor uv = TdGroup.INSTANCE.lieExponential().log(inp);
+    Tensor xy = TdGroup.INSTANCE.lieExponential().exp(uv);
     Tolerance.CHOP.requireClose(inp, xy);
   }
 
@@ -173,8 +173,8 @@ class TdGroupTest {
   void testSt1Singular() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = Tensors.vector(0, Math.random());
-      Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
-      Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
+      Tensor xy = TdGroup.INSTANCE.lieExponential().exp(inp);
+      Tensor uv = TdGroup.INSTANCE.lieExponential().log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -185,8 +185,8 @@ class TdGroupTest {
       Tensor v = Tensors.vector(Math.random(), Math.random(), -Math.random(), -Math.random());
       Scalar u = RealScalar.of(Math.random());
       Tensor inp = Append.of(v, u);
-      Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
-      Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
+      Tensor xy = TdGroup.INSTANCE.lieExponential().exp(inp);
+      Tensor uv = TdGroup.INSTANCE.lieExponential().log(xy);
       Tolerance.CHOP.requireClose(inp, uv);
     }
   }
@@ -195,8 +195,8 @@ class TdGroupTest {
   void testLogExp() {
     for (int count = 0; count < 10; ++count) {
       Tensor inp = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random(), Math.random());
-      Tensor uv = TdGroup.INSTANCE.exponential0().log(inp);
-      Tensor xy = TdGroup.INSTANCE.exponential0().exp(uv);
+      Tensor uv = TdGroup.INSTANCE.lieExponential().log(inp);
+      Tensor xy = TdGroup.INSTANCE.lieExponential().exp(uv);
       Tolerance.CHOP.requireClose(inp, xy);
     }
   }
@@ -204,8 +204,8 @@ class TdGroupTest {
   @Test
   void testSingular() {
     Tensor inp = Tensors.vector(Math.random(), 3 * Math.random(), -Math.random(), -4 * Math.random(), 0);
-    Tensor xy = TdGroup.INSTANCE.exponential0().exp(inp);
-    Tensor uv = TdGroup.INSTANCE.exponential0().log(xy);
+    Tensor xy = TdGroup.INSTANCE.lieExponential().exp(inp);
+    Tensor uv = TdGroup.INSTANCE.lieExponential().log(xy);
     Tolerance.CHOP.requireClose(inp, uv);
   }
 

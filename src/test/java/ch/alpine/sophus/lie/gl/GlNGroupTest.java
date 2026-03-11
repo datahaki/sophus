@@ -50,7 +50,7 @@ class GlNGroupTest {
     Tensor X = RandomVariate.of(distribution, n, n);
     Tensor adgX = lieGroup.adjoint(g, X);
     Tensor lhs = MatrixExp.of(adgX);
-    Tensor rhs = lieGroup.conjugation(g).apply(lieGroup.exponential0().exp(X));
+    Tensor rhs = lieGroup.conjugation(g).apply(lieGroup.lieExponential().exp(X));
     Tolerance.CHOP.requireClose(lhs, rhs);
   }
 }

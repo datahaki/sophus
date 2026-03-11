@@ -38,7 +38,7 @@ public class GlGroup extends AbstractLieGroup {
         && !Tolerance.CHOP.isZero(Det.of(matrix));
   }
 
-  private enum Exponential0 implements LieExponential {
+  private enum GlExponential implements LieExponential {
     INSTANCE;
 
     @Override // from Exponential
@@ -58,8 +58,8 @@ public class GlGroup extends AbstractLieGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
-    return Exponential0.INSTANCE;
+  public LieExponential lieExponential() {
+    return GlExponential.INSTANCE;
   }
 
   @Override

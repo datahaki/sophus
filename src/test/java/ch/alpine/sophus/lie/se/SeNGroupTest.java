@@ -22,10 +22,10 @@ class SeNGroupTest {
     SeNGroup seNGroup = new SeNGroup(2);
     Tensor basis = MatrixAlgebra.of(seNGroup).basis();
     Tensor xya = RandomVariate.of(UniformDistribution.unit(20), 3);
-    Tensor cmp = Se2Group.INSTANCE.exponential0().exp(xya);
+    Tensor cmp = Se2Group.INSTANCE.lieExponential().exp(xya);
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     Tensor V = matrixAlgebra.toMatrix(xya);
-    Tensor exp = seNGroup.exponential0().exp(V);
+    Tensor exp = seNGroup.lieExponential().exp(V);
     Tensor rot = RotationMatrix.of(cmp.Get(2));
     Tolerance.CHOP.requireClose(rot, Tensor.of(exp.stream().limit(2).map(row -> row.extract(0, 2))));
     Tolerance.CHOP.requireClose(exp.Get(0, 2), cmp.Get(0));

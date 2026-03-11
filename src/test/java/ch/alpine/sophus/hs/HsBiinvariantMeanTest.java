@@ -55,7 +55,7 @@ class HsBiinvariantMeanTest {
   @Disabled
   @Test
   void testSe2Mean4() {
-    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential0();
+    Exponential exponential = Se2CoveringGroup.INSTANCE.lieExponential();
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
     Tensor p2 = Tensors.vector(-0.05, 0.03, 0.1);
@@ -75,7 +75,7 @@ class HsBiinvariantMeanTest {
   @Disabled
   @Test
   void testSe2MeanRandom() {
-    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential0();
+    Exponential exponential = Se2CoveringGroup.INSTANCE.lieExponential();
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
     Tensor ad = LieAlgebraAds.se(2);
@@ -95,7 +95,7 @@ class HsBiinvariantMeanTest {
 
   @Test
   void testSo3Mean4() {
-    Exponential exponential = So3Group.INSTANCE.exponential0();
+    Exponential exponential = So3Group.INSTANCE.lieExponential();
     assertInstanceOf(So3Exponential.class, exponential);
     Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
     Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
@@ -116,7 +116,7 @@ class HsBiinvariantMeanTest {
 
   @Test
   void testSo3MeanRandom() {
-    Exponential exponential = So3Group.INSTANCE.exponential0();
+    Exponential exponential = So3Group.INSTANCE.lieExponential();
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Distribution dist_w = UniformDistribution.of(0.5, 1);
     Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();

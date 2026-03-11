@@ -63,7 +63,7 @@ public class GroupCheck {
       int dim = vectorEncodingMarker.dimensions();
       Tensor x = RandomVariate.of(DISTRIBUTION, dim);
       Tensor y = RandomVariate.of(DISTRIBUTION, dim);
-      Exponential exponential0 = lieGroup.exponential0();
+      Exponential exponential0 = lieGroup.lieExponential();
       Tensor exp_x = exponential0.exp(x);
       Tensor exp_y = exponential0.exp(y);
       checkElem(lieGroup, exp_x, exp_y);
@@ -90,7 +90,7 @@ public class GroupCheck {
       MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
       Tensor ad = matrixAlgebra.ad();
       TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 0xA);
-      Exponential exponential0 = lieGroup.exponential0();
+      Exponential exponential0 = lieGroup.lieExponential();
       assertEquals(matrixBasis.length(), matrixAlgebra.dimensions());
       assertInstanceOf(SparseArray.class, ad);
       Tensor form = KillingForm.of(ad);
@@ -140,7 +140,7 @@ public class GroupCheck {
   }
 
   private static void checkAd(LieGroup lieGroup, Tensor x, Tensor Y) {
-    Exponential exponential0 = lieGroup.exponential0();
+    Exponential exponential0 = lieGroup.lieExponential();
     Tensor adjoint = lieGroup.adjoint(x, Y);
     Tensor y = exponential0.exp(Y);
     Tensor lhs = exponential0.exp(adjoint);

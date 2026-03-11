@@ -37,7 +37,7 @@ class PGlGroupTest {
   void testSimple(int n) {
     PGlNGroup pGlNGroup = new PGlNGroup(n);
     LinearSubspace linearSubspace = //
-        LinearSubspace.of(pGlNGroup.exponential0().isTangentQ()::defect, n, n);
+        LinearSubspace.of(pGlNGroup.lieExponential().isTangentQ()::defect, n, n);
     int dim = n * n - 1;
     assertEquals(linearSubspace.dimensions(), dim);
     Tensor w = RandomVariate.of(NormalDistribution.of(0, 0.0003), dim);

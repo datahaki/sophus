@@ -22,7 +22,7 @@ import ch.alpine.tensor.spa.SparseArray;
 public class MatrixAlgebra implements TensorBinaryOperator {
   public static MatrixAlgebra of(SpecificLieGroup specificLieGroup) {
     int n = specificLieGroup.matrixOrder();
-    LieExponential lieExponential = specificLieGroup.exponential0();
+    LieExponential lieExponential = specificLieGroup.lieExponential();
     ZeroDefectArrayQ zeroDefectArrayQ = lieExponential.isTangentQ();
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, n, n);
     return new MatrixAlgebra(linearSubspace.basis());

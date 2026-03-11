@@ -9,7 +9,7 @@ import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 
-enum RExponential0 implements LieExponential {
+enum RnExponential implements LieExponential {
   INSTANCE;
 
   @Override // from Exponential

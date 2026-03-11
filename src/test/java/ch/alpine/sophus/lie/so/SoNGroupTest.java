@@ -51,7 +51,7 @@ class SoNGroupTest {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     Scalar angle = RealScalar.ONE;
     Tensor v = matrixAlgebra.toMatrix(Tensors.of(angle));
-    Tensor exp = soNGroup.exponential0().exp(v);
+    Tensor exp = soNGroup.lieExponential().exp(v);
     Tensor rot = RotationMatrix.of(angle);
     Tolerance.CHOP.requireClose(exp, rot);
   }
@@ -71,7 +71,7 @@ class SoNGroupTest {
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
     for (int i = 0; i < 3; ++i) {
       Tensor vec = UnitVector.of(3, i);
-      Tensor rot = soNGroup.exponential0().exp(matrixAlgebra.toMatrix(vec));
+      Tensor rot = soNGroup.lieExponential().exp(matrixAlgebra.toMatrix(vec));
       Tensor rod = So3Exponential.vectorExp(vec);
       Tolerance.CHOP.requireClose(rot, rod);
     }

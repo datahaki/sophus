@@ -29,7 +29,7 @@ public class R2SGroup extends AbstractLieGroup {
     return Array.zeros(3);
   }
 
-  public enum Exponential0 implements LieExponential {
+  public enum R2SExponential implements LieExponential {
     INSTANCE;
 
     @Override // from Exponential
@@ -61,8 +61,8 @@ public class R2SGroup extends AbstractLieGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
-    return Exponential0.INSTANCE;
+  public LieExponential lieExponential() {
+    return R2SExponential.INSTANCE;
   }
 
   @Override

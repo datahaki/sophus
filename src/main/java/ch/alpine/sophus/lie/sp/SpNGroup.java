@@ -18,7 +18,7 @@ public class SpNGroup extends SpGroup implements SpecificLieGroup {
 
   public SpNGroup(int n) {
     this.n = n;
-    linearSubspace = LinearSubspace.of(exponential0().isTangentQ()::defect, 2 * n, 2 * n);
+    linearSubspace = LinearSubspace.of(lieExponential().isTangentQ()::defect, 2 * n, 2 * n);
   }
 
   @Override

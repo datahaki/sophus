@@ -45,7 +45,7 @@ class Se2AlgebraTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     Tensor x = RandomVariate.of(distribution, 3);
     Tensor y = RandomVariate.of(distribution, 3);
-    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential0();
+    Exponential exponential = Se2CoveringGroup.INSTANCE.lieExponential();
     Tensor mX = exponential.exp(x);
     Tensor mY = exponential.exp(y);
     Tensor res = exponential.log(Se2CoveringGroup.INSTANCE.combine(mX, mY));

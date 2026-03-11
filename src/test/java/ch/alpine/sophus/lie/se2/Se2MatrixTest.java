@@ -90,8 +90,8 @@ class Se2MatrixTest {
     for (int n = -5; n <= 5; ++n) {
       double value = 1 + 2 * Math.PI * n;
       Tensor g = Tensors.vector(2, 3, value);
-      Tensor x = Se2CoveringGroup.INSTANCE.exponential0().log(g);
-      Tensor exp_x = Se2CoveringGroup.INSTANCE.exponential0().exp(x);
+      Tensor x = Se2CoveringGroup.INSTANCE.lieExponential().log(g);
+      Tensor exp_x = Se2CoveringGroup.INSTANCE.lieExponential().exp(x);
       assertEquals(exp_x.Get(2), RealScalar.of(value));
       Chop._13.requireClose(g, exp_x);
     }
@@ -102,8 +102,8 @@ class Se2MatrixTest {
     for (int n = -5; n <= 5; ++n) {
       double value = 1 + 2 * Math.PI * n;
       Tensor x = Tensors.vector(2, 3, value);
-      Tensor g = Se2CoveringGroup.INSTANCE.exponential0().exp(x);
-      Tensor log_g = Se2CoveringGroup.INSTANCE.exponential0().log(g);
+      Tensor g = Se2CoveringGroup.INSTANCE.lieExponential().exp(x);
+      Tensor log_g = Se2CoveringGroup.INSTANCE.lieExponential().log(g);
       Chop._13.requireClose(x, log_g);
     }
   }
@@ -113,8 +113,8 @@ class Se2MatrixTest {
     Distribution distribution = UniformDistribution.of(-25, 25);
     for (int index = 0; index < 10; ++index) {
       Tensor x = RandomVariate.of(distribution, 3);
-      Tensor g = Se2CoveringGroup.INSTANCE.exponential0().exp(x);
-      Tensor log_g = Se2CoveringGroup.INSTANCE.exponential0().log(g);
+      Tensor g = Se2CoveringGroup.INSTANCE.lieExponential().exp(x);
+      Tensor log_g = Se2CoveringGroup.INSTANCE.lieExponential().log(g);
       Chop._10.requireClose(x, log_g);
     }
   }
@@ -124,8 +124,8 @@ class Se2MatrixTest {
     Distribution distribution = UniformDistribution.of(-25, 25);
     for (int index = 0; index < 10; ++index) {
       Tensor g = RandomVariate.of(distribution, 3);
-      Tensor x = Se2CoveringGroup.INSTANCE.exponential0().log(g);
-      Tensor exp_x = Se2CoveringGroup.INSTANCE.exponential0().exp(x);
+      Tensor x = Se2CoveringGroup.INSTANCE.lieExponential().log(g);
+      Tensor exp_x = Se2CoveringGroup.INSTANCE.lieExponential().exp(x);
       Chop._10.requireClose(g, exp_x);
     }
   }
@@ -135,8 +135,8 @@ class Se2MatrixTest {
     Distribution distribution = UniformDistribution.of(-5, 5);
     for (int index = 0; index < 10; ++index) {
       Tensor x = RandomVariate.of(distribution, 2).append(RealScalar.ZERO);
-      Tensor g0 = Se2CoveringGroup.INSTANCE.exponential0().exp(x);
-      Tensor x2 = Se2CoveringGroup.INSTANCE.exponential0().log(g0);
+      Tensor g0 = Se2CoveringGroup.INSTANCE.lieExponential().exp(x);
+      Tensor x2 = Se2CoveringGroup.INSTANCE.lieExponential().log(g0);
       Chop._13.requireClose(x, x2);
     }
   }
@@ -160,7 +160,7 @@ class Se2MatrixTest {
   @Test
   void testG0() {
     Tensor u = Tensors.vector(1.2, 0, 0);
-    Tensor m = Se2CoveringGroup.INSTANCE.exponential0().exp(u);
+    Tensor m = Se2CoveringGroup.INSTANCE.lieExponential().exp(u);
     assertEquals(m, u);
   }
 }

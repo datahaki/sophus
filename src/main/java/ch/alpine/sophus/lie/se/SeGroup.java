@@ -26,7 +26,7 @@ public class SeGroup extends GlGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
+  public LieExponential lieExponential() {
     return SeExponential.INSTANCE;
   }
 

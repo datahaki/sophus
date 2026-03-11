@@ -9,10 +9,10 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.num.Pi;
 
-class RExponential0Test {
+class RExponentialTest {
   @Test
   void test() {
-    Tensor matrix = RExponential0.INSTANCE.gl_representation(Pi.VALUE);
+    Tensor matrix = RExponential.INSTANCE.gl_representation(Pi.VALUE);
     assertTrue(MatrixQ.ofSize(matrix, 2, 2));
   }
 }

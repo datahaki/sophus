@@ -53,7 +53,7 @@ public class Se2CoveringGroup extends AbstractLieGroup implements VectorEncoding
     return new Se2BiinvariantMean(this, LinearBiinvariantMean.INSTANCE);
   }
 
-  private class Exponential0 implements LieExponential {
+  private class Se2Exponential implements LieExponential {
     /** maps a vector x from the Lie-algebra se2 to a vector of the Lie-group SE2
      * 
      * @param x element in the se2 Lie-algebra of the form {vx, vy, beta}
@@ -110,8 +110,8 @@ public class Se2CoveringGroup extends AbstractLieGroup implements VectorEncoding
   }
 
   @Override
-  public final LieExponential exponential0() {
-    return new Exponential0();
+  public final LieExponential lieExponential() {
+    return new Se2Exponential();
   }
 
   @Override

@@ -58,10 +58,10 @@ class SlNGroupTest {
       Distribution distribution = TriangularDistribution.of(-0.1, 0, 0.1);
       Tensor x = RandomVariate.of(distribution, dim);
       Tensor y = RandomVariate.of(distribution, dim);
-      Tensor X = slNGroup.exponential0().exp(matrixAlgebra.toMatrix(x));
-      Tensor Y = slNGroup.exponential0().exp(matrixAlgebra.toMatrix(y));
+      Tensor X = slNGroup.lieExponential().exp(matrixAlgebra.toMatrix(x));
+      Tensor Y = slNGroup.lieExponential().exp(matrixAlgebra.toMatrix(y));
       Tensor Z = slNGroup.combine(X, Y);
-      Tensor z = matrixAlgebra.toVector(slNGroup.exponential0().log(Z));
+      Tensor z = matrixAlgebra.toVector(slNGroup.lieExponential().log(Z));
       Tolerance.CHOP.requireClose(z, BakerCampbellHausdorff.of(ad, 9).apply(x, y));
       Tolerance.CHOP.requireClose(z, BakerCampbellHausdorff.of(ad, 0xA).apply(x, y));
       Tolerance.CHOP.requireClose(z, BakerCampbellHausdorff.of(ad, 11).apply(x, y));

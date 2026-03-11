@@ -9,7 +9,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
 
-enum ScExponential0 implements LieExponential {
+enum ScExponential implements LieExponential {
   INSTANCE;
 
   @Override // from Exponential

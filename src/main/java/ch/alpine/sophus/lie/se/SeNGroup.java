@@ -32,10 +32,10 @@ public class SeNGroup extends SeGroup implements SpecificLieGroup {
   }
 
   @Override
-  public LieExponential exponential0() {
+  public LieExponential lieExponential() {
     return n == 3 //
         ? Se3Exponential.INSTANCE
-        : super.exponential0();
+        : super.lieExponential();
   }
 
   @Override

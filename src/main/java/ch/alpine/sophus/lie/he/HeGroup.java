@@ -48,7 +48,7 @@ public class HeGroup extends AbstractLieGroup {
   }
 
   @Override
-  public final LieExponential exponential0() {
+  public final LieExponential lieExponential() {
     return HeExponential.INSTANCE;
   }
 

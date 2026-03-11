@@ -39,7 +39,7 @@ class Se2GroupTest {
 
   @Test
   void testWrap() {
-    Tensor xya = Se2Group.INSTANCE.exponential0().exp(Tensors.vector(0, 0, 4));
+    Tensor xya = Se2Group.INSTANCE.lieExponential().exp(Tensors.vector(0, 0, 4));
     Sign.requirePositive(xya.Get(2).negate());
   }
 

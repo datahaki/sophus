@@ -45,8 +45,8 @@ class RnGroupTest {
   @Test
   void testSimple1() {
     Tensor matrix = HilbertMatrix.of(2, 3);
-    assertEquals(RGroup.INSTANCE.exponential0().exp(matrix), matrix);
-    assertEquals(RGroup.INSTANCE.exponential0().log(matrix), matrix);
+    assertEquals(RGroup.INSTANCE.lieExponential().exp(matrix), matrix);
+    assertEquals(RGroup.INSTANCE.lieExponential().log(matrix), matrix);
   }
 
   @Test
@@ -93,7 +93,7 @@ class RnGroupTest {
 
   @Test
   void test_glRep() {
-    LieExponential lieExponential = RGroup.INSTANCE.exponential0();
+    LieExponential lieExponential = RGroup.INSTANCE.lieExponential();
     Tensor matrix = lieExponential.gl_representation(Tensors.vector(1, 2, 3));
     Tensor string = Tensors.fromString("{{0, 0, 0, 1}, {0, 0, 0, 2}, {0, 0, 0, 3}, {0, 0, 0, 0}}");
     assertEquals(matrix, string);

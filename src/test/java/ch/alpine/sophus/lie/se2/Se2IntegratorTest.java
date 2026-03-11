@@ -14,7 +14,7 @@ class Se2IntegratorTest {
     Tensor g = RandomVariate.of(UniformDistribution.unit(), 3);
     Tensor x = RandomVariate.of(UniformDistribution.unit(), 3);
     Tensor p1 = Se2Group.INSTANCE.tangentSpace(g).exp(x);
-    Tensor p2 = Se2Group.INSTANCE.combine(g, Se2CoveringGroup.INSTANCE.exponential0().exp(x));
+    Tensor p2 = Se2Group.INSTANCE.combine(g, Se2CoveringGroup.INSTANCE.lieExponential().exp(x));
     Tolerance.CHOP.requireClose(p1, p2);
   }
 }

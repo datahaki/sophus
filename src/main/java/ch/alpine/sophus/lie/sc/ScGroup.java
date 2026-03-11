@@ -25,15 +25,15 @@ public class ScGroup extends AbstractLieGroup {
   }
 
   @Override
-  public final LieExponential exponential0() {
-    return ScExponential0.INSTANCE;
+  public final LieExponential lieExponential() {
+    return ScExponential.INSTANCE;
   }
 
   @Override
   public BiinvariantMean biinvariantMean() {
     return (Tensor sequence, Tensor weights) -> {
       AffineQ.INSTANCE.require(weights);
-      Exponential exponential = exponential0();
+      Exponential exponential = lieExponential();
       return exponential.exp(weights.dot(exponential.log().slash(sequence)));
     };
   }

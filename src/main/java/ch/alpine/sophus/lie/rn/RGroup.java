@@ -31,12 +31,13 @@ public class RGroup extends AbstractLieGroup implements MetricManifold {
   @Override
   public MemberQ isPointQ() {
     /* scalars, vectors, arrays, unstructured tensors */
+    // TODO RExponential does not correspond with that flexibility
     return _ -> true;
   }
 
   @Override
-  public final LieExponential exponential0() {
-    return RExponential0.INSTANCE;
+  public final LieExponential lieExponential() {
+    return RExponential.INSTANCE;
   }
 
   @Override

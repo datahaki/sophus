@@ -37,8 +37,8 @@ class So3GroupTest {
     SoNGroup soNGroup = new SoNGroup(3);
     Tensor basis = MatrixAlgebra.of(soNGroup).basis();
     for (var elem : basis) {
-      Tensor exp1 = So3Group.INSTANCE.exponential0().exp(elem);
-      Tensor exp2 = soNGroup.exponential0().exp(elem);
+      Tensor exp1 = So3Group.INSTANCE.lieExponential().exp(elem);
+      Tensor exp2 = soNGroup.lieExponential().exp(elem);
       Tolerance.CHOP.requireClose(exp1, exp2);
     }
   }
@@ -91,7 +91,7 @@ class So3GroupTest {
 
   @Test
   void testFailOrthogonal() {
-    assertThrows(Exception.class, () -> So3Group.INSTANCE.exponential0().log(So3TestHelper.spawn_so3()));
+    assertThrows(Exception.class, () -> So3Group.INSTANCE.lieExponential().log(So3TestHelper.spawn_so3()));
   }
 
   @Test

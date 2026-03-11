@@ -109,11 +109,11 @@ class Se2CoveringBiinvariantMeanTest {
     Distribution distribution = UniformDistribution.of(-2, 2);
     Tensor vectors = RandomVariate.of(distribution, 3, 3);
     Tensor weights = RandomVariate.of(distribution, 3);
-    Tensor exp = Se2CoveringGroup.INSTANCE.exponential0().exp(weights.dot(vectors));
+    Tensor exp = Se2CoveringGroup.INSTANCE.lieExponential().exp(weights.dot(vectors));
     // ---
     Tensor sequence = Join.of( //
         Array.zeros(1, 3), //
-        Tensor.of(vectors.stream().map(Se2CoveringGroup.INSTANCE.exponential0()::exp)));
+        Tensor.of(vectors.stream().map(Se2CoveringGroup.INSTANCE.lieExponential()::exp)));
     Tensor mean = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(sequence, //
         Join.of(Tensors.of(RealScalar.ONE.subtract(Total.ofVector(weights))), weights));
     assertFalse(Chop._08.isClose(exp, mean));

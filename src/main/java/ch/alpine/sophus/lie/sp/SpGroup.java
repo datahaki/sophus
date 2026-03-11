@@ -19,7 +19,7 @@ public class SpGroup extends GlGroup {
   }
 
   @Override
-  public final LieExponential exponential0() {
+  public final LieExponential lieExponential() {
     return SpExponential.INSTANCE;
   }
 
