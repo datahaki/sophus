@@ -1,6 +1,8 @@
 // code by ob
 package ch.alpine.sophus.bm;
 
+import java.util.Optional;
+
 import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BinaryAverage;
@@ -42,8 +44,21 @@ public interface BiinvariantMean {
    * @param weights vector typically affine, and non-negative
    * @return bi-invariant mean
    * @throws Exception if sequence and weights are empty
+   * @throws Exception if biinvariant mean cannot be computed, for instance for constellations of points and weights
+   * on the sphere
    * @implSpec implementations treat both parameters as immutable
    * @implSpec implementations are not required to check for affinity of the weights vector
    * @see AffineQ */
   Tensor mean(Tensor sequence, Tensor weights);
+
+  /** @param sequence
+   * @param weights
+   * @return */
+  default Optional<Tensor> optional(Tensor sequence, Tensor weights) {
+    try {
+      return Optional.of(mean(sequence, weights));
+    } catch (Exception exception) {
+      return Optional.empty();
+    }
+  }
 }
