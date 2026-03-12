@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.GeodesicSpace;
@@ -47,40 +49,38 @@ import ch.alpine.tensor.sca.Chop;
 import test.wrap.ThrowQ;
 
 class GrManifoldTest {
-  @Test
-  void testMidpoint() {
-    int n = 4;
-    for (int k = 1; k < n; ++k) {
-      Grassmannian grassmannian = new Grassmannian(n, k);
-      Tensor p = RandomSample.of(grassmannian);
-      Tensor q = RandomSample.of(grassmannian);
-      Tensor m1 = GrManifold.INSTANCE.midpoint(p, q);
-      Tensor m2 = GrManifold.INSTANCE.midpoint(q, p);
-      Chop._08.requireClose(m1, m2);
-    }
+  @RepeatedTest(5)
+  void testMidpoint(RepetitionInfo repetitionInfo) {
+    int n = repetitionInfo.getTotalRepetitions() - 1;
+    int k = repetitionInfo.getCurrentRepetition() - 1;
+    Grassmannian grassmannian = new Grassmannian(n, k);
+    Tensor p = RandomSample.of(grassmannian);
+    Tensor q = RandomSample.of(grassmannian);
+    Tensor m1 = GrManifold.INSTANCE.midpoint(p, q);
+    Tensor m2 = GrManifold.INSTANCE.midpoint(q, p);
+    Chop._08.requireClose(m1, m2);
   }
 
-  @Test
-  void testMirror() {
-    int n = 4;
-    for (int k = 1; k < n; ++k) {
-      Grassmannian grassmannian = new Grassmannian(n, k);
-      Tensor p = RandomSample.of(grassmannian);
-      Tensor q = RandomSample.of(grassmannian);
-      TangentSpace exponential = grassmannian.tangentSpace(p);
-      assumeFalse(ThrowQ.of(() -> exponential.log(q)));
-      ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
-      Tensor mir1 = stf.apply(RealScalar.ONE.negate());
-      // GrExponential exp_p = new GrExponential(p);
-      Tensor mir2 = GrManifold.INSTANCE.flip(p, q);
-      Chop._08.requireClose(mir1, mir2);
-    }
+  @RepeatedTest(5)
+  void testMirror(RepetitionInfo repetitionInfo) {
+    int n = repetitionInfo.getTotalRepetitions() - 1;
+    int k = repetitionInfo.getCurrentRepetition() - 1;
+    Grassmannian grassmannian = new Grassmannian(n, k);
+    Tensor p = RandomSample.of(grassmannian);
+    Tensor q = RandomSample.of(grassmannian);
+    TangentSpace exponential = grassmannian.tangentSpace(p);
+    assumeFalse(ThrowQ.of(() -> exponential.log(q)));
+    ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
+    Tensor mir1 = stf.apply(RealScalar.ONE.negate()); // <- has thrown an exception in the past
+    // GrExponential exp_p = new GrExponential(p);
+    Tensor mir2 = GrManifold.INSTANCE.flip(p, q);
+    Chop._08.requireClose(mir1, mir2);
   }
 
-  @Test
-  void testCommute() {
-    int n = 5;
-    int k = 2;
+  @RepeatedTest(5)
+  void testCommute(RepetitionInfo repetitionInfo) {
+    int n = repetitionInfo.getTotalRepetitions() - 1;
+    int k = repetitionInfo.getCurrentRepetition() - 1;
     RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
