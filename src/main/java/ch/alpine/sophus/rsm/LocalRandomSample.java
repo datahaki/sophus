@@ -14,7 +14,7 @@ import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
 /** samples around origin of given tangent space with standard deviation sigma
  * and maps back to manifold */
@@ -42,7 +42,7 @@ public class LocalRandomSample implements RandomSampleInterface, Serializable {
   private LocalRandomSample(TangentSpace tangentSpace, Scalar sigma) {
     this.tangentSpace = tangentSpace;
     List<Integer> list = Dimensions.of(tangentSpace.log(tangentSpace.basePoint()));
-    distribution = NormalDistribution.of(sigma.zero(), sigma);
+    distribution = TriangularDistribution.with(sigma.zero(), sigma);
     linearSubspace = LinearSubspace.of(tangentSpace.isTangentQ()::defect, list);
     n = linearSubspace.dimensions();
   }
