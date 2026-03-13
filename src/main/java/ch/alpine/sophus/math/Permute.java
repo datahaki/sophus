@@ -17,6 +17,10 @@ public class Permute implements TensorUnaryOperator {
     return new Permute(Integers.requirePermutation(Primitives.toIntArray(sigma)));
   }
 
+  public static TensorUnaryOperator of(int[] sigma) {
+    return new Permute(sigma);
+  }
+
   // ---
   private final int[] sigma;
 
