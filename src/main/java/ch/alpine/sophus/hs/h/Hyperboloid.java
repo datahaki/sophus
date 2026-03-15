@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.h;
 
-import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class Hyperboloid extends HManifold implements SpecificManifold {
+public class Hyperboloid extends HManifold implements SpecificHomogeneousSpace {
   private final int dimensions;
   private final ZeroDefectArrayQ isPointQ;
 

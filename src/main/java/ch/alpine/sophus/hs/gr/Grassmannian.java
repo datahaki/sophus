@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.gr;
 
-import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
  * 
  * @param n positive
  * @param k no greater than n */
-public class Grassmannian extends GrManifold implements SpecificManifold {
+public class Grassmannian extends GrManifold implements SpecificHomogeneousSpace {
   private final int n;
   private final int k;
   private final RandomSampleInterface randomSampleInterface;

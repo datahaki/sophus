@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.rpn;
 
-import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -11,7 +11,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
  * 
  * Reference:
  * "Eichfeldtheorie" by Helga Baum, 2005, p. 22 */
-public class RpnManifold extends RpManifold implements SpecificManifold {
+public class RpnManifold extends RpManifold implements SpecificHomogeneousSpace {
   private final int n;
   private final int length;
 

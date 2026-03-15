@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ch.alpine.sophus.SophusExperimental;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.MetricManifold;
-import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.rsm.LocalRandomSample;
@@ -43,15 +42,14 @@ import ch.alpine.tensor.sca.Chop;
 import test.wrap.ThrowQ;
 
 class HomogeneousSpaceTest {
-  static List<HomogeneousSpace> homogeneousSpaces() {
-    return SophusExperimental.filter(HomogeneousSpace.class);
+  static List<SpecificHomogeneousSpace> homogeneousSpaces() {
+    return SophusExperimental.filter(SpecificHomogeneousSpace.class);
   }
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testSimpleWert(HomogeneousSpace homogeneousSpace) {
-    SpecificManifold specificManifold = (SpecificManifold) homogeneousSpace;
-    Tensor p = RandomSample.of(specificManifold.randomSampleInterface());
+  void testSimpleWert(SpecificHomogeneousSpace homogeneousSpace) {
+    Tensor p = RandomSample.of(homogeneousSpace.randomSampleInterface());
     homogeneousSpace.isPointQ().require(p);
     List<Integer> dims = Dimensions.of(p);
     TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);
@@ -63,10 +61,10 @@ class HomogeneousSpaceTest {
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testSerialization(HomogeneousSpace homogeneousSpace) {
+  void testSerialization(SpecificHomogeneousSpace homogeneousSpace) {
     assertDoesNotThrow(() -> Serialization.copy(homogeneousSpace));
     MemberQ pointQ = homogeneousSpace.isPointQ();
-    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
+    RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
     assertEquals( //
         RandomSample.of(rsi, new Random(13)), //
         RandomSample.of(rsi, new Random(13)));
@@ -82,8 +80,8 @@ class HomogeneousSpaceTest {
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testDistance(HomogeneousSpace homogeneousSpace) {
-    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
+  void testDistance(SpecificHomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
     assumeTrue(homogeneousSpace instanceof MetricManifold);
     MetricManifold metricManifold = (MetricManifold) homogeneousSpace;
     Tensor p = RandomSample.of(rsi);
@@ -102,8 +100,8 @@ class HomogeneousSpaceTest {
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testExponential(HomogeneousSpace homogeneousSpace) {
-    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
+  void testExponential(SpecificHomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
     Tensor p = RandomSample.of(rsi);
     TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);
     Tensor q = RandomSample.of(LocalRandomSample.of(tangentSpace, 0.1));
@@ -127,8 +125,8 @@ class HomogeneousSpaceTest {
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testBiinvMean(HomogeneousSpace homogeneousSpace) {
-    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
+  void testBiinvMean(SpecificHomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
     Tensor p = RandomSample.of(rsi);
     TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);
     Tensor log_p = tangentSpace.log(p);
@@ -138,7 +136,7 @@ class HomogeneousSpaceTest {
     zeroDefectArrayQ.require(log_p);
     LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
     int d = linearSubspace.dimensions();
-    if (homogeneousSpace instanceof SpecificManifold specificManifold) {
+    if (homogeneousSpace instanceof SpecificHomogeneousSpace specificManifold) {
       assertEquals(specificManifold.dimensions(), d);
     }
     {
@@ -163,8 +161,8 @@ class HomogeneousSpaceTest {
 
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
-  void testTransport(HomogeneousSpace homogeneousSpace) {
-    RandomSampleInterface rsi = (RandomSampleInterface) homogeneousSpace;
+  void testTransport(SpecificHomogeneousSpace homogeneousSpace) {
+    RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
     final Tensor p = RandomSample.of(rsi);
     final TangentSpace exp_p = homogeneousSpace.tangentSpace(p);
     final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, 0.05));

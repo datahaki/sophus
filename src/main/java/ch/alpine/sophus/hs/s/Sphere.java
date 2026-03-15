@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.s;
 
-import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
  * 
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/Sphere.html">Sphere</a> */
-public class Sphere extends SnManifold implements SpecificManifold {
+public class Sphere extends SnManifold implements SpecificHomogeneousSpace {
   private final int dimensions;
   private final int length;
 

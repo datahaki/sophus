@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
  * @return matrix that satisfies {@link OrthogonalMatrixQ} typically up to precision of 1e-10
  * 
  * @see StManifold */
-public class StiefelManifold extends StManifold implements SpecificManifold {
+public class StiefelManifold extends StManifold implements SpecificHomogeneousSpace {
   private final int n;
   private final int k;
 

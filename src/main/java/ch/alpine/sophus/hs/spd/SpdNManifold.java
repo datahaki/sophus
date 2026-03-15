@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import ch.alpine.sophus.api.SpecificManifold;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
-public class SpdNManifold extends SpdManifold implements SpecificManifold {
+public class SpdNManifold extends SpdManifold implements SpecificHomogeneousSpace {
   private final int n;
 
   public SpdNManifold(int n) {
