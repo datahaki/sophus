@@ -18,8 +18,8 @@ class SoTransportTest {
     Distribution distribution = NormalDistribution.standard();
     Tensor m = RandomVariate.of(distribution, 3, 3);
     Tensor ve = Transpose.of(m).subtract(m);
-    Tensor p = RandomSample.of(So3Group.INSTANCE);
-    Tensor q = RandomSample.of(So3Group.INSTANCE);
+    Tensor p = RandomSample.of(So3Group.INSTANCE.randomSampleInterface());
+    Tensor q = RandomSample.of(So3Group.INSTANCE.randomSampleInterface());
     Tensor vp = p.dot(ve);
     Tensor vq = SoTransport.INSTANCE.shift(p, q).apply(vp);
     Chop._10.requireClose(q.dot(ve), vq);

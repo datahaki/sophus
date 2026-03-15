@@ -96,7 +96,7 @@ class StiefelManifoldTest {
   @ValueSource(ints = { 3, 4, 5 })
   void testSimple(int n) {
     for (int k = n - 2; k <= n; ++k) {
-      RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k);
+      RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k).randomSampleInterface();
       Tensor matrix = RandomSample.of(randomSampleInterface);
       StManifold.INSTANCE.isPointQ().require(matrix);
     }
@@ -105,7 +105,7 @@ class StiefelManifoldTest {
   @Test
   void testMember() {
     StiefelManifold stRandomSample = new StiefelManifold(5, 3);
-    Tensor matrix = RandomSample.of(stRandomSample);
+    Tensor matrix = RandomSample.of(stRandomSample.randomSampleInterface());
     assertEquals(Dimensions.of(matrix), List.of(3, 5));
     // StMemberQ.INSTANCE.require(matrix);
   }

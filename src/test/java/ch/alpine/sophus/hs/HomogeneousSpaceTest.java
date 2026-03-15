@@ -51,7 +51,7 @@ class HomogeneousSpaceTest {
   @MethodSource("homogeneousSpaces")
   void testSimpleWert(HomogeneousSpace homogeneousSpace) {
     SpecificManifold specificManifold = (SpecificManifold) homogeneousSpace;
-    Tensor p = RandomSample.of(specificManifold);
+    Tensor p = RandomSample.of(specificManifold.randomSampleInterface());
     homogeneousSpace.isPointQ().require(p);
     List<Integer> dims = Dimensions.of(p);
     TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);

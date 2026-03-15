@@ -112,7 +112,7 @@ class SoNGroupTest {
   void testRandomDet(RepetitionInfo repetitionInfo) {
     int n = repetitionInfo.getCurrentRepetition();
     SoNGroup soNGroup = new SoNGroup(n);
-    for (Tensor matrix : RandomSample.of(soNGroup, 10)) {
+    for (Tensor matrix : RandomSample.of(soNGroup.randomSampleInterface(), 10)) {
       OrthogonalMatrixQ.INSTANCE.require(matrix);
       Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);
     }
@@ -121,7 +121,7 @@ class SoNGroupTest {
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7 })
   void testSimple(int n) {
-    RandomSampleInterface randomSampleInterface = new SoNGroup(n);
+    RandomSampleInterface randomSampleInterface = new SoNGroup(n).randomSampleInterface();
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(Det.of(tensor), RealScalar.ONE);
     OrthogonalMatrixQ.INSTANCE.require(tensor);

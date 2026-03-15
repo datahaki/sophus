@@ -26,7 +26,7 @@ class SphereTest {
 
   @Test
   void testSimple() {
-    Tensor tensor = RandomSample.of(new Sphere(1), 10);
+    Tensor tensor = RandomSample.of(new Sphere(1).randomSampleInterface(), 10);
     assertEquals(Dimensions.of(tensor), Arrays.asList(10, 2));
   }
 }

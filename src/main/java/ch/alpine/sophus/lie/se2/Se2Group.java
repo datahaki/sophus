@@ -1,16 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.so2.So2;
+import ch.alpine.sophus.rsm.DnRandomSample;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
@@ -36,12 +33,12 @@ public class Se2Group extends Se2CoveringGroup {
     return So2.MOD.apply(a);
   }
 
-  private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.HALF));
-
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return RandomVariate.of(NormalDistribution.standard(), randomGenerator, 2) //
-        .append(RandomVariate.of(DISTRIBUTION, randomGenerator));
+  public RandomSampleInterface randomSampleInterface() {
+    return DnRandomSample.of( //
+        NormalDistribution.standard(), //
+        NormalDistribution.standard(), //
+        UniformDistribution.of(Clips.absolute(Pi.HALF)));
   }
 
   @Override

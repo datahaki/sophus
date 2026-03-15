@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.BilinearForm;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.MetricManifold;
@@ -14,6 +12,7 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public class VectorizedGroup extends AbstractLieGroup implements MetricManifold, VectorEncodingMarker {
   // TODO SOPHUS through introspection check for metric or not
@@ -99,8 +98,8 @@ public class VectorizedGroup extends AbstractLieGroup implements MetricManifold,
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return lieGroup.randomSample(randomGenerator);
+  public RandomSampleInterface randomSampleInterface() {
+    return lieGroup.randomSampleInterface();
   }
 
   @Override

@@ -1,20 +1,13 @@
 // code by jph
 package ch.alpine.sophus.lie.se;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.sophus.lie.se3.Se3Exponential;
-import ch.alpine.sophus.lie.so.SoNGroup;
-import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.ArrayFlatten;
-import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public class SeNGroup extends SeGroup implements SpecificLieGroup {
   private final int n;
@@ -44,10 +37,8 @@ public class SeNGroup extends SeGroup implements SpecificLieGroup {
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    Tensor rot = new SoNGroup(n).randomSample(randomGenerator);
-    Tensor pnt = RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, 1);
-    return ArrayFlatten.of(new Tensor[][] { { rot, pnt } }).append(UnitVector.of(n + 1, n));
+  public RandomSampleInterface randomSampleInterface() {
+    return new SeNRandom(n);
   }
 
   @Override

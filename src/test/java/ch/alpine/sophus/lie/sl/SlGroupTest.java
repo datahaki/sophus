@@ -40,7 +40,7 @@ class SlGroupTest {
   void testRandom(RepetitionInfo repetitionInfo) {
     int n = repetitionInfo.getCurrentRepetition() + 1;
     SlNGroup seNGroup = new SlNGroup(n);
-    Tensor matrix = RandomSample.of(seNGroup);
+    Tensor matrix = RandomSample.of(seNGroup.randomSampleInterface());
     Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);
   }
 }

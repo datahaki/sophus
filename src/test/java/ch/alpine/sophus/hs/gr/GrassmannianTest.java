@@ -73,7 +73,7 @@ class GrassmannianTest {
   void testGrassmannianRandom() {
     int n = 5;
     Grassmannian grassmannian = new Grassmannian(n, 3);
-    Tensor p = RandomSample.of(grassmannian);
+    Tensor p = RandomSample.of(grassmannian.randomSampleInterface());
     TensorUnaryOperator tuo = m -> Join.of(p.dot(m).add(m.dot(p)).subtract(m), SymmetricMatrixQ.INSTANCE.defect(m));
     Tensor tensor = LinearSubspace.of(tuo, n, n).basis();
     assertEquals(tensor.length(), 6);
@@ -120,7 +120,7 @@ class GrassmannianTest {
     Distribution distribution = NormalDistribution.standard();
     for (int k = 1; k < n; ++k) {
       Grassmannian grassmannian = new Grassmannian(n, k);
-      Tensor p = RandomSample.of(grassmannian);
+      Tensor p = RandomSample.of(grassmannian.randomSampleInterface());
       TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
       LinearSubspace linearSubspace = LinearSubspace.of(tGrMemberQ::defect, n, n);
       Tensor v = RandomVariate.of(distribution, n, n);
@@ -141,7 +141,7 @@ class GrassmannianTest {
   @Test
   void testSimple() {
     for (int k = 1; k < 5; ++k) {
-      RandomSampleInterface grRandomSample = new Grassmannian(k + 3, k);
+      RandomSampleInterface grRandomSample = new Grassmannian(k + 3, k).randomSampleInterface();
       Tensor x = RandomSample.of(grRandomSample);
       GrManifold.INSTANCE.isPointQ().require(x);
     }
@@ -150,7 +150,7 @@ class GrassmannianTest {
   @Test
   void testNN() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = new Grassmannian(n, n);
+      RandomSampleInterface randomSampleInterface = new Grassmannian(n, n).randomSampleInterface();
       Tensor x = RandomSample.of(randomSampleInterface);
       GrManifold.INSTANCE.isPointQ().require(x);
       Chop._09.requireClose(x, IdentityMatrix.of(n));
@@ -160,7 +160,7 @@ class GrassmannianTest {
   @Test
   void testN0() {
     for (int n = 1; n < 5; ++n) {
-      RandomSampleInterface randomSampleInterface = new Grassmannian(n, 0);
+      RandomSampleInterface randomSampleInterface = new Grassmannian(n, 0).randomSampleInterface();
       for (int k = 0; k < 3; ++k) {
         Tensor x = RandomSample.of(randomSampleInterface);
         GrManifold.INSTANCE.isPointQ().require(x);

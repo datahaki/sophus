@@ -56,7 +56,7 @@ class SpdNManifoldTest {
       Tensor sequence = RandomSample.of(rsi, randomGenerator, len);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, len));
       Tensor mL = SpdManifold.INSTANCE.biinvariantMean().mean(sequence, weights);
-      Tensor g = RandomSample.of(new SoNGroup(n), randomGenerator);
+      Tensor g = RandomSample.of(new SoNGroup(n).randomSampleInterface(), randomGenerator);
       Tensor sR = Tensor.of(sequence.stream().map(t -> BasisTransform.ofForm(t, g)));
       Tensor mR = SpdManifold.INSTANCE.biinvariantMean().mean(sR, weights);
       Chop._06.requireClose(mR, BasisTransform.ofForm(mL, g));

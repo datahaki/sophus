@@ -34,7 +34,7 @@ class TSnMemberQTest {
   @ValueSource(ints = { 2, 4, 5 })
   void testRandom(int n) {
     Sphere sphereN = new Sphere(n);
-    Tensor p = RandomSample.of(sphereN);
+    Tensor p = RandomSample.of(sphereN.randomSampleInterface());
     LinearSubspace linearSubspace = LinearSubspace.of(new TSnMemberQ(p)::defect, n + 1);
     TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
     linearSubspace.basis().stream().forEach(tSnMemberQ::require);
@@ -56,7 +56,7 @@ class TSnMemberQTest {
   @Test
   void testSnExpLog() {
     for (int d = 1; d < 4; ++d) {
-      RandomSampleInterface randomSampleInterface = new Sphere(d);
+      RandomSampleInterface randomSampleInterface = new Sphere(d).randomSampleInterface();
       Tensor x = RandomSample.of(randomSampleInterface);
       Tensor y = RandomSample.of(randomSampleInterface);
       Tensor v = new STangentSpace(x).log(y);

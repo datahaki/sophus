@@ -1,13 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.LieExponential;
+import ch.alpine.sophus.rsm.DnRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -19,8 +18,7 @@ import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
@@ -200,12 +198,12 @@ public class Se2CoveringGroup extends AbstractLieGroup implements VectorEncoding
     return 3;
   }
 
-  private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(Pi.VALUE));
-
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return RandomVariate.of(NormalDistribution.standard(), randomGenerator, 2) //
-        .append(RandomVariate.of(DISTRIBUTION, randomGenerator));
+  public RandomSampleInterface randomSampleInterface() {
+    return DnRandomSample.of( //
+        NormalDistribution.standard(), //
+        NormalDistribution.standard(), //
+        UniformDistribution.of(Clips.absolute(Pi.VALUE)));
   }
 
   @Override

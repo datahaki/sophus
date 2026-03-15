@@ -1,14 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.td;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.VectorEncodingMarker;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -33,8 +31,8 @@ public class TdNGroup extends TdGroup implements VectorEncodingMarker {
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return RandomVariate.of(NormalDistribution.standard(), randomGenerator, n) //
+  public RandomSampleInterface randomSampleInterface() {
+    return randomGenerator -> RandomVariate.of(NormalDistribution.standard(), randomGenerator, n) //
         .append(RandomVariate.of(LogNormalDistribution.standard(), randomGenerator));
   }
 

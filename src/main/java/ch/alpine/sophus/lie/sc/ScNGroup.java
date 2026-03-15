@@ -1,12 +1,10 @@
 // code by jph
 package ch.alpine.sophus.lie.sc;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.VectorEncodingMarker;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.LogNormalDistribution;
 
@@ -28,8 +26,8 @@ public class ScNGroup extends ScGroup implements VectorEncodingMarker {
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return RandomVariate.of(LogNormalDistribution.standard(), n);
+  public RandomSampleInterface randomSampleInterface() {
+    return RandomVariate.array(LogNormalDistribution.standard(), n);
   }
 
   @Override

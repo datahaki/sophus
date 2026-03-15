@@ -62,7 +62,7 @@ class SnRotationMatrixTest {
   @Test
   void testTargetSn() {
     for (int d = 1; d < 6; ++d) {
-      RandomSampleInterface randomSampleInterface = new Sphere(d);
+      RandomSampleInterface randomSampleInterface = new Sphere(d).randomSampleInterface();
       for (int count = 0; count < 10; ++count) {
         Tensor a = RandomSample.of(randomSampleInterface);
         Tensor b = RandomSample.of(randomSampleInterface);

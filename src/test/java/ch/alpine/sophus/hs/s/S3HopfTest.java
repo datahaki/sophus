@@ -16,7 +16,7 @@ class S3HopfTest {
   @Test
   void testSimple() {
     Sphere sphere = new Sphere(3);
-    Tensor xyza = RandomSample.of(sphere);
+    Tensor xyza = RandomSample.of(sphere.randomSampleInterface());
     S3Hopf s3Hopf = S3Hopf.of(xyza);
     Tensor h1 = s3Hopf.project();
     Scalar angle = RandomVariate.of(UniformDistribution.of(Clips.absolute(Pi.VALUE)));
@@ -27,7 +27,7 @@ class S3HopfTest {
   @Test
   void testLift() {
     Sphere sphere = new Sphere(2);
-    Tensor xyz = RandomSample.of(sphere);
+    Tensor xyz = RandomSample.of(sphere.randomSampleInterface());
     S3Hopf.northernHemisphereGauge(xyz);
     S3Hopf.stereographic(xyz);
   }

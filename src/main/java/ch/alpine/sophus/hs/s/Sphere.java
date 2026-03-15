@@ -1,10 +1,7 @@
 // code by jph
 package ch.alpine.sophus.hs.s;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.SpecificManifold;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
@@ -21,7 +18,6 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 public class Sphere extends SnManifold implements SpecificManifold {
   private final int dimensions;
   private final int length;
-  private final RandomSampleInterface randomSampleInterface;
 
   /** Example:
    * dimension == 0 consist of the points {1}, and {-1}
@@ -32,7 +28,6 @@ public class Sphere extends SnManifold implements SpecificManifold {
   public Sphere(int dimensions) {
     this.dimensions = Integers.requirePositiveOrZero(dimensions);
     this.length = dimensions + 1;
-    randomSampleInterface = SphereRandomSample.of(dimensions);
   }
 
   @Override // from MemberQ
@@ -41,9 +36,9 @@ public class Sphere extends SnManifold implements SpecificManifold {
         && super.isPointQ().test(p);
   }
 
-  @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return randomSampleInterface.randomSample(randomGenerator);
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
+    return SphereRandomSample.of(dimensions);
   }
 
   @Override

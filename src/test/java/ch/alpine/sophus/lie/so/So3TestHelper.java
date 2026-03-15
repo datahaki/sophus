@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Clips;
 public enum So3TestHelper {
   ;
   private static final Distribution DISTRIBUTION = UniformDistribution.of(Clips.absolute(10));
-  private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = So3Group.INSTANCE;
+  private static final RandomSampleInterface RANDOM_SAMPLE_INTERFACE = So3Group.INSTANCE.randomSampleInterface();
 
   public static Tensor spawn_So3() {
     return spawn_So3(ThreadLocalRandom.current());

@@ -26,7 +26,7 @@ class StExponentialTest {
   void testSimple(int n) {
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-      Tensor p = RandomSample.of(stiefelManifold);
+      Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface());
       stiefelManifold.isPointQ().require(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor v = tStMemberQ.projection(RandomVariate.of(NormalDistribution.of(0.0, 0.1), k, n));

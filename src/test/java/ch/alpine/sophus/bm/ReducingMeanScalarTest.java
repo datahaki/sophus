@@ -70,7 +70,7 @@ class ReducingMeanScalarTest {
   void testLagrangeProperty() {
     int d = 2;
     int len = 5 + ThreadLocalRandom.current().nextInt(3);
-    RandomSampleInterface rsi = new SpdNManifold(d);
+    RandomSampleInterface rsi = new SpdNManifold(d).randomSampleInterface();
     Tensor sequence = RandomSample.of(rsi, len);
     BiinvariantMean biinvariantMean = SpdManifold.INSTANCE.biinvariantMean();
     for (int index = 0; index < len; ++index) {

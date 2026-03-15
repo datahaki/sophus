@@ -16,7 +16,7 @@ class SpdIsoTest {
     Tensor g = IdentityMatrix.inplaceAdd(RandomVariate.of(NormalDistribution.of(0, 0.1), n, n));
     SpdIsometry spdIso = new SpdIsometry(g);
     SpdNManifold spdNManifold = new SpdNManifold(n);
-    Tensor p = RandomSample.of(spdNManifold);
+    Tensor p = RandomSample.of(spdNManifold.randomSampleInterface());
     spdNManifold.isPointQ().require(p);
     spdNManifold.isPointQ().require(spdIso.apply(p));
   }

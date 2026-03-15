@@ -1,14 +1,12 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.lie.SpecificLieGroup;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.mat.qr.QRDecomposition;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
@@ -25,10 +23,11 @@ public class SoNGroup extends SoGroup implements SpecificLieGroup {
     this.n = Integers.requirePositive(n);
   }
 
-  @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator randomGenerator) {
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
     /* for some reason this always gives Det == 1 */
-    return QRDecomposition.of(RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, n)) //
+    return randomGenerator -> //
+    QRDecomposition.of(RandomVariate.of(NormalDistribution.standard(), randomGenerator, n, n)) //
         .getQConjugateTranspose();
   }
 

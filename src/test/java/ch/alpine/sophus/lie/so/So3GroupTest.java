@@ -114,7 +114,7 @@ class So3GroupTest {
 
   @RepeatedTest(10)
   void testSimple3() {
-    Tensor matrix = RandomSample.of(So3Group.INSTANCE);
+    Tensor matrix = RandomSample.of(So3Group.INSTANCE.randomSampleInterface());
     MatrixQ.requireSize(matrix, 3, 3);
     OrthogonalMatrixQ.INSTANCE.require(matrix);
     Tolerance.CHOP.requireClose(Det.of(matrix), RealScalar.ONE);

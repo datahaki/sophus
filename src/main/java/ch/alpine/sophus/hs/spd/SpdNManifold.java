@@ -1,13 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.spd;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.SpecificManifold;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 public class SpdNManifold extends SpdManifold implements SpecificManifold {
@@ -24,8 +22,8 @@ public class SpdNManifold extends SpdManifold implements SpecificManifold {
   }
 
   @Override
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return new Spd0RandomSample(n, NormalDistribution.standard()).randomSample(randomGenerator);
+  public RandomSampleInterface randomSampleInterface() {
+    return new Spd0RandomSample(n, NormalDistribution.standard());
   }
 
   @Override

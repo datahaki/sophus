@@ -18,7 +18,7 @@ class Sl2IwasawaTest {
 
   @RepeatedTest(10)
   void testRandom() {
-    Tensor p = RandomSample.of(slNGroup);
+    Tensor p = RandomSample.of(slNGroup.randomSampleInterface());
     Sl2Iwasawa iwasawa = Sl2Iwasawa.from(p);
     Tensor q = iwasawa.matrix();
     Tolerance.CHOP.requireClose(p, q);

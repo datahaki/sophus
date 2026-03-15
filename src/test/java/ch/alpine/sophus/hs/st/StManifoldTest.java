@@ -26,7 +26,7 @@ class StManifoldTest {
   void test(int n) {
     for (int k = n - 2; k < n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-      Tensor p = RandomSample.of(stiefelManifold);
+      Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface());
       Tensor q = StManifold.projection(p);
       Tolerance.CHOP.requireClose(p, q);
     }
@@ -38,7 +38,7 @@ class StManifoldTest {
     RandomGenerator randomGenerator = ThreadLocalRandom.current();
     for (int k = 1; k <= n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-      Tensor p = RandomSample.of(stiefelManifold, randomGenerator);
+      Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface(), randomGenerator);
       stiefelManifold.isPointQ().require(p);
       TStMemberQ tStMemberQ = new TStMemberQ(p);
       Tensor sequence = Tensors.empty();
@@ -56,7 +56,7 @@ class StManifoldTest {
       {
         SoNGroup Gk = new SoNGroup(k);
         SoNGroup Gn = new SoNGroup(n);
-        StAction stAction = new StAction(RandomSample.of(Gk), RandomSample.of(Gn));
+        StAction stAction = new StAction(RandomSample.of(Gk.randomSampleInterface()), RandomSample.of(Gn.randomSampleInterface()));
         Tensor mean2 = biinvariantMean.mean(stAction.slash(sequence), weights);
         Chop._08.requireClose(mean2, stAction.apply(mean));
       }

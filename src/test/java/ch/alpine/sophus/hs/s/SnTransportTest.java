@@ -21,8 +21,8 @@ class SnTransportTest {
 
   @Test
   void testFlip() {
-    Tensor p = RandomSample.of(new Sphere(3));
-    Tensor q = RandomSample.of(new Sphere(3));
+    Tensor p = RandomSample.of(new Sphere(3).randomSampleInterface());
+    Tensor q = RandomSample.of(new Sphere(3).randomSampleInterface());
     STangentSpace snExponential = new STangentSpace(p);
     Tensor f1 = snExponential.exp(snExponential.log(q).negate());
     Tensor f2 = SnManifold.INSTANCE.flip(p, q);

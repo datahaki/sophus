@@ -19,7 +19,7 @@ class S3HopfQuaternionTest {
   @Test
   void test() {
     Sphere sphere = new Sphere(3);
-    Tensor xyza = RandomSample.of(sphere);
+    Tensor xyza = RandomSample.of(sphere.randomSampleInterface());
     Quaternion q = Quaternion.of(xyza.Get(3), xyza.extract(0, 3));
     S3HopfQuaternion s3HopfQuaternion = new S3HopfQuaternion(q);
     // Tensor xyz =

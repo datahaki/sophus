@@ -16,7 +16,7 @@ class GrBilinearFormTest {
   void test() {
     int n = 5;
     Grassmannian grassmannian = new Grassmannian(n, 3);
-    Tensor p = RandomSample.of(grassmannian);
+    Tensor p = RandomSample.of(grassmannian.randomSampleInterface());
     TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
     Tensor u = tGrMemberQ.projection(RandomVariate.of(NormalDistribution.standard(), n, n));
     Tensor v = tGrMemberQ.projection(RandomVariate.of(NormalDistribution.standard(), n, n));

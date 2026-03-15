@@ -10,7 +10,7 @@ class SpNGroupTest {
   @Test
   void test() {
     SpNGroup spNGroup = new SpNGroup(3);
-    Tensor p = RandomSample.of(spNGroup);
+    Tensor p = RandomSample.of(spNGroup.randomSampleInterface());
     spNGroup.isPointQ().require(p);
   }
 }

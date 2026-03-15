@@ -19,7 +19,7 @@ class SphereRandomSampleTest {
   @RepeatedTest(5)
   void testSimple(RepetitionInfo repetitionInfo) {
     int dimension = repetitionInfo.getCurrentRepetition();
-    RandomSampleInterface randomSampleInterface = new Sphere(dimension);
+    RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Chop._12.requireClose(Vector2Norm.of(tensor), RealScalar.ONE);
     assertEquals(tensor.length(), dimension + 1);

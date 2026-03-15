@@ -63,7 +63,7 @@ class HsDesignTest {
   void testSn() {
     Manifold manifold = SnManifold.INSTANCE;
     for (int dimension = 2; dimension < 6; ++dimension) {
-      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
       for (int count = dimension + 2; count < 8; ++count) {
         Tensor sequence = RandomSample.of(randomSampleInterface, count);
         Tensor forms = Tensor.of(sequence.stream().map(point -> new Mahalanobis(manifold.tangentSpace(point).log().slash(sequence)).sigma_inverse()));

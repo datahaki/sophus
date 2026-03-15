@@ -30,7 +30,7 @@ class SpecificLieGroupTest {
     Tensor ad = matrixAlgebra.ad();
     int n = ad.length();
     Integers.requirePositive(n);
-    Tensor p = RandomSample.of(specificLieGroup);
+    Tensor p = RandomSample.of(specificLieGroup.randomSampleInterface());
     Tensor neutral = specificLieGroup.neutral(p);
     specificLieGroup.isPointQ().require(neutral);
     specificLieGroup.isPointQ().require(p);

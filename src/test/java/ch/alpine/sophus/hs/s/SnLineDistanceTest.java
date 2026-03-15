@@ -42,7 +42,7 @@ class SnLineDistanceTest {
   @Test
   void testBounded() throws ClassNotFoundException, IOException {
     for (int dimension = 2; dimension < 6; ++dimension) {
-      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
       for (int count = 0; count < 10; ++count) {
         Tensor p = RandomSample.of(randomSampleInterface);
         Tensor q = RandomSample.of(randomSampleInterface);
@@ -58,7 +58,7 @@ class SnLineDistanceTest {
   void testMidpoint() {
     Distribution distribution = UniformDistribution.unit();
     for (int dimension = 2; dimension < 6; ++dimension) {
-      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
       for (int count = 0; count < 10; ++count) {
         Tensor p = RandomSample.of(randomSampleInterface);
         Tensor q = RandomSample.of(randomSampleInterface);

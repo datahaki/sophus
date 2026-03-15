@@ -1,16 +1,11 @@
 // code by jph
 package ch.alpine.sophus.hs.st;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.api.SpecificManifold;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
-import ch.alpine.tensor.mat.pd.Orthogonalize;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** uniform distribution on St(n, k) according to Haar measure
  * 
@@ -32,11 +27,9 @@ public class StiefelManifold extends StManifold implements SpecificManifold {
     Integers.requireLessEquals(k, n);
   }
 
-  @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    Tensor p = Orthogonalize.usingPD(RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n));
-    p = StManifold.projection(p); // just for numeric correction
-    return isPointQ().require(p);
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
+    return new StRandom(n, k);
   }
 
   @Override

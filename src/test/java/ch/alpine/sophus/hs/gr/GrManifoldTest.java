@@ -54,8 +54,8 @@ class GrManifoldTest {
     int n = repetitionInfo.getTotalRepetitions() - 1;
     int k = repetitionInfo.getCurrentRepetition() - 1;
     Grassmannian grassmannian = new Grassmannian(n, k);
-    Tensor p = RandomSample.of(grassmannian);
-    Tensor q = RandomSample.of(grassmannian);
+    Tensor p = RandomSample.of(grassmannian.randomSampleInterface());
+    Tensor q = RandomSample.of(grassmannian.randomSampleInterface());
     Tensor m1 = GrManifold.INSTANCE.midpoint(p, q);
     Tensor m2 = GrManifold.INSTANCE.midpoint(q, p);
     Chop._08.requireClose(m1, m2);
@@ -66,8 +66,8 @@ class GrManifoldTest {
     int n = repetitionInfo.getTotalRepetitions() - 1;
     int k = repetitionInfo.getCurrentRepetition() - 1;
     Grassmannian grassmannian = new Grassmannian(n, k);
-    Tensor p = RandomSample.of(grassmannian);
-    Tensor q = RandomSample.of(grassmannian);
+    Tensor p = RandomSample.of(grassmannian.randomSampleInterface());
+    Tensor q = RandomSample.of(grassmannian.randomSampleInterface());
     TangentSpace exponential = grassmannian.tangentSpace(p);
     assumeFalse(ThrowQ.of(() -> exponential.log(q)));
     ScalarTensorFunction stf = GrManifold.INSTANCE.curve(p, q);
@@ -81,7 +81,7 @@ class GrManifoldTest {
   void testCommute(RepetitionInfo repetitionInfo) {
     int n = repetitionInfo.getTotalRepetitions() - 1;
     int k = repetitionInfo.getCurrentRepetition() - 1;
-    RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
+    RandomSampleInterface randomSampleInterface = new Grassmannian(n, k).randomSampleInterface();
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Tolerance.CHOP.requireClose(p.dot(q), Transpose.of(q.dot(p)));
@@ -92,8 +92,8 @@ class GrManifoldTest {
   @Test
   void testMismatch() {
     int n = 5;
-    Tensor p1 = RandomSample.of(new Grassmannian(n, 1));
-    Tensor p2 = RandomSample.of(new Grassmannian(n, 2));
+    Tensor p1 = RandomSample.of(new Grassmannian(n, 1).randomSampleInterface());
+    Tensor p2 = RandomSample.of(new Grassmannian(n, 2).randomSampleInterface());
     Tensor q = ConstantArray.of(Pi.VALUE, n, n);
     assertThrows(Exception.class, () -> new GrTangentSpace(p1).log(q));
     assertThrows(Exception.class, () -> new GrTangentSpace(p2).log(q));
@@ -145,7 +145,7 @@ class GrManifoldTest {
   @Test
   void testRandomSymmetry() {
     Random random = new Random(3);
-    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 3);
+    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 3).randomSampleInterface();
     Tensor p = RandomSample.of(randomSampleInterface, random);
     Tensor q = RandomSample.of(randomSampleInterface, random);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
@@ -155,7 +155,7 @@ class GrManifoldTest {
 
   @Test
   void testFrobenius() {
-    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 3);
+    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 3).randomSampleInterface();
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     Scalar d1 = GrManifold.INSTANCE.distance(p, q);
@@ -178,7 +178,7 @@ class GrManifoldTest {
   @Test
   void testBiinvariant() {
     Distribution distribution = ExponentialDistribution.of(1);
-    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 2).randomSampleInterface(); // 4 dimensional
     Scalar maxDist = RealScalar.of(1.4);
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor sequence = Tensors.of(p);
@@ -195,7 +195,7 @@ class GrManifoldTest {
     GrManifold.INSTANCE.isPointQ().require(point);
     GrManifold.INSTANCE.distance(p, point);
     {
-      Tensor g = RandomSample.of(new SoNGroup(4));
+      Tensor g = RandomSample.of(new SoNGroup(4).randomSampleInterface());
       GrAction grAction = new GrAction(g);
       Tensor seq_l = Tensor.of(sequence.stream().map(grAction));
       Tensor pnt_l = BIINVARIANT_MEAN.mean(seq_l, weights);
@@ -206,7 +206,7 @@ class GrManifoldTest {
   @Test
   void testGeodesic() {
     GeodesicSpace hsGeodesic = GrManifold.INSTANCE;
-    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 2); // 4 dimensional
+    RandomSampleInterface randomSampleInterface = new Grassmannian(4, 2).randomSampleInterface(); // 4 dimensional
     Tensor p = RandomSample.of(randomSampleInterface);
     Tensor q = RandomSample.of(randomSampleInterface);
     ScalarTensorFunction scalarTensorFunction = hsGeodesic.curve(p, q);
@@ -237,7 +237,7 @@ class GrManifoldTest {
     int n = 5;
     for (int k = 1; k < n; ++k) {
       Distribution distribution = UniformDistribution.unit();
-      RandomSampleInterface randomSampleInterface = new Grassmannian(n, k);
+      RandomSampleInterface randomSampleInterface = new Grassmannian(n, k).randomSampleInterface();
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(p, q);
@@ -249,7 +249,7 @@ class GrManifoldTest {
   @Test
   void testSimple2() {
     int n = 5;
-    Tensor x = RandomSample.of(new Grassmannian(n, 3));
+    Tensor x = RandomSample.of(new Grassmannian(n, 3).randomSampleInterface());
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     GrManifold.INSTANCE.isPointQ().require(x);
   }
@@ -257,7 +257,7 @@ class GrManifoldTest {
   @Test
   void testVectorProject() {
     for (int n = 1; n < 6; ++n) {
-      Tensor normal = RandomSample.of(new Sphere(n));
+      Tensor normal = RandomSample.of(new Sphere(n).randomSampleInterface());
       Tensor x = TensorProduct.of(normal, normal);
       GrManifold.INSTANCE.isPointQ().require(x);
     }

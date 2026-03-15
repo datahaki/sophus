@@ -41,7 +41,7 @@ class TSoMemberQTest {
   @ValueSource(ints = { 3, 4 })
   void testAntisymmAtPoint(int n) {
     SoNGroup soNGroup = new SoNGroup(n);
-    Tensor p = RandomSample.of(soNGroup);
+    Tensor p = RandomSample.of(soNGroup.randomSampleInterface());
     TensorUnaryOperator tuo = v -> Transpose.of(v).dot(p).add(Transpose.of(p).dot(v));
     LinearSubspace linearSubspace = LinearSubspace.of(tuo, n, n);
     assertEquals(linearSubspace.dimensions(), n * (n - 1) / 2);

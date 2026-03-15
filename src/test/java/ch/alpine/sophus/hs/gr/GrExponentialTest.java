@@ -65,7 +65,7 @@ class GrExponentialTest {
 
   @Test
   void testShift() {
-    Tensor x = RandomSample.of(new Grassmannian(2, 1));
+    Tensor x = RandomSample.of(new Grassmannian(2, 1).randomSampleInterface());
     GrTangentSpace grExponential = new GrTangentSpace(x);
     TGrMemberQ tGrMemberQ = new TGrMemberQ(x);
     Distribution distribution = UniformDistribution.unit();
@@ -83,7 +83,7 @@ class GrExponentialTest {
   @ValueSource(ints = { 4, 5, 6 })
   void testDesign(int n) {
     int k = 3;
-    Tensor x = RandomSample.of(new Grassmannian(n, k));
+    Tensor x = RandomSample.of(new Grassmannian(n, k).randomSampleInterface());
     assertEquals(Dimensions.of(x), Arrays.asList(n, n));
     assertEquals(MatrixRank.of(x), k);
     InfluenceMatrixQ.INSTANCE.require(x);

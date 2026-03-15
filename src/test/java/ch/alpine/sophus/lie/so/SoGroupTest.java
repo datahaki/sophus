@@ -21,6 +21,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Chop;
 
 class SoGroupTest {
@@ -121,8 +122,9 @@ class SoGroupTest {
   void testSimple() {
     RandomGenerator random = new Random(1);
     for (int n = 2; n < 10; ++n) {
-      Tensor p = new SoNGroup(n).randomSample(random);
-      Tensor q = new SoNGroup(n).randomSample(random);
+      RandomSampleInterface randomSampleInterface = new SoNGroup(n).randomSampleInterface();
+      Tensor p = randomSampleInterface.randomSample(random);
+      Tensor q = randomSampleInterface.randomSample(random);
       TangentSpace exponential = SoGroup.INSTANCE.tangentSpace(p);
       Tensor vp = exponential.log(q);
       TSoMemberQ.INSTANCE.require(vp);

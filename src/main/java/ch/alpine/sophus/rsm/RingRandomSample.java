@@ -32,7 +32,7 @@ public class RingRandomSample implements RandomSampleInterface, Serializable {
   private final Distribution distribution;
 
   public RingRandomSample(int dimensions, Scalar r1, Scalar r2) {
-    randomSampleInterface = new Sphere(dimensions - 1);
+    randomSampleInterface = new Sphere(dimensions - 1).randomSampleInterface();
     power = Power.function(Rational.of(1, dimensions));
     this.r2 = r2;
     distribution = UniformDistribution.of(Power.of(r1.divide(r2), dimensions), RealScalar.ONE);

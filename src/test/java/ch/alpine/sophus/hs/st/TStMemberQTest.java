@@ -29,7 +29,7 @@ class TStMemberQTest {
     int n = 7;
     int k = 3;
     StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-    Tensor p = RandomSample.of(stiefelManifold);
+    Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface());
     TStMemberQ tStMemberQ = new TStMemberQ(p);
     LinearSubspace linearSubspace = LinearSubspace.of(tStMemberQ::defect, k, n);
     int dim = n * k - k * (k + 1) / 2;
@@ -49,7 +49,7 @@ class TStMemberQTest {
   void testSimple(int n) {
     RandomGenerator randomGenerator = new Random(3);
     for (int k = n - 2; k <= n; ++k) {
-      RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k);
+      RandomSampleInterface randomSampleInterface = new StiefelManifold(n, k).randomSampleInterface();
       Tensor p = RandomSample.of(randomSampleInterface, randomGenerator);
       StManifold.INSTANCE.isPointQ().require(p);
       final Tensor c = RandomVariate.of(NormalDistribution.standard(), randomGenerator, k, n);
@@ -70,7 +70,7 @@ class TStMemberQTest {
   void test(int n) {
     for (int k = n - 2; k < n; ++k) {
       StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-      Tensor p = RandomSample.of(stiefelManifold);
+      Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface());
       Tensor g = Transpose.of(p).dot(p);
       assertTrue(GrManifold.INSTANCE.isPointQ().test(g));
     }
@@ -81,7 +81,7 @@ class TStMemberQTest {
   void testTransport(int n) {
     int k = 2;
     StiefelManifold stiefelManifold = new StiefelManifold(n, k);
-    Tensor p = RandomSample.of(stiefelManifold);
+    Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface());
     Tensor v = new TStMemberQ(p).projection(RandomVariate.of(NormalDistribution.of(0, 0.3), k, n));
     Tensor q = stiefelManifold.tangentSpace(p).exp(v);
     Tensor m = stiefelManifold.tangentSpace(p).exp(v.multiply(Rational.HALF));

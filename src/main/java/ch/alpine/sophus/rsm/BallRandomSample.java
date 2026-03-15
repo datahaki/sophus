@@ -47,7 +47,7 @@ public class BallRandomSample implements RandomSampleInterface, Serializable {
   private final ScalarUnaryOperator power;
 
   private BallRandomSample(Tensor center, Scalar radius) {
-    randomSampleInterface = new Sphere(center.length() - 1);
+    randomSampleInterface = new Sphere(center.length() - 1).randomSampleInterface();
     power = Power.function(Rational.of(1, center.length()));
     this.center = center;
     this.radius = radius;

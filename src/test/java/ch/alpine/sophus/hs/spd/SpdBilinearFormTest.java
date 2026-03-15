@@ -20,7 +20,7 @@ class SpdBilinearFormTest {
     int n = 3;
     SpdNManifold spdNManifold = new SpdNManifold(n);
     Tensor p = IdentityMatrix.of(n);
-    Tensor q = RandomSample.of(spdNManifold);
+    Tensor q = RandomSample.of(spdNManifold.randomSampleInterface());
     Scalar d1 = spdNManifold.distance(p, q);
     Scalar d2 = Spd0Exponential.INSTANCE.distance(q);
     Tolerance.CHOP.requireClose(d1, d2);

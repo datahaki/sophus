@@ -63,7 +63,7 @@ class ReducingMeanEstimateTest {
     ReducingMeanEstimate bm = new ReducingMeanEstimate(SpdManifold.INSTANCE);
     for (int d = 2; d < 4; ++d) {
       int n = d * (d + 1) / 2 + 1 + randomGenerator.nextInt(3);
-      RandomSampleInterface rsi = new SpdNManifold(d);
+      RandomSampleInterface rsi = new SpdNManifold(d).randomSampleInterface();
       Tensor sequence = RandomSample.of(rsi, randomGenerator, n);
       Distribution distribution = UniformDistribution.of(0.1, 1);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, randomGenerator, n));
@@ -84,7 +84,7 @@ class ReducingMeanEstimateTest {
   void testLagrangeProperty() {
     int d = 2;
     int len = 5 + ThreadLocalRandom.current().nextInt(3);
-    RandomSampleInterface rsi = new SpdNManifold(d);
+    RandomSampleInterface rsi = new SpdNManifold(d).randomSampleInterface();
     Tensor sequence = RandomSample.of(rsi, len);
     BiinvariantMean biinvariantMean = SpdManifold.INSTANCE.biinvariantMean();
     for (int index = 0; index < len; ++index) {

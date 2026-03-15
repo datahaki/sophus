@@ -144,7 +144,7 @@ class SnManifoldTest {
   void testMidpoint() {
     GeodesicSpace hsMidpoint = SnManifold.INSTANCE;
     for (int dimension = 2; dimension <= 5; ++dimension) {
-      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
       Tensor p = RandomSample.of(randomSampleInterface);
       Tensor q = RandomSample.of(randomSampleInterface);
       Tensor m1 = SnManifold.INSTANCE.midpoint(p, q);

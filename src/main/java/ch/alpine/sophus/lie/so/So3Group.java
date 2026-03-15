@@ -1,11 +1,8 @@
 // code by jph
 package ch.alpine.sophus.lie.so;
 
-import java.util.random.RandomGenerator;
-
 import ch.alpine.sophus.hs.s.SphereRandomSample;
 import ch.alpine.sophus.lie.LieExponential;
-import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.QuaternionToRotationMatrix;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 
@@ -24,7 +21,6 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
  * "Computing the Mean of Geometric Features Application to the Mean Rotation"
  * by Xavier Pennec, 1998 */
 public class So3Group extends SoNGroup {
-  private static final RandomSampleInterface S3_RANDOM_SAMPLE = SphereRandomSample.of(3);
   public static final So3Group INSTANCE = new So3Group();
 
   private So3Group() {
@@ -40,8 +36,8 @@ public class So3Group extends SoNGroup {
    * "Spheres and Rotations" eq. (21.5.17) in NR, 2007
    * 
    * @see SoRandomSample */
-  @Override // from RandomSampleInterface
-  public Tensor randomSample(RandomGenerator randomGenerator) {
-    return QuaternionToRotationMatrix.of(S3_RANDOM_SAMPLE.randomSample(randomGenerator));
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
+    return SphereRandomSample.of(3).andThen(QuaternionToRotationMatrix::of);
   }
 }
