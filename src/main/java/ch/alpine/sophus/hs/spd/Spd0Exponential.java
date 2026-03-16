@@ -37,11 +37,13 @@ public enum Spd0Exponential implements Exponential, BilinearForm {
 
   @Override // from Exponential
   public Tensor exp(Tensor x) {
+    // Symmetrize to compensate for numerical error
     return Symmetrize.of(MatrixExp.ofSymmetric(x));
   }
 
   @Override // from Exponential
   public Tensor log(Tensor q) {
+    // Symmetrize to compensate for numerical error
     return Symmetrize.of(MatrixLog.ofSymmetric(q));
   }
 

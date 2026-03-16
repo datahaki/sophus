@@ -15,10 +15,6 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 public record S3HopfQuaternion(Quaternion q) implements Serializable {
-  public S3HopfQuaternion {
-    Tolerance.CHOP.requireClose(q.abs(), RealScalar.ONE);
-  }
-
   public static S3HopfQuaternion of(Tensor xyzw) {
     return new S3HopfQuaternion(Quaternion.of(xyzw.Get(3), xyzw.extract(0, 3)));
   }
@@ -30,9 +26,11 @@ public record S3HopfQuaternion(Quaternion q) implements Serializable {
     Quaternion P = Quaternion.of(RealScalar.ZERO, xyz);
     Scalar num = RealScalar.ONE.add(P.multiply(I));
     Scalar den = Sqrt.FUNCTION.apply(RealScalar.ONE.add(x).multiply(RealScalar.TWO));
-    IO.println(num);
-    IO.println(den);
     return new S3HopfQuaternion((Quaternion) num.divide(den));
+  }
+
+  public S3HopfQuaternion {
+    Tolerance.CHOP.requireClose(q.abs(), RealScalar.ONE);
   }
 
   public Tensor project() {
