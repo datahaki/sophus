@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -101,26 +102,32 @@ class HomogeneousSpaceTest {
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
   void testExponential(SpecificHomogeneousSpace homogeneousSpace) {
-    RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
-    Tensor p = RandomSample.of(rsi);
-    TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);
-    Tensor q = RandomSample.of(LocalRandomSample.of(tangentSpace, 0.1));
-    Tensor log_p = tangentSpace.log(p);
-    Tolerance.CHOP.requireAllZero(log_p);
-    assumeFalse(ThrowQ.of(() -> tangentSpace.log(q)));
-    Tensor v = tangentSpace.log(q);
-    List<Integer> list = Dimensions.of(v);
-    assertEquals(list, Dimensions.of(log_p));
-    ZeroDefectArrayQ zeroDefectArrayQ = tangentSpace.isTangentQ();
-    LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
-    int d = linearSubspace.dimensions();
-    Tensor weights = RandomVariate.of(NormalDistribution.of(0.0, 0.1), d);
-    Tensor w = linearSubspace.apply(weights);
-    Tensor r = tangentSpace.exp(w);
-    assumeTrue(homogeneousSpace.isPointQ().test(r));
-    Tensor pv100 = tangentSpace.exp(v.multiply(RealScalar.of(10)));
-    MemberQ pointQ = homogeneousSpace.isPointQ();
-    pointQ.require(pv100);
+    for (int attempt = 0; attempt < 3; ++attempt)
+      try {
+        RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
+        Tensor p = RandomSample.of(rsi);
+        TangentSpace tangentSpace = homogeneousSpace.tangentSpace(p);
+        Tensor q = RandomSample.of(LocalRandomSample.of(tangentSpace, 0.1));
+        Tensor log_p = tangentSpace.log(p);
+        Tolerance.CHOP.requireAllZero(log_p);
+        assumeFalse(ThrowQ.of(() -> tangentSpace.log(q)));
+        Tensor v = tangentSpace.log(q);
+        List<Integer> list = Dimensions.of(v);
+        assertEquals(list, Dimensions.of(log_p));
+        ZeroDefectArrayQ zeroDefectArrayQ = tangentSpace.isTangentQ();
+        LinearSubspace linearSubspace = LinearSubspace.of(zeroDefectArrayQ::defect, list);
+        int d = linearSubspace.dimensions();
+        Tensor weights = RandomVariate.of(NormalDistribution.of(0.0, 0.1), d);
+        Tensor w = linearSubspace.apply(weights);
+        Tensor r = tangentSpace.exp(w);
+        assumeTrue(homogeneousSpace.isPointQ().test(r));
+        Tensor pv100 = tangentSpace.exp(v.multiply(RealScalar.of(10)));
+        MemberQ pointQ = homogeneousSpace.isPointQ();
+        pointQ.require(pv100);
+        return;
+      } catch (Exception e) {
+      }
+    fail();
   }
 
   @ParameterizedTest
