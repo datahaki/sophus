@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.he;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.ExactTensorQ;
+import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -39,6 +41,8 @@ class HeGroupTest {
       Tensor uvw = HeGroup.INSTANCE.lieExponential().log(xyz);
       Tolerance.CHOP.requireClose(inp, uvw);
     }
+    assertFalse(HeGroup.INSTANCE.isPointQ().test(Tensors.vector(1, 2)));
+    assertFalse(HeGroup.INSTANCE.isPointQ().test(IdentityMatrix.of(3)));
   }
 
   @Test

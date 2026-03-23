@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.spd;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -13,6 +14,7 @@ import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
+import ch.alpine.tensor.mat.HilbertMatrix;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -27,6 +29,8 @@ class SpdNManifoldTest {
   void test() {
     SpdNManifold spdNManifold = new SpdNManifold(3);
     assertEquals(spdNManifold.dimensions(), 6);
+    assertFalse(spdNManifold.isPointQ().test(HilbertMatrix.of(3, 4)));
+    assertFalse(spdNManifold.isPointQ().test(HilbertMatrix.of(4, 3)));
   }
 
   @Test
