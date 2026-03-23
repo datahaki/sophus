@@ -10,7 +10,7 @@ import ch.alpine.tensor.mat.SquareMatrixQ;
 public enum UpperVectorize {
   ;
   /** @param tensor with rank at least 2
-   * @param index for instance 0 to include diagonal elements, or -1 to exclude diagonal elements
+   * @param index for instance 0 to include diagonal elements, or 1 to exclude diagonal elements
    * @return vector
    * @throws Exception if given tensor is not a tensor of rank at least 2 */
   public static Tensor of(Tensor tensor, int index) {

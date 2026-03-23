@@ -38,6 +38,7 @@ The library was developed with the following objectives in mind
 
 * Biinvariant mean
 * Random samples
+* Parallel transport: pole ladder, Schild's ladder
 
 ## 👥 Contributors
 
