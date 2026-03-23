@@ -30,6 +30,14 @@ The library was developed with the following objectives in mind
 * Special orthogonal group `SL(n)`
 * Special Euclidean groups `SE(2)`, `SE(2)` covering, `SE(n)`
 
+##### Curves
+
+* Clothoids
+
+## 🎉 Features
+
+* Biinvariant mean
+* Random samples
 
 ## 👥 Contributors
 

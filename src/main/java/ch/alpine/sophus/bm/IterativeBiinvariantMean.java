@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
@@ -67,7 +66,7 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.require(weights);
+    AffineVectorQ.INSTANCE.require(weights);
     return apply(sequence, weights).orElseThrow();
   }
 

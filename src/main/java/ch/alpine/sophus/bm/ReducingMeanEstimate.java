@@ -6,7 +6,6 @@ import java.util.PriorityQueue;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
-import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -33,7 +32,7 @@ public record ReducingMeanEstimate(GeodesicSpace geodesicSpace) implements MeanE
   /** @return */
   @Override
   public Tensor estimate(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.require(weights);
+    AffineVectorQ.INSTANCE.require(weights);
     VectorQ.requireLength(weights, sequence.length());
     PriorityQueue<WPoint> priorityQueue = new PriorityQueue<>();
     int index = 0;

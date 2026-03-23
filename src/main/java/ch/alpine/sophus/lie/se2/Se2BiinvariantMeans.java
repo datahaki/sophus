@@ -1,9 +1,9 @@
 // code by ob, jph
 package ch.alpine.sophus.lie.se2;
 
+import ch.alpine.sophus.bm.AffineVectorQ;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.so2.So2BiinvariantMeans;
-import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Tensor;
 
 /** Biinvariant mean for a sequence of points in SE(2), which is the solution to
@@ -17,7 +17,7 @@ import ch.alpine.tensor.Tensor;
  * 
  * <p>Careful: The weights are not checked to be affine.
  * 
- * @see AffineQ */
+ * @see AffineVectorQ */
 public enum Se2BiinvariantMeans implements BiinvariantMean {
   /** The Arsigny-formula which treats SO(2) locally as a vector space yields
    * better results in BiinvariantMeanCenter compared to the global formula.

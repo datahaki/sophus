@@ -14,7 +14,6 @@ import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.lie.rn.RGroup;
-import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -32,7 +31,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class ReducingMeanEstimateTest {
   private static Tensor _check(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.require(weights);
+    AffineVectorQ.INSTANCE.require(weights);
     ReducingMeanEstimate biinvariantMean = new ReducingMeanEstimate(RGroup.INSTANCE);
     Tensor mean1 = biinvariantMean.estimate(sequence, weights);
     Tensor mean2 = LinearBiinvariantMean.INSTANCE.mean(sequence, weights);
@@ -90,7 +89,7 @@ class ReducingMeanEstimateTest {
     for (int index = 0; index < len; ++index) {
       Tensor point = sequence.get(index);
       Tensor weights = UnitVector.of(len, index);
-      AffineQ.INSTANCE.require(weights);
+      AffineVectorQ.INSTANCE.require(weights);
       Tensor spd = biinvariantMean.mean(sequence, weights);
       Chop._08.requireClose(spd, point);
     }

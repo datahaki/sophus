@@ -2,10 +2,10 @@
 package ch.alpine.sophus.lie.sc;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.sophus.bm.AffineVectorQ;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.LieExponential;
-import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
@@ -32,7 +32,7 @@ public class ScGroup extends AbstractLieGroup {
   @Override
   public BiinvariantMean biinvariantMean() {
     return (Tensor sequence, Tensor weights) -> {
-      AffineQ.INSTANCE.require(weights);
+      AffineVectorQ.INSTANCE.require(weights);
       Exponential exponential = lieExponential();
       return exponential.exp(weights.dot(exponential.log().slash(sequence)));
     };

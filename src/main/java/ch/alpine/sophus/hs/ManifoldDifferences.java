@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.math;
+package ch.alpine.sophus.hs;
 
 import java.util.Objects;
 

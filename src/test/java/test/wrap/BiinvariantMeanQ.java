@@ -1,8 +1,8 @@
 // code by jph
 package test.wrap;
 
+import ch.alpine.sophus.bm.AffineVectorQ;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.AffineQ;
 import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Chop;
 
 public record BiinvariantMeanQ(BiinvariantMean biinvariantMean, Chop chop) {
   public void check(Tensor sequence, Tensor weights) {
-    AffineQ.INSTANCE.require(weights);
+    AffineVectorQ.INSTANCE.require(weights);
     Tensor expect = biinvariantMean.mean(sequence, weights);
     for (Tensor perm : Permutations.of(Range.of(0, weights.length()))) {
       TensorUnaryOperator permute = Permute.of(perm);

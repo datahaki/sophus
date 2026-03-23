@@ -1,5 +1,5 @@
 // code by ob, jph
-package ch.alpine.sophus.math;
+package ch.alpine.sophus.bm;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -12,10 +12,10 @@ import ch.alpine.tensor.sca.Chop;
  * affine hyperplane (or sometimes just an affine hyperplane)
  * 
  * check if entries add up to one */
-public class AffineQ extends ZeroDefectArrayQ {
-  public static final ZeroDefectArrayQ INSTANCE = new AffineQ(Tolerance.CHOP);
+public class AffineVectorQ extends ZeroDefectArrayQ {
+  public static final ZeroDefectArrayQ INSTANCE = new AffineVectorQ(Tolerance.CHOP);
 
-  public AffineQ(Chop chop) {
+  public AffineVectorQ(Chop chop) {
     super(1, chop);
   }
 
