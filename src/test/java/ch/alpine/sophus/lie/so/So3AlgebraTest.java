@@ -28,7 +28,7 @@ class So3AlgebraTest {
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = So3Exponential.vectorExp(x);
     Tensor mY = So3Exponential.vectorExp(y);
-    Tensor res = So3Exponential.vector_log(mX.dot(mY));
+    Tensor res = So3Exponential.INSTANCE.vectorLog().apply(mX.dot(mY));
     Tensor basis = MatrixAlgebra.of(So3Group.INSTANCE).basis();
     MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
     TensorBinaryOperator tbo = BakerCampbellHausdorff.of(matrixAlgebra.ad(), 6);

@@ -8,6 +8,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
@@ -61,12 +62,23 @@ public enum So3Exponential implements LieExponential {
     return ArcCos.FUNCTION.apply(value);
   }
 
+  /** inverse function of {@link #vectorExp(Tensor)}
+   * 
+   * @param q orthogonal with dimensions 3 x 3
+   * @return vector of length 3 */
+  @Override
+  public TensorUnaryOperator vectorLog() { // 3x3 OrthogonalMatrixQ
+    return q -> vectorize(log(q));
+  }
+
   @Override
   public ZeroDefectArrayQ isTangentQ() {
     return new AntisymmetricMatrixQ(Chop._10);
   }
 
-  /** @param vector of length 3
+  /** inverse function of {@link #vector_log(Tensor)}
+   * 
+   * @param vector of length 3
    * @return orthogonal matrix with dimensions 3 x 3 */
   public static Tensor vectorExp(Tensor vector) {
     Scalar beta = Vector2Norm.of(vector);
@@ -76,10 +88,6 @@ public enum So3Exponential implements LieExponential {
     Scalar r2 = Sqrt.FUNCTION.apply(h2.multiply(h2).multiply(HALF));
     Tensor X2 = Cross.skew3(vector.multiply(r2));
     return ID3.add(X1).add(X2.dot(X2));
-  }
-
-  public static Tensor vector_log(Tensor q) {
-    return vectorize(INSTANCE.log(q));
   }
 
   /** @param log 3 x 3 matrix in so(3), or 4 x 4 matrix in se(3)

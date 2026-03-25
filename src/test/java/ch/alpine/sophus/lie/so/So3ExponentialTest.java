@@ -50,7 +50,7 @@ class So3ExponentialTest {
     Tensor y = Tensors.vector(0.02, -0.1, -0.04);
     Tensor mX = So3Exponential.vectorExp(x);
     Tensor mY = So3Exponential.vectorExp(y);
-    Tensor res = So3Exponential.vector_log(mX.dot(mY));
+    Tensor res = So3Exponential.INSTANCE.vectorLog().apply(mX.dot(mY));
     Tensor ad = LeviCivitaTensor.of(3).negate().maps(N.DOUBLE);
     Scalar cmp = RealScalar.ONE;
     for (int degree = 1; degree < 6; ++degree) {
@@ -76,7 +76,7 @@ class So3ExponentialTest {
   void testLog() {
     Tensor vector = Tensors.vector(0.2, 0.3, -0.4);
     Tensor matrix = So3Exponential.vectorExp(vector);
-    Tensor result = So3Exponential.vector_log(matrix);
+    Tensor result = So3Exponential.INSTANCE.vectorLog().apply(matrix);
     assertEquals(result, vector);
   }
 
@@ -148,7 +148,7 @@ class So3ExponentialTest {
     Tensor vec = Tensors.vector(.3, .5, -0.4);
     Tensor matrix = So3Exponential.vectorExp(vec);
     Tensor lom = So3Exponential.INSTANCE.log(matrix);
-    Tensor log = So3Exponential.vector_log(matrix);
+    Tensor log = So3Exponential.INSTANCE.vectorLog().apply(matrix);
     Chop._14.requireClose(vec, log);
     Chop._14.requireClose(lom, Cross.skew3(vec));
   }
