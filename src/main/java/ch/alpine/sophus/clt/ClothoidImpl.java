@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Abs;
  * For parameter 1, the curve evaluates to q.
  * 
  * Reference: U. Reif slides */
-/* package */ class ClothoidImpl implements Clothoid {
+class ClothoidImpl implements Clothoid {
   private final Tensor xya;
   private final LagrangeQuadratic lagrangeQuadratic;
   private final Tensor diff;

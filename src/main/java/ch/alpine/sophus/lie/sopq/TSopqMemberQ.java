@@ -6,7 +6,7 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
 import ch.alpine.tensor.sca.Chop;
 
-/* package */ class TSopqMemberQ extends ZeroDefectSquareMatrixQ {
+class TSopqMemberQ extends ZeroDefectSquareMatrixQ {
   private final Tensor form;
 
   public TSopqMemberQ(int p, int q) {

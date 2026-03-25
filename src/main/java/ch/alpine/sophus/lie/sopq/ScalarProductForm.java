@@ -6,7 +6,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 
-/* package */ enum ScalarProductForm {
+enum ScalarProductForm {
   ;
   /** @param p
    * @param q

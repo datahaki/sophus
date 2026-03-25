@@ -14,7 +14,7 @@ import ch.alpine.tensor.num.ReIm;
 
 /** Reference:
  * Ulrich Reif slides */
-/* package */ abstract class ClothoidCurve implements ScalarTensorFunction {
+abstract class ClothoidCurve implements ScalarTensorFunction {
   protected static final Scalar _1 = RealScalar.of(1.0);
   // ---
   private final Tensor pxy;

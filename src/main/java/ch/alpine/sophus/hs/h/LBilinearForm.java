@@ -17,7 +17,7 @@ import ch.alpine.tensor.red.Total;
  * 
  * Reference:
  * "Barycentric Subspace Analysis on Manifolds" by Xavier Pennec, 2016 */
-/* package */ enum LBilinearForm implements BilinearForm {
+enum LBilinearForm implements BilinearForm {
   INSTANCE;
 
   /** for all p, q in H^n one has <u|v> <= -1, with equality if and only if p = q.

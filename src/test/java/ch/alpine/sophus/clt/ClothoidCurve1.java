@@ -6,7 +6,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 
 /** 1-point Gauss Legendre quadrature on interval [0, 1] */
-/* package */ class ClothoidCurve1 extends ClothoidCurve {
+class ClothoidCurve1 extends ClothoidCurve {
   private static final Scalar HALF = RealScalar.of(0.5);
 
   // ---

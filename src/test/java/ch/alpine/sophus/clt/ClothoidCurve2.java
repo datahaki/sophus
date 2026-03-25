@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** 2-point Gauss Legendre quadrature on interval [0, 1] */
-/* package */ class ClothoidCurve2 extends ClothoidCurve {
+class ClothoidCurve2 extends ClothoidCurve {
   private static final Scalar HALF = RealScalar.of(0.5);
   private static final Tensor X = Tensors.vector(-1, 1) //
       .multiply(Sqrt.FUNCTION.apply(Rational.of(1, 3))) //

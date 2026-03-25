@@ -6,7 +6,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-/* package */ class Se2AdjointComp implements TensorUnaryOperator {
+class Se2AdjointComp implements TensorUnaryOperator {
   private final Tensor matrix;
 
   /** @param xya element from Lie Group SE2 as coordinates {x, y, omega} */

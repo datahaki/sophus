@@ -15,7 +15,7 @@ import ch.alpine.tensor.num.ReIm;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** original implementation */
-/* package */ enum ComplexClothoidCurve implements GeodesicSpace {
+enum ComplexClothoidCurve implements GeodesicSpace {
   INSTANCE;
 
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));

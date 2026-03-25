@@ -6,7 +6,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.MatrixDotTranspose;
 
 /** projects a square matrix to an element from the Lie algebra SO(p, q) */
-/* package */ class TSopqProject implements TensorUnaryOperator {
+class TSopqProject implements TensorUnaryOperator {
   private final Tensor form;
 
   public TSopqProject(int p, int q) {

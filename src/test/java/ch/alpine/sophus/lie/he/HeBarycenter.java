@@ -11,7 +11,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.re.LinearSolve;
 
 /** HeBarycenter remains only for testing purpose. */
-/* package */ class HeBarycenter implements TensorUnaryOperator {
+class HeBarycenter implements TensorUnaryOperator {
   private final Tensor lhs;
 
   public HeBarycenter(Tensor sequence) {

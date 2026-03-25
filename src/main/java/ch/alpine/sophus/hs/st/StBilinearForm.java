@@ -14,7 +14,7 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Re;
 
-/* package */ class StBilinearForm implements BilinearForm, Serializable {
+class StBilinearForm implements BilinearForm, Serializable {
   private final Tensor c;
 
   public StBilinearForm(Tensor p) {

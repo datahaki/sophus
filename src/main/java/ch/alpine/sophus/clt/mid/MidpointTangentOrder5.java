@@ -11,7 +11,7 @@ import ch.alpine.tensor.api.ScalarBinaryOperator;
  * 
  * function is odd in s1
  * function is even in s2 */
-/* package */ enum MidpointTangentOrder5 implements ScalarBinaryOperator {
+enum MidpointTangentOrder5 implements ScalarBinaryOperator {
   INSTANCE;
 
   private static final Scalar F10 = RealScalar.of(-1.5006205701038964);

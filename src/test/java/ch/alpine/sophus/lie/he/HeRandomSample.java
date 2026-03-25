@@ -10,7 +10,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
 
-/* package */ class HeRandomSample implements RandomSampleInterface, Serializable {
+class HeRandomSample implements RandomSampleInterface, Serializable {
   private final int n;
   private final Distribution distribution;
 

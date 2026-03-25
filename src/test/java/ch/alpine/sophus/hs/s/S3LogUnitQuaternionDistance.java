@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.exp.Log;
  * 
  * <p>Reference:
  * https://en.wikipedia.org/wiki/Quaternion */
-/* package */ enum S3LogUnitQuaternionDistance implements Metric<Quaternion> {
+enum S3LogUnitQuaternionDistance implements Metric<Quaternion> {
   INSTANCE;
 
   @Override // from Metric

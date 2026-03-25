@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
  * 
  * <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/RotationMatrix.html">RotationMatrix</a> */
-/* package */ enum RotationMatrix3D {
+enum RotationMatrix3D {
   ;
   private static final Tensor ID3 = IdentityMatrix.of(3);
 

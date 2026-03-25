@@ -38,7 +38,7 @@ import ch.alpine.tensor.sca.Chop;
  * by Helga Baum, 2005
  * 
  * Reference: geomstats */
-/* package */ class StTangentSpace implements TangentSpace, Serializable {
+class StTangentSpace implements TangentSpace, Serializable {
   private final Tensor p;
   private final Tensor pt;
   private final TStMemberQ tStMemberQ;

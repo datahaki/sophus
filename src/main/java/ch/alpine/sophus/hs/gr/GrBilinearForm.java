@@ -8,7 +8,7 @@ import ch.alpine.tensor.mat.MatrixDotConjugateTranspose;
 import ch.alpine.tensor.red.Trace;
 import ch.alpine.tensor.sca.Re;
 
-/* package */ enum GrBilinearForm implements BilinearForm {
+enum GrBilinearForm implements BilinearForm {
   INSTANCE;
 
   @Override

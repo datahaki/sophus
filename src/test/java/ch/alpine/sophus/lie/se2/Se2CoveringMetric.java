@@ -9,7 +9,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 /** mixes units
  * 
  * ||log(p^-1.q)|| */
-/* package */ enum Se2CoveringMetric implements TensorMetric {
+enum Se2CoveringMetric implements TensorMetric {
   INSTANCE;
 
   @Override // from TensorMetric

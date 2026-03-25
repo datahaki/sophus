@@ -8,7 +8,7 @@ import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
 
-/* package */ enum PGlExponential implements LieExponential {
+enum PGlExponential implements LieExponential {
   INSTANCE;
 
   @Override // from Exponential

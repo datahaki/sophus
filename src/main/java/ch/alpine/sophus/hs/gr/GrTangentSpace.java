@@ -43,7 +43,7 @@ public class GrTangentSpace implements TangentSpace, Serializable {
     return BasisTransform.ofMatrix(p, MatrixExp.of(MatrixBracket.of(p, v)));
   }
 
-  /* package */ Tensor mLog(Tensor q) {
+  Tensor mLog(Tensor q) {
     return MatrixLog.of(bic(q).dot(p2_id));
   }
 

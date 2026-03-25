@@ -9,7 +9,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarBinaryOperator;
 
 /** @param binaryOperator mapping (s1, s2) -> lambda */
-/* package */ record CustomClothoidQuadratic(ScalarBinaryOperator binaryOperator) implements ClothoidQuadratic, Serializable {
+record CustomClothoidQuadratic(ScalarBinaryOperator binaryOperator) implements ClothoidQuadratic, Serializable {
   private static final Scalar HALF = RealScalar.of(0.5);
 
   public static ClothoidQuadratic of(Scalar lambda) {

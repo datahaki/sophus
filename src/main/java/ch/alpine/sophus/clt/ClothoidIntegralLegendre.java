@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
  * @param lagrangeQuadratic typically a quadratic polynomial
  * 
  * @see LagrangeQuadratic */
-/* package */ record ClothoidIntegralLegendre(LagrangeQuadratic lagrangeQuadratic) implements ScalarUnaryOperator, ClothoidIntegral {
+record ClothoidIntegralLegendre(LagrangeQuadratic lagrangeQuadratic) implements ScalarUnaryOperator, ClothoidIntegral {
   private static final Scalar _1 = RealScalar.of(1.0);
   private static final Tensor W = Tensors.vector(5, 8, 5).divide(RealScalar.of(18.0));
   private static final Tensor X = Tensors.vector(-1, 0, 1) //

@@ -98,7 +98,7 @@ public class SpdTangentSpace implements TangentSpace, Serializable {
    * @param v
    * @return
    * @see BasisTransform#ofForm(Tensor, Tensor) */
-  /* package */ static Tensor basis(Tensor matrix, Tensor v) {
+  static Tensor basis(Tensor matrix, Tensor v) {
     return Symmetrize.of(v.dot(matrix).dot(v));
   }
 
@@ -113,7 +113,7 @@ public class SpdTangentSpace implements TangentSpace, Serializable {
    * @return the 2-norm of the eigenvalues of log_p(q) == log_0(bt(q, pn))
    * @see SpdMetric */
   @PackageTestAccess
-  /* package */ Scalar distance(Tensor q) {
+  Scalar distance(Tensor q) {
     return Spd0Exponential.INSTANCE.distance(basis(q, pn));
   }
 }

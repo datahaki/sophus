@@ -13,7 +13,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
  * <p>In order to obtain samples of a clothoid that interpolates p and q the
  * recommended method is to use LaneRiesenfeldCurveSubdivision with
  * Clothoid2 and degrees 1 or 3. */
-/* package */ enum Clothoid2 implements GeodesicSpace {
+enum Clothoid2 implements GeodesicSpace {
   INSTANCE;
 
   @Override // from GeodesicInterface

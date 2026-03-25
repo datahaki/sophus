@@ -15,7 +15,7 @@ import ch.alpine.tensor.red.Trace;
  * Affine-invariant metric
  * Fisher–Rao metric (in statistics)
  * Cartan/Killing–induced metric on the symmetric space. */
-/* package */ class SpdBilinearForm implements BilinearForm, Serializable {
+class SpdBilinearForm implements BilinearForm, Serializable {
   private final Tensor pinv;
 
   public SpdBilinearForm(Tensor p) {

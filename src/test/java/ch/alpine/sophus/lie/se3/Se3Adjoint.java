@@ -15,7 +15,7 @@ import ch.alpine.tensor.mat.re.Inverse;
  * 
  * code based on derivation by Ethan Eade
  * "Lie Groups for 2D and 3D Transformations", p. 11 */
-/* package */ class Se3Adjoint implements TensorUnaryOperator {
+class Se3Adjoint implements TensorUnaryOperator {
   /** @param g element from Lie Group SE3 as 4x4 affine matrix
    * @return */
   public static TensorUnaryOperator forward(Tensor g) {
@@ -31,7 +31,7 @@ import ch.alpine.tensor.mat.re.Inverse;
   private final Tensor R;
   private final Tensor t;
 
-  /* package */ Se3Adjoint(Tensor R, Tensor t) {
+  Se3Adjoint(Tensor R, Tensor t) {
     this.R = MatrixQ.require(R);
     this.t = VectorQ.requireLength(t, 3);
   }

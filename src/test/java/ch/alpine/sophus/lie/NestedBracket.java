@@ -3,7 +3,7 @@ package ch.alpine.sophus.lie;
 
 import ch.alpine.tensor.Tensor;
 
-/* package */ record NestedBracket(Tensor ad) {
+record NestedBracket(Tensor ad) {
   public Tensor l2r(Tensor x0, Tensor... xs) {
     Tensor y = x0;
     for (Tensor x : xs)

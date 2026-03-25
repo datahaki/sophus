@@ -7,7 +7,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.api.ScalarBinaryOperator;
 import ch.alpine.tensor.num.Pi;
 
-/* package */ enum MidpointTangentLayers implements ScalarBinaryOperator {
+enum MidpointTangentLayers implements ScalarBinaryOperator {
   INSTANCE;
 
   @Override

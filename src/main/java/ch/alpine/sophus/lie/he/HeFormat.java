@@ -12,7 +12,7 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Integers;
 
 /** class used for group elements as well as algebra elements */
-/* package */ record HeFormat(Tensor x, Tensor y, Scalar z) implements Serializable {
+record HeFormat(Tensor x, Tensor y, Scalar z) implements Serializable {
   /** @param xyz vector of length 2 * n + 1
    * @return */
   public static HeFormat of(Tensor xyz) {

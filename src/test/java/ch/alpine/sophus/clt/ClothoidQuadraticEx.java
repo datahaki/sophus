@@ -6,7 +6,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 
-/* package */ class ClothoidQuadraticEx implements ScalarUnaryOperator {
+class ClothoidQuadraticEx implements ScalarUnaryOperator {
   private static final Scalar N4 = RealScalar.of(-4);
   // ---
   private final Scalar b0;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
     return ComplexScalar.unit(angle(s));
   }
 
-  /* package */ Scalar angle(Scalar s) {
+  Scalar angle(Scalar s) {
     Scalar _s_1 = s.subtract(RealScalar.ONE);
     Scalar _2s_1 = s.add(_s_1);
     Scalar t1 = b0.multiply(_s_1).multiply(_2s_1);
