@@ -38,6 +38,7 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.nrm.AveragingWeights;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
+import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -214,23 +215,27 @@ class GrManifoldTest {
     for (Tensor point : sequence)
       GrManifold.INSTANCE.isPointQ().require(point);
   }
-  // @Test
-  // void testFromOToP() {
-  // int n = 5;
-  // for (int k = 0; k <= n; ++k) {
-  // int fk = k;
-  // Distribution distribution = UniformDistribution.unit();
-  // TGr0MemberQ tGr0MemberQ = new TGr0MemberQ(n, k);
-  // Tensor ov = tGr0MemberQ.project(RandomVariate.of(distribution, n, n));
-  // Tensor o = DiagonalMatrix.with(Tensors.vector(i -> Boole.of(i < fk), n));
-  // RandomSampleInterface randomSampleInterface = Grassmannian.of(n, k);
-  // Tensor p = RandomSample.of(randomSampleInterface);
-  // TensorUnaryOperator tensorUnaryOperator = GrManifold.INSTANCE.hsTransport().shift(o, p);
-  // Tensor pv = tensorUnaryOperator.apply(ov);
-  // TGrMemberQ tGrMemberQ = new TGrMemberQ(p);
-  // tGrMemberQ.requireMember(pv);
-  // }
-  // }
+
+  @Test
+  void testFromOToP() {
+    int n = 5;
+    for (int k = 0; k <= n; ++k) {
+      int fk = k;
+      Grassmannian grassmannian = new Grassmannian(n, k);
+      RandomSampleInterface randomSampleInterface = grassmannian.randomSampleInterface();
+      Tensor p = RandomSample.of(randomSampleInterface);
+      TGrMemberQ tGr0MemberQ = new TGrMemberQ(p);
+      Distribution distribution = UniformDistribution.unit();
+      Tensor ov = tGr0MemberQ.projection(RandomVariate.of(distribution, n, n));
+      tGr0MemberQ.require(ov);
+      Tensor o = DiagonalMatrix.full(Tensors.vector(i -> Boole.of(i < fk), n));
+      grassmannian.isPointQ().require(o);
+      TensorUnaryOperator tensorUnaryOperator = grassmannian.hsTransport().shift(p, o);
+      Tensor pv = tensorUnaryOperator.apply(ov);
+      TGrMemberQ tGrMemberQ = new TGrMemberQ(o);
+      tGrMemberQ.require(pv);
+    }
+  }
 
   @Test
   void testNonMemberFail() {
