@@ -12,21 +12,15 @@ import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.SnTransport;
 import ch.alpine.sophus.hs.s.UnitVectorQ;
 import ch.alpine.sophus.math.FrobeniusForm;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.chq.MemberQ;
-import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.tri.Sin;
 
 /** real projective plane
  * 
@@ -52,15 +46,9 @@ public class RpManifold implements HomogeneousSpace, MetricManifold {
 
   @Override
   public final ScalarTensorFunction curve(Tensor p, Tensor q) {
-    // TODO SOPHUS ALG duplicate with SnManifold, possibly share baseclass with SnManifold extend
-    Scalar a = SnManifold.INSTANCE.distance(p, q);
-    if (Scalars.isZero(a)) // when p == q
-      return _ -> p.copy();
-    if (Tolerance.CHOP.isClose(a, Pi.VALUE))
-      throw new Throw(p, q); // when p == -q
-    return scalar -> Vector2Norm.NORMALIZE.apply(Tensors.of( //
-        Sin.FUNCTION.apply(a.multiply(RealScalar.ONE.subtract(scalar))), //
-        Sin.FUNCTION.apply(a.multiply(scalar))).dot(Tensors.of(p, q)));
+    Scalar dp = SnManifold.INSTANCE.distance(p, q);
+    Scalar dn = SnManifold.INSTANCE.distance(p, q.negate());
+    return SnManifold.INSTANCE.curve(p, Scalars.lessEquals(dp, dn) ? q : q.negate());
   }
 
   @Override
