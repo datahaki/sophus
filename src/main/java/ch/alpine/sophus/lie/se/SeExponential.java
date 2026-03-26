@@ -22,12 +22,12 @@ enum SeExponential implements LieExponential {
     return MatrixLog.of(q);
   }
 
-  @Override
+  @Override // from Exponential
   public TensorUnaryOperator vectorLog() {
     return q -> UpperVectorize.of(log(q), 1);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSeMemberQ.INSTANCE;
   }

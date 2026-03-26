@@ -53,7 +53,7 @@ class StTangentSpace implements TangentSpace, Serializable {
     tStMemberQ = new TStMemberQ(p);
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor basePoint() {
     return p;
   }
@@ -143,7 +143,7 @@ class StTangentSpace implements TangentSpace, Serializable {
     throw new Throw(p, q);
   }
 
-  @Override
+  @Override // from Exponential
   public TStMemberQ isTangentQ() {
     return tStMemberQ;
   }

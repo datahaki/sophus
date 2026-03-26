@@ -22,7 +22,7 @@ enum RnExponential implements LieExponential {
     return y.copy();
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     // TODO this is does not corresponds to RGroup which allows scalar, and matrices
     return VectorQ.INSTANCE;

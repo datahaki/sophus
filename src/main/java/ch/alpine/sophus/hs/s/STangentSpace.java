@@ -36,7 +36,6 @@ public class STangentSpace implements TangentSpace, Serializable {
   private final SnAngle snAngle;
   private final TensorUnaryOperator projection;
 
-  /** only needed for vectorLog */
   /** @param p on S^n
    * @throws Exception if x is not a vector of Euclidean norm 1 */
   public STangentSpace(Tensor p) {
@@ -46,12 +45,12 @@ public class STangentSpace implements TangentSpace, Serializable {
     projection = VectorProjection.on(p);
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor basePoint() {
     return p;
   }
 
-  @Override // from Exponential
+  @Override // from TangentSpace
   public Tensor exp(Tensor v) {
     isTangentQ().require(v);
     Scalar vn = Vector2Norm.of(v);
@@ -59,7 +58,7 @@ public class STangentSpace implements TangentSpace, Serializable {
   }
 
   /** @throws Exception if y not member of Sn */
-  @Override // from Exponential
+  @Override // from TangentSpace
   public Tensor log(Tensor y) {
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(snAngle.apply(y));
   }
@@ -68,7 +67,7 @@ public class STangentSpace implements TangentSpace, Serializable {
     return SnRotationMatrix.of(p, q);
   }
 
-  @Override
+  @Override // from Exponential
   public TSnMemberQ isTangentQ() {
     return tSnMemberQ;
   }

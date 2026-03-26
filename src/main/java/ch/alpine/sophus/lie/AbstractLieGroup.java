@@ -24,7 +24,7 @@ public abstract class AbstractLieGroup implements LieGroup, Serializable {
     return new LieExp() {
       Tensor pinv;
 
-      @Override
+      @Override // from TangentSpace
       public Tensor basePoint() {
         return p;
       }

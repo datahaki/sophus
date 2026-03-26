@@ -21,7 +21,7 @@ enum PGlExponential implements LieExponential {
     return MatrixLog.of(matrix);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSlMemberQ.INSTANCE; // sl according to chatgpt
   }

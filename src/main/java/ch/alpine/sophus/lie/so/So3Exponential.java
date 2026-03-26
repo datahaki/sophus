@@ -66,12 +66,12 @@ public enum So3Exponential implements LieExponential {
    * 
    * @param q orthogonal with dimensions 3 x 3
    * @return vector of length 3 */
-  @Override
+  @Override // from Exponential
   public TensorUnaryOperator vectorLog() { // 3x3 OrthogonalMatrixQ
     return q -> vectorize(log(q));
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return new AntisymmetricMatrixQ(Chop._10);
   }

@@ -10,17 +10,17 @@ import ch.alpine.tensor.mat.ex.MatrixLog;
 public enum SlExponential implements LieExponential {
   INSTANCE;
 
-  @Override
+  @Override // from Exponential
   public Tensor exp(Tensor v) {
     return MatrixExp.of(v);
   }
 
-  @Override
+  @Override // from Exponential
   public Tensor log(Tensor q) {
     return MatrixLog.of(q);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSlMemberQ.INSTANCE;
   }

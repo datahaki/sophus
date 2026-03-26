@@ -32,7 +32,7 @@ public class HTangentSpace implements TangentSpace, Serializable {
     p_h = this.pw.toPoint();
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor basePoint() {
     return pw.p();
   }
@@ -65,7 +65,7 @@ public class HTangentSpace implements TangentSpace, Serializable {
     return Drop.tail(log, 1);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return VectorQ.ofLength(pw.p().length());
   }

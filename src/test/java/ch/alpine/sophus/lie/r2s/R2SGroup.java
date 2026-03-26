@@ -54,7 +54,7 @@ public class R2SGroup extends AbstractLieGroup {
           z.subtract(x.multiply(y).multiply(Rational.HALF)));
     }
 
-    @Override
+    @Override // from Exponential
     public ZeroDefectArrayQ isTangentQ() {
       return VectorQ.ofLength(3);
     }

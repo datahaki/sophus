@@ -57,8 +57,8 @@ public class SnManifold implements HomogeneousSpace, MetricManifold, Serializabl
   }
 
   @Override // from Manifold
-  public TangentSpace tangentSpace(Tensor point) {
-    return new STangentSpace(point);
+  public TangentSpace tangentSpace(Tensor p) {
+    return new STangentSpace(p);
   }
 
   @Override // from HomogeneousSpace

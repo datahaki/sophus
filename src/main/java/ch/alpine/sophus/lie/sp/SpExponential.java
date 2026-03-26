@@ -20,7 +20,7 @@ enum SpExponential implements LieExponential {
     return MatrixLog.of(matrix);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSpMemberQ.INSTANCE;
   }

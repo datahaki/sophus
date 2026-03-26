@@ -21,12 +21,12 @@ enum HeExponential implements LieExponential {
     return HeFormat.of(xyz).log().toCoordinate();
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return VectorQ.INSTANCE;
   }
 
-  @Override
+  @Override // from LieExponential
   public Tensor gl_representation(Tensor uvw) {
     HeFormat heFormat = HeFormat.of(uvw);
     int n = heFormat.x().length();

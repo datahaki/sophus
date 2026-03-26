@@ -51,7 +51,7 @@ public class GlGroup extends AbstractLieGroup {
       return MatrixLog.of(matrix);
     }
 
-    @Override
+    @Override // from Exponential
     public ZeroDefectArrayQ isTangentQ() {
       return SquareMatrixQ.INSTANCE;
     }

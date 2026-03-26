@@ -88,12 +88,12 @@ public class Se2CoveringGroup extends AbstractLieGroup implements VectorEncoding
           be);
     }
 
-    @Override
+    @Override // from Exponential
     public ZeroDefectArrayQ isTangentQ() {
       return VectorQ.ofLength(3);
     }
 
-    @Override
+    @Override // from LieExponential
     public Tensor gl_representation(Tensor x) {
       Scalar be = x.Get(2);
       if (Scalars.isZero(be))

@@ -27,7 +27,7 @@ enum SoExponential implements LieExponential {
     return q -> UpperVectorize.of(log(q), 1);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSoMemberQ.INSTANCE;
   }

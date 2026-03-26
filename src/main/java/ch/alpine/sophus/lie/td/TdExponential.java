@@ -41,12 +41,12 @@ enum TdExponential implements LieExponential {
         log_l);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return VectorQ.INSTANCE;
   }
 
-  @Override
+  @Override // from LieExponential
   public Tensor gl_representation(Tensor dt_dlambda) {
     Tensor dt = Drop.tail(dt_dlambda, 1);
     int n = dt.length();

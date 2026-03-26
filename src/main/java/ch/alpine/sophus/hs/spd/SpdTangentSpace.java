@@ -51,7 +51,7 @@ public class SpdTangentSpace implements TangentSpace, Serializable {
     pn = matrixSqrt.sqrt_inverse();
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor basePoint() {
     return p;
   }
@@ -74,12 +74,12 @@ public class SpdTangentSpace implements TangentSpace, Serializable {
     return basis(Spd0Exponential.INSTANCE.log(basis(q, pn)), pp);
   }
 
-  @Override
+  @Override // from Exponential
   public TensorUnaryOperator vectorLog() {
     return q -> UpperVectorize.of(log(q), 0);
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSpdMemberQ.INSTANCE;
   }

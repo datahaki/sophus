@@ -30,17 +30,17 @@ public class VectorizedGroup extends AbstractLieGroup implements MetricManifold,
   @Override
   public LieExponential lieExponential() {
     return new LieExponential() {
-      @Override
+      @Override // from Exponential
       public Tensor exp(Tensor v) {
         return exponential0.exp(matrixAlgebra.toMatrix(v));
       }
 
-      @Override
+      @Override // from Exponential
       public Tensor log(Tensor q) {
         return matrixAlgebra.toVector(exponential0.log(q));
       }
 
-      @Override
+      @Override // from Exponential
       public ZeroDefectArrayQ isTangentQ() {
         return VectorQ.INSTANCE;
       }

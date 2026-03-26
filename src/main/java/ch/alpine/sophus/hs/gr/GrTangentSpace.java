@@ -32,7 +32,7 @@ public class GrTangentSpace implements TangentSpace, Serializable {
     p2_id = bic(p);
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor basePoint() {
     return p;
   }
@@ -53,12 +53,12 @@ public class GrTangentSpace implements TangentSpace, Serializable {
     return MatrixBracket.of(mLog(q).multiply(Rational.HALF), p);
   }
 
-  @Override
+  @Override // from Exponential
   public TensorUnaryOperator vectorLog() {
     return q -> UpperVectorize.of(log(q), 0);
   }
 
-  @Override
+  @Override // from Exponential
   public TGrMemberQ isTangentQ() {
     return tGrMemberQ;
   }

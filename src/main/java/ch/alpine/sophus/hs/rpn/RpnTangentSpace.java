@@ -37,7 +37,7 @@ class RpnTangentSpace implements TangentSpace, Serializable {
       throw new Throw(p);
   }
 
-  @Override
+  @Override // from TangentSpace
   public Tensor basePoint() {
     return p;
   }
@@ -65,7 +65,7 @@ class RpnTangentSpace implements TangentSpace, Serializable {
     return NORMALIZE_UNLESS_ZERO.apply(y.subtract(projection.apply(y))).multiply(d_xyn);
   }
 
-  @Override
+  @Override // from Exponential
   public TSnMemberQ isTangentQ() {
     return tSnMemberQ;
   }

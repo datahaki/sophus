@@ -49,7 +49,7 @@ public enum Se3Exponential implements LieExponential {
     return Se3Matrix.ofT(wx, Vi.dot(t));
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSeMemberQ.INSTANCE;
   }

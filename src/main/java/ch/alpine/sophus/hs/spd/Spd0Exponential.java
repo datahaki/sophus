@@ -47,7 +47,7 @@ public enum Spd0Exponential implements Exponential, BilinearForm {
     return Symmetrize.of(MatrixLog.ofSymmetric(q));
   }
 
-  @Override
+  @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
     return TSpdMemberQ.INSTANCE; // not reached in tests
   }
