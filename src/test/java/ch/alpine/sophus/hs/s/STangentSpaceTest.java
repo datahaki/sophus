@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-class SnExponentialTest {
+class STangentSpaceTest {
   @Test
   void test2D() {
     STangentSpace snExp = new STangentSpace(UnitVector.of(2, 0));

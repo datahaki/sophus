@@ -298,4 +298,13 @@ class Se2CoveringGroupTest {
     // System.out.println(nu);
     // System.out.println(dL);
   }
+
+  @Test
+  void testLieIntegrator() {
+    Tensor g = RandomVariate.of(UniformDistribution.unit(), 3);
+    Tensor x = RandomVariate.of(UniformDistribution.unit(), 3);
+    Tensor p1 = Se2Group.INSTANCE.tangentSpace(g).exp(x);
+    Tensor p2 = Se2Group.INSTANCE.combine(g, Se2CoveringGroup.INSTANCE.lieExponential().exp(x));
+    Tolerance.CHOP.requireClose(p1, p2);
+  }
 }

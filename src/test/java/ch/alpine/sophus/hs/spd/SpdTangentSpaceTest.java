@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-class SpdExponentialTest {
+class SpdTangentSpaceTest {
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 4 })
   void testSimple(int n) {

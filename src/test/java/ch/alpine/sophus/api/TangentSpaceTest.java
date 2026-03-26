@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,7 +9,6 @@ import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.lie.rn.RGroup;
@@ -31,7 +30,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-class HsDesignTest {
+class TangentSpaceTest {
   @Test
   void testRn() {
     Manifold manifold = RGroup.INSTANCE;

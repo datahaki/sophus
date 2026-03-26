@@ -13,7 +13,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-class HExponentialTest {
+class HTangentSpaceTest {
   @ParameterizedTest
   @ValueSource(ints = { 1, 2, 3, 5 })
   void testZero(int d) {

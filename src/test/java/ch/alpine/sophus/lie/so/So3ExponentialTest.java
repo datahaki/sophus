@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -260,6 +261,18 @@ class So3ExponentialTest {
     Tolerance.CHOP.requireClose(Orthogonalize.of(matrix), matrix);
     Tolerance.CHOP.requireClose(Orthogonalize.usingSvd(matrix), matrix);
     Tolerance.CHOP.requireClose(Orthogonalize.usingPD(matrix), matrix);
+  }
+
+  @Test
+  void testSimple123() {
+    Tensor sequence = Tensors.of( //
+        So3Exponential.vectorExp(Tensors.vector(+1 + 0.3, 0, 0)), //
+        So3Exponential.vectorExp(Tensors.vector(+0 + 0.3, 0, 0)), //
+        So3Exponential.vectorExp(Tensors.vector(-1 + 0.3, 0, 0)));
+    Tensor log = MeanDefect.of( //
+        sequence, Tensors.vector(0.25, 0.5, 0.25), //
+        So3Group.INSTANCE.tangentSpace(So3Exponential.vectorExp(Tensors.vector(+0.3, 0, 0)))).tangent();
+    Chop._10.requireAllZero(log);
   }
 
   @Test

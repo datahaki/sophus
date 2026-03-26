@@ -1,11 +1,10 @@
 // code by jph
-package ch.alpine.sophus.hs;
+package ch.alpine.sophus.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;

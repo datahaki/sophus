@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.bm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,11 +15,13 @@ import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.sophus.hs.spd.SpdPhongMean;
 import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.UnitVector;
+import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.ext.ArgMax;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.NormalizeTotal;
@@ -81,6 +84,55 @@ class ReducingMeanEstimateTest {
 
   @Test
   void testLagrangeProperty() {
+    int d = 2;
+    int len = 5 + ThreadLocalRandom.current().nextInt(3);
+    RandomSampleInterface rsi = new SpdNManifold(d).randomSampleInterface();
+    Tensor sequence = RandomSample.of(rsi, len);
+    BiinvariantMean biinvariantMean = SpdManifold.INSTANCE.biinvariantMean();
+    for (int index = 0; index < len; ++index) {
+      Tensor point = sequence.get(index);
+      Tensor weights = UnitVector.of(len, index);
+      AffineVectorQ.INSTANCE.require(weights);
+      Tensor spd = biinvariantMean.mean(sequence, weights);
+      Chop._08.requireClose(spd, point);
+    }
+  }
+
+  @Test
+  void testExact() {
+    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(2, 3, 0, 8, 0, 7, 1));
+    Tensor sequence = Tensors.vector(0, 1, 2, 3, 4, 5, 6);
+    Tensor mean = _check(sequence, weights);
+    ExactScalarQ.require((Scalar) mean);
+  }
+
+  @Test
+  void testExact2() {
+    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(1, -1, 1));
+    Tensor sequence = Tensors.vector(3, 4, 10);
+    Tensor mean = _check(sequence, weights);
+    ExactScalarQ.require((Scalar) mean);
+    assertEquals(mean, RealScalar.of(9));
+  }
+
+  @Test
+  void testExact3() {
+    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(-1, 1, 1));
+    Tensor sequence = Tensors.vector(3, 4, 10);
+    Tensor mean = _check(sequence, weights);
+    ExactScalarQ.require((Scalar) mean);
+  }
+
+  @Test
+  void testExact4() {
+    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(1, 1, -1));
+    Tensor sequence = Tensors.vector(3, 4, 10);
+    Tensor mean = _check(sequence, weights);
+    ExactScalarQ.require((Scalar) mean);
+  }
+
+  @Test
+  void testLagrangeProperty2() {
     int d = 2;
     int len = 5 + ThreadLocalRandom.current().nextInt(3);
     RandomSampleInterface rsi = new SpdNManifold(d).randomSampleInterface();

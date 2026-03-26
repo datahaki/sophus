@@ -1,11 +1,10 @@
 // code by jph
-package ch.alpine.sophus.math;
+package ch.alpine.sophus.bm;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.bm.AffineVectorQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.HilbertMatrix;

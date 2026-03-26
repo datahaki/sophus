@@ -15,16 +15,29 @@ import ch.alpine.sophus.lie.so.SoNGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
 import ch.alpine.tensor.mat.HilbertMatrix;
+import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.TriangularDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class SpdNManifoldTest {
+  @Test
+  void test123() {
+    int n = 3;
+    Tensor g = IdentityMatrix.inplaceAdd(RandomVariate.of(NormalDistribution.of(0, 0.1), n, n));
+    SpdIsometry spdIso = new SpdIsometry(g);
+    SpdNManifold spdNManifold = new SpdNManifold(n);
+    Tensor p = RandomSample.of(spdNManifold.randomSampleInterface());
+    spdNManifold.isPointQ().require(p);
+    spdNManifold.isPointQ().require(spdIso.apply(p));
+  }
+
   @Test
   void test() {
     SpdNManifold spdNManifold = new SpdNManifold(3);

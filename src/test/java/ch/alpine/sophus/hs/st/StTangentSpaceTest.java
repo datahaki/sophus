@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-class StExponentialTest {
+class StTangentSpaceTest {
   @ParameterizedTest
   @ValueSource(ints = { 2, 3, 4, 5, 6, 10 })
   void testSimple(int n) {
