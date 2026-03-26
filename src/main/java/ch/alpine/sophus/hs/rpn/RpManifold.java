@@ -8,8 +8,8 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.hs.PoleLadder;
 import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.SnTransport;
 import ch.alpine.sophus.hs.s.UnitVectorQ;
 import ch.alpine.sophus.math.FrobeniusForm;
 import ch.alpine.tensor.RealScalar;
@@ -47,7 +47,7 @@ public class RpManifold implements HomogeneousSpace, MetricManifold {
 
   @Override
   public final HsTransport hsTransport() {
-    return new PoleLadder(this);
+    return SnTransport.INSTANCE;
   }
 
   @Override

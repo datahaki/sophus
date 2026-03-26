@@ -8,6 +8,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.ZeroDefectArrayQ;
 import ch.alpine.tensor.sca.Chop;
 
+/** a tangent vector at a point p of the sphere S^d is
+ * a (d+1)-vector that is orthogonal to p in R^(d+1) */
 public class TSnMemberQ extends ZeroDefectArrayQ {
   private final Tensor p;
 

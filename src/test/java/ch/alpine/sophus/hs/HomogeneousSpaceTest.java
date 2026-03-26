@@ -3,6 +3,7 @@ package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -169,10 +170,11 @@ class HomogeneousSpaceTest {
   @ParameterizedTest
   @MethodSource("homogeneousSpaces")
   void testTransport(SpecificHomogeneousSpace homogeneousSpace) {
+    Random random = new Random(2);
     RandomSampleInterface rsi = homogeneousSpace.randomSampleInterface();
-    final Tensor p = RandomSample.of(rsi);
+    final Tensor p = RandomSample.of(rsi, random);
     final TangentSpace exp_p = homogeneousSpace.tangentSpace(p);
-    final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, 0.05));
+    final Tensor q = RandomSample.of(LocalRandomSample.of(exp_p, 0.05), random);
     final TangentSpace exp_q = homogeneousSpace.tangentSpace(q);
     TensorUnaryOperator shift = homogeneousSpace.hsTransport().shift(p, q);
     {
@@ -187,6 +189,6 @@ class HomogeneousSpaceTest {
     Tensor pqb = shift.slash(sub_p.basis());
     ZeroDefectArrayQ zeroDefectArrayQ = LinearSubspaceMemberQ.of(sub_q, Chop._10);
     boolean success = pqb.stream().allMatch(zeroDefectArrayQ);
-    assumeTrue(success);
+    assertTrue(success);
   }
 }
