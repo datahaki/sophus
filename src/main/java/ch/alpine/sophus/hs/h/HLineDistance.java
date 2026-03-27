@@ -41,7 +41,7 @@ public enum HLineDistance implements LineDistance {
       // Tolerance.CHOP.requireClose(matriy, matrix);
       Tensor nullspace = NullSpace.of(matrix);
       Integers.requireEquals(nullspace.length(), 1);
-      // TODO implementation restricted to H^2 ORTHOGINALIZE!!!
+      // TODO SOPHUS implementation restricted to H^2 ORTHOGINALIZE!!!
       Scalar norm = LBilinearForm.INSTANCE.norm(nullspace.get(0));
       Tensor n = nullspace.get(0).divide(norm);
       Scalar normCheck = LBilinearForm.INSTANCE.norm(n);

@@ -46,7 +46,7 @@ public class AckermannSteering implements Serializable {
    * as is the symmetric standard configuration of most vehicles */
   // implementation is redundant to angle function in order to reuse the computation of the tangent
   public Tensor pair(Scalar delta) {
-    // TODO somewhat redundant to angle
+    // TODO SOPHUS somewhat redundant to angle
     Scalar tan = Tan.FUNCTION.apply(delta);
     Scalar tan_factor = tan.multiply(factor);
     return Tensors.of( //

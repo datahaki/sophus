@@ -22,7 +22,7 @@ import ch.alpine.tensor.Tensor;
  * @param geodesicSpace
  * 
  * @see IterativeBiinvariantMean */
-// TODO this is not used anywhere
+// TODO SOPHUS this is not used anywhere
 public record SingleStepMeanEstimate(Manifold manifold) implements MeanEstimate, Serializable {
   @Override
   public Tensor estimate(Tensor sequence, Tensor weights) {

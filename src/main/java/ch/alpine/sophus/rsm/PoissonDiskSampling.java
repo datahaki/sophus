@@ -37,7 +37,8 @@ public class PoissonDiskSampling {
     List<Tensor> points = new ArrayList<>();
     List<Tensor> active = new ArrayList<>();
     // Step 0: Initialize the background grid
-    Scalar cellSize = r.divide(Sqrt.FUNCTION.apply(RealScalar.TWO)); // TODO generalize
+    // TODO SOPHUS generalize
+    Scalar cellSize = r.divide(Sqrt.FUNCTION.apply(RealScalar.TWO));
     int cols = Ceiling.intValueExact(width.divide(cellSize));
     int rows = Ceiling.intValueExact(height.divide(cellSize));
     Tensor[][] grid = new Tensor[cols][rows];

@@ -28,7 +28,7 @@ public class Se2ForwardAction implements TensorUnaryOperator {
 
   @Override // from TensorUnaryOperator
   public Tensor apply(Tensor tensor) {
-    // TODO require vector length 2 but tests fail
+    // TODO SOPHUS require vector length 2 but tests fail
     // VectorQ.requireLength(tensor, 2);
     Scalar qx = tensor.Get(0);
     Scalar qy = tensor.Get(1);
