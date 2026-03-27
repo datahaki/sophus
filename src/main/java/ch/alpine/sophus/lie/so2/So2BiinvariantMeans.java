@@ -64,7 +64,7 @@ public enum So2BiinvariantMeans implements BiinvariantMean {
     Clip clip = sequence.stream() //
         .map(Scalar.class::cast) //
         .collect(MinMax.toClip());
-    if (Scalars.lessThan(clip.width(), Pi.VALUE))
+    if (Scalars.lessThan(clip.length(), Pi.VALUE))
       return sequence;
     throw new Throw(sequence);
   }
