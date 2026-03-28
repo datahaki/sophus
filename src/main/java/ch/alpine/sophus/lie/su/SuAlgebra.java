@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.lie.LieAlgebra;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
@@ -40,14 +40,14 @@ public class SuAlgebra implements LieAlgebra, Serializable {
         tensor.set(RealScalar.ONE, index, i, j);
         tensor.set(RealScalar.ONE.negate(), index, j, i);
         ++index;
-        tensor.set(ComplexScalar.I, index, i, j);
-        tensor.set(ComplexScalar.I, index, j, i);
+        tensor.set(Complex.I, index, i, j);
+        tensor.set(Complex.I, index, j, i);
         ++index;
       }
     for (int i = 1; i < n; ++i) {
       int j = i - 1;
-      tensor.set(ComplexScalar.I, index, j, j);
-      tensor.set(ComplexScalar.I.negate(), index, i, i);
+      tensor.set(Complex.I, index, j, j);
+      tensor.set(Complex.I.negate(), index, i, i);
       ++index;
     }
     return tensor;

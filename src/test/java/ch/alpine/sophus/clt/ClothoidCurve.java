@@ -4,7 +4,7 @@ package ch.alpine.sophus.clt;
 import ch.alpine.sophus.clt.mid.OriginalApproximation;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -57,6 +57,6 @@ abstract class ClothoidCurve implements ScalarTensorFunction {
   }
 
   public Scalar exp_i(Scalar s) {
-    return ComplexScalar.unit(lagrangeQuadratic.apply(s));
+    return Complex.unit(lagrangeQuadratic.apply(s));
   }
 }

@@ -3,7 +3,7 @@ package ch.alpine.sophus.clt;
 
 import java.io.Serializable;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -85,7 +85,7 @@ public class ClothoidIntegralAnalytic implements ClothoidIntegral, Serializable 
     private final Scalar factor;
 
     public Degree0(Scalar c0) {
-      factor = Exp.FUNCTION.apply(ComplexScalar.I.multiply(c0));
+      factor = Exp.FUNCTION.apply(Complex.I.multiply(c0));
     }
 
     @Override // from ClothoidPartial
@@ -105,13 +105,13 @@ public class ClothoidIntegralAnalytic implements ClothoidIntegral, Serializable 
     public Degree1(Scalar c0, Scalar c1) {
       this.c0 = c0;
       this.c1 = c1;
-      factor = ComplexScalar.I.divide(c1);
-      ofs = Exp.FUNCTION.apply(ComplexScalar.I.multiply(c0));
+      factor = Complex.I.divide(c1);
+      ofs = Exp.FUNCTION.apply(Complex.I.multiply(c0));
     }
 
     @Override // from ClothoidPartial
     public Scalar apply(Scalar t) {
-      Scalar ofs2 = Exp.FUNCTION.apply(ComplexScalar.I.multiply(c1.multiply(t).add(c0)));
+      Scalar ofs2 = Exp.FUNCTION.apply(Complex.I.multiply(c1.multiply(t).add(c0)));
       return ofs.subtract(ofs2).multiply(factor);
     }
   }
@@ -119,8 +119,8 @@ public class ClothoidIntegralAnalytic implements ClothoidIntegral, Serializable 
   /** exact solution taken from
    * https://www.wolframalpha.com */
   private static class Degree2 implements ScalarUnaryOperator {
-    private static final Scalar _N1_1_4 = ComplexScalar.unit(Pi.QUARTER);
-    private static final Scalar _N1_3_4 = ComplexScalar.unit(Pi._3_4);
+    private static final Scalar _N1_1_4 = Complex.unit(Pi.QUARTER);
+    private static final Scalar _N1_3_4 = Complex.unit(Pi._3_4);
     private static final Scalar _1_4 = Rational.of(1, 4);
     // ---
     private final Scalar c1;
@@ -135,7 +135,7 @@ public class ClothoidIntegralAnalytic implements ClothoidIntegral, Serializable 
       this.c1 = coeffs.Get(1);
       this.c2 = coeffs.Get(2);
       Scalar f1 = _N1_3_4;
-      Scalar f2 = Exp.FUNCTION.apply(c0.subtract(_1_4.multiply(c1).multiply(c1).divide(c2)).multiply(ComplexScalar.I));
+      Scalar f2 = Exp.FUNCTION.apply(c0.subtract(_1_4.multiply(c1).multiply(c1).divide(c2)).multiply(Complex.I));
       Scalar f3 = Sqrt.FUNCTION.apply(Pi.VALUE);
       f4 = Rational.HALF.divide(Sqrt.FUNCTION.apply(c2));
       factor = Times.of(f1, f2, f3, f4);

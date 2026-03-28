@@ -4,7 +4,7 @@ package ch.alpine.sophus.clt;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.clt.mid.MidpointTangentOrder2;
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.mat.Tolerance;
@@ -43,8 +43,8 @@ class ClothoidTangentDefectTest {
 
   @Test
   void testUnit() {
-    Scalar DIAG = ComplexScalar.of(0.7071067811865476, 0.7071067811865475);
-    Tolerance.CHOP.requireClose(DIAG, ComplexScalar.unit(Pi.QUARTER));
+    Scalar DIAG = Complex.of(0.7071067811865476, 0.7071067811865475);
+    Tolerance.CHOP.requireClose(DIAG, Complex.unit(Pi.QUARTER));
   }
 
   @Test

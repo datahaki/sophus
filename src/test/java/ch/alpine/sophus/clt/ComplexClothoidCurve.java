@@ -4,7 +4,7 @@ package ch.alpine.sophus.clt;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -30,9 +30,9 @@ enum ComplexClothoidCurve implements GeodesicSpace {
 
   @Override // from GeodesicInterface
   public ScalarTensorFunction curve(Tensor p, Tensor q) {
-    Scalar p0 = ComplexScalar.of(p.Get(0), p.Get(1));
+    Scalar p0 = Complex.of(p.Get(0), p.Get(1));
     Scalar a0 = p.Get(2);
-    Scalar p1 = ComplexScalar.of(q.Get(0), q.Get(1));
+    Scalar p1 = Complex.of(q.Get(0), q.Get(1));
     Scalar a1 = q.Get(2);
     // ---
     Scalar d = p1.subtract(p0);

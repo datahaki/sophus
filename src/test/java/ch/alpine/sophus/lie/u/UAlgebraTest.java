@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.LieAlgebra;
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.mat.AntihermitianMatrixQ;
@@ -34,7 +34,7 @@ class UAlgebraTest {
     Tensor weights = RandomVariate.of(UniformDistribution.unit(), 9);
     Tensor matrix = weights.dot(basis);
     AntihermitianMatrixQ.INSTANCE.require(matrix);
-    Tensor divide = matrix.divide(ComplexScalar.I);
+    Tensor divide = matrix.divide(Complex.I);
     HermitianMatrixQ.INSTANCE.require(divide);
     Eigensystem.ofHermitian(divide);
   }

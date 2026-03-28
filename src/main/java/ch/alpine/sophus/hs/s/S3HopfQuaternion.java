@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.s;
 
 import java.io.Serializable;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -41,7 +41,7 @@ public record S3HopfQuaternion(Quaternion q) implements Serializable {
   }
 
   public Tensor lift(Scalar angle) {
-    Quaternion r = q.multiply(ComplexScalar.unit(angle));
+    Quaternion r = q.multiply(Complex.unit(angle));
     return Join.of(Tensors.of(r.w()), r.xyz());
   }
 }

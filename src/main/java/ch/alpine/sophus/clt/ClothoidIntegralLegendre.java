@@ -2,7 +2,7 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -65,7 +65,7 @@ record ClothoidIntegralLegendre(LagrangeQuadratic lagrangeQuadratic) implements 
   }
 
   private Scalar exp_i(Scalar s) {
-    return ComplexScalar.unit(lagrangeQuadratic.apply(s));
+    return Complex.unit(lagrangeQuadratic.apply(s));
   }
 
   @Override

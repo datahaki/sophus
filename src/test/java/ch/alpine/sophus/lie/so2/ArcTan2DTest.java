@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -50,7 +50,7 @@ class ArcTan2DTest {
   @Test
   void testComplex() {
     Scalar scalar = ArcTan2D.of(Tensors.fromString("{1 + I, 2 - 3*I}"));
-    Scalar expect = ComplexScalar.of(-1.4808695768986575, -0.4023594781085251);
+    Scalar expect = Complex.of(-1.4808695768986575, -0.4023594781085251);
     Chop._12.requireClose(scalar, expect);
   }
 

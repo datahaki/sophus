@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 /** for matching end point tangents the real part of the defect should be 0
  * and the imaginary part should be positive */
 public class ClothoidTangentDefect implements ScalarUnaryOperator {
-  private static final Scalar DIAG = ComplexScalar.unit(Pi.QUARTER);
+  private static final Scalar DIAG = Complex.unit(Pi.QUARTER);
   private static final Scalar EPS = RealScalar.of(1e-10);
 
   public static ClothoidTangentDefect of(Scalar s1, Scalar s2) {
@@ -54,7 +54,7 @@ public class ClothoidTangentDefect implements ScalarUnaryOperator {
 
   private Scalar unsafe(Scalar lam) {
     Scalar factor = DIAG.divide(Sqrt.FUNCTION.apply(lam));
-    Scalar exp = Exp.FUNCTION.apply(s2_half_sqr.divide(lam).add(s1).add(lam).multiply(ComplexScalar.I));
+    Scalar exp = Exp.FUNCTION.apply(s2_half_sqr.divide(lam).add(s1).add(lam).multiply(Complex.I));
     Scalar erf1 = Erf.FUNCTION.apply(s2_half.add(lam).multiply(factor));
     Scalar erf2 = Erf.FUNCTION.apply(s2_half.subtract(lam).multiply(factor));
     return factor.multiply(exp).multiply(erf1.subtract(erf2));

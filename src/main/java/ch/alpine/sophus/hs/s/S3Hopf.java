@@ -3,7 +3,7 @@ package ch.alpine.sophus.hs.s;
 
 import java.io.Serializable;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -27,8 +27,8 @@ public record S3Hopf(Scalar z1, Scalar z2) implements Serializable {
   }
 
   public static S3Hopf of(Tensor xyza) {
-    Scalar z1 = ComplexScalar.of(xyza.Get(0), xyza.Get(1));
-    Scalar z2 = ComplexScalar.of(xyza.Get(2), xyza.Get(3));
+    Scalar z1 = Complex.of(xyza.Get(0), xyza.Get(1));
+    Scalar z2 = Complex.of(xyza.Get(2), xyza.Get(3));
     return new S3Hopf(z1, z2);
   }
 
@@ -36,7 +36,7 @@ public record S3Hopf(Scalar z1, Scalar z2) implements Serializable {
     Scalar x = xyz.Get(0);
     Scalar y = xyz.Get(1);
     Scalar z = xyz.Get(2);
-    Scalar w = ComplexScalar.of(x, y).divide(RealScalar.ONE.add(z));
+    Scalar w = Complex.of(x, y).divide(RealScalar.ONE.add(z));
     Scalar den = Hypot.withOne(w);
     return new S3Hopf( //
         w.divide(den), //
@@ -48,7 +48,7 @@ public record S3Hopf(Scalar z1, Scalar z2) implements Serializable {
     Scalar y = xyz.Get(1);
     Scalar z = xyz.Get(2);
     Scalar z1 = Sqrt.FUNCTION.apply(RealScalar.ONE.add(z).multiply(Rational.HALF));
-    Scalar z2 = ComplexScalar.of(x, y).divide(Sqrt.FUNCTION.apply(RealScalar.ONE.add(z).multiply(RealScalar.TWO)));
+    Scalar z2 = Complex.of(x, y).divide(Sqrt.FUNCTION.apply(RealScalar.ONE.add(z).multiply(RealScalar.TWO)));
     return new S3Hopf(z1, z2);
   }
 
@@ -68,7 +68,7 @@ public record S3Hopf(Scalar z1, Scalar z2) implements Serializable {
   /** @param angle
    * @return point in S^3, i.e. a vector of length 4 with Euclidean norm 1 */
   public Tensor lift(Scalar angle) {
-    Scalar expith = ComplexScalar.unit(angle);
+    Scalar expith = Complex.unit(angle);
     return Join.of( //
         ReIm.of(z1.multiply(expith)).vector(), //
         ReIm.of(z2.multiply(expith)).vector());

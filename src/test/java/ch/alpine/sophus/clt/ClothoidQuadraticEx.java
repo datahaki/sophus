@@ -1,7 +1,7 @@
 // code by ureif
 package ch.alpine.sophus.clt;
 
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -21,7 +21,7 @@ class ClothoidQuadraticEx implements ScalarUnaryOperator {
 
   @Override
   public Scalar apply(Scalar s) {
-    return ComplexScalar.unit(angle(s));
+    return Complex.unit(angle(s));
   }
 
   Scalar angle(Scalar s) {
