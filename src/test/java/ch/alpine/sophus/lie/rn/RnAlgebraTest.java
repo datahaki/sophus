@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorBinaryOperator;
-import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
+import ch.alpine.tensor.lie.BakerCampbellHausdorff;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 

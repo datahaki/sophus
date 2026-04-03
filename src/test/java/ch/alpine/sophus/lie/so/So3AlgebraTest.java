@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorBinaryOperator;
-import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
+import ch.alpine.tensor.lie.BakerCampbellHausdorff;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;

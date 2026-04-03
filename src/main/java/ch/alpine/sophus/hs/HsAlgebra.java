@@ -20,7 +20,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.io.StringScalar;
-import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
+import ch.alpine.tensor.lie.BakerCampbellHausdorff;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 

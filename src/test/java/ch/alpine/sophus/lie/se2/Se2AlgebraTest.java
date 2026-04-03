@@ -15,7 +15,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.lie.bch.BakerCampbellHausdorff;
+import ch.alpine.tensor.lie.BakerCampbellHausdorff;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
