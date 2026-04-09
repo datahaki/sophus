@@ -3,7 +3,6 @@ package ch.alpine.sophus.clt;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.se2.Se2Group;
@@ -13,6 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -96,14 +96,12 @@ class ClothoidBuilderTest {
     Chop._03.requireClose(headTailInterface.tail(), RealScalar.ZERO);
   }
 
-  @Disabled
   @Test
   void testCircle() {
-    // TODO SOPHIS not sure
     Tensor p = Tensors.vector(0, 0, +Math.PI / 2);
     Tensor q = Tensors.vector(-2, 0, -Math.PI / 2);
     LagrangeQuadraticD headTailInterface = CLOTHOID_BUILDER.curve(p, q).curvature();
-    Chop._03.requireClose(headTailInterface.head(), RealScalar.ONE);
-    Chop._03.requireClose(headTailInterface.tail(), RealScalar.ONE);
+    Tolerance.CHOP.requireClose(headTailInterface.head(), RealScalar.ONE);
+    Tolerance.CHOP.requireClose(headTailInterface.tail(), RealScalar.ONE);
   }
 }

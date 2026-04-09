@@ -21,7 +21,7 @@ public enum NilpotentAlgebraQ {
 
   private static Boolean build(Tensor ad) {
     return Tolerance.CHOP.allZero(KillingForm.of(ad)) //
-        // TODO SOPHUS ALG it is not clear whether this criteria is sufficient
+        // TODO SOPHUS ALG several other criteria should be checked
         && IntStream.range(0, ad.length()) //
             .allMatch(i -> NilpotentMatrixQ.of(ad.get(Tensor.ALL, Tensor.ALL, i)));
   }

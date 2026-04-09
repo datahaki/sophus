@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TangentSpace;
@@ -26,15 +25,6 @@ import ch.alpine.tensor.sca.Chop;
 
 class SoGroupTest {
   private static final LieGroup LIE_GROUP = SoGroup.INSTANCE;
-
-  @Disabled
-  @Test
-  void testBlub() {
-    Tensor orth = So3Exponential.vectorExp(Tensors.vector(-0.2, 0.3, 0.1));
-    Tensor matr = So3Exponential.vectorExp(Tensors.vector(+0.1, 0.2, 0.3));
-    SoGroup.INSTANCE.combine(orth, matr);
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.combine(orth, matr.add(matr)));
-  }
 
   @Test
   void testAdjoint() {
@@ -86,21 +76,9 @@ class SoGroupTest {
     assertFalse(SoGroup.INSTANCE.isPointQ().test(nondet));
   }
 
-  @Disabled
-  @Test
-  void testSimple67() {
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.combine(IdentityMatrix.of(3), HilbertMatrix.of(3)));
-  }
-
   @Test
   void testDetNegFail33() {
     assertThrows(Exception.class, () -> SoGroup.INSTANCE.isPointQ().require(DiagonalMatrix.of(1, 1, -1)));
-  }
-
-  @Disabled
-  @Test
-  void testDetNegCombineFail() {
-    assertThrows(Exception.class, () -> SoGroup.INSTANCE.combine(IdentityMatrix.of(3), DiagonalMatrix.of(1, 1, -1)));
   }
 
   @Test

@@ -2,18 +2,14 @@
 package ch.alpine.sophus.hs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,8 +19,6 @@ import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.sophus.lie.he.HeAlgebra;
-import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
@@ -37,9 +31,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.lie.BakerCampbellHausdorff;
-import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -47,77 +39,6 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class HsAlgebraTest {
-  @Disabled
-  @Test
-  void testSe2() {
-    Tensor ad = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE).ad();
-    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
-    bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
-    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 6);
-    assertTrue(hsAlgebra.isReductive());
-    assertTrue(hsAlgebra.isSymmetric());
-  }
-
-  @Disabled
-  @Test
-  void testSe2Actions() {
-    Tensor ad = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE).ad();
-    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
-    bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
-    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 8);
-    {
-      Tensor g = Tensors.vector(1, 0, 0);
-      Tensor p = Tensors.vector(2, 4);
-      Tensor q = hsAlgebra.action(g, p);
-      assertEquals(q, Tensors.vector(3, 4));
-    }
-    {
-      Tensor g = Tensors.vector(0, 1, 0);
-      Tensor p = Tensors.vector(2, 4);
-      Tensor q = hsAlgebra.action(g, p);
-      assertEquals(q, Tensors.vector(2, 5));
-    }
-    {
-      double angle = Math.PI / 16;
-      Tensor g = Tensors.vector(0, 0, angle);
-      Tensor p = Tensors.vector(.05, .02);
-      Tensor q1 = hsAlgebra.action(g, p);
-      Tensor q2 = RotationMatrix.of(angle).dot(p);
-      Tolerance.CHOP.requireClose(q1, q2);
-    }
-  }
-
-  @Disabled
-  @Test
-  void testSe2ActionsExp() {
-    MatrixAlgebra lAlg = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE);
-    Tensor ad = lAlg.ad();
-    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
-    bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
-    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 8);
-    RandomGenerator randomGenerator = ThreadLocalRandom.current();
-    Distribution distribution = UniformDistribution.of(-0.05, 0.05);
-    Tensor g = RandomVariate.of(distribution, randomGenerator, 3);
-    Tensor p = RandomVariate.of(distribution, randomGenerator, 2);
-    Tensor q1 = hsAlgebra.action(g, p);
-    Tensor xyz = Se2CoveringGroup.INSTANCE.lieExponential().exp(g);
-    Tensor mat = Se2Matrix.of(xyz);
-    Tensor q2 = mat.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
-    Tolerance.CHOP.requireClose(q1, q2);
-    Tensor exp = MatrixExp.of(g.dot(lAlg.basis()));
-    Tensor q3 = exp.dot(p.copy().append(RealScalar.ONE)).extract(0, 2);
-    Tolerance.CHOP.requireClose(q1, q3);
-  }
-
-  @Disabled
-  @Test
-  void testSe2Fail() {
-    Tensor ad = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE).ad();
-    TensorBinaryOperator bch = BakerCampbellHausdorff.of(ad, 10, Tolerance.CHOP);
-    bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
-    assertThrows(Exception.class, () -> new HsAlgebra(ad, 1, 6));
-  }
-
   @Test
   void testSo3() {
     Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
@@ -148,25 +69,6 @@ class HsAlgebraTest {
     Distribution distribution = UniformDistribution.of(-0.1, 0.1);
     hsAlgebra.action(RandomVariate.of(distribution, 3), RandomVariate.of(distribution, 2));
     // hsAlgebra.printTable();
-  }
-
-  @Disabled
-  @Test
-  void testSo3Simple() {
-    Tensor g = Tensors.vector(0.0, 0.0, Math.PI / 2);
-    Tensor m = Tensors.vector(0.1, 0.0);
-    Tensor ad = MatrixAlgebra.of(So3Group.INSTANCE).ad();
-    HsAlgebra hsAlgebra = new HsAlgebra(ad, 2, 6);
-    Tensor res = hsAlgebra.action(g, m);
-    Chop._03.requireClose(res, Tensors.vector(0.0, 0.1));
-    Tensor p = UnitVector.of(3, 2);
-    Tensor rotation = So3Exponential.vectorExp(g);
-    STangentSpace snExponential = new STangentSpace(p);
-    Tensor v = m.copy().append(RealScalar.ZERO);
-    Tensor snm = snExponential.exp(v);
-    Tensor dot = rotation.dot(snm);
-    Tensor bak = snExponential.log(dot);
-    Tolerance.CHOP.requireClose(bak, Tensors.vector(0, 0.1, 0));
   }
 
   @Test
@@ -269,20 +171,6 @@ class HsAlgebraTest {
         Tensor rem = prj.extract(hsAlgebra.dimM(), hsAlgebra.dimG());
         assertEquals(rem, Array.zeros(rem.length()));
       }
-    }
-  }
-
-  @Disabled
-  @Test
-  void testLieAlgebra() {
-    Tensor se2_ad = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE).ad();
-    TensorBinaryOperator bch = BakerCampbellHausdorff.of(se2_ad, 10, Tolerance.CHOP);
-    bch.apply(Tensors.vector(.1, .1, .1), Tensors.vector(.1, .2, .3));
-    for (Tensor ad : new Tensor[] { //
-        se2_ad, new HeAlgebra(2).ad(), LieAlgebraAds.sl(3) }) {
-      HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
-      assertFalse(hsAlgebra.isSymmetric());
-      assertTrue(hsAlgebra.isReductive());
     }
   }
 }

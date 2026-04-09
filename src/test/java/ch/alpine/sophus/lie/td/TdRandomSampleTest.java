@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie.td;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
@@ -25,7 +24,6 @@ class TdRandomSampleTest {
     Tolerance.CHOP.requireClose(log1, log2.negate());
   }
 
-  @Disabled
   @Test
   void testAdLog() {
     for (int count = 0; count < 10; ++count) {

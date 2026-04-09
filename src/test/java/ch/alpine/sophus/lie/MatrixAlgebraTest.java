@@ -2,26 +2,21 @@
 package ch.alpine.sophus.lie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.sl.Sl2Algebra;
 import ch.alpine.sophus.lie.so.So3Group;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.lie.BakerCampbellHausdorff;
-import ch.alpine.tensor.lie.JacobiIdentity;
 import ch.alpine.tensor.lie.KillingForm;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.mat.DiagonalMatrix;
@@ -33,36 +28,10 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.spa.Normal;
-import ch.alpine.tensor.spa.SparseArray;
 
 class MatrixAlgebraTest {
-  @Disabled
-  @Test
-  void testSe2() {
-    Tensor b0 = Tensors.fromString("{{0, 0, 1}, {0, 0, 0}, {0, 0, 0}}");
-    Tensor b1 = Tensors.fromString("{{0, 0, 0}, {0, 0, 1}, {0, 0, 0}}");
-    Tensor b2 = LeviCivitaTensor.of(3).get(2).negate();
-    assertInstanceOf(SparseArray.class, b2);
-    Tensor basis = Tensors.of(b0, b1, b2);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(basis);
-    assertEquals(matrixAlgebra.ad(), LieAlgebraAds.se(2));
-    assertEquals(matrixAlgebra.toVector(b1.add(b2)), Tensors.vector(0, 1, 1));
-    assertEquals(matrixAlgebra.toVector(b0.subtract(b2)), Tensors.vector(1, 0, -1));
-    Tensor matrix = matrixAlgebra.toMatrix(Tensors.vector(2, 3, 4));
-    Tensor tensor = Total.of(Tensors.of( //
-        b0.multiply(RealScalar.of(2)), //
-        b1.multiply(RealScalar.of(3)), //
-        b2.multiply(RealScalar.of(4))));
-    assertEquals(matrix, tensor);
-    Tolerance.CHOP.requireClose( //
-        matrixAlgebra.toVector(b1.add(b2.multiply(RealScalar.of(0.3))).maps(N.DOUBLE)), Tensors.vector(0, 1, 0.3));
-    Tensor rank4 = JacobiIdentity.INSTANCE.defect(matrixAlgebra.ad());
-    assertInstanceOf(SparseArray.class, rank4);
-  }
-
   @Test
   void testSl2() {
     Tensor ad = Sl2Algebra.INSTANCE.ad();
@@ -151,13 +120,6 @@ class MatrixAlgebraTest {
       Tensor z_cmp = matrixAlgebra.toVector(mZ);
       Tolerance.CHOP.requireClose(z, z_cmp);
     }
-  }
-
-  @Disabled
-  @Test
-  void testMatrixLogExpExpSe2() {
-    MatrixAlgebra matrixAlgebra = MatrixAlgebra.of(Se2CoveringGroup.INSTANCE);
-    check(matrixAlgebra, 8);
   }
 
   @Test

@@ -6,26 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.lie.LieAlgebraAds;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.api.TensorBinaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
-import ch.alpine.tensor.lie.BakerCampbellHausdorff;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.re.Inverse;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -46,29 +38,6 @@ class Se2CoveringGroupTest {
     // Se2CoveringGroupElement se2CoveringGroupElement = Se2CoveringGroup.INSTANCE.element(p);
     Tensor tensor = Se2CoveringGroup.INSTANCE.combine(p, Tensors.vector(0, 0, -3));
     assertEquals(tensor, Tensors.vector(1, 2, 0));
-  }
-
-  @Disabled
-  @Test
-  void testConvergenceSe2() {
-    Tensor x = Tensors.vector(0.1, 0.2, 0.05);
-    Tensor y = Tensors.vector(0.02, -0.1, -0.04);
-    LieExponential lieExponential = Se2CoveringGroup.INSTANCE.lieExponential();
-    Tensor mX = lieExponential.exp(x);
-    Tensor glx = lieExponential.gl_representation(x);
-    Tensor xGL = MatrixExp.of(glx);
-    Tolerance.CHOP.requireClose(mX.extract(0, 2), xGL.get(Tensor.ALL, 2).extract(0, 2));
-    Tensor mY = lieExponential.exp(y);
-    Tensor res = lieExponential.log(Se2CoveringGroup.INSTANCE.combine(mX, mY));
-    Scalar cmp = RealScalar.ONE;
-    for (int degree = 1; degree < 6; ++degree) {
-      TensorBinaryOperator binaryOperator = BakerCampbellHausdorff.of(LieAlgebraAds.se(2), degree);
-      Tensor z = binaryOperator.apply(x, y);
-      Scalar err = Vector2Norm.between(res, z);
-      assertTrue(Scalars.lessThan(err, cmp));
-      cmp = err;
-    }
-    Chop._08.requireZero(cmp);
   }
 
   @Test

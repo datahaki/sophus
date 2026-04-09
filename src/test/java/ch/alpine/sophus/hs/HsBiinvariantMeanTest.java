@@ -7,16 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.hs.s.SnManifold;
-import ch.alpine.sophus.lie.LieAlgebraAds;
 import ch.alpine.sophus.lie.MatrixAlgebra;
-import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
@@ -49,47 +46,6 @@ class HsBiinvariantMeanTest {
       Tensor meanS2 = SnManifold.INSTANCE.biinvariantMean().mean(pointsS2, weights);
       Tensor res = snExponential.log(meanS2).extract(0, 2);
       Tolerance.CHOP.requireClose(m_avg, res);
-    }
-  }
-
-  @Disabled
-  @Test
-  void testSe2Mean4() {
-    Exponential exponential = Se2CoveringGroup.INSTANCE.lieExponential();
-    Tensor p0 = Tensors.vector(0.1, 0.2, 0.05);
-    Tensor p1 = Tensors.vector(0.02, -0.1, -0.04);
-    Tensor p2 = Tensors.vector(-0.05, 0.03, 0.1);
-    Tensor p3 = Tensors.vector(0.07, -0.08, -0.06);
-    Tensor sequence = Tensors.of(p0, p1, p2, p3);
-    Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
-    Tensor weights = NormalizeTotal.FUNCTION.apply(Tensors.vector(0.3, 0.4, 0.5, 0.6));
-    Tensor meanG = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(seqG, weights);
-    Tensor mean = exponential.log(meanG);
-    Tensor ad = LieAlgebraAds.se(2);
-    HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
-    BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
-    Tensor meanb = biinvariantMean.mean(sequence, weights);
-    Tolerance.CHOP.requireClose(mean, meanb);
-  }
-
-  @Disabled
-  @Test
-  void testSe2MeanRandom() {
-    Exponential exponential = Se2CoveringGroup.INSTANCE.lieExponential();
-    Distribution distribution = UniformDistribution.of(-0.1, 0.1);
-    Distribution dist_w = UniformDistribution.of(0.5, 1);
-    Tensor ad = LieAlgebraAds.se(2);
-    HsAlgebra hsAlgebra = new HsAlgebra(ad, ad.length(), 6);
-    Random random = new Random(1);
-    for (int n = 4; n < 7; ++n) {
-      Tensor sequence = RandomVariate.of(distribution, random, n, 3);
-      Tensor seqG = Tensor.of(sequence.stream().map(exponential::exp));
-      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(dist_w, random, n));
-      Tensor meanG = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(seqG, weights);
-      Tensor mean = exponential.log(meanG);
-      BiinvariantMean biinvariantMean = HsBiinvariantMean.of(hsAlgebra);
-      Tensor meanb = biinvariantMean.mean(sequence, weights);
-      Chop._11.requireClose(mean, meanb);
     }
   }
 

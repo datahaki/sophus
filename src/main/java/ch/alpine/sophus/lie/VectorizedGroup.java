@@ -17,8 +17,8 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 public class VectorizedGroup extends AbstractLieGroup implements MetricManifold, VectorEncodingMarker {
   // TODO SOPHUS through introspection check for metric or not
   private final SpecificLieGroup lieGroup;
-  private final MatrixAlgebra matrixAlgebra;
   private final Exponential exponential0;
+  private final MatrixAlgebra matrixAlgebra;
 
   /** @param specificLieGroup */
   public VectorizedGroup(SpecificLieGroup specificLieGroup) {

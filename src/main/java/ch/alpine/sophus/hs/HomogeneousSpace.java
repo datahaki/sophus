@@ -26,7 +26,6 @@ public interface HomogeneousSpace extends GeodesicSpace, Manifold {
    * @param p
    * @param q
    * @return Exp_p[-Log_p[q]] */
-  // TODO SOPHUS find an elegant way to check if default matches override
   default Tensor flip(Tensor p, Tensor q) {
     TangentSpace exp_p = tangentSpace(p);
     return exp_p.exp(exp_p.log(q).negate());

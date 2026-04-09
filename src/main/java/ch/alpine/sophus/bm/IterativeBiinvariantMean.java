@@ -33,6 +33,21 @@ public class IterativeBiinvariantMean implements BiinvariantMean, Serializable {
     return new IterativeBiinvariantMean(manifold, chop, initialGuess);
   }
 
+  /** approximation of biinvariant mean using a geodesic average that has a
+   * nested structure based on the weights.
+   * 
+   * because the result is not invariant under reordering of the input, the
+   * implementation should only be used as an initial guess for the iterative
+   * fixed point method.
+   * 
+   * tests have shown empirically for the SPD manifold, that the reducing
+   * mean is closer to the exact mean than the {@link SpdPhongMean}
+   * 
+   * For R^n the ReducingMean coincides with the weighted average.
+   * 
+   * @param geodesicSpace
+   * 
+   * @see IterativeBiinvariantMean */
   /** uses arg max of weights in sequence as initial guess
    * 
    * @param homogeneousSpace

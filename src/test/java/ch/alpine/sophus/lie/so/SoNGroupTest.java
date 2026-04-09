@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
@@ -17,11 +16,8 @@ import ch.alpine.sophus.lie.MatrixAlgebra;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.chq.ExactTensorQ;
 import ch.alpine.tensor.lie.KillingForm;
-import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
 import ch.alpine.tensor.mat.DiagonalMatrixQ;
 import ch.alpine.tensor.mat.MatrixQ;
@@ -42,39 +38,10 @@ class SoNGroupTest {
     assertTrue(soNGroup.toString().contains("2"));
   }
 
-  @Disabled
-  @Test
-  void testBasis2() {
-    SoNGroup soNGroup = new SoNGroup(2);
-    Tensor matrixBasis = MatrixAlgebra.of(soNGroup).basis();
-    assertEquals(matrixBasis, Tensors.fromString("{{{0, -1}, {1, 0}}}"));
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
-    Scalar angle = RealScalar.ONE;
-    Tensor v = matrixAlgebra.toMatrix(Tensors.of(angle));
-    Tensor exp = soNGroup.lieExponential().exp(v);
-    Tensor rot = RotationMatrix.of(angle);
-    Tolerance.CHOP.requireClose(exp, rot);
-  }
-
   @Test
   void testString3Rodrigues() {
     SoNGroup soNGroup = new SoNGroup(3);
     assertTrue(soNGroup.toString().contains("3"));
-  }
-
-  @Disabled
-  @Test
-  void testBasis3Rodrigues() {
-    SoNGroup soNGroup = new SoNGroup(3);
-    Tensor matrixBasis = MatrixAlgebra.of(soNGroup).basis();
-    assertEquals(matrixBasis.length(), 3);
-    MatrixAlgebra matrixAlgebra = new MatrixAlgebra(matrixBasis);
-    for (int i = 0; i < 3; ++i) {
-      Tensor vec = UnitVector.of(3, i);
-      Tensor rot = soNGroup.lieExponential().exp(matrixAlgebra.toMatrix(vec));
-      Tensor rod = So3Exponential.vectorExp(vec);
-      Tolerance.CHOP.requireClose(rot, rod);
-    }
   }
 
   @Test
