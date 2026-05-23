@@ -11,7 +11,7 @@ import ch.alpine.tensor.alg.Differences;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** <pre>
- * HsDifferences[{a, b, c, d, e}] == {{a, log_a[b]}, {b, log_b[c]}, ..., {d, log_d[e]}}
+ * ManifoldDifferences[{a, b, c, d, e}] == {{a, log_a[b]}, {b, log_b[c]}, ..., {d, log_d[e]}}
  * </pre>
  * 
  * Careful:
