@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.pdf.Permute;
 
 class PermuteTest {
   @Test

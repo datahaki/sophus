@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -20,6 +19,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.Permute;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Quantity;

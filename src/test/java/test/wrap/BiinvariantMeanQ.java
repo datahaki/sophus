@@ -3,11 +3,11 @@ package test.wrap;
 
 import ch.alpine.sophus.bm.AffineVectorQ;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.math.Permute;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Permutations;
+import ch.alpine.tensor.pdf.Permute;
 import ch.alpine.tensor.sca.Chop;
 
 public record BiinvariantMeanQ(BiinvariantMean biinvariantMean, Chop chop) {
