@@ -9,12 +9,12 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.ArrayFlatten;
-import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.AntisymmetricMatrixQ;
+import ch.alpine.tensor.mat.MatrixDotTranspose;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.mat.ex.MatrixExp;
@@ -118,7 +118,7 @@ class StTangentSpace implements TangentSpace, Serializable {
     Tensor U = svd.getU(); // k x k
     Tensor R = svd.getV(); // k x k
     Tensor D = W.block(l0k, List.of(W.length(), k)); // 2k x k
-    Tensor O = Dot.of(D, R, Transpose.of(U)); // 2k x k
+    Tensor O = MatrixDotTranspose.of(D.dot(R), U); // 2k x k
     Tensor V = Join.of(1, P, O); // 2k x 2k orthogonal matrix
     // new OrthogonalMatrixQ(Chop._08).requireMember(V);
     // step 4: for loop

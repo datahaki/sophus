@@ -2,8 +2,8 @@
 package ch.alpine.sophus.lie.sopq;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.ZeroDefectSquareMatrixQ;
+import ch.alpine.tensor.mat.TransposeMatrixDot;
 import ch.alpine.tensor.sca.Chop;
 
 class TSopqMemberQ extends ZeroDefectSquareMatrixQ {
@@ -17,6 +17,6 @@ class TSopqMemberQ extends ZeroDefectSquareMatrixQ {
   @Override
   public Tensor defect(Tensor x) {
     // FIXME SOPHUS ALG implement based on /reference
-    return Transpose.of(x).dot(form).subtract(form.dot(x));
+    return TransposeMatrixDot.of(x, form).subtract(form.dot(x));
   }
 }

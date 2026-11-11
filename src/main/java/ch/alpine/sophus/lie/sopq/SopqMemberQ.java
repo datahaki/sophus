@@ -2,9 +2,9 @@
 package ch.alpine.sophus.lie.sopq;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.SquareMatrixQ;
+import ch.alpine.tensor.mat.TransposeMatrixDot;
 import ch.alpine.tensor.sca.Chop;
 
 class SopqMemberQ implements MemberQ {
@@ -19,6 +19,6 @@ class SopqMemberQ implements MemberQ {
   @Override // from MemberQ
   public boolean test(Tensor x) {
     return SquareMatrixQ.INSTANCE.test(x) //
-        && CHOP.isClose(Transpose.of(x).dot(form).dot(x), form);
+        && CHOP.isClose(TransposeMatrixDot.of(x, form).dot(x), form);
   }
 }

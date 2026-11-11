@@ -4,9 +4,9 @@ package ch.alpine.sophus.hs.gr;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.BasisTransform;
-import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.OrthogonalMatrixQ;
+import ch.alpine.tensor.mat.TransposeMatrixDot;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.sca.Chop;
 
@@ -26,7 +26,7 @@ public record GrAction(Tensor g) implements TensorUnaryOperator {
     Eigensystem eq = Eigensystem.ofSymmetric(q).decreasing();
     // eigenvalue comparison to verify that p and q are from the same space Gr(n, k)
     Chop._10.requireClose(ep.values(), eq.values());
-    return new GrAction(Transpose.of(ep.vectors()).dot(eq.vectors()));
+    return new GrAction(TransposeMatrixDot.of(ep.vectors(), eq.vectors()));
   }
 
   /** @param g from SO(n) */
