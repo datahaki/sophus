@@ -15,7 +15,7 @@ class TSopqProject implements TensorUnaryOperator {
 
   @Override
   public Tensor apply(Tensor x) {
-    // TODO SOPHUS ALG work with form as vector {1,1,1,...,-1,-1}
+    // TODO ALG work with form as vector {1,1,1,...,-1,-1}
     return x.subtract(MatrixDotTranspose.of(form, x).dot(form));
   }
 }

@@ -24,7 +24,7 @@ enum RExponential implements LieExponential {
 
   @Override // from Exponential
   public ZeroDefectArrayQ isTangentQ() {
-    // TODO SOPHUS this is does not corresponds to RGroup which allows scalar, and matrices
+    // TODO this is does not corresponds to RGroup which allows scalar, and matrices
     return VectorQ.INSTANCE;
   }
 

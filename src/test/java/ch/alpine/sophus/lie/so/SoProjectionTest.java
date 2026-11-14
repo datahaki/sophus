@@ -36,7 +36,7 @@ class SoProjectionTest {
     Tensor p = SoProjection.project(x);
     Tensor q = StManifold.projection(x);
     assertEquals(Dimensions.of(p), Dimensions.of(q));
-    // TODO SOPHUS should be special case of StProjection !?
+    // TODO should be special case of StProjection !?
     // ... but p != q at the moment
   }
 }

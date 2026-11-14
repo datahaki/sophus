@@ -51,7 +51,7 @@ class GrActionTest {
       GrAction match = GrAction.match(p, q);
       Tensor ofForm = BasisTransform.ofForm(pv, match.g());
       assumeTrue(false);
-      // TODO SOPHUS pv is not a "form" but a tangent vector!
+      // TODO pv is not a "form" but a tangent vector!
       Chop._08.requireClose(qv, ofForm);
     }
   }

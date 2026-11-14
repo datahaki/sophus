@@ -16,7 +16,7 @@ class TSopqMemberQ extends ZeroDefectSquareMatrixQ {
 
   @Override
   public Tensor defect(Tensor x) {
-    // FIXME SOPHUS ALG implement based on /reference
+    // FIXME ALG implement based on /reference
     return TransposeMatrixDot.of(x, form).subtract(form.dot(x));
   }
 }
