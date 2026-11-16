@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie.se2;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.alg.VectorQ;
@@ -14,7 +12,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class Se2CoveringRandomSampleTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     RandomSampleInterface randomSampleInterface = //
         Se2CoveringRandomSample.uniform(UniformDistribution.of(Clips.absolute(10)));
     Serialization.copy(randomSampleInterface);

@@ -3,8 +3,6 @@ package ch.alpine.sophus.lie.se2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
@@ -53,7 +51,7 @@ class Se2ForwardActionTest {
   }
 
   @Test
-  void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() {
     Se2ForwardAction forward = new Se2ForwardAction(Tensors.vector(2, -3, 1.3));
     TensorUnaryOperator copy = Serialization.copy(forward);
     Tensor vector = Tensors.vector(0.32, -0.98);

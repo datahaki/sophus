@@ -3,8 +3,6 @@ package ch.alpine.sophus.clt;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so2.So2;
@@ -23,7 +21,7 @@ class ClothoidBuilderImplTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     Distribution distribution = UniformDistribution.of(-8, 8);
     ClothoidBuilder clothoidInterface = Serialization.copy(CLOTHOID_BUILDER);
     for (int count = 0; count < 100; ++count) {

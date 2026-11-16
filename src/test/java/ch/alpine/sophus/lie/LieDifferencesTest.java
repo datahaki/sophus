@@ -4,7 +4,6 @@ package ch.alpine.sophus.lie;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class LieDifferencesTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     Distribution distribution = UniformDistribution.unit();
     Tensor tensor = RandomVariate.of(distribution, 10, 4);
     TensorUnaryOperator lieDifferences = //
@@ -52,7 +51,7 @@ class LieDifferencesTest {
   }
 
   @Test
-  void testSe2Simple() throws ClassNotFoundException, IOException {
+  void testSe2Simple() {
     Tensor p1 = Tensors.vector(0, 0, -Math.PI);
     Tensor p2 = Tensors.vector(0, 0, +Math.PI);
     TensorUnaryOperator lieDifferences = LieDifferences.of(Se2Group.INSTANCE);
@@ -79,7 +78,7 @@ class LieDifferencesTest {
   }
 
   @Test
-  void testHeSimple() throws ClassNotFoundException, IOException {
+  void testHeSimple() {
     Distribution distribution = NormalDistribution.standard();
     int n = 10;
     int d = 3;

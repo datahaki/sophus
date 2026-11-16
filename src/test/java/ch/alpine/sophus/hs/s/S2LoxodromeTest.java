@@ -4,8 +4,6 @@ package ch.alpine.sophus.hs.s;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
@@ -34,7 +32,7 @@ class S2LoxodromeTest {
   }
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     ScalarTensorFunction scalarTensorFunction = Serialization.copy(S2Loxodrome.of(0.1));
     Tensor tensor = Subdivide.of(-1, 100, 60).maps(scalarTensorFunction);
     assertTrue(tensor.stream().allMatch(SnManifold.INSTANCE.isPointQ()));

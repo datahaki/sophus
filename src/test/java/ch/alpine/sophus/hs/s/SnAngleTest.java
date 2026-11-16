@@ -3,8 +3,6 @@ package ch.alpine.sophus.hs.s;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensors;
@@ -13,7 +11,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class SnAngleTest {
   @Test
-  void testSerializable() throws ClassNotFoundException, IOException {
+  void testSerializable() {
     Serialization.copy(new SnAngle(UnitVector.of(4, 2)));
   }
 

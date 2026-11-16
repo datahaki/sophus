@@ -4,8 +4,6 @@ package ch.alpine.sophus.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
@@ -23,7 +21,7 @@ import ch.alpine.tensor.sca.Conjugate;
 
 class VectorProjectionTest {
   @Test
-  void testReal() throws ClassNotFoundException, IOException {
+  void testReal() {
     Tensor projection = Serialization.copy(VectorProjection.on(Tensors.vector(1, 0, 0))).apply(Tensors.vector(1, 1, 1));
     assertEquals(projection, UnitVector.of(3, 0));
     Tensor p2 = VectorProjection.on(Tensors.vector(1, 1, 1)).apply(Tensors.vector(5, 6, 7));

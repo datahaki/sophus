@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.clt;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Complex;
@@ -27,7 +25,7 @@ class ClothoidIntegralAnalyticTest {
   }
 
   @Test
-  void testSimple1() throws ClassNotFoundException, IOException {
+  void testSimple1() {
     ScalarUnaryOperator clothoidPartial = Serialization.copy(ClothoidIntegralAnalytic.of(1.3, -0.7, 0.2));
     Scalar result = clothoidPartial.apply(RealScalar.of(0.3));
     Scalar expect = Complex.of(0.1082616101141145, 0.27929038997053457);
@@ -43,7 +41,7 @@ class ClothoidIntegralAnalyticTest {
   }
 
   @Test
-  void testCircle() throws ClassNotFoundException, IOException {
+  void testCircle() {
     ScalarUnaryOperator clothoidPartial = Serialization.copy(ClothoidIntegralAnalytic.of(1.3, -0.7, 0));
     Scalar result = clothoidPartial.apply(RealScalar.of(0.3));
     Scalar expect = Complex.of(0.10990181566815083, 0.2785521975010192);
@@ -51,7 +49,7 @@ class ClothoidIntegralAnalyticTest {
   }
 
   @Test
-  void testLine() throws ClassNotFoundException, IOException {
+  void testLine() {
     ScalarUnaryOperator clothoidPartial = Serialization.copy(ClothoidIntegralAnalytic.of(1.3, 0, 0));
     Scalar result = clothoidPartial.apply(RealScalar.of(0.3));
     Scalar expect = Complex.of(0.0802496485873762, 0.2890674556251579);

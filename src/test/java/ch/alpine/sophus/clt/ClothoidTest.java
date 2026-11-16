@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.so2.So2;
@@ -35,7 +33,7 @@ class ClothoidTest {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
 
   @Test
-  void testLength() throws ClassNotFoundException, IOException {
+  void testLength() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -92,7 +90,7 @@ class ClothoidTest {
   }
 
   @Test
-  void testCurvature() throws ClassNotFoundException, IOException {
+  void testCurvature() {
     Distribution distribution = NormalDistribution.standard();
     for (int count = 0; count < 100; ++count) {
       Tensor p = RandomVariate.of(distribution, 3);
@@ -135,7 +133,7 @@ class ClothoidTest {
   }
 
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     Tensor p = Tensors.vector(1, 2, 1);
     Tensor q = Tensors.vector(8, 6, 2);
     LagrangeQuadraticD clothoidTerminalRatio = CLOTHOID_BUILDER.curve(p, q).curvature();

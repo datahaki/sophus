@@ -3,8 +3,6 @@ package ch.alpine.sophus.hs.rpn;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -21,7 +19,7 @@ import ch.alpine.tensor.sca.Sign;
 class HemisphereRandomSampleTest {
   @ParameterizedTest
   @ValueSource(ints = { 0, 1, 2, 3, 4 })
-  void testSimple(int dimension) throws ClassNotFoundException, IOException {
+  void testSimple(int dimension) {
     RandomSampleInterface randomSampleInterface = HemisphereRandomSample.of(dimension);
     Tensor tensor = RandomSample.of(randomSampleInterface);
     Sign.requirePositive(Last.of(tensor));

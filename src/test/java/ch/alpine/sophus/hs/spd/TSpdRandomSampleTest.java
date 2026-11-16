@@ -3,8 +3,6 @@ package ch.alpine.sophus.hs.spd;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.ext.Serialization;
@@ -14,7 +12,7 @@ import ch.alpine.tensor.pdf.c.TriangularDistribution;
 
 class TSpdRandomSampleTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     TSpdRandomSample simRandomSample = new TSpdRandomSample(3, TriangularDistribution.with(0, 1));
     Serialization.copy(simRandomSample);
     SymmetricMatrixQ.INSTANCE.require(RandomSample.of(simRandomSample));

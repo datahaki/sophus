@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.hs;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.hs.DoubleExponential.DoubleExponentialPoint;
@@ -16,7 +14,7 @@ import ch.alpine.tensor.num.Pi;
 
 class DoubleExponentialTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     DoubleExponential doubleExponential = //
         Serialization.copy(new DoubleExponential(SnManifold.INSTANCE));
     DoubleExponentialPoint doubleExponentialPoint = doubleExponential.at(UnitVector.of(3, 0));

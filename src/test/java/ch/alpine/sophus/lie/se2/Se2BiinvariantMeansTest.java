@@ -4,8 +4,6 @@ package ch.alpine.sophus.lie.se2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -34,7 +32,7 @@ class Se2BiinvariantMeansTest {
   // This test is from the paper:
   // Source: "Bi-invariant Means in Lie Groups. Application toLeft-invariant Polyaffine Transformations." p38
   @Test
-  void testArsignyPennec() throws ClassNotFoundException, IOException {
+  void testArsignyPennec() {
     Scalar TWO = RealScalar.of(2);
     Scalar ZERO = RealScalar.ZERO;
     Scalar rootOfTwo = Sqrt.FUNCTION.apply(TWO);

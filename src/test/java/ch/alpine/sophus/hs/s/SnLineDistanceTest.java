@@ -3,8 +3,6 @@ package ch.alpine.sophus.hs.s;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -40,7 +38,7 @@ class SnLineDistanceTest {
   }
 
   @Test
-  void testBounded() throws ClassNotFoundException, IOException {
+  void testBounded() {
     for (int dimension = 2; dimension < 6; ++dimension) {
       RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
       for (int count = 0; count < 10; ++count) {

@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Rational;
@@ -48,7 +46,7 @@ class LagrangeQuadraticDTest {
   }
 
   @Test
-  void testZero() throws ClassNotFoundException, IOException {
+  void testZero() {
     LagrangeQuadraticD lagrangeQuadraticD = Serialization.copy(LagrangeQuadraticD.of(1e-9, 1e-10));
     assertTrue(lagrangeQuadraticD.isZero(Chop._08));
   }

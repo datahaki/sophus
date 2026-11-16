@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.sophus.lie.sopq;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
@@ -13,7 +11,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class TSopqProjectTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     TSopqProject tSopqProject = new TSopqProject(3, 2);
     Tensor x = RandomVariate.of(NormalDistribution.standard(), 5, 5);
     Tensor sopq = tSopqProject.apply(x);
