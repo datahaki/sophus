@@ -33,7 +33,7 @@ public enum NylanderPower {
     Scalar theta = ArcTan.of(z, Hypot.of(x, y)).multiply(exponent);
     Scalar sin_theta = Sin.FUNCTION.apply(theta);
     Scalar r = Vector2Norm.of(vector);
-    ScalarUnaryOperator power = Power.function(exponent);
+    ScalarUnaryOperator power = Power.withExponent(exponent);
     return Tensors.of( //
         sin_theta.multiply(Cos.FUNCTION.apply(phi)), //
         sin_theta.multiply(Sin.FUNCTION.apply(phi)), //

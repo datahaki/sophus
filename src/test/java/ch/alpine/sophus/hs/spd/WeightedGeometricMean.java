@@ -17,7 +17,7 @@ public enum WeightedGeometricMean implements BiinvariantMean {
     AffineVectorQ.INSTANCE.require(weights);
     Int i = new Int();
     return sequence.stream() //
-        .map(point -> point.maps(Power.function(weights.Get(i.getAndIncrement())))) //
+        .map(point -> point.maps(Power.withExponent(weights.Get(i.getAndIncrement())))) //
         .reduce(Times::of).orElseThrow();
   }
 }
