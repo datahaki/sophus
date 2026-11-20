@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.sophus.lie;
 
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 
@@ -15,6 +16,6 @@ public class Adjoint {
   }
 
   public Tensor matrix(Tensor tensor) {
-    return Transpose.of(lieGroup.adjoint(tensor).slash(vectors));
+    return Transpose.of(Slash.of(vectors, lieGroup.adjoint(tensor)));
   }
 }

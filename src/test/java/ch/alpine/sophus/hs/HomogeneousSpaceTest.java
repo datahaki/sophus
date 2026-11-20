@@ -22,6 +22,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.rsm.LocalRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ArrayQ;
 import ch.alpine.tensor.alg.Dimensions;
@@ -158,9 +159,9 @@ class HomogeneousSpaceTest {
     {
       RandomSampleInterface rpnts = LocalRandomSample.of(tangentSpace, RealScalar.of(0.1));
       Tensor sequence = RandomSample.of(rpnts, d);
-      Tensor slash1 = tangentSpace.vectorLog().slash(sequence);
+      Tensor slash1 = Slash.of(sequence, tangentSpace.vectorLog());
       TensorUnaryOperator vectorLog = t -> Flatten.of(tangentSpace.log(t));
-      Tensor slash2 = vectorLog.slash(sequence);
+      Tensor slash2 = Slash.of(sequence, vectorLog);
       int rank = MatrixRank.of(slash2);
       assertEquals(MatrixRank.of(slash1), rank);
       assertEquals(rank, d);
@@ -186,7 +187,7 @@ class HomogeneousSpaceTest {
     Tensor log_p = exp_p.log(p);
     LinearSubspace sub_p = LinearSubspace.of(exp_p.isTangentQ()::defect, Dimensions.of(log_p));
     LinearSubspace sub_q = LinearSubspace.of(exp_q.isTangentQ()::defect, Dimensions.of(log_p));
-    Tensor pqb = shift.slash(sub_p.basis());
+    Tensor pqb = Slash.of(sub_p.basis(), shift);
     ZeroDefectArrayQ zeroDefectArrayQ = LinearSubspaceMemberQ.of(sub_q, Chop._10);
     boolean success = pqb.stream().allMatch(zeroDefectArrayQ);
     assertTrue(success);

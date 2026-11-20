@@ -4,6 +4,7 @@ package ch.alpine.sophus.bm;
 import java.io.Serializable;
 
 import ch.alpine.sophus.api.Exponential;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 
 /** Any m from the group that satisfies the equation below is refers to as
@@ -32,7 +33,7 @@ public record MeanDefect(Exponential exponential, Tensor tangent) implements Ser
    * @param weights
    * @param exponential at estimated weighted average of given sequence */
   public static MeanDefect of(Tensor sequence, Tensor weights, Exponential exponential) {
-    return new MeanDefect(exponential, weights.dot(exponential.log().slash(sequence)));
+    return new MeanDefect(exponential, weights.dot(Slash.of(sequence, exponential.log())));
   }
 
   /** @return better guess of weighted average on manifold */

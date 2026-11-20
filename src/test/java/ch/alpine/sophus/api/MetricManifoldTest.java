@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ch.alpine.sophus.SophusExperimental;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Outer;
@@ -55,8 +56,8 @@ class MetricManifoldTest {
     Scalar det = Det.of(B);
     assertFalse(Tolerance.CHOP.isZero(det));
     // ---
-    Tensor P = tangentSpace.exp().slash(V.multiply(RealScalar.of(0.02)));
-    Tensor R = tangentSpace.vectorLog().slash(P);
+    Tensor P = Slash.of(V.multiply(RealScalar.of(0.02)), tangentSpace.exp());
+    Tensor R = Slash.of(P, tangentSpace.vectorLog());
     // IO.println(metricManifold + " " + Dimensions.of(V) + " - " + Dimensions.of(R));
     // IO.println(tangentSpace);
     // IO.println(Pretty.of(R.maps(Round._3)));

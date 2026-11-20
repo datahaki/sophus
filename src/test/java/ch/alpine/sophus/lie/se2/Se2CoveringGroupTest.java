@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -148,7 +149,7 @@ class Se2CoveringGroupTest {
   }
 
   private static Tensor adjoint(LieGroup lieGroup, Tensor p) {
-    return lieGroup.adjoint(p).slash(IdentityMatrix.of(3));
+    return Slash.of(IdentityMatrix.of(3), lieGroup.adjoint(p));
   }
 
   @Test

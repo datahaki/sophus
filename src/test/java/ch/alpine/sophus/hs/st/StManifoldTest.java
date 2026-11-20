@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.so.SoNGroup;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.Tolerance;
@@ -57,7 +58,7 @@ class StManifoldTest {
         SoNGroup Gk = new SoNGroup(k);
         SoNGroup Gn = new SoNGroup(n);
         StAction stAction = new StAction(RandomSample.of(Gk.randomSampleInterface()), RandomSample.of(Gn.randomSampleInterface()));
-        Tensor mean2 = biinvariantMean.mean(stAction.slash(sequence), weights);
+        Tensor mean2 = biinvariantMean.mean(Slash.of(sequence, stAction), weights);
         Chop._08.requireClose(mean2, stAction.apply(mean));
       }
     }

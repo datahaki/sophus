@@ -17,6 +17,7 @@ import ch.alpine.sophus.api.VectorEncodingMarker;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -78,7 +79,7 @@ public class GroupCheck {
       int n = sequence.length();
       Tensor weights = ConstantArray.of(RealScalar.of(1.0 / n), n);
       Tensor mean = lieGroup.biinvariantMean().mean(sequence, weights);
-      Tensor centered = lieGroup.actionL(lieGroup.invert(mean)).slash(sequence);
+      Tensor centered = Slash.of(sequence, lieGroup.actionL(lieGroup.invert(mean)));
       MeanDefect meanDefect = MeanDefect.of(centered, weights, exponential0);
       Tolerance.CHOP.requireAllZero(meanDefect.tangent());
       return;
@@ -108,7 +109,7 @@ public class GroupCheck {
       int n = sequence.length();
       Tensor weights = ConstantArray.of(RealScalar.of(1.0 / n), n);
       Tensor mean = lieGroup.biinvariantMean().mean(sequence, weights);
-      Tensor centered = lieGroup.actionL(lieGroup.invert(mean)).slash(sequence);
+      Tensor centered = Slash.of(sequence, lieGroup.actionL(lieGroup.invert(mean)));
       MeanDefect meanDefect = MeanDefect.of(centered, weights, exponential0);
       Tolerance.CHOP.requireAllZero(meanDefect.tangent());
       // ---

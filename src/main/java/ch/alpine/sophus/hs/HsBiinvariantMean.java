@@ -7,6 +7,7 @@ import java.util.Objects;
 import ch.alpine.sophus.bm.AffineVectorQ;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Array;
@@ -49,7 +50,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
       Tensor next = mean_negate(_sequence, weights, prev);
       if (chop.isClose(prev, next))
         return next.negate();
-      _sequence = hsAlgebra.action(hsAlgebra.lift(next)).slash(sequence);
+      _sequence = Slash.of(sequence, hsAlgebra.action(hsAlgebra.lift(next)));
       prev = next;
     }
     throw new Throw(sequence, weights);
@@ -61,7 +62,7 @@ public class HsBiinvariantMean implements BiinvariantMean, Serializable {
       if (chop.allZero(defect))
         return mean_negate;
       TensorUnaryOperator tuo = hsAlgebra.action(hsAlgebra.lift(defect));
-      sequence = tuo.slash(sequence);
+      sequence = Slash.of(sequence, tuo);
       mean_negate = tuo.apply(mean_negate);
     }
     throw new Throw(sequence, weights);

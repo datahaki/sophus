@@ -10,6 +10,7 @@ import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -97,7 +98,7 @@ class Se2CoveringBiinvariantMeanTest {
       Tensor points = RandomVariate.of(distribution, n, 3);
       Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(distribution, n));
       Tensor xya = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(points, weights);
-      Tensor all = Se2CoveringGroup.INSTANCE.inverse().slash(points);
+      Tensor all = Slash.of(points, Se2CoveringGroup.INSTANCE.inverse());
       Tensor one = Se2CoveringGroup.INSTANCE.biinvariantMean().mean(all, weights);
       Tensor combine = Se2CoveringGroup.INSTANCE.combine(xya, one);
       Chop._12.requireAllZero(combine);

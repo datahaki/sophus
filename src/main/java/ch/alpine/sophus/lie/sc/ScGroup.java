@@ -7,6 +7,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.AbstractLieGroup;
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.VectorQ;
@@ -34,7 +35,7 @@ public class ScGroup extends AbstractLieGroup {
     return (Tensor sequence, Tensor weights) -> {
       AffineVectorQ.INSTANCE.require(weights);
       Exponential exponential = lieExponential();
-      return exponential.exp(weights.dot(exponential.log().slash(sequence)));
+      return exponential.exp(weights.dot(Slash.of(sequence, exponential.log())));
     };
   }
 
