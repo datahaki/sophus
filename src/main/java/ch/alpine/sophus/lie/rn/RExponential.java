@@ -2,6 +2,7 @@
 package ch.alpine.sophus.lie.rn;
 
 import ch.alpine.sophus.lie.LieExponential;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
@@ -33,7 +34,7 @@ enum RExponential implements LieExponential {
     Tensor x = Flatten.of(_x); // <- allows all tensors instead of only vectors
     int n = x.length();
     Tensor zeros = Array.zeros(n);
-    Tensor matrix = Tensor.of(x.stream().map(r -> Append.of(zeros, r)));
+    Tensor matrix = Slash.of(x, r -> Append.of(zeros, r));
     return matrix.append(Array.zeros(n + 1));
   }
 }

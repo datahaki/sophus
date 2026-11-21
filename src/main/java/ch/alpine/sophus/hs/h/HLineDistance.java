@@ -7,6 +7,7 @@ import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.api.TensorDistance;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -35,7 +36,7 @@ public enum HLineDistance implements LineDistance {
       HWeierstrassCoordinate qw = new HWeierstrassCoordinate(q);
       Tensor A = Tensors.of(pw.toPoint(), qw.toPoint());
       Tensor d = Array.same(RealScalar.ONE, p.length()).append(RealScalar.ONE.negate());
-      Tensor matrix = Tensor.of(A.stream().map(row -> Times.of(row, d)));
+      Tensor matrix = Slash.of(A, row -> Times.of(row, d));
       // Tensor diag = DiagonalMatrix.full(d);
       // Tensor matrix = A.dot(diag);
       // Tolerance.CHOP.requireClose(matriy, matrix);
@@ -53,7 +54,7 @@ public enum HLineDistance implements LineDistance {
     public Scalar distance(Tensor r) {
       HWeierstrassCoordinate rw = new HWeierstrassCoordinate(r);
       Tensor rx = rw.toPoint();
-      Tensor vec = Tensor.of(m.stream().map(n -> LBilinearForm.INSTANCE.formEval(n, rx)));
+      Tensor vec = Slash.of(m, n -> LBilinearForm.INSTANCE.formEval(n, rx));
       return ArcSinh.FUNCTION.apply(Clips.unit().apply(Vector2Norm.of(vec)));
     }
   }

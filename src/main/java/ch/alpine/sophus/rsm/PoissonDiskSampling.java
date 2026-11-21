@@ -33,6 +33,7 @@ public class PoissonDiskSampling {
     ringRandomSample = new RingRandomSample(2, r, r.add(r));
   }
 
+  // TODO possibly return Unprotect.using(...
   public List<Tensor> generate() {
     List<Tensor> points = new ArrayList<>();
     List<Tensor> active = new ArrayList<>();

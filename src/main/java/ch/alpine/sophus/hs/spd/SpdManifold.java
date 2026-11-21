@@ -10,6 +10,7 @@ import ch.alpine.sophus.bm.IterativeBiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.MemberQ;
@@ -109,7 +110,7 @@ public class SpdManifold implements HomogeneousSpace, MetricManifold, Serializab
     // ... also the inverse of eigensystem.vectors() is ConjugateTranspose !?
     // return BasisTransform.ofMatrix(DiagonalMatrix.with(vector), v);
     Int i = new Int();
-    Tensor scaled = Tensor.of(v.stream().map(row -> row.multiply(vector.Get(i.getAndIncrement()))));
+    Tensor scaled = Slash.of(v, row -> row.multiply(vector.Get(i.getAndIncrement())));
     return ConjugateTranspose.of(eigensystem.vectors()).dot(scaled);
   }
 

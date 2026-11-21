@@ -2,6 +2,7 @@
 package ch.alpine.sophus.hs.spd;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.mat.ex.MatrixLog;
@@ -12,6 +13,6 @@ public enum SpdPhongMean implements BiinvariantMean {
 
   @Override // from BiinvariantMean
   public Tensor mean(Tensor sequence, Tensor weights) {
-    return MatrixExp.ofSymmetric(weights.dot(Tensor.of(sequence.stream().map(MatrixLog::ofSymmetric))));
+    return MatrixExp.ofSymmetric(weights.dot(Slash.of(sequence, MatrixLog::ofSymmetric)));
   }
 }

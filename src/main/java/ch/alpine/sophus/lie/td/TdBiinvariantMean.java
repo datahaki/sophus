@@ -5,6 +5,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.sc.ScGroup;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
@@ -23,7 +24,7 @@ public enum TdBiinvariantMean implements BiinvariantMean {
     // Reference 1, p.27 "weighted geometric mean of scalings"
     Scalar scmean = ScGroup.INSTANCE.biinvariantMean().mean(lambdas.maps(Tensors::of), weights).Get(0);
     Tensor alphaw = NormalizeTotal.FUNCTION.apply(Times.of(weights, lambdas.divide(scmean).maps(Logc.FUNCTION)));
-    Tensor tn_seq = Tensor.of(sequence.stream().map(row -> Drop.tail(row, 1)));
+    Tensor tn_seq = Slash.of(sequence, row -> Drop.tail(row, 1));
     Tensor trmean = LinearBiinvariantMean.INSTANCE.mean(tn_seq, alphaw);
     return trmean.append(scmean); // "scalings reweighted arithmetic mean of translations"
   }
