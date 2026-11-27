@@ -2,8 +2,6 @@
 // code by jph
 package ch.alpine.sophus.rsm;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
@@ -13,6 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.ext.SwapRemoveList;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.opt.nd.BoxRandomSample;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -44,7 +43,7 @@ public class PoissonDiskSampling {
   }
 
   public class Inner {
-    private final List<Tensor> active = new ArrayList<>();
+    private final SwapRemoveList<Tensor> swapRemoveList = new SwapRemoveList<>();
     private final int cols;
     private final int rows;
     private final Tensor[][] grid;
@@ -68,15 +67,15 @@ public class PoissonDiskSampling {
         addPoint(col, row, point);
       }
       // Step 2: Process active list
-      while (!active.isEmpty()) {
-        int randomIndex = randomGenerator.nextInt(active.size());
-        Tensor ref = active.get(randomIndex);
+      while (!swapRemoveList.isEmpty()) {
+        int index = randomGenerator.nextInt(swapRemoveList.size());
+        Tensor ref = swapRemoveList.get(index);
         boolean found = RandomSample.stream(ringRandomSample, randomGenerator) //
             .limit(attempts) //
             .map(ref::add) //
             .anyMatch(this::register); // relies on quick exit
         if (!found)
-          active.remove(randomIndex);
+          swapRemoveList.removeByIndex(index);
       }
       return Tensor.of(Stream.of(grid).flatMap(Stream::of).filter(Objects::nonNull), added);
     }
@@ -103,7 +102,7 @@ public class PoissonDiskSampling {
     }
 
     private void addPoint(int col, int row, Tensor point) {
-      active.add(point);
+      swapRemoveList.add(point);
       grid[col][row] = point;
       ++added;
     }
