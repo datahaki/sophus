@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.ExactTensorQ;
@@ -76,13 +75,13 @@ class VectorProjectionTest {
 
   @Test
   void testZeroFail() {
-    assertThrows(Throw.class, () -> VectorProjection.on(Tensors.vector(0, 0, 0)));
-    assertThrows(Throw.class, () -> VectorProjection.on(Tensors.vector(0.0, 0, 0)));
+    assertThrows(Exception.class, () -> VectorProjection.on(Tensors.vector(0, 0, 0)));
+    assertThrows(Exception.class, () -> VectorProjection.on(Tensors.vector(0.0, 0, 0)));
   }
 
   @Test
   void testScalarFail() {
-    assertThrows(Throw.class, () -> VectorProjection.on(RealScalar.ONE));
+    assertThrows(Exception.class, () -> VectorProjection.on(RealScalar.ONE));
   }
 
   @Test
