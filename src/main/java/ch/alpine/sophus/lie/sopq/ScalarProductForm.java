@@ -11,7 +11,6 @@ enum ScalarProductForm {
   /** @param p
    * @param q
    * @return */
-  // TODO dot should be implemented more efficiently
   public static Tensor of(int p, int q) {
     return DiagonalMatrix.sparse(Tensors.vector(i -> i < p //
         ? RealScalar.ONE
